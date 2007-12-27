@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../styles/stylesheet.css" media="screen"/>
+	<title>Woopsi Documentation - The Woopsi Hierarchy</title>
+</head>
+
+<body>
+<div id="navigation">
+	<ul>
+		<li><a href="http://www.sourceforge.net/projects/woopsi">Woopsi</a></li>
+		<li><a href="../index.html">Index</a></li>
+		<li><a href="gadgets.html">Next: Gadgets</a></li>
+	</ul>
+	<a class="logo" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=207650&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<div id="content">
+	<h1>The Woopsi Hierarchy</h1>
+	<p>Before we start putting a GUI together, we need to establish some of the basic concepts that Woopsi uses to describe an interface. First of all, everything visible on the screen is a “gadget”. A gadget is an object that contains basic functionality for drawing lines and rectangles, and it describes a rectangular portion of the screen. Gadgets can contain other gadgets, and so they can themselves be children of other gadgets.</p>
+
+	<p>Gadgets form the lowest level of the Woopsi hierarchy. Gadgets are contained within windows (which are themselves a form of gadget). Windows are rectangular regions of the screen that can be dragged around, and that provide a surface for other gadgets to reside in.</p>
+
+	<p>Above windows are “screens” (another gagdet type). Screens were a concept introduced by the Commodore Amiga’s GUI, “Workbench”, and summarily ignored ever since. The closest modern approximation is Linux’s multiple desktop system or OSX' "Spaces". A screen provides a workspace to which windows can be added. Multiple screens can be added to Woopsi, and clicking the “depth” gadget in the top-right of the screen cycles through them.</p>
+</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+#include "skinnedwindowdepthbutton.h"
+
+SkinnedWindowDepthButton::SkinnedWindowDepthButton(s16 x, s16 y, const WindowSkin* skin) : WindowDepthButton(x, y, 0, 0, NULL) {
+
+	_skin = skin;
+
+	// Parse skin information
+	_height = _skin->depthButton.bitmap.width;
+	_width = _skin->depthButton.bitmap.height;
+	_flags.borderless = _skin->depthButton.borderless;
+	_flags.visible = _skin->depthButton.visible;
+	_font = _skin->depthButton.font.font;
+	_backColour = _skin->depthButton.colours.back;
+	_shineColour = _skin->depthButton.colours.shine;
+	_highlightColour = _skin->depthButton.colours.highlight;
+	_shadowColour = _skin->depthButton.colours.shadow;
+	_fillColour = _skin->depthButton.colours.fill;
+}
+
+SkinnedWindowDepthButton::~SkinnedWindowDepthButton() {
+}
+
+void SkinnedWindowDepthButton::draw() {
+	Gadget::draw();
+}
+
+void SkinnedWindowDepthButton::draw(Rect clipRect) {
+
+	// Background
+	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+
+	if (_flags.clicked) {
+		if (_parent->isActive()) {
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.focusClick, 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+		} else {
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.blurClick, 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+		}
+	} else {
+		if (_parent->isActive()) {
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.focus, 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+		} else {
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.blur, 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+		}
+	}
+
+	delete port;
+}

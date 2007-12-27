@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../../styles/stylesheet.css" media="screen"/>
+	<title>Woopsi Documentation - Developer Guide - Classes - SuperBitmap</title>
+</head>
+
+<body>
+<div id="navigation">
+	<ul>
+		<li><a href="http://www.sourceforge.net/projects/woopsi">Woopsi</a></li>
+		<li><a href="../../index.html">Index</a></li>
+		<li><a href="button.html">Previous: Button</a></li>
+		<li><a href="../tutorials/calculator.html">Next: Making a Calculator</a></li>
+	</ul>
+	<a class="logo" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=207650&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<div id="content">
+	<h1>Gadget Developer Guide - Classes - SuperBitmap</h1>
+	<h2>Overview</h2>
+	<p>The SuperBitmap is possibly the most versatile of Woopsi's gadgets.  It provides the developer with a canvas that can be attached to windows or screens and drawn on using a set of basic drawing functions - lines, rectangles, etc.  Bitmap images can also be drawn directly onto the SuperBitmap's canvas.</p>
+	<p>The SuperBitmap has a couple of other handy features.  The SuperBitmap's canvas can be larger than the actual gadget - it is possible to have a 100x100 window containing a 50x50 SuperBitmap gadget, and the SuperBitmap gadget can contain a bitmap canvas that is 500x500 pixels wide.  Clicking the SuperBitmap gadget with the stylus and dragging it scrolls the canvas within the gadget's confines, making the gadget a viewport into a much larger space.</p>
+	<p>Unlike standard windows and gadgets, the SuperBitmap retains anything drawn to it.  It is possible (though inadvisable) to draw directly to screens, windows and gadgets, but any such drawing activity will be lost as soon as a screen refresh occurs.  SuperBitmaps store their bitmaps in a block of RAM outside of the DS's video memory, so any screen refreshes automatically restore the latest image to the screen.
+	
+	<h2>Usage Ideas</h2>
+	<p>Here are a few possible uses that the SuperBitmap can be put to:</p>
+	<ul>
+		<li>Display surface for window-based games</li>
+		<li>Image viewer for bitmaps larger than the DS' screens</li>
+		<li>Background images for screens and windows</li>
+		<li>Canvas for a paint program</li>
+	</ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+body {
+	font-family: arial, sans-serif;
+	font-size: 12pt;
+	margin: 0px;
+	padding: 0px;
+	line-height: 18pt;
+}
+
+#navigation {
+	border-bottom: 1px solid black;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	background-color: white;
+	width: 100%;
+	margin: 0px;
+}
+
+#navigation ul {
+	padding: 0px;
+	margin: 3px;
+	list-style-type: none;
+	display: inline;
+	float: left;
+}
+
+#navigation ul li {
+	padding: 5px 10px 5px 5px;
+	display: inline;
+}
+
+#navigation a.logo {
+	float: right;
+	display: inline;
+}
+
+#content {
+	padding: 30px 10px 10px 10px;
+}
+
+#content #logo {
+	text-align: center;
+}
+
+#content #logo img {
+	border: none;
+}
+
+#content h1 {
+	font-size: 16pt;
+	background-color: #eeeeee;
+	padding: 10px;
+	border: 1px solid #dedede;
+}
+
+#content h2 {
+	padding-top: 30px;
+	font-size: 14pt;
+	border-bottom: 1px solid #aaaaaa;
+}
+
+#content ul li {
+	padding-top: 5px;
+}
+
+#content pre {
+	border: 1px dotted black;
+	padding: 5px;
+	margin: 20px;
+	background-color: #eeeeee;
+}
+
+#content p.antNote {
+	padding: 5px;
+	margin: 20px;
+	border: 1px dotted black;
+	background-color: #ffeeee;
+}
+
+#content table.parameters {
+	border: 1px dotted black;
+	padding: 5px;
+	margin: 20px;
+	background-color: #eeeeee;
+}
+
+#content table.parameters td {
+	padding: 2px;
+}

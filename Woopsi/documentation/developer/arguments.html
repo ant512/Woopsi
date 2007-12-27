@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../styles/stylesheet.css" media="screen"/>
+	<title>Woopsi Documentation - Developer Guide - Event Arguments</title>
+</head>
+
+<body>
+<div id="navigation">
+	<ul>
+		<li><a href="http://www.sourceforge.net/projects/woopsi">Woopsi</a></li>
+		<li><a href="../index.html">Index</a></li>
+		<li><a href="events.html">Previous: Events</a></li>
+		<li><a href="guidelines.html">Next: Guidelines</a></li>
+	</ul>
+	<a class="logo" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=207650&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<div id="content">
+	<h1>Developer Guide - Event Arguments</h1>
+	<p>It us generally useful to know more information about the event than just that it has occurred.  We know that a button has been clicked, but where has it been clicked?  If a window has been dragged, where has it been dragged to?  Which key has been pressed?  The "EventArgs" parameter in the EventHandler's functions gives us this information.</p>
+
+	<p>The EventArgs parameter is a struct that contains all of the information we need to know about an event.  It contains:</p>
+
+	<table class="parameters">
+		<tr>
+			<td><em>gadget</em></td><td>A pointer to the gadget that fired the event</td>
+		</tr>
+		<tr>
+			<td><em>eventX</em></td><td>The x co-ordinate of the event</td>
+		</tr>
+		<tr>
+			<td><em>eventY</em></td><td>The y co-ordinate of the event</td>
+		</tr>
+		<tr>
+			<td><em>keyCode</em></td><td>The button that fired the event</td>
+		</tr>
+	</table>
+
+	<p>Not all of these properties are filled for every event.  The key press event does not send the co-ordinates, for example, and the click event does not send a keycode.  The VBL event does not populate the struct with any information.</p>
+
+	<p>The "keyCode" value refers to an enum in the "EventHandler" class.  Each button on the DS has its own unique number.  If we want to check for a keycode, the easiest way is to use a switch() statement in the key press handler:</p>
+
+	<pre><code>void handleKeyPress(EventArgs e) {
+	switch (e.keyCode) {
+		case KEY_CODE_A:
+			// A is pressed
+			break;
+
+		case KEY_CODE_B:
+			// B is pressed
+			break;
+	
+		default:
+			// Etc
+			break;
+	}
+}</code></pre>
+
+	<p>The co-ordinates are relative to the screen, rather than to the gadget.  They can be converted to "gadget space" quite easily:</p>
+
+	<pre><code>s16 gadgetEventX = e.eventX - getX();
+s16 gadgetEventY = e.eventY - getY();</code></pre>
+
+	<p>This information lets us handle events more intelligently.  We can:</p>
+
+	<ul>
+		<li>Use the same event handler for multiple buttons, and use a switch() statement on the e.gadget property (where "e" is the instance of the EventArgs struct) to determine which gadget sent the event;</li>
+		<li>Perform different actions depending on where a gadget was clicked;</li>
+		<li>Use a switch statement to run different code depending on which button was pressed.</li>
+	</ul>
+</div>
+
+</body>
+</html>

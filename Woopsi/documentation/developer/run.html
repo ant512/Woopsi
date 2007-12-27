@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../styles/stylesheet.css" media="screen"/>
+	<title>Woopsi Documentation - Developer Guide - Running the GUI</title>
+</head>
+
+<body>
+<div id="navigation">
+	<ul>
+		<li><a href="http://www.sourceforge.net/projects/woopsi">Woopsi</a></li>
+		<li><a href="../index.html">Index</a></li>
+		<li><a href="create.html">Previous: Creating a Simple GUI</a></li>
+		<li><a href="events.html">Next: Handling Events</a></li>
+	</ul>
+	<a class="logo" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=207650&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<div id="content">
+	<h1>Developer Guide - Running the GUI</h1>
+	<p>If you were to take the code from the <a href="create.html">Creating a Simple GUI</a> section, insert it into a project and run it, you'd find that nothing happened.  We're missing two vital steps - we need to draw the GUI, and then we need to ensure that Woopsi is running.  To do that, we just need to call two of Woopsi's functions, like this:</p>
+
+	<pre><code>// Draw the GUI
+woopsi.draw();
+
+// Infinite loop to keep the program running
+while (1)
+{
+	woopsi.play();
+	PA_WaitForVBL();
+}</code></pre>
+
+	<p>The code below provides a complete version of the GUI we've defined that you can copy into your "main.cpp" file and run:</p>
+
+	<pre><code>// Includes
+#include &lt;PA9.h&gt;
+#include "woopsi.h"
+
+int main()
+{
+	PA_Init();    // Initializes PA_Lib
+	PA_InitVBL(); // Initializes a standard VBL
+
+	// Initialise the screen
+	PA_Init16bitBg(0, 0);
+
+	// Create a simple GUI
+	Woopsi woopsi;
+	Screen* screen = woopsi.addScreen("My Screen");
+	Window* window = screen->addWindow(20, 20, 100, 100, "My Window", false, true);
+	Button* button = window->addButton(5, 5, 60, 60, "My Button"));
+
+	// Draw the GUI
+	woopsi.draw();
+
+	// Infinite loop to keep the program running
+	while (1)
+	{
+		woopsi.play();
+		PA_WaitForVBL();
+	}
+
+	return 0;
+}</code></pre>
+</div>
+
+</body>
+</html>

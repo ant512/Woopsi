@@ -1,0 +1,320 @@
+#include "skinnedwindow.h"	
+
+SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, WindowSkin* skin) : Window(x, y, width, height, title, flags, NULL) {
+	_title = title;
+
+	_windowBorderTop = NULL;
+	_windowBorderLeft = NULL;
+	_windowBorderRight = NULL;
+	_windowBorderBottom = NULL;
+	_windowCloseButton = NULL;
+
+	_skin = skin;
+
+	// Parse skin information
+	_flags.borderless = _skin->window.borderless;
+	_flags.permeable = _skin->window.permeable;
+	_flags.closeable = _skin->closeButton.visible;
+	_font = _skin->window.font.font;
+	_backColour = _skin->window.colours.back;
+	_shineColour = _skin->window.colours.shine;
+	_highlightColour = _skin->window.colours.highlight;
+	_shadowColour = _skin->window.colours.shadow;
+	_fillColour = _skin->window.colours.fill;
+
+	// Add border to gadget list
+	if (!_flags.borderless) {
+		createBorder();
+	}
+}
+
+SkinnedWindow::~SkinnedWindow() {
+}
+
+u8 SkinnedWindow::getBorderSize() {
+	if (!_flags.borderless) {
+		return _windowBorderLeft->getWidth();
+	}
+
+	return 0;
+}
+
+u8 SkinnedWindow::getTitleHeight() {
+	if (!_flags.borderless) {
+		return _windowBorderTop->getWidth();
+	}
+
+	return 0;
+}
+
+void SkinnedWindow::setClickedGadget(Gadget* gadget) {
+	if (_clickedGadget != gadget) {
+		_clickedGadget = gadget;
+
+		// Only remember we clicked a gadget if we didn't click
+		// a border gadget
+		if ((_clickedGadget == _windowBorderBottom) ||
+			(_clickedGadget == _windowBorderLeft) ||
+			(_clickedGadget == _windowBorderRight) ||
+			(_clickedGadget == _windowBorderTop)) {
+
+			// Forget the clicked gadget
+			_clickedGadget = NULL;
+		}
+
+		// Notify parent
+		if (_parent != NULL) {
+			_parent->setClickedGadget(this);
+		}
+	}
+}
+
+void SkinnedWindow::setBorderless(bool isBorderless) {
+	if (isBorderless != _flags.borderless) {
+		if (isBorderless) {
+			// Remove borders
+
+			if (_flags.closeable) {
+				_windowCloseButton->close();
+			}
+
+			_windowDepthButton->close();
+			_windowBorderLeft->close();
+			_windowBorderRight->close();
+			_windowBorderBottom->close();
+			_windowBorderTop->close();
+
+			_windowCloseButton = NULL;
+			_windowDepthButton = NULL;
+			_windowBorderBottom = NULL;
+			_windowBorderLeft = NULL;
+			_windowBorderRight = NULL;
+			_windowBorderTop = NULL;
+
+			_flags.borderless = true;
+
+			// Move all children to compensate
+			for (u8 i = 0; i < _gadgets.size(); i++) {
+				_gadgets[i]->moveTo(_gadgets[i]->getX() - getX() - WINDOW_BORDER_SIZE, _gadgets[i]->getY() - getY() - WINDOW_TITLE_HEIGHT);
+			}
+		} else {
+			// Add borders
+
+			// Move all children to compensate
+			for (u8 i = 0; i < _gadgets.size(); i++) {
+				_gadgets[i]->moveTo(_gadgets[i]->getX() - getX() + WINDOW_BORDER_SIZE, _gadgets[i]->getY() - getY() + WINDOW_TITLE_HEIGHT);
+			}
+
+			// Create borders
+			createBorder();
+
+			_flags.borderless = false;
+		}
+
+		invalidateVisibleRectCache();
+
+		draw();
+	}
+}
+
+void SkinnedWindow::createBorder() {
+	// Add gadgets to the start in reverse order
+
+	// Add close button
+	if (_flags.closeable) {
+		u16 closeY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->closeButton.bitmap.height / 2);
+		_windowCloseButton = new SkinnedWindowCloseButton(_skin->closeButton.offsetX, closeY, _skin);
+		insertGadget(_windowCloseButton);
+	}
+
+	// Add depth button
+	u16 depthY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->depthButton.bitmap.height / 2);
+	_windowDepthButton = new SkinnedWindowDepthButton(_width - _skin->depthButton.bitmap.width - _skin->depthButton.offsetX, depthY, _skin);
+	insertGadget(_windowDepthButton);
+
+	_windowBorderTop = new SkinnedWindowBorderTop(0, _width, _title, _skin);
+	_windowBorderLeft = new SkinnedWindowBorderLeft(0, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
+	_windowBorderRight = new SkinnedWindowBorderRight(_width - _skin->rightBorder.bitmap.width, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
+	_windowBorderBottom = new SkinnedWindowBorderBottom(0, _height - _skin->bottomCentreBorder.bitmap.height, _width, _skin);
+	insertGadget(_windowBorderBottom);
+	insertGadget(_windowBorderRight);
+	insertGadget(_windowBorderLeft);
+	insertGadget(_windowBorderTop);
+}
+
+bool SkinnedWindow::click(s16 x, s16 y) {
+
+	if (_flags.enabled) {
+		if (checkCollision(x, y)) {
+			bool gotGadget = false;
+			_clickedGadget = NULL;
+
+			// Work out which gadget was clicked
+			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				if (_gadgets[i]->click(x, y)) {
+
+					// Only remember we clicked a gadget if we didn't click
+					// a border gadget
+					if (_clickedGadget != NULL) {
+						if ((_clickedGadget != _windowCloseButton) &&
+							(_clickedGadget != _windowDepthButton)) {
+							gotGadget = true;
+						}
+					}
+
+					break;
+				}
+			}
+
+			// Did we click a gadget?
+			if (!gotGadget) {
+				// Handle click on window
+				Gadget::click(x, y);
+			}
+
+			// Do we need to draw the XOR rect?
+			if (_flags.dragging) {
+				// Get a graphics port from the parent screen
+				GraphicsPort* port = _parent->newGraphicsPort();
+
+				// Draw rect
+				port->drawXORRect(_newX, _newY, _width, _height);
+
+				delete port;
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool SkinnedWindow::focus() {
+
+	if (_flags.enabled) {
+		if (!_flags.active) {
+
+			// Handle focus gained on window
+			Gadget::focus();
+
+			// Run focus on borders
+			if (_windowBorderTop != NULL) {
+				_windowBorderBottom->draw();
+				_windowBorderTop->draw();
+				_windowBorderLeft->draw();
+				_windowBorderRight->draw();
+				_windowDepthButton->draw();
+			}
+
+			// Run focus on close button
+			if (_windowCloseButton != NULL) {
+				_windowCloseButton->draw();
+			}
+
+			return true;
+		}
+	}
+	return false;
+}
+
+bool SkinnedWindow::blur() {
+
+	if (_flags.active) {
+
+		// Handle focus lost on window
+		Gadget::blur();
+
+		// Run blur on borders
+		if (_windowBorderTop != NULL) {
+			_windowBorderBottom->draw();
+			_windowBorderTop->draw();
+			_windowBorderLeft->draw();
+			_windowBorderRight->draw();
+			_windowDepthButton->draw();
+		}
+
+		// Run blur on close button
+		if (_windowCloseButton != NULL) {
+			_windowCloseButton->draw();
+		}
+
+		// Take focus away from child gadgets
+		if (_activeGadget != NULL) {
+			_activeGadget->blur();
+			_activeGadget = NULL;
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+bool SkinnedWindow::resize(u16 width, u16 height) {
+
+	// Enforce gadget to stay within parent confines if necessary
+	if (_parent != NULL) {
+		if (!_parent->isPermeable()) {
+
+			Rect parentRect;
+			_parent->getClientRect(parentRect);
+
+			// Check width
+			if (_x + width > parentRect.width) {
+				width = parentRect.width - _x;
+			}
+
+			// Check height
+			if (_y + height > parentRect.height) {
+				height = parentRect.height - _y;
+			}
+		}
+	}
+
+	if ((_width != width) || (_height != height)) {
+		erase();
+
+		_width = width;
+		_height = height;
+
+		// Top border
+		if (_flags.closeable) {
+			_windowBorderTop->resize(_width - WINDOW_CLOSE_BUTTON_WIDTH - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);
+		} else {
+			_windowBorderTop->resize(_width - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);
+		}
+
+		_windowBorderLeft->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
+		_windowBorderRight->moveTo(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT);
+		_windowBorderRight->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
+		_windowBorderBottom->resize(_width, WINDOW_BORDER_SIZE);
+		_windowBorderBottom->moveTo(0, _height - WINDOW_BORDER_SIZE);
+
+		// Depth button
+		_windowDepthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
+
+		draw();
+
+		raiseResizeEvent(width, height);
+
+		return true;
+	}
+
+	return false;
+}
+
+// Insert the available space for child gadgets into the rect
+void SkinnedWindow::getClientRect(Rect& rect) {
+	if (!_flags.borderless) {
+		rect.x = _windowBorderLeft->getWidth();
+		rect.y = _windowBorderTop->getHeight();
+		rect.width = _width - _windowBorderLeft->getWidth() - _windowBorderRight->getWidth();
+		rect.height = _height - _windowBorderBottom->getHeight() - _windowBorderTop->getHeight();
+	} else {
+		rect.x = 0;
+		rect.y = 0;
+		rect.width = _width;
+		rect.height = _height;
+	}
+}

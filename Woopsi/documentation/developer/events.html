@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../styles/stylesheet.css" media="screen"/>
+	<title>Woopsi Documentation - Developer Guide - Handling Events</title>
+</head>
+
+<body>
+<div id="navigation">
+	<ul>
+		<li><a href="http://www.sourceforge.net/projects/woopsi">Woopsi</a></li>
+		<li><a href="../index.html">Index</a></li>
+		<li><a href="run.html">Previous: Running the GUI</a></li>
+		<li><a href="arguments.html">Next: Event Arguments</a></li>
+	</ul>
+	<a class="logo" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=207650&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<div id="content">
+	<h1>Developer Guide - Handling Events</h1>
+	<p>Imagine that we want to make a button and a textbox, and we want the button to write some text into the textbox when it is clicked.  Let's get the GUI set up first.  Assuming we already have a pointer to a window:</p>
+
+	<pre><code>TextBox* textBox = window->addTextBox(0, 0, 52, 16, "");
+Button* button = window->addButton(0, 16, 52, 16, "Button");</code></pre>
+
+	<p>We now have a blank textbox and a button with the word "Button" written on it.</p>
+
+	<p>Clicking the button at the moment doesn't do anything - we need to handle the click event that the button sends out, and use that event to insert text into the textbox.  To handle the event, we need to create an event handler.</p>
+
+	<p>An event handler is a class that inherits from the base "EventHandler" class.  The base class implements all of Woopsi's events as virtual functions that can be over-ridden in the sub class.  In this particular case we're only interested in the click and release events, so we can ignore the others.  Here is an EventHandler class that will change the textbox's text to "Clicked", and reset it once the button is released:</p>
+
+	<pre><code>#include "woopsi.h"
+
+class MyEventHandler(TextBox* textBox, Button* button) : EventHandler {
+private:
+	TextBox* textBox;
+	Button* button;
+
+public:
+
+	MyEventHandler(TextBox* textBox, Button* button) {
+		this->textBox = textBox;
+		this->button = button;
+	}
+
+	~MyEventHandler() {
+	}
+
+	void handleClick(EventArgs e) {
+		textBox->setText("clicked");
+		textBox->draw();
+	}
+
+	void handleRelease(EventArgs e) {
+		textBox->setText("");
+		textBox->draw();
+	}
+};</code></pre>
+
+	<p>To connect everything together, we'd use this code:</p>
+
+	<pre><code>// Create gadgets
+TextBox* textBox = window->addTextBox(0, 0, 52, 16, "");
+Button* button = window->addButton(0, 16, 52, 16, "Button");
+
+// Create event handler
+MyEventHandler* handler = new MyEventHandler(textBox, button);
+
+// Wire up event handler to button
+button->setEventHandler(handler);</code></pre>
+
+	<p>Now when we click the button, the textbox will read "Clicked".  As soon as we release the button the text in the textbox will be wiped.</p>
+
+	<p>All of the events work the same way.  Note that each gadget can only have one event handler; if you find that you need more than one function fired when an event occurs, the best way to deal with this is to have your EventHandler class run those functions.</p>
+</div>
+
+</body>
+</html>

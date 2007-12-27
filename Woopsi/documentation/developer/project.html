@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../styles/stylesheet.css" media="screen"/>
+	<title>Woopsi Documentation - Developer Guide - Creating a Woopsi Project</title>
+</head>
+
+<body>
+<div id="navigation">
+	<ul>
+		<li><a href="http://www.sourceforge.net/projects/woopsi">Woopsi</a></li>
+		<li><a href="../index.html">Index</a></li>
+		<li><a href="installation.html">Previous: Installation</a></li>
+		<li><a href="create.html">Next: Creating a Simple GUI</a></li>
+	</ul>
+	<a class="logo" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=207650&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<div id="content">
+	<h1>Developer Guide - Creating a Woopsi Project</h1>
+	<p>There are two assumptions that we need to make before setting up a Woopsi project:</p>
+	
+	<ul>
+		<li>You have installed <a href="http://www.devkitpro.org">devKitPro</a></li>
+		<li>You have installed <a href="http://www.palib.info">PALib</a></li>
+	</ul>
+	
+	<p>The installation of these two applications falls outside the scope of this manual.</p>
+	
+	<p>Once you have these two programs installed:</p>
+	
+	<ul>
+		<li>Create a new DS project in your IDE</li>
+		<li>Open the Woopsi folder that you previously unarchived in the <a href="installation.html">installation</a> step</li>
+		<li>Navigate through the hierarchy until you find the "source" folder</li>
+		<li>Drag the contents of the folder (excluding the "main.cpp" file) to the source folder of your new project</li>
+		<li>If you are using VC++, drag the "data" folder from the Woopsi folder into your new project, replacing the existing folder</li>
+		<li>If you are using Visual HAM, drag the "bitmap"folder from the Woopsi "source" folder into your new project's "source" folder</li>
+		<li>Add the following includes to the top of your "main.cpp" file: <pre><code>#include "woopsi.h"
+#include "bitmap/all_gfx.c"
+#include "bitmap/all_gfx.h"</code></pre></li>
+	</ul>
+	
+	<p>Your Woopsi project is now set up and ready to go.</p>
+</div>
+
+</body>
+</html>

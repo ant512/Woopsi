@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../styles/stylesheet.css" media="screen"/>
+	<title>Woopsi Documentation - Gadget Developer Guide - Style Guide</title>
+</head>
+
+<body>
+<div id="navigation">
+	<ul>
+		<li><a href="http://www.sourceforge.net/projects/woopsi">Woopsi</a></li>
+		<li><a href="../index.html">Index</a></li>
+		<li><a href="create.html">Previous: Creating a Gadget</a></li>
+	</ul>
+	<a class="logo" href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=207650&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+<div id="content">
+	<h1>Gadget Developer Guide - Style Guide</h1>
+	<p>If you intend to submit your new Woopsi developments back into the main source tree, you <em>must</em> follow this style guide.  You may not agree with the style I have adopted (and you're welcome to let me know how I can improve it in future projects), but this project's style is set in stone.</p>
+	
+	<p>Unless I've made a horrendous mistake.<p>
+	
+	<p>If you are not intending to share your work, I'd strongly suggest that you still follow the style guide - internal consistency is very important.  You can of course adopt your own style - as you're not sharing anyway, who cares?</p>
+	
+	<h2>Naming Conventions</h2>
+	
+	<ul>
+		<li>Variable names should be in <strong>lowerCamelCase</strong>, eg:
+		<pre><code>u8 windowNumber;</code></pre></li>
+		<li>Class variables should be prefixed with an underscore, eg:
+		<pre><code>u8 _width;</code></pre></li>
+		<li>Class names should be in <strong>UpperCamelCase</strong>, eg:
+		<pre><code>class WindowBorder</code></pre></li>
+		<li>Class names should not have any distinguishing prefix or suffix</li>
+		<li>Pointer names should not have any distinguishing prefix or suffix</li>
+		<li>Function names should be in <strong>lowerCamelCase</strong>, eg:
+		<pre><code>void doSomeStuff();</code></pre></li>
+		<li>Function names should start with a verb</li>
+		<li>Do not use hungarian notation</li>
+		<li>Enum names should be in <strong>UpperCamelCase</strong>, eg:
+		<pre><code>enum OutlineType { };</code></pre></li>
+		<li>Enum items should be in UPPER_CASE, with words separated by underscores.  The name should begin with a word that associates it wirh the name of the enum, eg:
+		<pre><code>enum OutlineType {
+	OUTLINE_CLICK_DEPENDENT = 0,
+	OUTLINE_OUT = 1,
+	OUTLINE_IN = 2
+};</code></pre></li>
+		<li>Preprocessor defines to avoid including the same file twice should be in the format "_CLASSNAME_H_"</li>
+		<li>Use short variable names(i, j, k, etc) for iterator variables, eg:
+		<pre><code>for (u8 j = 0; j < 10; j++) { }</code></pre></li>
+		<li>Pointers should have the pointer symbol next to the type, not the variable name:
+		<pre><code>char* myChar;</code></pre></li>
+	</ul>
+	
+	<h2>Formatting</h2>
+	<ul>
+		<li>Use tabs to indent - one tab per indentation level</li>
+		<li>Split classes into .h and .cpp files</li>
+		<li>Opening braces for functions/namespaces/classes/etc should be on the same line as the function name, eg:
+		<pre><code> void myFunction() {</code></pre></li>
+		<li>There should be a single space between program control commands (such as "if", "switch", "while", "for", etc) and their arguments, eg:
+		<pre><code>while (0) { }
+switch (myValue) { }
+if (false) { }
+for (u8 i = 0; i < 10; i++) { }</code></pre></li>
+		<li>There should not be a space between a function call and its parameters, eg:
+		<pre><code>doSomething(withThisValue);</pre></code</li>
+		<li>Operators should have a leading space and a trailing space, eg:
+		<pre><code>i = 0
+j > 3
+k < 4 : k = 4 ? k = 5</code></pre></li>
+		<li>There is no requirement for lines to be shorter than 80 characters; if you must split lines for the sake of readability, choose a sensible split point and indent after the split</li>
+	</ul>
+	
+	<h2>Structure</h2>
+	<ul>
+		<li>Use getters and setters instead of public class variables</li>
+	</ul>
+	
+	<p>I recommend looking through the existing sourcecode and following the standards laid out there.</p>
+</div>
+
+</body>
+</html>
