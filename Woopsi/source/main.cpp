@@ -265,7 +265,7 @@ int main() {
 
 	SimpleScreen* newScreen2 = new SimpleScreen("Another screen");
 	woopsi.addGadget(newScreen2);
-	newScreen2->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
+	newScreen2->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0)));
 	
 	// Add child windows
 	SimpleWindow* controlWindow = newScreen->newWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
@@ -321,7 +321,7 @@ int main() {
 
 	// Add screen background
 	//SuperBitmap* demoBackground = demoScreen->newSuperBitmap(0, 0, 256, 179, (u16*)background_Bitmap, 256, 192, true);
-	demoScreen->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31));
+	demoScreen->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
 
 	// Create calculator app
 	new Calculator(demoScreen);
