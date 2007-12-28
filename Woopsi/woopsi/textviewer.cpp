@@ -19,6 +19,7 @@ TextViewer::TextViewer(s16 x, s16 y, u16 width, u16 height, s32 textY, char* tex
 
 // Destructor
 TextViewer::~TextViewer() {
+	delete _text;
 }
 
 Text* TextViewer::getText() {
