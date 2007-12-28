@@ -8,6 +8,15 @@
 
 #define woopsiRGB(r, g, b) (((b) << 10) | ((g) << 5) | (r) | (1 << 15))
 
+// Extra DMA defines
+#define REG_DMA2SRC *(volatile u32*)0x040000C8
+#define REG_DMA2DST *(volatile u32*)0x040000CC
+#define REG_DMA2CNT *(volatile u32*)0x040000D0
+#define DMA_Copy2(source, dest, count, mode) {REG_DMA2SRC = (u32)source; REG_DMA2DST = (u32)dest; REG_DMA2CNT = (count) | (mode);}
+#define DMA_Force2(ulVal, dest, count, mode) {REG_DMA2SRC=(u32)&ulVal; REG_DMA2DST = (u32)dest; REG_DMA2CNT = (count) | (mode) | DMA_SRC_FIX;}
+#define DMA_Active() (!(!(REG_DMA3CNT & DMA_ON)))
+#define DMA_Active2() (!(!(REG_DMA2CNT & DMA_ON)))
+
 #ifdef USING_PALIB
 #include <PA9.h>
 #else

@@ -54,6 +54,8 @@ Change Log
      - Added ScrollingPanel gadget.
      - Added SDL layer.
      - Added vertical scrolling to MultiLineTextBox.
+     - Added macros for using the 2nd DMA channel.
+     - Added check for DMA active flag in SuperBitmap drawing code.
 
   - Broken:
      - Vertical alignment in MultiLineTextBox other than top.
