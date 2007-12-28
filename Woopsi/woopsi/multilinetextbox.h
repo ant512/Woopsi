@@ -4,13 +4,14 @@
 #include <nds.h>
 #include "textwriter.h"
 #include "gadget.h"
+#include "scrollingpanel.h"
 #include "fontbase.h"
 #include "text.h"
 #include "graphicsport.h"
 
 using namespace std;
 
-class MultiLineTextBox : public Gadget {
+class MultiLineTextBox : public ScrollingPanel {
 public:
 	enum TextPositionHoriz {
 		TEXT_POSITION_HORIZ_CENTRE = 0,
@@ -24,7 +25,7 @@ public:
 		TEXT_POSITION_VERT_BOTTOM = 2
 	};
 
-	MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, s16 maxRows = 0, FontBase* font = NULL);
+	MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
 	virtual ~MultiLineTextBox();
 
 	virtual void draw(Rect clipRect);
@@ -37,9 +38,6 @@ public:
 	virtual char* getText();
 	virtual void setText(char* text);
 	virtual void addText(char* text);
-
-	virtual bool click(s16 x, s16 y);
-	virtual bool release(s16 x, s16 y);
 
 	virtual void setFont(FontBase* font);
 
@@ -55,10 +53,9 @@ protected:
 	bool _autoDrawing;
 
 	u8 getRowX(u8 rowPixelWidth);
-	u8 getRowY(u8 screenRow, u8 screenRows);
+	s16 getRowY(u8 screenRow, u8 screenRows);
 	void calculateTotalVisibleRows();
 	void stripTopLines(const u32 lines);
-
 };
 
 #endif

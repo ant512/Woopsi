@@ -607,5 +607,10 @@ bool ScrollingPanel::clipToClientRect(Rect& clipRect) {
 	clipRect.width = (clipX2 - clipRect.x) + 1;
 	clipRect.height = (clipY2 - clipRect.y) + 1;
 
+	// Adjust y value to match screen
+	if (clipRect.y > TOP_SCREEN_Y_OFFSET) {
+		clipRect.y -= TOP_SCREEN_Y_OFFSET;
+	}
+
 	return true;
 }

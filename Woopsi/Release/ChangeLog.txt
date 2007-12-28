@@ -53,6 +53,10 @@ Change Log
      - Added tiny font to debug console.
      - Added ScrollingPanel gadget.
      - Added SDL layer.
+     - Added vertical scrolling to MultiLineTextBox.
+
+  - Broken:
+     - Vertical alignment in MultiLineTextBox other than top.
 
 
   V0.28 (20071214)

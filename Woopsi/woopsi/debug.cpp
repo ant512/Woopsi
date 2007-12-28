@@ -82,7 +82,7 @@ void Debug::createGUI() {
 			Gadget::Rect rect;
 			_window->getClientRect(rect);
 
-			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0, _font);
+			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
 			_textBox->setAutomaticDrawing(false);
 			_window->addGadget(_textBox);
 			_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);

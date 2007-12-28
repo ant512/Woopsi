@@ -36,7 +36,7 @@ Textbox* SimpleWindow::newTextbox(s16 x, s16 y, u16 width, u16 height, char* tex
 
 MultiLineTextBox* SimpleWindow::newMultiLineTextBox(s16 x, s16 y, u16 width, u16 height, u8 maxRows, char* text) {
 	// Create a new textbox
-	MultiLineTextBox* newTextBox = new MultiLineTextBox(getBorderSize() + x, getTitleHeight() + y, width, height, text, maxRows, _font);
+	MultiLineTextBox* newTextBox = new MultiLineTextBox(getBorderSize() + x, getTitleHeight() + y, width, height, text, Gadget::GADGET_DRAGGABLE, maxRows, _font);
 	addGadget(newTextBox);
 
 	return newTextBox;
