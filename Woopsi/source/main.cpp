@@ -294,7 +294,7 @@ int main() {
 	buttons.push_back(controlWindow->newButton(124, 0, 40, 16, "Help"));
 
 	// Text viewer
-	textWindow->newTextViewer(1, 1, 246, 127, "Woopsi\n"
+	MultiLineTextBox* multiBox = textWindow->newMultiLineTextBox(1, 1, 246, 127, 50, "Woopsi\n"
 		"------\n\n"
 		"This is a demo of a windowing system I'm working on "
 		"for the Nintendo DS, written in C++.  The aim of the "
@@ -309,6 +309,7 @@ int main() {
 		"of a window), everything takes place within a \"screen\" "
 		"environment, and the look-and-feel of the system "
 		"intentionally resembles the old Amiga system.");
+	multiBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
 
 	// Add Welcome notice
 	//newScreen->addAlert("Welcome!", "Welcome to Woopsi!");

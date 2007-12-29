@@ -206,10 +206,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\textviewer.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\textwriter.cpp"
 				>
 			</File>
@@ -433,10 +429,6 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\textbox.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\textviewer.h"
 				>
 			</File>
 			<File

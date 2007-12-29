@@ -42,14 +42,6 @@ MultiLineTextBox* SimpleWindow::newMultiLineTextBox(s16 x, s16 y, u16 width, u16
 	return newTextBox;
 }
 
-TextViewer* SimpleWindow::newTextViewer(s16 x, s16 y, u16 width, u16 height, char* text) {
-	// Create new text viewer
-	TextViewer* newTextViewer = new TextViewer(getBorderSize() + x, getTitleHeight() + y, width, height, 0, text, _font);
-	addGadget(newTextViewer);
-
-	return newTextViewer;
-}
-
 SuperBitmap* SimpleWindow::newSuperBitmap(s16 x, s16 y, u16 width, u16 height, u32 bitmapWidth, u32 bitmapHeight, bool isDecoration) {
 	// Create new superbitmap
 	SuperBitmap* newSuperBitmap = new SuperBitmap(getBorderSize() + x, getTitleHeight() + y, width, height, bitmapWidth, bitmapHeight, isDecoration, _font);

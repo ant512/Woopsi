@@ -16,7 +16,6 @@
 #include "screen.h"
 #include "amigascreen.h"
 #include "simplescreen.h"
-#include "textviewer.h"
 #include "textwriter.h"
 #include "textbox.h"
 #include "eventhandler.h"

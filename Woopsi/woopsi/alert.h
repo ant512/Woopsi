@@ -3,7 +3,6 @@
 
 #include <nds.h>
 #include "simplewindow.h"
-#include "textviewer.h"
 
 using namespace std;
 
@@ -16,7 +15,6 @@ public:
 
 protected:
 	Button* _button;
-	TextViewer* _textViewer;
 };
 
 #endif
