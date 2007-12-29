@@ -107,9 +107,11 @@ void SuperBitmap::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour
 
 		// Loop through all lines
 		for (u16 i = y + 1; i < lastY; i++) {
-			DMA_Copy(line0, linei, width, DMA_16NOW);
 
+			// Wait until DMA channel is clear
 			while (DMA_Active());
+
+			DMA_Copy(line0, linei, width, DMA_16NOW);
 
 			// Move to next line
 			linei += _bitmapWidth;
@@ -126,10 +128,11 @@ void SuperBitmap::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 		u16* pos = _bitmap + (y * _bitmapWidth) + x;
 		*pos = colour;
 
+		// Wait until DMA channel is clear
+		while (DMA_Active());
+
 		// Duplicate pixel
 		DMA_Force(*pos, (pos + 1), width - 1, DMA_16NOW);
-
-		while (DMA_Active());
 	}
 }
 
@@ -459,9 +462,11 @@ void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bit
 		u16 lastLine = y + height;
 
 		for (u16 i = y; i < lastLine; i++) {
-			DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
 
+			// Wait until DMA channel is clear
 			while (DMA_Active());
+
+			DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
 
 			srcLinei += bitmapWidth;
 			destLinei += _bitmapWidth;
