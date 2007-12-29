@@ -73,7 +73,7 @@ u8 Text::getLineTrimmedLength(s32 lineNumber) {
 	s16 length = getLineLength(lineNumber);
 
 	// Strip any trailing spaces, etc
-	while ((length > -1) && (!_font->checkGlyphData(_text[_linePositions[lineNumber] + length - 1]))) {
+	while ((length > 0) && (!_font->checkGlyphData(_text[_linePositions[lineNumber] + length - 1]))) {
 		length--;
 	}
 
