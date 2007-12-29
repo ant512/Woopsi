@@ -68,7 +68,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	s32 topRowRegion = ((-_scrollY + (clipRect.y - getY())) / _text->getLineHeight()) - 1;
 
 	// Calculate the number of rows in this region
-	u8 rowCountRegion = (clipRect.height / _text->getLineHeight()) + 2;
+	u8 rowCountRegion = (clipRect.height / _text->getLineHeight()) + 3;
 
 	// Draw lines of text
 	s16 textX;
@@ -225,12 +225,13 @@ void MultiLineTextBox::addText(char* text) {
 		// Ensure that we have the correct number of rows
 		if (_text->getLineCount() > _maxRows) {
 			stripTopLines(_text->getLineCount() - _maxRows);
+
+			if (_autoDrawing) {
+				draw();
+			}
+
 		} else {
 			_text->setText(_rawText);
-		}
-
-		if (_autoDrawing) {
-			draw();
 		}
 
 		// Update max scroll value
