@@ -30,8 +30,8 @@ Change Log
   - New Features:
      - Added SuperBitmap::drawFilledCircle().
      - ScreenFlipButton uses GraphicsPort for all of its drawing operations.
-     - Added woopsiRGB() function as shortcut to RGB with alpha bit set.
-     - Replaced pixel plotting with DMA_Force() in SuperBitmap::drawHorizLine.
+     - Added woopsiRGB() define as shortcut to RGB with alpha bit set.
+     - Replaced pixel plotting with DMA_Force() in SuperBitmap::drawHorizLine().
      - Added SuperBitmap::clipBitmapCoordinates().
      - SuperBitmap draw routines clip to bitmap dimensions.
      - Added GraphicsPort::drawFilledCircle().
