@@ -20,6 +20,7 @@ public:
 	virtual ~AmigaScreen();
 
 	virtual void setBorderless(bool isBorderless);
+	virtual bool handleEvent(const EventArgs& e);
 
 protected:
 	ScreenTitle* _screenTitle;

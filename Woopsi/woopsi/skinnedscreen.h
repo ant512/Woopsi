@@ -21,6 +21,7 @@ public:
 	virtual ~SkinnedScreen();
 
 	virtual void setBorderless(bool isBorderless);
+	virtual bool handleEvent(const EventArgs& e);
 
 protected:
 	SkinnedScreenTitle* _screenTitle;

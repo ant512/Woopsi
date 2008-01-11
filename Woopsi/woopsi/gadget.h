@@ -13,7 +13,7 @@ using namespace std;
 
 class GraphicsPort;
 
-class Gadget {
+class Gadget : public EventHandler {
 public:
 	enum OutlineType {
 		OUTLINE_CLICK_DEPENDENT = 0,

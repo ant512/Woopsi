@@ -55,11 +55,7 @@ bool ScreenDepthButton::release(s16 x, s16 y) {
 
 		// Was the stylus released over this control?
 		if (checkCollision(x, y)) {
-			// Swap screens
-			_parent->lowerToBottom();
-
-			// Lose focus
-			_parent->blur();
+			raiseReleaseEvent(x, y);
 		}
 
 		Gadget::draw();

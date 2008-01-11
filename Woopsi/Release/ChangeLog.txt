@@ -56,6 +56,12 @@ Change Log
      - Added vertical scrolling to MultiLineTextBox.
      - Added macros for using the 2nd DMA channel.
      - Added check for DMA active flag in SuperBitmap drawing code.
+     - Gadget class inherits from EventHandler, so any gadget can be subclassed
+       and made to handle events.
+     - Screen decoration button gadgets have their parent screen set as their
+       event handler.
+     - Screen decoration button gadgets raise release events to notify their
+       screens of user input instead of calling functions (subclassing aid).
 
   - Broken:
      - Vertical alignment in MultiLineTextBox other than top.

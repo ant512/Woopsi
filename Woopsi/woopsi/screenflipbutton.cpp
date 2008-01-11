@@ -55,8 +55,7 @@ bool ScreenFlipButton::release(s16 x, s16 y) {
 
 		// Was the stylus released over this control?
 		if (checkCollision(x, y)) {
-			// Swap screens
-			((Screen*)_parent)->flipScreens();
+			raiseReleaseEvent(x, y);
 		}
 
 		Gadget::draw();
