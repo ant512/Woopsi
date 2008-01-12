@@ -13,7 +13,7 @@ using namespace std;
 class ScreenDepthButton;
 class ScreenFlipButton;
 
-class AmigaScreen : public Screen {
+class AmigaScreen : public Screen, public EventHandler {
 
 public:
 	AmigaScreen(char* title, FontBase* font = NULL);

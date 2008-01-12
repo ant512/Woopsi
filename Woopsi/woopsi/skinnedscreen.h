@@ -14,7 +14,7 @@ using namespace std;
 class SkinnedScreenDepthButton;
 class SkinnedScreenFlipButton;
 
-class SkinnedScreen : public Screen {
+class SkinnedScreen : public Screen, public EventHandler {
 
 public:
 	SkinnedScreen(char* title, const ScreenSkin* skin);

@@ -1,6 +1,12 @@
 Change Log
 ----------
 
+  V0.30
+  
+  - Fixes:
+     - Removed EventHandler inheritance from Gadget.
+     - Added EventHandler inheritance to AmigaScreen and SkinnedScreen.
+
   V0.29 (20081101)
   
   - Fixes:
@@ -25,7 +31,6 @@ Change Log
        itself.
      - Removed all left bitshifts from GraphicsPort::clipFilledRect() and
        replaced with SCREEN_WIDTH multipliers (aid portability).
- 
  
   - New Features:
      - Added SuperBitmap::drawFilledCircle().

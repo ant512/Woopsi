@@ -1,9 +1,10 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 #include "debug.h"
 #include "textwriter.h"
 #include "font.h"
 #include "sysfont.h"
-#include <stdio.h>
-#include <string.h>
 #include "woopsifuncs.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
