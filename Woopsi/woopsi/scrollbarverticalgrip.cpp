@@ -55,27 +55,26 @@ bool ScrollbarVerticalGrip::drag(s16 x, s16 y, s16 vX, s16 vY) {
 		if (_flags.dragging) {
 
 			// Work out where we're moving to
-			s16 destX = x - _grabPointX - _parent->getX();
 			s16 destY = y - _grabPointY - _parent->getY();
 
 			// Do we need to move?
-			if ((destX != x) && (destY != y)) {
+			if (destY != y) {
 
 				// Prevent grip from moving outside parent
-				if (destX < 0) {
-					destX = 0;
-				} else if (destX + _width > _parent->getWidth()) {
-					destX = _parent->getWidth() - _width;
-				}
-
 				if (destY < 0) {
 					destY = 0;
-				} else if (destY + _height > _parent->getY() + _parent->getHeight()) {
-					destY = _parent->getHeight() - _height;
+				} else {
+					// Get parent rect
+					Rect rect;
+					_parent->getClientRect(rect);
+
+					if (destY + _height > rect.height) {
+						destY = rect.height - _height + 1;
+					}
 				}
 
 				// Move to new location
-				moveTo(destX, destY);
+				moveTo(0, destY);
 			}
 
 			raiseDragEvent(x, y, vX, vY);
