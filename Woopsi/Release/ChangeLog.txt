@@ -7,6 +7,7 @@ Change Log
      - Removed EventHandler inheritance from Gadget.
      - Added EventHandler inheritance to AmigaScreen and SkinnedScreen.
      - Minor optimisation in TextBox click() and release() functions.
+	 - Added more DMA_Active() checks to fix SuperBitmap DMA problems.
 
   - New Features:
      - Added vertical scrollbar.

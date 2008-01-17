@@ -66,6 +66,8 @@ void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u1
 
 	// Loop through all lines
 	for (u16 i = y + 1; i < lastY; i++) {
+		while (DMA_Active());
+
 		DMA_Copy(line0, linei, width, DMA_16NOW);
 
 		// Move to next line
@@ -191,6 +193,7 @@ void GraphicsPort::drawClippedHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 
 		if (width > 0) {
 			// Duplicate pixel
+			while(DMA_Active());
 			DMA_Force(*pos, (pos + 1), width, DMA_16NOW);
 		}
 	}
@@ -652,6 +655,7 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 	u16 lastLine = y + height;
 
 	for (u16 i = y; i < lastLine; i++) {
+		while (DMA_Active());
 		DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
 
 		srcLinei += bitmapWidth;

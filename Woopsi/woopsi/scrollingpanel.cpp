@@ -121,9 +121,11 @@ void ScrollingPanel::scrollLeft(s32 dx) {
 					copySource = DrawBg[screen] + x + (y * SCREEN_WIDTH);
 
 					// Copy row to buffer
+					while(DMA_Active());
 					DMA_Copy(copySource, rowBuffer, width, DMA_16NOW);
 
 					// Copy row back to screen
+					while(DMA_Active());
 					DMA_Copy(rowBuffer, (copySource - dx), width, DMA_16NOW);
 				}
 
@@ -190,9 +192,11 @@ void ScrollingPanel::scrollRight(s32 dx) {
 					copySource = DrawBg[screen] + x + (y * SCREEN_WIDTH);
 
 					// Copy row to buffer
+					while(DMA_Active());
 					DMA_Copy(copySource, rowBuffer, width, DMA_16NOW);
 
 					// Copy row back to screen
+					while(DMA_Active());
 					DMA_Copy(rowBuffer, (copySource + dx), width, DMA_16NOW);
 				}
 
@@ -258,6 +262,7 @@ void ScrollingPanel::scrollUp(s32 dy) {
 
 				// Loop through rows
 				for (u16 y = yStart; y < yEnd; y++) {
+					while(DMA_Active());
 					DMA_Copy(copySource, (copySource - (dy * SCREEN_WIDTH)), width, DMA_16NOW);
 					copySource += SCREEN_WIDTH;
 				}
@@ -317,6 +322,7 @@ void ScrollingPanel::scrollDown(s32 dy) {
 
 				// Loop through rows
 				for (u16 y = yStart; y >= yEnd; y--) {
+					while(DMA_Active());
 					DMA_Copy(copySource, (copySource + (dy * SCREEN_WIDTH)), width, DMA_16NOW);
 					copySource -= SCREEN_WIDTH;
 				}
