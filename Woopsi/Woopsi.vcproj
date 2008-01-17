@@ -134,6 +134,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\scrollbarvertical.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\scrollbarverticalcomplex.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\scrollbarverticalgrip.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\scrollingpanel.cpp"
 				>
 			</File>
@@ -356,6 +368,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\scrollablebase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\scrollbarvertical.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\scrollbarverticalcomplex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\scrollbarverticalgrip.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\scrollingpanel.h"
 				>
 			</File>
@@ -524,6 +552,10 @@
 		</File>
 		<File
 			RelativePath=".\docs\ReadMe.txt"
+			>
+		</File>
+		<File
+			RelativePath=".\Release\Woopsi.nds"
 			>
 		</File>
 	</Files>

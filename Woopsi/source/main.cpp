@@ -284,6 +284,7 @@ int main() {
 	SimpleWindow* textTestWindow = newScreen->newWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
 	textTestWindow->newMultiLineTextBox(0, 0, 80, 80, 5, "This is some\ntest text");
 
+	textTestWindow->addGadget(new ScrollbarVertical(10, 30, 10, 40));
 
 	// Controls
 	vector<Button*> buttons;

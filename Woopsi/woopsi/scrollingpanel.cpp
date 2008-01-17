@@ -28,54 +28,6 @@ void ScrollingPanel::draw(Rect clipRect) {
 ScrollingPanel::~ScrollingPanel() {
 }
 
-u32 ScrollingPanel::getScrollWidth() {
-	return (_maxScrollX - _minScrollX) + 1;
-}
-
-u32 ScrollingPanel::getScrollHeight() {
-	return (_maxScrollY - _minScrollY) + 1;
-}
-
-u32 ScrollingPanel::getScrollX() {
-	return _scrollX;
-}
-
-u32 ScrollingPanel::getScrollY() {
-	return _scrollY;
-}
-
-u32 ScrollingPanel::getMinScrollX() {
-	return _minScrollX;
-}
-
-u32 ScrollingPanel::getMinScrollY() {
-	return _minScrollY;
-}
-
-u32 ScrollingPanel::getMaxScrollX() {
-	return _maxScrollX;
-}
-
-u32 ScrollingPanel::getMaxScrollY() {
-	return _maxScrollY;
-}
-
-void ScrollingPanel::setMinScrollX(u32 minScrollX) {
-	_minScrollX = minScrollX;
-}
-
-void ScrollingPanel::setMinScrollY(u32 minScrollY) {
-	_minScrollY = minScrollY;
-}
-
-void ScrollingPanel::setMaxScrollX(u32 maxScrollX) {
-	_maxScrollX = maxScrollX;
-}
-
-void ScrollingPanel::setMaxScrollY(u32 maxScrollY) {
-	_maxScrollY = maxScrollY;
-}
-
 void ScrollingPanel::scroll(s32 dx, s32 dy) {
 
 	// Prevent scrolling outside boundaries

@@ -103,8 +103,6 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 					destY = 0;
 				}
 
-				// Get parent re
-
 				// Get a graphics port from the parent screen
 				GraphicsPort* port = _parent->newGraphicsPort();
 

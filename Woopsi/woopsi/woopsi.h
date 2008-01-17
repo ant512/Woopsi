@@ -31,6 +31,7 @@
 #include "animbutton.h"
 #include "woopsifuncs.h"
 #include "scrollingpanel.h"
+#include "scrollbarvertical.h"
 
 using namespace std;
 

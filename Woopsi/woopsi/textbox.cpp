@@ -151,27 +151,17 @@ void Textbox::addText(const char* text) {
 }
 
 bool Textbox::click(s16 x, s16 y) {
-
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			Gadget::click(x, y);
-
-			draw();
-
-			return true;
-		}
+	if (Gadget::click(x, y)) {
+		draw();
+		return true;
 	}
 
 	return false;
 }
 
 bool Textbox::release(s16 x, s16 y) {
-
-	if (_flags.clicked) {
-		Gadget::release(x, y);
-
+	if (Gadget::release(x, y)) {
 		draw();
-		
 		return true;
 	}
 

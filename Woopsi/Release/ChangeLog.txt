@@ -2,10 +2,18 @@ Change Log
 ----------
 
   V0.30
-  
+
   - Fixes:
      - Removed EventHandler inheritance from Gadget.
      - Added EventHandler inheritance to AmigaScreen and SkinnedScreen.
+     - Minor optimisation in TextBox click() and release() functions.
+
+  - New Features:
+     - Added vertical scrollbar.
+     - Added ScrollableBase base class for scrolling gadgets.
+     - Removed ScrollableBase functions from ScrollingPanel and added
+       ScrollableBase as a base class for ScrollingPanel.
+
 
   V0.29 (20081101)
   
