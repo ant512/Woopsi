@@ -14,7 +14,11 @@ void ScrollbarVerticalGrip::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Draw background
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	if (!_flags.clicked) {
+		port->drawFilledRect(0, 0, _width, _height, _fillColour);
+	} else {
+		port->drawFilledRect(0, 0, _width, _height, _highlightColour);
+	}
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);

@@ -4,17 +4,14 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height) : Gadg
 	_outline = OUTLINE_IN;
 
 	// Create grip
-	_grip = new ScrollbarVerticalGrip(1, 1, width - 2, 10);
+	_gripY = 1;
+	_grip = new ScrollbarVerticalGrip(1, _gripY, width - 2, 10);
 	_grip->setEventHandler(this);
 	addGadget(_grip);
 }
 
 ScrollbarVertical::~ScrollbarVertical() {
 	delete _grip;
-}
-
-void ScrollbarVertical::setTarget(ScrollableBase* target) {
-	_target = target;
 }
 
 void ScrollbarVertical::draw() {
@@ -25,7 +22,7 @@ void ScrollbarVertical::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Draw background
-	port->drawFilledRect(0, 0, _width, _height, _fillColour);
+	port->drawFilledRect(0, 0, _width, _height, _darkColour);
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
@@ -74,6 +71,13 @@ bool ScrollbarVertical::click(s16 x, s16 y) {
 				// Move the grip
 				_grip->moveTo(0, newGripY);
 
+				// Notify event handler of the scroll
+				// Pass scroll distance as arguments
+				raiseScrollEvent(0, newGripY - _gripY);
+
+				// Update stored grip Y position
+				_gripY = newGripY;
+
 				// Handle click on gutter
 				Gadget::click(x, y);
 			}
@@ -109,7 +113,7 @@ bool ScrollbarVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
 		return _clickedGadget->drag(x, y, vX, vY);
 	}
 
-	return Gadget::drag(x, y, vX, vY);
+	return false;
 }
 
 bool ScrollbarVertical::handleEvent(const EventArgs& e) {
@@ -118,7 +122,14 @@ bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 	if ((e.gadget == _grip) && (e.gadget != NULL)) {
 		if (e.type == EVENT_DRAG) {
 
-			// Grip being dragged
+			// Grip being dragged - raise scroll event
+			// Pass scroll distance as arguments
+			s16 newGripY = e.gadget->getY();
+
+			raiseScrollEvent(0, newGripY - _gripY);
+
+			// Update stored grip Y position
+			_gripY = newGripY;
 
 			// TODO: Handle grip dragging here
 			return true;
@@ -126,4 +137,18 @@ bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 	}
 
 	return false;
+}
+
+void ScrollbarVertical::raiseScrollEvent(s16 x, s16 y) {
+	if (_eventHandler != NULL) {
+
+		EventArgs e;
+		e.type = EVENT_SCROLL;
+		e.eventX = x;
+		e.eventY = y;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
 }

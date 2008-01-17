@@ -13,6 +13,8 @@ Change Log
      - Added ScrollableBase base class for scrolling gadgets.
      - Removed ScrollableBase functions from ScrollingPanel and added
        ScrollableBase as a base class for ScrollingPanel.
+     - Added EVENT_SCROLL to EventHandler.
+     - Added _darkColour to Gadget class.
 
 
   V0.29 (20081101)

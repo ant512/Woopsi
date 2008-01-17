@@ -85,6 +85,7 @@ public:
 	const u16 getHighlightColour() const;
 	const u16 getShadowColour() const;
 	const u16 getFillColour() const;
+	const u16 getDarkColour() const;
 	const OutlineType getOutlineType() const;
 
 	u32 setRefcon(u32 refcon);
@@ -99,6 +100,7 @@ public:
 	void setHighlightColour(u16 colour);
 	void setShadowColour(u16 colour);
 	void setFillColour(u16 colour);
+	void setDarkColour(u16 colour);
 	void setCloseType(CloseType closeType);
 	virtual void setFont(FontBase* font);
 
@@ -181,6 +183,7 @@ protected:
 	u16 _highlightColour;
 	u16 _shadowColour;
 	u16 _fillColour;
+	u16 _darkColour;
 
 	// Status
 	Flags _flags;

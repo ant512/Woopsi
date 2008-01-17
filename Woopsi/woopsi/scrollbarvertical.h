@@ -6,7 +6,6 @@
 #include "graphicsport.h"
 #include "scrollbarverticalgrip.h"
 #include "eventhandler.h"
-#include "scrollablebase.h"
 
 using namespace std;
 
@@ -16,8 +15,6 @@ public:
 
 	ScrollbarVertical(s16 x, s16 y, u16 width, u16 height);
 	virtual ~ScrollbarVertical();
-
-	void setTarget(ScrollableBase* target);
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);
@@ -29,7 +26,9 @@ public:
 
 protected:
 	ScrollbarVerticalGrip* _grip;
-	ScrollableBase* _target;
+	s16 _gripY;
+
+	void raiseScrollEvent(s16 x, s16 y);
 };
 
 #endif

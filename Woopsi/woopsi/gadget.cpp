@@ -49,6 +49,7 @@ void Gadget::init() {
 	_highlightColour = woopsiRGB(12, 17, 23);
 	_shadowColour = woopsiRGB(0, 0, 0);
 	_fillColour = woopsiRGB(24, 24, 24);
+	_darkColour = woopsiRGB(15, 15, 15);
 
 	_flags.clicked = false;
 	_flags.dragging = false;
@@ -240,6 +241,10 @@ void Gadget::setShadowColour(u16 colour) {
 
 void Gadget::setFillColour(u16 colour) {
 	_fillColour = colour;
+}
+
+void Gadget::setDarkColour(u16 colour) {
+	_darkColour = colour;
 }
 
 u8 Gadget::calculatePhysicalScreenNumber(s16 y) {
@@ -1848,6 +1853,10 @@ const u16 Gadget::getShadowColour() const {
 
 const u16 Gadget::getFillColour() const {
 	return _fillColour;
+}
+
+const u16 Gadget::getDarkColour() const {
+	return _darkColour;
 }
 
 const Gadget::OutlineType Gadget::getOutlineType() const {

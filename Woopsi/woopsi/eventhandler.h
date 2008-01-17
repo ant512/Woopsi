@@ -24,7 +24,8 @@ enum EventType {
 	EVENT_DISABLE = 15,
 	EVENT_VALUE_CHANGE = 16,
 	EVENT_RESIZE = 17,
-	EVENT_MOVE = 18
+	EVENT_MOVE = 18,
+	EVENT_SCROLL = 19
 };
 
 enum KeyCode {
