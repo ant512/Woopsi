@@ -10,6 +10,7 @@ Change Log
 	 - Added more DMA_Active() checks to fix SuperBitmap DMA problems.
 
   - New Features:
+     - Added vertical slider.
      - Added vertical scrollbar.
      - Added ScrollableBase base class for scrolling gadgets.
      - Removed ScrollableBase functions from ScrollingPanel and added
