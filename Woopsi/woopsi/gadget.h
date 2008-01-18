@@ -73,7 +73,7 @@ public:
 	Gadget* getParent();
 	Gadget* getActiveGadget();
 	u8 getPhysicalScreenNumber();
-	virtual void getClientRect(Rect& rect);
+	virtual void getClientRect(Rect& rect) const;
 	void getRectClippedToHierarchy(Rect& rect);
 	virtual GraphicsPort* newGraphicsPort();
 	virtual GraphicsPort* newGraphicsPort(Rect clipRect);

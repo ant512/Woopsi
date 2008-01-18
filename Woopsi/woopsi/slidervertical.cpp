@@ -2,9 +2,15 @@
 
 SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_outline = OUTLINE_IN;
+	_minimumValue = 0;
+	_maximumValue = 0;
+	_minimumGripHeight = 5;
 
 	// Create grip
-	_grip = new SliderVerticalGrip(1, 1, width - 2, 10);
+	Rect rect;
+	getClientRect(rect);
+
+	_grip = new SliderVerticalGrip(rect.x, rect.y, rect.width, rect.height);
 	_grip->setEventHandler(this);
 	addGadget(_grip);
 }
@@ -23,22 +29,32 @@ const s16 SliderVertical::getMaximumValue() const {
 
 const s16 SliderVertical::getValue() const {
 	// Calculate the current value represented by the top of the grip
-	return ((_maximumValue - _minimumValue) * (_grip->getY() - _parent->getY())) / _height;
+	Rect rect;
+	getClientRect(rect);
+
+	return ((_maximumValue - _minimumValue) * (_grip->getY() - _parent->getY())) / rect.height;
 }
 
 void SliderVertical::setMinimumValue(const s16 value) {
 	_minimumValue = value;
+
+	resizeGrip();
 }
 
 void SliderVertical::setMaximumValue(const s16 value) {
 	_maximumValue = value;
+
+	resizeGrip();
 }
 
 void SliderVertical::setValue(const s16 value) {
 
 	// Convert the value to co-ordinates using fixed-point fractional values
 	// for accuracy
-	s32 pixelValue = ((_maximumValue << 8) - (_minimumValue << 8)) / _height;
+	Rect rect;
+	getClientRect(rect);
+
+	s32 pixelValue = ((_maximumValue << 8) - (_minimumValue << 8)) / rect.height;
 	s16 newGripY = (value << 8) / pixelValue;
 
 	// Move the grip
@@ -154,4 +170,21 @@ bool SliderVertical::handleEvent(const EventArgs& e) {
 	}
 
 	return false;
+}
+
+void SliderVertical::resizeGrip() {
+
+	// Get available size
+	Rect rect;
+	getClientRect(rect);
+
+	// Calculate height
+	u16 newHeight = (_maximumValue - _minimumValue) / rect.height;
+
+	// Ensure height is within acceptable boundaries
+	if (newHeight < _minimumGripHeight) newHeight = _minimumGripHeight;
+	if (newHeight > rect.height) newHeight = rect.height;
+
+	// Perform resize
+	_grip->resize(rect.width, newHeight);
 }

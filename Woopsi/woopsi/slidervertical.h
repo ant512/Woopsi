@@ -36,6 +36,9 @@ protected:
 	SliderVerticalGrip* _grip;
 	s16 _minimumValue;
 	s16 _maximumValue;
+	s16 _minimumGripHeight;
+
+	void resizeGrip();
 };
 
 #endif

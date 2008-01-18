@@ -1626,7 +1626,7 @@ u32 Gadget::setRefcon(u32 refcon) {
 }
 
 // Insert the available space for child gadgets into the rect
-void Gadget::getClientRect(Rect& rect) {
+void Gadget::getClientRect(Rect& rect) const {
 	rect.x = !_flags.borderless;
 	rect.y = rect.x;
 	rect.width = ((s16)_width) - (rect.x * 2);
