@@ -56,7 +56,7 @@ class EventHandler {
 public:
 	EventHandler() { }
 	virtual ~EventHandler() { }
-	virtual bool handleEvent(const EventArgs& e) { return false; }
+	virtual bool handleEvent(const EventArgs& e) = 0;
 };
 
 #endif
