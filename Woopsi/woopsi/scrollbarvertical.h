@@ -1,18 +1,18 @@
-#ifndef _SCROLLBAR_VERTICAL_COMPLEX_H_
-#define _SCROLLBAR_VERTICAL_COMPLEX_H_
+#ifndef _SCROLLBAR_VERTICAL_H_
+#define _SCROLLBAR_VERTICAL_H_
 
 #include <nds.h>
 #include "gadget.h"
-#include "scrollbarvertical.h"
+#include "slidervertical.h"
 
 using namespace std;
 
-class ScrollbarVerticalComplex : public Gadget {
+class ScrollbarVertical : public Gadget {
 
 public:
 
-	ScrollbarVerticalComplex(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
-	virtual ~ScrollbarVerticalComplex();
+	ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
+	virtual ~ScrollbarVertical();
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);
@@ -22,7 +22,7 @@ public:
 	virtual bool resize(u16 width, u16 height);
 
 protected:
-	ScrollbarVertical* _scrollbar;
+	SliderVertical* _slider;
 };
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef _SCROLLBAR_VERTICAL_GRIP_H_
-#define _SCROLLBAR_VERTICAL_GRIP_H_
+#ifndef _SLIDER_VERTICAL_GRIP_H_
+#define _SLIDER_VERTICAL_GRIP_H_
 
 #include <nds.h>
 #include "gadget.h"
@@ -7,12 +7,12 @@
 
 using namespace std;
 
-class ScrollbarVerticalGrip : public Gadget {
+class SliderVerticalGrip : public Gadget {
 
 public:
 
-	ScrollbarVerticalGrip(s16 x, s16 y, u16 width, u16 height);
-	virtual ~ScrollbarVerticalGrip();
+	SliderVerticalGrip(s16 x, s16 y, u16 width, u16 height);
+	virtual ~SliderVerticalGrip();
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);

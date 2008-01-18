@@ -138,14 +138,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollbarverticalcomplex.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\scrollbarverticalgrip.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\scrollingpanel.cpp"
 				>
 			</File>
@@ -199,6 +191,14 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\skinnedwindowdepthbutton.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\slidervertical.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\sliderverticalgrip.cpp"
 				>
 			</File>
 			<File
@@ -376,14 +376,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollbarverticalcomplex.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\scrollbarverticalgrip.h"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\scrollingpanel.h"
 				>
 			</File>
@@ -441,6 +433,14 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\skinnedwindowdepthbutton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\slidervertical.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\sliderverticalgrip.h"
 				>
 			</File>
 			<File

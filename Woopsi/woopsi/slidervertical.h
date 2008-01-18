@@ -1,20 +1,28 @@
-#ifndef _SCROLLBAR_VERTICAL_H_
-#define _SCROLLBAR_VERTICAL_H_
+#ifndef _SLIDER_VERTICAL_H_
+#define _SLIDER_VERTICAL_H_
 
 #include <nds.h>
 #include "gadget.h"
 #include "graphicsport.h"
-#include "scrollbarverticalgrip.h"
+#include "sliderverticalgrip.h"
 #include "eventhandler.h"
 
 using namespace std;
 
-class ScrollbarVertical : public Gadget, public EventHandler {
+class SliderVertical : public Gadget, public EventHandler {
 
 public:
 
-	ScrollbarVertical(s16 x, s16 y, u16 width, u16 height);
-	virtual ~ScrollbarVertical();
+	SliderVertical(s16 x, s16 y, u16 width, u16 height);
+	virtual ~SliderVertical();
+
+	const s16 getMinimumValue() const;
+	const s16 getMaximumValue() const;
+	const s16 getValue() const;
+
+	void setMinimumValue(const s16 value);
+	void setMaximumValue(const s16 value);
+	void setValue(const s16 value);
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);
@@ -25,10 +33,9 @@ public:
 	virtual bool handleEvent(const EventArgs& e);
 
 protected:
-	ScrollbarVerticalGrip* _grip;
-	s16 _gripY;
-
-	void raiseScrollEvent(s16 x, s16 y);
+	SliderVerticalGrip* _grip;
+	s16 _minimumValue;
+	s16 _maximumValue;
 };
 
 #endif

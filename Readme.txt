@@ -59,12 +59,15 @@ Features
     - Check boxes;
     - Single-line textboxes;
     - Multi-line text boxes;
-    - Smooth-scrolling text viewers;
     - Screens;
     - Windows;
     - Gradient backgrounds;
-    - SuperBitmap (for persistent drawing and displaying large bitmaps in small
-      gadgets);
+    - SuperBitmap, for persistent drawing and displaying large bitmaps in small
+      gadgets;
+    - Scrolling panels, for containing graphics or gadgets within regions that
+      are larger than the parent container;
+    - Scroll bars;
+    - Slider bars;
   - Skinnable screens and windows;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
@@ -77,19 +80,24 @@ Features
     - Text manipulation, including wrapping functions and width calculation;
     - Animation class with support for variable framerates and standard/pingpong
       looping;
-    - GraphicsPort class providing depth-sorted, hardware accelerated drawing
-      functions:
-      - Optimised horizontal/vertical lines;
-      - Filled and unfilled rectangles;
-      - Bitmap blitting;
-      - XOR functions;
+    - GraphicsPort class providing depth-sorted, clipped, hardware-accelerated
+      drawing functions:
       - Pixel plotting;
+      - Optimised horizontal/vertical lines;
+      - Bresenham omni-directional lines;
+      - Filled and unfilled rectangles;
+      - Filled and unfilled circles;
+      - Bitmap blitting;
+      - XOR horizontal/vertical lines and pixel plotting;
+      - Flood fill.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
   - Simplistic "multitasking" - each window runs simultaneously;
   - Uses 16-bit display mode;
   - Uses the old AmigaOS 3.0 "Topaz" font;
   - Optional PALib support.
+  - Optional SDL layer to facilitate native compilation on non-DS platforms and
+    aid porting.
 
 
 Requirements
@@ -103,11 +111,31 @@ Requirements
   
   To use Woopsi with PALib:
   
-   - Uncomment the line in "woopsi/woopsifuncs.h" that reads:
-
-     //#define USING_PALIB
-  
    - Replace the "Makefile" with "Makefile.palib".
+   
+  To use Woopsi with libnds:
+  
+   - Replace the "Makefile" with "Makefile.libnds"
+   
+
+SDL Compatibility
+-----------------
+
+  Woopsi has been designed to be portable.  Thanks to this, Woopsi comes
+  equipped with an optional SDL layer that replaces libnds and allows the code
+  to be compiled for any platform with an SDL port.  To create an SDL build of
+  Woopsi:
+  
+   - Create a new SDL project in your dev environment of choice;
+   - Copy the "woopsi" source folder into your SDL project;
+   - Copy the contents of the "sdl" folder from this archive into your copy of
+     the "woopsi" folder.
+     
+  Assuming you set up the initial project correctly, you can now develop Woopsi
+  applications using SDL.
+  
+  Note that you should not use the Woopsi makefiles, as these are only relevant
+  to DS builds of Woopsi.
   
   
 Credits and Acknowlegements
@@ -121,7 +149,8 @@ Credits and Acknowlegements
                                                   - The PALib team
                                                   - Nintendo
                                                   - R. J. Michal
-   
+
+
 Links
 -----
 

@@ -1,24 +1,55 @@
-#include "scrollbarvertical.h"
+#include "slidervertical.h"
 
-ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
+SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_outline = OUTLINE_IN;
 
 	// Create grip
-	_gripY = 1;
-	_grip = new ScrollbarVerticalGrip(1, _gripY, width - 2, 10);
+	_grip = new SliderVerticalGrip(1, 1, width - 2, 10);
 	_grip->setEventHandler(this);
 	addGadget(_grip);
 }
 
-ScrollbarVertical::~ScrollbarVertical() {
+SliderVertical::~SliderVertical() {
 	delete _grip;
 }
 
-void ScrollbarVertical::draw() {
+const s16 SliderVertical::getMinimumValue() const {
+	return _minimumValue;
+}
+
+const s16 SliderVertical::getMaximumValue() const {
+	return _maximumValue;
+}
+
+const s16 SliderVertical::getValue() const {
+	// Calculate the current value represented by the top of the grip
+	return ((_maximumValue - _minimumValue) * (_grip->getY() - _parent->getY())) / _height;
+}
+
+void SliderVertical::setMinimumValue(const s16 value) {
+	_minimumValue = value;
+}
+
+void SliderVertical::setMaximumValue(const s16 value) {
+	_maximumValue = value;
+}
+
+void SliderVertical::setValue(const s16 value) {
+
+	// Convert the value to co-ordinates using fixed-point fractional values
+	// for accuracy
+	s32 pixelValue = ((_maximumValue << 8) - (_minimumValue << 8)) / _height;
+	s16 newGripY = (value << 8) / pixelValue;
+
+	// Move the grip
+	_grip->moveTo(0, newGripY);
+}
+
+void SliderVertical::draw() {
 	Gadget::draw();
 }
 
-void ScrollbarVertical::draw(Rect clipRect) {
+void SliderVertical::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Draw background
@@ -30,7 +61,7 @@ void ScrollbarVertical::draw(Rect clipRect) {
 	delete port;
 }
 
-bool ScrollbarVertical::click(s16 x, s16 y) {
+bool SliderVertical::click(s16 x, s16 y) {
 	if (_flags.enabled) {
 		if (checkCollision(x, y)) {
 			_clickedGadget = NULL;
@@ -71,13 +102,6 @@ bool ScrollbarVertical::click(s16 x, s16 y) {
 				// Move the grip
 				_grip->moveTo(0, newGripY);
 
-				// Notify event handler of the scroll
-				// Pass scroll distance as arguments
-				raiseScrollEvent(0, newGripY - _gripY);
-
-				// Update stored grip Y position
-				_gripY = newGripY;
-
 				// Handle click on gutter
 				Gadget::click(x, y);
 			}
@@ -89,7 +113,7 @@ bool ScrollbarVertical::click(s16 x, s16 y) {
 	return false;
 }
 
-bool ScrollbarVertical::release(s16 x, s16 y) {
+bool SliderVertical::release(s16 x, s16 y) {
 	if (_clickedGadget != NULL) {
 
 		// Release clicked gadget
@@ -107,7 +131,7 @@ bool ScrollbarVertical::release(s16 x, s16 y) {
 	return false;
 }
 
-bool ScrollbarVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
+bool SliderVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	// Handle child dragging
 	if (_clickedGadget != NULL) {
 		return _clickedGadget->drag(x, y, vX, vY);
@@ -116,39 +140,18 @@ bool ScrollbarVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	return false;
 }
 
-bool ScrollbarVertical::handleEvent(const EventArgs& e) {
+bool SliderVertical::handleEvent(const EventArgs& e) {
 
 	// Handle grip events
 	if ((e.gadget == _grip) && (e.gadget != NULL)) {
-		if (e.type == EVENT_DRAG) {
+		if ((e.type == EVENT_DRAG) || (e.type == EVENT_MOVE)) {
 
-			// Grip being dragged - raise scroll event
-			// Pass scroll distance as arguments
-			s16 newGripY = e.gadget->getY();
+			// Grip has moved
+			raiseValueChangeEvent();
 
-			raiseScrollEvent(0, newGripY - _gripY);
-
-			// Update stored grip Y position
-			_gripY = newGripY;
-
-			// TODO: Handle grip dragging here
 			return true;
 		}
 	}
 
 	return false;
-}
-
-void ScrollbarVertical::raiseScrollEvent(s16 x, s16 y) {
-	if (_eventHandler != NULL) {
-
-		EventArgs e;
-		e.type = EVENT_SCROLL;
-		e.eventX = x;
-		e.eventY = y;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
-	}
 }

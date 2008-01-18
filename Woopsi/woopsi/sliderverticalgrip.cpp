@@ -1,16 +1,16 @@
-#include "scrollbarverticalgrip.h"
+#include "sliderverticalgrip.h"
 
-ScrollbarVerticalGrip::ScrollbarVerticalGrip(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
+SliderVerticalGrip::SliderVerticalGrip(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 }
 
-ScrollbarVerticalGrip::~ScrollbarVerticalGrip() {
+SliderVerticalGrip::~SliderVerticalGrip() {
 }
 
-void ScrollbarVerticalGrip::draw() {
+void SliderVerticalGrip::draw() {
 	Gadget::draw();
 }
 
-void ScrollbarVerticalGrip::draw(Rect clipRect) {
+void SliderVerticalGrip::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Draw background
@@ -26,7 +26,7 @@ void ScrollbarVerticalGrip::draw(Rect clipRect) {
 	delete port;
 }
 
-bool ScrollbarVerticalGrip::click(s16 x, s16 y) {
+bool SliderVerticalGrip::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
 
 		setDragging(x, y);
@@ -38,7 +38,7 @@ bool ScrollbarVerticalGrip::click(s16 x, s16 y) {
 	return false;
 }
 
-bool ScrollbarVerticalGrip::release(s16 x, s16 y) {
+bool SliderVerticalGrip::release(s16 x, s16 y) {
 	if (Gadget::release(x, y)) {
 
 		_flags.dragging = false;
@@ -50,7 +50,7 @@ bool ScrollbarVerticalGrip::release(s16 x, s16 y) {
 	return false;
 }
 
-bool ScrollbarVerticalGrip::drag(s16 x, s16 y, s16 vX, s16 vY) {
+bool SliderVerticalGrip::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	if (_flags.enabled) {
 		if (_flags.dragging) {
 
