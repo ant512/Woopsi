@@ -8,6 +8,7 @@ Change Log
      - Added EventHandler inheritance to AmigaScreen and SkinnedScreen.
      - Minor optimisation in TextBox click() and release() functions.
 	 - Added more DMA_Active() checks to fix SuperBitmap DMA problems.
+	 - Made EventHandler an abstract class.
 
   - New Features:
      - Added vertical slider.
