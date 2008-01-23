@@ -35,7 +35,11 @@ public:
 	virtual void setTextPositionVert(TextPositionVert position);
 	virtual void setAutomaticDrawing(bool autoDrawing);
 	
-	virtual char* getText();
+	virtual const u16 getPageCount() const;
+	virtual const u16 getCurrentPage() const;
+	
+	virtual char* getRawText();
+	virtual const Text* getText() const;
 	virtual void setText(char* text);
 	virtual void addText(char* text);
 
@@ -56,6 +60,8 @@ protected:
 	s16 getRowY(u8 screenRow, u8 screenRows);
 	void calculateTotalVisibleRows();
 	void stripTopLines(const u32 lines);
+	
+	virtual void setText(char* text, bool raiseEvent);
 };
 
 #endif

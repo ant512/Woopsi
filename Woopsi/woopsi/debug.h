@@ -2,6 +2,7 @@
 #define _DEBUG_H_
 
 #include <nds.h>
+#include "eventhandler.h"
 
 #define DEBUG_ACTIVE true
 
@@ -11,8 +12,9 @@ class MultiLineTextBox;
 class Gadget;
 class Woopsi;
 class Font;
+class SliderVertical;
 
-class Debug {
+class Debug : public EventHandler {
 
 public:
 	static void busyWait();
@@ -20,13 +22,22 @@ public:
 	static void printf(const char *format, ...);
 	static void setWoopsi(Woopsi* woopsi);
 
+	bool handleEvent(const EventArgs& e);
+
 private:
-	static AmigaScreen* _screen;
-	static AmigaWindow* _window;
-	static MultiLineTextBox* _textBox;
+	Debug();
+	~Debug();
+
+	static Debug* _debug;
 	static Woopsi* _woopsi;
-	static Font* _font;
-	static void createGUI();
+	AmigaScreen* _screen;
+	AmigaWindow* _window;
+	MultiLineTextBox* _textBox;
+	SliderVertical* _slider;
+	Font* _font;
+	void createGUI();
+
+	static void createDebug();
 };
 
 #endif

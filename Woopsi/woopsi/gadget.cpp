@@ -1316,12 +1316,12 @@ bool Gadget::resize(u16 width, u16 height) {
 			_parent->getClientRect(parentRect);
 
 			// Check width
-			if (_x + width > parentRect.width) {
+			if (_x + width > parentRect.x + parentRect.width) {
 				width = parentRect.width - _x;
 			}
 
 			// Check height
-			if (_y + height > parentRect.height) {
+			if (_y + height > parentRect.y + parentRect.height) {
 				height = parentRect.height - _y;
 			}
 		}

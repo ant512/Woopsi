@@ -14,7 +14,7 @@ public:
 	Screen(char* title, FontBase* font = NULL);
 	virtual ~Screen();
 	
-	virtual void getClientRect(Rect& rect);
+	virtual void getClientRect(Rect& rect) const;
 
 	virtual void setBorderless(bool isBorderless);
 

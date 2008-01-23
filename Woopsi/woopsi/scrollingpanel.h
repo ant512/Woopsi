@@ -27,6 +27,7 @@ public:
 	virtual bool blur();
 
 	virtual void scroll(s32 dx, s32 dy);
+	virtual void jump(s32 x, s32 y);
 
 protected:
 	void scrollLeft(s32 dx);
@@ -38,6 +39,8 @@ protected:
 	void drawChildren(Rect clipRect);
 
 	bool clipToClientRect(Rect& clipRect);
+
+	void raiseScrollEvent();
 };
 
 #endif

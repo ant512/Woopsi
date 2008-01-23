@@ -28,7 +28,7 @@ public:
 	virtual u8 getBorderSize();
 	virtual u8 getTitleHeight();
 
-	virtual void getClientRect(Rect& rect);
+	virtual void getClientRect(Rect& rect) const;
 
 	virtual void setClickedGadget(Gadget* gadget);
 

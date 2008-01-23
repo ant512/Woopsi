@@ -305,7 +305,7 @@ bool SkinnedWindow::resize(u16 width, u16 height) {
 }
 
 // Insert the available space for child gadgets into the rect
-void SkinnedWindow::getClientRect(Rect& rect) {
+void SkinnedWindow::getClientRect(Rect& rect) const {
 	if (!_flags.borderless) {
 		rect.x = _windowBorderLeft->getWidth();
 		rect.y = _windowBorderTop->getHeight();

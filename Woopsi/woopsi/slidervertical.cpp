@@ -1,10 +1,13 @@
 #include "slidervertical.h"
 
+#include <iostream>
+
 SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_outline = OUTLINE_IN;
 	_minimumValue = 0;
 	_maximumValue = 0;
 	_minimumGripHeight = 5;
+	_pageSize = 1;
 
 	// Create grip
 	Rect rect;
@@ -32,19 +35,19 @@ const s16 SliderVertical::getValue() const {
 	Rect rect;
 	getClientRect(rect);
 
-	return ((_maximumValue - _minimumValue) * (_grip->getY() - _parent->getY())) / rect.height;
+	return ((_maximumValue - _minimumValue) * (_grip->getY() - _parent->getY())) / ((rect.height - _grip->getHeight()) + 1);
+}
+
+const s16 SliderVertical::getPageSize() const {
+	return _pageSize;
 }
 
 void SliderVertical::setMinimumValue(const s16 value) {
 	_minimumValue = value;
-
-	resizeGrip();
 }
 
 void SliderVertical::setMaximumValue(const s16 value) {
 	_maximumValue = value;
-
-	resizeGrip();
 }
 
 void SliderVertical::setValue(const s16 value) {
@@ -54,11 +57,22 @@ void SliderVertical::setValue(const s16 value) {
 	Rect rect;
 	getClientRect(rect);
 
-	s32 pixelValue = ((_maximumValue << 8) - (_minimumValue << 8)) / rect.height;
-	s16 newGripY = (value << 8) / pixelValue;
+	s32 pixelValue = ((_maximumValue - _minimumValue) << 8) / ((rect.height - _grip->getHeight()) + 1);
+	
+	if (pixelValue > 0) {
+		s16 newGripY = (value << 8) / pixelValue;
+	
+		if (newGripY + _grip->getHeight() > rect.y + rect.height) {
+			newGripY = (rect.y + rect.height) - _grip->getHeight();
+		}
 
-	// Move the grip
-	_grip->moveTo(0, newGripY);
+		// Move the grip
+		_grip->moveTo(0, abs(newGripY));
+	}
+}
+
+void SliderVertical::setPageSize(s16 pageSize) {
+	_pageSize = pageSize;
 }
 
 void SliderVertical::draw() {
@@ -111,7 +125,7 @@ bool SliderVertical::click(s16 x, s16 y) {
 				// Adjust y value so that it does not exceed boundaries of gutter
 				if (newGripY < rect.y) {
 					newGripY = rect.y;
-				} else if (newGripY + _grip->getHeight() > rect.height) {
+				} else if (newGripY + _grip->getHeight() > rect.y + rect.height) {
 					newGripY = (rect.height - _grip->getHeight()) + 1;
 				}
 
@@ -172,19 +186,43 @@ bool SliderVertical::handleEvent(const EventArgs& e) {
 	return false;
 }
 
+void SliderVertical::recalculate() {
+	resizeGrip();
+	
+	// Reposition grip
+	setValue(getValue());
+}
+
 void SliderVertical::resizeGrip() {
 
 	// Get available size
 	Rect rect;
 	getClientRect(rect);
 
-	// Calculate height
-	u16 newHeight = (_maximumValue - _minimumValue) / rect.height;
+	// Calculate new height
+	s32 newHeight = rect.height;
+	
+	// Calculate the height of the content that has overflowed the viewport
+	s32 overspill = (abs(_maximumValue - _minimumValue) - _pageSize << 8);
+	
+	// Is there any overflow?
+	if (overspill > 0) {
+	
+		// Calculate the ratio of content to gutter
+		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
+		
+		// New height is equivalent to the height of the gutter minus
+		// the ratio-converted overflow height
+		newHeight = rect.height - (overspill / ratio);
+		
 
-	// Ensure height is within acceptable boundaries
-	if (newHeight < _minimumGripHeight) newHeight = _minimumGripHeight;
-	if (newHeight > rect.height) newHeight = rect.height;
+		// Ensure height is within acceptable boundaries
+		if (newHeight < _minimumGripHeight) {
+			newHeight = _minimumGripHeight;
+		}
+		if (newHeight > rect.height) newHeight = rect.height;
 
-	// Perform resize
-	_grip->resize(rect.width, newHeight);
+		// Perform resize
+		_grip->resize(rect.width, newHeight);
+	}
 }

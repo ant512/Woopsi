@@ -297,7 +297,7 @@ bool AmigaWindow::resize(u16 width, u16 height) {
 }
 
 // Insert the available space for child gadgets into the rect
-void AmigaWindow::getClientRect(Rect& rect) {
+void AmigaWindow::getClientRect(Rect& rect) const {
 	if (!_flags.borderless) {
 		rect.x = _windowBorderLeft->getWidth();
 		rect.y = _windowBorderTop->getHeight();

@@ -164,11 +164,19 @@ void MultiLineTextBox::setTextPositionVert(TextPositionVert position) {
 	}
 }
 
-char* MultiLineTextBox::getText() {
+char* MultiLineTextBox::getRawText() {
 	return _rawText;
 }
 
+const Text* MultiLineTextBox::getText() const {
+	return _text;
+}
+
 void MultiLineTextBox::setText(char* text) {
+	setText(text, true);
+}
+
+void MultiLineTextBox::setText(char* text, bool raiseEvent) {
 	
 	// Have we already created a block of memory that we need to free?
 	if (_rawText != NULL) {
@@ -201,7 +209,7 @@ void MultiLineTextBox::setText(char* text) {
 		scroll(0, _minScrollY);
 	}
 
-	raiseValueChangeEvent();
+	if (raiseEvent) raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::addText(char* text) {
@@ -233,19 +241,19 @@ void MultiLineTextBox::addText(char* text) {
 		} else {
 			_text->setText(_rawText);
 		}
-
+		
 		// Update max scroll value
 		if (_text->getLineCount() > _visibleRows) {
 			_minScrollY = -(_text->getPixelHeight() - _height) - _font->getHeight();
 
 			// Scroll to bottom of new text
-			scroll(0, _minScrollY);
+			jump(0, _minScrollY);
 		}
 
 		raiseValueChangeEvent();
 	} else {
 		// No text, so set it for the first time
-		setText(text);
+		setText(text, false);
 
 		// Ensure that we have the correct number of rows
 		if (_text->getLineCount() > _maxRows) {
@@ -255,14 +263,14 @@ void MultiLineTextBox::addText(char* text) {
 		if (_autoDrawing) {
 			draw();
 		}
-
+		
 		// Update max scroll value
-		if (_text->getLineCount() > _visibleRows) {
-			_minScrollY = -(_text->getPixelHeight() - _height) - _font->getHeight();
+		//if (_text->getLineCount() > _visibleRows) {
+		//	_minScrollY = -(_text->getPixelHeight() - _height) - _font->getHeight();
 
 			// Scroll to bottom of new text
-			scroll(0, _minScrollY);
-		}
+		//	jump(0, _minScrollY);
+		//}
 
 		raiseValueChangeEvent();
 	}
@@ -296,4 +304,39 @@ void MultiLineTextBox::stripTopLines(const u32 lines) {
 	_rawText = newText;
 
 	_text->setText(_rawText);
+}
+
+const u16 MultiLineTextBox::getPageCount() const {
+
+	// Get client rect
+	Rect clientRect;
+	getClientRect(clientRect);
+
+	// Calculate the maximum number of visible rows
+	u8 rowCount = clientRect.height / _text->getLineHeight();
+	
+	// Return number of screens of text
+	if (rowCount > 0) {
+		u16 pages = _text->getLineCount() / rowCount;
+		
+		return pages + 1;
+	} else {
+		return 1;
+	}
+}
+
+const u16 MultiLineTextBox::getCurrentPage() const {
+
+	// Get client rect
+	Rect clientRect;
+	getClientRect(clientRect);
+
+	// Calculate the top line of text
+	s32 topRow = (-_scrollY / _text->getLineHeight());
+	
+	// Calculate the maximum number of visible rows
+	u8 rowCount = clientRect.height / _text->getLineHeight();
+	
+	// Return the page on which the top row falls
+	return topRow / rowCount;
 }

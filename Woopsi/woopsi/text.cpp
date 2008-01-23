@@ -20,23 +20,23 @@ Text::Text(FontBase* font, char* text, u16 width) {
 Text::~Text() {
 }
 
-s32 Text::getPixelHeight() {
+const s32 Text::getPixelHeight() const {
 	return _textPixelHeight;
 }
 
-u8 Text::getPixelWidth() {
+const u8 Text::getPixelWidth() const {
 	return _textPixelWidth;
 }
 
-u8 Text::getLineSpacing() {
+const u8 Text::getLineSpacing() const {
 	return _lineSpacing;
 }
 
-u8 Text::getLineHeight() {
+const u8 Text::getLineHeight() const {
 	return _lineHeight;
 }
 
-s32 Text::getLineCount() {
+const s32 Text::getLineCount() const {
 	return _totalLines;
 }
 

@@ -25,6 +25,7 @@ public:
 	virtual const s32 getScrollHeight() { return (_maxScrollY - _minScrollY) + 1; };
 
 	virtual void scroll(s32 dx, s32 dy) = 0;
+	virtual void jump(s32 x, s32 y) = 0;
 
 protected:
 	s32 _scrollX;

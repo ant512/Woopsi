@@ -28,6 +28,11 @@ void ScrollingPanel::draw(Rect clipRect) {
 ScrollingPanel::~ScrollingPanel() {
 }
 
+void ScrollingPanel::jump(s32 x, s32 y) {
+	// Calculate difference between jump value and current value and scroll
+	scroll(x - _scrollX, y - _scrollY);
+}
+
 void ScrollingPanel::scroll(s32 dx, s32 dy) {
 
 	// Prevent scrolling outside boundaries
@@ -70,6 +75,9 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 
 		// Scroll all child gadgets
 		scrollChildren(dx, dy);
+
+		// Notify event handler
+		raiseScrollEvent();
 	}
 }
 
@@ -571,4 +579,18 @@ bool ScrollingPanel::clipToClientRect(Rect& clipRect) {
 	}
 
 	return true;
+}
+
+void ScrollingPanel::raiseScrollEvent() {
+	if (_eventHandler != NULL) {
+
+		EventArgs e;
+		e.type = EVENT_SCROLL;
+		e.eventX = 0;
+		e.eventY = 0;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
 }

@@ -19,10 +19,13 @@ public:
 	const s16 getMinimumValue() const;
 	const s16 getMaximumValue() const;
 	const s16 getValue() const;
+	const s16 getPageSize() const;
 
 	void setMinimumValue(const s16 value);
 	void setMaximumValue(const s16 value);
 	void setValue(const s16 value);
+	void setPageSize(const s16 pageSize);
+	void recalculate();
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);
@@ -37,6 +40,7 @@ protected:
 	s16 _minimumValue;
 	s16 _maximumValue;
 	s16 _minimumGripHeight;
+	s16 _pageSize;
 
 	void resizeGrip();
 };

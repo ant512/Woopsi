@@ -22,11 +22,11 @@ public:
 	u8 getLinePixelLength(s32 lineNumber);
 	u8 getLineTrimmedPixelLength(s32 lineNumber);
 	char* getLinePointer(s32 lineNumber);
-	s32 getPixelHeight();
-	u8 getPixelWidth();
-	u8 getLineSpacing();
-	u8 getLineHeight();
-	s32 getLineCount();
+	const s32 getPixelHeight() const;
+	const u8 getPixelWidth() const;
+	const u8 getLineSpacing() const;
+	const u8 getLineHeight() const;
+	const s32 getLineCount() const;
 	FontBase* getFont();
 	
 private:

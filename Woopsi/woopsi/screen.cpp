@@ -473,7 +473,7 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 }
 
 // Insert the available space for child gadgets into the rect
-void Screen::getClientRect(Rect& rect) {
+void Screen::getClientRect(Rect& rect) const {
 	rect.x = 0;
 	rect.y = 0;
 	rect.width = _width;

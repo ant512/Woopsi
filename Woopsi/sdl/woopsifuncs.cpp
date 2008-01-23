@@ -32,16 +32,16 @@ void initWoopsiGfxMode() {
 		exit(1);
 	}
 
-	/* Set 256x384 video mode */
-	screen = SDL_SetVideoMode(256, 384, video_bpp, videoflags);
+	/* Set 320x480 video mode */
+	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT * 2, video_bpp, videoflags);
 	if (screen == NULL) {
-		fprintf(stderr, "Couldn't set 640x480x%d video mode: %s\n", video_bpp, SDL_GetError());
+		fprintf(stderr, "Couldn't set %dx%dx%d video mode: %s\n", SCREEN_WIDTH, SCREEN_HEIGHT, video_bpp, SDL_GetError());
 		SDL_Quit();
 		exit(2);
 	}
-	
-	DrawBg[0] = new u16[49152];
-	DrawBg[1] = new u16[49152];
+
+	DrawBg[0] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
+	DrawBg[1] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
 }
 
 void woopsiVblFunc() {
@@ -49,37 +49,37 @@ void woopsiVblFunc() {
 	SDL_PixelFormat* format;
 	format = screen->format;
 	SDL_LockSurface(screen);
-	
+
 	u32 r = 0;
 	u32 g = 0;
-	u32 b  = 0;
-	
+	u32 b = 0;
+
 	// Draw top screen
-	for (u16 i = 0; i < 49152; i++) {
+	for (u32 i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
 		r = (DrawBg[1][i] & 31) << 3;
 		g = (DrawBg[1][i] & (31 << 5)) >> 2;
 		b = (DrawBg[1][i] & (31 << 10)) >> 7;
 		putPixel(screen, i % SCREEN_WIDTH, (i / SCREEN_WIDTH), SDL_MapRGB(format, r, g, b));
 	}
-	
+
 	// Draw bottom screen
-	for (u16 i = 0; i < 49152; i++) {
+	for (u32 i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
 		r = (DrawBg[0][i] & 31) << 3;
 		g = (DrawBg[0][i] & (31 << 5)) >> 2;
 		b = (DrawBg[0][i] & (31 << 10)) >> 7;
-		putPixel(screen, i % SCREEN_WIDTH, (i / SCREEN_WIDTH) + 192, SDL_MapRGB(format, r, g, b));
+		putPixel(screen, i % SCREEN_WIDTH, (i / SCREEN_WIDTH) + SCREEN_HEIGHT, SDL_MapRGB(format, r, g, b));
 	}
-	
+
 	SDL_UnlockSurface(screen);
-	SDL_UpdateRect(screen, 0, 0, 256, 384);
-	
+	SDL_UpdateRect(screen, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT * 2);
+
 	if (Stylus.Newpress) {
 		Stylus.Held = true;
 		Stylus.Newpress = false;
 	}
-	
+
 	Stylus.Released = false;
-	
+
 	if (Pad.Newpress.Left) Pad.Held.Left = true;
 	if (Pad.Newpress.Right) Pad.Held.Right = true;
 	if (Pad.Newpress.Up) Pad.Held.Up = true;
@@ -92,7 +92,7 @@ void woopsiVblFunc() {
 	if (Pad.Newpress.Select) Pad.Held.Select = true;
 	if (Pad.Newpress.L) Pad.Held.L = true;
 	if (Pad.Newpress.R) Pad.Held.R = true;
-	
+
 	Pad.Released.Left = false;
 	Pad.Released.Right = false;
 	Pad.Released.Up = false;
@@ -105,7 +105,7 @@ void woopsiVblFunc() {
 	Pad.Released.R = false;
 	Pad.Released.Start = false;
 	Pad.Released.Select = false;
-	
+
 	Pad.Newpress.Left = false;
 	Pad.Newpress.Right = false;
 	Pad.Newpress.Up = false;
@@ -118,7 +118,7 @@ void woopsiVblFunc() {
 	Pad.Newpress.R = false;
 	Pad.Newpress.Start = false;
 	Pad.Newpress.Select = false;
-	
+
 	// Check events
 	if (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -246,14 +246,14 @@ void woopsiVblFunc() {
 				break;
 		}
 	}
-	
+
 	Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime+Stylus.Uptime < 45);
 	Stylus.Downtime *= !Stylus.Newpress; // = 0 if newpress
 	Stylus.Downtime += Stylus.Held;
-	
+
 	Stylus.Uptime *= !Stylus.Released; // = 0 when released
 	Stylus.Uptime += !Stylus.Held;
-	
+
 	if (Stylus.Held) {
 		if (Stylus.Newpress) {
 			Stylus.Vx = Stylus.oldVx = 0;
@@ -264,7 +264,7 @@ void woopsiVblFunc() {
 			Stylus.Vx = mouseX - Stylus.X;
 			Stylus.Vy = mouseY - Stylus.Y;
 		}
-		
+
 		Stylus.X = mouseX;
 		Stylus.Y = mouseY;
 	}
