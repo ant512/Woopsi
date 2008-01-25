@@ -47,27 +47,27 @@ public:
 	
 	/**
 	 * Add a new screen to the Woopsi instance.
-	 * @note This should be removed.
+	 * This should be removed.
 	 * @param title The title of the new screen.
 	 */
 	virtual Screen* newScreen(char* title);
 	
 	/**
 	 * Run the Woopsi instace.
-	 * @note This should be called every VBL in order for Woopsi to work.
+	 * This should be called every VBL in order for Woopsi to work.
 	 */
 	virtual void play();
 	
 	/**
 	 * Draw the entire Woopsi GUI to the display.
-	 * @note should be called before the main loop runs.
+	 * Should be called before the main loop runs.
 	 */
 	virtual void draw();
 	
 	/**
 	 * Draw a specific rectangle of the GUI.
-	 * @note The supplied region will be drawn with no further clipping checks.
-	 * @note For use only within Woopsi gadgets.
+	 * The supplied region will be drawn with no further clipping checks.
+	 * For use only within Woopsi gadgets.
 	 * @param clipRect The region to draw.
 	 */
 	virtual void draw(Rect clipRect);
@@ -91,7 +91,7 @@ public:
 	 * Receive stylus clicks and process them.
 	 * @param x The x co-ordinate of the click.
 	 * @param y The y co-ordinate of the click.
-	 * @returns True if clicked.
+	 * @return True if clicked.
 	 */
 	virtual bool click(s16 x, s16 y);
 
@@ -99,7 +99,7 @@ public:
 	 * Receive stylus releases and process them.
 	 * @param x The x co-ordinate of the release.
 	 * @param y The y co-ordinate of the release.
-	 * @returns True if released.
+	 * @return True if released.
 	 */
 	virtual bool release(s16 x, s16 y);
 
@@ -109,13 +109,13 @@ public:
 	 * @param y The current y co-ordinate of the stylus.
 	 * @param vX The horizontal distance dragged.
 	 * @param vY The vertical distance dragged.
-	 * @returns True if dragged.
+	 * @return True if dragged.
 	 */
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 	/**
 	 * Receive and process VBLs.
-	 * @returns True if VBL was processed.
+	 * @return True if VBL was processed.
 	 */
 	virtual bool vbl();
 
@@ -127,17 +127,17 @@ public:
 
 	/**
 	 * Swaps the depth of the supplied gadget.
-	 * @note This function presumes that all child gadgets are screens.
+	 * This function presumes that all child gadgets are screens.
 	 * @param gadget The gadget to be depth-swapped.
-	 * @returns True if the depth swap occurred.
+	 * @return True if the depth swap occurred.
 	 */
 	virtual bool swapGadgetDepth(Gadget* gadget);
 
 	/**
 	 * Flips the supplied gadget from its current screen to the other screen.
-	 * @note Thuis functions presumes that all child gadgets are screens.
+	 * This functions presumes that all child gadgets are screens.
 	 * @param gadget The gadget (must be a screen) to flip.
-	 * @returns True if the flip occurred.
+	 * @return True if the flip occurred.
 	 */
 	virtual bool flipScreens(Gadget* gadget);
 
@@ -149,7 +149,7 @@ public:
 
 	/**
 	 * Get a pointer to the system font.
-	 * @returns A pointer to the system font.
+	 * @return A pointer to the system font.
 	 */
 	static FontBase* getSystemFont();
 
@@ -161,27 +161,27 @@ public:
 
 	/**
 	 * Add the supplied gadget to the list of gadgets that receive VBL notifications.
-	 * @note Gadgets not in this list will not be able to update automatically when the screen refreshes.
+	 * Gadgets not in this list will not be able to update automatically when the screen refreshes.
 	 * @param A pointer to the gadget to add to the VBL list.
 	 */
 	static void registerForVBL(Gadget* gadget);
 
 	/**
 	 * Remove the supplied gadget from the list of gadgets that receive VBL notifications.
-	 * @note Gadgets removed from the list will no longer be able to update automatically when the screen refreshes.
+	 * Gadgets removed from the list will no longer be able to update automatically when the screen refreshes.
 	 * @param gadget A pointer to the gadget to remove from the VBL list.
 	 */
 	static void unregisterFromVBL(Gadget* gadget);
 
 	/**
 	 * Add a gadget to the list of gadgets to be deleted.
-	 * @note Must never be called by anything other than the framework itself.
+	 * Must never be called by anything other than the framework itself.
 	 */
 	static void addToDeleteQueue(Gadget* gadget);
 
 	/**
 	 * Return the number of VBLs that have occurred since Woopsi began running.
-	 * @note The count will eventually overflow the 32-bit int and reset to 0.  Developers must allow for this.
+	 * The count will eventually overflow the 32-bit int and reset to 0.  Developers must allow for this.
 	 */
 	static u32 getVBLCount();
 
