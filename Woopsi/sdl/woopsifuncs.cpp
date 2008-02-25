@@ -333,3 +333,7 @@ void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
         break;
     }
 }
+
+// Function does nothing, as mem does not need flushing in SDL
+void DC_FlushRange(const void *base, u32 size) {
+}

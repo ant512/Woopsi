@@ -72,4 +72,7 @@ void initWoopsiGfxMode();
 void woopsiWaitVBL();
 bool woopsiLidClosed();
 
+// Simulate some features of libnds
+void DC_FlushRange(const void *base, u32 size);
+
 #endif
