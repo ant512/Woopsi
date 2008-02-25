@@ -1057,7 +1057,7 @@ bool Gadget::moveHiddenToChildList(Gadget* gadget) {
 			}
 
 			// Remove gadget from hidden vector
-			_hiddenGadgets.erase(_gadgets.begin() + i);
+			_hiddenGadgets.erase(_hiddenGadgets.begin() + i);
 
 			return true;
 		}

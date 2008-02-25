@@ -9,6 +9,9 @@ Change Log
      - Minor optimisation in TextBox click() and release() functions.
 	 - Added more DMA_Active() checks to fix SuperBitmap DMA problems.
 	 - Made EventHandler an abstract class.
+	 - Removed post-DMA waits.
+     - Added cache flushing to fix empty pixels when using DMA hardware.
+	 - Fixed incorrect vector pointer in Gadget::moveHiddenToChildList().
 
   - New Features:
      - Added vertical slider.

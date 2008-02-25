@@ -105,6 +105,9 @@ void SuperBitmap::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour
 		u16* line0 = _bitmap + x + (y * _bitmapWidth);
 		u16* linei = line0 + _bitmapWidth;
 
+		// Flush out the bitmap mem cache to ensure DMA can see correct data
+		DC_FlushRange(line0, width * sizeof(u16));
+
 		// Loop through all lines
 		for (u16 i = y + 1; i < lastY; i++) {
 
@@ -112,7 +115,6 @@ void SuperBitmap::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour
 			while (DMA_Active());
 
 			DMA_Copy(line0, linei, width, DMA_16NOW);
-			while (DMA_Active());
 
 			// Move to next line
 			linei += _bitmapWidth;
@@ -134,7 +136,6 @@ void SuperBitmap::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 
 		// Duplicate pixel
 		DMA_Force(*pos, (pos + 1), width - 1, DMA_16NOW);
-		while (DMA_Active());
 	}
 }
 
@@ -409,7 +410,7 @@ void SuperBitmap::pushStack(s16 x, s16 y, vector<u16>* stack) {
 	stack->push_back(x + (y << 8));
 }     
 
-//Draw bitmap to the bitmap
+//Draw bitmap to the internal bitmap
 void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight) {
 	
 	// Ensure bitmap co-ordinates make sense
@@ -463,13 +464,15 @@ void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bit
 
 		u16 lastLine = y + height;
 
+		// Flush out the bitmap mem cache to ensure DMA can see correct data
+		DC_FlushRange(srcLine0, width * height * sizeof(u16));
+
 		for (u16 i = y; i < lastLine; i++) {
 
 			// Wait until DMA channel is clear
 			while (DMA_Active());
 
 			DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
-			while (DMA_Active());
 
 			srcLinei += bitmapWidth;
 			destLinei += _bitmapWidth;

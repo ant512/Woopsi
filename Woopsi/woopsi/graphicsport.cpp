@@ -64,6 +64,9 @@ void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u1
 	u16* linei = line0 + SCREEN_WIDTH;
 	u16 lineInc = SCREEN_WIDTH;
 
+	// Flush out the bitmap mem cache to ensure DMA can see correct data
+	DC_FlushRange(line0, width * sizeof(u16));
+
 	// Loop through all lines
 	for (u16 i = y + 1; i < lastY; i++) {
 		while (DMA_Active());
@@ -653,6 +656,9 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 	u16* destLinei = destLine0;
 
 	u16 lastLine = y + height;
+
+	// Flush out the bitmap mem cache to ensure DMA can see correct data
+	DC_FlushRange(srcLine0, width * height * sizeof(u16));
 
 	for (u16 i = y; i < lastLine; i++) {
 		while (DMA_Active());
