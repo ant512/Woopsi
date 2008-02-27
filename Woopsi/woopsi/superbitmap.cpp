@@ -54,6 +54,9 @@ void SuperBitmap::draw(Rect clipRect) {
 	s16 x = !_flags.borderless;
 	s16 y = x;
 
+	// Flush out the bitmap mem cache to ensure DMA can see correct data
+	DC_FlushRange(_bitmap, _bitmapWidth * _bitmapHeight * sizeof(u16));
+
 	port->drawBitmap(x, y, _width, _height, _bitmap, _bitmapX, _bitmapY, _bitmapWidth, _bitmapHeight);
 
 	// Draw outline
@@ -95,30 +98,28 @@ void SuperBitmap::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour
 
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
 
-		// Draw initial line
-		drawHorizLine(x, y, width, colour);
+		// Draw initial pixel to heap
+		u16* pos = new u16;
+		*pos = colour;
 
-		// Calculate last line to draw
-		u16 lastY = y + height;
+		// Ensure DMA can see latest memory state
+		DC_FlushRange(pos, sizeof(u16));
+		
+		// Target location to draw to
+		u16* target = _bitmap + (y * _bitmapWidth) + x;
 
-		// Precalculate line values for loop
-		u16* line0 = _bitmap + x + (y * _bitmapWidth);
-		u16* linei = line0 + _bitmapWidth;
-
-		// Flush out the bitmap mem cache to ensure DMA can see correct data
-		DC_FlushRange(line0, width * sizeof(u16));
-
-		// Loop through all lines
-		for (u16 i = y + 1; i < lastY; i++) {
-
+		for (u16 i = 0; i < height; i++) {
 			// Wait until DMA channel is clear
 			while (DMA_Active());
 
-			DMA_Copy(line0, linei, width, DMA_16NOW);
+			// Duplicate pixel
+			DMA_Force(*pos, target, width, DMA_16NOW);
 
-			// Move to next line
-			linei += _bitmapWidth;
+			// Move to next row
+			target += _bitmapWidth;
 		}
+
+		delete pos;
 	}
 }
 
@@ -130,6 +131,9 @@ void SuperBitmap::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 		// Draw initial pixel
 		u16* pos = _bitmap + (y * _bitmapWidth) + x;
 		*pos = colour;
+
+		// Ensure DMA can see latest memory state
+		DC_FlushRange(pos, sizeof(u16));
 
 		// Wait until DMA channel is clear
 		while (DMA_Active());
@@ -463,9 +467,6 @@ void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bit
 		u16* destLinei = destLine0;
 
 		u16 lastLine = y + height;
-
-		// Flush out the bitmap mem cache to ensure DMA can see correct data
-		DC_FlushRange(srcLine0, width * height * sizeof(u16));
 
 		for (u16 i = y; i < lastLine; i++) {
 

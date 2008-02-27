@@ -53,28 +53,32 @@ void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 // Draw pre-clipped rectangles
 void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 
-	// Draw top line
-	drawClippedHorizLine(x, y, width, colour);
+	// Draw initial pixel
+	u16* pos = _bitmap + (y * SCREEN_WIDTH) + x;
+	*pos = colour;
 
-	// Calculate last line to draw
-	u16 lastY = y + height;
+	u16* target = pos + 1;
 
-	// Precalculate line values for loop
-	u16* line0 = _bitmap + x + (y * SCREEN_WIDTH);
-	u16* linei = line0 + SCREEN_WIDTH;
-	u16 lineInc = SCREEN_WIDTH;
-
-	// Flush out the bitmap mem cache to ensure DMA can see correct data
-	DC_FlushRange(line0, width * sizeof(u16));
-
-	// Loop through all lines
-	for (u16 i = y + 1; i < lastY; i++) {
+	// Draw first line
+	if (width > 1) {
+		// Wait until DMA channel is clear
 		while (DMA_Active());
 
-		DMA_Copy(line0, linei, width, DMA_16NOW);
+		DMA_Force(*pos, target, width - 1, DMA_16NOW);
+	}
 
-		// Move to next line
-		linei += lineInc;
+	// Move to next row
+	target += _bitmapWidth - 1;
+
+	for (u16 i = 1; i < height; i++) {
+		// Wait until DMA channel is clear
+		while (DMA_Active());
+
+		// Duplicate pixel
+		DMA_Force(*pos, target, width, DMA_16NOW);
+
+		// Move to next row
+		target += _bitmapWidth;
 	}
 }
 
@@ -658,7 +662,7 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 	u16 lastLine = y + height;
 
 	// Flush out the bitmap mem cache to ensure DMA can see correct data
-	DC_FlushRange(srcLine0, width * height * sizeof(u16));
+	//DC_FlushRange(srcLine0, width * height * sizeof(u16));
 
 	for (u16 i = y; i < lastLine; i++) {
 		while (DMA_Active());
