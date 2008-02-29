@@ -141,6 +141,7 @@ void DynamicArray<T>::insert(const u32 index, const T &value) {
 
 	// Bounds check
 	if (index >= _size) push_back(value);
+	return;
 
 	// Ensure the array is large enough to contain this data
 	resize();
