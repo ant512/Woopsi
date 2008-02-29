@@ -21,6 +21,7 @@ Change Log
        ScrollableBase as a base class for ScrollingPanel.
      - Added EVENT_SCROLL to EventHandler.
      - Added _darkColour to Gadget class.
+     - Added LinkedList, LinkedListIterator and DynamicArray classes.
 
 
   V0.29 (20081101)
