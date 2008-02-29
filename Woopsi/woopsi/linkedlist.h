@@ -175,9 +175,12 @@ void LinkedList<T>::pop_back() {
 		// Delete the existing foot
 		delete _foot;
 
-		// Update the foot pou32ers
+		// Update the foot pointers
 		_foot = newFoot;
-		_foot->next = NULL;
+
+		if (_foot != NULL) {
+			_foot->next = NULL;
+		}
 
 		_size--;
 	}
@@ -240,6 +243,7 @@ void LinkedList<T>::erase(const u32 index) {
 		if (newHead != NULL) {
 			newHead->previous = NULL;
 			_head = newHead;
+			_foot = _head;
 		}
 
 		return;
