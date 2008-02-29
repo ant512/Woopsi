@@ -86,6 +86,14 @@ public:
 	 */
 	T& operator[](const u32 index);
 
+	/**
+	 * Return the starting index.  Beginning element is always 0.
+	 * Only included to allow painless swapping between vector and
+	 * this class.
+	 * @return Always returns 0.
+	 */
+	u32 begin();
+
 private:
 	T* _data;
 	u32 _size;
@@ -140,7 +148,7 @@ template <class T>
 void DynamicArray<T>::insert(const u32 index, const T &value) {
 
 	// Bounds check
-	if (index >= _size) {
+	if ((index >= _size) || (_size == 0)) {
 		push_back(value);
 		return;
 	}
@@ -148,11 +156,19 @@ void DynamicArray<T>::insert(const u32 index, const T &value) {
 	// Ensure the array is large enough to contain this data
 	resize();
 
-	// Shift all of the data back one place to make a space for the
-	// new data
-	for (u32 i = _size - 1; i >= index; i--) {
-		_data[i + 1] = _data[i];
+	// Shift all of the data back one place to make a space for the new data
+	// We can't use a straightforward for loop because index can be 0 and we're
+	// using unsigned ints
+	u32 i = index;
+	while (i <= _size) {
+		_data[_size - i] = _data[_size - (i + 1)];
+		i++;
 	}
+
+	// Shift all of the data back one place to make a space for the new data
+	//for (u32 i = _size - 1; i >= index; i--) {
+	//	_data[i + 1] = _data[i];
+	//}
 
 	// Add data to array
 	_data[index] = value;
@@ -218,6 +234,11 @@ template <class T>
 void DynamicArray<T>::clear() {
 	// All we need to do is reset the size value
 	_size = 0;
+}
+
+template <class T>
+u32 DynamicArray<T>::begin() {
+	return 0;
 }
 
 #endif
