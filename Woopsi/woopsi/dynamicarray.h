@@ -165,11 +165,6 @@ void DynamicArray<T>::insert(const u32 index, const T &value) {
 		i++;
 	}
 
-	// Shift all of the data back one place to make a space for the new data
-	//for (u32 i = _size - 1; i >= index; i--) {
-	//	_data[i + 1] = _data[i];
-	//}
-
 	// Add data to array
 	_data[index] = value;
 
