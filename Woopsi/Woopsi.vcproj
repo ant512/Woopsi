@@ -308,6 +308,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\dynamicarray.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\eventhandler.h"
 				>
 			</File>
@@ -333,6 +337,14 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\graphicsport.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\linkedlist.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\linkedlistiterator.h"
 				>
 			</File>
 			<File
