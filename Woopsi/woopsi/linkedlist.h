@@ -21,7 +21,7 @@ struct LinkedListItem {
  * access is provided by the LinkedListIterator class, an instance of which
  * can be created with the getIterator() function.
  *
- * Use the DynamicList instead if you u32end to perform a lot of random access
+ * Use the DynamicList instead if you intend to perform a lot of random access
  * on the data in the list.  Random access is provided by iterating through
  * the data until the correct item is found, which will decrease performance
  * when dealing with random access of large lists.
@@ -53,8 +53,8 @@ public:
 	void push_back(const T &value);
 
 	/**
-	 * Insert a value u32o the list.
-	 * @param index The index to insert u32o.
+	 * Insert a value into the list.
+	 * @param index The index to insert into.
 	 * @param value The value to insert.
 	 */
 	void insert(const u32 index, const T &value);
@@ -104,12 +104,12 @@ private:
 	friend class LinkedListIterator<T>;
 
 	/**
-	 * Get a pou32er to the head item.
+	 * Get a pointer to the head item.
 	 */
 	LinkedListItem<T>* getHead();
 
 	/**
-	 * Get a pou32er to the foot item.
+	 * Get a pointer to the foot item.
 	 */
 	LinkedListItem<T>* getFoot();
 
@@ -158,7 +158,7 @@ void LinkedList<T>::push_back(const T &value) {
 		// Update foot
 		_foot->next = item;
 
-		// Swap pou32er
+		// Swap pointer
 		_foot = item;
 	}
 
@@ -169,7 +169,7 @@ void LinkedList<T>::push_back(const T &value) {
 template <class T>
 void LinkedList<T>::pop_back() {
 	if (_size >= 1) {
-		// Store a pou32er to the new foot
+		// Store a pointer to the new foot
 		LinkedListItem<T>* newFoot = _foot->previous;
 
 		// Delete the existing foot

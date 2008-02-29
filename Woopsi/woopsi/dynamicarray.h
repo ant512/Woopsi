@@ -45,8 +45,8 @@ public:
 	void push_back(const T &value);
 
 	/**
-	 * Insert a value u32o the array.
-	 * @param index The index to insert u32o.
+	 * Insert a value into the array.
+	 * @param index The index to insert into.
 	 * @param value The value to insert.
 	 */
 	void insert(const u32 index, const T &value);

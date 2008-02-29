@@ -23,23 +23,23 @@ public:
 	~LinkedListIterator();
 
 	/**
-	 * Move the iterator pou32er to the first item in the list.
+	 * Move the iterator pointer to the first item in the list.
 	 */
 	void moveToFirst();
 	
 	/**
-	 * Move the iterator pou32er to the last item in the list.
+	 * Move the iterator pointer to the last item in the list.
 	 */
 	void moveToLast();
 
 	/**
-	 * Move the iterator pou32er to the next item in the list.
+	 * Move the iterator pointer to the next item in the list.
 	 * @return True if the iterator could move to the next item.
 	 */
 	bool moveToNext();
 
 	/**
-	 * Move the iterator pou32er to the previous item in the list.
+	 * Move the iterator pointer to the previous item in the list.
 	 * @return True if the iterator could move to the previous item.
 	 */
 	bool moveToPrevious();
@@ -66,7 +66,7 @@ template <class T>
 LinkedListIterator<T>::LinkedListIterator(LinkedList<T>* list) {
 	_list = list;
 
-	// Pou32 the iterator to the top of the list
+	// Point the iterator to the top of the list
 	_iterator = list->getHead();
 }
 
