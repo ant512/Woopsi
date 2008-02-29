@@ -168,7 +168,7 @@ void DynamicArray<T>::erase(const u32 index) {
 	if (index >= _size) return;
 
 	// Shift all of the data back one place and overwrite the value
-	for (u32 i = index; i < _size; i++) {
+	for (u32 i = index; i < _size - 1; i++) {
 		_data[i] = _data[i + 1];
 	}
 
