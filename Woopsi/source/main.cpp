@@ -20,7 +20,7 @@ int main2() {
 	SimpleScreen* newScreen = new SimpleScreen("Woopsi Demo V0.28");
 	woopsi.addGadget(newScreen);
 
-	new PacMan(newScreen);
+	//new PacMan(newScreen);
 
 	woopsi.draw();
 

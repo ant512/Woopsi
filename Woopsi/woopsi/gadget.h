@@ -8,6 +8,7 @@
 #include "glyphs.h"
 #include "defines.h"
 #include "fontbase.h"
+#include "dynamicarray.h"
 
 using namespace std;
 
@@ -763,8 +764,8 @@ protected:
 	Gadget* _parent;
 	Gadget* _activeGadget;
 	Gadget* _clickedGadget;
-	vector<Gadget*> _gadgets;
-	vector<Gadget*> _hiddenGadgets;
+	DynamicArray<Gadget*> _gadgets;
+	DynamicArray<Gadget*> _hiddenGadgets;
 
 	// Decorations
 	u8 _decorationCount;
