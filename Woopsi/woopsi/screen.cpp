@@ -215,11 +215,11 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 					// Create pointer to a vector to store the overlapped rectangles
 					// We can discard this later as we don't need it
-					vector<Rect>* invisibleRects = new vector<Rect>();
+					DynamicArray<Rect>* invisibleRects = new DynamicArray<Rect>();
 
 					// Create pointer to a vector to store the non-overlapped rectangles
 					// We will use this to clip the gadget
-					vector<Rect>* visibleRects = new vector<Rect>();
+					DynamicArray<Rect>* visibleRects = new DynamicArray<Rect>();
 
 					// Copy the gadget's properties into a rect
 					Rect vRect;

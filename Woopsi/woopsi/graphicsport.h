@@ -2,7 +2,6 @@
 #define _GRAPHICS_PORT_H_
 
 #include <nds.h>
-#include <vector>
 #include "debug.h"
 #include "defines.h"
 #include "gadget.h"

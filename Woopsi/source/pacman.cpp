@@ -665,7 +665,7 @@ void PacGhost::doDumbAI() {
 	
 	// Work out which directions we can travel in and store them in an array; do not allow the
 	// ghost to reverse direction
-	vector<u8> directions;
+	DynamicArray<u8> directions;
 
 	// Check up		
 	if (checkMove(1, _speed, false) && (_currentDirection != 2)) {

@@ -2,10 +2,10 @@
 #define _SUPERBITMAP_H_
 
 #include <nds.h>
-#include <vector>
 #include "textwriter.h"
 #include "gadget.h"
 #include "graphicsport.h"
+#include "dynamicarray.h"
 
 using namespace std;
 
@@ -50,8 +50,8 @@ protected:
 	u16* _bitmap __attribute__ ((aligned (4)));
 	bool _allowStylusScroll;
 
-	bool popStack(s16* x, s16* y, vector<u16>* stack);
-	void pushStack(s16 x, s16 y, vector<u16>* stack) ;
+	bool popStack(s16* x, s16* y, DynamicArray<u16>* stack);
+	void pushStack(s16 x, s16 y, DynamicArray<u16>* stack) ;
 	bool clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height);
 };
 

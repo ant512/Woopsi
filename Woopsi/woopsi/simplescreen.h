@@ -2,7 +2,6 @@
 #define _SIMPLE_SCREEN_H_
 
 #include <nds.h>
-#include <vector>
 #include "gadget.h"
 #include "simplewindow.h"
 #include "screentitle.h"

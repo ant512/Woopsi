@@ -82,6 +82,8 @@ void Debug::setWoopsi(Woopsi* woopsi) {
 }
 
 void Debug::createGUI() {
+	if (_woopsi == NULL)
+		_woopsi = woopsiApplication;
 
 	if (_woopsi != NULL) {
 
@@ -89,6 +91,7 @@ void Debug::createGUI() {
 		if (_screen == NULL) {
 			_screen = new AmigaScreen("Debug");
 			_woopsi->addGadget(_screen);
+//			_screen->flipToTopScreen();
 			_screen->draw();
 		}
 

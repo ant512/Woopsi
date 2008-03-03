@@ -33,6 +33,7 @@
 #include "scrollingpanel.h"
 #include "slidervertical.h"
 #include "scrollbarvertical.h"
+#include "dynamicarray.h"
 
 using namespace std;
 
@@ -42,9 +43,10 @@ using namespace std;
 class Woopsi : public Gadget {
 
 public:
+	static Woopsi *singleton;
 	Woopsi(FontBase* font = NULL);
 	virtual ~Woopsi();
-	
+
 	/**
 	 * Add a new screen to the Woopsi instance.
 	 * This should be removed.
@@ -188,8 +190,8 @@ public:
 protected:
 	bool _lidClosed;
 	
-	static vector<Gadget*> _vblListeners;
-	static vector<Gadget*> _deleteQueue;
+	static DynamicArray<Gadget*> _vblListeners;
+	static DynamicArray<Gadget*> _deleteQueue;
 	static FontBase* _systemFont;
 	static u32 _vblCount;
 
@@ -199,4 +201,5 @@ protected:
 	void processDeleteQueue();
 };
 
+#define woopsiApplication (Woopsi::singleton)
 #endif

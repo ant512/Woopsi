@@ -1,9 +1,9 @@
 #ifndef _PACMAN_H_
 #define _PACMAN_H_
 
-#include <vector>
 #include "woopsi.h"
 #include "sysfont.h"
+#include "dynamicarray.h"
 
 class PacSprite;
 class PacMan;
@@ -134,7 +134,7 @@ class PacGhosts {
 
 private:
 	PacMan* _game;
-	vector<PacGhost*> _ghosts;
+	DynamicArray<PacGhost*> _ghosts;
 	u8 _ghostCount;
 	u8 _ghostsInHome;
 	

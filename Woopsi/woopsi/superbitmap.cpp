@@ -337,7 +337,7 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 	if (oldColour == newColour) return;
 
 	// Initalise stack
-	vector<u16> stack;
+	DynamicArray<u16> stack;
 
 	s16 x1; 
 	u8 spanUp, spanDown;
@@ -398,7 +398,7 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 }
 
 // Floodfill stack functions
-bool SuperBitmap::popStack(s16* x, s16* y, vector<u16>* stack) { 
+bool SuperBitmap::popStack(s16* x, s16* y, DynamicArray<u16>* stack) { 
 	if (stack->size() > 0) { 
 		u16 val = stack->at(stack->size() - 1);
 		*y = val / _bitmapWidth;
@@ -410,7 +410,7 @@ bool SuperBitmap::popStack(s16* x, s16* y, vector<u16>* stack) {
 	}    
 }
 
-void SuperBitmap::pushStack(s16 x, s16 y, vector<u16>* stack) {
+void SuperBitmap::pushStack(s16 x, s16 y, DynamicArray<u16>* stack) {
 	stack->push_back(x + (y << 8));
 }     
 

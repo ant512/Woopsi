@@ -6,6 +6,7 @@
 #ifndef _GRADIENT_H_
 #define _GRADIENT_H_
 
+#include <cstdlib>
 #include "gadget.h"
 
 // Gradient - draws colors bands down the screen

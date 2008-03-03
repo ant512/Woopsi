@@ -2,12 +2,12 @@
 #define _GADGET_H_
 
 #include <nds.h>
-#include <vector>
 #include "eventhandler.h"
 #include "debug.h"
 #include "glyphs.h"
 #include "defines.h"
 #include "fontbase.h"
+#include "dynamicarray.h"
 
 using namespace std;
 
@@ -232,7 +232,7 @@ public:
 	 * Gets a pointer to the vector of all of the visible regions of this gadget.
 	 * @return A pointer to a vector of all visible regions.
 	 */
-	vector<Rect>* getVisibleRectCache();
+	DynamicArray<Rect>* getVisibleRectCache();
 
 	/**
 	 * Gets a pointer to the gadget's font.
@@ -687,7 +687,7 @@ public:
 	 * @param invalidRects A list of corrupt regions.
 	 * @param sender A pointer to the gadget that corrupted the regions.
 	 */
-	virtual void redrawDirty(vector<Rect>* invalidRects, Gadget* sender);
+	virtual void redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender);
 
 	/**
 	 * Move any rectangles from the visibleRects list that overlap this gadget
@@ -697,7 +697,7 @@ public:
 	 * @param gadget The gadget that requested the lists.
 	 * @see splitRectangles()
 	 */
-	virtual void removeOverlappedRects(vector<Rect>* visibleRects, vector<Rect>* invisibleRects, Gadget* gadget);
+	virtual void removeOverlappedRects(DynamicArray<Rect>* visibleRects, DynamicArray<Rect>* invisibleRects, Gadget* gadget);
 
 	/**
 	 * Works out which rectangles in the invalidRectangles list overlap this
@@ -710,7 +710,7 @@ public:
 	 * @param validRects A vector of regions that represents areas of the
 	 * display that do not need to be redrawn.
 	 */
-	virtual void splitRectangles(vector<Rect>* invalidRectangles, vector<Rect>* validRects, Gadget* sender);
+	virtual void splitRectangles(DynamicArray<Rect>* invalidRectangles, DynamicArray<Rect>* validRects, Gadget* sender);
 
 	/**
 	 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
@@ -763,14 +763,14 @@ protected:
 	Gadget* _parent;
 	Gadget* _activeGadget;
 	Gadget* _clickedGadget;
-	vector<Gadget*> _gadgets;
-	vector<Gadget*> _hiddenGadgets;
+	DynamicArray<Gadget*> _gadgets;
+	DynamicArray<Gadget*> _hiddenGadgets;
 
 	// Decorations
 	u8 _decorationCount;
 
 	// Visible regions
-	vector<Rect> _visibleRegionCache;
+	DynamicArray<Rect> _visibleRegionCache;
 	bool _visibleRegionCacheInvalid;
 
 	OutlineType _outline;
@@ -796,7 +796,7 @@ protected:
 	virtual void closeChild(Gadget* gadget);
 	virtual void hideChild(Gadget* gadget);
 
-	virtual void redrawDirtyChildren(vector<Rect>* invalidRects, Gadget* sender);
+	virtual void redrawDirtyChildren(DynamicArray<Rect>* invalidRects, Gadget* sender);
 
 	virtual GraphicsPort* newInternalGraphicsPort();
 	virtual GraphicsPort* newInternalGraphicsPort(Rect clipRect);

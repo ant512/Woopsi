@@ -2,7 +2,6 @@
 #define _AMIGA_WINDOW_H_
 
 #include <nds.h>
-#include <vector>
 #include "window.h"
 #include "windowbordertop.h"
 #include "windowborderside.h"

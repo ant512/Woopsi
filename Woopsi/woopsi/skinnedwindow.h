@@ -2,7 +2,6 @@
 #define _SKINNED_WINDOW_H_
 
 #include <nds.h>
-#include <vector>
 #include "window.h"
 #include "skinnedwindowbordertop.h"
 #include "skinnedwindowborderleft.h"

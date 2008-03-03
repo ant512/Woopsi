@@ -1,0 +1,215 @@
+# Woopsi Makefile 											ex:set ts=4 sw=4:
+# builds a standalone library
+
+#include $(DEVKITARM)/ds_rules
+
+PATH 		:= $(DEVKITARM)/bin:$(PATH)
+
+#-------------------------------------------------------------------------------
+# TARGET is the name of the output file
+# BUILD is the directory where object files & intermediate files will be placed
+# RELEASE is where the binary files will be placed
+# SOURCES is a list of directories containing source code
+# INCLUDES is a list of directories containing extra header files
+#-------------------------------------------------------------------------------
+
+TARGET		:=	libwoopsi
+BUILD		:=	build
+RELEASE     :=  Release
+SOURCES		:=	woopsi data/bitmap
+INCLUDES	:=	include woopsi data/bitmap build
+LIBDIRS		:=	$(DEVKITPRO)/libnds
+
+#-------------------------------------------------------------------------------
+# options for code generation
+#-------------------------------------------------------------------------------
+
+ARCH	:=	-mthumb-interwork -march=armv5te -mtune=arm946e-s
+
+# note: arm9tdmi isn't the correct CPU arch, but anything newer and LD
+# *insists* it has a FPU or VFP, and it won't take no for an answer!
+
+MINUSG	:=	-g
+CFLAGS	:=	$(MINUSG) -Wall -O2 \
+ 		-fomit-frame-pointer \
+		-ffast-math \
+		$(ARCH)
+
+CFLAGS	+=	$(INCLUDE) -DARM9
+ASFLAGS	:=	$(MINUSG) $(ARCH)
+LDFLAGS	:=	$(MINUSG) $(ARCH) -mno-fpu
+
+#-------------------------------------------------------------------------------
+# the prefix on the compiler executables
+#-------------------------------------------------------------------------------
+PREFIX			:=	arm-eabi-
+
+#-------------------------------------------------------------------------------
+# no real need to edit anything past this point unless you need to add 
+# additional rules for different file extensions
+#-------------------------------------------------------------------------------
+
+ifneq ($(BUILD),$(notdir $(CURDIR)))
+ 
+export OUTPUT	:=	$(CURDIR)/$(RELEASE)/$(TARGET)
+export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
+export CC		:=	$(PREFIX)gcc
+export CXX		:=	$(PREFIX)g++
+export AR		:=	$(PREFIX)ar
+export OBJCOPY	:=	$(PREFIX)objcopy
+
+#-------------------------------------------------------------------------------
+# use CXX for linking C++ projects, CC for standard C
+#-------------------------------------------------------------------------------
+
+CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
+CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
+SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
+PCXFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.pcx)))
+BINFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.bin)))
+PALFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.pal)))
+RAWFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.raw)))
+MAPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.map)))
+JPEGFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.jpg)))
+MODFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.mod)))
+GIFFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.gif)))
+BMPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.bmp)))
+ 
+export OFILES	:=	$(MAPFILES:.map=.o) $(RAWFILES:.raw=.o) $(PALFILES:.pal=.o)\
+					$(BINFILES:.bin=.o) $(PCXFILES:.pcx=.o) $(JPEGFILES:.jpg=.o)\
+					$(MODFILES:.mod=.o) $(GIFFILES:.gif=.o) $(BMPFILES:.bmp=.o)\
+					$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+ 
+export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
+				$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+				$(foreach dir,$(LIBDIRS),-I$(dir)/include/nds) \
+				-I$(CURDIR)/$(BUILD)
+ 
+.PHONY: $(BUILD) clean rebuild
+ 
+#-------------------------------------------------------------------------------
+
+$(BUILD):
+	[ -d $(CURDIR)/$(RELEASE) ] || mkdir -p $(CURDIR)/$(RELEASE)
+	[ -d $@ ] || mkdir -p $@
+	make -C $(BUILD) -f $(CURDIR)/Makefile.lib
+ 
+#-------------------------------------------------------------------------------
+
+clean:
+	@echo Cleaning... $(TARGET)
+	@rm -fr $(BUILD) *.elf *.*ds* $(RELEASE)/*.*ds*
+ 
+rebuild: clean $(BUILD)
+
+#-------------------------------------------------------------------------------
+
+else
+ 
+DEPENDS	:= $(OFILES:.o=.d)
+ 
+#-------------------------------------------------------------------------------
+# main targets
+#-------------------------------------------------------------------------------
+
+$(OUTPUT).a : $(OFILES)
+	@echo Building $(notdir $@)
+	@$(AR) -rc $@ $?
+ 
+#-------------------------------------------------------------------------------
+# Compile Targets for C/C++
+#-------------------------------------------------------------------------------
+ 
+#-------------------------------------------------------------------------------
+%.o : %.cpp
+	@echo Compiling $(notdir $<)
+	@$(CXX) -MMD -MF $*.d -MP $(CFLAGS) -c $< -o $*.o
+	
+#-------------------------------------------------------------------------------
+%.o : %.c
+	@echo Compiling $(notdir $<)
+	@$(CC) -MMD -MF $*.d -MP $(CFLAGS) -c $< -o $*.o
+ 
+#-------------------------------------------------------------------------------
+(%.o) : %.s
+	@echo Assembling $(notdir $<)
+	@$(CC) -MMD -MF $*.d -MP $(ASFLAGS) -c $< -o $*.o
+ 
+define bin2o
+	cp $(<) $(*).tmp
+	$(OBJCOPY) -I binary -O elf32-littlearm -B arm \
+	--rename-section .data=.rodata \
+	--redefine-sym _binary_$*_tmp_start=$*\
+	--redefine-sym _binary_$*_tmp_end=$*_end\
+	--redefine-sym _binary_$*_tmp_size=$*_size\
+	$(*).tmp $(@)
+	echo "extern const u8" $(*)"[];" > $(*).h
+	echo "extern const u32" $(*)_size[]";" >> $(*).h
+	rm $(*).tmp
+endef
+ 
+#-------------------------------------------------------------------------------
+%.o	:	%.pcx
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+ 
+#-------------------------------------------------------------------------------
+%.o	:	%.bin
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+ 
+#-------------------------------------------------------------------------------
+%.o	:	%.raw
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+ 
+#-------------------------------------------------------------------------------
+%.o	:	%.pal
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+ 
+#-------------------------------------------------------------------------------
+%.o	:	%.map
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#-------------------------------------------------------------------------------
+%.o	:	%.mdl
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#-------------------------------------------------------------------------------
+%.o	:	%.jpg
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#-------------------------------------------------------------------------------
+%.o	:	%.mod
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#-------------------------------------------------------------------------------
+%.o	:	%.gif
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#-------------------------------------------------------------------------------
+%.o	:	%.bmp
+#-------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+ 
+-include $(DEPENDS) 
+#-------------------------------------------------------------------------------
+endif
+#-------------------------------------------------------------------------------

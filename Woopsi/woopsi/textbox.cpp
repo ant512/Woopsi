@@ -23,7 +23,8 @@ Textbox::Textbox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBas
 	_padding = 2;
 
 	char text[2];
-	sprintf(text, "%c", letter);
+	text[0] = letter;
+	text[1] = '\0';
 
 	setText(text);
 	calculateTextPosition();

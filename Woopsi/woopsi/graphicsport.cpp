@@ -138,7 +138,8 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter) {
 
 	// Convert char to char[]
 	char text[2];
-	sprintf(text, "%c", letter);
+	text[0] = letter;
+	text[1] = '\0';
 
 	// Output as normal
 	drawText(x, y, font, text);

@@ -2,7 +2,6 @@
 #define _WINDOW_BASE_H_
 
 #include <nds.h>
-#include <vector>
 #include "gadget.h"
 #include "fontbase.h"
 #include "graphicsport.h"

@@ -14,22 +14,24 @@ int main2() {
 	initWoopsiGfxMode();
 
 	// Create woopsi
-	Woopsi woopsi;
+	woopsiApplication = new Woopsi();
 
 	// Create screens
-	SimpleScreen* newScreen = new SimpleScreen("Woopsi Demo V0.28");
-	woopsi.addGadget(newScreen);
+	SimpleScreen* newScreen = new SimpleScreen("Woopsi Demo V0.30");
+	woopsiApplication->addGadget(newScreen);
 
 	//new PacMan(newScreen);
 
-	woopsi.draw();
+	woopsiApplication->draw();
 
 	// Infinite loop to keep the program running
 	while (1)
 	{
-		woopsi.play();
+		woopsiApplication->play();
 		woopsiWaitVBL();
 	}
+
+	delete woopsiApplication;
 }
 
 int mainOld() {
@@ -37,11 +39,11 @@ int mainOld() {
 	initWoopsiGfxMode();
 
 	// Create woopsi
-	Woopsi woopsi;
+	woopsiApplication = new Woopsi();
 
 	// Create screens
 	SimpleScreen* newScreen = new SimpleScreen("Woopsi Demo V0.28");
-	woopsi.addGadget(newScreen);
+	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
 	SimpleWindow* textWindow = newScreen->newWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
@@ -65,12 +67,12 @@ int mainOld() {
 	textWindow->addGadget(panel1);
 
 
-	woopsi.draw();
+	woopsiApplication->draw();
 
 	// Infinite loop to keep the program running
 	while (1)
 	{
-		woopsi.play();
+		woopsiApplication->play();
 
 		if ((Pad.Held.Left) && (Pad.Held.Up)) {
 			panel1->scroll(-3, -3);
@@ -92,13 +94,15 @@ int mainOld() {
 
 		woopsiWaitVBL();
 	}
+
+	delete woopsiApplication;
 }
 
 int main() {
 	initWoopsiGfxMode();
 
 	// Create woopsi
-	Woopsi woopsi;
+	woopsiApplication = new Woopsi();
 
 	// Create screen skin
 	ScreenSkin* screenSkin = new ScreenSkin;
@@ -241,7 +245,7 @@ int main() {
 	
 	// Create skinned screen
 	SkinnedScreen* sknScreen = new SkinnedScreen("Skin", screenSkin);
-	woopsi.addGadget(sknScreen);
+	woopsiApplication->addGadget(sknScreen);
 
 	// Create skinned window
 	SkinnedWindow* sknWindow = new SkinnedWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, windowSkin);
@@ -260,11 +264,11 @@ int main() {
 
 	// Create screens
 	SimpleScreen* newScreen = new SimpleScreen("Woopsi Demo V0.28");
-	woopsi.addGadget(newScreen);
+	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
 	SimpleScreen* newScreen2 = new SimpleScreen("Another screen");
-	woopsi.addGadget(newScreen2);
+	woopsiApplication->addGadget(newScreen2);
 	newScreen2->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0)));
 	
 	// Add child windows
@@ -289,7 +293,7 @@ int main() {
 	textTestWindow->addGadget(slider);
 
 	// Controls
-	vector<Button*> buttons;
+	DynamicArray<Button*> buttons;
 	buttons.push_back(controlWindow->newButton(0, 0, 41, 16, "Home"));
 	buttons.push_back(controlWindow->newButton(41, 0, 49, 16, "Index"));
 	buttons.push_back(controlWindow->newButton(90, 0, 17, 16, "<"));
@@ -319,7 +323,7 @@ int main() {
 
 	// Add another screen
 	SimpleScreen* demoScreen = new SimpleScreen("Demos");
-	woopsi.addGadget(demoScreen);
+	woopsiApplication->addGadget(demoScreen);
 	demoScreen->setPermeable(true);
 	demoScreen->flipToTopScreen();
 
@@ -368,12 +372,12 @@ int main() {
 	// Move new screen to the back
 	//woopsi.swapGadgetDepth(demoScreen);
 
-	woopsi.draw();
+	woopsiApplication->draw();
 
 	// Infinite loop to keep the program running
 	while (1)
 	{
-		woopsi.play();
+		woopsiApplication->play();
 
 		//if (Pad.Held.A) {
 		//	multiText->addText("Text");
@@ -382,6 +386,8 @@ int main() {
 
 		woopsiWaitVBL();
 	}
+	
+	delete woopsiApplication;
 
 	return 0;
 }

@@ -2,7 +2,6 @@
 #define _LINKED_LIST_ITERATOR_H_
 
 #include <nds.h>
-
 #include "linkedlist.h"
 
 /**

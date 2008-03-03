@@ -1,8 +1,8 @@
 #ifndef _ANIMATION_H_
 #define _ANIMATION_H_
 
-#include <NDS.h>
-#include <vector>
+#include <nds.h>
+#include "dynamicarray.h"
 
 using namespace std;
 
@@ -53,7 +53,7 @@ public:
 	void goToFrame(u16 frame);
 
 private:
-	vector<AnimFrame> _frames;
+	DynamicArray<AnimFrame> _frames;
 	u8 _speed;
 	u16 _frameTimer;
 	u16 _currentFrame;

@@ -2,7 +2,6 @@
 #define _SIMPLE_WINDOW_H_
 
 #include <nds.h>
-#include <vector>
 #include "amigawindow.h"
 #include "textwriter.h"
 #include "button.h"

@@ -3,7 +3,7 @@
 
 #include <nds.h>
 
-#define DYNAMIC_ARRAY_SIZE 16
+#define DYNAMIC_ARRAY_SIZE 100
 
 /**
  * Class providing a dynamic array; that is, an array that will automatically
@@ -66,13 +66,13 @@ public:
 	 * @param index The index of the desired value.
 	 * @return The value at the specified index.
 	 */
-	T& at(const u32 index);
+	T& at(const u32 index) const;
 
 	/**
 	 * Check if the array has any data.
 	 * @return True if the array is empty.
 	 */
-	bool empty();
+	bool empty() const;
 
 	/**
 	 * Remove all data.
@@ -84,7 +84,7 @@ public:
 	 * @param index The index to retrieve.
 	 * @return The value at the specified index.
 	 */
-	T& operator[](const u32 index);
+	T& operator[](const u32 index) const;
 
 	/**
 	 * Return the starting index.  Beginning element is always 0.
@@ -92,7 +92,7 @@ public:
 	 * this class.
 	 * @return Always returns 0.
 	 */
-	u32 begin();
+	u32 begin() const;
 
 private:
 	T* _data;
@@ -199,7 +199,11 @@ void DynamicArray<T>::resize() {
 		T* newData = new T[newSize];
 
 		// Copy old array to new
-		memcpy(newData, _data, sizeof(T) * _reservedSize);
+		for (u32 i = 0; i < _reservedSize; i++) {
+			newData[i] = _data[i];
+		}
+
+		//memcpy(newData, _data, sizeof(T) * _reservedSize);
 
 		// Delete the old array
 		delete [] _data;
@@ -211,17 +215,17 @@ void DynamicArray<T>::resize() {
 }
 
 template <class T>
-T& DynamicArray<T>::at(const u32 index) {
+T& DynamicArray<T>::at(const u32 index) const {
 	return _data[index];
 }
 
 template <class T>
-bool DynamicArray<T>::empty() {
+bool DynamicArray<T>::empty() const {
 	return (_size == 0);
 }
 
 template <class T>
-T& DynamicArray<T>::operator[](const u32 index) {
+T& DynamicArray<T>::operator[](const u32 index) const {
 	return _data[index];
 }
 
@@ -232,7 +236,7 @@ void DynamicArray<T>::clear() {
 }
 
 template <class T>
-u32 DynamicArray<T>::begin() {
+u32 DynamicArray<T>::begin() const {
 	return 0;
 }
 

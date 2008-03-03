@@ -2,7 +2,6 @@
 #define _SKINNED_SCREEN_H_
 
 #include <nds.h>
-#include <vector>
 #include "gadget.h"
 #include "skinnedscreentitle.h"
 #include "fontbase.h"

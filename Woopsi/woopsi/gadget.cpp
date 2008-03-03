@@ -581,11 +581,11 @@ void Gadget::draw() {
 
 		// Create pointer to a vector to store the overlapped rectangles
 		// We can discard this later as we don't need it
-		vector<Rect>* invisibleRects = new vector<Rect>();
+		DynamicArray<Rect>* invisibleRects = new DynamicArray<Rect>();
 
 		// Create a pointer to store rects that are not overlapped by
 		// children
-		vector<Rect>* visibleRects = new vector<Rect>();
+		DynamicArray<Rect>* visibleRects = new DynamicArray<Rect>();
 
 		if (invisibleRects != NULL) {
 
@@ -621,14 +621,14 @@ void Gadget::draw() {
 
 // Redraw any regions that have been overlapped
 // Called when erasing a gadget higher up the vector
-void Gadget::redrawDirty(vector<Rect>* invalidRects, Gadget* sender) {
+void Gadget::redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 
 	if (isVisible()) {
 
 		// Draw any children first
 		redrawDirtyChildren(invalidRects, sender);
 
-		vector<Rect>* overlappingRects = new vector<Rect>();
+		DynamicArray<Rect>* overlappingRects = new DynamicArray<Rect>();
 
 		if (overlappingRects != NULL) {
 
@@ -648,7 +648,7 @@ void Gadget::redrawDirty(vector<Rect>* invalidRects, Gadget* sender) {
 	}
 }
 
-void Gadget::redrawDirtyChildren(vector<Rect>* invalidRects, Gadget* sender) {
+void Gadget::redrawDirtyChildren(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 
 	for (s16 i = _gadgets.size() - 1; i > -1 ; i--) {
 		if (invalidRects->size() > 0) {
@@ -665,7 +665,7 @@ void Gadget::redrawDirtyChildren(vector<Rect>* invalidRects, Gadget* sender) {
 // Remove any rectangles that this gadget overlaps from the visible vector
 // and add them to the invisible vector
 // Called when drawing a gadget to check that no higher gadgets get overwritten
-void Gadget::removeOverlappedRects(vector<Rect>* visibleRects, vector<Rect>* invisibleRects, Gadget* gadget) {
+void Gadget::removeOverlappedRects(DynamicArray<Rect>* visibleRects, DynamicArray<Rect>* invisibleRects, Gadget* gadget) {
 
 	// Locate gadget in the list
 	u8 gadgetIndex = 0;
@@ -701,7 +701,7 @@ void Gadget::removeOverlappedRects(vector<Rect>* visibleRects, vector<Rect>* inv
 
 // Split rectangles into valid and invalid sub-rectangles
 // Used when calculating which portions of a gadget to draw
-void Gadget::splitRectangles(vector<Rect>* invalidRects, vector<Rect>* validRects, Gadget* sender) {
+void Gadget::splitRectangles(DynamicArray<Rect>* invalidRects, DynamicArray<Rect>* validRects, Gadget* sender) {
 
 	// Check for collisions with any rectangles in the vector
 	for (u16 i = 0; i < invalidRects->size(); i++) {
@@ -1654,7 +1654,7 @@ void Gadget::cacheVisibleRects() {
 
 		// Create pointer to a vector to store the overlapped rectangles
 		// We can discard this later as we don't need it
-		vector<Rect>* invisibleRects = new vector<Rect>();
+		DynamicArray<Rect>* invisibleRects = new DynamicArray<Rect>();
 
 		if (invisibleRects != NULL) {
 
@@ -1745,7 +1745,7 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 }
 
 // Return vector of visible rects
-vector<Gadget::Rect>* Gadget::getVisibleRectCache() {
+DynamicArray<Gadget::Rect>* Gadget::getVisibleRectCache() {
 	return &_visibleRegionCache;
 }
 

@@ -1,13 +1,16 @@
 #include "woopsi.h"
 
+// instantiate singleton
+Woopsi *Woopsi::singleton = NULL;
+
 // Initialise static system font
 FontBase* Woopsi::_systemFont = NULL;
 
 // Initialise static VBL listener vector
-vector<Gadget*> Woopsi::_vblListeners;
+DynamicArray<Gadget*> Woopsi::_vblListeners;
 
 // Initialise static deletion queue
-vector<Gadget*> Woopsi::_deleteQueue;
+DynamicArray<Gadget*> Woopsi::_deleteQueue;
 
 // Initialise VBL counter
 u32 Woopsi::_vblCount = 0;
@@ -24,13 +27,15 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 		_font = getSystemFont();
 	}
 
-	Debug::setWoopsi(this);
+	singleton = this;
+	//Debug::setWoopsi(this);
 }
 
 Woopsi::~Woopsi() {
 	deleteSystemFont();
 	_font = NULL;
-	Debug::setWoopsi(NULL);
+	singleton = NULL;
+	//Debug::setWoopsi(NULL);
 }
 
 // Add a new screen
@@ -342,7 +347,7 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 void Woopsi::eraseRect(Rect rect) {
 
 	// Create pointer to a vector to store the invalid rectangles
-	vector<Rect>* invalidRectangles = new vector<Rect>();
+	DynamicArray<Rect>* invalidRectangles = new DynamicArray<Rect>();
 
 	if (invalidRectangles != NULL) {
 		 
@@ -369,8 +374,6 @@ void Woopsi::eraseRect(Rect rect) {
 
 		// Tidy up
 		delete invalidRectangles;
-	} else {
-		Debug::output("Error: Woopsi::eraseRect()");
 	}
 }
 

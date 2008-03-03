@@ -18,7 +18,7 @@ void Calculator::initGUI() {
 	_output = _window->newTextbox(0, 0, 52, 16, "0");
 	_output->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_RIGHT);
 
-	vector<Button*> buttons;
+	DynamicArray<Button*> buttons;
 	buttons.push_back(_window->newButton(0, 16, 13, 16, "7"));
 	buttons.push_back(_window->newButton(13, 16, 13, 16, "8"));
 	buttons.push_back(_window->newButton(26, 16, 13, 16, "9"));

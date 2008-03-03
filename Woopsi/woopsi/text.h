@@ -2,9 +2,9 @@
 #define _TEXT_H_
 
 #include <nds.h>
-#include <vector>
 #include "fontbase.h"
 #include "debug.h"
+#include "dynamicarray.h"
 
 using namespace std;
 
@@ -32,7 +32,7 @@ public:
 private:
 
 	FontBase* _font;
-	vector<u32> _linePositions;
+	DynamicArray<u32> _linePositions;
 	s32 _totalLines;
 	u8 _lineSpacing;
 	u8 _lineHeight;

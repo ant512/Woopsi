@@ -1,6 +1,7 @@
 #ifndef _SCROLLING_PANEL_H_
 #define _SCROLLING_PANEL_H_
 
+#include <cstdlib>
 #include <nds.h>
 #include "gadget.h"
 #include "graphicsport.h"
