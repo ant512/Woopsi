@@ -16,8 +16,8 @@ PATH 		:= $(DEVKITARM)/bin:$(PATH)
 TARGET		:=	libwoopsi
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	woopsi data/bitmap
-INCLUDES	:=	include woopsi data/bitmap build
+SOURCES		:=	woopsi
+INCLUDES	:=	include woopsi build
 LIBDIRS		:=	$(DEVKITPRO)/libnds
 
 #-------------------------------------------------------------------------------
