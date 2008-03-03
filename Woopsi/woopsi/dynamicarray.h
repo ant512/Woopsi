@@ -36,7 +36,7 @@ public:
 	 * Get the size of the array.
 	 * @return The size of the array.
 	 */
-	u32 size() const;
+	s32 size() const;
 
 	/**
 	 * Add a value to the end of the array.
@@ -49,7 +49,7 @@ public:
 	 * @param index The index to insert into.
 	 * @param value The value to insert.
 	 */
-	void insert(const u32 index, const T &value);
+	void insert(const s32 index, const T &value);
 
 	/**
 	 * Remove the last element from the array.
@@ -59,14 +59,14 @@ public:
 	/**
 	 * Erase a single value at the specified index
 	 */
-	void erase(const u32 index);
+	void erase(const s32 index);
 
 	/**
 	 * Get a value at the specified location.  Does not perform bounds checking.
 	 * @param index The index of the desired value.
 	 * @return The value at the specified index.
 	 */
-	T& at(const u32 index) const;
+	T& at(const s32 index) const;
 
 	/**
 	 * Check if the array has any data.
@@ -84,7 +84,7 @@ public:
 	 * @param index The index to retrieve.
 	 * @return The value at the specified index.
 	 */
-	T& operator[](const u32 index) const;
+	T& operator[](const s32 index) const;
 
 	/**
 	 * Return the starting index.  Beginning element is always 0.
@@ -96,8 +96,8 @@ public:
 
 private:
 	T* _data;
-	u32 _size;
-	u32 _reservedSize;
+	s32 _size;
+	s32 _reservedSize;
 
 	/**
 	 * Resize the array if it is full.
@@ -118,7 +118,7 @@ DynamicArray<T>::~DynamicArray() {
 }
 
 template <class T>
-u32 DynamicArray<T>::size() const {
+s32 DynamicArray<T>::size() const {
 	return _size;
 }
 
@@ -145,7 +145,7 @@ void DynamicArray<T>::pop_back() {
 }
 
 template <class T>
-void DynamicArray<T>::insert(const u32 index, const T &value) {
+void DynamicArray<T>::insert(const s32 index, const T &value) {
 
 	// Bounds check
 	if ((index >= _size) || (_size == 0)) {
@@ -157,12 +157,8 @@ void DynamicArray<T>::insert(const u32 index, const T &value) {
 	resize();
 
 	// Shift all of the data back one place to make a space for the new data
-	// We can't use a straightforward for loop because index can be 0 and we're
-	// using unsigned ints
-	u32 i = index;
-	while (i <= _size) {
-		_data[_size - i] = _data[_size - (i + 1)];
-		i++;
+	for (s32 i = _size; i > index; i--) {
+		_data[i] = _data[i - 1];
 	}
 
 	// Add data to array
@@ -173,13 +169,13 @@ void DynamicArray<T>::insert(const u32 index, const T &value) {
 }
 
 template <class T>
-void DynamicArray<T>::erase(const u32 index) {
+void DynamicArray<T>::erase(const s32 index) {
 
 	// Bounds check
 	if (index >= _size) return;
 
 	// Shift all of the data back one place and overwrite the value
-	for (u32 i = index; i < _size - 1; i++) {
+	for (s32 i = index; i < _size - 1; i++) {
 		_data[i] = _data[i + 1];
 	}
 
@@ -199,7 +195,7 @@ void DynamicArray<T>::resize() {
 		T* newData = new T[newSize];
 
 		// Copy old array to new
-		for (u32 i = 0; i < _reservedSize; i++) {
+		for (s32 i = 0; i < _reservedSize; i++) {
 			newData[i] = _data[i];
 		}
 
@@ -215,7 +211,7 @@ void DynamicArray<T>::resize() {
 }
 
 template <class T>
-T& DynamicArray<T>::at(const u32 index) const {
+T& DynamicArray<T>::at(const s32 index) const {
 	return _data[index];
 }
 
@@ -225,7 +221,7 @@ bool DynamicArray<T>::empty() const {
 }
 
 template <class T>
-T& DynamicArray<T>::operator[](const u32 index) const {
+T& DynamicArray<T>::operator[](const s32 index) const {
 	return _data[index];
 }
 

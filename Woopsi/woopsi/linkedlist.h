@@ -44,7 +44,7 @@ public:
 	 * Get the size of the list.
 	 * @return The size of the list.
 	 */
-	u32 size() const;
+	s32 size() const;
 
 	/**
 	 * Add a value to the end of the list.
@@ -57,7 +57,7 @@ public:
 	 * @param index The index to insert into.
 	 * @param value The value to insert.
 	 */
-	void insert(const u32 index, const T &value);
+	void insert(const s32 index, const T &value);
 
 	/**
 	 * Remove the last element from the list.
@@ -67,14 +67,14 @@ public:
 	/**
 	 * Erase a single value at the specified index
 	 */
-	void erase(const u32 index);
+	void erase(const s32 index);
 
 	/**
 	 * Get a value at the specified location.  Does not perform bounds checking.
 	 * @param index The index of the desired value.
 	 * @return The value at the specified index.
 	 */
-	T& at(const u32 index);
+	T& at(const s32 index);
 
 	/**
 	 * Check if the list has any data.
@@ -92,7 +92,7 @@ public:
 	 * @param index The index to retrieve.
 	 * @return The value.
 	 */
-	T& operator[](const u32 index);
+	T& operator[](const s32 index);
 
 	/**
 	 * Return the starting index.  Beginning element is always 0.
@@ -139,7 +139,7 @@ LinkedList<T>::~LinkedList() {
 }
 
 template <class T>
-u32 LinkedList<T>::size() const {
+s32 LinkedList<T>::size() const {
 	return _size;
 }
 
@@ -195,7 +195,7 @@ void LinkedList<T>::pop_back() {
 }
 
 template <class T>
-void LinkedList<T>::insert(const u32 index, const T &value) {
+void LinkedList<T>::insert(const s32 index, const T &value) {
 
 	// Quick insert if list is empty or if index exceeds bounds
 	if ((_head == NULL) || (index >= _size)) {
@@ -205,7 +205,7 @@ void LinkedList<T>::insert(const u32 index, const T &value) {
 	// Locate the requested index - this could be optimised
 	// by looping from back to front if the desired index is over
 	// half-way through the list.
-	u32 i = 0;
+	s32 i = 0;
 	LinkedListItem<T>* item = _head;
 
 	while ((i < index) && (item != NULL)) {
@@ -231,7 +231,7 @@ void LinkedList<T>::insert(const u32 index, const T &value) {
 }
 
 template <class T>
-void LinkedList<T>::erase(const u32 index) {
+void LinkedList<T>::erase(const s32 index) {
 
 	// Abort if index exceeds bounds
 	if (index >= _size) return;
@@ -258,7 +258,7 @@ void LinkedList<T>::erase(const u32 index) {
 	}
 
 	// No shortcuts possible; locate the requested index
-	u32 i = 0;
+	s32 i = 0;
 	LinkedListItem<T>* item = _head;
 
 	while ((i < index) && (item != NULL)) {
@@ -266,7 +266,7 @@ void LinkedList<T>::erase(const u32 index) {
 		i++;
 	}
 
-	// Rewire pou32ers
+	// Rewire pointers
 	if (item->previous != NULL) {
 		item->previous->next = item->next;
 	}
@@ -283,8 +283,8 @@ void LinkedList<T>::erase(const u32 index) {
 }
 
 template <class T>
-T& LinkedList<T>::at(const u32 index) {
-	u32 i = 0;
+T& LinkedList<T>::at(const s32 index) {
+	s32 i = 0;
 	LinkedListItem<T>* item = _head;
 
 	// Locate the requested index - this could be optimised
@@ -304,7 +304,7 @@ bool LinkedList<T>::empty() {
 }
 
 template <class T>
-T& LinkedList<T>::operator[](const u32 index) {
+T& LinkedList<T>::operator[](const s32 index) {
 	return at(index);
 }
 

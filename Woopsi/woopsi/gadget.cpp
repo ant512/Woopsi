@@ -1161,6 +1161,7 @@ void Gadget::closeChild(Gadget* gadget) {
 }
 
 bool Gadget::swapGadgetDepth(Gadget* gadget) {
+	
 	// Can we swap?
 	if (_gadgets.size() > 1) {
 

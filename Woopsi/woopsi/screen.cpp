@@ -408,7 +408,7 @@ void Screen::lidOpened() {
 // Only allows non-decoration depths to be swapped
 bool Screen::swapGadgetDepth(Gadget* gadget) {
 
-	// Do we have more than one gadget
+	// Do we have more than one gadget?
 	if (_gadgets.size() - _decorationCount > 1) {
 
 		u8 lowestGadget = _decorationCount;
