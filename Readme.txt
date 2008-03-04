@@ -90,6 +90,7 @@ Features
       - Bitmap blitting;
       - XOR horizontal/vertical lines and pixel plotting;
       - Flood fill.
+    - Linked list and dynamic array container classes.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
   - Simplistic "multitasking" - each window runs simultaneously;
@@ -98,6 +99,7 @@ Features
   - Optional PALib support.
   - Optional SDL layer to facilitate native compilation on non-DS platforms and
     aid porting.
+  - Optional .a library build.
 
 
 Requirements
@@ -178,4 +180,5 @@ Licencing and Contributions
   these criteria.
   
   All code will continue to be distributed under the BSD licence, so do not
-  contribute code if you are unwilling to release it under that licence.
+  contribute code if you are unwilling to release it under 
+  that licence.
