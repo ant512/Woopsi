@@ -49,16 +49,16 @@ int mainOld() {
 	SimpleWindow* textWindow = newScreen->newWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
 
 	ScrollingPanel* panel1 = new ScrollingPanel(20, 20, 50, 50, Gadget::GADGET_DRAGGABLE);
-	panel1->setMinScrollX(-20);
-	panel1->setMaxScrollX(20);
-	panel1->setMinScrollY(-20);
-	panel1->setMaxScrollY(20);
+	//panel1->setMinScrollX(-20);
+	//panel1->setMaxScrollX(20);
+	//panel1->setMinScrollY(-20);
+	//panel1->setMaxScrollY(20);
 
 	ScrollingPanel* panel2 = new ScrollingPanel(10, 10, 30, 30, Gadget::GADGET_DRAGGABLE);
-	panel2->setMinScrollX(-20);
-	panel2->setMaxScrollX(20);
-	panel2->setMinScrollY(-20);
-	panel2->setMaxScrollY(20);
+	//panel2->setMinScrollX(-20);
+	//panel2->setMaxScrollX(20);
+	//panel2->setMinScrollY(-20);
+	//panel2->setMaxScrollY(20);
 
 
 	panel2->addGadget(new Button(5, 5, 20, 20, "Text"));

@@ -202,7 +202,7 @@ void SliderVertical::resizeGrip() {
 	s32 newHeight = rect.height;
 	
 	// Calculate the height of the content that has overflowed the viewport
-	s32 overspill = (abs(_maximumValue - _minimumValue) - _pageSize << 8);
+	s32 overspill = ((abs(_maximumValue - _minimumValue) - _pageSize) << 8);
 	
 	// Is there any overflow?
 	if (overspill > 0) {

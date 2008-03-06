@@ -11,12 +11,6 @@
 #include "woopsi.h"
 #include "slidervertical.h"
 
-//AmigaScreen* Debug::_screen = NULL;
-//AmigaWindow* Debug::_window = NULL;
-//MultiLineTextBox* Debug::_textBox = NULL;
-//Font* Debug::_font = NULL;
-//SliderVertical* Debug::_slider = NULL;
-
 Woopsi* Debug::_woopsi = NULL;
 Debug* Debug::_debug = NULL;
 
@@ -62,7 +56,7 @@ void Debug::printf(const char *format, ...) {
 	vsnprintf(buffer, sizeof(buffer), format, args);
 	va_end(args);
 
-	output(buffer);
+	_debug->output(buffer);
 }
 
 
@@ -77,10 +71,6 @@ void Debug::busyWait() {
 	}
 }
 
-void Debug::setWoopsi(Woopsi* woopsi) {
-	_woopsi = woopsi;
-}
-
 void Debug::createGUI() {
 	if (_woopsi == NULL)
 		_woopsi = woopsiApplication;
@@ -91,7 +81,7 @@ void Debug::createGUI() {
 		if (_screen == NULL) {
 			_screen = new AmigaScreen("Debug");
 			_woopsi->addGadget(_screen);
-//			_screen->flipToTopScreen();
+			_screen->flipToTopScreen();
 			_screen->draw();
 		}
 
@@ -161,14 +151,14 @@ bool Debug::handleEvent(const EventArgs& e) {
 			switch (e.type) {
 				case EVENT_DRAG:
 					if (_slider != NULL) {
-						_slider->setValue(_textBox->getScrollY());
+						_slider->setValue(_textBox->getCanvasY());
 						_slider->recalculate();
 						return true;
 					}
 					break;
 				case EVENT_SCROLL:
 					if (_slider != NULL) {
-						_slider->setMinimumValue(_textBox->getMinScrollY() - _textBox->getHeight());
+						_slider->setMaximumValue(_textBox->getCanvasHeight());
 						_slider->recalculate();
 						return true;
 					}

@@ -16,7 +16,6 @@ Text::Text(FontBase* font, char* text, u16 width) {
 	setText(text);
 }
 
-// Destructor
 Text::~Text() {
 }
 
@@ -245,6 +244,9 @@ void Text::wrap() {
 	}
 	
 	// Precalculate some values
+
+	// Total lines is 1 less than the size of the position array because the first element
+	// is the start of the first line
 	_totalLines = _linePositions.size() - 1;
 	_textPixelWidth *= _font->getWidth();
 

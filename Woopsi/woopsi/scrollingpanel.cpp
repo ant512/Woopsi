@@ -1,12 +1,10 @@
 #include "scrollingpanel.h"
 
 ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
-	_minScrollX = 0;
-	_minScrollY = 0;
-	_maxScrollX = 0;
-	_maxScrollY = 0;
-	_scrollX = 0;
-	_scrollY = 0;
+	_canvasWidth = width;
+	_canvasHeight = height;
+	_canvasX = 0;
+	_canvasY = 0;
 	_flags.permeable = true;
 }
 
@@ -30,22 +28,22 @@ ScrollingPanel::~ScrollingPanel() {
 
 void ScrollingPanel::jump(s32 x, s32 y) {
 	// Calculate difference between jump value and current value and scroll
-	scroll(x - _scrollX, y - _scrollY);
+	scroll(x - _canvasX, y - _canvasY);
 }
 
 void ScrollingPanel::scroll(s32 dx, s32 dy) {
 
 	// Prevent scrolling outside boundaries
-	if (_scrollX + dx < _minScrollX) {
-		dx = _minScrollX - _scrollX;
-	} else if (_scrollX + dx > _maxScrollX) {
-		dx = _maxScrollX - _scrollX;
+	if (_canvasX + dx < -(_canvasWidth - _width)) {
+		dx = -(_canvasWidth - _width) - _canvasX;
+	} else if (_canvasX + dx > 0) {
+		dx = -_canvasX;
 	}
 
-	if (_scrollY + dy < _minScrollY) {
-		dy = _minScrollY - _scrollY;
-	} else if (_scrollY + dy > _maxScrollY) {
-		dy = _maxScrollY - _scrollY;
+	if (_canvasY + dy < -(_canvasHeight - _height)) {
+		dy = -(_canvasHeight - _height) - _canvasY;
+	} else if (_canvasY + dy > 0) {
+		dy = -_canvasY;
 	}
 
 	// Perform scroll if necessary
@@ -89,7 +87,7 @@ void ScrollingPanel::scrollLeft(s32 dx) {
 	cacheVisibleRects();
 
 	// Adjust scroll value			
-	_scrollX -= dx;
+	_canvasX -= dx;
 
 	u8 screen = getPhysicalScreenNumber();
 	u16 yStart = 0;
@@ -160,7 +158,7 @@ void ScrollingPanel::scrollRight(s32 dx) {
 	cacheVisibleRects();
 
 	// Adjust scroll value
-	_scrollX += dx;
+	_canvasX += dx;
 
 	u8 screen = getPhysicalScreenNumber();
 	u16 yStart = 0;
@@ -227,7 +225,6 @@ void ScrollingPanel::scrollRight(s32 dx) {
 }
 
 void ScrollingPanel::scrollUp(s32 dy) {
-
 	// Copy rows upwards one by one from the second row downwards
 
 	// Flip dy
@@ -236,7 +233,7 @@ void ScrollingPanel::scrollUp(s32 dy) {
 	cacheVisibleRects();
 
 	// Adjust the scroll values
-	_scrollY -= dy;
+	_canvasY -= dy;
 
 	u8 screen = getPhysicalScreenNumber();
 	u16 yStart = 0;
@@ -296,7 +293,7 @@ void ScrollingPanel::scrollDown(s32 dy) {
 	cacheVisibleRects();
 
 	// Adjust the scroll values
-	_scrollY += dy;
+	_canvasY += dy;
 
 	u8 screen = getPhysicalScreenNumber();
 	u16 yStart = 0;

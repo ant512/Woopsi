@@ -642,8 +642,6 @@ void Gadget::redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 			}
 
 			delete overlappingRects;
-		} else {
-			Debug::output("Error: Gadget::redrawDirty()");
 		}
 	}
 }

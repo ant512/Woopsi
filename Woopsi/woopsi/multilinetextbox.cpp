@@ -16,9 +16,6 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 
 	_flags.draggable = true;
 
-	_maxScrollY = 0;
-	_minScrollY = 0;
-
 	_maxRows = maxRows;
 
 	calculateTotalVisibleRows();
@@ -65,7 +62,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	u8 rowCount = clientRect.height / _text->getLineHeight();
 
 	// Calculate the top line of text in this region
-	s32 topRowRegion = ((-_scrollY + (clipRect.y - getY())) / _text->getLineHeight()) - 1;
+	s32 topRowRegion = ((-_canvasY + (clipRect.y - getY())) / _text->getLineHeight()) - 1;
 
 	// Calculate the number of rows in this region
 	u8 rowCountRegion = (clipRect.height / _text->getLineHeight()) + 3;
@@ -76,7 +73,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	s32 currentTextRow = topRowRegion;
 	u8 rowPixelWidth = 0;
 	u8 rowLength = 0;
-	_scrollX = 0;
+	_canvasX = 0;
 	u8 i = 0;
 
 	while ((i < rowCountRegion) && (i < _text->getLineCount() - topRowRegion) && (currentTextRow < _text->getLineCount())) {
@@ -89,8 +86,8 @@ void MultiLineTextBox::draw(Rect clipRect) {
 			rowLength = _text->getLineTrimmedLength(currentTextRow);
 			rowPixelWidth = _text->getFont()->getWidth() * rowLength;
 
-			textX = getRowX(rowPixelWidth) + _scrollX;
-			textY = getRowY(currentTextRow, rowCount) + _scrollY + 1;
+			textX = getRowX(rowPixelWidth) + _canvasX;
+			textY = getRowY(currentTextRow, rowCount) + _canvasY + 1;
 			
 			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentTextRow));
 		}
@@ -201,12 +198,12 @@ void MultiLineTextBox::setText(char* text, bool raiseEvent) {
 		draw();
 	}
 
-	// Update max scroll value
+	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {
-		_minScrollY = -(_text->getPixelHeight() - _height) - _font->getHeight();
+		_canvasHeight = _text->getPixelHeight();
 
 		// Scroll to bottom of new text
-		scroll(0, _minScrollY);
+		scroll(0, _canvasHeight - _height);
 	}
 
 	if (raiseEvent) raiseValueChangeEvent();
@@ -244,35 +241,16 @@ void MultiLineTextBox::addText(char* text) {
 		
 		// Update max scroll value
 		if (_text->getLineCount() > _visibleRows) {
-			_minScrollY = -(_text->getPixelHeight() - _height) - _font->getHeight();
+			_canvasHeight = _text->getPixelHeight();
 
 			// Scroll to bottom of new text
-			jump(0, _minScrollY);
+			scroll(0, -_canvasHeight);
 		}
 
 		raiseValueChangeEvent();
 	} else {
 		// No text, so set it for the first time
-		setText(text, false);
-
-		// Ensure that we have the correct number of rows
-		if (_text->getLineCount() > _maxRows) {
-			stripTopLines(_text->getLineCount() - _maxRows);
-		}
-
-		if (_autoDrawing) {
-			draw();
-		}
-		
-		// Update max scroll value
-		//if (_text->getLineCount() > _visibleRows) {
-		//	_minScrollY = -(_text->getPixelHeight() - _height) - _font->getHeight();
-
-			// Scroll to bottom of new text
-		//	jump(0, _minScrollY);
-		//}
-
-		raiseValueChangeEvent();
+		setText(text);
 	}
 }
 
@@ -332,7 +310,7 @@ const u16 MultiLineTextBox::getCurrentPage() const {
 	getClientRect(clientRect);
 
 	// Calculate the top line of text
-	s32 topRow = (-_scrollY / _text->getLineHeight());
+	s32 topRow = (-_canvasY / _text->getLineHeight());
 	
 	// Calculate the maximum number of visible rows
 	u8 rowCount = clientRect.height / _text->getLineHeight();
