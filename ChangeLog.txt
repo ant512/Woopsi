@@ -13,6 +13,10 @@ Change Log
      - Added cache flushing to fix empty pixels when using DMA hardware.
 	 - Fixed incorrect vector pointer in Gadget::moveHiddenToChildList().
 	 - Font::scanGlyph() no longer scans past the end of its bitmap's memory.
+	 - Tidied up Debug class.
+	 - Added javadoc comments to more files.
+	 - Swapped ScrollingPanel and ScrollableBase to use a more logical model
+	   of the scrolling region.
 
   - New Features:
      - Added vertical slider.
