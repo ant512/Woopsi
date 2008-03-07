@@ -1,0 +1,478 @@
+Change Log
+----------
+
+  V0.30
+
+  - Fixes:
+     - Removed EventHandler inheritance from Gadget.
+     - Added EventHandler inheritance to AmigaScreen and SkinnedScreen.
+     - Minor optimisation in TextBox click() and release() functions.
+	 - Added more DMA_Active() checks to fix SuperBitmap DMA problems.
+	 - Made EventHandler an abstract class.
+	 - Removed post-DMA waits.
+     - Added cache flushing to fix empty pixels when using DMA hardware.
+	 - Fixed incorrect vector pointer in Gadget::moveHiddenToChildList().
+	 - Font::scanGlyph() no longer scans past the end of its bitmap's memory.
+
+  - New Features:
+     - Added vertical slider.
+     - Added vertical scrollbar.
+     - Added ScrollableBase base class for scrolling gadgets.
+     - Removed ScrollableBase functions from ScrollingPanel and added
+       ScrollableBase as a base class for ScrollingPanel.
+     - Added EVENT_SCROLL to EventHandler.
+     - Added _darkColour to Gadget class.
+     - Added LinkedList, LinkedListIterator and DynamicArray classes.
+
+
+  V0.29 (20081101)
+  
+  - Fixes:
+     - Windows prevented from being dragged out of top of screen.
+     - ScreenTitle and WindowBorderTop make a copy of the text passed into them.
+     - BitmapButton's drawing routine offsets its blit origin by 1 to account
+       for the gadget's border width if applicable.
+     - Replaced most of SuperBitmap's draw(Rect) routine with a call to
+       GraphicsPort::drawBitmap().
+     - Increased size of window gadgets in demo skin.
+     - Updated SuperBitmap to use s16 instead of u16 for co-ordinates.
+     - Text::wrap() correctly wraps the last line of text.
+     - Fixed more bugs in TextViewer.
+     - Removed old Debug methods.
+     - Fixed clipping in SuperBitmap draw routines.
+     - Fixed all warnings.
+     - Fixed GraphicsPort clipping - windows were wrapping around vertically
+       when drawn in screens that were dragged down.
+     - Fixed bugs in setting gadget attributes from skins.
+     - Window was handling click() even if a child was clicked.
+     - SuperBitmap::drawFilledRect() was drawing the top line of the rect over
+       itself.
+     - Removed all left bitshifts from GraphicsPort::clipFilledRect() and
+       replaced with SCREEN_WIDTH multipliers (aid portability).
+ 
+  - New Features:
+     - Added SuperBitmap::drawFilledCircle().
+     - ScreenFlipButton uses GraphicsPort for all of its drawing operations.
+     - Added woopsiRGB() define as shortcut to RGB with alpha bit set.
+     - Replaced pixel plotting with DMA_Force() in SuperBitmap::drawHorizLine().
+     - Added SuperBitmap::clipBitmapCoordinates().
+     - SuperBitmap draw routines clip to bitmap dimensions.
+     - Added GraphicsPort::drawFilledCircle().
+     - Ball in Pong demo is now circular.
+     - Added PacMan demo.
+     - MultiLineTextBox outputs using the GraphicsPort.
+     - MultiLineTextBox automatically chooses smallest number of rows if no
+       value (or 0) is given as the parameter in its constructor.
+     - MultiLineTextBox trims its text to match the number of rows specified in
+       its constructor.
+     - Added MultiLineTextBox::setAutomaticDrawing() - if set to "false",
+       draw() must be called when changes are made to the textbox's text for
+       them to be shown.
+     - GraphicsPort has a new drawText() function with a length parameter.
+     - Added Debug console that automatically creates itself when called for
+       the first time.
+     - Added Debug::printf().
+     - Changed skinning structs to be more descriptive.
+     - Added tiny font to debug console.
+     - Added ScrollingPanel gadget.
+     - Added SDL layer.
+     - Added vertical scrolling to MultiLineTextBox.
+     - Added macros for using the 2nd DMA channel.
+     - Added check for DMA active flag in SuperBitmap drawing code.
+     - Gadget class inherits from EventHandler, so any gadget can be subclassed
+       and made to handle events.
+     - Screen decoration button gadgets have their parent screen set as their
+       event handler.
+     - Screen decoration button gadgets raise release events to notify their
+       screens of user input instead of calling functions (subclassing aid).
+
+  - Broken:
+     - Vertical alignment in MultiLineTextBox other than top.
+
+
+  V0.28 (20071214)
+  
+  - Fixes:
+     - Gadget::hideChild() was only hiding previously-hidden children.
+     - Gadget::hideChild() was moving an iterator in the wrong direction.
+     - Gadget::closeChild() was moving an iterator in the wrong direction.
+     - Gadget destructor closes children correctly.
+     - Gadget::moveChildToHiddenList() was incorrectly reducing the decoration
+       count.
+     - Gadget::moveChildToDeletedList() was incorrectly reducing the decoration
+       count.
+     - Gadget destructor did not close hidden children.
+     - Children and hidden children deregistered from VBL when destructed.
+     - Woopsi no longer automatically switches screen focus when a screen
+       closes.
+     - Renamed screenbase and windowbase files back to screen and window.
+     - Renamed WindowBase class back to Window.
+     - Swapped Bitmap class for Bitmap struct.
+     - GraphicsPort now works with const references to clipping rects.
+     - Fixed GraphicsPort::drawBitmap() clipping on top screen.
+     - Fixed GraphicsPort::drawFilledRect() clipping on top screen.
+     - Removed SuperBitmap::newBitmapGraphicsPort() as the top screen offset
+       code in the GraphicsPort made it unworkable.
+     - VBL count increased before child VBL functions called.
+     - Font class initialises _isMonochrome variable correctly.
+     - GraphicsPort and SuperBitmap reset font colour correctly when using
+       colour parameter.
+     - Window drag initialisation moved into WindowBorderTop gadget.
+     - Removed Window::checkTitleBarClicked().
+     - Added const-correctness and implementation hiding to Font classes.
+     - Removed Gadget::GadgetType enum and all references to it.
+     - Improved const-correctness of GraphicsPort class.
+     - BitmapButton works with const u16* bitmap data instead of non-const.
+     - Swapped bool cast for flag setting in Gadget constructor with PALib-style
+       double logical NOT construct.
+	
+  - New Features:
+     - Skinning system.
+     - Added MonoFont class for 1bpp font support.
+     - Split Font class into Font and FontBase classes.
+     - Added Animation class.
+     - Added GraphicsPort::drawRect().
+     - PALib is optional.
+     - Added AnimButton.
+     - Added GraphicsPort::drawBevelledRect().
+     - Removed Gadget::drawIntOutline() and replaced with
+       GraphicsPort::drawBevelledRect().
+     - Added Gadget::getXXXColour() functions.
+     - Added Gadget::getOutlineType().
+     - Added AnimButton test.
+     - Added new ROM icon.
+
+  V0.27 (20071209)
+  
+  - Fixes:
+     - Renamed "font" to "sysfont".
+     - Moved font includes out of "all_gfx.h".
+     - Removed font inheritance (problematic with many gadgets).
+     - Made font an optional parameter in all gadget constructors.
+     - Removed font from constructors of window border gadgets that do not use a
+       font.
+     - Woopsi height based on top screen offset instead of an arbitrary number.
+     - Private class members set to protected where appropriate.
+     - "Gadget::setBorderless()" now invalidates rect cache.
+     - Removed "Gadget::removeGadget()" function (request 1846590).
+     - "Window::createBorder()" sets border focus correctly.
+     - Window border gadgets base their colour on the parent's active flag
+       rather than by abusing the focus system and their own active flags.
+     - GraphicsPort was using SCREEN_WIDTH instead of _bitmapWidth when blitting
+       bitmaps.
+     - Fonts work with const u16* bitmap data instead of plain u16*.
+     - Woopsi clears its background correctly when a screen closes.
+     - Gadgets draw only those regions not obscured by children (previously
+       broken by switch to region caching).
+     - Gradient cache uses new instead of malloc.
+     - Removed support for external bitmaps from SuperBitmap.
+     - Renamed Gadget::getRectClippedToParent to
+       Gadget::getRectClippedToHierarchy.
+     - Making a gadget invisible makes its children invisible.
+     - Fixed off-by-one error in Gadget::checkCollision() functions.
+     - Fixed gadget-space to display-space co-ordinate problem in GraphicsPort
+       clipping routines.
+     - Removed GraphicsPort::clipXORRect() and replaced with bugfixed
+       alternative.
+     - Various functions in Gadget class now check isVisible() instead of
+       _flags.visible.
+     - focus() functions ignore the call unless the gadget is not active.
+     - GraphicsPort will no longer draw to deleted/invisible gadgets.
+     - Tidied up ambiguities in Gadget::closeChild().
+     - Gadget::closeChild() function setting the active gadget pointer to top
+       gadget in the stack, but the top gadget could have been the gadget
+       being closed.
+     - Fixed same problem in Gadget::hideChild().
+ 
+  - New Features:
+     - Added static system font routines to Woopsi class.
+     - Gadgets automatically use system font if no font specified (bug 1846003).
+     - Added "floodFill()" function to SuperBitmap (request 1816931).
+     - Added "drawBitmap()" function to SuperBitmap (request 1813792).
+     - Added "newBitmapGraphicsPort()" function to SuperBitmap.
+     - Added "setFont()" function to Text.
+     - Split Screen class into ScreenBase, AmigaScreen and SimpleScreen classes.
+     - Added "permeable" flag to gadgets - if set to "true", child gadgets can
+       be dragged to exceed the borders of their parents (ie. windows can be
+       dragged off-screen).
+     - Gadget::getRectClippedToHierarchy clips to entire ancestor tree.
+     - Gadget::moveTo() enforces permeability of parent gadgets.
+     - Gadget::resize() enforces permeability of parent gadgets.
+     - Window::resize() enforces permeability of parent gadgets.
+     - Changed VBL events so gadgets must register with Woopsi to receive them
+       (request 1847147).
+     - Centralised gadget deletion queue handling into static Woopsi functions.
+     - Added Gadget::hideChild() function.
+     - Added VBL counting and static getVBLCount() function to Woopsi class
+       (request 1847147).
+     - Split Window class into WindowBase, AmigaWindow and SimpleWindow classes.
+     - Added text output methods with colour parameter to GraphicsPort and
+       SuperBitmap classes.
+
+  V0.26 (20071208)
+  
+  - Fixes:
+     - Added clip-to-physical-screen code back in.
+     - Fixed inconsistency in screen _flags.borderless variable.
+     - Fixed warning in gadget.cpp (bug 1826584).
+     - Removed parent pointers from gadget constructors.
+     - Removed eventhandler.cpp and rolled the functionality into the header.
+     - Removed font bitmap check from TextWriter (feature 1830307).
+     - Renamed "addXXX()" gadget creation functions to "newXXX()" (feature
+       1830242).
+     - Added check for null parent pointer before adding gadgets to child
+       vector (bug 1830241).
+     - Fixed flicker in top display when flipping screens.
+     - Fixed border size confusion in Window class.
+     - Fixed problem with height and width to y2 and x2 conversion in
+       TextWriter.
+     - Fixed scroll limit problem in TextViewer.
+     - Fixed drawing problems in TextViewer.
+     - Removed _deleteQueueActive from Gadget class and rely on vector size
+       instead (bug 1843784).
+     - Made destructors virtual where appropriate.
+     - Set gadgets to be invisible until added to a parent gadget to prevent
+       them being drawn to arbitrary positions on the screen.
+     - Removed "removeOverlappedRects" from Woopsi class.
+     - Changed Gadget::eraseGadget() so that the parent is responsible for.
+       erasing children instead of passing call up to Woopsi instance.
+     - Fixed Woopsi constructor parameter order.
+
+  - New Features:
+     - Screen and window borders can be enabled/disabled with setBorderless().
+     - Gadgets now have a flags bitmask instead of individual bools to control
+       properties (request 1826433).
+     - Added addGadget() and insertGadget() for more control over children.
+     - Added an ID number ("refcon") to the base gadget class (request 1828519).
+     - Added getClientRect() function to gadget/window/screen classes.
+     - Added GraphicsPort class to handle drawing within gadgets.
+     - Gadgets now cache their visible regions to improve drawing speed.
+     - Pong demo uses a GraphicsPort instead of a SuperBitmap.
+     - Added "removeGadget" function for deleting gadgets from vectors.
+     - Added gadget decoration concept to handle borders, etc.
+     - Removed all usage of Gadget::getType() to aid subclassing.
+     - BitmapButton draws its bitmap using GraphicsPort.
+     - Window uses parent screen's GraphicsPort to draw its XOR rectangles.
+       (fixes bug in which XOR rectangle overlaps other screens, but no longer
+       relevant since screens automatically depth-sort when clicked).
+     - Window border gadgets use GraphicsPort for their output.
+     - Screen title gadget uses GraphicsPort for its output.
+     - Removed most drawing functions from Gadget class.
+     - Added hardware-accelerated horizontal line drawing.
+     - Improved speed of filled rect by using faster horizontal line routine.
+     - Renamed bool getters from "getXXX()" to "isXXX()".
+     - Added clip-to-parents into Gadget::cacheVisibleRects and
+       Gadget::splitRects.
+     - Removed glyph font and added support routines to allow single font.
+     - Added font inheritance system.
+     - Added Gradient background class.
+     - Removed background image from demo and replaced with gradient.
+
+  V0.25 (20071104)
+
+  - Fixes:
+     - Added vector to store hidden gadgets, reducing the complexity of
+       maintaining gadget lists and focus.
+     - Removed all screen dimension magic numbers and replaced with defines.
+
+  - New Features:
+     - Split Woopsi library code into separate directory for ease of integration
+       in other projects.
+
+  V0.24 (20071103)
+
+  - Fixes:
+     - Tidied up a lot of the code.
+     - Gadget deletion queue now handles solely in the VBL events.
+     - Optimised TextWriter by preventing it from drawing empty glyphs.
+     - Changed TextWriter into a static class.
+     - Optimised TextViewer so that it uses much less memory.
+     - Text font and glyph font now sent around hierarchy instead of each gadget
+       creating their own font.
+     - Improved Font class.
+     - Removed 8-bit code from Bitmap class.
+     - General refactoring and code tidying.
+     - Made EventHandler methods virtual instead of pure virtual.
+     - Split gadget events into "raiseXEvent()" and "x()" functions.
+     - Clicking a gadget automatically notifies its parent that it is the new
+       clicked gadget.
+     - Moved dirty child redraw function into gadget class.
+     - Added horizontal clipping to rect splitting functions.
+     - Fixed SuperBitmap border.
+     - Relevant gadget methods are now virtual for subclassing.
+     - Removed all unnecessary all_gfx includes.
+
+  - New features:
+     - Added non-draggable screens and windows.
+     - Added show/hide gadget functionality.
+     - Added ability to hide a window instead of closing it when the close
+       button is clicked.
+     - Added closed/hidden/shown events.
+     - Added monochrome output to Font class and definable text colour.
+     - Added drawText() function to SuperBitmap class.
+     - Added window depth button.
+     - Added enable/disable gadget.
+     - Started work on alert requester.
+     - Moved text data manipulation out of TextViewer into a separate class.
+     - Added Gadget::moveTo method.
+     - Added Gadget::resize method.
+     - Added resize event.
+     - Added move event.
+     - Added value change event.
+     - Added window resizing (API only).
+     - Added radio buttons.
+     - Added radio button groups.
+     - Added "clicked" glyphs for screen and window depth buttons.
+     - Most gadget action methods (click(), moveTo(), etc) return bools to
+       indicate success or failure.
+     - Added enabled/disabled events.
+     - Added checkboxes.
+     - Added NDS screen flipping and support for top NDS screen.
+     - Added screen flipping gadget.
+     - Updated screens to swap to front when clicked.
+     - Added a variety of gadget depth manipulation functions.
+
+  V0.23 (20071024)
+
+  - Fixes:
+     - Improved event routing.
+     - Improved drawing speed when blurring windows.
+     - Fixed various null pointer bugs.
+     - Tidied up all gadget destructors.
+     - Misc other minor fixes.
+
+  - New features:
+     - Added window close buttons.
+     - Added gadget close functionality.
+
+  V0.22 (20071022)
+  
+   - Fixes:
+     - Screens can now be the active gadget.
+     - The system can now only have one active gadget at a time (previously,
+       each screen could have an active window).
+     - Doubled the speed of active window switching (system was redrawing
+       twice).
+     - Lid events now sent to all gadgets.
+     - Pad input re-enabled.
+     - Fixed null pointer crashes if no active gadget was available in some
+       events.
+     - Replaced Mario picture with Simian Zombie logo in SuperBitmap test.
+     - Misc other minor fixes.
+     
+   - New features:
+     - Added handleFocus() and handleBlur() events.
+     - Added BitmapButton class.
+
+  V0.21 (20071015)
+  
+   - Fixes:
+     - Deleted setBitmap() in SuperBitmap and added secondary constructor
+       instead - fixes a crash.
+     - Made Woopsi a gadget.
+     - Moved removeOverlappedRects() function from Screen/Window into Gadget.
+     - Improved TextViewer clipping.
+     - Fixed screen title clipping.
+     - Fixed null pointer crash in screen stylus handling.
+     - VBL sent to all gadgets on all screens.
+     
+   - New features:
+     - Screen dragging.
+     - Added addSuperBitmap() to Screen - allows screen backgrounds.
+     - Debug class to aid debugging.
+
+   - Broken:
+     - Pad input is disabled.
+    
+  V0.2a (20070928)
+  
+   - General:
+     - First source code release.
+     - Licenced source under BSD licence.
+     - Started work on "standard developer" documentation.
+     
+   - Fixes:
+     - Borderless windows fixed.
+     - Switched active window colour to closest approximation the DS can make to
+       the original WB2.x blue.
+     - Made screen depth gadget wider so it is easier to click.
+     - TextViewer clips correctly when drawing/scrolling (though it still
+       doesn’t clip to the invalid region when redrawing).
+     - Moved child gadget vector from Screen and Window into Gadget.
+     - Moved drawChildren() from Screen and Window into Gadget.
+     - Fixed window border clipping (fixes window title overlap problem).
+     - Fixed screen title clipping.
+     
+   - New features:
+     - Added drawHorizLine() to SuperBitmap.
+     - Added drawVertLine() to SuperBitmap.
+     - Added drawRect() to SuperBitmap.
+     - Added allowStylusScroll() to SuperBitmap.
+     - Added setShineColour() to Gadget.
+     - Added setHighlightColour() to Gadget.
+     - Added setShadowColour() to Gadget.
+     - Added setBackColour() to Gadget.
+     - Added setFillColour() to Gadget.
+     - Added events for lid opening and lid closing.
+
+  V0.18 (20070926)
+  
+   - Eighth WIP demo release.
+   - Added intelligent gadget drawing.
+   - Improved SuperBitmap init speed.
+   - Improved erase speed.
+   - Code tidying/refactoring.
+
+  V0.17 (20070925)
+  
+   - Seventh WIP demo release.
+   - Added clipping to the majority of gadgets.
+   - Added intelligent gadget removal.
+   - Added a bitmap to the SuperBitmap demo.
+   - Changed Pong demo to use SuperBitmap as its canvas.
+   - Converted window/screen borders into gadgets.
+
+  V0.10 (20070923)
+  
+   - Sixth WIP demo release.
+   - EventArgs and EventHandler system implemented.
+   - Added key and VBL events.
+   - Added drawFilledRect() function for drawing to gadgets.
+   - Added SuperBitmap gadget.
+   - Converted from 8-bit display to 16-bit.
+   - Added Pong demo.
+   - Added SuperBitmap demo.
+  
+  V0.06 (20070921)
+  
+   - Fifth WIP demo release.
+   - Bugfix for TextViewer crash.
+   - Event system work begun.
+   - Calculator app added.
+   - Textbox gadget added.
+   - Button gadget altered to inherit from Textbox.
+   - More optimistion in fast filled rectangle code.
+
+  V0.05 (20070920)
+  
+   - Fourth WIP demo release.
+   - Bugfix for fast filled rectange routine.
+   - Multiple screen support.
+   - Screen depth gadget.
+   - Fixed crash caused by uninitialised pointer in handleReleased() window
+     function.
+   - Begun work on gadget glyphs.
+   - Fixed bug in XORed rectangle code - corner pixels were being XORed twice.
+
+  V0.03 (20070920)
+
+   - Third WIP demo release.
+   - Renamed from "WindowSystemDS" to "Woopsi".
+
+  V0.02 (20070919)
+  
+   - Second WIP demo release.
+
+  V0.01 (20070917)
+  
+   - First WIP demo release.
