@@ -10,7 +10,7 @@ Font::Font(const u16* bitmap, const u16 bitmapWidth, const u16 bitmapHeight, con
 Font::~Font() {
 }
 
-// Return a pixel at a given location 
+// Return a pixel at a given location
 const u16 Font::getPixel(const u32 position) const {
 	if (!isMonochrome()) {
 		return _bitmap[position];
@@ -26,16 +26,24 @@ const bool Font::scanGlyph(const u16 x, const u16 y) const {
 	u8 maxX = x + getWidth();
 	u8 maxY = y + getHeight();
 	u16 bitmapWidth = getBitmapWidth();
+	u16 bitmapHeight = getBitmapHeight();
+	u32 bitmapSize = bitmapWidth * bitmapHeight;
 
 	for (u16 x2 = x; x2 < maxX; x2++) {
 		for (u16 y2 = y; y2 < maxY; y2++) {
+
+		    u16 pixel = x2 + (y2 * bitmapWidth);
+
+		    // Check pixel is within bitmap boundaries
+		    if (pixel > bitmapSize) return false;
+
 			if (_bitmap[x2 + (y2 * bitmapWidth)] != getTransparentColour()) {
 				// Got some data
 				return true;
 			}
 		}
 	}
-	
+
 	// No data
 	return false;
 }
