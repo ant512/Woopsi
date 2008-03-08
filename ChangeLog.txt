@@ -17,6 +17,9 @@ Change Log
 	 - Added javadoc comments to more files.
 	 - Swapped ScrollingPanel and ScrollableBase to use a more logical model
 	   of the scrolling region.
+	 - Made Gadget::getX() and Gadget::getY() const.
+	 - Fixed majority of SliderVertical bugs.
+	 - Added scrollbar to Debug GUI.
 
   - New Features:
      - Added vertical slider.

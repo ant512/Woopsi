@@ -72,7 +72,7 @@ void Gadget::init() {
 	_closeType = CLOSE_TYPE_CLOSE;
 }
 
-s16 Gadget::getX() {
+s16 Gadget::getX() const {
 	if (_parent != NULL) {
 		return _parent->getX() + _x;
 	}
@@ -80,7 +80,7 @@ s16 Gadget::getX() {
 	return _x;
 }
 
-s16 Gadget::getY() {
+s16 Gadget::getY() const {
 	if (_parent != NULL) {
 		return _parent->getY() + _y;
 	}

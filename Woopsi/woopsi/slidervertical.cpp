@@ -33,8 +33,19 @@ const s16 SliderVertical::getValue() const {
 	// Calculate the current value represented by the top of the grip
 	Rect rect;
 	getClientRect(rect);
+	
+	// Is the grip smaller than the gutter?
+	if (rect.height > _grip->getHeight()) {
+	
+		// Calculate ratio
+		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / (rect.height);// - _grip->getHeight());
 
-	return ((_maximumValue - _minimumValue) * (_grip->getY() - _parent->getY())) / ((rect.height - _grip->getHeight()) + 1);
+		// Multiply by grip position
+		return ((_grip->getY() - getY()) * ratio) >> 8;
+	} else {
+		// Just return the minimum value
+		return _minimumValue;
+	}
 }
 
 const s16 SliderVertical::getPageSize() const {
@@ -55,15 +66,18 @@ void SliderVertical::setValue(const s16 value) {
 	// for accuracy
 	Rect rect;
 	getClientRect(rect);
-
-	s32 pixelValue = ((_maximumValue - _minimumValue) << 8) / ((rect.height - _grip->getHeight()) + 1);
 	
-	if (pixelValue > 0) {
-		s16 newGripY = (value << 8) / pixelValue;
+	// Can the grip move?
+	if (rect.height > _grip->getHeight()) {
 	
-		if (newGripY + _grip->getHeight() > rect.y + rect.height) {
-			newGripY = (rect.y + rect.height) - _grip->getHeight();
-		}
+		// Calculate ratio
+		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / (rect.height);// - _grip->getHeight());
+		
+		s16 newGripY = (value << 8) / ratio;
+	
+		//if (newGripY + _grip->getHeight() > rect.y + rect.height) {
+		//	newGripY = (rect.y + rect.height) - _grip->getHeight();
+		//}
 
 		// Move the grip
 		_grip->moveTo(0, abs(newGripY));
@@ -163,7 +177,12 @@ bool SliderVertical::release(s16 x, s16 y) {
 bool SliderVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	// Handle child dragging
 	if (_clickedGadget != NULL) {
-		return _clickedGadget->drag(x, y, vX, vY);
+		return _clickedGadget->drag(x, y, vX, vY);//) {
+		
+			// Notify parent of the slider that a drag event has occurred
+			//raiseDragEvent(x, y, vX, vY);
+			//return true;
+		//}
 	}
 
 	return false;
@@ -189,7 +208,7 @@ void SliderVertical::recalculate() {
 	resizeGrip();
 	
 	// Reposition grip
-	setValue(getValue());
+	//setValue(getValue());
 }
 
 void SliderVertical::resizeGrip() {
@@ -213,15 +232,12 @@ void SliderVertical::resizeGrip() {
 		// New height is equivalent to the height of the gutter minus
 		// the ratio-converted overflow height
 		newHeight = rect.height - (overspill / ratio);
-		
 
 		// Ensure height is within acceptable boundaries
-		if (newHeight < _minimumGripHeight) {
-			newHeight = _minimumGripHeight;
-		}
+		if (newHeight < _minimumGripHeight) newHeight = _minimumGripHeight;
 		if (newHeight > rect.height) newHeight = rect.height;
-
-		// Perform resize
-		_grip->resize(rect.width, newHeight);
 	}
+
+	// Perform resize
+	_grip->resize(rect.width, newHeight);
 }

@@ -81,7 +81,7 @@ void Debug::createGUI() {
 		if (_screen == NULL) {
 			_screen = new AmigaScreen("Debug");
 			_woopsi->addGadget(_screen);
-			_screen->flipToTopScreen();
+			//_screen->flipToTopScreen();
 			_screen->draw();
 		}
 
@@ -102,7 +102,7 @@ void Debug::createGUI() {
 			Gadget::Rect rect;
 			_window->getClientRect(rect);
 
-			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
+			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width - 10, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
 			_textBox->setAutomaticDrawing(false);
 			_window->addGadget(_textBox);
 			_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
@@ -118,7 +118,7 @@ void Debug::createGUI() {
 		
 		// Add slider
 		if (_slider == NULL) {
-			_slider = new SliderVertical(30, 30, 10, 100);
+			_slider = new SliderVertical(242, 13, 10, 162);
 			_window->addGadget(_slider);
 			_slider->setMinimumValue(0);
 			_slider->setMaximumValue(0);
@@ -137,8 +137,7 @@ bool Debug::handleEvent(const EventArgs& e) {
 			switch (e.type) {
 				case EVENT_VALUE_CHANGE:
 					if (_textBox != NULL) {
-						//_textBox->jump(0, _slider->getValue());
-						//Debug::printf("jump %d", _slider->getValue());
+						//_textBox->jump(0, 0 - _slider->getValue());
 						return true;
 					}
 					break;
@@ -151,15 +150,21 @@ bool Debug::handleEvent(const EventArgs& e) {
 			switch (e.type) {
 				case EVENT_DRAG:
 					if (_slider != NULL) {
-						_slider->setValue(_textBox->getCanvasY());
-						_slider->recalculate();
+						_slider->setValue(0 - _textBox->getCanvasY());
 						return true;
 					}
 					break;
 				case EVENT_SCROLL:
 					if (_slider != NULL) {
+						_slider->setValue(0 - _textBox->getCanvasY());
+						return true;
+					}
+					break;
+				case EVENT_VALUE_CHANGE:
+					if (_slider != NULL) {
 						_slider->setMaximumValue(_textBox->getCanvasHeight());
 						_slider->recalculate();
+						_slider->setValue(0 - _textBox->getCanvasY());
 						return true;
 					}
 					break;

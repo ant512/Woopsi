@@ -81,13 +81,13 @@ public:
 	 * Get the x co-ordinate of the gadget relative to its parent.
 	 * @return Parent-relative x co-ordinate.
 	 */
-	s16 getX();
+	s16 getX() const;
 
 	/**
 	 * Get the y co-ordinate of the gadget relative to its parent.
 	 * @return Parent-relative y co-ordinate.
 	 */
-	s16 getY();
+	s16 getY() const;
 
 	/**
 	 * Get the reference constant for this gadget.
