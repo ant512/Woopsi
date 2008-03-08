@@ -199,10 +199,6 @@ bool SliderVertical::handleEvent(const EventArgs& e) {
 	return false;
 }
 
-void SliderVertical::recalculate() {
-	resizeGrip();
-}
-
 void SliderVertical::resizeGrip() {
 
 	// Get available size

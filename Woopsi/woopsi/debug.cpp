@@ -161,8 +161,8 @@ bool Debug::handleEvent(const EventArgs& e) {
 				case EVENT_SCROLL:
 					if (_slider != NULL) {
 						_slider->setFiresEvents(false);
-						//_slider->setMaximumValue(_textBox->getCanvasHeight());
-						//_slider->recalculate();
+						_slider->setMaximumValue(_textBox->getCanvasHeight());
+						_slider->resizeGrip();
 						_slider->setValue(0 - _textBox->getCanvasY());
 						_slider->setFiresEvents(true);
 						return true;
@@ -170,11 +170,11 @@ bool Debug::handleEvent(const EventArgs& e) {
 					break;
 				case EVENT_VALUE_CHANGE:
 					if (_slider != NULL) {
-						_slider->setFiresEvents(false);
-						_slider->setMaximumValue(_textBox->getCanvasHeight());
-						_slider->recalculate();
-						_slider->setValue(0 - _textBox->getCanvasY());
-						_slider->setFiresEvents(true);
+						//_slider->setFiresEvents(false);
+						//_slider->setMaximumValue(_textBox->getCanvasHeight());
+						//_slider->resizeGrip();
+						//_slider->setValue(0 - _textBox->getCanvasY());
+						//_slider->setFiresEvents(true);
 						return true;
 					}
 					break;
