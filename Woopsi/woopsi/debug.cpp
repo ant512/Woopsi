@@ -131,20 +131,20 @@ void Debug::createGUI() {
 
 bool Debug::handleEvent(const EventArgs& e) {
 	if (e.gadget != NULL) {
-		if (e.gadget == _slider) {
+		if ((e.gadget == _slider) && (_slider->isActive())) {
 			
 			// Slider events
 			switch (e.type) {
 				case EVENT_VALUE_CHANGE:
 					if (_textBox != NULL) {
-						//_textBox->jump(0, 0 - _slider->getValue());
+						_textBox->jump(0, 0 - _slider->getValue());
 						return true;
 					}
 					break;
 				default:
 					break;
 			}
-		} else if (e.gadget == _textBox) {
+		} else if ((e.gadget == _textBox) && (!_slider->isActive())) {
 
 			// Textbox events
 			switch (e.type) {

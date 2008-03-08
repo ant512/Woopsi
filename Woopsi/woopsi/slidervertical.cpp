@@ -142,11 +142,11 @@ bool SliderVertical::click(s16 x, s16 y) {
 					newGripY = (rect.height - _grip->getHeight()) + 1;
 				}
 
-				// Move the grip
-				_grip->moveTo(0, newGripY);
-
 				// Handle click on gutter
 				Gadget::click(x, y);
+
+				// Move the grip
+				_grip->moveTo(0, newGripY);
 			}
 
 			return true;
