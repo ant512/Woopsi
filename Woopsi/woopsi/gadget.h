@@ -72,6 +72,7 @@ public:
 		u8 enabled : 1;
 		u8 decoration : 1;
 		u8 permeable : 1;
+		u8 firesEvents : 1;
 	} Flags;
 
 	Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
@@ -110,7 +111,7 @@ public:
 	 *
 	 * @return True if active.
 	 */
-	bool isActive();
+	const bool isActive() const;
 
 	/**
 	 * Has the gadget been marked for deletion?
@@ -119,13 +120,13 @@ public:
 	 *
 	 * @return True if marked for deletion.
 	 */
-	bool isDeleted();
+	const bool isDeleted() const;
 
 	/**
 	 * Is the gadget visible?
 	 * @return True if visible.
 	 */
-	bool isVisible();
+	const bool isVisible() const;
 
 	/**
 	 * Is the gadget a decoration?
@@ -134,7 +135,7 @@ public:
 	 *
 	 * @return True if the gadget is a decoration.
 	 */
-	bool isDecoration();
+	const bool isDecoration() const;
 
 	/**
 	 * Are the gadget's edges permeable or solid?
@@ -143,31 +144,31 @@ public:
 	 *
 	 * @return True if permeable.
 	 */
-	bool isPermeable();
+	const bool isPermeable() const;
 
 	/**
 	 * Does the gadget have a border?
 	 * @return True if the gadget does not have a border.
 	 */
-	bool isBorderless();
+	const bool isBorderless() const;
 
 	/**
 	 * Is the gadget clicked?
 	 * @return True if the gadget is currently clicked.
 	 */
-	bool isClicked();
+	const bool isClicked() const;
 
 	/**
 	 * Get the width of the gadget.
 	 * @return The gadget width.
 	 */
-	u16 getWidth();
+	u16 getWidth() const;
 
 	/**
 	 * Get the height of the gadget.
 	 * @return The gadget height.
 	 */
-	u16 getHeight();
+	u16 getHeight() const;
 
 	/**
 	 * Get a pointer to this gadget's parent.
@@ -185,7 +186,13 @@ public:
 	 * Get the number of the screen that this gadget is currently displayed on.
 	 * @return 0 for the touch screen, 1 for the top screen.
 	 */
-	u8 getPhysicalScreenNumber();
+	const u8 getPhysicalScreenNumber() const;
+
+	/**
+	 * Check if this gadget fires events or not.
+	 * @return True if events are enabled.
+	 */
+	const bool firesEvents() const;
 
 	/**
 	 * Insert the properties of the space within this gadget that is available
@@ -316,10 +323,15 @@ public:
 	/**
 	 * Sets the gadget's event handler.  The event handler will receive
 	 * all events raised by this gadget.
-	 *
 	 * @param eventHandler A pointer to the event handler.
 	 */
 	void setEventHandler(EventHandler* eventHandler);
+
+	/**
+	 * Enables or disables event firing for this gadget.
+	 * @param firesEvents True to enable events, false to disable.
+	 */
+	void setFiresEvents(const bool firesEvents);
 
 	/**
 	 * Sets the gadget visible or invisible. This does not redraw or
@@ -781,8 +793,8 @@ protected:
 	// Initialisation
 	void init();
 
-	s16 calculatePhysicalScreenY(s16 y);
-	u8 calculatePhysicalScreenNumber(s16 y);
+	const s16 calculatePhysicalScreenY(s16 y) const;
+	const u8 calculatePhysicalScreenNumber(s16 y) const;
 
 	// Drawing tools
 	void clear(Rect clipRect);

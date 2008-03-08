@@ -38,7 +38,7 @@ const s16 SliderVertical::getValue() const {
 	if (rect.height > _grip->getHeight()) {
 	
 		// Calculate ratio
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / (rect.height);// - _grip->getHeight());
+		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
 
 		// Multiply by grip position
 		return ((_grip->getY() - getY()) * ratio) >> 8;
@@ -71,7 +71,7 @@ void SliderVertical::setValue(const s16 value) {
 	if (rect.height > _grip->getHeight()) {
 	
 		// Calculate ratio
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / (rect.height);// - _grip->getHeight());
+		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
 		
 		s16 newGripY = (value << 8) / ratio;
 	
@@ -178,11 +178,6 @@ bool SliderVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	// Handle child dragging
 	if (_clickedGadget != NULL) {
 		return _clickedGadget->drag(x, y, vX, vY);//) {
-		
-			// Notify parent of the slider that a drag event has occurred
-			//raiseDragEvent(x, y, vX, vY);
-			//return true;
-		//}
 	}
 
 	return false;
@@ -206,9 +201,6 @@ bool SliderVertical::handleEvent(const EventArgs& e) {
 
 void SliderVertical::recalculate() {
 	resizeGrip();
-	
-	// Reposition grip
-	//setValue(getValue());
 }
 
 void SliderVertical::resizeGrip() {

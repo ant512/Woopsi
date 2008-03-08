@@ -59,6 +59,7 @@ void Gadget::init() {
 	_flags.visible = false;
 	_flags.decoration = false;
 	_flags.permeable = false;
+	_flags.firesEvents = true;
 
 	_activeGadget = NULL;
 	_clickedGadget = NULL;
@@ -88,11 +89,11 @@ s16 Gadget::getY() const {
 	return _y;
 }
 
-u16 Gadget::getWidth() {
+u16 Gadget::getWidth() const {
 	return _width;
 }
 
-u16 Gadget::getHeight() {
+u16 Gadget::getHeight() const {
 	return _height;
 }
 
@@ -100,19 +101,23 @@ Gadget* Gadget::getParent() {
 	return _parent;
 }
 
-bool Gadget::isPermeable() {
+const bool Gadget::isPermeable() const {
 	return _flags.permeable;
 }
 
-bool Gadget::isActive() {
+const bool Gadget::isActive() const {
 	return _flags.active;
 }
 
-bool Gadget::isClicked() {
+const bool Gadget::isClicked() const {
 	return _flags.clicked;
 }
 
-bool Gadget::isVisible() {
+const bool Gadget::firesEvents() const {
+	return _flags.firesEvents;
+}
+
+const bool Gadget::isVisible() const {
 	if (_parent != NULL) {
 		if (_parent->isVisible()) {
 			return _flags.visible;
@@ -124,15 +129,15 @@ bool Gadget::isVisible() {
 	return false;
 }
 
-bool Gadget::isDeleted() {
+const bool Gadget::isDeleted() const {
 	return _flags.deleted;
 }
 
-bool Gadget::isDecoration() {
+const bool Gadget::isDecoration() const {
 	return _flags.decoration;
 }
 
-bool Gadget::isBorderless() {
+const bool Gadget::isBorderless() const {
 	return _flags.borderless;
 }
 
@@ -144,7 +149,7 @@ Gadget::CloseType Gadget::getCloseType() {
 	return _closeType;
 }
 
-u8 Gadget::getPhysicalScreenNumber() {
+const u8 Gadget::getPhysicalScreenNumber() const{
 	return calculatePhysicalScreenNumber(getY());
 }
 
@@ -223,6 +228,10 @@ void Gadget::setEventHandler(EventHandler* eventHandler) {
 	_eventHandler = eventHandler;
 }
 
+void Gadget::setFiresEvents(const bool firesEvents) {
+	_flags.firesEvents = firesEvents;
+}
+
 void Gadget::setBackColour(u16 colour) {
 	_backColour = colour;
 }
@@ -247,7 +256,7 @@ void Gadget::setDarkColour(u16 colour) {
 	_darkColour = colour;
 }
 
-u8 Gadget::calculatePhysicalScreenNumber(s16 y) {
+const u8 Gadget::calculatePhysicalScreenNumber(s16 y) const {
 	if (y > TOP_SCREEN_Y_OFFSET - 1) {
 		// Top screen
 		return 1;
@@ -257,7 +266,7 @@ u8 Gadget::calculatePhysicalScreenNumber(s16 y) {
 	return 0;
 }
 
-s16 Gadget::calculatePhysicalScreenY(s16 y) {
+const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
 	if (y > TOP_SCREEN_Y_OFFSET - 1) {
 		return y - TOP_SCREEN_Y_OFFSET;
 	}
@@ -315,7 +324,7 @@ bool Gadget::checkCollision(Gadget* gadget) {
 }
 
 void Gadget::raiseClickEvent(s16 x, s16 y) {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_CLICK;
@@ -329,7 +338,7 @@ void Gadget::raiseClickEvent(s16 x, s16 y) {
 }
 
 void Gadget::raiseReleaseEvent(s16 x, s16 y) {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_RELEASE;
@@ -343,7 +352,7 @@ void Gadget::raiseReleaseEvent(s16 x, s16 y) {
 }
 
 void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_DRAG;
@@ -357,7 +366,7 @@ void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
 }
 
 void Gadget::raiseVBLEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_VBL;
@@ -371,7 +380,7 @@ void Gadget::raiseVBLEvent() {
 }
 
 void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_KEY_PRESS;
@@ -385,7 +394,7 @@ void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
 }
 
 void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_KEY_RELEASE;
@@ -399,7 +408,7 @@ void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
 }
 
 void Gadget::raiseLidClosedEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_LID_CLOSED;
@@ -413,7 +422,7 @@ void Gadget::raiseLidClosedEvent() {
 }
 
 void Gadget::raiseLidOpenedEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_LID_OPENED;
@@ -427,7 +436,7 @@ void Gadget::raiseLidOpenedEvent() {
 }
 
 void Gadget::raiseFocusEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_FOCUS;
@@ -441,7 +450,7 @@ void Gadget::raiseFocusEvent() {
 }
 
 void Gadget::raiseBlurEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_BLUR;
@@ -455,7 +464,7 @@ void Gadget::raiseBlurEvent() {
 }
 
 void Gadget::raiseCloseEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_CLOSE;
@@ -469,7 +478,7 @@ void Gadget::raiseCloseEvent() {
 }
 
 void Gadget::raiseHideEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_HIDE;
@@ -483,7 +492,7 @@ void Gadget::raiseHideEvent() {
 }
 
 void Gadget::raiseShowEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_SHOW;
@@ -497,7 +506,7 @@ void Gadget::raiseShowEvent() {
 }
 
 void Gadget::raiseEnableEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_ENABLE;
@@ -511,7 +520,7 @@ void Gadget::raiseEnableEvent() {
 }
 
 void Gadget::raiseDisableEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_DISABLE;
@@ -525,7 +534,7 @@ void Gadget::raiseDisableEvent() {
 }
 
 void Gadget::raiseValueChangeEvent() {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_VALUE_CHANGE;
@@ -539,7 +548,7 @@ void Gadget::raiseValueChangeEvent() {
 }
 
 void Gadget::raiseResizeEvent(u16 width, u16 height) {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_RESIZE;
@@ -553,7 +562,7 @@ void Gadget::raiseResizeEvent(u16 width, u16 height) {
 }
 
 void Gadget::raiseMoveEvent(s16 x, s16 y) {
-	if (_eventHandler != NULL) {
+	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_MOVE;

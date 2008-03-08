@@ -131,40 +131,50 @@ void Debug::createGUI() {
 
 bool Debug::handleEvent(const EventArgs& e) {
 	if (e.gadget != NULL) {
-		if ((e.gadget == _slider) && (_slider->isActive())) {
+		if (e.gadget == _slider) {
 			
 			// Slider events
 			switch (e.type) {
 				case EVENT_VALUE_CHANGE:
 					if (_textBox != NULL) {
+						_textBox->setFiresEvents(false);
 						_textBox->jump(0, 0 - _slider->getValue());
+						_textBox->setFiresEvents(true);
 						return true;
 					}
 					break;
 				default:
 					break;
 			}
-		} else if ((e.gadget == _textBox) && (!_slider->isActive())) {
+		} else if (e.gadget == _textBox) {
 
 			// Textbox events
 			switch (e.type) {
 				case EVENT_DRAG:
 					if (_slider != NULL) {
+						_slider->setFiresEvents(false);
 						_slider->setValue(0 - _textBox->getCanvasY());
+						_slider->setFiresEvents(true);
 						return true;
 					}
 					break;
 				case EVENT_SCROLL:
 					if (_slider != NULL) {
+						_slider->setFiresEvents(false);
+						//_slider->setMaximumValue(_textBox->getCanvasHeight());
+						//_slider->recalculate();
 						_slider->setValue(0 - _textBox->getCanvasY());
+						_slider->setFiresEvents(true);
 						return true;
 					}
 					break;
 				case EVENT_VALUE_CHANGE:
 					if (_slider != NULL) {
+						_slider->setFiresEvents(false);
 						_slider->setMaximumValue(_textBox->getCanvasHeight());
 						_slider->recalculate();
 						_slider->setValue(0 - _textBox->getCanvasY());
+						_slider->setFiresEvents(true);
 						return true;
 					}
 					break;

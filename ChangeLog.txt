@@ -30,6 +30,7 @@ Change Log
      - Added EVENT_SCROLL to EventHandler.
      - Added _darkColour to Gadget class.
      - Added LinkedList, LinkedListIterator and DynamicArray classes.
+	 - Added event enabling/disabling to Gadget class.
 
 
   V0.29 (20081101)
