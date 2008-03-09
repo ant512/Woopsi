@@ -288,9 +288,9 @@ int main() {
 	SimpleWindow* textTestWindow = newScreen->newWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
 	textTestWindow->newMultiLineTextBox(0, 0, 80, 80, 5, "This is some\ntest text");
 
-	SliderVertical* slider = new SliderVertical(10, 30, 10, 40);
-	slider->setMaximumValue(10);
-	textTestWindow->addGadget(slider);
+	//SliderVertical* slider = new SliderVertical(10, 30, 10, 40);
+	//slider->setMaximumValue(10);
+	//textTestWindow->addGadget(slider);
 
 	// Controls
 	DynamicArray<Button*> buttons;

@@ -28,14 +28,12 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 	}
 
 	singleton = this;
-	//Debug::setWoopsi(this);
 }
 
 Woopsi::~Woopsi() {
 	deleteSystemFont();
 	_font = NULL;
 	singleton = NULL;
-	//Debug::setWoopsi(NULL);
 }
 
 // Add a new screen

@@ -18,7 +18,6 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 }
 
 SliderVertical::~SliderVertical() {
-	delete _grip;
 }
 
 const s16 SliderVertical::getMinimumValue() const {
