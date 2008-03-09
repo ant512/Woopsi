@@ -32,6 +32,7 @@
 #include "woopsifuncs.h"
 #include "scrollingpanel.h"
 #include "slidervertical.h"
+#include "sliderhorizontal.h"
 #include "scrollbarvertical.h"
 #include "dynamicarray.h"
 

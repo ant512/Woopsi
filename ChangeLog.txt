@@ -34,6 +34,7 @@ Change Log
      - Added LinkedList, LinkedListIterator and DynamicArray classes.
 	 - Added event enabling/disabling to Gadget class.
 	 - Added event enabling/disabling to ScrollingPanel class.
+	 - Added horizontal slider.
 
 
   V0.29 (20081101)

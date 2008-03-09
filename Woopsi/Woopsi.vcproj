@@ -194,6 +194,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\sliderhorizontal.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\sliderhorizontalgrip.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\slidervertical.cpp"
 				>
 			</File>
@@ -445,6 +453,14 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\skinnedwindowdepthbutton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\sliderhorizontal.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\sliderhorizontalgrip.h"
 				>
 			</File>
 			<File
