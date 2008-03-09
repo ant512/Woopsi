@@ -579,7 +579,7 @@ bool ScrollingPanel::clipToClientRect(Rect& clipRect) {
 }
 
 void ScrollingPanel::raiseScrollEvent() {
-	if ((_eventHandler != NULL) && (_flags.firesEvents)) {
+	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
 
 		EventArgs e;
 		e.type = EVENT_SCROLL;

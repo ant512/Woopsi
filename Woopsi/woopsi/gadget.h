@@ -72,7 +72,7 @@ public:
 		u8 enabled : 1;
 		u8 decoration : 1;
 		u8 permeable : 1;
-		u8 firesEvents : 1;
+		u8 raisesEvents : 1;
 	} Flags;
 
 	Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
@@ -189,10 +189,10 @@ public:
 	const u8 getPhysicalScreenNumber() const;
 
 	/**
-	 * Check if this gadget fires events or not.
+	 * Check if this gadget raises events or not.
 	 * @return True if events are enabled.
 	 */
-	const bool firesEvents() const;
+	const bool raisesEvents() const;
 
 	/**
 	 * Insert the properties of the space within this gadget that is available
@@ -329,9 +329,9 @@ public:
 
 	/**
 	 * Enables or disables event firing for this gadget.
-	 * @param firesEvents True to enable events, false to disable.
+	 * @param raisesEvents True to enable events, false to disable.
 	 */
-	void setFiresEvents(const bool firesEvents);
+	void setRaisesEvents(const bool raisesEvents);
 
 	/**
 	 * Sets the gadget visible or invisible. This does not redraw or

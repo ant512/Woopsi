@@ -137,9 +137,9 @@ bool Debug::handleEvent(const EventArgs& e) {
 			switch (e.type) {
 				case EVENT_VALUE_CHANGE:
 					if (_textBox != NULL) {
-						_textBox->setFiresEvents(false);
+						_textBox->setRaisesEvents(false);
 						_textBox->jump(0, 0 - _slider->getValue());
-						_textBox->setFiresEvents(true);
+						_textBox->setRaisesEvents(true);
 						return true;
 					}
 					break;
@@ -152,29 +152,29 @@ bool Debug::handleEvent(const EventArgs& e) {
 			switch (e.type) {
 				case EVENT_DRAG:
 					if (_slider != NULL) {
-						_slider->setFiresEvents(false);
+						_slider->setRaisesEvents(false);
 						_slider->setValue(0 - _textBox->getCanvasY());
-						_slider->setFiresEvents(true);
+						_slider->setRaisesEvents(true);
 						return true;
 					}
 					break;
 				case EVENT_SCROLL:
 					if (_slider != NULL) {
-						_slider->setFiresEvents(false);
+						_slider->setRaisesEvents(false);
 						_slider->setMaximumValue(_textBox->getCanvasHeight());
 						_slider->resizeGrip();
 						_slider->setValue(0 - _textBox->getCanvasY());
-						_slider->setFiresEvents(true);
+						_slider->setRaisesEvents(true);
 						return true;
 					}
 					break;
 				case EVENT_VALUE_CHANGE:
 					if (_slider != NULL) {
-						//_slider->setFiresEvents(false);
+						//_slider->setRaisesEvents(false);
 						//_slider->setMaximumValue(_textBox->getCanvasHeight());
 						//_slider->resizeGrip();
 						//_slider->setValue(0 - _textBox->getCanvasY());
-						//_slider->setFiresEvents(true);
+						//_slider->setRaisesEvents(true);
 						return true;
 					}
 					break;
