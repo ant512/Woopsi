@@ -118,135 +118,146 @@ void woopsiVblFunc() {
 	Pad.Newpress.R = false;
 	Pad.Newpress.Start = false;
 	Pad.Newpress.Select = false;
+	
+	// Read mouse state
+	int mState;
+	int mX;
+	int mY;
+	
+	mState = SDL_GetMouseState(&mX, &mY);
+	
+	// Update mouse position
+	mouseX = mX;
+	mouseY = mY - SCREEN_HEIGHT;
+	
+	// Check buttons
+	if ((mState & SDL_BUTTON_LEFT) && (!Stylus.Held)) {
+		
+		// New click
+		Stylus.Newpress = true;
+		Stylus.Held = true;
+		Stylus.Released = false;
 
-	// Check events
-	if (SDL_PollEvent(&event)) {
-		switch (event.type) {
-			case SDL_MOUSEBUTTONDOWN:
-				Stylus.Newpress = true;
-				Stylus.Held = true;
-				Stylus.Released = false;
-				mouseX = event.button.x;
-				mouseY = event.button.y - SCREEN_HEIGHT;
-				break;
-			case SDL_MOUSEBUTTONUP:
-				Stylus.Released = true;
-				Stylus.Held = false;
-				Stylus.Newpress = false;
-				mouseX = event.button.x;
-				mouseY = event.button.y - SCREEN_HEIGHT;
-				break;
-			case SDL_MOUSEMOTION:
-				mouseX = event.motion.x;
-				mouseY = event.motion.y - SCREEN_HEIGHT;
-				break;
-			case SDL_KEYUP:
-				switch (event.key.keysym.scancode) {
-					case 123:
-						Pad.Released.Left = true;
-						Pad.Held.Left = false;
-						Pad.Newpress.Left = false;
-						break;
-					case 124:
-						Pad.Released.Right = true;
-						Pad.Held.Right = false;
-						Pad.Newpress.Right = false;
-						break;
-					case 125:
-						Pad.Released.Down = true;
-						Pad.Held.Down = false;
-						Pad.Newpress.Down = false;
-						break;
-					case 126:
-						Pad.Released.Up = true;
-						Pad.Held.Up = false;
-						Pad.Newpress.Up = false;
-						break;
-					case 0:
-						Pad.Released.A = true;
-						Pad.Held.A = false;
-						Pad.Newpress.A = false;
-						break;
-					case 1:
-						Pad.Released.B = true;
-						Pad.Held.B = false;
-						Pad.Newpress.B = false;
-						break;
-					case 2:
-						Pad.Released.L = true;
-						Pad.Held.L = false;
-						Pad.Newpress.L = false;
-						break;
-					case 3:
-						Pad.Released.R = true;
-						Pad.Held.R = false;
-						Pad.Newpress.R = false;
-						break;
-					case 6:
-						Pad.Released.X = true;
-						Pad.Held.X = false;
-						Pad.Newpress.X = false;
-						break;
-					case 7:
-						Pad.Released.Y = true;
-						Pad.Held.Y = false;
-						Pad.Newpress.Y = false;
-						break;
-					case 8:
-						Pad.Released.Start = true;
-						Pad.Held.Start = false;
-						Pad.Newpress.Start = false;
-						break;
-					case 9:
-						Pad.Released.Select = true;
-						Pad.Held.Select = false;
-						Pad.Newpress.Select = false;
-						break;
-				}
-				break;
-			case SDL_KEYDOWN:
-				switch (event.key.keysym.scancode) {
-					case 123:
-						Pad.Newpress.Left = true;
-						break;
-					case 124:
-						Pad.Newpress.Right = true;
-						break;
-					case 125:
-						Pad.Newpress.Down = true;
-						break;
-					case 126:
-						Pad.Newpress.Up = true;
-						break;
-					case 0:
-						Pad.Newpress.A = true;
-						break;
-					case 1:
-						Pad.Newpress.B = true;
-						break;
-					case 2:
-						Pad.Newpress.L = true;
-						break;
-					case 3:
-						Pad.Newpress.R = true;
-						break;
-					case 6:
-						Pad.Newpress.X = true;
-						break;
-					case 7:
-						Pad.Newpress.Y = true;
-						break;
-					case 8:
-						Pad.Newpress.Start = true;
-						break;
-					case 9:
-						Pad.Newpress.Select = true;
-						break;
-				}
-				break;
-		}
+	} else if ((!(mState & SDL_BUTTON_LEFT)) && (Stylus.Held)) {
+		
+		// Release
+		Stylus.Released = true;
+		Stylus.Held = false;
+		Stylus.Newpress = false;
+	}
+	
+	// Get key state
+    Uint8* keyState = SDL_GetKeyState(NULL);
+
+	// Up
+	if ((keyState[SDLK_UP]) && ((!Pad.Held.Up) && (!Pad.Newpress.Up))) {
+		Pad.Newpress.Up = true;
+	} else if ((!keyState[SDLK_UP]) && ((Pad.Held.Up) || (Pad.Newpress.Up))) {
+		Pad.Released.Up = true;
+		Pad.Held.Up = false;
+		Pad.Newpress.Up = false;
+	}
+	
+	// Down
+	if ((keyState[SDLK_DOWN]) && ((!Pad.Held.Down) && (!Pad.Newpress.Down))) {
+		Pad.Newpress.Down = true;
+	} else if ((!keyState[SDLK_DOWN]) && ((Pad.Held.Down) || (Pad.Newpress.Down))) {
+		Pad.Released.Down = true;
+		Pad.Held.Down = false;
+		Pad.Newpress.Down = false;
+	}
+	
+	// Left
+	if ((keyState[SDLK_LEFT]) && ((!Pad.Held.Left) && (!Pad.Newpress.Left))) {
+		Pad.Newpress.Left = true;
+	} else if ((!keyState[SDLK_LEFT]) && ((Pad.Held.Left) || (Pad.Newpress.Left))) {
+		Pad.Released.Left = true;
+		Pad.Held.Left = false;
+		Pad.Newpress.Left = false;
+	}
+	
+	// Right
+	if ((keyState[SDLK_RIGHT]) && ((!Pad.Held.Right) && (!Pad.Newpress.Right))) {
+		Pad.Newpress.Right = true;
+	} else if ((!keyState[SDLK_RIGHT]) && ((Pad.Held.Right) || (Pad.Newpress.Right))) {
+		Pad.Released.Right = true;
+		Pad.Held.Right = false;
+		Pad.Newpress.Right = false;
+	}	
+
+	// A (assigned as Z on keyboard)
+	if ((keyState[SDLK_z]) && ((!Pad.Held.A) && (!Pad.Newpress.A))) {
+		Pad.Newpress.A = true;
+	} else if ((!keyState[SDLK_z]) && ((Pad.Held.A) || (Pad.Newpress.A))) {
+		Pad.Released.A = true;
+		Pad.Held.A = false;
+		Pad.Newpress.A = false;
+	}
+	
+	// B (assigned as X on keyboard)
+	if ((keyState[SDLK_x]) && ((!Pad.Held.B) && (!Pad.Newpress.B))) {
+		Pad.Newpress.B = true;
+	} else if ((!keyState[SDLK_x]) && ((Pad.Held.B) || (Pad.Newpress.B))) {
+		Pad.Released.B = true;
+		Pad.Held.B = false;
+		Pad.Newpress.B = false;
+	}
+	
+	// X (assigned as C on keyboard)
+	if ((keyState[SDLK_c]) && ((!Pad.Held.X) && (!Pad.Newpress.X))) {
+		Pad.Newpress.X = true;
+	} else if ((!keyState[SDLK_c]) && ((Pad.Held.X) || (Pad.Newpress.X))) {
+		Pad.Released.X = true;
+		Pad.Held.X = false;
+		Pad.Newpress.X = false;
+	}
+	
+	// Y (assigned as V on keyboard)
+	if ((keyState[SDLK_v]) && ((!Pad.Held.Y) && (!Pad.Newpress.Y))) {
+		Pad.Newpress.Y = true;
+	} else if ((!keyState[SDLK_v]) && ((Pad.Held.Y) || (Pad.Newpress.Y))) {
+		Pad.Released.Y = true;
+		Pad.Held.Y = false;
+		Pad.Newpress.Y = false;
+	}
+	
+	// L (assigned as A on keyboard)
+	if ((keyState[SDLK_a]) && ((!Pad.Held.L) && (!Pad.Newpress.L))) {
+		Pad.Newpress.L = true;
+	} else if ((!keyState[SDLK_a]) && ((Pad.Held.L) || (Pad.Newpress.L))) {
+		Pad.Released.L = true;
+		Pad.Held.L = false;
+		Pad.Newpress.L = false;
+	}
+	
+	// R (assigned as S on keyboard)
+	if ((keyState[SDLK_s]) && ((!Pad.Held.R) && (!Pad.Newpress.R))) {
+		Pad.Newpress.R = true;
+	} else if ((!keyState[SDLK_s]) && ((Pad.Held.R) || (Pad.Newpress.R))) {
+		Pad.Released.R = true;
+		Pad.Held.R = false;
+		Pad.Newpress.R = false;
+	}
+	
+	// Start (assigned as D on keyboard)
+	if ((keyState[SDLK_d]) && ((!Pad.Held.Start) && (!Pad.Newpress.Start))) {
+		Pad.Newpress.Start = true;
+	} else if ((!keyState[SDLK_d]) && ((Pad.Held.Start) || (Pad.Newpress.Start))) {
+		Pad.Released.Start = true;
+		Pad.Held.Start = false;
+		Pad.Newpress.Start = false;
 	}
 
+	// Select (assigned as F on keyboard)
+	if ((keyState[SDLK_f]) && ((!Pad.Held.Select) && (!Pad.Newpress.Select))) {
+		Pad.Newpress.Select = true;
+	} else if ((!keyState[SDLK_f]) && ((Pad.Held.Select) || (Pad.Newpress.Select))) {
+		Pad.Released.Select = true;
+		Pad.Held.Select = false;
+		Pad.Newpress.Select = false;
+	}
+	
+	// Update other stylus properties
 	Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime+Stylus.Uptime < 45);
 	Stylus.Downtime *= !Stylus.Newpress; // = 0 if newpress
 	Stylus.Downtime += Stylus.Held;
