@@ -58,7 +58,7 @@ bool SliderVerticalGrip::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			s16 destY = y - _grabPointY - _parent->getY();
 
 			// Do we need to move?
-			if (destY != y) {
+			if (destY != _y) {
 
 				// Prevent grip from moving outside parent
 				if (destY < 0) {

@@ -83,7 +83,7 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			s16 destY = y - _grabPointY - _parent->getY();
 
 			// Do we need to move?
-			if ((destX != x) && (destY != y)) {
+			if ((destX != _x) && (destY != _y)) {
 
 				// Prevent window from moving outside screen
 				if (!_parent->isPermeable()) {

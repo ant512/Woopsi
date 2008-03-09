@@ -38,9 +38,17 @@ const s16 SliderVertical::getValue() const {
 	
 		// Calculate ratio
 		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
+		
+		// Calculate value
+		u32 val ((_grip->getY() - getY()) * ratio);
+		
+		// Round up if fractional value is >= 128
+		if (val & 128) {
+			val += 0x100;
+		}
 
-		// Multiply by grip position
-		return ((_grip->getY() - getY()) * ratio) >> 8;
+		// Right shift to erase fractional part and return
+		return val >> 8;
 	} else {
 		// Just return the minimum value
 		return _minimumValue;
@@ -69,14 +77,25 @@ void SliderVertical::setValue(const s16 value) {
 	// Can the grip move?
 	if (rect.height > _grip->getHeight()) {
 	
-		// Calculate ratio
+		// Calculate ratio (max fractional value of 255)
 		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
 		
-		s16 newGripY = (value << 8) / ratio;
-	
-		//if (newGripY + _grip->getHeight() > rect.y + rect.height) {
-		//	newGripY = (rect.y + rect.height) - _grip->getHeight();
-		//}
+		// Bitshift value up by 12 spaces so that the value returned is still
+		// bitshifted 4 places up and thus has a fractional nibble
+		s16 newGripY = (value << 12) / ratio;
+		
+		// Round up if fractional value is >= 8
+		if (newGripY & 8) {
+			newGripY += 0x10;
+		}
+		
+		// Bitshift back down to eliminate fraction
+		newGripY >>= 4;
+		
+		// Adjust new y so that it fits within gutter
+		if (newGripY + _grip->getHeight() > rect.y + rect.height) {
+			newGripY = (rect.y + rect.height) - _grip->getHeight();
+		}
 
 		// Move the grip
 		_grip->moveTo(0, abs(newGripY));
@@ -208,7 +227,7 @@ void SliderVertical::resizeGrip() {
 	s32 newHeight = rect.height;
 	
 	// Calculate the height of the content that has overflowed the viewport
-	s32 overspill = ((abs(_maximumValue - _minimumValue) - _pageSize) << 8);
+	s32 overspill = ((abs(_maximumValue - _minimumValue) - _pageSize) << 12);
 	
 	// Is there any overflow?
 	if (overspill > 0) {
@@ -218,7 +237,15 @@ void SliderVertical::resizeGrip() {
 		
 		// New height is equivalent to the height of the gutter minus
 		// the ratio-converted overflow height
-		newHeight = rect.height - (overspill / ratio);
+		newHeight = (rect.height << 4) - (overspill / ratio);
+		
+		// Handle rounding
+		if (newHeight & 8) {
+			newHeight += 0x10;
+		}
+		
+		// Bitshift to remove fraction
+		newHeight >>= 4;
 
 		// Ensure height is within acceptable boundaries
 		if (newHeight < _minimumGripHeight) newHeight = _minimumGripHeight;

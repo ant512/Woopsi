@@ -18,8 +18,10 @@ Change Log
 	 - Swapped ScrollingPanel and ScrollableBase to use a more logical model
 	   of the scrolling region.
 	 - Made Gadget::getX() and Gadget::getY() const.
-	 - Fixed majority of SliderVertical bugs.
+	 - Fixed SliderVertical bugs.
 	 - Added scrollbar to Debug GUI.
+	 - Fixed incorrect line count in Text::wrap() function.
+	 - Fixed incorrect check for movement in all gadget drag() functions.
 
   - New Features:
      - Added vertical slider.
@@ -31,6 +33,7 @@ Change Log
      - Added _darkColour to Gadget class.
      - Added LinkedList, LinkedListIterator and DynamicArray classes.
 	 - Added event enabling/disabling to Gadget class.
+	 - Added event enabling/disabling to ScrollingPanel class.
 
 
   V0.29 (20081101)

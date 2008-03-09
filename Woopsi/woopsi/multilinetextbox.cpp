@@ -200,7 +200,7 @@ void MultiLineTextBox::setText(char* text, bool raiseEvent) {
 
 	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 
 		// Scroll to bottom of new text
 		scroll(0, _canvasHeight - _height);
@@ -241,7 +241,7 @@ void MultiLineTextBox::addText(char* text) {
 		
 		// Update max scroll value
 		if (_text->getLineCount() > _visibleRows) {
-			_canvasHeight = _text->getPixelHeight();
+			_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 
 			// Scroll to bottom of new text
 			scroll(0, -_canvasHeight);

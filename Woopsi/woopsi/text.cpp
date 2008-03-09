@@ -141,15 +141,15 @@ void Text::wrap() {
 
 		currentPos = pos;
 		lastBreakPos = 0;
-		lineLength = 1;
+		lineLength = 0;
 		gotBreak = false;
 
 		// Search for a break point (from left to right)
 		while ((lineLength < _maxLineLength) && (remainingSize > 0) && (currentPos < totalSize)) {
-			if (_text[currentPos] == 10) {
-
-				// Found a return
-
+			lineLength++;
+		
+			if (_text[currentPos] == '\n') {
+				// Got a return
 
 				// Recalculate positions
 				if (remainingSize > lineLength) {
@@ -158,6 +158,7 @@ void Text::wrap() {
 					remainingSize = 0;
 				}
 
+				// Advance to next character and remember we got a break
 				pos = currentPos + 1;
 				gotBreak = true;
 				
@@ -172,13 +173,12 @@ void Text::wrap() {
 					   (_text[currentPos] == '-') ||
 					   (_text[currentPos] == '_')) {
 			
-				// Found a valid breakpoint
+				// Remember the most recent breakpoint
 				lastBreakPos = currentPos;
 			}
 
 			// Move forward to next character
 			currentPos++;
-			lineLength++;
 		}
 
 		// Did we hit a line return?
@@ -196,8 +196,10 @@ void Text::wrap() {
 
 				pos = lastBreakPos + 1;
 					
-				// Push next line start into vector
-				_linePositions.push_back(pos);
+				// Push next line start into vector if this line contains data
+				if (lineLength > 0) {
+					_linePositions.push_back(pos);
+				}
 			} else {
 		
 				// No break found
@@ -212,8 +214,10 @@ void Text::wrap() {
 					remainingSize = 0;
 				}
 			
-				// Push next line start into vector
-				_linePositions.push_back(pos);
+				// Push next line start into vector if this line contains data
+				if (lineLength > 0) {
+					_linePositions.push_back(pos);
+				}
 			}
 		}
 

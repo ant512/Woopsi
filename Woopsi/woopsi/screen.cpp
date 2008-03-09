@@ -199,7 +199,7 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			s16 destY = y - _grabPointY;
 
 			// Do we need to move?
-			if (destY != y) {
+			if (destY != _y) {
 
 				if (destY < 0) {
 					destY = 0;
