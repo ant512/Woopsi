@@ -289,8 +289,8 @@ int main() {
 	textTestWindow->newMultiLineTextBox(0, 0, 80, 80, 5, "This is some\ntest text");
 
 	SliderHorizontal* slider = new SliderHorizontal(10, 30, 50, 15);
-	slider->setMaximumValue(10);
-	slider->setPageSize(2);
+	slider->setMaximumValue(2);
+	slider->setPageSize(1);
 	slider->resizeGrip();
 	textTestWindow->addGadget(slider);
 

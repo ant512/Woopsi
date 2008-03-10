@@ -43,9 +43,9 @@ const s16 SliderVertical::getValue() const {
 		u32 val ((_grip->getY() - getY()) * ratio);
 		
 		// Round up if fractional value is >= 128
-		if (val & 128) {
-			val += 0x100;
-		}
+		//if (val & 128) {
+		//	val += 0x100;
+		//}
 
 		// Right shift to erase fractional part and return
 		return val >> 8;
@@ -78,19 +78,18 @@ void SliderVertical::setValue(const s16 value) {
 	if (rect.height > _grip->getHeight()) {
 	
 		// Calculate ratio (max fractional value of 255)
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
+		u32 ratio = (rect.height << 8) / (u32)abs(_maximumValue - _minimumValue);
 		
-		// Bitshift value up by 12 spaces so that the value returned is still
-		// bitshifted 4 places up and thus has a fractional nibble
-		s16 newGripY = (value << 12) / ratio;
+		// Convert value using ratio
+		s16 newGripY = (value * ratio) >> 8;
 		
 		// Round up if fractional value is >= 8
-		if (newGripY & 8) {
-			newGripY += 0x10;
-		}
+		//if (newGripY & 8) {
+		//	newGripY += 0x10;
+		//}
 		
 		// Bitshift back down to eliminate fraction
-		newGripY >>= 4;
+		//newGripY >>= 8;
 		
 		// Adjust new y so that it fits within gutter
 		if (newGripY + _grip->getHeight() > rect.y + rect.height) {
@@ -227,25 +226,25 @@ void SliderVertical::resizeGrip() {
 	s32 newHeight = rect.height;
 	
 	// Calculate the height of the content that has overflowed the viewport
-	s32 overspill = ((abs(_maximumValue - _minimumValue) - _pageSize) << 12);
+	s32 overspill = ((s32)abs(_maximumValue - _minimumValue)) - _pageSize;
 	
 	// Is there any overflow?
 	if (overspill > 0) {
 	
 		// Calculate the ratio of content to gutter
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
+		u32 ratio = (rect.height << 8) / (u32)abs(_maximumValue - _minimumValue);
 		
 		// New height is equivalent to the height of the gutter minus
 		// the ratio-converted overflow height
-		newHeight = (rect.height << 4) - (overspill / ratio);
+		newHeight = (rect.height << 8) - (overspill * ratio);
 		
 		// Handle rounding
-		if (newHeight & 8) {
-			newHeight += 0x10;
-		}
+		//if (newHeight & 8) {
+		//	newHeight += 0x10;
+		//}
 		
 		// Bitshift to remove fraction
-		newHeight >>= 4;
+		newHeight >>= 8;
 
 		// Ensure height is within acceptable boundaries
 		if (newHeight < _minimumGripHeight) newHeight = _minimumGripHeight;

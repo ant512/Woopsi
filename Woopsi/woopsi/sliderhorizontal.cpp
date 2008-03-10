@@ -43,9 +43,9 @@ const s16 SliderHorizontal::getValue() const {
 		u32 val ((_grip->getX() - getX()) * ratio);
 		
 		// Round up if fractional value is >= 128
-		if (val & 128) {
-			val += 0x100;
-		}
+		//if (val & 128) {
+		//	val += 0x100;
+		//}
 
 		// Right shift to erase fractional part and return
 		return val >> 8;
@@ -78,19 +78,18 @@ void SliderHorizontal::setValue(const s16 value) {
 	if (rect.width > _grip->getWidth()) {
 	
 		// Calculate ratio (max fractional value of 255)
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.width;
+		u32 ratio = (rect.width << 8) / (u32)abs(_maximumValue - _minimumValue);
 		
-		// Bitshift value up by 12 spaces so that the value returned is still
-		// bitshifted 4 places up and thus has a fractional nibble
-		s16 newGripX = (value << 12) / ratio;
+		// Convert value using ratio
+		s16 newGripX = (value * ratio) >> 8;
 		
 		// Round up if fractional value is >= 8
-		if (newGripX & 8) {
-			newGripX += 0x10;
-		}
+		//if (newGripX & 8) {
+		//	newGripX += 0x10;
+		//}
 		
 		// Bitshift back down to eliminate fraction
-		newGripX >>= 4;
+		//newGripX >>= 4;
 		
 		// Adjust new x so that it fits within gutter
 		if (newGripX + _grip->getWidth() > rect.x + rect.width) {
@@ -227,25 +226,25 @@ void SliderHorizontal::resizeGrip() {
 	s32 newWidth = rect.width;
 	
 	// Calculate the width of the content that has overflowed the viewport
-	s32 overspill = ((abs(_maximumValue - _minimumValue) - _pageSize) << 12);
+	s32 overspill = ((s32)abs(_maximumValue - _minimumValue)) - _pageSize;
 	
 	// Is there any overflow?
 	if (overspill > 0) {
 	
 		// Calculate the ratio of content to gutter
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.width;
+		u32 ratio = (rect.width << 8) / (u32)abs(_maximumValue - _minimumValue);
 		
 		// New width is equivalent to the width of the gutter minus
 		// the ratio-converted overflow width
-		newWidth = (rect.width << 4) - (overspill / ratio);
+		newWidth = (rect.width << 8) - (overspill * ratio);
 		
 		// Handle rounding
-		if (newWidth & 8) {
-			newWidth += 0x10;
-		}
+		//if (newWidth & 8) {
+			//newWidth += 0x10;
+		//}
 		
 		// Bitshift to remove fraction
-		newWidth >>= 4;
+		newWidth >>= 8;
 
 		// Ensure width is within acceptable boundaries
 		if (newWidth < _minimumGripWidth) newWidth = _minimumGripWidth;
