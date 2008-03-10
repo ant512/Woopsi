@@ -1,12 +1,10 @@
 #include "animbutton.h"
 
-AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, u16 bitmapWidth, u16 bitmapHeight) : Textbox(x, y, width, height, "", NULL) {
+AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Textbox(x, y, width, height, "", NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 
-	_bitmapWidth = bitmapWidth;
-	_bitmapHeight = bitmapHeight;
-	_bitmapX = bitmapX;
-	_bitmapY = bitmapY;
+	_animX = animX;
+	_animY = animY;
 
 	_animClicked = new Animation(0, Animation::ANIMATION_LOOPTYPE_LOOP, 0);
 	_animNormal = new Animation(0, Animation::ANIMATION_LOOPTYPE_LOOP, 0);
@@ -28,9 +26,9 @@ void AnimButton::draw(Rect clipRect) {
 
 	// Draw bitmaps
 	if (_flags.clicked) {
-		port->drawBitmap(x, y, _animClicked->getCurrentFrame()->width, _animClicked->getCurrentFrame()->height, _animClicked->getCurrentBitmap(), _bitmapX, _bitmapY, _bitmapWidth, _bitmapHeight);
+		port->drawBitmap(x, y, _animClicked->getCurrentFrame()->width, _animClicked->getCurrentFrame()->height, _animClicked->getCurrentBitmap(), _animX, _animY, _animClicked->getCurrentFrame()->width, _animClicked->getCurrentFrame()->height);
 	} else {
-		port->drawBitmap(x, y, _animNormal->getCurrentFrame()->width, _animNormal->getCurrentFrame()->height, _animNormal->getCurrentBitmap(), _bitmapX, _bitmapY, _bitmapWidth, _bitmapHeight);
+		port->drawBitmap(x, y, _animNormal->getCurrentFrame()->width, _animNormal->getCurrentFrame()->height, _animNormal->getCurrentBitmap(), _animX, _animY, _animClicked->getCurrentFrame()->height, _animClicked->getCurrentFrame()->width);
 	}
 
 	// Draw outline
