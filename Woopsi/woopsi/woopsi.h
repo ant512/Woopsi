@@ -44,8 +44,22 @@ using namespace std;
 class Woopsi : public Gadget {
 
 public:
+	/**
+	 * The singleton provides an instance of Woopsi that should be instantiated and
+	 * used as the only Woopsi instance.  The Debug class in particular interacts
+	 * with this singleton.
+	 */
 	static Woopsi *singleton;
+	
+	/**
+	 * Constructor.
+	 * @param font Pointer to a font object for use within this class.
+	 */
 	Woopsi(FontBase* font = NULL);
+	
+	/**
+	 * Destructor.
+	 */
 	virtual ~Woopsi();
 
 	/**
@@ -196,9 +210,21 @@ protected:
 	static FontBase* _systemFont;
 	static u32 _vblCount;
 
+	/**
+	 * Closes a child gadget.
+	 * @param gadget The child gadget to close.
+	 */
 	virtual void closeChild(Gadget* gadget);
+	
+	/**
+	 * Hides a child gadget.
+	 * @param gadget The child gadget to hide.
+	 */
 	virtual void hideChild(Gadget* gadget);
 
+	/**
+	 * Delete any gadgets in the deletion queue.
+	 */
 	void processDeleteQueue();
 };
 
