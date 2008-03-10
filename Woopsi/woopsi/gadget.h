@@ -85,6 +85,7 @@ public:
 	 * @param font Pointer to a font object to use for text output.  If no object is
 	 * specified the gadget will fetch the default system font from the Woopsi class.
 	 * @see GadgetFlagType.
+	 */
 	Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
 	
 	/**
