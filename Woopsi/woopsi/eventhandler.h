@@ -5,6 +5,9 @@
 
 class Gadget;
 
+/**
+ * Enum listing all possible events that can occur within the system.
+ */
 enum EventType {
 	EVENT_NONE = 0,
 	EVENT_CLICK = 1,
@@ -28,6 +31,9 @@ enum EventType {
 	EVENT_SCROLL = 19
 };
 
+/**
+ * Enum listing all key codes.
+ */
 enum KeyCode {
 	KEY_CODE_NONE = 0,
 	KEY_CODE_UP = 1,
@@ -44,6 +50,9 @@ enum KeyCode {
 	KEY_CODE_SELECT = 12
 };
 
+/**
+ * EventArgs struct.  Passed as the argument for every event.
+ */
 typedef struct {
 	EventType type;
 	Gadget* gadget;
@@ -52,10 +61,27 @@ typedef struct {
 	KeyCode keyCode;
 } EventArgs;
 
+/**
+ * Base EventHandler class, intended to be subclassed.  Any class that needs to listen for
+ * gadget events should inherit from this class.
+ */
 class EventHandler {
 public:
+	/**
+	 * Constructor.
+	 */
 	EventHandler() { }
+	
+	/**
+	 * Destructor.
+	 */
 	virtual ~EventHandler() { }
+	
+	/**
+	 * Event handler function.  Each gadget that this class is the event handler for will
+	 * call this function and pass it details of the event in the EventArgs parameter.
+	 * @param e The event's argument data.
+	 */
 	virtual bool handleEvent(const EventArgs& e) = 0;
 };
 
