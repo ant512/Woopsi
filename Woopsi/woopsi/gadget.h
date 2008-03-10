@@ -75,7 +75,21 @@ public:
 		u8 raisesEvents : 1;
 	} Flags;
 
+	/**
+	 * Constructor.
+	 * @param x The x co-ordinate of the gadget.
+	 * @param y The y co-ordinate of the gadget.
+	 * @param width The width of the gadget.
+	 * @param height The height of the gadget.
+	 * @param flags Bitmask specifying some set-up values for the gadget.
+	 * @param font Pointer to a font object to use for text output.  If no object is
+	 * specified the gadget will fetch the default system font from the Woopsi class.
+	 * @see GadgetFlagType.
 	Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
+	
+	/**
+	 * Destructor.
+	 */
 	virtual ~Gadget();
 
 	/**
@@ -99,7 +113,6 @@ public:
 	/**
 	 * Get the type of close routine that should be called by other gadgets
 	 * interacting with this gadget.
-	 *
 	 * @return The close type of this gadget.
 	 */
 	CloseType getCloseType();
@@ -108,7 +121,6 @@ public:
 	 * Is the gadget active?
 	 * A value of true indicates that this gadget has focus or is an ancestor
 	 * of the gadget with focus.
-	 *
 	 * @return True if active.
 	 */
 	const bool isActive() const;
@@ -117,7 +129,6 @@ public:
 	 * Has the gadget been marked for deletion?
 	 * Gadgets marked for deletion are automatically deleted and should not be
 	 * interacted with.
-	 *
 	 * @return True if marked for deletion.
 	 */
 	const bool isDeleted() const;
@@ -132,7 +143,6 @@ public:
 	 * Is the gadget a decoration?
 	 * Decoration gadgets are children of, but also an essential component of,
 	 * another gadget.
-	 *
 	 * @return True if the gadget is a decoration.
 	 */
 	const bool isDecoration() const;
@@ -141,7 +151,6 @@ public:
 	 * Are the gadget's edges permeable or solid?
 	 * Permeable gadgets do not enforce their dimensions on the
 	 * co-ordinates and dimensions of child gadgets.
-	 *
 	 * @return True if permeable.
 	 */
 	const bool isPermeable() const;
@@ -198,7 +207,6 @@ public:
 	 * Insert the properties of the space within this gadget that is available
 	 * for children into the rect passed in as a parameter.
 	 * All co-ordinates are relative to this gadget.
-	 *
 	 * @param rect Reference to a rect to populate with data.
 	 */
 	virtual void getClientRect(Rect& rect) const;
@@ -206,7 +214,6 @@ public:
 	/**
 	 * Clips the supplied rect to the boundaries defined by this gadget and
 	 * this gadget's parents.
-	 *
 	 * @param rect Reference to a rect to populate with data.
 	 */
 	void getRectClippedToHierarchy(Rect& rect);
@@ -215,7 +222,6 @@ public:
 	 * Gets a pointer to a new instance of the GraphicsPort class to allow
 	 * drawing within this gadget's client space.
 	 * The GraphicsPort object must be deleted when it is no longer required.
-	 *
 	 * @return A pointer to a new GraphicsPort object.
 	 */
 	virtual GraphicsPort* newGraphicsPort();
@@ -229,7 +235,6 @@ public:
 	 * Drawing is clipped only to the supplied rect.  If the rect is
 	 * not within the region of this gadget graphical anomalies will occur.
 	 * This should only be called by the Woopsi hierarchy.
-	 *
 	 * @param clipRect The region to clip to.
 	 * @return A pointer to a new GraphicsPort object.
 	 */
