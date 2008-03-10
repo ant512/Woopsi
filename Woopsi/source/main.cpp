@@ -353,7 +353,7 @@ int main() {
 	sknScreen->addGadget(ikWindow);
 	ikWindow->getClientRect(rect);
 
-	AnimButton* butt = new AnimButton(rect.x, rect.y, 111, 53, 0, 0, 111, 53);
+	AnimButton* butt = new AnimButton(rect.x, rect.y, 111, 53, 0, 0);
 	butt->getNormalAnimation()->addFrame(ik6_Bitmap, 111, 53, 0);
 	butt->getNormalAnimation()->addFrame(ik7_Bitmap, 111, 53, 0);
 	butt->getNormalAnimation()->addFrame(ik8_Bitmap, 111, 53, 0);

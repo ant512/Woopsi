@@ -22,6 +22,7 @@ Change Log
 	 - Added scrollbar to Debug GUI.
 	 - Fixed incorrect line count in Text::wrap() function.
 	 - Fixed incorrect check for movement in all gadget drag() functions.
+	 - Removed unnecessary bitmap dimensions from AnimButton class.
 
   - New Features:
      - Added vertical slider.
@@ -32,6 +33,7 @@ Change Log
      - Added EVENT_SCROLL to EventHandler.
      - Added _darkColour to Gadget class.
      - Added LinkedList, LinkedListIterator and DynamicArray classes.
+     - Removed all STL code.
 	 - Added event enabling/disabling to Gadget class.
 	 - Added event enabling/disabling to ScrollingPanel class.
 	 - Added horizontal slider.
