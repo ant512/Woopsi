@@ -11,33 +11,220 @@
 
 using namespace std;
 
+/**
+ * GraphicsPort is the interface between a gadget and the framebuffer.  It provides
+ * drawing tools that are clipped to the visible regions of a gadget.  This class can only
+ * draw to one of the DS' framebuffers.  It makes extensive use of the DMA hardware and does
+ * not call DC_FlushRange(), which will cause problems if it attempts to draw to anything
+ * other than VRAM.
+ */
 class GraphicsPort {
 public:
+	
+	/**
+	 * Constructor.
+	 * @param gadget Pointer to the gadget that this port will draw into.
+	 * @param x The x co-ordinate of the graphics port.
+	 * @param y The y co-ordinate of the graphics port.
+	 * @param width The width of the graphics port.
+	 * @param height The height of the graphics port.
+	 * @param bitmap The bitmap that the port will draw to. 
+	 * @param bitmapWidth The width of the bitmap being drawn to.
+	 * @param bitmapHeight The height of the bitmap being drawn to.
+	 * @param clipRect The clipping region within which the class must draw.
+	 */
 	GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const Gadget::Rect* clipRect = NULL);
+	
+	/**
+	 * Destructor.
+	 */
 	~GraphicsPort();
 
+	/**
+	 * Return the x co-ordinate of the graphics port.
+	 * @return The x co-ordinate of the graphics port.
+	 */
 	s16 getX();
+	
+	/**
+	 * Return the y co-ordinate of the graphics port.
+	 * @return The y co-ordinate of the graphics port.
+	 */
 	s16 getY();
 
-	// Externally-visible drawing functions
+	/**
+	 * Draw a pixel to the bitmap.
+	 * @param x The x co-ordinate of the pixel.
+	 * @param y The y co-ordinate of the pixel.
+	 * @param colour The colour of the pixel.
+	 */
 	void drawPixel(u16 x, u16 y, u16 colour);
+	
+	/**
+	 * Draw a filled rectangle to the bitmap.
+	 * @param x The x co-ordinate of the rectangle.
+	 * @param y The y co-ordinate of the rectangle.
+	 * @param width The width of the rectangle.
+	 * @param height The height of the rectangle.
+	 * @param colour The colour of the rectangle.
+	 */
 	void drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
+	
+	/**
+	 * Draw a horizontal line to the bitmap
+	 * @param x The x co-ordinate of the line.
+	 * @param y The y co-ordinate of the line.
+	 * @param width The width of the line.
+	 * @param colour The colour of the line.
+	 */
 	void drawHorizLine(s16 x, s16 y, s16 width, u16 colour);
+	
+	/**
+	 * Draw a vertical line to the bitmap
+	 * @param x The x co-ordinate of the line.
+	 * @param y The y co-ordinate of the line.
+	 * @param height The height of the line.
+	 * @param colour The colour of the line.
+	 */
 	void drawVertLine(s16 x, s16 y, s16 height, u16 colour);
+	
+	/**
+	 * Draw an unfilled rectangle to the bitmap
+	 * @param x The x co-ordinate of the rectangle.
+	 * @param y The y co-ordinate of the rectangle.
+	 * @param width The width of the rectangle.
+	 * @param height The height of the rectangle.
+	 * @param colour The colour of the rectangle.
+	 */
 	void drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
+	
+	/**
+	 * Draw a bevelled rectangle to the bitmap.
+	 * @param x The x co-ordinate of the rectangle.
+	 * @param y The y co-ordinate of the rectangle.
+	 * @param width The width of the rectangle.
+	 * @param height The height of the rectangle.
+	 * @param shineColour The colour of the top/left sides.
+	 * @param shadowColour The colour of the bottom/right sides.
+	 */
 	void drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shineColour, u16 shadowColour);
+	
+	/**
+	 * Draw a bevelled rectangle to the bitmap using the gadget's border details as the
+	 * basis of the bevel colours.
+	 * @param x The x co-ordinate of the rectangle.
+	 * @param y The y co-ordinate of the rectangle.
+	 * @param width The width of the rectangle.
+	 * @param height The height of the rectangle.
+	 */
 	void drawBevelledRect(s16 x, s16 y, u16 width, u16 height);
+	
+	/**
+	 * Draw a filled circle to the bitmap.
+	 * @param x The x co-ordinate of the circle.
+	 * @param y The y co-ordinate of the circle.
+	 * @param radius The radius of the circle.
+	 * @param colour The colour of the circle.
+	 */
 	void drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour);
+	
+	/**
+	 * Invert the colour of the pixel at the specified co-ordinates.
+	 * @param x The x co-ordinate of the pixel.
+	 * @param y The y co-ordinate of the pixel.
+	 */
 	void drawXORPixel(s16 x, s16 y);
+	
+	/**
+	 * Invert the colour of a horizontal line of pixels.
+	 * @param x The x co-ordinate of the line.
+	 * @param y The y co-ordinate of the line.
+	 * @param width The width of the line.
+	 */
 	void drawXORHorizLine(s16 x, s16 y, s16 width);
+	
+	/**
+	 * Invert the colour of a vertical line of pixels.
+	 * @param x The x co-ordinate of the line.
+	 * @param y The y co-ordinate of the line.
+	 * @param height The height of the line.
+	 */
 	void drawXORVertLine(s16 x, s16 y, s16 height);
+	
+	/**
+	 * Invert the colour of an unfilled rectangle of pixels.
+	 * @param x The x co-ordinate of the rectangle.
+	 * @param y The y co-ordinate of the rectangle.
+	 * @param width The width of the rectangle.
+	 * @param height The height of the rectangle.
+	 */
 	void drawXORRect(s16 x, s16 y, u16 width, u16 height);
+	
+	/**
+	 * Draw a string to the bitmap.
+	 * @param x The x co-ordinate of the string.
+	 * @param y The y co-ordinate of the string.
+	 * @param font The font to draw with.
+	 * @param string The string to output.
+	 */
 	void drawText(s16 x, s16 y, FontBase* font, char* string);
+	
+	/**
+	 * Draw a particular length of a string to the bitmap.
+	 * @param x The x co-ordinate of the string.
+	 * @param y The y co-ordinate of the string.
+	 * @param font The font to draw with.
+	 * @param length The number of characters to output.
+	 * @param string The string to output.
+	 */
 	void drawText(s16 x, s16 y, FontBase* font, u16 length, char* string);
+	
+	/**
+	 * Draw a single character to the bitmap.
+	 * @param x The x co-ordinate of the character.
+	 * @param y The y co-ordinate of the character.
+	 * @param font The font to draw with.
+	 * @param letter The character to output.
+	 */
 	void drawText(s16 x, s16 y, FontBase* font, char letter);
+	
+	/**
+	 * Draw a string to the bitmap in a specific colour.
+	 * @param x The x co-ordinate of the string.
+	 * @param y The y co-ordinate of the string.
+	 * @param font The font to draw with.
+	 * @param string The string to output.
+	 * @param colour The colour of the string.
+	 */
 	void drawText(s16 x, s16 y, FontBase* font, char* string, u16 colour);
+	
+	/**
+	 * Draw a single character to the bitmap in a specific colour.
+	 * @param x The x co-ordinate of the character.
+	 * @param y The y co-ordinate of the character.
+	 * @param font The font to draw with.
+	 * @param string The character to output.
+	 * @param colour The colour of the character.
+	 */
 	void drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour);
+	
+	/**
+	 * Draw a bitmap to the port's bitmap.
+	 * @param x The x co-ordinate to draw the bitmap to.
+	 * @param y The y co-ordinate to draw the bitmap to.
+	 * @param width The width of the bitmap to draw.
+	 * @param height The height of the bitmap to draw.
+	 * @param bitmap Pointer to the bitmap to draw.
+	 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
+	 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+	 * @param bitmapWidth The width of the supplied bitmap.
+	 * @param bitmapHeight The height of the supplied bitmap.
+	 */
 	void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight);
+	
+	/**
+	 * Erases the graphics port's output by redrawing its gadget.
+	 */
 	void clear();
 
 private:
