@@ -19,7 +19,7 @@ Gradient::Gradient(s16 x, s16 y, u16 width, u16 height, u16 fromColour, u16 toCo
 	calculate();
 }
 
-// Calcuilate gradient values
+// Calculate gradient values
 void Gradient::calculate() {
 
 	// Compute initial and final states and appropriate deltas
