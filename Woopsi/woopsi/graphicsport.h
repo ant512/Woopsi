@@ -121,8 +121,8 @@ public:
 	
 	/**
 	 * Draw a filled circle to the bitmap.
-	 * @param x The x co-ordinate of the circle.
-	 * @param y The y co-ordinate of the circle.
+	 * @param x0 The x co-ordinate of the circle.
+	 * @param y0 The y co-ordinate of the circle.
 	 * @param radius The radius of the circle.
 	 * @param colour The colour of the circle.
 	 */

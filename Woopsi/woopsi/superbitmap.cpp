@@ -78,7 +78,7 @@ void SuperBitmap::drawPixel(s16 x, s16 y, u16 colour) {
 }
 
 // Get a single pixel from the bitmap
-u16 SuperBitmap::getPixel(s16 x, s16 y) {
+const u16 SuperBitmap::getPixel(s16 x, s16 y) const {
 
 	// Prevent overflows
 	if ((x < 0) || (y < 0)) return 0;
@@ -89,7 +89,7 @@ u16 SuperBitmap::getPixel(s16 x, s16 y) {
 }
 
 // Return the bitmap
-u16* SuperBitmap::getBitmap() {
+const u16* SuperBitmap::getBitmap() const {
 	return _bitmap;
 }
 
