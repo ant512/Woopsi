@@ -234,6 +234,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\tinyfontmono.c"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\window.cpp"
 				>
 			</File>

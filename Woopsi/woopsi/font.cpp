@@ -37,7 +37,7 @@ const bool Font::scanGlyph(const u16 x, const u16 y) const {
 		    // Check pixel is within bitmap boundaries
 		    if (pixel > bitmapSize) return false;
 
-			if (_bitmap[x2 + (y2 * bitmapWidth)] != getTransparentColour()) {
+			if (_bitmap[pixel] != getTransparentColour()) {
 				// Got some data
 				return true;
 			}

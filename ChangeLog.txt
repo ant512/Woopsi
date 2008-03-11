@@ -23,6 +23,7 @@ Change Log
      - Fixed incorrect line count in Text::wrap() function.
      - Fixed incorrect check for movement in all gadget drag() functions.
      - Removed unnecessary bitmap dimensions from AnimButton class.
+	 - Made Gradient::resize() public.
 
   - New Features:
      - Added vertical slider.

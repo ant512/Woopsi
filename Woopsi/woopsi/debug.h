@@ -12,6 +12,7 @@ class MultiLineTextBox;
 class Gadget;
 class Woopsi;
 class Font;
+class MonoFont;
 class SliderVertical;
 
 /**
@@ -51,7 +52,7 @@ private:
 	AmigaWindow* _window;
 	MultiLineTextBox* _textBox;
 	SliderVertical* _slider;
-	Font* _font;
+	MonoFont* _font;
 
 	/** 
 	 * Constructor is private to force a singleton pattern.
