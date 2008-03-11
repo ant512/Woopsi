@@ -7,22 +7,22 @@ Change Log
      - Removed EventHandler inheritance from Gadget.
      - Added EventHandler inheritance to AmigaScreen and SkinnedScreen.
      - Minor optimisation in TextBox click() and release() functions.
-	 - Added more DMA_Active() checks to fix SuperBitmap DMA problems.
-	 - Made EventHandler an abstract class.
-	 - Removed post-DMA waits.
+     - Added more DMA_Active() checks to fix SuperBitmap DMA problems.
+     - Made EventHandler an abstract class.
+     - Removed post-DMA waits.
      - Added cache flushing to fix empty pixels when using DMA hardware.
-	 - Fixed incorrect vector pointer in Gadget::moveHiddenToChildList().
-	 - Font::scanGlyph() no longer scans past the end of its bitmap's memory.
-	 - Tidied up Debug class.
-	 - Added javadoc comments to more files.
-	 - Swapped ScrollingPanel and ScrollableBase to use a more logical model
-	   of the scrolling region.
-	 - Made Gadget::getX() and Gadget::getY() const.
-	 - Fixed SliderVertical bugs.
-	 - Added scrollbar to Debug GUI.
-	 - Fixed incorrect line count in Text::wrap() function.
-	 - Fixed incorrect check for movement in all gadget drag() functions.
-	 - Removed unnecessary bitmap dimensions from AnimButton class.
+     - Fixed incorrect vector pointer in Gadget::moveHiddenToChildList().
+     - Font::scanGlyph() no longer scans past the end of its bitmap's memory.
+     - Tidied up Debug class.
+     - Added javadoc comments to more files.
+     - Swapped ScrollingPanel and ScrollableBase to use a more logical model
+       of the scrolling region.
+     - Made Gadget::getX() and Gadget::getY() const.
+     - Fixed SliderVertical bugs.
+     - Added scrollbar to Debug GUI.
+     - Fixed incorrect line count in Text::wrap() function.
+     - Fixed incorrect check for movement in all gadget drag() functions.
+     - Removed unnecessary bitmap dimensions from AnimButton class.
 
   - New Features:
      - Added vertical slider.
@@ -34,9 +34,9 @@ Change Log
      - Added _darkColour to Gadget class.
      - Added LinkedList, LinkedListIterator and DynamicArray classes.
      - Removed all STL code.
-	 - Added event enabling/disabling to Gadget class.
-	 - Added event enabling/disabling to ScrollingPanel class.
-	 - Added horizontal slider.
+     - Added event enabling/disabling to Gadget class.
+     - Added event enabling/disabling to ScrollingPanel class.
+     - Added horizontal slider.
 
 
   V0.29 (20081101)
@@ -139,7 +139,7 @@ Change Log
      - BitmapButton works with const u16* bitmap data instead of non-const.
      - Swapped bool cast for flag setting in Gadget constructor with PALib-style
        double logical NOT construct.
-	
+
   - New Features:
      - Skinning system.
      - Added MonoFont class for 1bpp font support.
