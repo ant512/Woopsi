@@ -3,7 +3,6 @@
 #include <stdarg.h>
 #include "debug.h"
 #include "textwriter.h"
-#include "font.h"
 #include "sysfont.h"
 #include "woopsifuncs.h"
 #include "amigascreen.h"
@@ -94,7 +93,7 @@ void Debug::createGUI() {
 
 		// Create font
 		if (_font == NULL) {
-			_font = new MonoFont(tinyfontmono_Bitmap, 128, 24, 4, 6, 32768);
+			_font = new MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, 32768);
 		}
 
 		// Add textbox

@@ -11,7 +11,6 @@ class AmigaWindow;
 class MultiLineTextBox;
 class Gadget;
 class Woopsi;
-class Font;
 class MonoFont;
 class SliderVertical;
 
