@@ -13,7 +13,7 @@ MonoFont::~MonoFont() {
 
 // Return a pixel at a given location 
 const u16 MonoFont::getPixel(const u32 position) const {
-	if (_bitmap[position >> 4] & (1 << (position % 16))) {
+	if (_bitmap[position >> 4] & (1 << (16 - (position % 16)))) {
 		// Got some data
 		return getColour();
 	}
@@ -33,7 +33,7 @@ const bool MonoFont::scanGlyph(const u16 x, const u16 y) const {
 			
 			pos = x2 + (y2 * bitmapWidth);
 
-			if (_bitmap[pos >> 4] & (1 << (pos % 16))) {
+			if (_bitmap[pos >> 4] & (1 << (16 - (pos % 16)))) {
 				// Got some data
 				return true;
 			}
