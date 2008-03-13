@@ -3,11 +3,11 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "graphicsport.h"
-#include "sliderverticalgrip.h"
 #include "eventhandler.h"
 
 using namespace std;
+
+class SliderVerticalGrip;
 
 /**
  * Gadget providing a sliding "grip" that can be moved up and

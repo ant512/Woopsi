@@ -2,9 +2,7 @@
 #define _WINDOW_DEPTH_BUTTON_H_
 
 #include <nds.h>
-#include "textwriter.h"
 #include "button.h"
-#include "graphicsport.h"
 
 using namespace std;
 
