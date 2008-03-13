@@ -6,7 +6,7 @@
  * lower DS screen to the upper screen.  This lets us use a single co-ordinate system
  * instead of one co-ordinate system for each screen.
  */
-#define TOP_SCREEN_Y_OFFSET 384
+#define TOP_SCREEN_Y_OFFSET 512
 
 /**
  * Define the width of a screen.

@@ -258,7 +258,7 @@ void Gadget::setDarkColour(u16 colour) {
 }
 
 const u8 Gadget::calculatePhysicalScreenNumber(s16 y) const {
-	if (y > TOP_SCREEN_Y_OFFSET - 1) {
+	if (y & TOP_SCREEN_Y_OFFSET) {
 		// Top screen
 		return 1;
 	}
@@ -268,7 +268,7 @@ const u8 Gadget::calculatePhysicalScreenNumber(s16 y) const {
 }
 
 const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
-	if (y > TOP_SCREEN_Y_OFFSET - 1) {
+	if (y & TOP_SCREEN_Y_OFFSET) {
 		return y - TOP_SCREEN_Y_OFFSET;
 	}
 

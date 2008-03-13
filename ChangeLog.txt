@@ -27,6 +27,7 @@ Change Log
      - Removed "auto drawing" code from MultiLineTextBox.
      - Switched to using visibility toggle in Debug class to optimise textbox
        redraws.
+     - Changed value of TOP_SCREEN_Y_OFFSET to 512 to enable bitmask checking.
 
 
   - New Features:
