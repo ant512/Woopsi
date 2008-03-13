@@ -96,9 +96,9 @@ Features
   - Simplistic "multitasking" - each window runs simultaneously;
   - Uses 16-bit display mode;
   - Uses the old AmigaOS 3.0 "Topaz" font;
-  - Optional PALib support.
+  - Optional PALib support;
   - Optional SDL layer to facilitate native compilation on non-DS platforms and
-    aid porting.
+    aid porting;
   - Optional .a library build.
 
 
@@ -117,7 +117,7 @@ Requirements
    
   To use Woopsi with libnds:
   
-   - Replace the "Makefile" with "Makefile.libnds"
+   - Replace the "Makefile" with "Makefile.libnds".
    
 
 SDL Compatibility
@@ -145,7 +145,7 @@ Credits and Acknowlegements
 
  - Coding and design                              - Antony Dzeryn
  - Testing, technical advice, other contributions - Jeff Laing
- - PALib removal                                  - Steve
+ - PALib independence                             - Steve
  - Simian Zombie logo                             - John Clay
  - Thanks to                                      - The devKitPro team
                                                   - The PALib team
