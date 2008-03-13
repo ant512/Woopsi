@@ -1,5 +1,4 @@
 #include "slidervertical.h"
-#include <stdlib.h>
 
 SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_outline = OUTLINE_IN;
@@ -37,15 +36,10 @@ const s16 SliderVertical::getValue() const {
 	if (rect.height > _grip->getHeight()) {
 	
 		// Calculate ratio
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.height;
+		u32 ratio = ((_maximumValue - _minimumValue) << 8) / rect.height;
 		
 		// Calculate value
 		u32 val ((_grip->getY() - getY()) * ratio);
-		
-		// Round up if fractional value is >= 128
-		//if (val & 128) {
-		//	val += 0x100;
-		//}
 
 		// Right shift to erase fractional part and return
 		return val >> 8;
@@ -78,18 +72,10 @@ void SliderVertical::setValue(const s16 value) {
 	if (rect.height > _grip->getHeight()) {
 	
 		// Calculate ratio (max fractional value of 255)
-		u32 ratio = (rect.height << 8) / (u32)abs(_maximumValue - _minimumValue);
+		u32 ratio = (rect.height << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// Convert value using ratio
 		s16 newGripY = (value * ratio) >> 8;
-		
-		// Round up if fractional value is >= 8
-		//if (newGripY & 8) {
-		//	newGripY += 0x10;
-		//}
-		
-		// Bitshift back down to eliminate fraction
-		//newGripY >>= 8;
 		
 		// Adjust new y so that it fits within gutter
 		if (newGripY + _grip->getHeight() > rect.y + rect.height) {
@@ -97,7 +83,7 @@ void SliderVertical::setValue(const s16 value) {
 		}
 
 		// Move the grip
-		_grip->moveTo(0, abs(newGripY));
+		_grip->moveTo(0, newGripY);
 	}
 }
 
@@ -136,34 +122,17 @@ bool SliderVertical::click(s16 x, s16 y) {
 			// Did we click a gadget?
 			if (_clickedGadget == NULL) {
 
-				// Move the grip
-				s16 newGripY;
+				// Handle click on gutter
+				Gadget::click(x, y);
 
 				// Which way should the grip move?
 				if (y > _grip->getY()) {
 					// Move grip down
-					newGripY = (_grip->getY() - getY()) + _grip->getHeight();
+					jumpGrip(1);
 				} else {
 					// Move grip up
-					newGripY = (_grip->getY() - getY()) - _grip->getHeight();
+					jumpGrip(0);
 				}
-
-				// Get client rect for this gadget
-				Rect rect;
-				getClientRect(rect);
-
-				// Adjust y value so that it does not exceed boundaries of gutter
-				if (newGripY < rect.y) {
-					newGripY = rect.y;
-				} else if (newGripY + _grip->getHeight() > rect.y + rect.height) {
-					newGripY = (rect.height - _grip->getHeight()) + 1;
-				}
-
-				// Handle click on gutter
-				Gadget::click(x, y);
-
-				// Move the grip
-				_grip->moveTo(0, newGripY);
 			}
 
 			return true;
@@ -182,7 +151,7 @@ bool SliderVertical::release(s16 x, s16 y) {
 		return true;
 	} else if (_flags.clicked) {
 
-		// Handle release on window
+		// Handle release on this
 		Gadget::release(x, y);
 
 		return true;
@@ -194,7 +163,7 @@ bool SliderVertical::release(s16 x, s16 y) {
 bool SliderVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	// Handle child dragging
 	if (_clickedGadget != NULL) {
-		return _clickedGadget->drag(x, y, vX, vY);//) {
+		return _clickedGadget->drag(x, y, vX, vY);
 	}
 
 	return false;
@@ -226,22 +195,17 @@ void SliderVertical::resizeGrip() {
 	s32 newHeight = rect.height;
 	
 	// Calculate the height of the content that has overflowed the viewport
-	s32 overspill = ((s32)abs(_maximumValue - _minimumValue)) - _pageSize;
+	s32 overspill = ((s32)(_maximumValue - _minimumValue)) - _pageSize;
 	
 	// Is there any overflow?
 	if (overspill > 0) {
 	
 		// Calculate the ratio of content to gutter
-		u32 ratio = (rect.height << 8) / (u32)abs(_maximumValue - _minimumValue);
+		u32 ratio = (rect.height << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// New height is equivalent to the height of the gutter minus
 		// the ratio-converted overflow height
 		newHeight = (rect.height << 8) - (overspill * ratio);
-		
-		// Handle rounding
-		//if (newHeight & 8) {
-		//	newHeight += 0x10;
-		//}
 		
 		// Bitshift to remove fraction
 		newHeight >>= 8;
@@ -253,4 +217,32 @@ void SliderVertical::resizeGrip() {
 
 	// Perform resize
 	_grip->resize(rect.width, newHeight);
+}
+
+void SliderVertical::jumpGrip(u8 direction) {
+
+	s16 newGripY;
+
+	// Which way should the grip move?
+	if (direction == 1) {
+		// Move grip down
+		newGripY = (_grip->getY() - getY()) + _grip->getHeight();
+	} else {
+		// Move grip up
+		newGripY = (_grip->getY() - getY()) - _grip->getHeight();
+	}
+
+	// Get client rect for this gadget
+	Rect rect;
+	getClientRect(rect);
+
+	// Adjust y value so that it does not exceed boundaries of gutter
+	if (newGripY < rect.y) {
+		newGripY = rect.y;
+	} else if (newGripY + _grip->getHeight() > rect.y + rect.height) {
+		newGripY = (rect.height - _grip->getHeight()) + 1;
+	}
+
+	// Move the grip
+	_grip->moveTo(0, newGripY);
 }

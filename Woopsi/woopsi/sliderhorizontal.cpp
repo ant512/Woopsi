@@ -1,5 +1,4 @@
 #include "sliderhorizontal.h"
-#include <stdlib.h>
 
 SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_outline = OUTLINE_IN;
@@ -37,15 +36,10 @@ const s16 SliderHorizontal::getValue() const {
 	if (rect.width > _grip->getWidth()) {
 	
 		// Calculate ratio
-		u32 ratio = (abs(_maximumValue - _minimumValue) << 8) / rect.width;
+		u32 ratio = ((_maximumValue - _minimumValue) << 8) / rect.width;
 		
 		// Calculate value
 		u32 val ((_grip->getX() - getX()) * ratio);
-		
-		// Round up if fractional value is >= 128
-		//if (val & 128) {
-		//	val += 0x100;
-		//}
 
 		// Right shift to erase fractional part and return
 		return val >> 8;
@@ -78,18 +72,10 @@ void SliderHorizontal::setValue(const s16 value) {
 	if (rect.width > _grip->getWidth()) {
 	
 		// Calculate ratio (max fractional value of 255)
-		u32 ratio = (rect.width << 8) / (u32)abs(_maximumValue - _minimumValue);
+		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// Convert value using ratio
 		s16 newGripX = (value * ratio) >> 8;
-		
-		// Round up if fractional value is >= 8
-		//if (newGripX & 8) {
-		//	newGripX += 0x10;
-		//}
-		
-		// Bitshift back down to eliminate fraction
-		//newGripX >>= 4;
 		
 		// Adjust new x so that it fits within gutter
 		if (newGripX + _grip->getWidth() > rect.x + rect.width) {
@@ -97,7 +83,7 @@ void SliderHorizontal::setValue(const s16 value) {
 		}
 
 		// Move the grip
-		_grip->moveTo(abs(newGripX), 0);
+		_grip->moveTo(newGripX, 0);
 	}
 }
 
@@ -226,22 +212,17 @@ void SliderHorizontal::resizeGrip() {
 	s32 newWidth = rect.width;
 	
 	// Calculate the width of the content that has overflowed the viewport
-	s32 overspill = ((s32)abs(_maximumValue - _minimumValue)) - _pageSize;
+	s32 overspill = ((s32)(_maximumValue - _minimumValue)) - _pageSize;
 	
 	// Is there any overflow?
 	if (overspill > 0) {
 	
 		// Calculate the ratio of content to gutter
-		u32 ratio = (rect.width << 8) / (u32)abs(_maximumValue - _minimumValue);
+		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// New width is equivalent to the width of the gutter minus
 		// the ratio-converted overflow width
 		newWidth = (rect.width << 8) - (overspill * ratio);
-		
-		// Handle rounding
-		//if (newWidth & 8) {
-			//newWidth += 0x10;
-		//}
 		
 		// Bitshift to remove fraction
 		newWidth >>= 8;

@@ -12,7 +12,7 @@ class MultiLineTextBox;
 class Gadget;
 class Woopsi;
 class MonoFont;
-class SliderVertical;
+class ScrollbarVertical;
 
 /**
  * Debugging console.  The class automatically creates its own
@@ -50,7 +50,7 @@ private:
 	AmigaScreen* _screen;
 	AmigaWindow* _window;
 	MultiLineTextBox* _textBox;
-	SliderVertical* _slider;
+	ScrollbarVertical* _scrollbar;
 	MonoFont* _font;
 
 	/** 

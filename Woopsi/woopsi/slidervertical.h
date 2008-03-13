@@ -21,7 +21,7 @@ public:
 	/**
 	 * Constructor.
 	 * @param x The x co-ord of the slider, relative to its parent.
-	 * @param y The y co-ord of the slider, relative t its parent.
+	 * @param y The y co-ord of the slider, relative to its parent.
 	 * @param width The width of the slider.
 	 * @param height The height of the slider.
 	 */
@@ -89,6 +89,12 @@ public:
 	 * Resize and redraw the grip.
 	 */
 	void resizeGrip();
+
+	/**
+	 * Make the grip jump up or down the gutter.
+	 * @param direction 0 to jump up, 1 to jump down.
+	 */
+	void jumpGrip(u8 direction);
 
 	/**
 	 * Draw the slider.

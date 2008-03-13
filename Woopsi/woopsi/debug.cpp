@@ -8,7 +8,7 @@
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "woopsi.h"
-#include "slidervertical.h"
+#include "scrollbarvertical.h"
 
 Woopsi* Debug::_woopsi = NULL;
 Debug* Debug::_debug = NULL;
@@ -18,7 +18,7 @@ Debug::Debug() {
 	_window = NULL;
 	_textBox = NULL;
 	_font = NULL;
-	_slider = NULL;
+	_scrollbar = NULL;
 
 	createGUI();
 }
@@ -81,7 +81,6 @@ void Debug::createGUI() {
 		if (_screen == NULL) {
 			_screen = new AmigaScreen("Debug");
 			_woopsi->addGadget(_screen);
-			//_screen->flipToTopScreen();
 			_screen->draw();
 		}
 
@@ -102,7 +101,7 @@ void Debug::createGUI() {
 			Gadget::Rect rect;
 			_window->getClientRect(rect);
 
-			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width - 10, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
+			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width - 9, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
 			_textBox->setVisible(false);
 			_window->addGadget(_textBox);
 			_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
@@ -117,28 +116,28 @@ void Debug::createGUI() {
 		}
 		
 		// Add slider
-		if (_slider == NULL) {
-			_slider = new SliderVertical(242, 13, 10, 162);
-			_window->addGadget(_slider);
-			_slider->setMinimumValue(0);
-			_slider->setMaximumValue(0);
-			_slider->setPageSize(_textBox->getHeight());
-			_slider->setEventHandler(this);
-			_slider->draw();
+		if (_scrollbar == NULL) {
+			_scrollbar = new ScrollbarVertical(243, 13, 9, 162);
+			_window->addGadget(_scrollbar);
+			_scrollbar->setMinimumValue(0);
+			_scrollbar->setMaximumValue(0);
+			_scrollbar->setPageSize(_textBox->getHeight());
+			_scrollbar->setEventHandler(this);
+			_scrollbar->draw();
 		}
 	}
 }
 
 bool Debug::handleEvent(const EventArgs& e) {
 	if (e.gadget != NULL) {
-		if (e.gadget == _slider) {
+		if (e.gadget == _scrollbar) {
 			
 			// Slider events
 			switch (e.type) {
 				case EVENT_VALUE_CHANGE:
 					if (_textBox != NULL) {
 						_textBox->setRaisesEvents(false);
-						_textBox->jump(0, 0 - _slider->getValue());
+						_textBox->jump(0, 0 - _scrollbar->getValue());
 						_textBox->setRaisesEvents(true);
 						return true;
 					}
@@ -151,20 +150,20 @@ bool Debug::handleEvent(const EventArgs& e) {
 			// Textbox events
 			switch (e.type) {
 				case EVENT_DRAG:
-					if (_slider != NULL) {
-						_slider->setRaisesEvents(false);
-						_slider->setValue(0 - _textBox->getCanvasY());
-						_slider->setRaisesEvents(true);
+					if (_scrollbar != NULL) {
+						_scrollbar->setRaisesEvents(false);
+						_scrollbar->setValue(0 - _textBox->getCanvasY());
+						_scrollbar->setRaisesEvents(true);
 						return true;
 					}
 					break;
 				case EVENT_SCROLL:
-					if (_slider != NULL) {
-						_slider->setRaisesEvents(false);
-						_slider->setMaximumValue(_textBox->getCanvasHeight());
-						_slider->resizeGrip();
-						_slider->setValue(0 - _textBox->getCanvasY());
-						_slider->setRaisesEvents(true);
+					if (_scrollbar != NULL) {
+						_scrollbar->setRaisesEvents(false);
+						_scrollbar->setMaximumValue(_textBox->getCanvasHeight());
+						_scrollbar->resizeGrip();
+						_scrollbar->setValue(0 - _textBox->getCanvasY());
+						_scrollbar->setRaisesEvents(true);
 						return true;
 					}
 					break;

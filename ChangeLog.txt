@@ -44,6 +44,8 @@ Change Log
      - Added horizontal slider.
      - Gadgets track calls to erase() and no longer perform a second erase
        without a call to draw() first.
+     - Completed ScrollbarVertical class.
+     - Added up, down, left and right arrow glyphs.
 
 
   V0.29 (20081101)
