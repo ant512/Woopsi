@@ -60,6 +60,7 @@ void Gadget::init() {
 	_flags.decoration = false;
 	_flags.permeable = false;
 	_flags.raisesEvents = true;
+	_flags.erased = true;
 
 	_activeGadget = NULL;
 	_clickedGadget = NULL;
@@ -624,6 +625,9 @@ void Gadget::draw() {
 		// Tidy up
 		delete visibleRects;
 
+		// Remember that the gadget is no longer erased
+		_flags.erased = false;
+
 		drawChildren();
 	}
 }
@@ -919,11 +923,16 @@ void Gadget::splitRectangles(DynamicArray<Rect>* invalidRects, DynamicArray<Rect
 // Erase this gadget from the screen
 void Gadget::erase() {
 
-	invalidateVisibleRectCache();
-	cacheVisibleRects();
+	if (!_flags.erased) {
+		invalidateVisibleRectCache();
+		cacheVisibleRects();
 
-	if (_parent != NULL) {
-		_parent->eraseGadget(this);
+		if (_parent != NULL) {
+			_parent->eraseGadget(this);
+		}
+
+		// Remember that the gadget has been erased
+		_flags.erased = true;
 	}
 }
 

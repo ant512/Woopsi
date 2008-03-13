@@ -73,6 +73,7 @@ public:
 		u8 decoration : 1;
 		u8 permeable : 1;
 		u8 raisesEvents : 1;
+		u8 erased : 1;
 	} Flags;
 
 	/**

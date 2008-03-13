@@ -28,7 +28,7 @@ void AnimButton::draw(Rect clipRect) {
 	if (_flags.clicked) {
 		port->drawBitmap(x, y, _animClicked->getCurrentFrame()->width, _animClicked->getCurrentFrame()->height, _animClicked->getCurrentBitmap(), _animX, _animY, _animClicked->getCurrentFrame()->width, _animClicked->getCurrentFrame()->height);
 	} else {
-		port->drawBitmap(x, y, _animNormal->getCurrentFrame()->width, _animNormal->getCurrentFrame()->height, _animNormal->getCurrentBitmap(), _animX, _animY, _animClicked->getCurrentFrame()->height, _animClicked->getCurrentFrame()->width);
+		port->drawBitmap(x, y, _animNormal->getCurrentFrame()->width, _animNormal->getCurrentFrame()->height, _animNormal->getCurrentBitmap(), _animX, _animY, _animClicked->getCurrentFrame()->width, _animClicked->getCurrentFrame()->height);
 	}
 
 	// Draw outline

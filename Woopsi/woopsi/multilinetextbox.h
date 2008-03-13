@@ -85,15 +85,6 @@ public:
 	virtual void setTextPositionVert(TextPositionVert position);
 
 	/**
-	 * With this option set to "true", methods that should redraw the
-	 * textbox do so.  Setting this to false can result in faster
-	 * operation, but it is the developer's responsibility to call the
-	 * draw() method when appropriate.
-	 * @param autoDrawing "True" to enable automatic drawing.
-	 */
-	virtual void setAutomaticDrawing(bool autoDrawing);
-	
-	/**
 	 * Returns the number of "pages" that the text spans.  A page
 	 * is defined as the amount of text that can be displayed within
 	 * the textbox at one time.
@@ -153,7 +144,6 @@ protected:
 	u8 _padding;
 	TextPositionHoriz _hPos;
 	TextPositionVert _vPos;
-	bool _autoDrawing;
 
 	u8 getRowX(u8 rowPixelWidth);
 	s16 getRowY(u8 screenRow, u8 screenRows);

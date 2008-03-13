@@ -12,7 +12,6 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 	_vPos = TEXT_POSITION_VERT_CENTRE;
 	_padding = 2;
 	_topRow = 0;
-	_autoDrawing = true;
 
 	_flags.draggable = true;
 
@@ -34,10 +33,6 @@ MultiLineTextBox::~MultiLineTextBox() {
 
 	delete [] _rawText;
 	_rawText = NULL;
-}
-
-void MultiLineTextBox::setAutomaticDrawing(bool autoDrawing) {
-	_autoDrawing = autoDrawing;
 }
 
 void MultiLineTextBox::draw(Rect clipRect) {
@@ -147,18 +142,12 @@ void MultiLineTextBox::calculateTotalVisibleRows() {
 
 void MultiLineTextBox::setTextPositionHoriz(TextPositionHoriz position) {
 	_hPos = position;
-
-	if (_autoDrawing) {
-		draw();
-	}
+	draw();
 }
 
 void MultiLineTextBox::setTextPositionVert(TextPositionVert position) {
 	_vPos = position;
-
-	if (_autoDrawing) {
-		draw();
-	}
+	draw();
 }
 
 char* MultiLineTextBox::getRawText() {
@@ -194,10 +183,8 @@ void MultiLineTextBox::setText(char* text, bool raiseEvent) {
 		stripTopLines(_text->getLineCount() - _maxRows);
 	}
 
-	if (_autoDrawing) {
-		draw();
-	}
-
+	draw();
+	
 	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
@@ -230,15 +217,12 @@ void MultiLineTextBox::addText(char* text) {
 		// Ensure that we have the correct number of rows
 		if (_text->getLineCount() > _maxRows) {
 			stripTopLines(_text->getLineCount() - _maxRows);
-
-			if (_autoDrawing) {
-				draw();
-			}
-
 		} else {
 			_text->setText(_rawText);
 		}
-		
+
+		draw();
+
 		// Update max scroll value
 		if (_text->getLineCount() > _visibleRows) {
 			_canvasHeight = _text->getPixelHeight() + (_padding << 1);

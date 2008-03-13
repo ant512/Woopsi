@@ -23,7 +23,11 @@ Change Log
      - Fixed incorrect line count in Text::wrap() function.
      - Fixed incorrect check for movement in all gadget drag() functions.
      - Removed unnecessary bitmap dimensions from AnimButton class.
-	 - Made Gradient::resize() public.
+     - Made Gradient::resize() public.
+     - Removed "auto drawing" code from MultiLineTextBox.
+     - Switched to using visibility toggle in Debug class to optimise textbox
+       redraws.
+
 
   - New Features:
      - Added vertical slider.
@@ -38,6 +42,8 @@ Change Log
      - Added event enabling/disabling to Gadget class.
      - Added event enabling/disabling to ScrollingPanel class.
      - Added horizontal slider.
+     - Gadgets track calls to erase() and no longer perform a second erase
+       without a call to draw() first.
 
 
   V0.29 (20081101)

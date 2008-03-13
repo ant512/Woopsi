@@ -40,10 +40,11 @@ void Debug::output(char* text) {
 
 		createDebug();
 
+		_debug->_textBox->setVisible(false);
 		_debug->_textBox->addText(">");
 		_debug->_textBox->addText(text);
+		_debug->_textBox->setVisible(true);
 		_debug->_textBox->addText("\n");
-		_debug->_textBox->draw();
 	}
 }
 
@@ -102,7 +103,7 @@ void Debug::createGUI() {
 			_window->getClientRect(rect);
 
 			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width - 10, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
-			_textBox->setAutomaticDrawing(false);
+			_textBox->setVisible(false);
 			_window->addGadget(_textBox);
 			_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
 			_textBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
@@ -111,8 +112,8 @@ void Debug::createGUI() {
 			_textBox->addText(WOOPSI_VERSION);
 			_textBox->addText("\n");
 			_textBox->addText(WOOPSI_COPYRIGHT);
+			_textBox->setVisible(true);
 			_textBox->addText("\n");
-			_textBox->draw();
 		}
 		
 		// Add slider
@@ -164,16 +165,6 @@ bool Debug::handleEvent(const EventArgs& e) {
 						_slider->resizeGrip();
 						_slider->setValue(0 - _textBox->getCanvasY());
 						_slider->setRaisesEvents(true);
-						return true;
-					}
-					break;
-				case EVENT_VALUE_CHANGE:
-					if (_slider != NULL) {
-						//_slider->setRaisesEvents(false);
-						//_slider->setMaximumValue(_textBox->getCanvasHeight());
-						//_slider->resizeGrip();
-						//_slider->setValue(0 - _textBox->getCanvasY());
-						//_slider->setRaisesEvents(true);
 						return true;
 					}
 					break;
