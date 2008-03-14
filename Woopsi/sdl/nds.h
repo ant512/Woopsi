@@ -1,12 +1,3 @@
-/*
- *  nds.h
- *  WoopsiSDL
- *
- *  Created by Antony Dzeryn on 23/12/2007.
- *  Copyright 2007 __MyCompanyName__. All rights reserved.
- *
- */
-
 #ifndef _NDS_H_
 #define _NDS_H_
 
