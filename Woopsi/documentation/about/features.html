@@ -21,19 +21,54 @@
 	<h1>About Woopsi - Features</h1>
 	<ul>
 		<li>Multiple screen support</li>
-		<li>Full featured windows, with depth sorting, close gadgets, etc</li>
-		<li>Standard UI components such as textboxes and buttons</li>
-		<li>Smooth scrolling text viewer</li>
-		<li>Smooth scrolling "SuperBitmap" gadget to display large bitmaps in small windows</li>
-		<li>Set of drawing functions for the SuperBitmap gadget, including rectangle and circle drawing</li>
-		<li>Monochrome and colour font support</li>
-		<li>Support for any standard PALib-style 16-bit bitmap font</li>
-		<li>Full featured event system</li>
-		<li>Optimised UI component redrawing</li>
-		<li>Hardware-accelerated rectangle drawing</li>
+		<li>A full set of user interface components:</li>
+		<ul>
+			<li>Text buttons with text alignment functionality</li>
+			<li>Image buttons</li>
+			<li>Animated buttons</li>
+			<li>Radio buttons and radio button groups</li>
+			<li>Check boxes</li>
+			<li>Single-line textboxes</li>
+			<li>Multi-line text boxes</li>
+			<li>Screens</li>
+			<li>Windows</li>
+			<li>Gradient backgrounds</li>
+			<li>SuperBitmap, for persistent drawing and displaying large bitmaps in small gadgets</li>
+			<li>Scrolling panels, for containing graphics or gadgets within regions that are larger than the parent container</li>
+			<li>Scroll bars</li>
+			<li>Slider bars</li>
+		</ul>
+		<li>Skinnable screens and windows</li>
+		<li>Draggable gadgets, including draggable windows and screens</li>
+		<li>Borderless gadgets, including borderless windows</li>
+		<li>Intelligent, optimised gadget drawing and erasing</li>
+		<li>Event system</li>
+		<li>Depth sorting</li>
+		<li>Complete API for constructing new gadgets:</li>
+		<ul>
+			<li>Extensible font system that supports monochrome and 16-bit font bitmaps by default</li>
+			<li>Text manipulation, including wrapping functions and width calculation</li>
+			<li>Animation class with support for variable framerates and standard/pingpong looping</li>
+			<li>GraphicsPort class providing depth-sorted, clipped, hardware-accelerated drawing functions:</li>
+			<ul>
+				<li>Pixel plotting</li>
+				<li>Optimised horizontal/vertical lines</li>
+				<li>Bresenham omni-directional lines</li>
+				<li>Filled and unfilled rectangles</li>
+				<li>Filled and unfilled circles</li>
+				<li>Bitmap blitting</li>
+				<li>XOR horizontal/vertical lines and pixel plotting</li>
+				<li>Flood fill</li>
+			</ul>
+			<li>Linked list and dynamic array container classes</li>
+		</ul>
 		<li>Object-orientated design for easy integration into other C++ software</li>
 		<li>Simple API for rapid GUI creation</li>
-		<li>16-bit display</li>
-		<li>Appearance mimics AmigaOS 3.0</li>
+		<li>Simplistic "multitasking" - each window runs simultaneously</li>
+		<li>Uses 16-bit display mode</li>
+		<li>Uses the old AmigaOS 3.0 "Topaz" font</li>
+		<li>Optional PALib support</li>
+		<li>Optional SDL layer to facilitate native compilation on non-DS platforms and aid porting</li>
+		<li>Optional .a library build</li>
 	</ul>
 </div>
