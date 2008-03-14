@@ -3,9 +3,10 @@
 
 #include <nds.h>
 #include "button.h"
-#include "radiobutton.h"
 
 using namespace std;
+
+class RadioButton;
 
 class RadioButtonGroup : public Gadget {
 

@@ -143,7 +143,7 @@ bool PacSprite::move(u8 newDirection, u8 speed, bool isGhost) {
 
 // PacMan
 
-PacMan::PacMan(SimpleScreen* screen) : EventHandler() {
+PacMan::PacMan(AmigaScreen* screen) : EventHandler() {
 	_screen = screen;
 	_width = 95;
 	_height = 110;
@@ -265,15 +265,22 @@ void PacMan::handleKeyPress(const EventArgs& e) {
 
 void PacMan::initGUI() {
 	// Create window
-	_window = _screen->newWindow(0, 13, 103, 150, "PacMan", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_window = new AmigaWindow(0, 13, 103, 150, "PacMan", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_screen->addGadget(_window);
+
 	_window->setEventHandler(this);
 	_window->setRefcon(1);
 
-	_superBitmap = _window->newSuperBitmap(0, 0, _width, _height, _width, _height, false);
+	Gadget::Rect rect;
+	_window->getClientRect(rect);
+
+	_superBitmap = new SuperBitmap(rect.x, rect.y, _width, _height, _width, _height, false);
+	_window->addGadget(_superBitmap);
 	_superBitmap->setAllowStylusScroll(false);
 	_superBitmap->setRefcon(2);
 
-	_resetButton = _window->newButton(18, 114, 60, 14, "Reset");
+	_resetButton = new Button(rect.x + 18, rect.y + 114, 60, 14, "Reset");
+	_window->addGadget(_resetButton);
 	_resetButton->setEventHandler(this);
 	_resetButton->setRefcon(3);
 	

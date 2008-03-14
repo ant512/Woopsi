@@ -2,16 +2,15 @@
 #define _GADGET_H_
 
 #include <nds.h>
-#include "eventhandler.h"
-#include "debug.h"
-#include "glyphs.h"
 #include "defines.h"
-#include "fontbase.h"
+#include "eventhandler.h"
 #include "dynamicarray.h"
+#include "glyphs.h"
 
 using namespace std;
 
 class GraphicsPort;
+class FontBase;
 
 /**
  * Class proving all the basic functionality of a Woopsi gadget.

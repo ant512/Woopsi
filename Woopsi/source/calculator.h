@@ -6,15 +6,15 @@
 class Calculator : EventHandler {
 
 public:
-	Calculator(SimpleScreen* screen);
+	Calculator(AmigaScreen* screen);
 	void buttonClicked(Gadget* gadget);
 
 	bool handleEvent(const EventArgs& e);
 	void handleClick(const EventArgs& e);
 
 private:
-	SimpleScreen* _screen;
-	SimpleWindow* _window;
+	AmigaScreen* _screen;
+	AmigaWindow* _window;
 	Textbox* _output;
 	s32 _val1;
 	s32 _val2;

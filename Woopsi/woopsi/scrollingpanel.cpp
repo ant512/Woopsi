@@ -1,4 +1,6 @@
 #include "scrollingpanel.h"
+#include "graphicsport.h"
+#include "woopsifuncs.h"
 
 ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
 	_canvasWidth = width;

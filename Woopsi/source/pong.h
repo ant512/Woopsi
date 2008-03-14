@@ -7,7 +7,7 @@
 class Pong : EventHandler {
 
 public:
-	Pong(SimpleScreen* screen);
+	Pong(AmigaScreen* screen);
 	~Pong();
 
 	void draw();
@@ -20,8 +20,8 @@ public:
 	void handleKeyRelease(const EventArgs& e);
 
 private:
-	SimpleScreen* _screen;
-	SimpleWindow* _window;
+	AmigaScreen* _screen;
+	AmigaWindow* _window;
 	u8 _p1x;
 	u8 _p1y;
 	u8 _p2x;

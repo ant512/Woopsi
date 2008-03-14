@@ -142,14 +142,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\simplescreen.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\simplewindow.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\skinnedscreen.cpp"
 				>
 			</File>
@@ -397,14 +389,6 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\scrollingpanel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\simplescreen.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\simplewindow.h"
 				>
 			</File>
 			<File

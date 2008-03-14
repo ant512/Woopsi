@@ -1,5 +1,7 @@
 #include "multilinetextbox.h"
-#include "woopsi.h"
+#include "fontbase.h"
+#include "text.h"
+#include "graphicsport.h"
 
 MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
 	

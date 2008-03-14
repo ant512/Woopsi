@@ -1,4 +1,8 @@
 #include "graphicsport.h"
+#include "defines.h"
+#include "fontbase.h"
+#include "textwriter.h"
+#include "woopsifuncs.h"
 
 GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const Gadget::Rect* clipRect) {
 	_gadget = gadget;

@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <nds.h>
 #include "gadget.h"
-#include "graphicsport.h"
 #include "scrollablebase.h"
 
 using namespace std;

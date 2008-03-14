@@ -1,4 +1,5 @@
 #include "radiobuttongroup.h"
+#include "radiobutton.h"
 
 RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, FontBase* font) : Gadget(x, y, 0, 0, GADGET_BORDERLESS, font) {
 	_selectedGadget = NULL;

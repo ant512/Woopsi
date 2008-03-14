@@ -1,5 +1,9 @@
 #include "amigawindow.h"	
-#include "screen.h"
+#include "windowbordertop.h"
+#include "windowborderside.h"
+#include "windowborderbottom.h"
+#include "windowclosebutton.h"
+#include "windowdepthbutton.h"
 
 AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font) : Window(x, y, width, height, title, flags, font) {
 	_title = title;

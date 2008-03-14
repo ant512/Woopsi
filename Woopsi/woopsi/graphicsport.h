@@ -2,14 +2,11 @@
 #define _GRAPHICS_PORT_H_
 
 #include <nds.h>
-#include "debug.h"
-#include "defines.h"
 #include "gadget.h"
-#include "fontbase.h"
-#include "textwriter.h"
-#include "woopsifuncs.h"
 
 using namespace std;
+
+class FontBase;
 
 /**
  * GraphicsPort is the interface between a gadget and the framebuffer.  It provides

@@ -1,6 +1,6 @@
 #include "calculator.h"
 
-Calculator::Calculator(SimpleScreen* screen) {
+Calculator::Calculator(AmigaScreen* screen) {
 	_screen = screen;
 	_opCode = 0;
 	_val1 = 0;
@@ -12,36 +12,42 @@ Calculator::Calculator(SimpleScreen* screen) {
 }
 
 void Calculator::initGUI() {
-	_window = _screen->newWindow(0, 90, 60, 97, "Calc", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_window = new AmigaWindow(0, 90, 60, 97, "Calc", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_screen->addGadget(_window);
+
+	Gadget::Rect rect;
+	_window->getClientRect(rect);
 
 	// Controls
-	_output = _window->newTextbox(0, 0, 52, 16, "0");
+	_output = new Textbox(rect.x, rect.y, 52, 16, "0");
 	_output->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_RIGHT);
+	_window->addGadget(_output);
 
 	DynamicArray<Button*> buttons;
-	buttons.push_back(_window->newButton(0, 16, 13, 16, "7"));
-	buttons.push_back(_window->newButton(13, 16, 13, 16, "8"));
-	buttons.push_back(_window->newButton(26, 16, 13, 16, "9"));
-	buttons.push_back(_window->newButton(39, 16, 13, 16, "*"));
+	buttons.push_back(new Button(rect.x, rect.y + 16, 13, 16, "7"));
+	buttons.push_back(new Button(rect.x + 13, rect.y + 16, 13, 16, "8"));
+	buttons.push_back(new Button(rect.x + 26, rect.y + 16, 13, 16, "9"));
+	buttons.push_back(new Button(rect.x + 39, rect.y + 16, 13, 16, "*"));
 
-	buttons.push_back(_window->newButton(0, 32, 13, 16, "4"));
-	buttons.push_back(_window->newButton(13, 32, 13, 16, "5"));
-	buttons.push_back(_window->newButton(26, 32, 13, 16, "6"));
-	buttons.push_back(_window->newButton(39, 32, 13, 16, "-"));
+	buttons.push_back(new Button(rect.x, rect.y + 32, 13, 16, "4"));
+	buttons.push_back(new Button(rect.x + 13, rect.y + 32, 13, 16, "5"));
+	buttons.push_back(new Button(rect.x + 26, rect.y + 32, 13, 16, "6"));
+	buttons.push_back(new Button(rect.x + 39, rect.y + 32, 13, 16, "-"));
 
-	buttons.push_back(_window->newButton(0, 48, 13, 16, "1"));
-	buttons.push_back(_window->newButton(13, 48, 13, 16, "2"));
-	buttons.push_back(_window->newButton(26, 48, 13, 16, "3"));
-	buttons.push_back(_window->newButton(39, 48, 13, 16, "+"));
+	buttons.push_back(new Button(rect.x, rect.y + 48, 13, 16, "1"));
+	buttons.push_back(new Button(rect.x + 13, rect.y + 48, 13, 16, "2"));
+	buttons.push_back(new Button(rect.x + 26, rect.y + 48, 13, 16, "3"));
+	buttons.push_back(new Button(rect.x + 39, rect.y + 48, 13, 16, "+"));
 
-	buttons.push_back(_window->newButton(0, 64, 13, 16, "0"));
-	buttons.push_back(_window->newButton(13, 64, 13, 16, "C"));
-	buttons.push_back(_window->newButton(26, 64, 13, 16, "="));
-	buttons.push_back(_window->newButton(39, 64, 13, 16, "/"));
+	buttons.push_back(new Button(rect.x, rect.y + 64, 13, 16, "0"));
+	buttons.push_back(new Button(rect.x + 13, rect.y + 64, 13, 16, "C"));
+	buttons.push_back(new Button(rect.x + 26, rect.y + 64, 13, 16, "="));
+	buttons.push_back(new Button(rect.x + 39, rect.y + 64, 13, 16, "/"));
 
 	// Wire up events
 	for (u8 i = 0; i < buttons.size(); i++) {
 		buttons[i]->setEventHandler(this);
+		_window->addGadget(buttons[i]);
 	}
 }
 

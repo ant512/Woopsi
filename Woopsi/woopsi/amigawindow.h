@@ -3,15 +3,14 @@
 
 #include <nds.h>
 #include "window.h"
-#include "windowbordertop.h"
-#include "windowborderside.h"
-#include "windowborderbottom.h"
-#include "windowclosebutton.h"
-#include "windowdepthbutton.h"
-#include "fontbase.h"
-#include "graphicsport.h"
 
 using namespace std;
+
+class WindowBorderTop;
+class WindowBorderSide;
+class WindowBorderBottom;
+class WindowCloseButton;
+class WindowDepthButton;
 
 class AmigaWindow : public Window {
 

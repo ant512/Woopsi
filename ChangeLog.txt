@@ -28,6 +28,9 @@ Change Log
      - Switched to using visibility toggle in Debug class to optimise textbox
        redraws.
      - Changed value of TOP_SCREEN_Y_OFFSET to 512 to enable bitmask checking.
+     - ScreenDepthButton uses GraphicsPort for all drawing operations.
+     - Tidied up some of the includes and dependencies.
+     - Removed SimpleScreen and SimpleWindow classes.
 
 
   - New Features:

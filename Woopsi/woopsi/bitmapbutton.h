@@ -3,7 +3,6 @@
 
 #include <nds.h>
 #include "textbox.h"
-#include "graphicsport.h"
 
 using namespace std;
 

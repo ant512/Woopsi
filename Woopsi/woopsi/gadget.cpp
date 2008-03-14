@@ -2,6 +2,8 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
+#include "eventhandler.h"
+#include "fontbase.h"
 
 Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_x = x;
@@ -1594,7 +1596,6 @@ void Gadget::addGadget(Gadget* gadget) {
 }
 
 // Insert a gadget into the gadget list after the decorations
-// Do not use this unless you know what you are doing
 void Gadget::insertGadget(Gadget* gadget) {
 	if (gadget->getParent() == NULL) {
 		gadget->setParent(this);

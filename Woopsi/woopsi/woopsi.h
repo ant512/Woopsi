@@ -12,10 +12,8 @@
 #include "button.h"
 #include "window.h"
 #include "amigawindow.h"
-#include "simplewindow.h"
 #include "screen.h"
 #include "amigascreen.h"
-#include "simplescreen.h"
 #include "textwriter.h"
 #include "textbox.h"
 #include "eventhandler.h"
@@ -35,6 +33,10 @@
 #include "sliderhorizontal.h"
 #include "scrollbarvertical.h"
 #include "dynamicarray.h"
+#include "radiobuttongroup.h"
+#include "radiobutton.h"
+#include "checkbox.h"
+#include "multilinetextbox.h"
 
 using namespace std;
 

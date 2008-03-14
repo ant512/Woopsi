@@ -40,4 +40,11 @@
  */
 #define WOOPSI_COPYRIGHT "Copyright 2007-2008 Antony Dzeryn"
 
+/**
+ * Ensure NULL is defined.
+ */
+#ifndef NULL
+#define NULL 0
+#endif
+
 #endif

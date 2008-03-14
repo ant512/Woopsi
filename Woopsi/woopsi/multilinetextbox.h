@@ -2,14 +2,11 @@
 #define _MULTILINE_TEXTBOX_H_
 
 #include <nds.h>
-#include "textwriter.h"
-#include "gadget.h"
 #include "scrollingpanel.h"
-#include "fontbase.h"
-#include "text.h"
-#include "graphicsport.h"
 
 using namespace std;
+
+class Text;
 
 /**
  * Textbox that offers multiple lines of text.  Has scrolling

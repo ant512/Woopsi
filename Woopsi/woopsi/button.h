@@ -2,7 +2,6 @@
 #define _BUTTON_H_
 
 #include <nds.h>
-#include "textwriter.h"
 #include "textbox.h"
 
 using namespace std;

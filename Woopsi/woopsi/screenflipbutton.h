@@ -2,9 +2,7 @@
 #define _SCREEN_FLIP_BUTTON_H_
 
 #include <nds.h>
-#include "textwriter.h"
 #include "button.h"
-#include "screen.h"
 
 using namespace std;
 

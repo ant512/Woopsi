@@ -2,12 +2,12 @@
 #define _SUPERBITMAP_H_
 
 #include <nds.h>
-#include "textwriter.h"
 #include "gadget.h"
-#include "graphicsport.h"
 #include "dynamicarray.h"
 
 using namespace std;
+
+class TextWriter;
 
 /**
  * The SuperBitmap class provides a set of 2D drawing tools and a bitmap in RAM to draw on.

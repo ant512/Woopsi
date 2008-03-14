@@ -3,8 +3,6 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "fontbase.h"
-#include "graphicsport.h"
 
 using namespace std;
 

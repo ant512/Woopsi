@@ -1,6 +1,7 @@
-#include "woopsi.h"
+#include "amigascreen.h"
 #include "screendepthbutton.h"
 #include "screenflipbutton.h"
+#include "screentitle.h"
 
 AmigaScreen::AmigaScreen(char* title, FontBase* font) : Screen(title, font) {
 

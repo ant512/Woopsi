@@ -3,14 +3,14 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "screentitle.h"
-#include "fontbase.h"
+#include "eventhandler.h"
 #include "screen.h"
 
 using namespace std;
 
 class ScreenDepthButton;
 class ScreenFlipButton;
+class ScreenTitle;
 
 class AmigaScreen : public Screen, public EventHandler {
 

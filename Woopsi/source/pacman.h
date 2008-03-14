@@ -40,7 +40,7 @@ protected:
 class PacMan : EventHandler {
 	
 public:
-	PacMan(SimpleScreen* screen);
+	PacMan(AmigaScreen* screen);
 	~PacMan();
 	
 	u16 getWidth();
@@ -63,8 +63,8 @@ public:
 	void handleRelease(const EventArgs& e);
 
 private:
-	SimpleScreen* _screen;
-	SimpleWindow* _window;
+	AmigaScreen* _screen;
+	AmigaWindow* _window;
 	SuperBitmap* _superBitmap;
 	Button* _resetButton;
 

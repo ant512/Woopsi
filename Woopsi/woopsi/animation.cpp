@@ -1,5 +1,4 @@
 #include "animation.h"
-#include "debug.h"
 
 // Constructor
 // loops = 0 means the animation loops infinitely

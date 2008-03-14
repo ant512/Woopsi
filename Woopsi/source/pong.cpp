@@ -1,6 +1,6 @@
 #include "pong.h"
 
-Pong::Pong(SimpleScreen* screen) {
+Pong::Pong(AmigaScreen* screen) {
 	_screen = screen;
 	_p1x = 0;
 	_p1y = 0;
@@ -31,7 +31,8 @@ Pong::~Pong() {
 
 void Pong::initGUI() {
 	// Create window
-	_window = _screen->newWindow(0, 13, 120, 60, "Pong", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_window = new AmigaWindow(0, 13, 120, 60, "Pong", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_screen->addGadget(_window);
 	_window->setEventHandler(this);
 	
 	// Register window for VBL events

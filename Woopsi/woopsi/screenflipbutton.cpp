@@ -1,6 +1,7 @@
 // TODO: Switch to GraphicsPort
 
 #include "screenflipbutton.h"
+#include "textwriter.h"
 
 ScreenFlipButton::ScreenFlipButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, GLYPH_SCREEN_FLIP_UP, font) {
 	_flags.decoration = true;
