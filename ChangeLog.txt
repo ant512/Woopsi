@@ -50,6 +50,8 @@ Change Log
        without a call to draw() first.
      - Completed ScrollbarVertical class.
      - Added up, down, left and right arrow glyphs.
+     - Added Gadget::changeDimensions() to allow move and resize with just one
+       redraw.
 
 
   V0.29 (20081101)
