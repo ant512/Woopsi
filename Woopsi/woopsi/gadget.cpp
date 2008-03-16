@@ -1093,6 +1093,11 @@ void Gadget::hideChild(Gadget* gadget) {
 			gadget->hide();
 		}
 
+		// Unset clicked gadget if necessary
+		if (_clickedGadget == gadget) {
+			_clickedGadget->release(_clickedGadget->getX(), _clickedGadget->getY());
+		}
+
 		// Do we need to make another gadget active?
 		if (_activeGadget == gadget) {
 
@@ -1106,11 +1111,6 @@ void Gadget::hideChild(Gadget* gadget) {
 			} else {
 				_activeGadget = NULL;
 			}
-		}
-
-		// Unset clicked gadget if necessary
-		if (_clickedGadget == gadget) {
-			_clickedGadget = NULL;
 		}
 
 		// Decrease decoration count if necessary
@@ -1140,6 +1140,11 @@ void Gadget::closeChild(Gadget* gadget) {
 			gadget->close();
 		}
 
+		// Unset clicked gadget if necessary
+		if (_clickedGadget == gadget) {
+			_clickedGadget->release(_clickedGadget->getX(), _clickedGadget->getY());
+		}
+
 		// Do we need to make another gadget active?
 		if (_activeGadget == gadget) {
 
@@ -1153,11 +1158,6 @@ void Gadget::closeChild(Gadget* gadget) {
 			} else {
 				_activeGadget = NULL;
 			}
-		}
-
-		// Unset clicked gadget if necessary
-		if (_clickedGadget == gadget) {
-			_clickedGadget = NULL;
 		}
 
 		// Decrease decoration count if necessary

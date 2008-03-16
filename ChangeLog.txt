@@ -31,6 +31,7 @@ Change Log
      - ScreenDepthButton uses GraphicsPort for all drawing operations.
      - Tidied up some of the includes and dependencies.
      - Removed SimpleScreen and SimpleWindow classes.
+     - Hiding/closing a child now releases the child if it is clicked.
 
 
   - New Features:
