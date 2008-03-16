@@ -64,50 +64,6 @@ void ScrollbarVertical::draw() {
 void ScrollbarVertical::draw(Rect clipRect) {
 }
 
-bool ScrollbarVertical::click(s16 x, s16 y) {
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			_clickedGadget = NULL;
-
-			// Work out which gadget was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					break;
-				}
-			}
-
-			// Did we click a gadget?
-			if (_clickedGadget == NULL) {
-
-				// Handle click on this gadget
-				Gadget::click(x, y);
-			}
-
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool ScrollbarVertical::release(s16 x, s16 y) {
-	if (_clickedGadget != NULL) {
-
-		// Release clicked gadget
-		_clickedGadget->release(x, y);
-
-		return true;
-	} else if (_flags.clicked) {
-
-		// Handle release on this
-		Gadget::release(x, y);
-
-		return true;
-	}
-
-	return false;
-}
-
 bool ScrollbarVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	// Handle child dragging
 	if (_clickedGadget != NULL) {

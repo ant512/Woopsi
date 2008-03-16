@@ -110,51 +110,20 @@ void SliderVertical::draw(Rect clipRect) {
 }
 
 bool SliderVertical::click(s16 x, s16 y) {
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			_clickedGadget = NULL;
+	if (Gadget::click(x, y)) {
 
-			// Work out which gadget was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					break;
-				}
+		// Did we click a gadget?
+		if (_clickedGadget == NULL) {
+
+			// Which way should the grip move?
+			if (y > _grip->getY()) {
+				// Move grip down
+				jumpGrip(1);
+			} else {
+				// Move grip up
+				jumpGrip(0);
 			}
-
-			// Did we click a gadget?
-			if (_clickedGadget == NULL) {
-
-				// Handle click on gutter
-				Gadget::click(x, y);
-
-				// Which way should the grip move?
-				if (y > _grip->getY()) {
-					// Move grip down
-					jumpGrip(1);
-				} else {
-					// Move grip up
-					jumpGrip(0);
-				}
-			}
-
-			return true;
 		}
-	}
-
-	return false;
-}
-
-bool SliderVertical::release(s16 x, s16 y) {
-	if (_clickedGadget != NULL) {
-
-		// Release clicked gadget
-		_clickedGadget->release(x, y);
-
-		return true;
-	} else if (_flags.clicked) {
-
-		// Handle release on this
-		Gadget::release(x, y);
 
 		return true;
 	}

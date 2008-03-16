@@ -363,45 +363,14 @@ void ScrollingPanel::scrollChildren(s32 dx, s32 dy) {
 
 bool ScrollingPanel::click(s16 x, s16 y) {
 
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			_clickedGadget = NULL;
+	if (Gadget::click(x, y)) {
 
-			// Work out which gadget was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					break;
-				}
-			}
+		// Did we click a gadget?
+		if (_clickedGadget == NULL) {
 
-			// Did we click a gadget?
-			if (_clickedGadget == NULL) {
-				// Handle click on window
-				Gadget::click(x, y);
-
-				// Start dragging
-				setDragging(x, y);
-			}
-
-			return true;
+			// Start dragging
+			setDragging(x, y);
 		}
-	}
-
-	return false;
-}
-
-bool ScrollingPanel::release(s16 x, s16 y) {
-
-	if (_clickedGadget != NULL) {
-
-		// Release clicked gadget
-		_clickedGadget->release(x, y);
-
-		return true;
-	} else if (_flags.clicked) {
-
-		// Handle release on window
-		Gadget::release(x, y);
 
 		return true;
 	}
@@ -428,94 +397,6 @@ bool ScrollingPanel::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			// Run drag on children
 			return _clickedGadget->drag(x, y, vX, vY);
 		}
-	}
-
-	return false;
-}
-
-
-bool ScrollingPanel::keyPress(KeyCode keyCode) {
-
-	if (_flags.enabled) {
-		// Handle key press on window
-		Gadget::keyPress(keyCode);
-
-		if (_activeGadget != NULL) {
-			// Run key press on active gadget
-			_activeGadget->keyPress(keyCode);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-bool ScrollingPanel::keyRelease(KeyCode keyCode) {
-
-	if (_flags.enabled) {
-		// Handle key release on window
-		Gadget::keyRelease(keyCode);
-
-		if (_activeGadget != NULL) {
-			// Run key release on active gadget
-			_activeGadget->keyRelease(keyCode);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-void ScrollingPanel::lidClosed() {
-	// Handle lid closed on window
-	Gadget::lidClosed();
-
-	// Run lid closed on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidClosed();
-	}
-}
-
-void ScrollingPanel::lidOpened() {
-	// Handle lid closed on window
-	Gadget::lidOpened();
-
-	// Run lid closed on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidOpened();
-	}
-}
-
-bool ScrollingPanel::focus() {
-
-	if (_flags.enabled) {
-		if (!_flags.active) {
-
-			// Handle focus gained on scrolling panel
-			Gadget::focus();
-
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ScrollingPanel::blur() {
-
-	if (_flags.active) {
-
-		// Handle focus lost on scrolling panel
-		Gadget::blur();
-
-		// Take focus away from child gadgets
-		if (_activeGadget != NULL) {
-			_activeGadget->blur();
-			_activeGadget = NULL;
-		}
-
-		return true;
 	}
 
 	return false;

@@ -117,14 +117,6 @@ public:
 	virtual bool click(s16 x, s16 y);
 
 	/**
-	 * Release the slider at the specified co-ordinates.
-	 * @param x The x co-ordinate of the release.
-	 * @param y The y co-ordinate of the release.
-	 * @return True if the release was processed by the slider.
-	 */
-	virtual bool release(s16 x, s16 y);
-
-	/**
 	 * Drag the slider at the specified co-ordinates.
 	 * @param x The x co-ordinate of the drag.
 	 * @param y The y co-ordinate of the drag.

@@ -52,14 +52,6 @@ public:
 	virtual bool click(s16 x, s16 y);
 	
 	/**
-	 * Release the gadget at the specified co-ordinates.
-	 * @param x The x co-ordinate of the release.
-	 * @param y The y co-ordinate of the release.
-	 * @return True if the release was successful.
-	 */
-	virtual bool release(s16 x, s16 y);
-	
-	/**
 	 * Drag the gadget at the specified co-ordinates.
 	 * @param x The x co-ordinate of the drag.
 	 * @param y The y co-ordinate of the drag.
@@ -68,42 +60,6 @@ public:
 	 * @return True if the drag was successful.
 	 */
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
-	
-	/**
-	 * Send a keypress to the gadget.
-	 * @param keyCode The code of the keypress to send.
-	 * @return True if the keypress was handled by the gadget.
-	 */
-	virtual bool keyPress(KeyCode keyCode);
-	
-	/**
-	 * Send a key release to the gadget.
-	 * @param keyCode The code of the key release to send.
-	 * @return True if the key release was handled by the gadget.
-	 */
-	virtual bool keyRelease(KeyCode keyCode);
-	
-	/**
-	 * Tell the gadget that the lid has closed.
-	 */
-	virtual void lidClosed();
-	
-	/**
-	 * Tell the gadget that the lid has opened.
-	 */
-	virtual void lidOpened();
-	
-	/**
-	 * Send the focus to the gadget.
-	 * @return True if the gadget took the focus.
-	 */
-	virtual bool focus();
-	
-	/**
-	 * Remove the focus from the gadget.
-	 * @return True if the gadget lost the focus.
-	 */
-	virtual bool blur();
 
 	/**
 	 * Scroll the panel by the specified amounts.

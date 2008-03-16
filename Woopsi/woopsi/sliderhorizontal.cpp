@@ -108,68 +108,20 @@ void SliderHorizontal::draw(Rect clipRect) {
 }
 
 bool SliderHorizontal::click(s16 x, s16 y) {
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			_clickedGadget = NULL;
+	if (Gadget::click(x, y)) {
 
-			// Work out which gadget was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					break;
-				}
+		// Did we click a gadget?
+		if (_clickedGadget == NULL) {
+
+			// Which way should the grip move?
+			if (x > _grip->getX()) {
+				// Move grip right
+				jumpGrip(1);
+			} else {
+				// Move grip left
+				jumpGrip(0);
 			}
-
-			// Did we click a gadget?
-			if (_clickedGadget == NULL) {
-
-				// Move the grip
-				s16 newGripX;
-
-				// Which way should the grip move?
-				if (x > _grip->getX()) {
-					// Move grip right
-					newGripX = (_grip->getX() - getX()) + _grip->getWidth();
-				} else {
-					// Move grip left
-					newGripX = (_grip->getX() - getX()) - _grip->getWidth();
-				}
-
-				// Get client rect for this gadget
-				Rect rect;
-				getClientRect(rect);
-
-				// Adjust x value so that it does not exceed boundaries of gutter
-				if (newGripX < rect.x) {
-					newGripX = rect.x;
-				} else if (newGripX + _grip->getWidth() > rect.x + rect.width) {
-					newGripX = (rect.width - _grip->getWidth()) + 1;
-				}
-
-				// Handle click on gutter
-				Gadget::click(x, y);
-
-				// Move the grip
-				_grip->moveTo(newGripX, 0);
-			}
-
-			return true;
 		}
-	}
-
-	return false;
-}
-
-bool SliderHorizontal::release(s16 x, s16 y) {
-	if (_clickedGadget != NULL) {
-
-		// Release clicked gadget
-		_clickedGadget->release(x, y);
-
-		return true;
-	} else if (_flags.clicked) {
-
-		// Handle release on window
-		Gadget::release(x, y);
 
 		return true;
 	}
@@ -234,4 +186,32 @@ void SliderHorizontal::resizeGrip() {
 
 	// Perform resize
 	_grip->resize(newWidth, rect.height);
+}
+
+void SliderHorizontal::jumpGrip(u8 direction) {
+
+	s16 newGripX;
+
+	// Which way should the grip move?
+	if (direction == 1) {
+		// Move grip right
+		newGripX = (_grip->getX() - getX()) + _grip->getWidth();
+	} else {
+		// Move grip left
+		newGripX = (_grip->getX() - getX()) - _grip->getWidth();
+	}
+
+	// Get client rect for this gadget
+	Rect rect;
+	getClientRect(rect);
+
+	// Adjust x value so that it does not exceed boundaries of gutter
+	if (newGripX < rect.x) {
+		newGripX = rect.x;
+	} else if (newGripX + _grip->getWidth() > rect.x + rect.width) {
+		newGripX = (rect.width - _grip->getWidth()) + 1;
+	}
+
+	// Move the grip
+	_grip->moveTo(newGripX, 0);
 }

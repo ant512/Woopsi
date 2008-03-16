@@ -91,6 +91,12 @@ public:
 	void resizeGrip();
 
 	/**
+	 * Make the grip jump left or right along the gutter.
+	 * @param direction 0 to jump left, 1 to jump right.
+	 */
+	void jumpGrip(u8 direction);
+
+	/**
 	 * Draw the slider.
 	 */
 	virtual void draw();
@@ -109,14 +115,6 @@ public:
 	 * @return True if the click was processed by the slider.
 	 */
 	virtual bool click(s16 x, s16 y);
-
-	/**
-	 * Release the slider at the specified co-ordinates.
-	 * @param x The x co-ordinate of the release.
-	 * @param y The y co-ordinate of the release.
-	 * @return True if the release was processed by the slider.
-	 */
-	virtual bool release(s16 x, s16 y);
 
 	/**
 	 * Drag the slider at the specified co-ordinates.

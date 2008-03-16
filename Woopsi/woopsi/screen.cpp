@@ -124,40 +124,6 @@ void Screen::draw(Rect clipRect) {
 	clear(clipRect);
 }
 
-void Screen::drawChildren(Rect clipRect) {
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->draw(clipRect);
-	}
-}
-
-bool Screen::click(s16 x, s16 y) {
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			_clickedGadget = NULL;
-
-			// Work out which gadget has been pressed
-			// Start from the end of the stack and work towards the front
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-
-				// Is the gadget clicked?
-				if (_gadgets[i]->click(x, y)) {
-					break;
-				}
-			}
-
-			// Did we locate a gadget?
-			if (_clickedGadget == NULL) {
-				// Handle click on screen
-				Gadget::click(x, y);
-			}
-
-			return true;
-		}
-	}
-
-	return false;
-}
-
 bool Screen::release(s16 x, s16 y) {
 
 	// Release from dragging
@@ -347,62 +313,6 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	}
 
 	return false;
-}
-
-bool Screen::keyPress(KeyCode keyCode) {
-
-	if (_flags.enabled) {
-
-		// Handle key press on screen
-		Gadget::keyPress(keyCode);
-
-		if (_activeGadget != NULL) {
-			// Run key press on active gadget
-			_activeGadget->keyPress(keyCode);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-bool Screen::keyRelease(KeyCode keyCode) {
-
-	if (_flags.enabled) {
-
-		// Handle key release on screen
-		Gadget::keyRelease(keyCode);
-
-		if (_activeGadget != NULL) {
-			// Run key release on active gadget
-			_activeGadget->keyRelease(keyCode);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-void Screen::lidClosed() {
-	// Handle lid closed on screen
-	Gadget::lidClosed();
-
-	// Run lid closed on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidClosed();
-	}
-}
-
-void Screen::lidOpened() {
-	// Handle lid opened on screen
-	Gadget::lidOpened();
-
-	// Run lid opened on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidOpened();
-	}
 }
 
 // Only allows non-decoration depths to be swapped

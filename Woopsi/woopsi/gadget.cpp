@@ -1378,25 +1378,40 @@ bool Gadget::click(s16 x, s16 y) {
 
 	if (_flags.enabled) {
 		if (checkCollision(x, y)) {
-			_flags.clicked = true;
 
-			// Take focus away from child gadgets
-			if (_activeGadget != NULL) {
-				_activeGadget->blur();
-				_activeGadget = NULL;
+			// Handle clicks on children
+			_clickedGadget = NULL;
+
+			// Work out which child was clicked
+			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				if (_gadgets[i]->click(x, y)) {
+					break;
+				}
 			}
 
-			// Give focus to this gadget
-			if (!_flags.active) {
-				focus();
-			}
+			// Handle clicks on this
+			if (_clickedGadget == NULL) {
 
-			// Tell parent that the clicked gadget has changed
-			if (_parent != NULL) {
-				_parent->setClickedGadget(this);
-			}
+				_flags.clicked = true;
 
-			raiseClickEvent(x, y);
+				// Take focus away from child gadgets
+				if (_activeGadget != NULL) {
+					_activeGadget->blur();
+					_activeGadget = NULL;
+				}
+
+				// Give focus to this gadget
+				if (!_flags.active) {
+					focus();
+				}
+
+				// Tell parent that the clicked gadget has changed
+				if (_parent != NULL) {
+					_parent->setClickedGadget(this);
+				}
+
+				raiseClickEvent(x, y);
+			}
 
 			return true;
 		}
@@ -1407,6 +1422,13 @@ bool Gadget::click(s16 x, s16 y) {
 
 bool Gadget::release(s16 x, s16 y) {
 
+	// Handle release on clicked child
+	if (_clickedGadget != NULL) {
+		_clickedGadget->release(x, y);
+		return true;
+	}
+
+	// Handle release on this
 	if (_flags.clicked) {
 		_flags.clicked = false;
 		_flags.dragging = false;
@@ -1448,7 +1470,13 @@ bool Gadget::vbl() {
 bool Gadget::keyPress(KeyCode keyCode) {
 	if (_flags.enabled) {
 		
+		// Raise keypress for this gadget
 		raiseKeyPressEvent(keyCode);
+
+		// Handle active child
+		if (_activeGadget != NULL) {
+			_activeGadget->keyPress(keyCode);
+		}
 
 		return true;
 	}
@@ -1459,7 +1487,13 @@ bool Gadget::keyPress(KeyCode keyCode) {
 bool Gadget::keyRelease(KeyCode keyCode) {
 	if (_flags.enabled) {
 
+		// Raise key release for this gadget
 		raiseKeyReleaseEvent(keyCode);
+
+		// Handle active child
+		if (_activeGadget != NULL) {
+			_activeGadget->keyRelease(keyCode);
+		}
 
 		return true;
 	}
@@ -1469,10 +1503,20 @@ bool Gadget::keyRelease(KeyCode keyCode) {
 
 void Gadget::lidClosed() {
 	raiseLidClosedEvent();
+
+	// Run lid closed on all gadgets
+	for (u8 i = 0; i < _gadgets.size(); i++) {
+		_gadgets[i]->lidClosed();
+	}
 }
 
 void Gadget::lidOpened() {
 	raiseLidOpenedEvent();
+
+	// Run lid opened on all gadgets
+	for (u8 i = 0; i < _gadgets.size(); i++) {
+		_gadgets[i]->lidOpened();
+	}
 }
 
 bool Gadget::focus() {
@@ -1494,6 +1538,12 @@ bool Gadget::blur() {
 	if (_flags.active) {
 
 		setActive(false);
+
+		// Take focus away from child gadgets
+		if (_activeGadget != NULL) {
+			_activeGadget->blur();
+			_activeGadget = NULL;
+		}
 
 		raiseBlurEvent();
 

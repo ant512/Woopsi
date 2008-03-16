@@ -32,6 +32,7 @@ Change Log
      - Tidied up some of the includes and dependencies.
      - Removed SimpleScreen and SimpleWindow classes.
      - Hiding/closing a child now releases the child if it is clicked.
+     - Removed unused Screen::drawChildren(clipRect) method.
 
 
   - New Features:
@@ -53,6 +54,9 @@ Change Log
      - Added up, down, left and right arrow glyphs.
      - Added Gadget::changeDimensions() to allow move and resize with just one
        redraw.
+     - Merged code for child click, release, keypress, key release, lid opened,
+       lid closed, focus and blur into the Gadget class, giving basic descendant
+       interaction out of the box.
 
 
   V0.29 (20081101)

@@ -22,15 +22,8 @@ public:
 	virtual void draw();
 	virtual void draw(Rect clipRect);
 
-	virtual bool click(s16 x, s16 y);
 	virtual bool release(s16 x, s16 y);
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
-	virtual bool keyPress(KeyCode keyCode);
-	virtual bool keyRelease(KeyCode keyCode);
-	virtual void lidClosed();
-	virtual void lidOpened();
-	virtual bool focus();
-	virtual bool blur();
 
 protected:
 	char* _title;

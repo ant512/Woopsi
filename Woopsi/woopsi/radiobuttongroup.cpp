@@ -77,25 +77,6 @@ void RadioButtonGroup::draw() {
 	Gadget::draw();
 }
 
-bool RadioButtonGroup::click(s16 x, s16 y) {
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			
-			// Work out which gadget was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					return true;;
-				}
-			}
-
-			// No gadget clicked
-			Gadget::click(x, y);
-		}
-	}
-
-	return false;
-}
-
 bool RadioButtonGroup::resize(u16 width, u16 height) {
 
 	if ((_width != width) || (_height != height)) {

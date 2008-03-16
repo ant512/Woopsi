@@ -1,5 +1,4 @@
 #include "window.h"	
-#include "screen.h"
 
 Window::Window(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
 	_title = title;
@@ -10,32 +9,6 @@ Window::~Window() {
 
 void Window::draw() {
 	Gadget::draw();
-}
-
-bool Window::click(s16 x, s16 y) {
-
-	if (_flags.enabled) {
-		if (checkCollision(x, y)) {
-			_clickedGadget = NULL;
-
-			// Work out which gadget was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					break;
-				}
-			}
-
-			// Did we click a gadget?
-			if (_clickedGadget == NULL) {
-				// Handle click on window
-				Gadget::click(x, y);
-			}
-
-			return true;
-		}
-	}
-
-	return false;
 }
 
 bool Window::release(s16 x, s16 y) {
@@ -132,93 +105,6 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 		}
 	}
 	
-	return false;
-}
-
-bool Window::keyPress(KeyCode keyCode) {
-
-	if (_flags.enabled) {
-		// Handle key press on window
-		Gadget::keyPress(keyCode);
-
-		if (_activeGadget != NULL) {
-			// Run key press on active gadget
-			_activeGadget->keyPress(keyCode);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-bool Window::keyRelease(KeyCode keyCode) {
-
-	if (_flags.enabled) {
-		// Handle key release on window
-		Gadget::keyRelease(keyCode);
-
-		if (_activeGadget != NULL) {
-			// Run key release on active gadget
-			_activeGadget->keyRelease(keyCode);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-void Window::lidClosed() {
-	// Handle lid closed on window
-	Gadget::lidClosed();
-
-	// Run lid closed on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidClosed();
-	}
-}
-
-void Window::lidOpened() {
-	// Handle lid closed on window
-	Gadget::lidOpened();
-
-	// Run lid closed on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidOpened();
-	}
-}
-
-bool Window::focus() {
-
-	if (_flags.enabled) {
-		if (!_flags.active) {
-
-			// Handle focus gained on window
-			Gadget::focus();
-
-			return true;
-		}
-	}
-	return false;
-}
-
-bool Window::blur() {
-
-	if (_flags.active) {
-
-		// Handle focus lost on window
-		Gadget::blur();
-
-		// Take focus away from child gadgets
-		if (_activeGadget != NULL) {
-			_activeGadget->blur();
-			_activeGadget = NULL;
-		}
-
-		return true;
-	}
-
 	return false;
 }
 

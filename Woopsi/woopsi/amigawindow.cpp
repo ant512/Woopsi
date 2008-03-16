@@ -188,38 +188,31 @@ bool AmigaWindow::click(s16 x, s16 y) {
 
 bool AmigaWindow::focus() {
 
-	if (_flags.enabled) {
-		if (!_flags.active) {
+	if (Gadget::focus()) {
 
-			// Handle focus gained on window
-			Gadget::focus();
-
-			// Run focus on borders
-			if (_windowBorderTop != NULL) {
-				_windowBorderBottom->draw();
-				_windowBorderTop->draw();
-				_windowBorderLeft->draw();
-				_windowBorderRight->draw();
-				_windowDepthButton->draw();
-			}
-
-			// Run focus on close button
-			if (_windowCloseButton != NULL) {
-				_windowCloseButton->draw();
-			}
-
-			return true;
+		// Run focus on borders
+		if (_windowBorderTop != NULL) {
+			_windowBorderBottom->draw();
+			_windowBorderTop->draw();
+			_windowBorderLeft->draw();
+			_windowBorderRight->draw();
+			_windowDepthButton->draw();
 		}
+
+		// Run focus on close button
+		if (_windowCloseButton != NULL) {
+			_windowCloseButton->draw();
+		}
+
+		return true;
 	}
+
 	return false;
 }
 
 bool AmigaWindow::blur() {
 
-	if (_flags.active) {
-
-		// Handle focus lost on window
-		Gadget::blur();
+	if (Gadget::blur()) {
 
 		// Run blur on borders
 		if (_windowBorderTop != NULL) {
