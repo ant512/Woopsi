@@ -533,6 +533,18 @@ public:
 	virtual bool resize(u16 width, u16 height);
 
 	/**
+	 * Resize and move the gadget in one operation.
+	 * Only performs one redraw so it is faster than calling the
+	 * two separate functions.
+	 * @param x The new x co-ordinate.
+	 * @param y The new y co-ordinate.
+	 * @param width The new width.
+	 * @param height The new height.
+	 * @return True if the gadget was adjusted successfully.
+	 */
+	virtual bool changeDimensions(s16 x, s16 y, u16 width, u16 height);
+
+	/**
 	 * Raises the gadget to the top of its parent's gadget stack.
 	 * @return True if the raise was successful.
 	 */
