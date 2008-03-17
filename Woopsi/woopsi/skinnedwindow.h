@@ -3,20 +3,19 @@
 
 #include <nds.h>
 #include "window.h"
-#include "skinnedwindowbordertop.h"
-#include "skinnedwindowborderleft.h"
-#include "skinnedwindowborderright.h"
-#include "skinnedwindowborderbottom.h"
-#include "skinnedwindowclosebutton.h"
-#include "skinnedwindowdepthbutton.h"
-#include "fontbase.h"
-#include "graphicsport.h"
 #include "skin.h"
-#include "gadget.h"
+#include "eventhandler.h"
 
 using namespace std;
 
-class SkinnedWindow : public Window {
+class SkinnedWindowDepthButton;
+class SkinnedWindowCloseButton;
+class SkinnedWindowBorderBottom;
+class SkinnedWindowBorderLeft;
+class SkinnedWindowBorderRight;
+class SkinnedWindowBorderTop;
+
+class SkinnedWindow : public Window, public EventHandler  {
 
 public:
 	SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, WindowSkin* skin);
@@ -36,6 +35,7 @@ public:
 	virtual bool blur();
 
 	virtual bool resize(u16 width, u16 height);
+	virtual bool handleEvent(const EventArgs& e);
 
 protected:
 	char* _title;
@@ -45,8 +45,8 @@ protected:
 	SkinnedWindowBorderLeft* _windowBorderLeft;
 	SkinnedWindowBorderRight* _windowBorderRight;
 	SkinnedWindowBorderBottom* _windowBorderBottom;
-	SkinnedWindowCloseButton* _windowCloseButton;
-	SkinnedWindowDepthButton* _windowDepthButton;
+	SkinnedWindowCloseButton* _closeButton;
+	SkinnedWindowDepthButton* _depthButton;
 
 	virtual void createBorder();
 };

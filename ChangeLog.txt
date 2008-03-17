@@ -57,6 +57,11 @@ Change Log
      - Merged code for child click, release, keypress, key release, lid opened,
        lid closed, focus and blur into the Gadget class, giving basic descendant
        interaction out of the box.
+     - Moved window close/depth button logic out of button classes and into
+       a new AmigaWindow event handler method.
+     - Replaced screen buttons with DecorationGlyphButton class.
+	 - Replaced window buttons with WindowBorderButton class.
+     - Skinned decoration buttons inherit from DecorationGlyphButton.
 
 
   V0.29 (20081101)

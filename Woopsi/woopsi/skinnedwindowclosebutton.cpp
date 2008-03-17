@@ -1,6 +1,6 @@
 #include "skinnedwindowclosebutton.h"
 
-SkinnedWindowCloseButton::SkinnedWindowCloseButton(s16 x, s16 y, const WindowSkin* skin) : WindowCloseButton(x, y, 0, 0, NULL) {
+SkinnedWindowCloseButton::SkinnedWindowCloseButton(s16 x, s16 y, const WindowSkin* skin) : DecorationGlyphButton(x, y, 0, 0, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, NULL) {
 
 	_skin = skin;
 

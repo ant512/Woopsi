@@ -2,14 +2,14 @@
 #define _SKINNED_SCREEN_DEPTH_BUTTON_H_
 
 #include <nds.h>
-#include "screendepthbutton.h"
+#include "decorationglyphbutton.h"
 #include "skinnedscreen.h"
 #include "skin.h"
 #include "bitmap.h"
 
 using namespace std;
 
-class SkinnedScreenDepthButton : public ScreenDepthButton {
+class SkinnedScreenDepthButton : public DecorationGlyphButton {
 
 public:
 	SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSkin* skin);

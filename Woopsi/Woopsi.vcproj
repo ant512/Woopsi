@@ -82,6 +82,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\decorationglyphbutton.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\font.cpp"
 				>
 			</File>
@@ -119,14 +123,6 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\screen.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\screendepthbutton.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\screenflipbutton.cpp"
 				>
 			</File>
 			<File
@@ -234,19 +230,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\windowborderbutton.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\windowborderside.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\woopsi\windowbordertop.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\windowclosebutton.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\windowdepthbutton.cpp"
 				>
 			</File>
 			<File
@@ -301,6 +293,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\debug.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\decorationglyphbutton.h"
 				>
 			</File>
 			<File
@@ -365,14 +361,6 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\screen.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\screendepthbutton.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\screenflipbutton.h"
 				>
 			</File>
 			<File
@@ -484,19 +472,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\windowborderbutton.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\windowborderside.h"
 				>
 			</File>
 			<File
 				RelativePath=".\woopsi\windowbordertop.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\windowclosebutton.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\windowdepthbutton.h"
 				>
 			</File>
 			<File

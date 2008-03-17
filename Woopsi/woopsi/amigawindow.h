@@ -3,16 +3,16 @@
 
 #include <nds.h>
 #include "window.h"
+#include "eventhandler.h"
 
 using namespace std;
 
 class WindowBorderTop;
 class WindowBorderSide;
 class WindowBorderBottom;
-class WindowCloseButton;
-class WindowDepthButton;
+class WindowBorderButton;
 
-class AmigaWindow : public Window {
+class AmigaWindow : public Window, public EventHandler {
 
 public:
 	AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font = NULL);
@@ -32,6 +32,7 @@ public:
 	virtual bool blur();
 
 	virtual bool resize(u16 width, u16 height);
+	virtual bool handleEvent(const EventArgs& e);
 
 protected:
 	char* _title;
@@ -40,8 +41,8 @@ protected:
 	WindowBorderSide* _windowBorderLeft;
 	WindowBorderSide* _windowBorderRight;
 	WindowBorderBottom* _windowBorderBottom;
-	WindowCloseButton* _windowCloseButton;
-	WindowDepthButton* _windowDepthButton;
+	WindowBorderButton* _closeButton;
+	WindowBorderButton* _depthButton;
 
 	virtual void createBorder();
 };

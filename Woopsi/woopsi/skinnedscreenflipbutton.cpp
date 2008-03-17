@@ -1,7 +1,7 @@
 #include "skinnedscreenflipbutton.h"
 
 SkinnedScreenFlipButton::SkinnedScreenFlipButton(s16 x, s16 y, const ScreenSkin* skin)
-: ScreenFlipButton(x, y, 0, 0, NULL) {
+: DecorationGlyphButton(x, y, 0, 0, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, NULL) {
 	_flags.decoration = true;
 	_skin = skin;
 

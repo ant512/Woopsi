@@ -2,8 +2,7 @@
 #include "windowbordertop.h"
 #include "windowborderside.h"
 #include "windowborderbottom.h"
-#include "windowclosebutton.h"
-#include "windowdepthbutton.h"
+#include "windowborderbutton.h"
 
 AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font) : Window(x, y, width, height, title, flags, font) {
 	_title = title;
@@ -12,7 +11,8 @@ AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 f
 	_windowBorderLeft = NULL;
 	_windowBorderRight = NULL;
 	_windowBorderBottom = NULL;
-	_windowCloseButton = NULL;
+	_closeButton = NULL;
+	_depthButton = NULL;
 
 	// Add border to gadget list
 	if (!(flags & GADGET_BORDERLESS)) {
@@ -67,17 +67,17 @@ void AmigaWindow::setBorderless(bool isBorderless) {
 			// Remove borders
 
 			if (_flags.closeable) {
-				_windowCloseButton->close();
+				_closeButton->close();
 			}
 
-			_windowDepthButton->close();
+			_depthButton->close();
 			_windowBorderLeft->close();
 			_windowBorderRight->close();
 			_windowBorderBottom->close();
 			_windowBorderTop->close();
 
-			_windowCloseButton = NULL;
-			_windowDepthButton = NULL;
+			_closeButton = NULL;
+			_depthButton = NULL;
 			_windowBorderBottom = NULL;
 			_windowBorderLeft = NULL;
 			_windowBorderRight = NULL;
@@ -114,13 +114,15 @@ void AmigaWindow::createBorder() {
 
 	// Add close button
 	if (_flags.closeable) {
-		_windowCloseButton = new WindowCloseButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, _font);
-		insertGadget(_windowCloseButton);
+		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _font);
+		_closeButton->setEventHandler(this);
+		insertGadget(_closeButton);
 	}
 
 	// Add depth button
-	_windowDepthButton = new WindowDepthButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, _font);
-	insertGadget(_windowDepthButton);
+	_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _font);
+	_depthButton->setEventHandler(this);
+	insertGadget(_depthButton);
 
 	// Add top border
 	if (_flags.closeable) {
@@ -132,6 +134,7 @@ void AmigaWindow::createBorder() {
 	_windowBorderLeft = new WindowBorderSide(0, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderRight = new WindowBorderSide(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderBottom = new WindowBorderBottom(0, _height - WINDOW_BORDER_SIZE, _width, WINDOW_BORDER_SIZE, WINDOW_BORDER_SIZE);
+
 	insertGadget(_windowBorderBottom);
 	insertGadget(_windowBorderRight);
 	insertGadget(_windowBorderLeft);
@@ -152,8 +155,8 @@ bool AmigaWindow::click(s16 x, s16 y) {
 					// Only remember we clicked a gadget if we didn't click
 					// a border gadget
 					if (_clickedGadget != NULL) {
-						if ((_clickedGadget != _windowCloseButton) &&
-							(_clickedGadget != _windowDepthButton)) {
+						if ((_clickedGadget != _closeButton) &&
+							(_clickedGadget != _depthButton)) {
 							gotGadget = true;
 						}
 					}
@@ -164,8 +167,27 @@ bool AmigaWindow::click(s16 x, s16 y) {
 
 			// Did we click a gadget?
 			if (!gotGadget) {
+
 				// Handle click on window
-				Gadget::click(x, y);
+				_flags.clicked = true;
+
+				// Take focus away from child gadgets
+				if (_activeGadget != NULL) {
+					_activeGadget->blur();
+					_activeGadget = NULL;
+				}
+
+				// Give focus to this gadget
+				if (!_flags.active) {
+					focus();
+				}
+
+				// Tell parent that the clicked gadget has changed
+				if (_parent != NULL) {
+					_parent->setClickedGadget(this);
+				}
+
+				raiseClickEvent(x, y);
 			}
 
 			// Do we need to draw the XOR rect?
@@ -196,12 +218,12 @@ bool AmigaWindow::focus() {
 			_windowBorderTop->draw();
 			_windowBorderLeft->draw();
 			_windowBorderRight->draw();
-			_windowDepthButton->draw();
+			_depthButton->draw();
 		}
 
 		// Run focus on close button
-		if (_windowCloseButton != NULL) {
-			_windowCloseButton->draw();
+		if (_closeButton != NULL) {
+			_closeButton->draw();
 		}
 
 		return true;
@@ -220,12 +242,12 @@ bool AmigaWindow::blur() {
 			_windowBorderTop->draw();
 			_windowBorderLeft->draw();
 			_windowBorderRight->draw();
-			_windowDepthButton->draw();
+			_depthButton->draw();
 		}
 
 		// Run blur on close button
-		if (_windowCloseButton != NULL) {
-			_windowCloseButton->draw();
+		if (_closeButton != NULL) {
+			_closeButton->draw();
 		}
 
 		// Take focus away from child gadgets
@@ -281,7 +303,7 @@ bool AmigaWindow::resize(u16 width, u16 height) {
 		_windowBorderBottom->moveTo(0, _height - WINDOW_BORDER_SIZE);
 
 		// Depth button
-		_windowDepthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
+		_depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
 
 		draw();
 
@@ -306,4 +328,39 @@ void AmigaWindow::getClientRect(Rect& rect) const {
 		rect.width = _width;
 		rect.height = _height;
 	}
+}
+
+bool AmigaWindow::handleEvent(const EventArgs& e) {
+	// Only handle release events
+	if (e.type == EVENT_RELEASE) {
+
+		// Was an interesting gadget released?
+		if (e.gadget != NULL) {
+
+			// Process decoration gadgets only
+			if (e.gadget == _depthButton) {
+
+				// Swap depths
+				swapDepth();
+				return true;
+			} else if (e.gadget == _closeButton) {
+
+				// Work out which close type to use
+				switch (getCloseType()) {
+					case CLOSE_TYPE_CLOSE:
+						// Close the window
+						close();
+						break;
+					case CLOSE_TYPE_HIDE:
+						// Hide the window
+						hide();
+						break;
+				}
+
+				return true;
+			}
+		}
+	}
+
+	return false;
 }

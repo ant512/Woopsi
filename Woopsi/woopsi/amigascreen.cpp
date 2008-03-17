@@ -1,6 +1,5 @@
 #include "amigascreen.h"
-#include "screendepthbutton.h"
-#include "screenflipbutton.h"
+#include "decorationglyphbutton.h"
 #include "screentitle.h"
 
 AmigaScreen::AmigaScreen(char* title, FontBase* font) : Screen(title, font) {
@@ -8,8 +7,8 @@ AmigaScreen::AmigaScreen(char* title, FontBase* font) : Screen(title, font) {
 	_titleHeight = 13;
 
 	_screenTitle = NULL;
-	_screenDepthButton = NULL;
-	_screenFlipButton = NULL;
+	_depthButton = NULL;
+	_flipButton = NULL;
 
 	_flags.borderless = true;
 	setBorderless(false);
@@ -24,27 +23,27 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 			// Remove borders
 			_screenTitle->close();
-			_screenDepthButton->close();
-			_screenFlipButton->close();
+			_depthButton->close();
+			_flipButton->close();
 
 			_screenTitle = NULL;
-			_screenDepthButton = NULL;
-			_screenFlipButton = NULL;
+			_depthButton = NULL;
+			_flipButton = NULL;
 
 			_flags.borderless = true;
 		} else {
 			// Add borders
 			_screenTitle = new ScreenTitle(_titleHeight, _title, _font);
-			_screenFlipButton = new ScreenFlipButton(224, 0, 16, _titleHeight, _font);
-			_screenDepthButton = new ScreenDepthButton(240, 0, 16, _titleHeight, _font);
+			_flipButton = new DecorationGlyphButton(224, 0, 16, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, _font);
+			_depthButton = new DecorationGlyphButton(240, 0, 16, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, _font);
 
 			insertGadget(_screenTitle);
-			insertGadget(_screenFlipButton);
-			insertGadget(_screenDepthButton);
+			insertGadget(_flipButton);
+			insertGadget(_depthButton);
 
 			// Set this as the decoration gadget event hander
-			_screenFlipButton->setEventHandler(this);
-			_screenDepthButton->setEventHandler(this);
+			_flipButton->setEventHandler(this);
+			_depthButton->setEventHandler(this);
 
 			_flags.borderless = false;
 		}
@@ -65,12 +64,12 @@ bool AmigaScreen::handleEvent(const EventArgs& e) {
 		if (e.gadget != NULL) {
 
 			// Process decoration gadgets only
-			if (e.gadget == _screenFlipButton) {
+			if (e.gadget == _flipButton) {
 
 				// Flip screens
 				flipScreens();
 				return true;
-			} else if (e.gadget == _screenDepthButton) {
+			} else if (e.gadget == _depthButton) {
 
 				// Depth swap to bottom of stack
 				lowerToBottom();

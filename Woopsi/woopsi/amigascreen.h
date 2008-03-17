@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class ScreenDepthButton;
+class DecorationGlyphButton;
 class ScreenFlipButton;
 class ScreenTitle;
 
@@ -23,8 +23,8 @@ public:
 
 protected:
 	ScreenTitle* _screenTitle;
-	ScreenDepthButton* _screenDepthButton;
-	ScreenFlipButton* _screenFlipButton;
+	DecorationGlyphButton* _depthButton;
+	DecorationGlyphButton* _flipButton;
 };
 
 #endif

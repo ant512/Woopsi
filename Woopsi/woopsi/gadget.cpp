@@ -1438,7 +1438,11 @@ bool Gadget::release(s16 x, s16 y) {
 			_parent->setClickedGadget(NULL);
 		}
 
-		raiseReleaseEvent(x, y);
+		// Only fire a release event if the stylus was released
+		// over this gadget
+		if (checkCollision(x, y)) {
+			raiseReleaseEvent(x, y);
+		}
 
 		return true;
 	}

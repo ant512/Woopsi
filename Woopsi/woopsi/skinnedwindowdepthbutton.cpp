@@ -1,6 +1,6 @@
 #include "skinnedwindowdepthbutton.h"
 
-SkinnedWindowDepthButton::SkinnedWindowDepthButton(s16 x, s16 y, const WindowSkin* skin) : WindowDepthButton(x, y, 0, 0, NULL) {
+SkinnedWindowDepthButton::SkinnedWindowDepthButton(s16 x, s16 y, const WindowSkin* skin) : DecorationGlyphButton(x, y, 0, 0, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, NULL) {
 
 	_skin = skin;
 
