@@ -3,7 +3,6 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "graphicsport.h"
 #include "sliderhorizontalgrip.h"
 #include "eventhandler.h"
 

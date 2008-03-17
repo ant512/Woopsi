@@ -1,4 +1,6 @@
 #include "windowbordertop.h"
+#include "graphicsport.h"
+#include <string.h>
 
 WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, char* text, FontBase* font) : Gadget(x, 0, width, height, GADGET_BORDERLESS, font) {
 	_flags.decoration = true;

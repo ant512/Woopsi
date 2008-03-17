@@ -1,4 +1,5 @@
 #include "textbox.h"
+#include "graphicsport.h"
 
 Textbox::Textbox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_text = NULL;

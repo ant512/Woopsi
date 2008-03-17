@@ -2,9 +2,7 @@
 #define _WINDOW_BORDER_BOTTOM_H_
 
 #include <nds.h>
-#include "textwriter.h"
 #include "gadget.h"
-#include "graphicsport.h"
 
 using namespace std;
 

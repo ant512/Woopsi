@@ -1,4 +1,5 @@
 #include "skinnedscreendepthbutton.h"
+#include "graphicsport.h"
 
 SkinnedScreenDepthButton::SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSkin* skin)
 : DecorationGlyphButton(x, y, 0, 0, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, NULL) {

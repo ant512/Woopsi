@@ -1,4 +1,5 @@
 #include "skinnedwindowborderleft.h"
+#include "graphicsport.h"
 
 SkinnedWindowBorderLeft::SkinnedWindowBorderLeft(s16 x, s16 y, u16 height, const WindowSkin* skin) : WindowBorderSide(x, y, 0, height) {
 

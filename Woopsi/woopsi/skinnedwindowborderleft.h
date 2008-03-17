@@ -3,9 +3,7 @@
 
 #include <nds.h>
 #include "windowborderside.h"
-#include "graphicsport.h"
 #include "skin.h"
-#include "gadget.h"
 
 using namespace std;
 

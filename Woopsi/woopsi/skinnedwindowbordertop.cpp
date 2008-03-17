@@ -1,4 +1,5 @@
 #include "skinnedwindowbordertop.h"
+#include "graphicsport.h"
 
 SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, char* text, const WindowSkin* skin) : WindowBorderTop(x, width, 0, text) {
 

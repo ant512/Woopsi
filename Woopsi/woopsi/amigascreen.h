@@ -2,7 +2,6 @@
 #define _AMIGA_SCREEN_H_
 
 #include <nds.h>
-#include "gadget.h"
 #include "eventhandler.h"
 #include "screen.h"
 

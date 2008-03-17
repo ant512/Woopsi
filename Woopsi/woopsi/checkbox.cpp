@@ -1,6 +1,7 @@
 // TODO: Remove internal drawing and replace with graphicsport
 
 #include "checkbox.h"
+#include "graphicsport.h"
 
 CheckBox::CheckBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, GLYPH_CHECK_BOX_ON, font) {
 	_font = font;

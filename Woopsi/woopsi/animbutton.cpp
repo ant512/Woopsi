@@ -1,5 +1,6 @@
 #include "animbutton.h"
 #include "animation.h"
+#include "graphicsport.h"
 
 AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Textbox(x, y, width, height, "", NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;

@@ -3,7 +3,6 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "dynamicarray.h"
 
 using namespace std;
 

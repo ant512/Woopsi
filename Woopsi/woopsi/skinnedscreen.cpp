@@ -1,6 +1,7 @@
-#include "woopsi.h"
 #include "skinnedscreendepthbutton.h"
 #include "skinnedscreenflipbutton.h"
+#include "skinnedscreentitle.h"
+#include "skinnedscreen.h"
 
 SkinnedScreen::SkinnedScreen(char* title, const ScreenSkin* skin) : Screen(title, NULL) {
 

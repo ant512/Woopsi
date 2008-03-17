@@ -3,9 +3,7 @@
 
 #include <nds.h>
 #include "decorationglyphbutton.h"
-#include "skinnedscreen.h"
 #include "skin.h"
-#include "bitmap.h"
 
 using namespace std;
 

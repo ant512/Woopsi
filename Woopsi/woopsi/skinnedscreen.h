@@ -2,9 +2,6 @@
 #define _SKINNED_SCREEN_H_
 
 #include <nds.h>
-#include "gadget.h"
-#include "skinnedscreentitle.h"
-#include "fontbase.h"
 #include "screen.h"
 #include "skin.h"
 
@@ -12,6 +9,7 @@ using namespace std;
 
 class SkinnedScreenDepthButton;
 class SkinnedScreenFlipButton;
+class SkinnedScreenTitle;
 
 class SkinnedScreen : public Screen, public EventHandler {
 

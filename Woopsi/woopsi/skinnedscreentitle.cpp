@@ -1,4 +1,5 @@
 #include "skinnedscreentitle.h"
+#include "graphicsport.h"
 
 SkinnedScreenTitle::SkinnedScreenTitle(char* text, const ScreenSkin* skin) : ScreenTitle(0, text, NULL) {
 	_flags.decoration = true;

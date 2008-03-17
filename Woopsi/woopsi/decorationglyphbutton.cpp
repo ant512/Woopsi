@@ -1,4 +1,5 @@
 #include "decorationglyphbutton.h"
+#include "graphicsport.h"
 
 DecorationGlyphButton::DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font) : Button(x, y, width, height, normalGlyph, font) {
 	_flags.decoration = true;

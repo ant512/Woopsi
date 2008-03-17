@@ -1,4 +1,5 @@
 #include "bitmapbutton.h"
+#include "graphicsport.h"
 
 BitmapButton::BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, const u16* bitmapNormal, const u16* bitmapClicked) : Textbox(x, y, width, height, "", NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;

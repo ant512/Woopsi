@@ -3,7 +3,6 @@
 
 #include <nds.h>
 #include "fontbase.h"
-#include "debug.h"
 #include "dynamicarray.h"
 
 using namespace std;

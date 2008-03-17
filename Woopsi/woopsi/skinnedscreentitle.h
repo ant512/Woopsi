@@ -2,7 +2,6 @@
 #define _SKINNED_SCREEN_TITLE_H_
 
 #include <nds.h>
-#include "graphicsport.h"
 #include "screentitle.h"
 #include "skin.h"
 

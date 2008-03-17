@@ -4,8 +4,6 @@
 #include <nds.h>
 #include "textwriter.h"
 #include "gadget.h"
-#include "fontbase.h"
-#include "graphicsport.h"
 
 using namespace std;
 

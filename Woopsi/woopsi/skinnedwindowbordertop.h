@@ -3,10 +3,7 @@
 
 #include <nds.h>
 #include "windowbordertop.h"
-#include "fontbase.h"
-#include "graphicsport.h"
 #include "skin.h"
-#include "gadget.h"
 
 using namespace std;
 
