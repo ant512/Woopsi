@@ -1368,9 +1368,10 @@ bool Gadget::resize(u16 width, u16 height) {
 }
 
 bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
+	bool wasVisible = _flags.visible;
 	setVisible(false);
 	bool moved = moveTo(x, y);
-	setVisible(true);
+	setVisible(wasVisible);
 	return (resize(width, height) | moved);
 }
 
