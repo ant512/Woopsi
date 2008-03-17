@@ -47,7 +47,8 @@ public:
 	 * @param maxRows The maximum number of rows the textbox can track.  Adding
 	 * text beyond this number will cause rows at the start of the text to be
 	 * forgotten; text is essentially stored as a queue, and adding to the back
-	 * of a full queue causes the front items to be popped off.
+	 * of a full queue causes the front items to be popped off.  Setting this to
+	 * 0 will make the textbox track only the visible rows.
 	 * @param font The font to use in this text box.
 	 */
 	MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
@@ -131,6 +132,14 @@ public:
 	 * @param Pointer to the new font.
 	 */
 	virtual void setFont(FontBase* font);
+
+	/**
+	 * Resize the textbox to the new dimensions.
+	 * @param width The new width.
+	 * @param height The new height.
+	 * @return True if the resize was successful.
+	 */
+	virtual bool resize(u16 width, u16 height);
 
 protected:
 	char* _rawText;

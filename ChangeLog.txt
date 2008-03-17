@@ -33,6 +33,9 @@ Change Log
      - Removed SimpleScreen and SimpleWindow classes.
      - Hiding/closing a child now releases the child if it is clicked.
      - Removed unused Screen::drawChildren(clipRect) method.
+     - MultiLineTextBox resizes correctly.
+     - AmigaWindow resizes correctly.
+     - Fixed enough problems in the Alert class to make it compile.
 
 
   - New Features:
@@ -60,7 +63,7 @@ Change Log
      - Moved window close/depth button logic out of button classes and into
        a new AmigaWindow event handler method.
      - Replaced screen buttons with DecorationGlyphButton class.
-	 - Replaced window buttons with WindowBorderButton class.
+     - Replaced window buttons with WindowBorderButton class.
      - Skinned decoration buttons inherit from DecorationGlyphButton.
 
 

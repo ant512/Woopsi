@@ -284,6 +284,12 @@ bool AmigaWindow::resize(u16 width, u16 height) {
 	}
 
 	if ((_width != width) || (_height != height)) {
+	
+		// Remember if the gadget is permeable
+		bool wasPermeable = _flags.permeable;
+
+		_flags.permeable = true;
+
 		erase();
 
 		_width = width;
@@ -304,6 +310,9 @@ bool AmigaWindow::resize(u16 width, u16 height) {
 
 		// Depth button
 		_depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
+
+		// Reset the permeable value
+		_flags.permeable = wasPermeable;
 
 		draw();
 

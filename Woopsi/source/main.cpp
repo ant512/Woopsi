@@ -357,7 +357,7 @@ int main() {
 	textWindow->addGadget(multiBox);
 
 	// Add Welcome notice
-	//newScreen->addAlert("Welcome!", "Welcome to Woopsi!");
+	//newScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
 
 	// Add another screen
 	AmigaScreen* demoScreen = new AmigaScreen("Demos");

@@ -37,6 +37,7 @@
 #include "radiobutton.h"
 #include "checkbox.h"
 #include "multilinetextbox.h"
+#include "alert.h"
 
 using namespace std;
 

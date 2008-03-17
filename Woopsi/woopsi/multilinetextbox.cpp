@@ -304,3 +304,41 @@ const u16 MultiLineTextBox::getCurrentPage() const {
 	// Return the page on which the top row falls
 	return topRow / rowCount;
 }
+
+bool MultiLineTextBox::resize(u16 width, u16 height) {
+	setVisible(false);
+
+	bool raiseEvent = false;
+
+	// Resize the gadget
+	Gadget::resize(width, height);
+
+	// Resize the canvas' width
+	_canvasWidth = _width;
+
+	setVisible(true);
+
+	// Re-wrap the text
+	_text->setWidth(_width);
+	_text->setText(_rawText);
+
+	// Ensure that we have the correct number of rows
+	if (_text->getLineCount() > _maxRows) {
+		stripTopLines(_text->getLineCount() - _maxRows);
+		raiseEvent = true;
+	}
+
+	draw();
+	
+	// Update canvas height
+	if (_text->getLineCount() > _visibleRows) {
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+
+		// Scroll to bottom of new text
+		scroll(0, _canvasHeight - _height);
+	}
+
+	if (raiseEvent) raiseValueChangeEvent();
+
+	return true;
+}
