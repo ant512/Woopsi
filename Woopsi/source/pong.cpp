@@ -16,7 +16,7 @@ Pong::Pong(AmigaScreen* screen) {
 	_upHeld = false;
 	_downHeld = false;
 	
-	_font = new Font(sysfont_Bitmap, 256, 192, 8, 10, 64543);
+	_font = new Font(sysfont_Bitmap, 256, 50, 8, 10, 64543);
 	_fontRColour = 0;
 	_fontGColour = 0;
 	_fontBColour = 0;
