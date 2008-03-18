@@ -40,7 +40,7 @@ const s16 SliderHorizontal::getValue() const {
 		u32 ratio = ((_maximumValue - _minimumValue) << 8) / rect.width;
 		
 		// Calculate value
-		u32 val ((_grip->getX() - getX()) * ratio);
+		u32 val = (_grip->getX() - getX()) * ratio;
 
 		// Right shift to erase fractional part and return
 		return val >> 8;
@@ -76,7 +76,7 @@ void SliderHorizontal::setValue(const s16 value) {
 		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// Convert value using ratio
-		s16 newGripX = (value * ratio) >> 8;
+		s16 newGripX = rect.x + ((value * ratio) >> 8);
 		
 		// Adjust new x so that it fits within gutter
 		if (newGripX + _grip->getWidth() > rect.x + rect.width) {
@@ -84,7 +84,7 @@ void SliderHorizontal::setValue(const s16 value) {
 		}
 
 		// Move the grip
-		_grip->moveTo(rect.x + newGripX, rect.y);
+		_grip->moveTo(newGripX, rect.y);
 	}
 }
 
@@ -214,5 +214,5 @@ void SliderHorizontal::jumpGrip(u8 direction) {
 	}
 
 	// Move the grip
-	_grip->moveTo(rect.x + newGripX, rect.y);
+	_grip->moveTo(newGripX, rect.y);
 }
