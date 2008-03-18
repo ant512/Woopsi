@@ -85,7 +85,7 @@ void SliderVertical::setValue(const s16 value) {
 		}
 
 		// Move the grip
-		_grip->moveTo(0, newGripY);
+		_grip->moveTo(rect.x, rect.y + newGripY);
 	}
 }
 
@@ -215,5 +215,5 @@ void SliderVertical::jumpGrip(u8 direction) {
 	}
 
 	// Move the grip
-	_grip->moveTo(0, newGripY);
+	_grip->moveTo(rect.x, rect.y + newGripY);
 }
