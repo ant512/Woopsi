@@ -36,6 +36,7 @@ Change Log
      - MultiLineTextBox resizes correctly.
      - AmigaWindow resizes correctly.
      - Fixed enough problems in the Alert class to make it compile.
+     - Minor optimisation in clipping.
 
 
   - New Features:

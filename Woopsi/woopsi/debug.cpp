@@ -160,7 +160,7 @@ bool Debug::handleEvent(const EventArgs& e) {
 				case EVENT_SCROLL:
 					if (_scrollbar != NULL) {
 						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setMaximumValue(_textBox->getCanvasHeight());
+						_scrollbar->setMaximumValue(_textBox->getCanvasHeight() - 1);
 						_scrollbar->resizeGrip();
 						_scrollbar->setValue(0 - _textBox->getCanvasY());
 						_scrollbar->setRaisesEvents(true);

@@ -177,7 +177,7 @@ void SliderVertical::resizeGrip() {
 		// New height is equivalent to the height of the gutter minus
 		// the ratio-converted overflow height
 		newHeight = (rect.height << 8) - (overspill * ratio);
-		
+
 		// Bitshift to remove fraction
 		newHeight >>= 8;
 

@@ -599,25 +599,22 @@ void Gadget::draw() {
 		// children
 		DynamicArray<Rect>* visibleRects = new DynamicArray<Rect>();
 
-		if (invisibleRects != NULL) {
-
-			// Copy all visible regions into the new vector
-			for (u16 i = 0; i < _visibleRegionCache.size(); i++) {
-				visibleRects->push_back(_visibleRegionCache[i]);
-			}
-
-			// Remove all child rects from the visible vector
-			for (u8 i = 0; i < _gadgets.size(); i++) {
-				if (visibleRects->size() > 0) {
-					_gadgets[i]->splitRectangles(visibleRects, invisibleRects, this);
-				} else {
-					break;
-				}
-			}
-
-			// Tidy up
-			delete invisibleRects;
+		// Copy all visible regions into the new vector
+		for (u16 i = 0; i < _visibleRegionCache.size(); i++) {
+			visibleRects->push_back(_visibleRegionCache[i]);
 		}
+
+		// Remove all child rects from the visible vector
+		for (u8 i = 0; i < _gadgets.size(); i++) {
+			if (visibleRects->size() > 0) {
+				_gadgets[i]->splitRectangles(visibleRects, invisibleRects, this);
+			} else {
+				break;
+			}
+		}
+
+		// Tidy up
+		delete invisibleRects;
 
 		// Draw all visible rectangles
 		for (u8 i = 0; i < visibleRects->size(); i++) {
@@ -645,19 +642,16 @@ void Gadget::redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 
 		DynamicArray<Rect>* overlappingRects = new DynamicArray<Rect>();
 
-		if (overlappingRects != NULL) {
+		// Remove any non-overlapping rectangles from dirty vector and add to
+		// overlapping vector
+		splitRectangles(invalidRects, overlappingRects, sender);
 
-			// Remove any non-overlapping rectangles from dirty vector and add to
-			// overlapping vector
-			splitRectangles(invalidRects, overlappingRects, sender);
-
-			// Draw overlapped rects
-			for (u8 i = 0; i < overlappingRects->size(); i++) {
-				draw(overlappingRects->at(i));
-			}
-
-			delete overlappingRects;
+		// Draw overlapped rects
+		for (u8 i = 0; i < overlappingRects->size(); i++) {
+			draw(overlappingRects->at(i));
 		}
+
+		delete overlappingRects;
 	}
 }
 
@@ -680,16 +674,9 @@ void Gadget::redrawDirtyChildren(DynamicArray<Rect>* invalidRects, Gadget* sende
 // Called when drawing a gadget to check that no higher gadgets get overwritten
 void Gadget::removeOverlappedRects(DynamicArray<Rect>* visibleRects, DynamicArray<Rect>* invisibleRects, Gadget* gadget) {
 
-	// Locate gadget in the list
-	u8 gadgetIndex = 0;
-
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-		if (_gadgets[i] == gadget) {
-			// Found gadget - remember the index of the next gadget
-			gadgetIndex = i + 1;
-			break;
-		}
-	}
+	// Locate gadget in the list; we add one to the index to
+	// ensure that we deal with the next gadget up in the z-order
+	s16 gadgetIndex = getGadgetIndex(gadget) + 1;
 
 	// Gadget should never be the bottom item on the screen
 	if (gadgetIndex > 0) {
@@ -1736,27 +1723,24 @@ void Gadget::cacheVisibleRects() {
 		// We can discard this later as we don't need it
 		DynamicArray<Rect>* invisibleRects = new DynamicArray<Rect>();
 
-		if (invisibleRects != NULL) {
+		// Copy the clipped gadget dimensions into a rect
+		Rect rect;
+		getRectClippedToHierarchy(rect);
 
-			// Copy the clipped gadget dimensions into a rect
-			Rect rect;
-			getRectClippedToHierarchy(rect);
+		// Do we have a visible region left?
+		if ((rect.height > 0) && (rect.width > 0)) {
 
-			// Do we have a visible region left?
-			if ((rect.height > 0) && (rect.width > 0)) {
-
-				// Add rect to list
-				_visibleRegionCache.push_back(rect);
-				
-				// Request refresh
-				if (_parent != NULL) {
-					_parent->removeOverlappedRects(&_visibleRegionCache, invisibleRects, this);
-				}
+			// Add rect to list
+			_visibleRegionCache.push_back(rect);
+			
+			// Request refresh
+			if (_parent != NULL) {
+				_parent->removeOverlappedRects(&_visibleRegionCache, invisibleRects, this);
 			}
-
-			// Tidy up
-			delete invisibleRects;
 		}
+
+		// Tidy up
+		delete invisibleRects;
 
 		_visibleRegionCacheInvalid = false;
 	}
@@ -1783,7 +1767,6 @@ GraphicsPort* Gadget::newGraphicsPort() {
 	cacheVisibleRects();
 
 	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT);
-	//return new GraphicsPort(this, 0, 0, _width, _height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 // Return the client graphics port for a specific clipping rect
@@ -1798,7 +1781,6 @@ GraphicsPort* Gadget::newGraphicsPort(Rect clipRect) {
 	cacheVisibleRects();
 
 	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, &clipRect);
-	//return new GraphicsPort(this, 0, 0, _width, _height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, &clipRect);
 }
 
 // Return the internal graphics port - allows drawing over entire gadget space

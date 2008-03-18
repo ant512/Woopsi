@@ -819,6 +819,11 @@ protected:
 	void clear();
 	void drawChildren();
 
+	/**
+	 * Get the index of the specified child gadget.
+	 * @param gadget The gadget to get the index of.
+	 * @return The index of the gadget.  -1 if the gadget is not found.
+	 */
 	s16 getGadgetIndex(Gadget* gadget);
 
 	virtual void setActive(bool active);
