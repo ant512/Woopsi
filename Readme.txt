@@ -119,6 +119,10 @@ Requirements
   
    - Replace the "Makefile" with "Makefile.libnds".
    
+  Woopsi has been developed using devkitPro r20, VC++ 2005 Express, and the last
+  official version of PALib (070323).  It has not been tested with newer
+  versions of these programs.
+  
 
 SDL Compatibility
 -----------------

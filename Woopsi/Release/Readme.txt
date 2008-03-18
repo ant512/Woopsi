@@ -57,8 +57,11 @@ Credits and Acknowlegements
 Links
 -----
 
+ - http://ant.simianzombie.com                    - My main site
  - http://ant.simianzombie.com/blog               - DS development blog
+ - http://ant.simianzombie.com/forum              - Woopsi forum
  - http://www.sourceforge.net/projects/woopsi     - Woopsi SourceForge page
+ - http://woopsi.sourceforge.net                  - Woopsi documentation
 
 
 Email
