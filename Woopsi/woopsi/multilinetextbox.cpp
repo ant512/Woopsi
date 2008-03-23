@@ -121,17 +121,20 @@ s16 MultiLineTextBox::getRowY(u8 screenRow, u8 screenRows) {
 	s16 textY = 0;
 	s16 startPos = 0;
 
+	Rect rect;
+	getClientRect(rect);
+
 	// Calculate vertical position
 	switch (_vPos) {
 		case TEXT_POSITION_VERT_CENTRE:
-			startPos = ((_height - (_padding << 1)) >> 1) - ((_text->getLineHeight() * screenRows) >> 1);
+			startPos = ((rect.height - (_padding << 1)) >> 1) - ((_text->getLineHeight() * screenRows) >> 1);
 			textY = startPos + (screenRow * _text->getLineHeight());
 			break;
 		case TEXT_POSITION_VERT_TOP:
 			textY = _padding + (screenRow * _text->getLineHeight());
 			break;
 		case TEXT_POSITION_VERT_BOTTOM:
-			textY = (_height - (_text->getLineHeight() * (screenRows - screenRow))) - _padding;
+			textY = (rect.height - (_text->getLineHeight() * (screenRows - screenRow))) - _padding;
 			break;
 	}
 
@@ -139,7 +142,11 @@ s16 MultiLineTextBox::getRowY(u8 screenRow, u8 screenRows) {
 }
 
 void MultiLineTextBox::calculateTotalVisibleRows() {
-	_visibleRows = (_height - (_padding << 1)) / _text->getLineHeight();
+
+	Rect rect;
+	getClientRect(rect);
+
+	_visibleRows = (rect.height - (_padding << 1)) / _text->getLineHeight();
 }
 
 void MultiLineTextBox::setTextPositionHoriz(TextPositionHoriz position) {
