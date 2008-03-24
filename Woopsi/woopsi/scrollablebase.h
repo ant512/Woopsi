@@ -45,18 +45,6 @@ public:
 	virtual const s32 getCanvasHeight() const { return _canvasHeight; };
 
 	/**
-	 * Sets the width of the virtual canvas.
-	 * @param The width of the virtual canvas.
-	 */
-	virtual void setCanvasWidth(s32 width) { _canvasWidth = width; };
-	
-	/**
-	 * Sets the height of the virtual canvas.
-	 * @param The height of the virtual canvas.
-	 */
-	virtual void setCanvasHeight(s32 height) { _canvasHeight = height; };
-
-	/**
 	 * Scrolls the virtual canvas by the specified amounts.
 	 * @param dx Distance to scroll horizontally.
 	 * @param dy Distance to scroll vertically.
@@ -75,6 +63,18 @@ protected:
 	s32 _canvasY;
 	s32 _canvasWidth;
 	s32 _canvasHeight;
+
+	/**
+	 * Sets the width of the virtual canvas.
+	 * @param The width of the virtual canvas.
+	 */
+	virtual void setCanvasWidth(const s32 width) { _canvasWidth = width; };
+	
+	/**
+	 * Sets the height of the virtual canvas.
+	 * @param The height of the virtual canvas.
+	 */
+	virtual void setCanvasHeight(const s32 height) { _canvasHeight = height; };
 };
 
 #endif
