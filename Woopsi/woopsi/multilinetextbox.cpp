@@ -1,3 +1,5 @@
+// TODO: Padding of 12px and above goes crazy
+
 #include "multilinetextbox.h"
 #include "fontbase.h"
 #include "text.h"
@@ -6,7 +8,6 @@
 MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
 	
 	_rawText = NULL;
-	_text = new Text(_font, "", width);
 
 	_outline = OUTLINE_IN;
 
@@ -15,7 +16,13 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 	_padding = 2;
 	_topRow = 0;
 
+	Rect rect;
+	getClientRect(rect);
+	_text = new Text(_font, "", rect.width - (_padding << 1));
+
 	_flags.draggable = true;
+
+	_canvasWidth = rect.width;
 
 	_maxRows = maxRows;
 
@@ -60,9 +67,12 @@ void MultiLineTextBox::draw(Rect clipRect) {
 
 	// Calculate the top line of text in this region
 	s32 topRowRegion = ((-_canvasY + (clipRect.y - getY())) / _text->getLineHeight()) - 1;
+	
+	// Calculcate the bottom line of text in this region
+	s32 bottomRowRegion = (((-_canvasY + (clipRect.y + clipRect.height - getY())) / _text->getLineHeight())) + 1;
 
 	// Calculate the number of rows in this region
-	u8 rowCountRegion = (clipRect.height / _text->getLineHeight()) + 3;
+	u8 rowCountRegion = (bottomRowRegion - topRowRegion);
 
 	// Draw lines of text
 	s16 textX;
@@ -70,7 +80,6 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	s32 currentTextRow = topRowRegion;
 	u8 rowPixelWidth = 0;
 	u8 rowLength = 0;
-	_canvasX = 0;
 	u8 i = 0;
 
 	while ((i < rowCountRegion) && (i < _text->getLineCount() - topRowRegion) && (currentTextRow < _text->getLineCount())) {
@@ -84,7 +93,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
 			rowPixelWidth = _text->getFont()->getWidth() * rowLength;
 
 			textX = getRowX(rowPixelWidth) + _canvasX;
-			textY = getRowY(currentTextRow, rowCount) + _canvasY + 1;
+			textY = getRowY(currentTextRow, rowCount) + _canvasY;
 			
 			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentTextRow));
 		}
@@ -102,14 +111,17 @@ void MultiLineTextBox::draw() {
 // Calculate values for centralised text
 u8 MultiLineTextBox::getRowX(u8 rowPixelWidth) {
 
+	Rect rect;
+	getClientRect(rect);
+
 	// Calculate horizontal position
 	switch (_hPos) {
 		case TEXT_POSITION_HORIZ_CENTRE:
-			return ((_width - (_padding << 1)) >> 1) - (rowPixelWidth >> 1);
+			return ((rect.width - (_padding << 1)) >> 1) - (rowPixelWidth >> 1);
 		case TEXT_POSITION_HORIZ_LEFT:
 			return _padding;
 		case TEXT_POSITION_HORIZ_RIGHT:
-			return _width - rowPixelWidth - _padding;
+			return rect.width - rowPixelWidth - _padding;
 	}
 
 	// Will never be reached
@@ -321,7 +333,9 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 	Gadget::resize(width, height);
 
 	// Resize the canvas' width
-	_canvasWidth = _width;
+	Rect rect;
+	getClientRect(rect);
+	_canvasWidth = rect.width;
 
 	setVisible(true);
 

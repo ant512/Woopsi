@@ -117,11 +117,14 @@ void Debug::createGUI() {
 		
 		// Add slider
 		if (_scrollbar == NULL) {
+			Gadget::Rect rect;
+			_textBox->getClientRect(rect);
+
 			_scrollbar = new ScrollbarVertical(243, 13, 9, 162);
 			_window->addGadget(_scrollbar);
 			_scrollbar->setMinimumValue(0);
 			_scrollbar->setMaximumValue(0);
-			_scrollbar->setPageSize(_textBox->getHeight());
+			_scrollbar->setPageSize(rect.height);
 			_scrollbar->setEventHandler(this);
 			_scrollbar->draw();
 		}
@@ -160,7 +163,7 @@ bool Debug::handleEvent(const EventArgs& e) {
 				case EVENT_SCROLL:
 					if (_scrollbar != NULL) {
 						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setMaximumValue(_textBox->getCanvasHeight() - 1);
+						_scrollbar->setMaximumValue(_textBox->getCanvasHeight());
 						_scrollbar->resizeGrip();
 						_scrollbar->setValue(0 - _textBox->getCanvasY());
 						_scrollbar->setRaisesEvents(true);

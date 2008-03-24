@@ -354,6 +354,7 @@ int main() {
 		"environment, and the look-and-feel of the system "
 		"intentionally resembles the old Amiga system.", Gadget::GADGET_DRAGGABLE, 50);
 	multiBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
+	multiBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
 	textWindow->addGadget(multiBox);
 
 	// Add Welcome notice

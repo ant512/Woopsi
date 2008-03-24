@@ -3,8 +3,12 @@
 #include "woopsifuncs.h"
 
 ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
-	_canvasWidth = width;
-	_canvasHeight = height;
+	
+	Rect rect;
+	getClientRect(rect);
+	
+	_canvasWidth = rect.width;
+	_canvasHeight = rect.height;
 	_canvasX = 0;
 	_canvasY = 0;
 	_flags.permeable = true;
@@ -35,15 +39,18 @@ void ScrollingPanel::jump(s32 x, s32 y) {
 
 void ScrollingPanel::scroll(s32 dx, s32 dy) {
 
+	Rect rect;
+	getClientRect(rect);
+
 	// Prevent scrolling outside boundaries
-	if (_canvasX + dx < -(_canvasWidth - _width)) {
-		dx = -(_canvasWidth - _width) - _canvasX;
+	if (_canvasX + dx < -(_canvasWidth - rect.width)) {
+		dx = -(_canvasWidth - rect.width) - _canvasX;
 	} else if (_canvasX + dx > 0) {
 		dx = -_canvasX;
 	}
 
-	if (_canvasY + dy < -(_canvasHeight - _height)) {
-		dy = -(_canvasHeight - _height) - _canvasY;
+	if (_canvasY + dy < -(_canvasHeight - rect.height)) {
+		dy = -(_canvasHeight - rect.height) - _canvasY;
 	} else if (_canvasY + dy > 0) {
 		dy = -_canvasY;
 	}
