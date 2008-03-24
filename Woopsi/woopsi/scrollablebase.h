@@ -24,25 +24,25 @@ public:
 	 * Gets the x co-ordinate of the virtual canvas.
 	 * @return The x co-ordinate of the virtual canvas.
 	 */
-	virtual const s32 getCanvasX() { return _canvasX; };
+	virtual const s32 getCanvasX() const { return _canvasX; };
 	
 	/**
 	 * Gets the y co-ordinate of the virtual canvas.
 	 * @return The y co-ordinate of the virtual canvas.
 	 */
-	virtual const s32 getCanvasY() { return _canvasY; };
+	virtual const s32 getCanvasY() const { return _canvasY; };
 
 	/**
 	 * Gets the width of the virtual canvas.
 	 * @return The width of the virtual canvas.
 	 */
-	virtual const s32 getCanvasWidth() { return _canvasWidth; };
+	virtual const s32 getCanvasWidth() const { return _canvasWidth; };
 	
 	/**
 	 * Gets the height of the virtual canvas.
 	 * @return The height of the virtual canvas.
 	 */
-	virtual const s32 getCanvasHeight() { return _canvasHeight; };
+	virtual const s32 getCanvasHeight() const { return _canvasHeight; };
 
 	/**
 	 * Scrolls the virtual canvas by the specified amounts.
