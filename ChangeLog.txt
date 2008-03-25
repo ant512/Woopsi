@@ -68,7 +68,7 @@ Change Log
      - Alert class complete.
 
 
-  V0.29 (20081101)
+  V0.29 (20080111)
   
   - Fixes:
      - Windows prevented from being dragged out of top of screen.
