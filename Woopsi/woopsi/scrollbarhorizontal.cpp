@@ -126,10 +126,15 @@ void ScrollbarHorizontal::setButtonScrollAmount(const u16 buttonScrollAmount) {
 
 bool ScrollbarHorizontal::resize(u16 width, u16 height) {
 
-	// Remember current value
+	// Remember current values
 	s16 value = getValue();
 	bool resized = false;
 	bool events = raisesEvents();
+	bool visible = isVisible();
+
+	// Hide and disable drawing
+	erase();
+	setVisible(false);
 
 	// Disable event raising
 	setRaisesEvents(false);
@@ -146,6 +151,10 @@ bool ScrollbarHorizontal::resize(u16 width, u16 height) {
 
 		resized = true;
 	}
+
+	// Show and reset drawing
+	setVisible(visible);
+	draw();
 
 	// Reset event raising
 	setRaisesEvents(events);

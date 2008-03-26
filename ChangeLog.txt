@@ -34,6 +34,7 @@ Change Log
      - Hiding/closing a child now releases the child if it is clicked.
      - Removed unused Screen::drawChildren(clipRect) method.
      - MultiLineTextBox resizes correctly.
+     - Textbox resizes correctly.
      - AmigaWindow resizes correctly.
      - Minor optimisation in clipping.
 

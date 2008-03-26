@@ -220,12 +220,18 @@ void SliderHorizontal::jumpGrip(u8 direction) {
 
 bool SliderHorizontal::resize(u16 width, u16 height) {
 
-	// Remember current value
+	// Remember current values
 	s16 value = getValue();
 	bool resized = false;
+	bool events = raisesEvents();
+	bool visible = isVisible();
 
-	// Disable grip events
-	_grip->setRaisesEvents(false);
+	// Disable event raising
+	setRaisesEvents(false);
+
+	// Hide and disable drawing
+	erase();
+	setVisible(false);
 
 	if (Gadget::resize(width, height)) {
 		resizeGrip();
@@ -236,8 +242,12 @@ bool SliderHorizontal::resize(u16 width, u16 height) {
 		resized = true;
 	}
 
-	// Re-enable grip events
-	_grip->setRaisesEvents(true);
+	// Show and reset drawing
+	setVisible(visible);
+	draw();
+
+	// Reset event raising
+	setRaisesEvents(events);
 
 	return resized;
 }

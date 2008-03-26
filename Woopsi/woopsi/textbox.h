@@ -117,6 +117,14 @@ public:
 	 */
 	virtual bool release(s16 x, s16 y);
 
+	/**
+	 * Resize the gadget to the new dimensions.
+	 * @param width The new width.
+	 * @param height The new height.
+	 * @return True if the resize was successful.
+	 */
+	virtual bool resize(u16 width, u16 height);
+
 
 protected:
 	char* _text;

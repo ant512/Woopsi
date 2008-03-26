@@ -169,3 +169,27 @@ bool Textbox::release(s16 x, s16 y) {
 
 	return false;
 }
+
+bool Textbox::resize(u16 width, u16 height) {
+
+	// Remember current values
+	bool resized = false;
+	bool visible = isVisible();
+
+	// Hide and disable drawing
+	erase();
+	setVisible(false);
+
+	// Attempt to resize
+	if (Gadget::resize(width, height)) {
+		calculateTextPosition();
+
+		resized = true;
+	}
+
+	// Show and reset drawing
+	setVisible(visible);
+	draw();
+
+	return resized;
+}
