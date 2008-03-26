@@ -1,0 +1,29 @@
+Upgrading from a Previous Version
+---------------------------------
+
+  Woopsi is currently in a pre-alpha state.  Its structure and API is subject to
+  change.  Until Woopsi is in at least beta, no effort is being made to ensure
+  that backwards-compatibility is retained between versions.  Similarly, no
+  effort is being made to track which changes are likely to break current code.
+   
+  If you are upgrading your project from a previous version of Woopsi, *please*
+  make a complete backup of your project first.  That way, you will be able to
+  revert back if you find that your code is completely broken by the upgrade.  I
+  don't expect the upgrades to create major problems that can't be resolved by
+  some minor tinkering or refactoring.  However, I am aware that several people
+  are using Woopsi for projects that aren't trivial in importance and that have
+  non-negotiable deadlines.
+  
+  Please don't let a GUI library be the undoing of your hard work.
+  
+  
+What to do if it Breaks
+-----------------------
+
+  The changelog supplied with Woopsi is a reasonably accurate list of changes
+  that occur between versions.  It should point you in the right direction if
+  you find that your project won't compile with the latest Woopsi code.
+  
+  Alternatively, you can ask for assistance on the Woopsi forum:
+  
+  http://ant.simianzombie.com/forum
