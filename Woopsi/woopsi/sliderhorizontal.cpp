@@ -1,4 +1,5 @@
 #include "sliderhorizontal.h"
+#include "sliderhorizontalgrip.h"
 #include "graphicsport.h"
 
 SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
@@ -215,4 +216,28 @@ void SliderHorizontal::jumpGrip(u8 direction) {
 
 	// Move the grip
 	_grip->moveTo(newGripX, rect.y);
+}
+
+bool SliderHorizontal::resize(u16 width, u16 height) {
+
+	// Remember current value
+	s16 value = getValue();
+	bool resized = false;
+
+	// Disable grip events
+	_grip->setRaisesEvents(false);
+
+	if (Gadget::resize(width, height) {
+		resizeGrip();
+
+		// Set back to current value
+		setValue(value);
+
+		resized = true;
+	}
+
+	// Re-enable grip events
+	_grip->setRaisesEvents(true);
+
+	return resized;
 }

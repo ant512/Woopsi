@@ -3,10 +3,11 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "sliderhorizontalgrip.h"
 #include "eventhandler.h"
 
 using namespace std;
+
+class SliderHorizontalGrip;
 
 /**
  * Gadget providing a sliding "grip" that can be moved left and
@@ -131,6 +132,14 @@ public:
 	 * @return True if the event was processed.
 	 */
 	virtual bool handleEvent(const EventArgs& e);
+
+	/**
+	 * Resize the slider to the new dimensions.
+	 * @param width The new width.
+	 * @param height The new height.
+	 * @return True if the resize was successful.
+	 */
+	virtual bool resize(u16 width, u16 height);
 
 protected:
 	SliderHorizontalGrip* _grip;

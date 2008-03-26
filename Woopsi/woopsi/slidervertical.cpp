@@ -217,3 +217,27 @@ void SliderVertical::jumpGrip(u8 direction) {
 	// Move the grip
 	_grip->moveTo(rect.x, newGripY);
 }
+
+bool SliderVertical::resize(u16 width, u16 height) {
+
+	// Remember current value
+	s16 value = getValue();
+	bool resized = false;
+
+	// Disable grip events
+	_grip->setRaisesEvents(false);
+
+	if (Gadget::resize(width, height) {
+		resizeGrip();
+
+		// Set back to current value
+		setValue(value);
+
+		resized = true;
+	}
+
+	// Re-enable grip events
+	_grip->setRaisesEvents(true);
+
+	return resized;
+}
