@@ -136,6 +136,14 @@ public:
 	 */
 	virtual bool handleEvent(const EventArgs& e);
 
+	/**
+	 * Resize the scrollbar to the new dimensions.
+	 * @param width The new width.
+	 * @param height The new height.
+	 * @return True if the resize was successful.
+	 */
+	virtual bool resize(u16 width, u16 height);
+
 
 protected:
 	SliderVertical* _slider;

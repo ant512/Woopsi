@@ -227,7 +227,7 @@ bool SliderHorizontal::resize(u16 width, u16 height) {
 	// Disable grip events
 	_grip->setRaisesEvents(false);
 
-	if (Gadget::resize(width, height) {
+	if (Gadget::resize(width, height)) {
 		resizeGrip();
 
 		// Set back to current value

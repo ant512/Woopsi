@@ -123,3 +123,32 @@ void ScrollbarVertical::jumpGrip(u8 direction) {
 void ScrollbarVertical::setButtonScrollAmount(const u16 buttonScrollAmount) {
 	_buttonScrollAmount = buttonScrollAmount;
 }
+
+bool ScrollbarVertical::resize(u16 width, u16 height) {
+
+	// Remember current value
+	s16 value = getValue();
+	bool resized = false;
+	bool events = raisesEvents();
+
+	// Disable event raising
+	setRaisesEvents(false);
+
+	if (Gadget::resize(width, height)) {
+
+		// Resize and move children
+		_slider->resize(width, height - (_buttonHeight << 1));
+		_upButton->moveTo(0, _slider->getHeight());
+		_downButton->moveTo(0, _slider->getHeight() + _buttonHeight);
+
+		// Set back to current value
+		setValue(value);
+
+		resized = true;
+	}
+
+	// Reset event raising
+	setRaisesEvents(events);
+
+	return resized;
+}

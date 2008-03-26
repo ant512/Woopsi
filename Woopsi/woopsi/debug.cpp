@@ -132,6 +132,7 @@ void Debug::createGUI() {
 }
 
 bool Debug::handleEvent(const EventArgs& e) {
+
 	if (e.gadget != NULL) {
 		if (e.gadget == _scrollbar) {
 			

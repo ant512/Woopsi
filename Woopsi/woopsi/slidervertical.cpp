@@ -223,11 +223,12 @@ bool SliderVertical::resize(u16 width, u16 height) {
 	// Remember current value
 	s16 value = getValue();
 	bool resized = false;
+	bool events = raisesEvents();
 
-	// Disable grip events
-	_grip->setRaisesEvents(false);
+	// Disable event raising
+	setRaisesEvents(false);
 
-	if (Gadget::resize(width, height) {
+	if (Gadget::resize(width, height)) {
 		resizeGrip();
 
 		// Set back to current value
@@ -236,8 +237,8 @@ bool SliderVertical::resize(u16 width, u16 height) {
 		resized = true;
 	}
 
-	// Re-enable grip events
-	_grip->setRaisesEvents(true);
+	// Reset event raising
+	setRaisesEvents(events);
 
 	return resized;
 }
