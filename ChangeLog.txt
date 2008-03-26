@@ -67,6 +67,7 @@ Change Log
      - Replaced window buttons with WindowBorderButton class.
      - Skinned decoration buttons inherit from DecorationGlyphButton.
      - Finished Alert class.
+     - Added library makefile.
 
 
   V0.29 (20080111)

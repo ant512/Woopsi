@@ -44,24 +44,23 @@ Requirements
 Credits and Acknowlegements
 ---------------------------
 
- - Coding and design                              - Antony Dzeryn
- - Testing, technical advice, other contributions - Jeff Laing
- - PALib removal                                  - Steve
- - Simian Zombie logo                             - John Clay
- - Thanks to                                      - The devKitPro team
-                                                  - The PALib team
-                                                  - Nintendo
-                                                  - R. J. Michal
+ - Coding and design                                - Antony Dzeryn
+ - Testing, technical advice, other contributions   - Jeff Laing
+ - PALib independence                               - Steve
+ - Simian Zombie logo                               - John Clay
+ - Thanks to                                        - The devKitPro team
+                                                    - The PALib team
+                                                    - Nintendo
+                                                    - R. J. Michal
 
 
 Links
 -----
 
- - http://ant.simianzombie.com                    - My main site
- - http://ant.simianzombie.com/blog               - DS development blog
- - http://ant.simianzombie.com/forum              - Woopsi forum
- - http://www.sourceforge.net/projects/woopsi     - Woopsi SourceForge page
- - http://woopsi.sourceforge.net                  - Woopsi documentation
+ - http://ant.simianzombie.com/blog                 - DS development blog
+ - http://ant.simianzombie.com/forum                - Woopsi forum
+ - http://www.sourceforge.net/projects/woopsi       - Woopsi SourceForge page
+ - http://woopsi.sourceforge.net                    - Woopsi documentation
 
 
 Email
