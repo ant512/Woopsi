@@ -41,6 +41,9 @@ Change Log
   - New Features:
      - Added vertical slider.
      - Added vertical scrollbar.
+     - Added horizontal slider.
+     - Added horizontal scrollbar.
+     - Added up, down, left and right arrow glyphs.
      - Added ScrollableBase base class for scrolling gadgets.
      - Removed ScrollableBase functions from ScrollingPanel and added
        ScrollableBase as a base class for ScrollingPanel.
@@ -50,11 +53,8 @@ Change Log
      - Removed all STL code.
      - Added event enabling/disabling to Gadget class.
      - Added event enabling/disabling to ScrollingPanel class.
-     - Added horizontal slider.
      - Gadgets track calls to erase() and no longer perform a second erase
        without a call to draw() first.
-     - Completed ScrollbarVertical class.
-     - Added up, down, left and right arrow glyphs.
      - Added Gadget::changeDimensions() to allow move and resize with just one
        redraw.
      - Merged code for child click, release, keypress, key release, lid opened,
@@ -65,7 +65,7 @@ Change Log
      - Replaced screen buttons with DecorationGlyphButton class.
      - Replaced window buttons with WindowBorderButton class.
      - Skinned decoration buttons inherit from DecorationGlyphButton.
-     - Alert class complete.
+     - Finished Alert class.
 
 
   V0.29 (20080111)

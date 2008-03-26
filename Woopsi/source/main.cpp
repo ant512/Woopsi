@@ -322,11 +322,11 @@ int main() {
 	textTestWindow->getClientRect(rect);
 	textTestWindow->addGadget(new MultiLineTextBox(rect.x, rect.y, 80, 80, "This is some\ntest text", Gadget::GADGET_DRAGGABLE, 5));
 
-	SliderHorizontal* slider = new SliderHorizontal(10, 30, 50, 15);
-	slider->setMaximumValue(50);
-	slider->setPageSize(6);
-	slider->resizeGrip();
-	textTestWindow->addGadget(slider);
+	//ScrollbarHorizontal* scrollbar = new ScrollbarHorizontal(10, 30, 50, 15);
+	//scrollbar->setMaximumValue(50);
+	//scrollbar->setPageSize(6);
+	//scrollbar->resizeGrip();
+	//textTestWindow->addGadget(scrollbar);
 
 	// Controls
 	controlWindow->getClientRect(rect);

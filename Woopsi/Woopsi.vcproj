@@ -130,6 +130,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\scrollbarhorizontal.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\scrollbarvertical.cpp"
 				>
 			</File>
@@ -369,6 +373,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\scrollablebase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\scrollbarhorizontal.h"
 				>
 			</File>
 			<File

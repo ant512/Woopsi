@@ -32,6 +32,7 @@
 #include "slidervertical.h"
 #include "sliderhorizontal.h"
 #include "scrollbarvertical.h"
+#include "scrollbarhorizontal.h"
 #include "dynamicarray.h"
 #include "radiobuttongroup.h"
 #include "radiobutton.h"
