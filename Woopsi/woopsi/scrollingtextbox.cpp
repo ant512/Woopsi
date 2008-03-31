@@ -45,10 +45,12 @@ const Text* ScrollingTextBox::getText() const {
 
 void ScrollingTextBox::setText(char* text) {
 	_textbox->setText(text);
+	_scrollbar->draw();
 }
 
 void ScrollingTextBox::addText(char* text) {
 	_textbox->addText(text);
+	_scrollbar->draw();
 }
 
 void ScrollingTextBox::setFont(FontBase* font) {
