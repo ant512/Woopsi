@@ -338,7 +338,7 @@ int main() {
 
 	// Text viewer
 	textWindow->getClientRect(rect);
-	MultiLineTextBox* multiBox = new MultiLineTextBox(rect.x + 1, rect.y + 1, 246, 127, "Woopsi\n"
+	ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "Woopsi\n"
 		"------\n\n"
 		"This is a demo of a windowing system I'm working on "
 		"for the Nintendo DS, written in C++.  The aim of the "
@@ -353,9 +353,9 @@ int main() {
 		"of a window), everything takes place within a \"screen\" "
 		"environment, and the look-and-feel of the system "
 		"intentionally resembles the old Amiga system.", Gadget::GADGET_DRAGGABLE, 50);
-	multiBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
-	multiBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
-	textWindow->addGadget(multiBox);
+	scrollingBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
+	scrollingBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
+	textWindow->addGadget(scrollingBox);
 
 	// Add Welcome notice
 	newScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));

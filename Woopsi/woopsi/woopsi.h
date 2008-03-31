@@ -39,6 +39,7 @@
 #include "checkbox.h"
 #include "multilinetextbox.h"
 #include "alert.h"
+#include "scrollingtextbox.h"
 
 using namespace std;
 

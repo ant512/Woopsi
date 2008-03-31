@@ -1,7 +1,15 @@
 Change Log
 ----------
 
-  V0.30
+  V0.31
+  
+  - Fixes:
+  
+  - New Features:
+     - Added ScrollingTextBox class.
+
+
+  V0.30 (20080326)
 
   - Fixes:
      - Removed EventHandler inheritance from Gadget.
@@ -37,7 +45,6 @@ Change Log
      - Textbox resizes correctly.
      - AmigaWindow resizes correctly.
      - Minor optimisation in clipping.
-
 
   - New Features:
      - Added vertical slider.

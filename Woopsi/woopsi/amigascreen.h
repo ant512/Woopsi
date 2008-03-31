@@ -11,13 +11,39 @@ class DecorationGlyphButton;
 class ScreenFlipButton;
 class ScreenTitle;
 
+/**
+ * Class providing a screen with an Amiga-style title bar.  Unlike the AmigaWindow class,
+ * the title bar in this class can be overlapped by child gadgets.  Clicking and dragging
+ * the title bar causes the screen to drop down the DS' display, revealing any screens
+ * below it.  The screen has depth swap and display flip buttons.
+ *
+ * All gadgets should be a child/grandchild/etc of a screen except for other screens
+ * and the Woopsi instance.
+ */
 class AmigaScreen : public Screen, public EventHandler {
 
 public:
+
+	/**
+	 * Constructor.
+	 */
 	AmigaScreen(char* title, FontBase* font = NULL);
+
+	/**
+	 * Destructor.
+	 */
 	virtual ~AmigaScreen();
 
+	/**
+	 * Sets this gadget's border state.  Setting to false hides the title bar.
+	 * @param isBorderless The border state.
+	 */
 	virtual void setBorderless(bool isBorderless);
+
+	/**
+	 * Handles events fired by the decoration gadgets.
+	 * @param e The event arguments.
+	 */
 	virtual bool handleEvent(const EventArgs& e);
 
 protected:

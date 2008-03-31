@@ -142,6 +142,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\scrollingtextbox.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\skinnedscreen.cpp"
 				>
 			</File>
@@ -385,6 +389,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\scrollingpanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\scrollingtextbox.h"
 				>
 			</File>
 			<File
