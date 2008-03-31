@@ -6,7 +6,7 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 
 	setBorderless(true);
 
-	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, GADGET_DRAGGABLE | flags, maxRows, font);
+	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, font);
 	_textbox->setEventHandler(this);
 	
 	// Create scrollbar
@@ -14,7 +14,7 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 	_textbox->getClientRect(rect);
 	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, font);
 	_scrollbar->setMinimumValue(0);
-	_scrollbar->setMaximumValue(0);
+	_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
 	_scrollbar->setPageSize(rect.height);
 	_scrollbar->setEventHandler(this);
 
@@ -92,6 +92,7 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 			switch (e.type) {
 				case EVENT_DRAG:
 					if (_scrollbar != NULL) {
+						_scrollbar = NULL;
 						_scrollbar->setRaisesEvents(false);
 						_scrollbar->setValue(0 - _textbox->getCanvasY());
 						_scrollbar->setRaisesEvents(true);
@@ -113,7 +114,7 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 			}
 		}
 	}
-	
+
 	return false;
 }
 
