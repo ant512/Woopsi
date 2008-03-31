@@ -2,17 +2,15 @@
 #define _DEBUG_H_
 
 #include <nds.h>
-#include "eventhandler.h"
 
 #define DEBUG_ACTIVE true
 
 class AmigaScreen;
 class AmigaWindow;
-class MultiLineTextBox;
 class Gadget;
 class Woopsi;
 class MonoFont;
-class ScrollbarVertical;
+class ScrollingTextBox;
 
 /**
  * Debugging console.  The class automatically creates its own
@@ -22,7 +20,7 @@ class ScrollbarVertical;
  * to work.  If this is defined as "false", calls to the debugger
  * will silently be ignored.
  */
-class Debug : public EventHandler {
+class Debug {
 
 public:
 	/**
@@ -38,19 +36,12 @@ public:
 	 */
 	static void printf(const char *format, ...);
 
-	/**
-	 * Handles all child gadget events.
-	 * @param e The event arguments to be processed.
-	 */
-	bool handleEvent(const EventArgs& e);
-
 private:
 	static Debug* _debug;
 	static Woopsi* _woopsi;
 	AmigaScreen* _screen;
 	AmigaWindow* _window;
-	MultiLineTextBox* _textBox;
-	ScrollbarVertical* _scrollbar;
+	ScrollingTextBox* _textBox;
 	MonoFont* _font;
 
 	/** 

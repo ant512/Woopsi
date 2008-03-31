@@ -17,6 +17,7 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 	_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
 	_scrollbar->setPageSize(rect.height);
 	_scrollbar->setEventHandler(this);
+	_scrollbar->resizeGrip();
 
 	// Add children to child array
 	addGadget(_textbox);
@@ -72,7 +73,7 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 
 	if (e.gadget != NULL) {
 		if (e.gadget == _scrollbar) {
-			
+
 			// Slider events
 			switch (e.type) {
 				case EVENT_VALUE_CHANGE:
@@ -92,7 +93,6 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 			switch (e.type) {
 				case EVENT_DRAG:
 					if (_scrollbar != NULL) {
-						_scrollbar = NULL;
 						_scrollbar->setRaisesEvents(false);
 						_scrollbar->setValue(0 - _textbox->getCanvasY());
 						_scrollbar->setRaisesEvents(true);
@@ -124,4 +124,13 @@ void ScrollingTextBox::draw() {
 
 void ScrollingTextBox::draw(Rect clipRect) {
 	clear(clipRect);
+}
+
+bool ScrollingTextBox::drag(s16 x, s16 y, s16 vX, s16 vY) {
+	// Handle child dragging
+	if (_clickedGadget != NULL) {
+		return _clickedGadget->drag(x, y, vX, vY);
+	}
+
+	return false;
 }

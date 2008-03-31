@@ -127,6 +127,17 @@ public:
 	 */
 	virtual void draw();
 
+	/**
+	 * Drag the gadget at the specified co-ordinates.
+	 * @param x The x co-ordinate of the drag.
+	 * @param y The y co-ordinate of the drag.
+	 * @param x The x distance of the drag.
+	 * @param y The y distance of the drag.
+	 * @return True if the drag was processed by the gadget.
+	 */
+	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
+
+
 protected:
 	MultiLineTextBox* _textbox;
 	ScrollbarVertical* _scrollbar;

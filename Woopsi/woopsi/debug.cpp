@@ -2,13 +2,12 @@
 #include <string.h>
 #include <stdarg.h>
 #include "debug.h"
-#include "textwriter.h"
 #include "sysfont.h"
 #include "woopsifuncs.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "woopsi.h"
-#include "scrollbarvertical.h"
+#include "scrollingtextbox.h"
 
 Woopsi* Debug::_woopsi = NULL;
 Debug* Debug::_debug = NULL;
@@ -18,7 +17,6 @@ Debug::Debug() {
 	_window = NULL;
 	_textBox = NULL;
 	_font = NULL;
-	_scrollbar = NULL;
 
 	createGUI();
 }
@@ -101,12 +99,11 @@ void Debug::createGUI() {
 			Gadget::Rect rect;
 			_window->getClientRect(rect);
 
-			_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width - 9, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
+			_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
 			_textBox->setVisible(false);
 			_window->addGadget(_textBox);
 			_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
 			_textBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
-			_textBox->setEventHandler(this);
 			_textBox->addText("Woopsi Version ");
 			_textBox->addText(WOOPSI_VERSION);
 			_textBox->addText("\n");
@@ -114,68 +111,5 @@ void Debug::createGUI() {
 			_textBox->setVisible(true);
 			_textBox->addText("\n");
 		}
-		
-		// Add slider
-		if (_scrollbar == NULL) {
-			Gadget::Rect rect;
-			_textBox->getClientRect(rect);
-
-			_scrollbar = new ScrollbarVertical(243, 13, 9, 162);
-			_window->addGadget(_scrollbar);
-			_scrollbar->setMinimumValue(0);
-			_scrollbar->setMaximumValue(0);
-			_scrollbar->setPageSize(rect.height);
-			_scrollbar->setEventHandler(this);
-			_scrollbar->draw();
-		}
 	}
-}
-
-bool Debug::handleEvent(const EventArgs& e) {
-
-	if (e.gadget != NULL) {
-		if (e.gadget == _scrollbar) {
-			
-			// Slider events
-			switch (e.type) {
-				case EVENT_VALUE_CHANGE:
-					if (_textBox != NULL) {
-						_textBox->setRaisesEvents(false);
-						_textBox->jump(0, 0 - _scrollbar->getValue());
-						_textBox->setRaisesEvents(true);
-						return true;
-					}
-					break;
-				default:
-					break;
-			}
-		} else if (e.gadget == _textBox) {
-
-			// Textbox events
-			switch (e.type) {
-				case EVENT_DRAG:
-					if (_scrollbar != NULL) {
-						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setValue(0 - _textBox->getCanvasY());
-						_scrollbar->setRaisesEvents(true);
-						return true;
-					}
-					break;
-				case EVENT_SCROLL:
-					if (_scrollbar != NULL) {
-						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setMaximumValue(_textBox->getCanvasHeight());
-						_scrollbar->resizeGrip();
-						_scrollbar->setValue(0 - _textBox->getCanvasY());
-						_scrollbar->setRaisesEvents(true);
-						return true;
-					}
-					break;
-				default:
-					break;
-			}
-		}
-	}
-	
-	return false;
 }
