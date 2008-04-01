@@ -7,6 +7,9 @@ Change Log
   
   - New Features:
      - Added ScrollingTextBox class.
+     - Added bonus code folder.
+     - Removed LinkedList and LinkedListIterator classes from main codebase into
+       bonus folder.
 
 
   V0.30 (20080326)

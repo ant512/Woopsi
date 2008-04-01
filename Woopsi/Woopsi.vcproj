@@ -344,14 +344,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\linkedlist.h"
-				>
-			</File>
-			<File
-				RelativePath=".\woopsi\linkedlistiterator.h"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\monofont.h"
 				>
 			</File>
