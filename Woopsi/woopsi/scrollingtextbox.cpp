@@ -67,10 +67,6 @@ const u16 ScrollingTextBox::getCurrentPage() const {
 	return _textbox->getCurrentPage();
 }
 
-bool ScrollingTextBox::resize(u16 width, u16 height) {
-	return false;
-}
-
 bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 
 	if (e.gadget != NULL) {
@@ -135,4 +131,32 @@ bool ScrollingTextBox::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	}
 
 	return false;
+}
+
+bool ScrollingTextBox::resize(u16 width, u16 height) {
+
+	// Prevent drawing
+	bool visible = isVisible();
+	setVisible(false);
+
+	// Ensure children are free to adjust
+	setPermeable(true);
+
+	// Resize the gadget
+	Gadget::resize(width, height);
+
+	// Resize the children
+	_textbox->resize(width - _scrollbarWidth, height);
+	_scrollbar->resize(_scrollbarWidth, height);
+
+	// Move the scrollbar
+	_scrollbar->moveTo(width - _scrollbarWidth, 0);
+
+	// Reset permeable
+	setPermeable(false);
+
+	// Reset drawing
+	setVisible(visible);
+
+	return true;
 }
