@@ -1,7 +1,7 @@
 Bonus Code
 ----------
 
-  This folder contains C++ extra classes that are not part of the main Woopsi
+  This folder contains extra C++ classes that are not part of the main Woopsi
   library code.  To use them, drop them into your source folder and include
   them in your project.
   
