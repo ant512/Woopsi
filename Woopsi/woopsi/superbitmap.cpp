@@ -25,10 +25,6 @@ SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u
 	initBitmap();
 }
 
-SuperBitmap::~SuperBitmap() {
-	delete[] _bitmap;
-}
-
 // Set up initial bitmap
 void SuperBitmap::initBitmap() {
 	// Allocate memory for bitmap

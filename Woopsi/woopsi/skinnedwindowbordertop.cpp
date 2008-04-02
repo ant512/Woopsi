@@ -15,9 +15,6 @@ SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, char* text, con
 	_fillColour = _skin->window.colours.fill;
 }
 
-SkinnedWindowBorderTop::~SkinnedWindowBorderTop() {
-}
-
 void SkinnedWindowBorderTop::draw() {
 	Gadget::draw();
 }

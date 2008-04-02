@@ -15,8 +15,7 @@ class DecorationGlyphButton : public Button {
 
 public:
 	DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font = NULL);
-	~DecorationGlyphButton();
-
+	
 	virtual void draw();
 	virtual void draw(Rect clipRect);
 	virtual bool focus();
@@ -25,6 +24,11 @@ public:
 protected:
 	char _normalGlyph;
 	char _clickedGlyph;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~DecorationGlyphButton() { };
 };
 
 #endif

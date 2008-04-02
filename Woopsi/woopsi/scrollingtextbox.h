@@ -35,11 +35,6 @@ public:
 	ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
 
 	/**
-	 * Destructor.
-	 */
-	virtual ~ScrollingTextBox();
-
-	/**
 	 * Set the horizontal alignment of text within the textbox.
 	 * @param position The horizontal position of the text.
 	 */
@@ -141,6 +136,12 @@ protected:
 	MultiLineTextBox* _textbox;
 	ScrollbarVertical* _scrollbar;
 	u8 _scrollbarWidth;
+
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~ScrollingTextBox() { };
 };
 
 #endif

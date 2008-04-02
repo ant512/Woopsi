@@ -10,13 +10,17 @@ using namespace std;
 class SkinnedWindowBorderLeft : public WindowBorderSide {
 public:
 	SkinnedWindowBorderLeft(s16 x, s16 y, u16 height, const WindowSkin* skin);
-	virtual ~SkinnedWindowBorderLeft();
 
 	virtual void draw(Rect clipRect);
 	virtual void draw();
 
 protected:
 	const WindowSkin* _skin;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SkinnedWindowBorderLeft() { };
 };
 
 #endif

@@ -13,7 +13,6 @@ class RadioButtonGroup : public Gadget {
 public:
 
 	RadioButtonGroup(s16 x, s16 y, FontBase* font = NULL);
-	virtual ~RadioButtonGroup();
 
 	RadioButton* newRadioButton(s16 x, s16 y, u16 width, u16 height);
 
@@ -27,6 +26,11 @@ public:
 
 protected:
 	RadioButton* _selectedGadget;
+
+	/**
+	 * Destructor.
+	 */
+	virtual ~RadioButtonGroup() { };
 };
 
 #endif

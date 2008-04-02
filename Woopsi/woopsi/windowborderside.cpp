@@ -7,9 +7,6 @@ WindowBorderSide::WindowBorderSide(s16 x, s16 y, u16 width, u16 height) : Gadget
 	_flags.decoration = true;
 }
 
-WindowBorderSide::~WindowBorderSide() {
-}
-
 void WindowBorderSide::draw() {
 	Gadget::draw();
 }

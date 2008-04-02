@@ -10,13 +10,6 @@ ScreenTitle::ScreenTitle(u16 height, char* text, FontBase* font) : Gadget(0, 0, 
 	strcpy(_text, text);
 }
 
-ScreenTitle::~ScreenTitle() {
-	if (_text != NULL) {
-		delete [] _text;
-	}
-}
-
-
 void ScreenTitle::draw() {
 	Gadget::draw();
 }

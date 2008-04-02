@@ -35,9 +35,6 @@ SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u
 	}
 }
 
-SkinnedWindow::~SkinnedWindow() {
-}
-
 u8 SkinnedWindow::getBorderSize() {
 	if (!_flags.borderless) {
 		return _windowBorderLeft->getWidth();

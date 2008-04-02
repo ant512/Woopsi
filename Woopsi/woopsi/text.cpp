@@ -16,9 +16,6 @@ Text::Text(FontBase* font, char* text, u16 width) {
 	setText(text);
 }
 
-Text::~Text() {
-}
-
 const s32 Text::getPixelHeight() const {
 	return _textPixelHeight;
 }

@@ -10,12 +10,6 @@ WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, char* text, FontB
 	strcpy(_text, text);
 }
 
-WindowBorderTop::~WindowBorderTop() {
-	if (_text != NULL) {
-		delete [] _text;
-	}
-}
-
 void WindowBorderTop::draw() {
 	Gadget::draw();
 }

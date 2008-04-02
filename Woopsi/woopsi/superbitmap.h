@@ -31,11 +31,6 @@ public:
 	SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, FontBase* font = NULL);
 	
 	/**
-	 * Destructor.
-	 */
-	virtual ~SuperBitmap();
-
-	/**
 	 * Get the colour of the pixel at the specified co-ordinates
 	 * @param x The x co-ordinate of the pixel.
 	 * @param y The y co-ordinate of the pixel.
@@ -235,6 +230,13 @@ protected:
 	 * @param height The height of the rectangle to clip (modified by the function).
 	 */
 	bool clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height);
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SuperBitmap() {
+		delete[] _bitmap;
+	};
 };
 
 #endif

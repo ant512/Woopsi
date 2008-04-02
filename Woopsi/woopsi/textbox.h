@@ -55,11 +55,6 @@ public:
 	Textbox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBase* font = NULL);
 	
 	/**
-	 * Destructor.
-	 */
-	virtual ~Textbox();
-
-	/**
 	 * Draw the region of the textbox within the clipping rect. Should not be called
 	 * directly.
 	 * @param clipRect The clipping rect to limit drawing to.
@@ -139,6 +134,13 @@ protected:
 	 */
 	void calculateTextPosition();
 
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~Textbox() {
+		delete[] _text;
+		_text = NULL;
+	};
 };
 
 #endif

@@ -19,9 +19,6 @@ SkinnedScreenFlipButton::SkinnedScreenFlipButton(s16 x, s16 y, const ScreenSkin*
 	_fillColour = _skin->screen.colours.fill;
 }
 
-SkinnedScreenFlipButton::~SkinnedScreenFlipButton() {
-}
-
 void SkinnedScreenFlipButton::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);

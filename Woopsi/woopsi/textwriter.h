@@ -98,12 +98,12 @@ private:
 	/**
 	 * Constructor.  Private to prevent creation.
 	 */
-	TextWriter();
+	inline TextWriter() { };
 	
 	/**
 	 * Destructor.  Private to prevent deletion.
 	 */
-	~TextWriter();
+	inline ~TextWriter() { };
 };
 
 #endif

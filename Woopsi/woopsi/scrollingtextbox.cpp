@@ -24,9 +24,6 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 	addGadget(_scrollbar);
 }
 
-ScrollingTextBox::~ScrollingTextBox() {
-}
-
 void ScrollingTextBox::setTextPositionHoriz(MultiLineTextBox::TextPositionHoriz position) {
 	_textbox->setTextPositionHoriz(position);
 }

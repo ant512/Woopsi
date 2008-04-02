@@ -27,7 +27,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	~Font();
+	inline ~Font() { };
 
 	/**
 	 * Get the colour of the pixel at the specified offset from the start of the bitmap.

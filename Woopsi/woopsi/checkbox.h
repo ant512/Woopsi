@@ -16,7 +16,6 @@ public:
 	};
 
 	CheckBox(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
-	virtual ~CheckBox();
 
 	virtual void draw(Rect clipRect);
 	virtual void draw();
@@ -26,6 +25,11 @@ public:
 
 protected:
 	CheckBoxState _state;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~CheckBox() { };
 };
 
 #endif

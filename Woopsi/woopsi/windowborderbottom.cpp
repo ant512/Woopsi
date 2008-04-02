@@ -7,9 +7,6 @@ WindowBorderBottom::WindowBorderBottom(s16 x, s16 y, u16 width, u16 height, u8 s
 	_flags.decoration = true;
 }
 
-WindowBorderBottom::~WindowBorderBottom() {
-}
-
 void WindowBorderBottom::draw() {
 	Gadget::draw();
 }

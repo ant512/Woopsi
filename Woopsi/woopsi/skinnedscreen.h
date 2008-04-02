@@ -15,7 +15,6 @@ class SkinnedScreen : public Screen, public EventHandler {
 
 public:
 	SkinnedScreen(char* title, const ScreenSkin* skin);
-	virtual ~SkinnedScreen();
 
 	virtual void setBorderless(bool isBorderless);
 	virtual bool handleEvent(const EventArgs& e);
@@ -26,6 +25,11 @@ protected:
 	SkinnedScreenFlipButton* _screenFlipButton;
 
 	const ScreenSkin* _skin;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SkinnedScreen() { };
 };
 
 #endif

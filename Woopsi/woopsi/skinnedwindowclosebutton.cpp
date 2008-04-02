@@ -18,9 +18,6 @@ SkinnedWindowCloseButton::SkinnedWindowCloseButton(s16 x, s16 y, const WindowSki
 	_fillColour = _skin->window.colours.fill;
 }
 
-SkinnedWindowCloseButton::~SkinnedWindowCloseButton() {
-}
-
 void SkinnedWindowCloseButton::draw() {
 	Gadget::draw();
 }

@@ -26,11 +26,6 @@ public:
 	 * @param font Pointer to a font object to use for text output.
 	 */
 	ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
-	
-	/**
-	 * Destructor.
-	 */
-	virtual ~ScrollingPanel();
 
 	/**
 	 * Draw the visible portions of the gadget and its children.
@@ -126,6 +121,12 @@ protected:
 	 * Raises a scroll event.  Fired when the panel scrolls.
 	 */
 	void raiseScrollEvent();
+
+	
+	/**
+	 * Destructor.
+	 */
+	virtual ~ScrollingPanel() { };
 };
 
 #endif

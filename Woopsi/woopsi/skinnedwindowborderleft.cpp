@@ -15,9 +15,6 @@ SkinnedWindowBorderLeft::SkinnedWindowBorderLeft(s16 x, s16 y, u16 height, const
 	_fillColour = _skin->window.colours.fill;
 }
 
-SkinnedWindowBorderLeft::~SkinnedWindowBorderLeft() {
-}
-
 void SkinnedWindowBorderLeft::draw() {
 	Gadget::draw();
 }

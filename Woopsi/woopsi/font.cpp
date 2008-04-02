@@ -7,9 +7,6 @@ Font::Font(const u16* bitmap, const u16 bitmapWidth, const u16 bitmapHeight, con
 	createGlyphMap();
 }
 
-Font::~Font() {
-}
-
 // Return a pixel at a given location
 const u16 Font::getPixel(const u32 position) const {
 	if (!isMonochrome()) {

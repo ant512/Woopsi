@@ -22,9 +22,6 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Fo
 	addGadget(_rightButton);
 }
 
-ScrollbarHorizontal::~ScrollbarHorizontal() {
-}
-
 const s16 ScrollbarHorizontal::getMinimumValue() const {
 	return _slider->getMinimumValue();
 }

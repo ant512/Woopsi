@@ -17,9 +17,6 @@ SkinnedScreenTitle::SkinnedScreenTitle(char* text, const ScreenSkin* skin) : Scr
 	_fillColour = _skin->screen.colours.fill;
 }
 
-SkinnedScreenTitle::~SkinnedScreenTitle() {
-}
-
 void SkinnedScreenTitle::draw(Rect clipRect) {
 
 	// Get a new graphics port

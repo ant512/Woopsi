@@ -19,7 +19,6 @@ class SkinnedWindow : public Window, public EventHandler  {
 
 public:
 	SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, WindowSkin* skin);
-	virtual ~SkinnedWindow();
 
 	virtual void setBorderless(bool isBorderless);
 
@@ -49,6 +48,11 @@ protected:
 	SkinnedWindowDepthButton* _depthButton;
 
 	virtual void createBorder();
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SkinnedWindow() { };
 };
 
 #endif

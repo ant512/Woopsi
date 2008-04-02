@@ -31,9 +31,6 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, char* title, char* text, FontB
 	addGadget(_textBox);
 }
 
-Alert::~Alert() {
-}
-
 bool Alert::handleEvent(const EventArgs& e) {
 	// Only handle release events
 	if (e.type == EVENT_RELEASE) {

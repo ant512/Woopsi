@@ -76,7 +76,7 @@ void Gadget::init() {
 	_closeType = CLOSE_TYPE_CLOSE;
 }
 
-s16 Gadget::getX() const {
+const s16 Gadget::getX() const {
 	if (_parent != NULL) {
 		return _parent->getX() + _x;
 	}
@@ -84,40 +84,12 @@ s16 Gadget::getX() const {
 	return _x;
 }
 
-s16 Gadget::getY() const {
+const s16 Gadget::getY() const {
 	if (_parent != NULL) {
 		return _parent->getY() + _y;
 	}
 
 	return _y;
-}
-
-u16 Gadget::getWidth() const {
-	return _width;
-}
-
-u16 Gadget::getHeight() const {
-	return _height;
-}
-
-Gadget* Gadget::getParent() {
-	return _parent;
-}
-
-const bool Gadget::isPermeable() const {
-	return _flags.permeable;
-}
-
-const bool Gadget::isActive() const {
-	return _flags.active;
-}
-
-const bool Gadget::isClicked() const {
-	return _flags.clicked;
-}
-
-const bool Gadget::raisesEvents() const {
-	return _flags.raisesEvents;
 }
 
 const bool Gadget::isVisible() const {
@@ -132,54 +104,10 @@ const bool Gadget::isVisible() const {
 	return false;
 }
 
-const bool Gadget::isDeleted() const {
-	return _flags.deleted;
-}
-
-const bool Gadget::isDecoration() const {
-	return _flags.decoration;
-}
-
-const bool Gadget::isBorderless() const {
-	return _flags.borderless;
-}
-
-Gadget* Gadget::getActiveGadget() {
-	return _activeGadget;
-}
-
-Gadget::CloseType Gadget::getCloseType() {
-	return _closeType;
-}
-
-const u8 Gadget::getPhysicalScreenNumber() const{
-	return calculatePhysicalScreenNumber(getY());
-}
-
-void Gadget::setVisible(bool visible) {
-	_flags.visible = visible;
-}
-
 void Gadget::setBorderless(bool isBorderless) {
 	_flags.borderless = isBorderless;
 
 	invalidateVisibleRectCache();
-}
-
-void Gadget::setPermeable(bool isPermeable) {
-	_flags.permeable = isPermeable;
-}
-
-void Gadget::setOutlineType(OutlineType outline) {
-	_outline = outline;
-}
-
-void Gadget::setCloseType(CloseType closeType) {
-	_closeType = closeType;
-}
-
-void Gadget::setDraggable(bool isDraggable) {
-	_flags.draggable = isDraggable;
 }
 
 void Gadget::setActive(bool active) {
@@ -225,38 +153,6 @@ void Gadget::setClickedGadget(Gadget* gadget) {
 	if (_parent != NULL) {
 		_parent->setClickedGadget(this);
 	}
-}
-
-void Gadget::setEventHandler(EventHandler* eventHandler) {
-	_eventHandler = eventHandler;
-}
-
-void Gadget::setRaisesEvents(const bool raisesEvents) {
-	_flags.raisesEvents = raisesEvents;
-}
-
-void Gadget::setBackColour(u16 colour) {
-	_backColour = colour;
-}
-
-void Gadget::setShineColour(u16 colour) {
-	_shineColour = colour;
-}
-
-void Gadget::setHighlightColour(u16 colour) {
-	_highlightColour = colour;
-}
-
-void Gadget::setShadowColour(u16 colour) {
-	_shadowColour = colour;
-}
-
-void Gadget::setFillColour(u16 colour) {
-	_fillColour = colour;
-}
-
-void Gadget::setDarkColour(u16 colour) {
-	_darkColour = colour;
 }
 
 const u8 Gadget::calculatePhysicalScreenNumber(s16 y) const {
@@ -582,9 +478,6 @@ void Gadget::drawChildren() {
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->draw();
 	}
-}
-
-void Gadget::draw(Rect clipRect) {
 }
 
 void Gadget::draw() {
@@ -1618,12 +1511,7 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 	return false;
 }
 
-void Gadget::setParent(Gadget* gadget) {
-	_parent = gadget;
-}
-
 // Append a gadget to the end of the gadget list
-// Do not use this unless you know what you are doing
 void Gadget::addGadget(Gadget* gadget) {
 	if (gadget->getParent() == NULL) {
 		gadget->setParent(this);
@@ -1677,11 +1565,6 @@ void Gadget::invalidateLowerGadgetsVisibleRectCache(Gadget* gadget) {
 			_gadgets[i]->invalidateVisibleRectCache();
 		}
 	}
-}
-
-// Get the ID of this gadget
-u32 Gadget::getRefcon() {
-	return _refcon;
 }
 
 // Set the ID of this gadget and return the old ID
@@ -1876,7 +1759,7 @@ void Gadget::getRectClippedToHierarchy(Rect& rect) {
 	}
 }
 
-FontBase* Gadget::getFont() {
+FontBase* Gadget::getFont() const {
 	return _font;
 }
 
@@ -1895,32 +1778,4 @@ void Gadget::unregisterChildrenFromVBL() {
 	for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
 		Woopsi::unregisterFromVBL(_hiddenGadgets[i]);
 	}
-}
-
-const u16 Gadget::getBackColour() const {
-	return _backColour;
-}
-
-const u16 Gadget::getShineColour() const {
-	return _shineColour;
-}
-
-const u16 Gadget::getHighlightColour() const {
-	return _highlightColour;
-}
-
-const u16 Gadget::getShadowColour() const {
-	return _shadowColour;
-}
-
-const u16 Gadget::getFillColour() const {
-	return _fillColour;
-}
-
-const u16 Gadget::getDarkColour() const {
-	return _darkColour;
-}
-
-const Gadget::OutlineType Gadget::getOutlineType() const {
-	return _outline;
 }

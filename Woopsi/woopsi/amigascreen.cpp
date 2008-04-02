@@ -14,9 +14,6 @@ AmigaScreen::AmigaScreen(char* title, FontBase* font) : Screen(title, font) {
 	setBorderless(false);
 }
 
-AmigaScreen::~AmigaScreen() {
-}
-
 void AmigaScreen::setBorderless(bool isBorderless) {
 	if (isBorderless != _flags.borderless) {
 		if (isBorderless) {

@@ -11,12 +11,16 @@ class SkinnedScreenFlipButton : public DecorationGlyphButton {
 
 public:
 	SkinnedScreenFlipButton(s16 x, s16 y, const ScreenSkin* skin);
-	~SkinnedScreenFlipButton();
 
 	virtual void draw(Rect clipRect);
 
 protected:
 	const ScreenSkin* _skin;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SkinnedScreenFlipButton() { };
 };
 
 #endif

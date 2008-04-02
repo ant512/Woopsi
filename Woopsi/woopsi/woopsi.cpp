@@ -426,7 +426,7 @@ void Woopsi::processDeleteQueue() {
 	if (_deleteQueue.size() > 0) {
 
 		for (u8 i = 0; i < _deleteQueue.size(); i++) {
-			delete _deleteQueue[i];
+			_deleteQueue[i]->destroy();
 		}
 
 		_deleteQueue.clear();

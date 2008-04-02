@@ -54,11 +54,6 @@ public:
 	MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
 
 	/**
-	 * Destructor.
-	 */
-	virtual ~MultiLineTextBox();
-
-	/**
 	 * Draw the region of the textbox within the clipping rect.
 	 * Should not be called directly.
 	 * @param clipRect The clipping rect to limit drawing to.
@@ -156,6 +151,11 @@ protected:
 	void calculateTotalVisibleRows();
 	void stripTopLines(const u32 lines);
 	virtual void setText(char* text, bool raiseEvent);
+
+	/**
+	 * Destructor.
+	 */
+	virtual ~MultiLineTextBox();
 };
 
 #endif

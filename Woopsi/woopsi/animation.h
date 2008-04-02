@@ -51,7 +51,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	~Animation();
+	inline ~Animation() { };
 
 	/**
 	 * Get the current animation frame.

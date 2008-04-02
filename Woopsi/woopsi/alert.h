@@ -32,11 +32,6 @@ public:
 	Alert(s16 x, s16 y, u16 width, u16 height, char* title, char* text, FontBase* font = NULL);
 
 	/**
-	 * Destructor.
-	 */
-	virtual ~Alert();
-
-	/**
 	 * Handles events raised by its sub-gadgets.
 	 */
 	virtual bool handleEvent(const EventArgs& e);
@@ -44,6 +39,11 @@ public:
 protected:
 	Button* _button;
 	MultiLineTextBox* _textBox;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~Alert() { };
 };
 
 #endif

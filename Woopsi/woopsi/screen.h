@@ -10,7 +10,6 @@ class Screen : public Gadget {
 
 public:
 	Screen(char* title, FontBase* font = NULL);
-	virtual ~Screen();
 	
 	virtual void getClientRect(Rect& rect) const;
 
@@ -37,6 +36,11 @@ protected:
 	char* _title;
 
 	void setActive(bool active);
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~Screen() { };
 };
 
 #endif

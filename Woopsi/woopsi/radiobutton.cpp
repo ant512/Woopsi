@@ -11,9 +11,6 @@ RadioButton::RadioButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : 
 	_flags.borderless = true;
 }
 
-RadioButton::~RadioButton() {
-}
-
 RadioButton::RadioButtonState RadioButton::getState() {
 	return _state;
 }

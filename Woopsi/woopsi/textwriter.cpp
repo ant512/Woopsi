@@ -1,14 +1,6 @@
 #include "textwriter.h"
 #include "woopsifuncs.h"
 
-// Constructor
-TextWriter::TextWriter() {
-}
-
-// Destructor
-TextWriter::~TextWriter() {
-}
-
 void TextWriter::drawChar(FontBase* font, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
 	u16* bitmap = NULL;
 

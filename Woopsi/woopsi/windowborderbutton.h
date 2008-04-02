@@ -13,10 +13,15 @@ class WindowBorderButton : public DecorationGlyphButton {
 
 public:
 	WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font = NULL);
-	~WindowBorderButton();
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);
+
+protected:
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~WindowBorderButton() { };
 };
 
 #endif

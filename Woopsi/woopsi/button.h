@@ -6,11 +6,20 @@
 
 using namespace std;
 
+/**
+ * Clickable button gadget.  Displays text within the button.
+ */
 class Button : public Textbox {
 public:
 	Button(s16 x, s16 y, u16 width, u16 height, char* text, FontBase* font = NULL);
 	Button(s16 x, s16 y, u16 width, u16 height, char letter, FontBase* font = NULL);
-	virtual ~Button();
+
+protected:
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~Button() { };
 };
 
 #endif

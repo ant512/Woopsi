@@ -28,11 +28,6 @@ public:
 	SliderHorizontal(s16 x, s16 y, u16 width, u16 height);
 
 	/**
-	 * Destructor.
-	 */
-	virtual ~SliderHorizontal();
-
-	/**
 	 * Get the smallest value that the slider can represent.
 	 * @return The smallest value.
 	 */
@@ -147,6 +142,11 @@ protected:
 	s16 _maximumValue;
 	s16 _minimumGripWidth;
 	s16 _pageSize;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SliderHorizontal() { };
 };
 
 #endif

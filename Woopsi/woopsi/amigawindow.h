@@ -16,7 +16,6 @@ class AmigaWindow : public Window, public EventHandler {
 
 public:
 	AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font = NULL);
-	virtual ~AmigaWindow();
 
 	virtual void setBorderless(bool isBorderless);
 
@@ -45,6 +44,11 @@ protected:
 	WindowBorderButton* _depthButton;
 
 	virtual void createBorder();
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~AmigaWindow() { }
 };
 
 #endif

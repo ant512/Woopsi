@@ -11,13 +11,17 @@ class SkinnedWindowBorderBottom : public WindowBorderBottom {
 
 public:
 	SkinnedWindowBorderBottom(s16 x, s16 y, u16 width, const WindowSkin* skin);
-	virtual ~SkinnedWindowBorderBottom();
 
 	virtual void draw(Rect clipRect);
 	virtual void draw();
 
 protected:
 	const WindowSkin* _skin;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SkinnedWindowBorderBottom() { };
 };
 
 #endif

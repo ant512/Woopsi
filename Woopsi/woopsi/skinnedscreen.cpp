@@ -25,9 +25,6 @@ SkinnedScreen::SkinnedScreen(char* title, const ScreenSkin* skin) : Screen(title
 	setBorderless(!_flags.borderless);
 }
 
-SkinnedScreen::~SkinnedScreen() {
-}
-
 void SkinnedScreen::setBorderless(bool isBorderless) {
 	if (isBorderless != _flags.borderless) {
 		if (isBorderless) {

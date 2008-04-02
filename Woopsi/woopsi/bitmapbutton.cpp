@@ -12,9 +12,6 @@ BitmapButton::BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16
 	_bitmapNormal = bitmapNormal;
 }
 
-BitmapButton::~BitmapButton() {
-}
-
 void BitmapButton::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);

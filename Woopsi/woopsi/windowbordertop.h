@@ -10,7 +10,6 @@ class WindowBorderTop : public Gadget {
 
 public:
 	WindowBorderTop(s16 x, u16 width, u16 height, char* text, FontBase* font = NULL);
-	virtual ~WindowBorderTop();
 
 	virtual void draw(Rect clipRect);
 	virtual void draw();
@@ -23,6 +22,14 @@ public:
 protected:
 	char* _text;
 
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~WindowBorderTop() {
+		if (_text != NULL) {
+			delete [] _text;
+		}
+	};
 };
 
 #endif

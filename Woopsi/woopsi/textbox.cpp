@@ -31,11 +31,6 @@ Textbox::Textbox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBas
 	calculateTextPosition();
 }
 
-Textbox::~Textbox() {
-	delete[] _text;
-	_text = NULL;
-}
-
 void Textbox::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);

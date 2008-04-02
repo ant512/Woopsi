@@ -11,12 +11,16 @@ class SkinnedScreenTitle : public ScreenTitle {
 
 public:
 	SkinnedScreenTitle(char* text, const ScreenSkin* skin);
-	~SkinnedScreenTitle();
 
 	virtual void draw(Rect clipRect);
 
 protected:
 	const ScreenSkin* _skin;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SkinnedScreenTitle() { };
 };
 
 #endif

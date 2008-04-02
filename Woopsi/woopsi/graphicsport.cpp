@@ -26,10 +26,6 @@ GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const
 	}
 }
 
-GraphicsPort::~GraphicsPort() {
-	delete _clipRect;
-}
-
 // Clip filled rectangle
 void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Gadget::Rect& clipRect) {
 

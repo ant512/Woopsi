@@ -13,36 +13,31 @@ public:
 	/**
 	 * Constructor.
 	 */
-	ScrollableBase() { }
+	inline ScrollableBase() { }
 	
-	/**
-	 * Destructor.
-	 */
-	virtual ~ScrollableBase() { }
-
 	/**
 	 * Gets the x co-ordinate of the virtual canvas.
 	 * @return The x co-ordinate of the virtual canvas.
 	 */
-	virtual const s32 getCanvasX() const { return _canvasX; };
+	virtual inline const s32 getCanvasX() const { return _canvasX; };
 	
 	/**
 	 * Gets the y co-ordinate of the virtual canvas.
 	 * @return The y co-ordinate of the virtual canvas.
 	 */
-	virtual const s32 getCanvasY() const { return _canvasY; };
+	virtual inline const s32 getCanvasY() const { return _canvasY; };
 
 	/**
 	 * Gets the width of the virtual canvas.
 	 * @return The width of the virtual canvas.
 	 */
-	virtual const s32 getCanvasWidth() const { return _canvasWidth; };
+	virtual inline const s32 getCanvasWidth() const { return _canvasWidth; };
 	
 	/**
 	 * Gets the height of the virtual canvas.
 	 * @return The height of the virtual canvas.
 	 */
-	virtual const s32 getCanvasHeight() const { return _canvasHeight; };
+	virtual inline const s32 getCanvasHeight() const { return _canvasHeight; };
 
 	/**
 	 * Scrolls the virtual canvas by the specified amounts.
@@ -68,13 +63,18 @@ protected:
 	 * Sets the width of the virtual canvas.
 	 * @param The width of the virtual canvas.
 	 */
-	virtual void setCanvasWidth(const s32 width) { _canvasWidth = width; };
+	virtual inline void setCanvasWidth(const s32 width) { _canvasWidth = width; };
 	
 	/**
 	 * Sets the height of the virtual canvas.
 	 * @param The height of the virtual canvas.
 	 */
-	virtual void setCanvasHeight(const s32 height) { _canvasHeight = height; };
+	virtual inline void setCanvasHeight(const s32 height) { _canvasHeight = height; };
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~ScrollableBase() { }
 };
 
 #endif

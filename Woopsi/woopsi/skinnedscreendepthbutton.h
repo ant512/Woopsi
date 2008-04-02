@@ -11,12 +11,16 @@ class SkinnedScreenDepthButton : public DecorationGlyphButton {
 
 public:
 	SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSkin* skin);
-	~SkinnedScreenDepthButton();
 
 	virtual void draw(Rect clipRect);
 
 protected:
 	const ScreenSkin* _skin;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~SkinnedScreenDepthButton() { };
 };
 
 #endif

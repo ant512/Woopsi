@@ -8,9 +8,6 @@ MonoFont::MonoFont(const u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, u8 widt
 	createGlyphMap();
 }
 
-MonoFont::~MonoFont() {
-}
-
 // Return a pixel at a given location 
 const u16 MonoFont::getPixel(const u32 position) const {
 	if (_bitmap[position >> 4] & (1 << (16 - (position % 16)))) {

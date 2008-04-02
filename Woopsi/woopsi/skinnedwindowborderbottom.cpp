@@ -16,9 +16,6 @@ SkinnedWindowBorderBottom::SkinnedWindowBorderBottom(s16 x, s16 y, u16 width, co
 	_sideBorderSize = _skin->leftBorder.bitmap.width;
 }
 
-SkinnedWindowBorderBottom::~SkinnedWindowBorderBottom() {
-}
-
 void SkinnedWindowBorderBottom::draw() {
 	Gadget::draw();
 }

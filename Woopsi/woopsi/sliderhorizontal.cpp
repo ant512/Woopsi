@@ -18,9 +18,6 @@ SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget
 	addGadget(_grip);
 }
 
-SliderHorizontal::~SliderHorizontal() {
-}
-
 const s16 SliderHorizontal::getMinimumValue() const {
 	return _minimumValue;
 }

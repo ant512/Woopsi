@@ -28,11 +28,6 @@ public:
 	AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY);
 	
 	/**
-	 * Destructor.
-	 */
-	virtual ~AnimButton();
-	
-	/**
 	 * Draw the region of the button that falls within the clipRect.  Should not be
 	 * called.
 	 * @param clipRect The clipping region to draw within.
@@ -79,6 +74,11 @@ protected:
 	u16 _animX;
 	u16 _animY;
 	bool _initialised;
+
+	/**
+	 * Destructor.
+	 */
+	virtual ~AnimButton();
 };
 
 #endif

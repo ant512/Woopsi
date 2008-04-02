@@ -10,7 +10,6 @@ class ScreenTitle : public Gadget {
 
 public:
 	ScreenTitle(u16 height, char* text, FontBase* font = NULL);
-	~ScreenTitle();
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);
@@ -18,6 +17,12 @@ public:
 
 protected:
 	char* _text;
+
+	virtual inline ~ScreenTitle() {
+		if (_text != NULL) {
+			delete [] _text;
+		}
+	}
 };
 
 #endif

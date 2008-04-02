@@ -9,9 +9,6 @@ FontBase::FontBase(const u16 bitmapWidth, const u16 bitmapHeight, const u8 width
 	_isMonochrome = false;
 }
 
-FontBase::~FontBase() {
-}
-
 const u16 FontBase::getBitmapWidth() const {
 	return _bitmapWidth;
 }

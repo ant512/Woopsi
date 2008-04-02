@@ -32,7 +32,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~FontBase();
+	virtual inline ~FontBase() { };
 
 	/**
 	 * Get the colour of a pixel at a particular offset from the start of the bitmap.  Must

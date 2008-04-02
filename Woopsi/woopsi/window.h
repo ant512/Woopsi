@@ -17,7 +17,6 @@ class Window : public Gadget {
 
 public:
 	Window(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font = NULL);
-	virtual ~Window();
 
 	virtual void draw();
 	virtual void draw(Rect clipRect);
@@ -27,6 +26,11 @@ public:
 
 protected:
 	char* _title;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~Window() { };
 };
 
 #endif

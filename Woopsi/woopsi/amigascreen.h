@@ -30,11 +30,6 @@ public:
 	AmigaScreen(char* title, FontBase* font = NULL);
 
 	/**
-	 * Destructor.
-	 */
-	virtual ~AmigaScreen();
-
-	/**
 	 * Sets this gadget's border state.  Setting to false hides the title bar.
 	 * @param isBorderless The border state.
 	 */
@@ -50,6 +45,11 @@ protected:
 	ScreenTitle* _screenTitle;
 	DecorationGlyphButton* _depthButton;
 	DecorationGlyphButton* _flipButton;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~AmigaScreen() { };
 };
 
 #endif

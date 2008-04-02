@@ -70,12 +70,12 @@ public:
 	/**
 	 * Constructor.
 	 */
-	EventHandler() { }
+	inline EventHandler() { }
 	
 	/**
 	 * Destructor.
 	 */
-	virtual ~EventHandler() { }
+	virtual inline ~EventHandler() { }
 	
 	/**
 	 * Event handler function.  Each gadget that this class is the event handler for will

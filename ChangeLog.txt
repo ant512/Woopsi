@@ -4,6 +4,8 @@ Change Log
   V0.31
   
   - Fixes:
+     - Started inlining methods that can be inlined.
+     - Made destructors protected to prevent creation of gadgets on the stack.
   
   - New Features:
      - Added ScrollingTextBox class.

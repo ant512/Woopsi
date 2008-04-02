@@ -33,11 +33,6 @@ public:
 	ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
 
 	/**
-	 * Destructor.
-	 */
-	virtual ~ScrollbarHorizontal();
-
-	/**
 	 * Get the smallest value that the slider can represent.
 	 * @return The smallest value.
 	 */
@@ -151,6 +146,11 @@ protected:
 	Button* _rightButton;
 	u8 _buttonWidth;
 	u16 _buttonScrollAmount;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~ScrollbarHorizontal() { };
 };
 
 #endif

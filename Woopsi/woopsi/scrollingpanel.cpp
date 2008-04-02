@@ -29,9 +29,6 @@ void ScrollingPanel::draw(Rect clipRect) {
 	delete port;
 }
 
-ScrollingPanel::~ScrollingPanel() {
-}
-
 void ScrollingPanel::jump(s32 x, s32 y) {
 	// Calculate difference between jump value and current value and scroll
 	scroll(x - _canvasX, y - _canvasY);

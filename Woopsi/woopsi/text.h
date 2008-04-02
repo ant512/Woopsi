@@ -27,7 +27,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	~Text();
+	inline ~Text() { };
 
 	/**
 	 * Set the text for the object to hold.

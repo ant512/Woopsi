@@ -22,9 +22,6 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBa
 	addGadget(_downButton);
 }
 
-ScrollbarVertical::~ScrollbarVertical() {
-}
-
 const s16 ScrollbarVertical::getMinimumValue() const {
 	return _slider->getMinimumValue();
 }

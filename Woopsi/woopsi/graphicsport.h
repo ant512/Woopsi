@@ -35,7 +35,9 @@ public:
 	/**
 	 * Destructor.
 	 */
-	~GraphicsPort();
+	inline ~GraphicsPort() {
+		delete _clipRect;
+	};
 
 	/**
 	 * Return the x co-ordinate of the graphics port.

@@ -8,9 +8,6 @@ DecorationGlyphButton::DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height
 	_clickedGlyph = clickedGlyph;
 }
 
-DecorationGlyphButton::~DecorationGlyphButton() {
-}
-
 void DecorationGlyphButton::draw() {
 	Gadget::draw();
 }

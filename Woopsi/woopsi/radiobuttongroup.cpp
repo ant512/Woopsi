@@ -5,9 +5,6 @@ RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, FontBase* font) : Gadget(x, y, 
 	_selectedGadget = NULL;
 }
 
-RadioButtonGroup::~RadioButtonGroup() {
-}
-
 RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 height) {
 	
 	RadioButton* newButton = new RadioButton(x, y, width, height, _font);

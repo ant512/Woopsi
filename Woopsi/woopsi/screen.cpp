@@ -8,9 +8,6 @@ Screen::Screen(char* title, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_
 	_flags.borderless = true;
 }
 
-Screen::~Screen() {
-}
-
 // Setting as not borderless does not change gadget
 void Screen::setBorderless(bool isBorderless) {
 }

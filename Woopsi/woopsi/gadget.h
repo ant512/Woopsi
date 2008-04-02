@@ -89,34 +89,29 @@ public:
 	Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
 	
 	/**
-	 * Destructor.
-	 */
-	virtual ~Gadget();
-
-	/**
 	 * Get the x co-ordinate of the gadget relative to its parent.
 	 * @return Parent-relative x co-ordinate.
 	 */
-	s16 getX() const;
+	const s16 getX() const;
 
 	/**
 	 * Get the y co-ordinate of the gadget relative to its parent.
 	 * @return Parent-relative y co-ordinate.
 	 */
-	s16 getY() const;
+	const s16 getY() const;
 
 	/**
 	 * Get the reference constant for this gadget.
 	 * @return The reference constant.
 	 */
-	u32 getRefcon();
+	inline const u32 getRefcon() { return _refcon; };
 
 	/**
 	 * Get the type of close routine that should be called by other gadgets
 	 * interacting with this gadget.
 	 * @return The close type of this gadget.
 	 */
-	CloseType getCloseType();
+	inline const CloseType getCloseType() { return _closeType; };
 
 	/**
 	 * Is the gadget active?
@@ -124,7 +119,7 @@ public:
 	 * of the gadget with focus.
 	 * @return True if active.
 	 */
-	const bool isActive() const;
+	inline const bool isActive() const { return _flags.active; };
 
 	/**
 	 * Has the gadget been marked for deletion?
@@ -132,7 +127,7 @@ public:
 	 * interacted with.
 	 * @return True if marked for deletion.
 	 */
-	const bool isDeleted() const;
+	inline const bool isDeleted() const { return _flags.deleted; };
 
 	/**
 	 * Is the gadget visible?
@@ -146,7 +141,7 @@ public:
 	 * another gadget.
 	 * @return True if the gadget is a decoration.
 	 */
-	const bool isDecoration() const;
+	inline const bool isDecoration() const { return _flags.decoration; };
 
 	/**
 	 * Are the gadget's edges permeable or solid?
@@ -154,55 +149,55 @@ public:
 	 * co-ordinates and dimensions of child gadgets.
 	 * @return True if permeable.
 	 */
-	const bool isPermeable() const;
+	inline const bool isPermeable() const { return _flags.permeable; };
 
 	/**
 	 * Does the gadget have a border?
 	 * @return True if the gadget does not have a border.
 	 */
-	const bool isBorderless() const;
+	inline const bool isBorderless() const { return _flags.borderless; };
 
 	/**
 	 * Is the gadget clicked?
 	 * @return True if the gadget is currently clicked.
 	 */
-	const bool isClicked() const;
+	inline const bool isClicked() const { return _flags.clicked; };
 
 	/**
 	 * Get the width of the gadget.
 	 * @return The gadget width.
 	 */
-	u16 getWidth() const;
+	inline u16 getWidth() const { return _width; };
 
 	/**
 	 * Get the height of the gadget.
 	 * @return The gadget height.
 	 */
-	u16 getHeight() const;
+	inline u16 getHeight() const { return _height; };
 
 	/**
 	 * Get a pointer to this gadget's parent.
 	 * @return This gadget's parent.
 	 */
-	Gadget* getParent();
+	inline Gadget* getParent() { return _parent; };
 
 	/**
 	 * Get a pointer to this gadget's active child.
 	 * @return This gadget's active child.
 	 */
-	Gadget* getActiveGadget();
+	inline Gadget* getActiveGadget() { return _activeGadget; };
 
 	/**
 	 * Get the number of the screen that this gadget is currently displayed on.
 	 * @return 0 for the touch screen, 1 for the top screen.
 	 */
-	const u8 getPhysicalScreenNumber() const;
+	inline const u8 getPhysicalScreenNumber() const { return calculatePhysicalScreenNumber(getY()); };
 
 	/**
 	 * Check if this gadget raises events or not.
 	 * @return True if events are enabled.
 	 */
-	const bool raisesEvents() const;
+	inline const bool raisesEvents() const { return _flags.raisesEvents; };
 
 	/**
 	 * Insert the properties of the space within this gadget that is available
@@ -251,49 +246,49 @@ public:
 	 * Gets a pointer to the gadget's font.
 	 * @return A pointer to the gadget's font.
 	 */
-	FontBase* getFont();
+	FontBase* getFont() const;
 
 	/**
 	 * Gets the colour used as the background fill.
 	 * @return Background fill colour.
 	 */
-	const u16 getBackColour() const;
+	inline const u16 getBackColour() const { return _backColour; };
 
 	/**
 	 * Gets the colour used as the light edge in bevelled boxes.
 	 * @return Shine colour.
 	 */
-	const u16 getShineColour() const;
+	inline const u16 getShineColour() const { return _shineColour; };
 
 	/**
 	 * Gets the colour used as the fill in focused window borders.
 	 * @return Highlight colour.
 	 */
-	const u16 getHighlightColour() const;
+	inline const u16 getHighlightColour() const { return _highlightColour; };
 
 	/**
 	 * Gets the colour used as the dark edge in bevelled boxes.
 	 * @return Shadow colour.
 	 */
-	const u16 getShadowColour() const;
+	inline const u16 getShadowColour() const { return _shadowColour; };
 
 	/**
 	 * Gets the colour used as the fill in unfocused window borders.
 	 * @return Fill colour.
 	 */
-	const u16 getFillColour() const;
+	inline const u16 getFillColour() const { return _fillColour; };
 
 	/**
 	 * Gets the colour used as the fill in scrollbar gutters.
 	 * @return Dark colour.
 	 */
-	const u16 getDarkColour() const;
+	inline const u16 getDarkColour() const { return _darkColour; };
 
 	/**
 	 * Gets the type of outline used in this gadget.
 	 * @return Outline type.
 	 */
-	const OutlineType getOutlineType() const;
+	inline const OutlineType getOutlineType() const { return _outline; };
 
 	/**
 	 * Sets this gadget's reference constant.  This should be unique,
@@ -312,32 +307,32 @@ public:
 	 * Sets whether or not this gadget can be dragged.
 	 * @param isDraggable The draggable state.
 	 */
-	void setDraggable(bool isDraggable);
+	inline void setDraggable(const bool isDraggable) { _flags.draggable = isDraggable; };
 
 	/**
 	 * Sets whether or not child gadgets can exceed this gadget's dimensions.
 	 * @param isPermeable The permeable state.
 	 */
-	void setPermeable(bool isPermeable);
+	inline void setPermeable(const bool isPermeable) { _flags.permeable = isPermeable; };
 
 	/**
 	 * Sets the outline type to use when drawing the gadget's border.
 	 * @param outline The outline type.
 	 */
-	void setOutlineType(OutlineType outline);
+	inline void setOutlineType(const OutlineType outline) { _outline = outline; };
 
 	/**
 	 * Sets the gadget's event handler.  The event handler will receive
 	 * all events raised by this gadget.
 	 * @param eventHandler A pointer to the event handler.
 	 */
-	void setEventHandler(EventHandler* eventHandler);
+	inline void setEventHandler(EventHandler* eventHandler) { _eventHandler = eventHandler; };
 
 	/**
 	 * Enables or disables event firing for this gadget.
 	 * @param raisesEvents True to enable events, false to disable.
 	 */
-	void setRaisesEvents(const bool raisesEvents);
+	inline void setRaisesEvents(const bool raisesEvents) { _flags.raisesEvents = raisesEvents; };
 
 	/**
 	 * Sets the gadget visible or invisible. This does not redraw or
@@ -346,49 +341,49 @@ public:
 	 *
 	 * @param visible The visibility state.
 	 */
-	void setVisible(bool visible);
+	inline void setVisible(const bool visible) { _flags.visible = visible; };
 
 	/**
 	 * Sets the background colour.
 	 * @param colour The new background colour.
 	 */
-	void setBackColour(u16 colour);
+	inline void setBackColour(const u16 colour) { _backColour = colour; };
 
 	/**
 	 * Sets the shine colour.
 	 * @param colour The new shine colour.
 	 */
-	void setShineColour(u16 colour);
+	inline void setShineColour(const u16 colour) { _shineColour = colour; };
 
 	/**
 	 * Sets the highlight colour.
 	 * @param colour The new highlight colour.
 	 */
-	void setHighlightColour(u16 colour);
+	inline void setHighlightColour(const u16 colour) { _highlightColour = colour; };
 
 	/**
 	 * Sets the shadow colour.
 	 * @param colour The new shadow colour.
 	 */
-	void setShadowColour(u16 colour);
+	inline void setShadowColour(const u16 colour) { _shadowColour = colour; };
 
 	/**
 	 * Sets the fill colour.
 	 * @param colour The new fill colour.
 	 */
-	void setFillColour(u16 colour);
+	inline void setFillColour(const u16 colour) { _fillColour = colour; };
 
 	/**
 	 * Sets the dark colour.
 	 * @param colour The new dark colour.
 	 */
-	void setDarkColour(u16 colour);
+	inline void setDarkColour(const u16 colour) { _darkColour = colour; };
 
 	/**
 	 * Sets the close type other gadgets should use when closing this gadget.
 	 * @param closeType The close type to use.
 	 */
-	void setCloseType(CloseType closeType);
+	inline void setCloseType(const CloseType closeType) { _closeType = closeType; };
 
 	/**
 	 * Sets the font.
@@ -678,7 +673,7 @@ public:
 	 * Called automatically when a gadget is added as a child.
 	 * @param parent A pointer to the parent gadget.
 	 */
-	void setParent(Gadget* parent);
+	inline void setParent(Gadget* parent) { _parent = parent; };
 
 	/**
 	 * Notify this gadget that it is being dragged, and set its drag point.
@@ -704,7 +699,7 @@ public:
 	 * @param clipRect The clipping region to draw.
 	 * @see draw()
 	 */
-	virtual void draw(Rect clipRect);
+	virtual inline void draw(Rect clipRect) { };
 
 	/**
 	 * Erase a child gadget by drawing the gadgets behind it.
@@ -762,6 +757,12 @@ public:
 	 */
 	bool swapDepth();
 
+	/**
+	 * Delete this gadget.  This should never be called in user code; gadget
+	 * deletion is handled by Woopsi.
+	 */
+	inline void destroy() { delete this; };
+
 protected:
 	s16 _x;
 	s16 _y;
@@ -808,7 +809,14 @@ protected:
 
 	FontBase* _font;
 
-	// Initialisation
+	/**
+	 * Destructor.
+	 */
+	virtual ~Gadget();
+
+	/**
+	 * Initialise the gadget.
+	 */
 	void init();
 
 	const s16 calculatePhysicalScreenY(s16 y) const;

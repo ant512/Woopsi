@@ -4,9 +4,6 @@ Window::Window(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, Font
 	_title = title;
 }
 
-Window::~Window() {
-}
-
 void Window::draw() {
 	Gadget::draw();
 }

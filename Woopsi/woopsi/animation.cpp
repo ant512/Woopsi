@@ -13,9 +13,6 @@ Animation::Animation(const u8 speed, const LoopType loopType, const u16 loops) {
 	_loopCount = 0;
 }
 
-Animation::~Animation() {
-}
-
 // Returns a pointer to the current frame
 const Animation::AnimFrame* Animation::getCurrentFrame() const {
 	return &_frames[_currentFrame];

@@ -20,9 +20,6 @@ AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 f
 	}
 }
 
-AmigaWindow::~AmigaWindow() {
-}
-
 u8 AmigaWindow::getBorderSize() {
 	if (!_flags.borderless) {
 		return WINDOW_BORDER_SIZE;

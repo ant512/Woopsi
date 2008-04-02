@@ -19,9 +19,6 @@ SkinnedScreenDepthButton::SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSki
 	_fillColour = _skin->screen.colours.fill;
 }
 
-SkinnedScreenDepthButton::~SkinnedScreenDepthButton() {
-}
-
 void SkinnedScreenDepthButton::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);

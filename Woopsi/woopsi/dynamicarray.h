@@ -25,12 +25,12 @@ public:
 	/**
 	 * Constructor.
 	 */
-	DynamicArray();
+	inline DynamicArray();
 
 	/**
 	 * Destructor.
 	 */
-	~DynamicArray();
+	inline ~DynamicArray();
 
 	/**
 	 * Get the size of the array.

@@ -18,9 +18,6 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	addGadget(_grip);
 }
 
-SliderVertical::~SliderVertical() {
-}
-
 const s16 SliderVertical::getMinimumValue() const {
 	return _minimumValue;
 }

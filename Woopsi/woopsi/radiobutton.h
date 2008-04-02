@@ -18,7 +18,6 @@ public:
 	};
 
 	RadioButton(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
-	virtual ~RadioButton();
 
 	virtual void draw(Rect clipRect);
 	virtual void draw();
@@ -28,6 +27,11 @@ public:
 
 protected:
 	RadioButtonState _state;
+
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~RadioButton() { };
 };
 
 #endif
