@@ -91,13 +91,13 @@ template <class T>
 void HashMapIterator<T>::moveToLast() {
 	
 	// Locate the last populated index
-	s32 j = _hashmap->reservedSize();
+	s32 j = _hashmap->reservedSize() - 1;
 	for (s32 i = 0; i < _hashmap->reservedSize(); i++) {
 		if (_hashmap->_data[j - i] != NULL) {
 			_index = j - i;
 
 			// Locate the last item in the list
-			_bucket = _hashmap->data[j - i];
+			_bucket = _hashmap->_data[j - i];
 
 			while (_bucket->next != NULL) {
 				_bucket = _bucket->next;
