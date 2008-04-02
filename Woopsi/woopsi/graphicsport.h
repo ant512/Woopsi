@@ -43,13 +43,13 @@ public:
 	 * Return the x co-ordinate of the graphics port.
 	 * @return The x co-ordinate of the graphics port.
 	 */
-	s16 getX();
+	inline const s16 getX() const { return _rect.x + _gadget->getX(); };
 	
 	/**
 	 * Return the y co-ordinate of the graphics port.
 	 * @return The y co-ordinate of the graphics port.
 	 */
-	s16 getY();
+	const s16 getY() const { return _rect.y + _gadget->getY(); };
 
 	/**
 	 * Draw a pixel to the bitmap.

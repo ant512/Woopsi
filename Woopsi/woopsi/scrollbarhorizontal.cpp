@@ -54,10 +54,6 @@ void ScrollbarHorizontal::setPageSize(s16 pageSize) {
 	_slider->setPageSize(pageSize);
 }
 
-void ScrollbarHorizontal::draw() {
-	Gadget::draw();
-}
-
 void ScrollbarHorizontal::draw(Rect clipRect) {
 }
 

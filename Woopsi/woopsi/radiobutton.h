@@ -19,10 +19,24 @@ public:
 
 	RadioButton(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
 
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
-	virtual void draw();
 	virtual bool click(s16 x, s16 y);
-	virtual RadioButtonState getState();
+
+	/**
+	 * Get the current state of the radio button.
+	 * @return The state of the radio button.
+	 */
+	virtual inline RadioButtonState getState() { return _state; }
+
+	/**
+	 * Set the state of the radio button.
+	 * @param state The new radio button state.
+	 */
 	virtual void setState(RadioButtonState state);
 
 protected:

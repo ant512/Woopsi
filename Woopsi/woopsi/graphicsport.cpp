@@ -739,11 +739,3 @@ bool GraphicsPort::clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Gad
 	// Return true as box can be drawn
 	return true;
 }
-
-s16 GraphicsPort::getX() {
-	return _rect.x + _gadget->getX();
-}
-
-s16 GraphicsPort::getY() {
-	return _rect.y + _gadget->getY();
-}

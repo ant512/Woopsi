@@ -6,6 +6,7 @@ Change Log
   - Fixes:
      - Started inlining methods that can be inlined.
      - Made destructors protected to prevent creation of gadgets on the stack.
+     - More const-correctness.
   
   - New Features:
      - Added ScrollingTextBox class.

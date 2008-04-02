@@ -36,7 +36,7 @@ public:
 	 * Get the size of the array.
 	 * @return The size of the array.
 	 */
-	s32 size() const;
+	inline const s32 size() const;
 
 	/**
 	 * Add a value to the end of the array.
@@ -66,13 +66,13 @@ public:
 	 * @param index The index of the desired value.
 	 * @return The value at the specified index.
 	 */
-	T& at(const s32 index) const;
+	inline T& at(const s32 index) const;
 
 	/**
 	 * Check if the array has any data.
 	 * @return True if the array is empty.
 	 */
-	bool empty() const;
+	inline bool empty() const;
 
 	/**
 	 * Remove all data.
@@ -118,7 +118,7 @@ DynamicArray<T>::~DynamicArray() {
 }
 
 template <class T>
-s32 DynamicArray<T>::size() const {
+const s32 DynamicArray<T>::size() const {
 	return _size;
 }
 

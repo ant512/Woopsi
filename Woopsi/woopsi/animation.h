@@ -57,56 +57,56 @@ public:
 	 * Get the current animation frame.
 	 * @return The current animation frame.
 	 */
-	const AnimFrame* getCurrentFrame() const;
+	inline const AnimFrame* getCurrentFrame() const { return &_frames[_currentFrame]; };
 	
 	/**
 	 * Get the bitmap from the current animation frame.
 	 * @return The current frame's bitmap.
 	 */
-	const u16* getCurrentBitmap() const;
+	inline const u16* getCurrentBitmap() const { return _frames[_currentFrame].bitmap; };
 	
 	/**
 	 * Get the current status of the animation - stopped, playing or paused.
 	 * @return The current animation status.
 	 */
-	const Status getStatus() const;
+	inline const Status getStatus() const { return _status; };
 	
 	/**
 	 * Get the speed of the animation.
 	 * @return The animation speed.
 	 */
-	const u8 getSpeed() const;
+	inline const u8 getSpeed() const { return _speed; };
 	
 	/**
 	 * Get the animation's loop type.
 	 * @return The animation's loop type.
 	 */
-	const LoopType getLoopType() const;
+	inline const LoopType getLoopType() const { return _loopType; };
 	
 	/**
 	 * Get the number of VBLs until the next frame is displayed.  This includes
 	 * any delay that the current frame specifies.
 	 * @return The number of VBLs until the next frame.
 	 */
-	const u16 getTimeToNextFrame() const;
+	inline const u16 getTimeToNextFrame() const { return _frameTimer; };
 	
 	/**
 	 * Gets the total number of frames in the animation.
 	 * @return The total number of frames.
 	 */
-	const u16 getFrameCount() const;
+	inline const u16 getFrameCount() const { return _frames.size(); };
 
 	/**
 	 * Set the speed of the animation.
 	 * @param speed The new speed of the animation.
 	 */
-	void setSpeed(const u8 speed);
+	inline void setSpeed(const u8 speed) { _speed = speed; };
 	
 	/**
 	 * Set the loop type of the animation.
 	 * @param loopType The new loop type.
 	 */
-	void setLoopType(const LoopType loopType);
+	inline void setLoopType(const LoopType loopType) { _loopType = loopType; };
 
 	/**
 	 * Add a new frame to the animation.
@@ -137,7 +137,7 @@ public:
 	/**
 	 * Pause the animation.
 	 */
-	void pause();
+	inline void pause() { _status = ANIMATION_STATUS_PAUSED; }
 	
 	/**
 	 * Jump to the specified frame.

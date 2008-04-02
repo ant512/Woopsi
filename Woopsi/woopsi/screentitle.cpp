@@ -10,10 +10,6 @@ ScreenTitle::ScreenTitle(u16 height, char* text, FontBase* font) : Gadget(0, 0, 
 	strcpy(_text, text);
 }
 
-void ScreenTitle::draw() {
-	Gadget::draw();
-}
-
 void ScreenTitle::draw(Rect clipRect) {
 
 	// Get a new graphics port

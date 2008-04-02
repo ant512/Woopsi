@@ -70,10 +70,6 @@ void RadioButtonGroup::draw(Rect clipRect) {
 	clear(clipRect);
 }
 
-void RadioButtonGroup::draw() {
-	Gadget::draw();
-}
-
 bool RadioButtonGroup::resize(u16 width, u16 height) {
 
 	if ((_width != width) || (_height != height)) {

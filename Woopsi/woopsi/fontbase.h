@@ -48,31 +48,31 @@ public:
 	 * @param y The y co-ordinate of the pixel.
 	 * @return The colour of the pixel.
 	 */
-	const u16 getPixel(const u16 x, const u16 y) const;
+	inline const u16 getPixel(const u16 x, const u16 y) const { return getPixel(x + (y * _width)); };
 	
 	/**
 	 * Gets the width of the font's glyph bitmap.
 	 * @return The width of the font's glyph bitmap.
 	 */
-	const u16 getBitmapWidth() const;
+	inline const u16 getBitmapWidth() const { return _bitmapWidth; };
 	
 	/**
 	 * Gets the height of the font's glyph bitmap.
 	 * @return The height of the font's glyph bitmap.
 	 */
-	const u16 getBitmapHeight() const;
+	inline const u16 getBitmapHeight() const { return _bitmapHeight; };
 	
 	/**
 	 * Gets the width of an individual glyph.
 	 * @return The width of an individual glyph.
 	 */
-	const u8 getWidth() const;
+	inline const u8 getWidth() const { return _width; };
 	
 	/**
 	 * Gets the height of an individual glyph.
 	 * @return The height of an individual glyph.
 	 */
-	const u8 getHeight() const;
+	inline const u8 getHeight() const { return _height; };
 	
 	/**
 	 * Checks if the glyph map to see if the glyph representing the specified character
@@ -81,7 +81,7 @@ public:
 	 * @return True if the glyph contains any pixels to be drawn.  False if the glyph is
 	 * blank.
 	 */
-	const bool checkGlyphData(const char glyph) const;
+	inline const bool checkGlyphData(const char glyph) const { return (_glyphMap[glyph >> 3] & (1 << (glyph % 8))); };
 	
 	/**
 	 * Sets the colour to use as the drawing colour.  If set, this overrides the colours
@@ -96,37 +96,37 @@ public:
 	 * isMonochrome() must be true for this colour to be used.
 	 * @return The current drawing colour.
 	 */
-	const u16 getColour() const;
+	inline const u16 getColour() const { return _drawColour; };
 	
 	/**
 	 * Returns true if the current font is being drawn using a single colour.
 	 * @return True if the current font is monochrome.
 	 */
-	const bool isMonochrome() const;
+	inline const bool isMonochrome() const { return _isMonochrome; };
 	
 	/**
 	 * Get the width in pixels of the supplied string if printed using this font.
 	 * @return The pixel width of the string.
 	 */
-	const u8 getTextPixelWidth(const char* text) const;
+	inline const u8 getTextPixelWidth(const char* text) const { return strlen(text) * _width; };
 	
 	/**
 	 * Get the colour currently being used as the transparent background colour.
 	 * @return The transparent background colour.
 	 */
-	const u16 getTransparentColour() const;
+	inline const u16 getTransparentColour() const { return _transparentColour; };
 	
 	/**
 	 * Sets the transparent background colour to a new value.
 	 * @param colour The new background colour.
 	 */
-	void setTransparentColour(const u16 colour);
+	inline void setTransparentColour(const u16 colour) { _transparentColour = colour; };
 
 	/**
 	 * Resets back to mulitcolour mode if the font supports it and is currently set to
 	 * monochrome mode.
 	 */
-	void clearColour();
+	inline void clearColour() { _isMonochrome = false; };
 
 protected:
 

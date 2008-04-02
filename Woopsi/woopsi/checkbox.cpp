@@ -11,22 +11,14 @@ CheckBox::CheckBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button
 	_outline = OUTLINE_OUT;
 }
 
-CheckBox::CheckBoxState CheckBox::getState() {
-	return _state;
-}
-
 void CheckBox::setState(CheckBox::CheckBoxState state) {
 	if (_state != state) {
 		_state = state;
 
 		raiseValueChangeEvent();
 
-		draw();
+		Gadget::draw();
 	}
-}
-
-void CheckBox::draw() {
-	Gadget::draw();
 }
 
 void CheckBox::draw(Rect clipRect) {

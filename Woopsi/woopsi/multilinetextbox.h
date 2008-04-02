@@ -54,16 +54,16 @@ public:
 	MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
 
 	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
+	/**
 	 * Draw the region of the textbox within the clipping rect.
 	 * Should not be called directly.
 	 * @param clipRect The clipping rect to limit drawing to.
 	 */
 	virtual void draw(Rect clipRect);
-
-	/**
-	 * Draw all visible regions of the textbox.
-	 */
-	virtual void draw();
 
 	/**
 	 * Set the horizontal alignment of text within the textbox.
@@ -98,7 +98,7 @@ public:
 	 * have undesired effects.
 	 * @return Pointer to the raw text.
 	 */
-	virtual char* getRawText();
+	virtual inline const char* getRawText() const { return _rawText; };
 
 	/**
 	 * Returns a pointer to the Text object that contains the

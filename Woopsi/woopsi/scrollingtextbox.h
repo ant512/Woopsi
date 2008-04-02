@@ -67,7 +67,7 @@ public:
 	 * have undesired effects.
 	 * @return Pointer to the raw text.
 	 */
-	virtual char* getRawText();
+	virtual const char* getRawText() const;
 
 	/**
 	 * Returns a pointer to the Text object that contains the

@@ -11,13 +11,20 @@ class ScreenTitle : public Gadget {
 public:
 	ScreenTitle(u16 height, char* text, FontBase* font = NULL);
 
-	virtual void draw();
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
 	virtual bool click(s16 x, s16 y);
 
 protected:
 	char* _text;
 
+	/**
+	 * Destructor.
+	 */
 	virtual inline ~ScreenTitle() {
 		if (_text != NULL) {
 			delete [] _text;

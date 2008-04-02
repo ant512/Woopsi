@@ -103,9 +103,9 @@ public:
 	void jumpGrip(u8 direction);
 
 	/**
-	 * Draw the slider.
+	 * Override the Gadget::draw() method.
 	 */
-	virtual void draw();
+	virtual inline void draw() { Gadget::draw(); };
 
 	/**
 	 * Draw the region of the slider that falls within the

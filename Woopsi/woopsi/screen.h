@@ -13,12 +13,14 @@ public:
 	
 	virtual void getClientRect(Rect& rect) const;
 
-	virtual void setBorderless(bool isBorderless);
+	virtual inline const u8 getTitleHeight() const { return _titleHeight; };
+	virtual inline const char* getTitle() const { return _title; };
 
-	virtual u8 getTitleHeight();
-	virtual char* getTitle();
-	virtual void drag();
-	virtual void draw();
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
 
 	virtual void setActiveGadget(Gadget* gadget);

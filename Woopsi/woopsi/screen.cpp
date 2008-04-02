@@ -8,18 +8,6 @@ Screen::Screen(char* title, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_
 	_flags.borderless = true;
 }
 
-// Setting as not borderless does not change gadget
-void Screen::setBorderless(bool isBorderless) {
-}
-
-u8 Screen::getTitleHeight() {
-	return _titleHeight;
-}
-
-char* Screen::getTitle() {
-	return _title;
-}
-
 void Screen::setActive(bool active) {
 
 	if (_flags.active != active) {
@@ -108,13 +96,6 @@ bool Screen::flipScreens() {
 	}
 
 	return false;
-}
-
-void Screen::drag() {
-}
-
-void Screen::draw() {
-	Gadget::draw();
 }
 
 void Screen::draw(Rect clipRect) {

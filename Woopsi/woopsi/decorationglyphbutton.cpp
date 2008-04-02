@@ -8,10 +8,6 @@ DecorationGlyphButton::DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height
 	_clickedGlyph = clickedGlyph;
 }
 
-void DecorationGlyphButton::draw() {
-	Gadget::draw();
-}
-
 void DecorationGlyphButton::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);

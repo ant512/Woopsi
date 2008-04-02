@@ -9,55 +9,9 @@ FontBase::FontBase(const u16 bitmapWidth, const u16 bitmapHeight, const u8 width
 	_isMonochrome = false;
 }
 
-const u16 FontBase::getBitmapWidth() const {
-	return _bitmapWidth;
-}
-
-const u16 FontBase::getBitmapHeight() const {
-	return _bitmapHeight;
-}
-
-const u8 FontBase::getWidth() const {
-	return _width;
-}
-
-const u8 FontBase::getHeight() const {
-	return _height;
-}
-
-const bool FontBase::isMonochrome() const {
-	return _isMonochrome;
-}
-
-const u16 FontBase::getColour() const {
-	return _drawColour;
-}
-
-// Return a pixel at a given location 
-const u16 FontBase::getPixel(const u16 x, const u16 y) const {
-	return getPixel(x + (y * _width));
-}
-
-const u16 FontBase::getTransparentColour() const {
-	return _transparentColour;
-}
-
-void FontBase::setTransparentColour(const u16 colour) {
-	_transparentColour = colour;
-}
-
 void FontBase::setColour(const u16 colour) {
 	_drawColour = colour;
 	_isMonochrome = true;
-}
-
-void FontBase::clearColour() {
-	_isMonochrome = false;
-}
-
-// Does the supplied glyph contain any drawable data?
-const bool FontBase::checkGlyphData(char glyph) const {
-	return (_glyphMap[glyph >> 3] & (1 << (glyph % 8)));
 }
 
 // Initialise the glyph map array
@@ -96,9 +50,4 @@ void FontBase::createGlyphMap() {
 			}
 		}
 	}
-}
-
-// Calculate the width in pixels of a string when printed using this font
-const u8 FontBase::getTextPixelWidth(const char* text) const {
-	return strlen(text) * _width;
 }

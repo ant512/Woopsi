@@ -47,7 +47,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		draw();
+		Gadget::draw();
 	}
 }
 

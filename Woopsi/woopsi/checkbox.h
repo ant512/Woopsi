@@ -17,10 +17,14 @@ public:
 
 	CheckBox(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
 
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
-	virtual void draw();
 	virtual bool click(s16 x, s16 y);
-	virtual CheckBoxState getState();
+	virtual inline const CheckBoxState getState() const { return _state; };
 	virtual void setState(CheckBoxState state);
 
 protected:

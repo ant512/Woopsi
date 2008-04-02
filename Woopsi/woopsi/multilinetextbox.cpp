@@ -104,10 +104,6 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	delete port;
 }
 
-void MultiLineTextBox::draw() {
-	Gadget::draw();
-}
-
 // Calculate values for centralised text
 u8 MultiLineTextBox::getRowX(u8 rowPixelWidth) {
 
@@ -163,16 +159,12 @@ void MultiLineTextBox::calculateTotalVisibleRows() {
 
 void MultiLineTextBox::setTextPositionHoriz(TextPositionHoriz position) {
 	_hPos = position;
-	draw();
+	Gadget::draw();
 }
 
 void MultiLineTextBox::setTextPositionVert(TextPositionVert position) {
 	_vPos = position;
-	draw();
-}
-
-char* MultiLineTextBox::getRawText() {
-	return _rawText;
+	Gadget::draw();
 }
 
 const Text* MultiLineTextBox::getText() const {
@@ -204,7 +196,7 @@ void MultiLineTextBox::setText(char* text, bool raiseEvent) {
 		stripTopLines(_text->getLineCount() - _maxRows);
 	}
 
-	draw();
+	Gadget::draw();
 	
 	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {
@@ -242,7 +234,7 @@ void MultiLineTextBox::addText(char* text) {
 			_text->setText(_rawText);
 		}
 
-		draw();
+		Gadget::draw();
 
 		// Update max scroll value
 		if (_text->getLineCount() > _visibleRows) {
@@ -349,7 +341,7 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 		raiseEvent = true;
 	}
 
-	draw();
+	Gadget::draw();
 	
 	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {

@@ -2,7 +2,7 @@
 #define _RADIO_BUTTON_GROUP_H_
 
 #include <nds.h>
-#include "button.h"
+#include "gadget.h"
 
 using namespace std;
 
@@ -21,8 +21,13 @@ public:
 	virtual void setSelectedGadget(RadioButton* gadget);
 	virtual void setSelectedIndex(u8 index);
 	virtual bool resize(u16 width, u16 height);
+
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
-	virtual void draw();
 
 protected:
 	RadioButton* _selectedGadget;

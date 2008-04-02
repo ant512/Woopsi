@@ -11,10 +11,6 @@ RadioButton::RadioButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : 
 	_flags.borderless = true;
 }
 
-RadioButton::RadioButtonState RadioButton::getState() {
-	return _state;
-}
-
 void RadioButton::setState(RadioButton::RadioButtonState state) {
 	if (_state != state) {
 		_state = state;
@@ -25,12 +21,8 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 
 		raiseValueChangeEvent();
 
-		draw();
+		Gadget::draw();
 	}
-}
-
-void RadioButton::draw() {
-	Gadget::draw();
 }
 
 void RadioButton::draw(Rect clipRect) {
