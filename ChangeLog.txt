@@ -13,6 +13,7 @@ Change Log
      - Added bonus code folder.
      - Moved LinkedList and LinkedListIterator classes from main codebase into
        bonus folder.
+     - Added getPreferredDimensions() to Gadget and Textbox classes.
 
 
   V0.30 (20080326)
