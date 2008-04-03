@@ -180,3 +180,11 @@ bool Textbox::resize(u16 width, u16 height) {
 
 	return resized;
 }
+
+// Get the preferred dimensions of the gadget
+void Textbox::getPreferredDimensions(Rect& rect) const {
+	rect.x = _x;
+	rect.y = _y;
+	rect.width = (_padding << 1) + (_font->getWidth() * strlen(_text));
+	rect.height = (_padding << 1) + _font->getHeight();
+}

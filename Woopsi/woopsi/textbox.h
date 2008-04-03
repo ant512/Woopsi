@@ -120,6 +120,13 @@ public:
 	 */
 	virtual bool resize(u16 width, u16 height);
 
+	/**
+	 * Insert the dimensions that this gadget wants to have into the rect
+	 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+	 * parent.
+	 * @param rect Reference to a rect to populate with data.
+	 */
+	virtual void getPreferredDimensions(Rect& rect) const;
 
 protected:
 	char* _text;

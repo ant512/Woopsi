@@ -200,6 +200,14 @@ public:
 	inline const bool raisesEvents() const { return _flags.raisesEvents; };
 
 	/**
+	 * Insert the dimensions that this gadget wants to have into the rect
+	 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+	 * parent.
+	 * @param rect Reference to a rect to populate with data.
+	 */
+	virtual void getPreferredDimensions(Rect& rect) const;
+
+	/**
 	 * Insert the properties of the space within this gadget that is available
 	 * for children into the rect passed in as a parameter.
 	 * All co-ordinates are relative to this gadget.

@@ -1575,6 +1575,14 @@ u32 Gadget::setRefcon(u32 refcon) {
 	return old;
 }
 
+// Get the preferred dimensions of the gadget
+void Gadget::getPreferredDimensions(Rect& rect) const {
+	rect.x = _x;
+	rect.y = _y;
+	rect.width = _width;
+	rect.height = _height;
+}
+
 // Insert the available space for child gadgets into the rect
 void Gadget::getClientRect(Rect& rect) const {
 	rect.x = !_flags.borderless;
