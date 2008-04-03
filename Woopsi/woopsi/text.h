@@ -95,32 +95,32 @@ public:
 	 * Get the total height of the text in pixels.
 	 * @return The total height of the text.
 	 */
-	const s32 getPixelHeight() const;
+	inline const s32 getPixelHeight() const { return _textPixelHeight; };
 
 	/**
 	 * Get the width of the longest line in pixels.
 	 * @return The width of the longest line.
 	 */
-	const u8 getPixelWidth() const;
+	inline const u8 getPixelWidth() const { return _textPixelWidth; };
 
 	/**
 	 * Get the pixel spacing between each line of text.
 	 * @return The line spacing.
 	 */
-	const u8 getLineSpacing() const;
+	inline const u8 getLineSpacing() const { return _lineSpacing; };
 
 	/**
 	 * Get the height in pixels of a line, given as the
 	 * height of the font plus the line spacing.
 	 * @return The height of a line.
 	 */
-	const u8 getLineHeight() const;
+	inline const u8 getLineHeight() const { return _lineHeight; };
 
 	/**
 	 * Get the total number of lines in the text.
 	 * @return The line count.
 	 */
-	const s32 getLineCount() const;
+	inline const s32 getLineCount() const { return _totalLines; };
 
 	/**
 	 * Get a pointer to the Text object's font.

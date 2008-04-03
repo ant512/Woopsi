@@ -7,10 +7,6 @@ WindowBorderSide::WindowBorderSide(s16 x, s16 y, u16 width, u16 height) : Gadget
 	_flags.decoration = true;
 }
 
-void WindowBorderSide::draw() {
-	Gadget::draw();
-}
-
 void WindowBorderSide::draw(Rect clipRect) {
 
 	// Choose a colour depending on parent's active state

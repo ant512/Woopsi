@@ -7,10 +7,6 @@ WindowBorderBottom::WindowBorderBottom(s16 x, s16 y, u16 width, u16 height, u8 s
 	_flags.decoration = true;
 }
 
-void WindowBorderBottom::draw() {
-	Gadget::draw();
-}
-
 void WindowBorderBottom::draw(Rect clipRect) {
 
 	// Choose a colour depending on parent's active state

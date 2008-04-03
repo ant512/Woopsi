@@ -18,7 +18,11 @@ class Window : public Gadget {
 public:
 	Window(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font = NULL);
 
-	virtual void draw();
+	/**
+	 * Draws the gadget.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
 
 	virtual bool release(s16 x, s16 y);

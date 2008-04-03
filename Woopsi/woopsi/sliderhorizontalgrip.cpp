@@ -4,10 +4,6 @@
 SliderHorizontalGrip::SliderHorizontalGrip(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 }
 
-void SliderHorizontalGrip::draw() {
-	Gadget::draw();
-}
-
 void SliderHorizontalGrip::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 

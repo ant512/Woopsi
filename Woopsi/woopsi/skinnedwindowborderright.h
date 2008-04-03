@@ -11,8 +11,12 @@ class SkinnedWindowBorderRight : public WindowBorderSide {
 public:
 	SkinnedWindowBorderRight(s16 x, s16 y, u16 height, const WindowSkin* skin);
 
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
-	virtual void draw();
 
 protected:
 	const WindowSkin* _skin;

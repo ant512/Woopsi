@@ -16,10 +16,6 @@ SkinnedWindowBorderBottom::SkinnedWindowBorderBottom(s16 x, s16 y, u16 width, co
 	_sideBorderSize = _skin->leftBorder.bitmap.width;
 }
 
-void SkinnedWindowBorderBottom::draw() {
-	Gadget::draw();
-}
-
 void SkinnedWindowBorderBottom::draw(Rect clipRect) {
 
 	// Get a new graphics port

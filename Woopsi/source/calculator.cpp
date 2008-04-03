@@ -51,7 +51,7 @@ void Calculator::initGUI() {
 	}
 }
 
-void Calculator::addText(char* text) {
+void Calculator::addText(const char* text) {
 	if ((strcmp(_output->getText(), "0") == 0) || (_wipeNeeded)) {
 		_wipeNeeded = false;
 		_output->setText(text);

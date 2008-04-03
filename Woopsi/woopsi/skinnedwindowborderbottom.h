@@ -13,7 +13,11 @@ public:
 	SkinnedWindowBorderBottom(s16 x, s16 y, u16 width, const WindowSkin* skin);
 
 	virtual void draw(Rect clipRect);
-	virtual void draw();
+
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
 
 protected:
 	const WindowSkin* _skin;

@@ -16,26 +16,6 @@ Text::Text(FontBase* font, char* text, u16 width) {
 	setText(text);
 }
 
-const s32 Text::getPixelHeight() const {
-	return _textPixelHeight;
-}
-
-const u8 Text::getPixelWidth() const {
-	return _textPixelWidth;
-}
-
-const u8 Text::getLineSpacing() const {
-	return _lineSpacing;
-}
-
-const u8 Text::getLineHeight() const {
-	return _lineHeight;
-}
-
-const s32 Text::getLineCount() const {
-	return _totalLines;
-}
-
 FontBase* Text::getFont() {
 	return _font;
 }

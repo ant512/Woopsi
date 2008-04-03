@@ -28,7 +28,7 @@ private:
 	void doDivide();
 	void doEquals();
 	void updateDisplay();
-	void addText(char* text);
+	void addText(const char* text);
 	void doFunction();
 	void initGUI();
 

@@ -37,15 +37,6 @@ void SuperBitmap::clearBitmap() {
 	drawFilledRect(0, 0, _bitmapWidth, _bitmapHeight, _backColour);
 }
 
-void SuperBitmap::setAllowStylusScroll(bool allowStylusScroll) {
-	_allowStylusScroll = allowStylusScroll;
-}
-
-// Copy bitmap to gadget
-void SuperBitmap::draw() {
-	Gadget::draw();
-}
-
 void SuperBitmap::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
@@ -85,11 +76,6 @@ const u16 SuperBitmap::getPixel(s16 x, s16 y) const {
 
 	u16 pos = x + (y * _bitmapWidth);
 	return _bitmap[pos];
-}
-
-// Return the bitmap
-const u16* SuperBitmap::getBitmap() const {
-	return _bitmap;
 }
 
 // External filled rectangle function

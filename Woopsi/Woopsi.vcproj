@@ -554,14 +554,6 @@
 			RelativePath=".\Makefile"
 			>
 		</File>
-		<File
-			RelativePath=".\docs\ReadMe.txt"
-			>
-		</File>
-		<File
-			RelativePath=".\Release\Woopsi.nds"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

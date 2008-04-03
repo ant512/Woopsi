@@ -18,10 +18,6 @@ SkinnedWindowDepthButton::SkinnedWindowDepthButton(s16 x, s16 y, const WindowSki
 	_fillColour = _skin->depthButton.colours.fill;
 }
 
-void SkinnedWindowDepthButton::draw() {
-	Gadget::draw();
-}
-
 void SkinnedWindowDepthButton::draw(Rect clipRect) {
 
 	// Background

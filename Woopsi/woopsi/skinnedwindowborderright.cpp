@@ -15,10 +15,6 @@ SkinnedWindowBorderRight::SkinnedWindowBorderRight(s16 x, s16 y, u16 height, con
 	_fillColour = _skin->window.colours.fill;
 }
 
-void SkinnedWindowBorderRight::draw() {
-	Gadget::draw();
-}
-
 void SkinnedWindowBorderRight::draw(Rect clipRect) {
 
 	// Get a new graphics port

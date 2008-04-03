@@ -42,18 +42,18 @@ public:
 	 * Get a pointer to the internal bitmap.
 	 * @return Pointer to the internal bitmap.
 	 */
-	const u16* getBitmap() const;
+	inline const u16* getBitmap() const { return _bitmap; };
 
 	/**
 	 * Disables and enables stylus scrolling.
 	 * @param allowStylusScroll True to enable stylus scrolling.
 	 */
-	void setAllowStylusScroll(bool allowStylusScroll);
+	inline void setAllowStylusScroll(bool allowStylusScroll) { _allowStylusScroll = allowStylusScroll; };
 
 	/**
 	 * Draws the gadget to the frawebuffer.
 	 */
-	virtual void draw();
+	virtual inline void draw() { Gadget::draw(); };
 	
 	/**
 	 * Draws the region of the gadget that falls within the clipping region.  Should not

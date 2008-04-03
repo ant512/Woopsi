@@ -14,10 +14,6 @@ ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, F
 	_flags.permeable = true;
 }
 
-void ScrollingPanel::draw() {
-	Gadget::draw();
-}
-
 void ScrollingPanel::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 

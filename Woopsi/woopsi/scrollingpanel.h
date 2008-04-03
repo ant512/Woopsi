@@ -28,9 +28,9 @@ public:
 	ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
 
 	/**
-	 * Draw the visible portions of the gadget and its children.
+	 * Override the Gadget::draw() method.
 	 */
-	virtual void draw();
+	virtual inline void draw() { Gadget::draw(); };
 	
 	/**
 	 * Draw a single region of the gadget.  Should not be called.

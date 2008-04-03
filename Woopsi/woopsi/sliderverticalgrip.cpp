@@ -4,10 +4,6 @@
 SliderVerticalGrip::SliderVerticalGrip(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 }
 
-void SliderVerticalGrip::draw() {
-	Gadget::draw();
-}
-
 void SliderVerticalGrip::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 

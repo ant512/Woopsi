@@ -18,14 +18,6 @@ SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget
 	addGadget(_grip);
 }
 
-const s16 SliderHorizontal::getMinimumValue() const {
-	return _minimumValue;
-}
-
-const s16 SliderHorizontal::getMaximumValue() const {
-	return _maximumValue;
-}
-
 const s16 SliderHorizontal::getValue() const {
 	// Calculate the current value represented by the left edge of the grip
 	Rect rect;
@@ -46,18 +38,6 @@ const s16 SliderHorizontal::getValue() const {
 		// Just return the minimum value
 		return _minimumValue;
 	}
-}
-
-const s16 SliderHorizontal::getPageSize() const {
-	return _pageSize;
-}
-
-void SliderHorizontal::setMinimumValue(const s16 value) {
-	_minimumValue = value;
-}
-
-void SliderHorizontal::setMaximumValue(const s16 value) {
-	_maximumValue = value;
 }
 
 void SliderHorizontal::setValue(const s16 value) {
@@ -84,14 +64,6 @@ void SliderHorizontal::setValue(const s16 value) {
 		// Move the grip
 		_grip->moveTo(newGripX, rect.y);
 	}
-}
-
-void SliderHorizontal::setPageSize(s16 pageSize) {
-	_pageSize = pageSize;
-}
-
-void SliderHorizontal::draw() {
-	Gadget::draw();
 }
 
 void SliderHorizontal::draw(Rect clipRect) {

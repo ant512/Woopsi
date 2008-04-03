@@ -118,9 +118,9 @@ public:
 	virtual void draw(Rect clipRect);
 
 	/**
-	 * Draw all visible regions of the textbox.
+	 * Override the Gadget::draw() method.
 	 */
-	virtual void draw();
+	virtual inline void draw() { Gadget::draw(); };
 
 	/**
 	 * Drag the gadget at the specified co-ordinates.

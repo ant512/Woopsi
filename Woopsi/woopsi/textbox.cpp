@@ -45,10 +45,6 @@ void Textbox::draw(Rect clipRect) {
 	delete port;
 }
 
-void Textbox::draw() {
-	Gadget::draw();
-}
-
 // Calculate values for centralised text
 void Textbox::calculateTextPosition() {
 
@@ -91,10 +87,6 @@ void Textbox::setTextPositionVert(TextPositionVert position) {
 	calculateTextPosition();
 
 	draw();
-}
-
-char* Textbox::getText() {
-	return _text;
 }
 
 void Textbox::setText(const char* text) {

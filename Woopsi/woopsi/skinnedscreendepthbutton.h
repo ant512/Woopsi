@@ -12,6 +12,11 @@ class SkinnedScreenDepthButton : public DecorationGlyphButton {
 public:
 	SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSkin* skin);
 
+	/**
+	 * Override the Gadget::draw() method.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
 
 protected:

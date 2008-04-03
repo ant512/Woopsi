@@ -10,10 +10,6 @@ WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, char* text, FontB
 	strcpy(_text, text);
 }
 
-void WindowBorderTop::draw() {
-	Gadget::draw();
-}
-
 void WindowBorderTop::draw(Rect clipRect) {
 
 	// Choose a colour depending on parent's active state

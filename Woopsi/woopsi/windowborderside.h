@@ -10,8 +10,12 @@ class WindowBorderSide : public Gadget {
 public:
 	WindowBorderSide(s16 x, s16 y, u16 width, u16 height);
 
+	/**
+	 * Draws the gadget.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
-	virtual void draw();
 
 	virtual bool focus();
 	virtual bool blur();

@@ -31,13 +31,13 @@ public:
 	 * Get the smallest value that the slider can represent.
 	 * @return The smallest value.
 	 */
-	const s16 getMinimumValue() const;
+	inline const s16 getMinimumValue() const { return _minimumValue; };
 
 	/**
 	 * Get the largest value that the slider can represent.
 	 * @return The largest value.
 	 */
-	const s16 getMaximumValue() const;
+	inline const s16 getMaximumValue() const { return _maximumValue; };
 
 	/**
 	 * Get the current value of the slider.
@@ -52,19 +52,19 @@ public:
 	 * would be the height of the scrolling gadget.
 	 * @return The page size.
 	 */
-	const s16 getPageSize() const;
+	inline const s16 getPageSize() const { return _pageSize; };
 
 	/**
 	 * Set the smallest value that the slider can represent.
 	 * @param value The smallest value.
 	 */
-	void setMinimumValue(const s16 value);
+	inline void setMinimumValue(const s16 value) { _minimumValue = value; };
 
 	/**
 	 * Set the largest value that the slider can represent.
 	 * @param value The largest value.
 	 */
-	void setMaximumValue(const s16 value);
+	inline void setMaximumValue(const s16 value) { _maximumValue = value; };
 
 	/**
 	 * Set the value that of the slider.  This will reposition
@@ -78,7 +78,7 @@ public:
 	 * @param pageSize The page size.
 	 * @see getPageSize().
 	 */
-	void setPageSize(const s16 pageSize);
+	inline void setPageSize(const s16 pageSize) { _pageSize = pageSize; };
 
 	/**
 	 * Resize and redraw the grip.
@@ -92,9 +92,9 @@ public:
 	void jumpGrip(u8 direction);
 
 	/**
-	 * Draw the slider.
+	 * Override the Gadget::draw() method.
 	 */
-	virtual void draw();
+	virtual inline void draw() { Gadget::draw(); };
 
 	/**
 	 * Draw the region of the slider that falls within the

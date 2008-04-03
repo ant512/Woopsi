@@ -64,7 +64,7 @@ public:
 	/**
 	 * Draw all visible regions of the textbox.
 	 */
-	virtual void draw();
+	virtual inline void draw() { Gadget::draw(); };
 
 	/**
 	 * Set the horizontal alignment of text within the textbox.
@@ -82,7 +82,7 @@ public:
 	 * Returns a pointer to the string shown in the textbox.
 	 * @return Pointer to the string.
 	 */
-	virtual char* getText();
+	virtual inline const char* getText() const { return _text; };
 	
 	/**
 	 * Set the text displayed in the textbox.

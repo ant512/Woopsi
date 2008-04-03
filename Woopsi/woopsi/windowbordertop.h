@@ -11,8 +11,12 @@ class WindowBorderTop : public Gadget {
 public:
 	WindowBorderTop(s16 x, u16 width, u16 height, char* text, FontBase* font = NULL);
 
+	/**
+	 * Draws the gadget.
+	 */
+	virtual inline void draw() { Gadget::draw(); };
+
 	virtual void draw(Rect clipRect);
-	virtual void draw();
 
 	virtual bool focus();
 	virtual bool blur();

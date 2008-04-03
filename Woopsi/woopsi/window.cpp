@@ -4,10 +4,6 @@ Window::Window(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, Font
 	_title = title;
 }
 
-void Window::draw() {
-	Gadget::draw();
-}
-
 bool Window::release(s16 x, s16 y) {
 
 	if (_flags.dragging) {

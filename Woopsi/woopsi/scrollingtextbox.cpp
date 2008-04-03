@@ -113,10 +113,6 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 	return false;
 }
 
-void ScrollingTextBox::draw() {
-	Gadget::draw();
-}
-
 void ScrollingTextBox::draw(Rect clipRect) {
 	clear(clipRect);
 }
