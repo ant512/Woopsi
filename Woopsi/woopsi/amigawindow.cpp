@@ -20,7 +20,7 @@ AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 f
 	}
 }
 
-u8 AmigaWindow::getBorderSize() {
+const u8 AmigaWindow::getBorderSize() const {
 	if (!_flags.borderless) {
 		return WINDOW_BORDER_SIZE;
 	}
@@ -28,7 +28,7 @@ u8 AmigaWindow::getBorderSize() {
 	return 0;
 }
 
-u8 AmigaWindow::getTitleHeight() {
+const u8 AmigaWindow::getTitleHeight() const {
 	if (!_flags.borderless) {
 		return WINDOW_TITLE_HEIGHT;
 	}

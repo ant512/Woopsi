@@ -27,11 +27,11 @@ RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 heigh
 	return newButton;
 }
 
-RadioButton* RadioButtonGroup::getSelectedGadget() {
+const RadioButton* RadioButtonGroup::getSelectedGadget() const {
 	return (RadioButton*)_selectedGadget;
 }
 
-s16 RadioButtonGroup::getSelectedIndex() {
+const s16 RadioButtonGroup::getSelectedIndex() const {
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		if (((RadioButton*)_gadgets[i]) == _selectedGadget) {
 			return i;

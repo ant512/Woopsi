@@ -842,6 +842,10 @@ protected:
 	 */
 	s16 getGadgetIndex(Gadget* gadget);
 
+	/**
+	 * Make this child active or inactive.
+	 * @param active True to make the gadget active, false to make the gadget inactive.
+	 */
 	virtual void setActive(bool active);
 
 	virtual void closeChild(Gadget* gadget);

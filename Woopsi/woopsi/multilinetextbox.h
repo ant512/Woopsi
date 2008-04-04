@@ -146,10 +146,40 @@ protected:
 	TextPositionHoriz _hPos;
 	TextPositionVert _vPos;
 
+	/**
+	 * Gets the x position of a row of text based on the width of the row and the 
+	 * type of horizontal alignment currently set.
+	 * @param rowPixelWidth The width of the row.
+	 * @return The x co-ordinate of the row.
+	 */
 	u8 getRowX(u8 rowPixelWidth);
+
+	/**
+	 * Gets the y position of the specified row of text based on the type of
+	 * vertical alignment currently set.
+	 * @param screenRow The row number to find the y co-ordinate of.
+	 * @param screenRows The number of visible rows within the textbox.
+	 * @return The y co-ordinate of the specified row of text.
+	 */
 	s16 getRowY(u8 screenRow, u8 screenRows);
+
+	/**
+	 * Works out the number of visible rows within the textbox.
+	 */
 	void calculateTotalVisibleRows();
+
+	/**
+	 * Removes any lines of text from the start of the text buffer that are
+	 * outside the maximum number of rows allowed by the buffer settings.
+	 */
 	void stripTopLines(const u32 lines);
+
+	/**
+	 * Set the text to display.  Does not raise a value changed event
+	 * if raise Event is set to false.
+	 * @param text The new text to display.
+	 * @param raiseEvent Set to false to prevent raising a value changed event.
+	 */
 	virtual void setText(char* text, bool raiseEvent);
 
 	/**

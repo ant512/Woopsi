@@ -22,8 +22,8 @@ public:
 
 	virtual void setBorderless(bool isBorderless);
 
-	virtual u8 getBorderSize();
-	virtual u8 getTitleHeight();
+	virtual const u8 getBorderSize() const;
+	virtual const u8 getTitleHeight() const;
 
 	virtual void getClientRect(Rect& rect) const;
 

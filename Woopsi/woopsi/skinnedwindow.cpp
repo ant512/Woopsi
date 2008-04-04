@@ -35,7 +35,7 @@ SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u
 	}
 }
 
-u8 SkinnedWindow::getBorderSize() {
+const u8 SkinnedWindow::getBorderSize() const {
 	if (!_flags.borderless) {
 		return _windowBorderLeft->getWidth();
 	}
@@ -43,7 +43,7 @@ u8 SkinnedWindow::getBorderSize() {
 	return 0;
 }
 
-u8 SkinnedWindow::getTitleHeight() {
+const u8 SkinnedWindow::getTitleHeight() const {
 	if (!_flags.borderless) {
 		return _windowBorderTop->getWidth();
 	}
