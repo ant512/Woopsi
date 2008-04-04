@@ -4,6 +4,9 @@
 #include "woopsi.h"
 #include "sysfont.h"
 
+class AmigaScreen;
+class AmigaWindow;
+
 class Pong : EventHandler {
 
 public:

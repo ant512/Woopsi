@@ -5,6 +5,11 @@
 #include "sysfont.h"
 #include "dynamicarray.h"
 
+class SuperBitmap;
+class AmigaScreen;
+class AmigaWindow;
+class Button;
+
 class PacSprite;
 class PacMan;
 class PacMap;

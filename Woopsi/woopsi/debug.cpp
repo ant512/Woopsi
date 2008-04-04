@@ -8,6 +8,7 @@
 #include "amigawindow.h"
 #include "woopsi.h"
 #include "scrollingtextbox.h"
+#include "monofont.h"
 
 Woopsi* Debug::_woopsi = NULL;
 Debug* Debug::_debug = NULL;

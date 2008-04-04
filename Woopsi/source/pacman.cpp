@@ -1,4 +1,10 @@
 #include "pacman.h"
+#include "superbitmap.h"
+#include "button.h"
+#include "amigawindow.h"
+#include "amigascreen.h"
+#include "woopsifuncs.h"
+#include "debug.h"
 
 // PacSprite
 

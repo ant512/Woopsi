@@ -1,14 +1,15 @@
 // Includes
 #include <nds.h>
-#include "woopsi.h"
+#include "woopsiheaders.h"
+
 #include "calculator.h"
 #include "pong.h"
 #include "pacman.h"
 #include "bitmap/all_gfx.c"
 #include "bitmap/all_gfx.h"
-#include "woopsifuncs.h"
-#include "skin.h"
 
+
+/*
 int main2() {
 
 	initWoopsiGfxMode();
@@ -98,6 +99,7 @@ int mainOld() {
 
 	delete woopsiApplication;
 }
+*/
 
 int main() {
 	initWoopsiGfxMode();

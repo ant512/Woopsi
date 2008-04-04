@@ -1,4 +1,8 @@
 #include "pong.h"
+#include "amigascreen.h"
+#include "amigawindow.h"
+#include "font.h"
+#include "woopsifuncs.h"
 
 Pong::Pong(AmigaScreen* screen) {
 	_screen = screen;

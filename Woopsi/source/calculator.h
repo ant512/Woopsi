@@ -2,6 +2,11 @@
 #define _CALCULATOR_H_
 
 #include "woopsi.h"
+#include "eventhandler.h"
+
+class AmigaScreen;
+class AmigaWindow;
+class Textbox;
 
 class Calculator : EventHandler {
 

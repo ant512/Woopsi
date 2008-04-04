@@ -1,4 +1,8 @@
 #include "calculator.h"
+#include "amigawindow.h"
+#include "amigascreen.h"
+#include "textbox.h"
+#include "button.h"
 
 Calculator::Calculator(AmigaScreen* screen) {
 	_screen = screen;

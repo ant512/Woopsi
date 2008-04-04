@@ -499,6 +499,10 @@
 				RelativePath=".\woopsi\woopsifuncs.h"
 				>
 			</File>
+			<File
+				RelativePath=".\woopsi\woopsiheaders.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

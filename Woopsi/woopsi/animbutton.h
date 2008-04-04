@@ -3,10 +3,9 @@
 
 #include <nds.h>
 #include "textbox.h"
+#include "animation.h"
 
 using namespace std;
-
-class Animation;
 
 /**
  * Button class that has an animation running in its clickable area.  Note that the

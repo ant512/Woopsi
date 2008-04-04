@@ -1,4 +1,9 @@
 #include "woopsi.h"
+#include "screen.h"
+#include "woopsifuncs.h"
+#include "fontbase.h"
+#include "font.h"
+#include "sysfont.h"
 
 // instantiate singleton
 Woopsi *Woopsi::singleton = NULL;

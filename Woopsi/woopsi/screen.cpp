@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "woopsi.h"
+#include "woopsifuncs.h"
 
 Screen::Screen(char* title, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GADGET_DRAGGABLE, font) {
 	_titleHeight = 0;
