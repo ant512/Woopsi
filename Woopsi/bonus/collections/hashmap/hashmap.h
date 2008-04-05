@@ -158,6 +158,7 @@ void HashMap<T>::add(const char* key, const T &value) {
 	// Insert bucket into start of list
 	bucket->next = _data[hash];
 	_data[hash]->previous = bucket;
+	_data[hash] = bucket;
 }
 
 template <class T>
