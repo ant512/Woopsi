@@ -146,7 +146,7 @@ void HashMap<T>::add(const char* key, const T &value) {
 	bucket->previous = NULL;
 	bucket->next = NULL;
 
-	// Remember we'ev added a new item
+	// Remember we've added a new item
 	_size++;
 
 	// Attempt to insert into empty bucket
@@ -155,14 +155,9 @@ void HashMap<T>::add(const char* key, const T &value) {
 		return;
 	}
 
-	// Attempt to append to bucket list
-	HashMapBucket<T>* bucketList = _data[hash];
-	while (bucketList->next != NULL) {
-		bucketList = bucketList->next;
-	}
-
-	bucketList->next = bucket;
-	bucket->previous = bucketList;
+	// Insert bucket into start of list
+	bucket->next = _data[hash];
+	_data[hash]->previous = bucket;
 }
 
 template <class T>
@@ -272,12 +267,14 @@ bool HashMap<T>::empty() {
 template <class T>
 const s32 HashMap<T>::getHash(const char* key) const {
     s32 hash = 0;
-	s32 keyLen = strlen((char*)key);
+	char ch;
      
-    for (s32 i = 0; i < keyLen; i++) {
-        hash += key[i];
-        hash += (hash << 10);
-        hash ^= (hash >> 6);
+    while(*key) {
+		ch = *key++;
+
+        hash += ch;
+        hash += (ch << 10);
+        hash ^= (ch >> 6);
     }
 
     hash += (hash << 3);
