@@ -40,6 +40,8 @@
 #include "multilinetextbox.h"
 #include "alert.h"
 #include "scrollingtextbox.h"
+#include "contextmenu.h"
+#include "contextmenuitem.h"
 #include "woopsi.h"
 
 #endif

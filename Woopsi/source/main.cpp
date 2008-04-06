@@ -332,7 +332,7 @@ int main() {
 
 
 	// Create screens
-	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.30");
+	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.31");
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
@@ -347,8 +347,12 @@ int main() {
 	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
 	newScreen->addGadget(textWindow);
 
-	RadioButtonGroup* radioButtons = new RadioButtonGroup(0, 0);
-	controlWindow->addGadget(radioButtons);
+
+	
+
+
+	//RadioButtonGroup* radioButtons = new RadioButtonGroup(0, 0);
+	//controlWindow->addGadget(radioButtons);
 
 	//radioButtons->newRadioButton(0, 0, 12, 12);
 	//radioButtons->newRadioButton(12, 0, 12, 12);
@@ -399,6 +403,13 @@ int main() {
 	scrollingBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
 	scrollingBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
 	textWindow->addGadget(scrollingBox);
+
+	ContextMenu* menu = new ContextMenu();
+	newScreen->addGadget(menu);
+	menu->newMenuItem("test 1");
+	menu->newMenuItem("test 2");
+	menu->newMenuItem("test  3");
+	menu->newMenuItem("test   4");
 
 	// Add Welcome notice
 	newScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));

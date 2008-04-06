@@ -1826,5 +1826,19 @@ bool Gadget::removeChild(Gadget* gadget) {
 		}
 	}
 
+	// Try to locate in hidden vector
+	for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
+		if (_hiddenGadgets[i] == gadget) {
+
+			// Divorce child from parent
+			_hiddenGadgets[i]->setParent(NULL);
+
+			// Remove gadget from hidden vector
+			_hiddenGadgets.erase(_hiddenGadgets.begin() + i);
+
+			return true;
+		}
+	}
+
 	return false;
 }

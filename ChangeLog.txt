@@ -16,6 +16,8 @@ Change Log
      - Added getPreferredDimensions() to Gadget and Textbox classes.
      - Moved header includes from woopsi.h to new woopsiheaders.h to allow
        more streamlined binaries.
+     - Added Gadget::remove() and Gadget::removeChild() methods.
+     - Started ContextMenu and ContextMenuItem classes.
 
 
   V0.30 (20080326)

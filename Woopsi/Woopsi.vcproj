@@ -78,6 +78,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\contextmenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\contextmenuitem.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\debug.cpp"
 				>
 			</File>
@@ -297,6 +305,14 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\checkbox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\contextmenu.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\contextmenuitem.h"
 				>
 			</File>
 			<File

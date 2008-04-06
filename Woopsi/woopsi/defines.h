@@ -33,7 +33,7 @@
 /**
  * Woopsi version number.
  */
-#define WOOPSI_VERSION "0.30"
+#define WOOPSI_VERSION "0.31"
 
 /**
  * Copyright notice.
