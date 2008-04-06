@@ -177,7 +177,7 @@ bool Textbox::resize(u16 width, u16 height) {
 	// Show and reset drawing
 	setVisible(visible);
 	draw();
-
+	
 	return resized;
 }
 

@@ -9,7 +9,14 @@ ContextMenuItem::ContextMenuItem(s16 x, s16 y, u16 width, u16 height, const char
 
 void ContextMenuItem::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-	port->drawFilledRect(0, 0, _width, _height, _shineColour);
-	port->drawText(_textX, _textY, _font, _text);
+
+	if (isClicked()) {
+		port->drawFilledRect(0, 0, _width, _height, _shadowColour);
+		port->drawText(_textX, _textY, _font, _text, _shineColour);
+	} else {
+		port->drawFilledRect(0, 0, _width, _height, _shineColour);
+		port->drawText(_textX, _textY, _font, _text);
+	}
+
 	delete port;
 }

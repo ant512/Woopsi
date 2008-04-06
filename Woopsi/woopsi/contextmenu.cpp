@@ -8,7 +8,7 @@ ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 0, 0, 0, font) {
 
 ContextMenuItem* ContextMenu::newMenuItem(char* text) {
 	// Create menu item
-	ContextMenuItem* item = new ContextMenuItem(0, 0, 10, 10, text, _font);
+	ContextMenuItem* item = new ContextMenuItem(0, 0, 0, 0, text, _font);
 	addGadget(item);
 
 	setPermeable(true);
@@ -18,22 +18,22 @@ ContextMenuItem* ContextMenu::newMenuItem(char* text) {
 	getClientRect(clientRect);
 
 	// Get gadget's preferred size
-	Rect rect;
-	item->getPreferredDimensions(rect);
+	Rect preferredRect;
+	item->getPreferredDimensions(preferredRect);
 
 	// Adjust rect's co-ordinates
-	rect.x = clientRect.x;
-	rect.y = (_gadgets.size() - 1) * rect.height;
+	preferredRect.x = clientRect.x;
+	preferredRect.y = clientRect.y + ((_gadgets.size() - 1) * preferredRect.height);
 
-	// Adjust gadget's dimensions
-	item->changeDimensions(rect.x, rect.y, rect.width, rect.height);
+	// Adjust gadget's co-ordinates
+	item->moveTo(preferredRect.x, preferredRect.y);
 
 	// Resize this gadget if necessary
-	if (rect.width > clientRect.width) {
-		clientRect.width = rect.width + (_width - clientRect.width);
+	if (preferredRect.width > clientRect.width) {
+		clientRect.width = preferredRect.width + (_width - clientRect.width);
 	}
 
-	clientRect.height = _height + rect.height;
+	clientRect.height = (_gadgets.size() * preferredRect.height) + (clientRect.y << 1);
 
 	setPermeable(false);
 
@@ -86,6 +86,35 @@ bool ContextMenu::resize(u16 width, u16 height) {
 	if ((_width != width) || (_height != height)) {
 		_width = width;
 		_height = height;
+
+		setPermeable(true);
+
+		Rect clientRect;
+		Rect preferredRect;
+
+		getClientRect(clientRect);
+
+		if (_gadgets.size() > 0) {
+
+			_gadgets[0]->getPreferredDimensions(preferredRect);
+
+			// Resize all children
+			for (u8 i = 0; i < _gadgets.size(); i++) {
+				_gadgets[i]->resize((u16)clientRect.width, (u16)preferredRect.height);
+			}
+		}
+
+		if (_hiddenGadgets.size() > 0) {
+
+			_hiddenGadgets[0]->getPreferredDimensions(preferredRect);
+
+			// Resize all hidden children
+			for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
+				_hiddenGadgets[i]->resize((u16)clientRect.width, (u16)preferredRect.height);
+			}
+		}
+
+		setPermeable(false);
 
 		raiseResizeEvent(width, height);
 
