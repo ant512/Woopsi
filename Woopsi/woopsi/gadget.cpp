@@ -1787,3 +1787,44 @@ void Gadget::unregisterChildrenFromVBL() {
 		Woopsi::unregisterFromVBL(_hiddenGadgets[i]);
 	}
 }
+
+bool Gadget::remove() {
+	if (_parent != NULL) {
+		return _parent->removeChild(this);
+	}
+
+	return false;
+}
+
+bool Gadget::removeChild(Gadget* gadget) {
+	// Locate gadget in main vector
+	for (u8 i = 0; i < _gadgets.size(); i++) {
+		if (_gadgets[i] == gadget) {
+
+			// Do we need to make another gadget active?
+			if (_activeGadget == gadget) {
+				_activeGadget = NULL;
+			}
+
+			// Unset clicked gadget if necessary
+			if (_clickedGadget == gadget) {
+				_clickedGadget = NULL;
+			}
+
+			// Decrease decoration count if necessary
+			if (gadget->isDecoration()) {
+				_decorationCount--;
+			}
+
+			// Divorce child from parent
+			gadget->setParent(NULL);
+
+			// Remove gadget from main vector
+			_gadgets.erase(_gadgets.begin() + i);
+
+			return true;
+		}
+	}
+
+	return false;
+}

@@ -1,5 +1,5 @@
 // Includes
-#include <nds.h>
+//#include <nds.h>
 #include "woopsiheaders.h"
 
 #include "calculator.h"
@@ -8,8 +8,49 @@
 #include "bitmap/all_gfx.c"
 #include "bitmap/all_gfx.h"
 
+#include "woopsi.h"
+#include "amigascreen.h"
+#include "amigawindow.h"
+#include "textbox.h"
+#include "gadget.h"
+#include "woopsifuncs.h"
 
 /*
+int main() {
+
+	initWoopsiGfxMode();
+
+	// Create woopsi
+	woopsiApplication = new Woopsi();
+
+	// Create screen
+	AmigaScreen* newScreen = new AmigaScreen("Test");
+	woopsiApplication->addGadget(newScreen);
+
+	// Create window
+	AmigaWindow* newWindow = new AmigaWindow(0, 13, 256, 179, "Test", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	newScreen->addGadget(newWindow);
+
+	// Create message
+	Gadget::Rect rect;
+	newWindow->getClientRect(rect);
+	Textbox* newTextbox = new Textbox(rect.x, rect.y, rect.width, rect.height, "Hello World!");
+	newTextbox->setTextPositionVert(Textbox::TEXT_POSITION_VERT_CENTRE);
+	newTextbox->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_CENTRE);
+	newWindow->addGadget(newTextbox);
+
+	woopsiApplication->draw();
+
+	// Infinite loop to keep the program running
+	while (1)
+	{
+		woopsiApplication->play();
+		woopsiWaitVBL();
+	}
+
+	delete woopsiApplication;
+}
+
 int main2() {
 
 	initWoopsiGfxMode();

@@ -771,6 +771,25 @@ public:
 	 */
 	inline void destroy() { delete this; };
 
+	/**
+	 * Remove this gadget from Woopsi's gadget hierarchy.  Returns
+	 * responsibility for deleting the gadget back to the developer.
+	 * Does not unregister the gadget from the VBL system.
+	 * Does not erase the gadget from the display.
+	 * @return True if the gadget was successfully removed.
+	 */
+	bool remove();
+
+	/**
+	 * Remove a child gadget from Woopsi's gadget hierarchy.  Returns
+	 * responsibility for deleting the gadget back to the developer.
+	 * Does not unregister the gadget from the VBL system.
+	 * Does not erase the gadget from the display.
+	 * @param gadget Pointer to the gadget to remove from the hierarchy.
+	 * @return True if the gadget was succesfully removed.
+	 */
+	bool removeChild(Gadget* gadget);
+
 protected:
 	s16 _x;
 	s16 _y;
