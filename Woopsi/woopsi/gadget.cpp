@@ -490,6 +490,20 @@ void Gadget::raiseMoveEvent(s16 x, s16 y) {
 	}
 }
 
+void Gadget::raiseContextMenuSelectionEvent() {
+	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+
+		EventArgs e;
+		e.type = EVENT_CONTEXT_MENU_SELECTION;
+		e.eventX = 0;
+		e.eventY = 0;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
 void Gadget::drawChildren() {
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->draw();
@@ -1924,4 +1938,10 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 		
 		woopsiApplication->getContextMenu()->show();
 	}
+}
+
+bool Gadget::handleContextMenuSelection(u32 value) {
+	raiseContextMenuSelectionEvent();
+
+	return true;
 }

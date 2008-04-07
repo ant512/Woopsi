@@ -9,27 +9,28 @@ class Gadget;
  * Enum listing all possible events that can occur within the system.
  */
 enum EventType {
-	EVENT_NONE = 0,					/**< No event to process; only included for completeness */
-	EVENT_CLICK = 1,				/**< Gadget has been clicked */
-	EVENT_DRAG = 2,					/**< Gadget has been dragged */
-	EVENT_RELEASE = 3,				/**< Gadget has been released (ie. stylus removed from screen) */
-	EVENT_KEY_PRESS = 4,			/**< DS button or d-pad has been pressed */
-	EVENT_KEY_RELEASE = 5,			/**< DS button or d-pad has been released */
-	EVENT_VBL = 6,					/**< Vertical blank has occurred */
-	EVENT_LID_OPENED = 7,			/**< DS' lid has been opened */
-	EVENT_LID_CLOSED = 8,			/**< DS' lid has been closed */
-	EVENT_FOCUS = 9,				/**< Gadget has received focus */
-	EVENT_BLUR = 10,				/**< Gadget has lost focus */
-	EVENT_CLOSE = 11,				/**< Gadget has been closed */
-	EVENT_HIDE = 12,				/**< Gadget has been hidden */
-	EVENT_SHOW = 13,				/**< Hidden gadget has been made visible */
-	EVENT_ENABLE = 14,				/**< Disabled gadget has been enabled */
-	EVENT_DISABLE = 15,				/**< Enabled gadget has been disabled */
-	EVENT_VALUE_CHANGE = 16,		/**< Gadget has changed value */
-	EVENT_RESIZE = 17,				/**< Gadget has been resized */
-	EVENT_MOVE = 18,				/**< Gadget has been moved */
-	EVENT_SCROLL = 19,				/**< Gadget has been scrolled */
-	EVENT_SHIFT_CLICK = 20			/**< Gadget has been shift-clicked */
+	EVENT_NONE = 0,						/**< No event to process; only included for completeness */
+	EVENT_CLICK = 1,					/**< Gadget has been clicked */
+	EVENT_DRAG = 2,						/**< Gadget has been dragged */
+	EVENT_RELEASE = 3,					/**< Gadget has been released (ie. stylus removed from screen) */
+	EVENT_KEY_PRESS = 4,				/**< DS button or d-pad has been pressed */
+	EVENT_KEY_RELEASE = 5,				/**< DS button or d-pad has been released */
+	EVENT_VBL = 6,						/**< Vertical blank has occurred */
+	EVENT_LID_OPENED = 7,				/**< DS' lid has been opened */
+	EVENT_LID_CLOSED = 8,				/**< DS' lid has been closed */
+	EVENT_FOCUS = 9,					/**< Gadget has received focus */
+	EVENT_BLUR = 10,					/**< Gadget has lost focus */
+	EVENT_CLOSE = 11,					/**< Gadget has been closed */
+	EVENT_HIDE = 12,					/**< Gadget has been hidden */
+	EVENT_SHOW = 13,					/**< Hidden gadget has been made visible */
+	EVENT_ENABLE = 14,					/**< Disabled gadget has been enabled */
+	EVENT_DISABLE = 15,					/**< Enabled gadget has been disabled */
+	EVENT_VALUE_CHANGE = 16,			/**< Gadget has changed value */
+	EVENT_RESIZE = 17,					/**< Gadget has been resized */
+	EVENT_MOVE = 18,					/**< Gadget has been moved */
+	EVENT_SCROLL = 19,					/**< Gadget has been scrolled */
+	EVENT_SHIFT_CLICK = 20,				/**< Gadget has been shift-clicked */
+	EVENT_CONTEXT_MENU_SELECTION = 21	/**< Item selected in gadget's context menu */
 };
 
 /**

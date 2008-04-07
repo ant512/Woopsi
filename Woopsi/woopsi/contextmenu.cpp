@@ -5,6 +5,7 @@
 ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 	setBorderless(false);
 	_opener = NULL;
+	_value = 0;
 }
 
 ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
@@ -48,6 +49,9 @@ bool ContextMenu::handleEvent(const EventArgs& e) {
 	// Only handle release events
 	if (e.type == EVENT_RELEASE) {
 		if (e.gadget != NULL) {
+
+			// Remember the value of the gadget
+			_value = ((ContextMenuItem*)e.gadget)->getValue();
 
 			// Notify the opener that a selection has been made
 			if (_opener != NULL) {

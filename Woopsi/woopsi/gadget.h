@@ -837,7 +837,7 @@ public:
 	 * Handle an action triggered by context menu selection.
 	 * @param value The value selected.
 	 */
-	virtual inline bool handleContextMenuSelection(u32 value) { return false; };
+	virtual bool handleContextMenuSelection(u32 value);
 
 protected:
 	s16 _x;
@@ -947,6 +947,7 @@ protected:
 	void raiseValueChangeEvent();
 	void raiseResizeEvent(u16 width, u16 height);
 	void raiseMoveEvent(s16 x, s16 y);
+	void raiseContextMenuSelectionEvent();
 };
 
 #endif

@@ -64,8 +64,16 @@ public:
 	 */
 	inline Gadget* getOpener() { return _opener; };
 
+	/**
+	 * Get the value of the context menu.  This will be
+	 * the value of the last chosen item.
+	 * @return The value of the last chosen menu item.
+	 */
+	inline const u32 getValue() const { return _value; };
+
 private:
 	Gadget* _opener;
+	u32 _value;
 
 	/**
 	 * Destructor.
