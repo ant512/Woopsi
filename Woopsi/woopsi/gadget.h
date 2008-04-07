@@ -176,7 +176,7 @@ public:
 	 * Does the gadget shift-click its children?
 	 * @return True if the gadget shift-clicks its children.
 	 */
-	inline const bool shiftClickChildren() const { return _flags.shiftClickChildren; };
+	inline const bool getShiftClickChildren() const { return _flags.shiftClickChildren; };
 
 	/**
 	 * Does the gadget shift-click its children?

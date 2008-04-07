@@ -10,6 +10,7 @@ Change Log
      - Gadget destructor deletes children using destroy() method instead of
        calling delete.
      - Textbox::resize() remembers correct value of visible flag.
+     - Gadget::show() invalidates the rect cache correctly.
   
   - New Features:
      - Added ScrollingTextBox class.
