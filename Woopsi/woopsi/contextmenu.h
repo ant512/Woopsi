@@ -26,7 +26,7 @@ public:
 	 * Add a new menu item to the gadget.
 	 * @param text Text to show in the item.
 	 */
-	virtual ContextMenuItem* newMenuItem(char* text);
+	virtual ContextMenuItem* newMenuItem(char* text, u32 value);
 
 	/**
 	 * Draw the region of the menu within the clipping rect.
@@ -47,7 +47,25 @@ public:
 	 */
 	virtual bool resize(u16 width, u16 height);
 
+	/**
+	 * Clear all items from the menu and reset it.
+	 */
+	virtual void reset();
+
+	/**
+	 * Set the gadget that opened the menu.
+	 * @param gadget Pointer to the gadget that opened the menu.
+	 */
+	inline void setOpener(Gadget* gadget) { _opener = gadget; };
+
+	/**
+	 * Get the gadget that opened the menu.
+	 * @return Pointer to the gadget that opened the menu.
+	 */
+	inline Gadget* getOpener() { return _opener; };
+
 private:
+	Gadget* _opener;
 
 	/**
 	 * Destructor.

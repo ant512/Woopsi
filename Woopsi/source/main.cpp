@@ -338,18 +338,21 @@ int main() {
 
 	AmigaScreen* newScreen2 = new AmigaScreen("Another screen");
 	woopsiApplication->addGadget(newScreen2);
-	newScreen2->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0)));
-	
+
+	Gradient* gradient = new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
+	newScreen2->insertGadget(gradient);
+	gradient->addContextMenuItem("Context Menu", 0);
+	gradient->addContextMenuItem("Test 1", 0);
+	gradient->addContextMenuItem("Test 2", 0);
+	gradient->addContextMenuItem("Test 3", 0);
+
+
 	// Add child windows
 	AmigaWindow* controlWindow = new AmigaWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
 	newScreen->addGadget(controlWindow);
 
 	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
 	newScreen->addGadget(textWindow);
-
-
-	
-
 
 	//RadioButtonGroup* radioButtons = new RadioButtonGroup(0, 0);
 	//controlWindow->addGadget(radioButtons);
@@ -404,12 +407,21 @@ int main() {
 	scrollingBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
 	textWindow->addGadget(scrollingBox);
 
-	ContextMenu* menu = new ContextMenu();
-	newScreen->addGadget(menu);
-	menu->newMenuItem("test 1");
-	menu->newMenuItem("test 2");
-	menu->newMenuItem("test  3");
-	menu->newMenuItem("test   4");
+	scrollingBox->addContextMenuItem("Context Menu 2", 0);
+	scrollingBox->addContextMenuItem("Test 3", 0);
+	scrollingBox->addContextMenuItem("Test 4", 0);
+	scrollingBox->addContextMenuItem("Test 5", 0);
+
+
+	//ContextMenu* menu = new ContextMenu();
+	//newScreen->addGadget(menu);
+	//menu->newMenuItem("test 1");
+	//menu->newMenuItem("test 2");
+	//menu->newMenuItem("test  3");
+	//menu->newMenuItem("test   4");
+
+	//menu->clear();
+	//menu->newMenuItem("gogogo");
 
 	// Add Welcome notice
 	newScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
@@ -441,7 +453,6 @@ int main() {
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y, 92, 28, 0, 0, 92, 28, bittest1_Bitmap, bittest4_Bitmap));
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 28, 92, 28, 0, 0, 92, 28, bittest2_Bitmap, bittest5_Bitmap));
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 56, 92, 27, 0, 0, 92, 28, bittest3_Bitmap, bittest6_Bitmap));
-
 
 	// Move new screen to the back
 	//woopsi.swapGadgetDepth(demoScreen);

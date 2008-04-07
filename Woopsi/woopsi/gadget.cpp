@@ -4,6 +4,7 @@
 #include "woopsifuncs.h"
 #include "eventhandler.h"
 #include "fontbase.h"
+#include "contextmenu.h"
 
 Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_x = x;
@@ -30,12 +31,12 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 Gadget::~Gadget() {
 	// Delete children
 	for (u8 i = 0; i < _gadgets.size(); i++) {
-		delete _gadgets[i];
+		_gadgets[i]->destroy();
 	}
 
 	// Delete hidden children
 	for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
-		delete(_hiddenGadgets[i]);
+		_hiddenGadgets[i]->destroy();
 	}
 
 	_gadgets.clear();
@@ -63,6 +64,7 @@ void Gadget::init() {
 	_flags.permeable = false;
 	_flags.raisesEvents = true;
 	_flags.erased = true;
+	_flags.shiftClickChildren = true;
 
 	_activeGadget = NULL;
 	_clickedGadget = NULL;
@@ -227,6 +229,20 @@ void Gadget::raiseClickEvent(s16 x, s16 y) {
 
 		EventArgs e;
 		e.type = EVENT_CLICK;
+		e.eventX = x;
+		e.eventY = y;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
+void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
+	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+
+		EventArgs e;
+		e.type = EVENT_SHIFT_CLICK;
 		e.eventX = x;
 		e.eventY = y;
 		e.keyCode = KEY_CODE_NONE;
@@ -886,6 +902,7 @@ bool Gadget::show() {
 
 		if (_parent != NULL) {
 			_parent->moveHiddenToChildList(this);
+			_parent->invalidateVisibleRectCache();	
 		}
 
 		draw();
@@ -1293,6 +1310,48 @@ bool Gadget::click(s16 x, s16 y) {
 
 				raiseClickEvent(x, y);
 			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Gadget::shiftClick(s16 x, s16 y) {
+
+	if (_flags.enabled) {
+		if (checkCollision(x, y)) {
+
+			bool clickedChild = false;
+
+			// Work out which child was clicked
+			if (_flags.shiftClickChildren) {
+				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+					if (_gadgets[i]->shiftClick(x, y)) {
+						clickedChild = true;
+						return true;
+					}
+				}
+			}
+
+			// Handle clicks on this
+
+			// Take focus away from child gadgets
+			if (_activeGadget != NULL) {
+				_activeGadget->blur();
+				_activeGadget = NULL;
+			}
+
+			// Give focus to this gadget
+			if (!_flags.active) {
+				focus();
+			}
+
+			// Set up the context menu
+			showContextMenu(x, y);
+
+			raiseShiftClickEvent(x, y);
 
 			return true;
 		}
@@ -1818,6 +1877,8 @@ bool Gadget::removeChild(Gadget* gadget) {
 
 			// Divorce child from parent
 			gadget->setParent(NULL);
+			
+			gadget->setVisible(false);
 
 			// Remove gadget from main vector
 			_gadgets.erase(_gadgets.begin() + i);
@@ -1836,9 +1897,34 @@ bool Gadget::removeChild(Gadget* gadget) {
 			// Remove gadget from hidden vector
 			_hiddenGadgets.erase(_hiddenGadgets.begin() + i);
 
+			gadget->setVisible(false);
+
 			return true;
 		}
 	}
 
 	return false;
+}
+
+void Gadget::addContextMenuItem(char* name, u32 value) {
+	NameValuePair newItem;
+	newItem.name = name;
+	newItem.value = value;
+
+	_contextMenuItems.push_back(newItem);
+}
+
+void Gadget::showContextMenu(s16 x, s16 y) {
+
+	if (_contextMenuItems.size() > 0) {
+		woopsiApplication->getContextMenu()->reset();
+		woopsiApplication->getContextMenu()->moveTo(x, y);
+		woopsiApplication->getContextMenu()->setOpener(this);
+
+		for (u8 i = 0; i < _contextMenuItems.size(); i++) {
+			woopsiApplication->getContextMenu()->newMenuItem(_contextMenuItems[i].name, _contextMenuItems[i].value);
+		}
+		
+		woopsiApplication->getContextMenu()->show();
+	}
 }

@@ -4,9 +4,10 @@
 #include "fontbase.h"
 #include "font.h"
 #include "sysfont.h"
+#include "contextmenu.h"
 
-// instantiate singleton
-Woopsi *Woopsi::singleton = NULL;
+// Instantiate singleton
+Woopsi* Woopsi::singleton = NULL;
 
 // Initialise static system font
 FontBase* Woopsi::_systemFont = NULL;
@@ -32,6 +33,11 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 		_font = getSystemFont();
 	}
 
+	// Create context menu
+	_contextMenu = new ContextMenu(_font);
+	addGadget(_contextMenu);
+	_contextMenu->hide();
+
 	singleton = this;
 }
 
@@ -39,6 +45,7 @@ Woopsi::~Woopsi() {
 	deleteSystemFont();
 	_font = NULL;
 	singleton = NULL;
+	_contextMenu = NULL;
 }
 
 // Add a new screen
@@ -57,10 +64,6 @@ void Woopsi::play() {
 	handleStylus();
 	handleKeys();
 	handleLid();
-}
-
-void Woopsi::draw() {
-	Gadget::draw();
 }
 
 bool Woopsi::vbl() {
@@ -97,7 +100,11 @@ void Woopsi::setActiveGadget(Gadget* gadget) {
 // Process all stylus input
 void Woopsi::handleStylus() {
 	if (Stylus.Newpress) {
-		click(Stylus.X, Stylus.Y);
+		if (Pad.Held.L || Pad.Held.R) {
+			shiftClick(Stylus.X, Stylus.Y);
+		} else {
+			click(Stylus.X, Stylus.Y);
+		}
 	} else if (Stylus.Held) {
 		drag(Stylus.X, Stylus.Y, Stylus.Vx, Stylus.Vy);
 	} else if (_flags.clicked) {
@@ -113,6 +120,32 @@ bool Woopsi::click(s16 x, s16 y) {
 	for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 		if (_gadgets[i]->click(x, y)) {
 
+			// Do we need to close the context menu?
+			if ((_gadgets[i] != _contextMenu) && (_contextMenu->isVisible())) {
+				_contextMenu->hide();
+				_contextMenu->reset();
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Woopsi::shiftClick(s16 x, s16 y) {
+
+	_flags.clicked = true;
+
+	// Close the existing context menu
+	if (_contextMenu->isVisible()) {
+		_contextMenu->hide();
+		_contextMenu->reset();
+	}
+
+	// Work out which gadget was clicked
+	for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+		if (_gadgets[i]->shiftClick(x, y)) {
 			return true;
 		}
 	}

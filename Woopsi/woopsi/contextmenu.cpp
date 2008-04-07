@@ -2,13 +2,14 @@
 #include "graphicsport.h"
 #include "contextmenuitem.h"
 
-ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 0, 0, 0, font) {
+ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 	setBorderless(false);
 }
 
-ContextMenuItem* ContextMenu::newMenuItem(char* text) {
+ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
 	// Create menu item
-	ContextMenuItem* item = new ContextMenuItem(0, 0, 0, 0, text, _font);
+	ContextMenuItem* item = new ContextMenuItem(0, 0, 0, 0, text, value, _font);
+	item->setEventHandler(this);
 	addGadget(item);
 
 	setPermeable(true);
@@ -29,8 +30,8 @@ ContextMenuItem* ContextMenu::newMenuItem(char* text) {
 	item->moveTo(preferredRect.x, preferredRect.y);
 
 	// Resize this gadget if necessary
-	if (preferredRect.width > clientRect.width) {
-		clientRect.width = preferredRect.width + (_width - clientRect.width);
+	if (preferredRect.width + (clientRect.x << 1) > clientRect.width) {
+		clientRect.width = preferredRect.width + (clientRect.x << 1);
 	}
 
 	clientRect.height = (_gadgets.size() * preferredRect.height) + (clientRect.y << 1);
@@ -46,24 +47,13 @@ bool ContextMenu::handleEvent(const EventArgs& e) {
 	// Only handle release events
 	if (e.type == EVENT_RELEASE) {
 		if (e.gadget != NULL) {
-			//if (e.gadget == _button) {
-				close();
-				return true;
-			//}
+
+			// Notify the opener that a selection has been made
+			_opener->handleContextMenuSelection(((ContextMenuItem*)e.gadget)->getValue());
+	
+			hide();
+			return true;
 		}
-	}
-
-	// Handle other events
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-
-		EventArgs newEvent;
-		newEvent.eventX = e.eventX;
-		newEvent.eventY = e.eventY;
-		newEvent.gadget = this;
-		newEvent.keyCode = e.keyCode;
-		newEvent.type = e.type;
-
-		return _eventHandler->handleEvent(newEvent);
 	}
 
 	return false;
@@ -122,4 +112,20 @@ bool ContextMenu::resize(u16 width, u16 height) {
 	}
 
 	return false;
+}
+
+void ContextMenu::reset() {
+
+	// Delete children
+	for (u8 i = 0; i < _gadgets.size(); i++) {
+		_gadgets[i]->destroy();
+	}
+
+	_gadgets.clear();
+
+	// Reset dimensions
+	_x = 0;
+	_y = 0;
+	_width = 0;
+	_height = 0;
 }

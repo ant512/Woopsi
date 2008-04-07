@@ -28,7 +28,8 @@ enum EventType {
 	EVENT_VALUE_CHANGE = 16,		/**< Gadget has changed value */
 	EVENT_RESIZE = 17,				/**< Gadget has been resized */
 	EVENT_MOVE = 18,				/**< Gadget has been moved */
-	EVENT_SCROLL = 19				/**< Gadget has been scrolled */
+	EVENT_SCROLL = 19,				/**< Gadget has been scrolled */
+	EVENT_SHIFT_CLICK = 20			/**< Gadget has been shift-clicked */
 };
 
 /**

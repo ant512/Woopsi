@@ -6,6 +6,8 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 
 	setBorderless(true);
 
+	_flags.shiftClickChildren = false;
+
 	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, font);
 	_textbox->setEventHandler(this);
 	
@@ -107,6 +109,18 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 				default:
 					break;
 			}
+		}
+
+		// Raise events to event handler
+		if (_eventHandler != NULL) {
+			EventArgs newEvent;
+			newEvent.eventX = e.eventX;
+			newEvent.eventY = e.eventY;
+			newEvent.gadget = this;
+			newEvent.keyCode = e.keyCode;
+			newEvent.type = e.type;
+
+			_eventHandler->handleEvent(newEvent);
 		}
 	}
 

@@ -7,6 +7,9 @@ Change Log
      - Started inlining methods that can be inlined.
      - Made destructors protected to prevent creation of gadgets on the stack.
      - More const-correctness.
+     - Gadget destructor deletes children using destroy() method instead of
+       calling delete.
+     - Textbox::resize() remembers correct value of visible flag.
   
   - New Features:
      - Added ScrollingTextBox class.

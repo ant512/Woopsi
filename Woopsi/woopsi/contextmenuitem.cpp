@@ -1,13 +1,15 @@
 #include "contextmenuitem.h"
 #include "graphicsport.h"
 
-ContextMenuItem::ContextMenuItem(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Textbox(x, y, width, height, text, font) {
+ContextMenuItem::ContextMenuItem(s16 x, s16 y, u16 width, u16 height, const char* text, u32 value, FontBase* font) : Textbox(x, y, width, height, text, font) {
 	setBorderless(true);
 	setTextPositionVert(TEXT_POSITION_VERT_CENTRE);
 	setTextPositionHoriz(TEXT_POSITION_HORIZ_LEFT);
+	_value = value;
 }
 
 void ContextMenuItem::draw(Rect clipRect) {
+
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	if (isClicked()) {
@@ -19,4 +21,13 @@ void ContextMenuItem::draw(Rect clipRect) {
 	}
 
 	delete port;
+}
+
+bool ContextMenuItem::release(s16 x, s16 y) {
+	if (Gadget::release(x, y)) {
+		draw();
+		return true;
+	}
+
+	return false;
 }

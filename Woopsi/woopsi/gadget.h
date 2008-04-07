@@ -73,7 +73,16 @@ public:
 		u8 permeable : 1;
 		u8 raisesEvents : 1;
 		u8 erased : 1;
+		u8 shiftClickChildren : 1;
 	} Flags;
+
+	/**
+	 * Struct describing a name/value pair.
+	 */
+	typedef struct {
+		u32 value;
+		char* name;
+	} NameValuePair;
 
 	/**
 	 * Constructor.
@@ -162,6 +171,18 @@ public:
 	 * @return True if the gadget is currently clicked.
 	 */
 	inline const bool isClicked() const { return _flags.clicked; };
+
+	/**
+	 * Does the gadget shift-click its children?
+	 * @return True if the gadget shift-clicks its children.
+	 */
+	inline const bool shiftClickChildren() const { return _flags.shiftClickChildren; };
+
+	/**
+	 * Does the gadget shift-click its children?
+	 * @return True if the gadget shift-clicks its children.
+	 */
+	inline void setShiftClickChildren(const u32 shiftClickChildren) { _flags.shiftClickChildren = shiftClickChildren; };
 
 	/**
 	 * Get the width of the gadget.
@@ -455,6 +476,14 @@ public:
 	 * @return True if the click was successful.
 	 */
 	virtual bool click(s16 x, s16 y);
+
+	/**
+	 * Shift-click this gadget at the supplied co-ordinates.
+	 * @param x X co-ordinate of the click.
+	 * @param y Y co-ordinate of the click.
+	 * @return True if the click was successful.
+	 */
+	virtual bool shiftClick(s16 x, s16 y);
 
 	/**
 	 * Release this gadget at the supplied co-ordinates
@@ -790,6 +819,26 @@ public:
 	 */
 	bool removeChild(Gadget* gadget);
 
+	/**
+	 * Add a context menu item definition to the gadget.
+	 * @param name The name of the menu item.
+	 * @param value The value of the menu item.
+	 */
+	void addContextMenuItem(char* name, u32 value);
+
+	/**
+	 * Show the context menu for this gadget at the specified co-ordinates.
+	 * @param x The x co-ordinate of the context menu, relative to the screen.
+	 * @param y The y co-ordinate of the context menu, relative to the screen.
+	 */
+	virtual void showContextMenu(s16 x, s16 y);
+
+	/**
+	 * Handle an action triggered by context menu selection.
+	 * @param value The value selected.
+	 */
+	virtual inline bool handleContextMenuSelection(u32 value) { return false; };
+
 protected:
 	s16 _x;
 	s16 _y;
@@ -836,6 +885,9 @@ protected:
 
 	FontBase* _font;
 
+	// Context menu
+	DynamicArray<NameValuePair> _contextMenuItems;
+
 	/**
 	 * Destructor.
 	 */
@@ -877,6 +929,7 @@ protected:
 
 	// Events
 	void raiseClickEvent(s16 x, s16 y);
+	void raiseShiftClickEvent(s16 x, s16 y);
 	void raiseReleaseEvent(s16 x, s16 y);
 	void raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY);
 	void raiseVBLEvent();

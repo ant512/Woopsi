@@ -8,6 +8,7 @@
 using namespace std;
 
 class Screen;
+class ContextMenu;
 
 /**
  * Class providing a top-level gadget and an interface to the Woopsi gadget hierarchy.
@@ -50,7 +51,7 @@ public:
 	 * Draw the entire Woopsi GUI to the display.
 	 * Should be called before the main loop runs.
 	 */
-	virtual void draw();
+	virtual inline void draw() { Gadget::draw(); };
 	
 	/**
 	 * Draw a specific rectangle of the GUI.
@@ -82,6 +83,14 @@ public:
 	 * @return True if clicked.
 	 */
 	virtual bool click(s16 x, s16 y);
+
+	/**
+	 * Receive stylus shift clicks and process them.
+	 * @param x The x co-ordinate of the click.
+	 * @param y The y co-ordinate of the click.
+	 * @return True if clicked.
+	 */
+	virtual bool shiftClick(s16 x, s16 y);
 
 	/**
 	 * Receive stylus releases and process them.
@@ -164,14 +173,24 @@ public:
 	/**
 	 * Add a gadget to the list of gadgets to be deleted.
 	 * Must never be called by anything other than the framework itself.
+	 * @param gadget The gadget to add to the delete queue.
 	 */
 	static void addToDeleteQueue(Gadget* gadget);
 
 	/**
 	 * Return the number of VBLs that have occurred since Woopsi began running.
 	 * The count will eventually overflow the 32-bit int and reset to 0.  Developers must allow for this.
+	 * @return The VBL count.
 	 */
 	static u32 getVBLCount();
+
+	/**
+	 * Get a pointer to the context menu.
+	 * @return Pointer to the context menu.
+	 */
+	inline ContextMenu* getContextMenu() { return _contextMenu; };
+	
+	void showContextMenu();
 
 protected:
 	bool _lidClosed;
@@ -180,6 +199,7 @@ protected:
 	static DynamicArray<Gadget*> _deleteQueue;
 	static FontBase* _systemFont;
 	static u32 _vblCount;
+	ContextMenu* _contextMenu;
 
 	/**
 	 * Closes a child gadget.

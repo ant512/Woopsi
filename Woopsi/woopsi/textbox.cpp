@@ -161,7 +161,7 @@ bool Textbox::resize(u16 width, u16 height) {
 
 	// Remember current values
 	bool resized = false;
-	bool visible = isVisible();
+	bool visible = _flags.visible;
 
 	// Hide and disable drawing
 	erase();
