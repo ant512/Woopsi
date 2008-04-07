@@ -231,6 +231,19 @@ bool PacMan::handleEvent(const EventArgs& e) {
 		case EVENT_RELEASE:
 			handleRelease(e);
 			return true;
+		case EVENT_CONTEXT_MENU_SELECTION:
+			switch (woopsiApplication->getContextMenuValue()) {
+				case 1:
+					_player->resetLives();
+					_gameOver = false;
+					reset();
+					break;
+				case 2:
+					_window->close();
+					break;
+			}
+			return true;
+
 		default:
 			return false;
 	}

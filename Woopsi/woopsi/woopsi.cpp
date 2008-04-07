@@ -541,3 +541,7 @@ void Woopsi::hideChild(Gadget* gadget) {
 		moveChildToHiddenList(gadget);
 	}
 }
+
+const u32 Woopsi::getContextMenuValue() const {
+	return _contextMenu->getValue();
+}

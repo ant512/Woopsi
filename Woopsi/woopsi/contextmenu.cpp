@@ -130,6 +130,7 @@ void ContextMenu::reset() {
 
 	_gadgets.clear();
 	_opener = NULL;
+	_value = 0;
 
 	// Reset dimensions
 	_x = 0;

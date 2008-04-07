@@ -190,7 +190,17 @@ public:
 	 */
 	inline ContextMenu* getContextMenu() { return _contextMenu; };
 	
+	/**
+	 * Show the context menu.
+	 */
 	void showContextMenu();
+
+	/**
+	 * Get the current value of the context menu, as determined
+	 * by the last selection.
+	 * @return The context menu value.
+	 */
+	const u32 getContextMenuValue() const;
 
 protected:
 	bool _lidClosed;
