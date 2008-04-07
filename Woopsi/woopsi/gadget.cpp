@@ -1323,13 +1323,10 @@ bool Gadget::shiftClick(s16 x, s16 y) {
 	if (_flags.enabled) {
 		if (checkCollision(x, y)) {
 
-			bool clickedChild = false;
-
 			// Work out which child was clicked
 			if (_flags.shiftClickChildren) {
 				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 					if (_gadgets[i]->shiftClick(x, y)) {
-						clickedChild = true;
 						return true;
 					}
 				}

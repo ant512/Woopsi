@@ -4,6 +4,7 @@
 
 ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 	setBorderless(false);
+	_opener = NULL;
 }
 
 ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
@@ -49,7 +50,9 @@ bool ContextMenu::handleEvent(const EventArgs& e) {
 		if (e.gadget != NULL) {
 
 			// Notify the opener that a selection has been made
-			_opener->handleContextMenuSelection(((ContextMenuItem*)e.gadget)->getValue());
+			if (_opener != NULL) {
+				_opener->handleContextMenuSelection(((ContextMenuItem*)e.gadget)->getValue());
+			}
 	
 			hide();
 			return true;
@@ -122,6 +125,7 @@ void ContextMenu::reset() {
 	}
 
 	_gadgets.clear();
+	_opener = NULL;
 
 	// Reset dimensions
 	_x = 0;
