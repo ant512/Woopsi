@@ -98,14 +98,14 @@ public:
 	Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
 	
 	/**
-	 * Get the x co-ordinate of the gadget relative to its parent.
-	 * @return Parent-relative x co-ordinate.
+	 * Get the x co-ordinate of the gadget in "Woopsi space".
+	 * @return Woopsi space x co-ordinate.
 	 */
 	const s16 getX() const;
 
 	/**
-	 * Get the y co-ordinate of the gadget relative to its parent.
-	 * @return Parent-relative y co-ordinate.
+	 * Get the y co-ordinate of the gadget in "Woopsi space".
+	 * @return Woopsi space y co-ordinate.
 	 */
 	const s16 getY() const;
 
