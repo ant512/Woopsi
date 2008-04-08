@@ -20,12 +20,12 @@ public:
 
 	PacGhost(PacMan* game);
 
-	bool isActive();
+	inline const bool isActive() const { return _active; };
 
-	void setType(u8 type);
-	void setActive(bool active);
+	inline void setType(const u8 type) { _type = type; };
+	inline void setActive(const bool active) { _active = active; };
 	
-	void run();
+	inline void run() { move(); };
 	void reset();
 	void leaveHome();
 	void move();

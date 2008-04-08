@@ -15,16 +15,27 @@ class PacGhost;
 class PacGhosts;
 class PacPlayer;
 
+/**
+ * PacMan game class.
+ */
 class PacMan : EventHandler {
 	
 public:
+	/**
+	 * Constructor.  Automatically creates the PacMan GUI.
+	 * @param screen The screen to create the GUI on.
+	 */
 	PacMan(AmigaScreen* screen);
+
+	/**
+	 * Destructor.
+	 */
 	~PacMan();
 	
-	u16 getWidth();
-	u16 getHeight();
+	inline const u16 getWidth() const { return _width; };
+	inline const u16 getHeight() const { return _height; };
 
-	bool isGameOver();
+	inline const bool isGameOver() const { return _gameOver; };
 	
 	PacMap* getMap();
 	PacGhosts* getGhosts();

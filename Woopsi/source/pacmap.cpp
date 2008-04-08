@@ -1,7 +1,6 @@
 #include "pacmap.h"
 #include "pacman.h"
 #include "superbitmap.h"
-#include "woopsifuncs.h"
 
 u8 PacMap::_layout[22][19] = {
 							{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},

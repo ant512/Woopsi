@@ -9,12 +9,12 @@ class PacSprite {
 public:
 	PacSprite(PacMan* game);
 
-	s16 getX();
-	s16 getY();
-	u8 getWidth();
-	u8 getHeight();
+	inline const s16 getX() const { return _x; };
+	inline const s16 getY() const { return _y; };
+	inline const u8 getWidth() const { return _width; };
+	inline const u8 getHeight() const { return _height; };
 
-	void setColour(u16 colour);
+	inline void setColour(const u16 colour) { _colour = colour; };
 
 	void draw();
 	bool checkCollision(PacSprite* sprite);

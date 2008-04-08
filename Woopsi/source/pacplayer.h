@@ -17,13 +17,13 @@ private:
 public:
 	PacPlayer(PacMan* game);
 
-	void setBufferedDirection(u8 bufferedDirection);
-	void resetLives();
+	inline void setBufferedDirection(const u8 bufferedDirection) { _bufferedDirection = bufferedDirection; };
+	inline void resetLives() { _lives = 3; };
 
 	void reset();
 	void loseLife();
 	void move();
-	void run();
+	inline void run() { move(); };
 };
 
 #endif

@@ -2,7 +2,6 @@
 #include "pacman.h"
 #include "pacplayer.h"
 #include "superbitmap.h"
-#include "woopsifuncs.h"
 
 PacGhost::PacGhost(PacMan* game) : PacSprite(game) {
 	_width = 5;
@@ -21,22 +20,6 @@ void PacGhost::reset() {
 	_speed = 1;
 	_leftHome = false;
 	_active = false;
-}
-
-bool PacGhost::isActive() {
-	return _active;
-}
-
-void PacGhost::setType(u8 type) {
-	_type = type;
-}
-
-void PacGhost::setActive(bool active) {
-	_active = active;
-}
-
-void PacGhost::run() {
-	move();
 }
 
 void PacGhost::leaveHome() {

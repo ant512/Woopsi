@@ -4,7 +4,6 @@
 #include "pacmap.h"
 #include "pacghosts.h"
 #include "superbitmap.h"
-#include "woopsifuncs.h"
 
 PacPlayer::PacPlayer(PacMan* game) : PacSprite(game) {
 	_x = 45;
@@ -18,10 +17,6 @@ PacPlayer::PacPlayer(PacMan* game) : PacSprite(game) {
 	_lives = 3;
 
 	draw();
-}
-
-void PacPlayer::resetLives() {
-	_lives = 3;
 }
 
 void PacPlayer::reset() {
@@ -58,12 +53,4 @@ void PacPlayer::move() {
 	}
 	
 	_game->getMap()->clearBlock(_x, _y);
-}
-
-void PacPlayer::run() {
-	move();
-}
-
-void PacPlayer::setBufferedDirection(u8 bufferedDirection) {
-	_bufferedDirection = bufferedDirection;
 }

@@ -3,7 +3,6 @@
 #include "button.h"
 #include "amigawindow.h"
 #include "amigascreen.h"
-#include "woopsifuncs.h"
 #include "debug.h"
 #include "pacsprite.h"
 #include "pacmap.h"
@@ -30,20 +29,8 @@ PacMan::~PacMan() {
 	delete _ghosts;
 }
 
-u16 PacMan::getWidth() {
-	return _width;
-}
-
-u16 PacMan::getHeight() {
-	return _height;
-}
-
 PacMap* PacMan::getMap() {
 	return _map;
-}
-
-bool PacMan::isGameOver() {
-	return _gameOver;
 }
 
 PacGhosts* PacMan::getGhosts() {

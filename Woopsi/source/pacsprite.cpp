@@ -2,7 +2,6 @@
 #include "pacman.h"
 #include "pacmap.h"
 #include "superbitmap.h"
-#include "woopsifuncs.h"
 
 PacSprite::PacSprite(PacMan* game) {
 	_game = game;
@@ -11,26 +10,6 @@ PacSprite::PacSprite(PacMan* game) {
 	_width = 5;
 	_height = 5;
 	_colour = woopsiRGB(0, 0, 0);
-}
-
-s16 PacSprite::getX() {
-	return _x;
-}
-
-s16 PacSprite::getY() {
-	return _y;
-}
-
-u8 PacSprite::getWidth() {
-	return _width;
-}
-
-u8 PacSprite::getHeight() {
-	return _height;
-}
-
-void PacSprite::setColour(u16 colour) {
-	_colour = colour;
 }
 
 void PacSprite::draw() {
