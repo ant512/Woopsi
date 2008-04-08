@@ -101,16 +101,6 @@ bool ContextMenu::resize(u16 width, u16 height) {
 			}
 		}
 
-		if (_hiddenGadgets.size() > 0) {
-
-			_hiddenGadgets[0]->getPreferredDimensions(preferredRect);
-
-			// Resize all hidden children
-			for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
-				_hiddenGadgets[i]->resize((u16)clientRect.width, (u16)preferredRect.height);
-			}
-		}
-
 		setPermeable(false);
 
 		raiseResizeEvent(width, height);
