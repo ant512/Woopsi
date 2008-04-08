@@ -61,13 +61,13 @@ protected:
 
 	/**
 	 * Sets the width of the virtual canvas.
-	 * @param The width of the virtual canvas.
+	 * @param width The width of the virtual canvas.
 	 */
 	virtual inline void setCanvasWidth(const s32 width) { _canvasWidth = width; };
 	
 	/**
 	 * Sets the height of the virtual canvas.
-	 * @param The height of the virtual canvas.
+	 * @param height The height of the virtual canvas.
 	 */
 	virtual inline void setCanvasHeight(const s32 height) { _canvasHeight = height; };
 

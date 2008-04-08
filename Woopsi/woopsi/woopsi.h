@@ -153,7 +153,7 @@ public:
 	/**
 	 * Add the supplied gadget to the list of gadgets that receive VBL notifications.
 	 * Gadgets not in this list will not be able to update automatically when the screen refreshes.
-	 * @param A pointer to the gadget to add to the VBL list.
+	 * @param gadget A pointer to the gadget to add to the VBL list.
 	 */
 	static void registerForVBL(Gadget* gadget);
 

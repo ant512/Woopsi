@@ -57,9 +57,6 @@ public:
 	 * clipping co-ordinates.
 	 * @param font The font to use for the glyph data.
 	 * @param letter The character to output.
-	 * @param length The length of the string to output.  This makes it possible to supply
-	 * a length smaller than the actual length of the string if the whole string should not
-	 * be printed or if it does not end in a terminator character.
 	 * @param x The x co-ordinate of the text.
 	 * @param y The y co-ordinate of the text.
 	 * @param clipX1 The left edge of the clipping rectangle.
@@ -82,9 +79,6 @@ public:
 	 * @param font The font to use for the glyph data.
 	 * @param letter The character to output.
 	 * @param charIndex The position of this character within a larger string.
-	 * @param length The length of the string to output.  This makes it possible to supply
-	 * a length smaller than the actual length of the string if the whole string should not
-	 * be printed or if it does not end in a terminator character.
 	 * @param x The x co-ordinate of the text.
 	 * @param y The y co-ordinate of the text.
 	 * @param clipX1 The left edge of the clipping rectangle.

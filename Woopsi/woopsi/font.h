@@ -20,7 +20,7 @@ public:
 	 * @param bitmapHeight The height of the glyph bitmap.
 	 * @param width The width of a single glyph.
 	 * @param height The height of a single glyph.
-	 * @param tramsparentColour The colour of the font's background.
+	 * @param transparentColour The colour of the font's background.
 	 */
 	Font(const u16* bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const u8 width, const u8 height, const u16 transparentColour);
 	

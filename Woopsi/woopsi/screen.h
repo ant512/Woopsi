@@ -65,7 +65,7 @@ public:
 	/**
 	 * Swaps the depth of the supplied child gadget.
 	 * @param gadget A pointer to the child gadget that needs to swap depths.
-	 * @retun True if the swap was successful.
+	 * @return True if the swap was successful.
 	 */
 	virtual bool swapGadgetDepth(Gadget* gadget);
 

@@ -687,7 +687,7 @@ public:
 	 * Invalidate the visible region cache for all gadgets below the supplied
 	 * gadget in this gadget's child stack.  This will cause those gadgets to
 	 * recalculate their visible regions next time they try to draw themselves.
-	 * @param A pointer to a child gadget.
+	 * @param gadget A pointer to a child gadget.
 	 */
 	void invalidateLowerGadgetsVisibleRectCache(Gadget* gadget);
 
@@ -781,6 +781,7 @@ public:
 	 * to be redrawn.
 	 * @param validRects A vector of regions that represents areas of the
 	 * display that do not need to be redrawn.
+	 * @param sender Pointer to the gadget that initiated the split.
 	 */
 	virtual void splitRectangles(DynamicArray<Rect>* invalidRectangles, DynamicArray<Rect>* validRects, Gadget* sender);
 
@@ -794,7 +795,7 @@ public:
 	/**
 	 * Swaps the depth of the supplied child gadget.
 	 * @param gadget A pointer to the child gadget that needs to swap depths.
-	 * @retun True if the swap was successful.
+	 * @return True if the swap was successful.
 	 */
 	virtual bool swapGadgetDepth(Gadget* gadget);
 
@@ -973,7 +974,7 @@ protected:
 	 * Redraws all regions of child gadgets that fall within the invalidRects
 	 * regions.
 	 * @param invalidRects List of invalid regions that need to be redrawn.
-	 * @param Pointer to the gadget that initiated the redraw.
+	 * @param sender Pointer to the gadget that initiated the redraw.
 	 */
 	virtual void redrawDirtyChildren(DynamicArray<Rect>* invalidRects, Gadget* sender);
 

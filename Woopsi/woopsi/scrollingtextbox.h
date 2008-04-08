@@ -80,20 +80,20 @@ public:
 
 	/**
 	 * Set the text displayed in the textbox.
-	 * @param text Pointer to the text to display.
+	 * @param text String to display.
 	 */
 	virtual void setText(char* text);
 
 	/**
 	 * Append new text to the end of the current text
 	 * displayed in the textbox.
-	 * @param Pointer to the text to append.
+	 * @param text String to append.
 	 */
 	virtual void addText(char* text);
 
 	/**
 	 * Set the font used in the textbox.
-	 * @param Pointer to the new font.
+	 * @param font Pointer to the new font.
 	 */
 	virtual void setFont(FontBase* font);
 
@@ -126,8 +126,8 @@ public:
 	 * Drag the gadget at the specified co-ordinates.
 	 * @param x The x co-ordinate of the drag.
 	 * @param y The y co-ordinate of the drag.
-	 * @param x The x distance of the drag.
-	 * @param y The y distance of the drag.
+	 * @param vX The x distance of the drag.
+	 * @param vY The y distance of the drag.
 	 * @return True if the drag was processed by the gadget.
 	 */
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);

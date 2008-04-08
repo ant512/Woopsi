@@ -23,7 +23,7 @@ public:
 	 * the position and dimensions of its children.
 	 * @param x The x co-ordinate of the group.
 	 * @param y The y co-ordinate of the group.
-	 * @font The font to use with the group.
+	 * @param font The font to use with the group.
 	 */
 	RadioButtonGroup(s16 x, s16 y, FontBase* font = NULL);
 
@@ -58,7 +58,7 @@ public:
 
 	/**
 	 * Selects the gadget at the specified index.
-	 * @param The index of the gadget to select.
+	 * @param index The index of the gadget to select.
 	 */
 	virtual void setSelectedIndex(u8 index);
 

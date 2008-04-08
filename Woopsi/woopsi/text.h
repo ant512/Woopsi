@@ -64,7 +64,7 @@ public:
 	/**
 	 * Get the number of characters in the specified line number,
 	 * ignoring any trailing blank characters.
-	 * @param The line number to check.
+	 * @param lineNumber The line number to check.
 	 * @return The number of characters in the line.
 	 */
 	u8 getLineTrimmedLength(s32 lineNumber);

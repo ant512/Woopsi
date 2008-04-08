@@ -21,8 +21,8 @@ public:
 	 * @param y The y co-ordinate of the button.
 	 * @param width The width of the button.
 	 * @param height The height of the button.
-	 * @param bitmapX The x co-ordinate at which the animation's bitmaps will be drawn.
-	 * @param bitmapY The y co-ordinate at which the animation's bitmaps will be drawn.
+	 * @param animX The x co-ordinate at which the animation's bitmaps will be drawn.
+	 * @param animY The y co-ordinate at which the animation's bitmaps will be drawn.
 	 */
 	AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY);
 

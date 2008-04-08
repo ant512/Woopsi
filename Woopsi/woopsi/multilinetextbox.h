@@ -111,20 +111,20 @@ public:
 
 	/**
 	 * Set the text displayed in the textbox.
-	 * @param text Pointer to the text to display.
+	 * @param text String to display.
 	 */
 	virtual void setText(char* text);
 
 	/**
 	 * Append new text to the end of the current text
 	 * displayed in the textbox.
-	 * @param Pointer to the text to append.
+	 * @param text String to append.
 	 */
 	virtual void addText(char* text);
 
 	/**
 	 * Set the font used in the textbox.
-	 * @param Pointer to the new font.
+	 * @param font Pointer to the new font.
 	 */
 	virtual void setFont(FontBase* font);
 

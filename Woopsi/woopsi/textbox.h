@@ -86,13 +86,13 @@ public:
 	
 	/**
 	 * Set the text displayed in the textbox.
-	 * @param text Pointer to the text to display.
+	 * @param text String to display.
 	 */
 	virtual void setText(const char* text);
 	
 	/**
 	 * Append new text to the end of the current text displayed in the textbox.
-	 * @param Pointer to the text to append.
+	 * @param text String to append.
 	 */
 	virtual void addText(const char* text);
 

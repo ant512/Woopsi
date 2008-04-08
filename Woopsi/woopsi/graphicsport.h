@@ -202,7 +202,7 @@ public:
 	 * @param x The x co-ordinate of the character.
 	 * @param y The y co-ordinate of the character.
 	 * @param font The font to draw with.
-	 * @param string The character to output.
+	 * @param letter The character to output.
 	 * @param colour The colour of the character.
 	 */
 	void drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour);
