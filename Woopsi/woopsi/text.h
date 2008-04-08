@@ -144,9 +144,25 @@ private:
 	u16 _width;
 	char* _text;
 
+	/**
+	 * Calculate and buffer the pixel height of a single line of text.
+	 */
 	void calculateLineHeight();
+
+	/**
+	 * Calculate and buffer the number of pixels in the longest row
+	 * of text.
+	 */
 	void calculateMaxLineLength();
+
+	/**
+	 * Calculate and buffer the total pixel height of the text.
+	 */
 	void calculateTextPixelHeight();
+
+	/**
+	 * Wrap the text.
+	 */
 	void wrap();
 };
 
