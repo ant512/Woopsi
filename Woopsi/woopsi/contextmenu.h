@@ -33,7 +33,7 @@ public:
 	 * @param clipRect The clipping rect to limit drawing to.
 	 */
 	virtual void draw(Rect clipRect);
-	
+
 	/**
 	 * Draw all visible regions of the menu.
 	 */
@@ -70,6 +70,18 @@ public:
 	 * @return The value of the last chosen menu item.
 	 */
 	inline const u32 getValue() const { return _value; };
+
+	/**
+	 * Give the gadget focus.
+	 * @return True if the gadget received focus correctly.
+	 */
+	virtual inline bool focus() { return false; };
+
+	/**
+	 * Remove focus from the gadget.
+	 * @return True if the gadget lost focus correctly.
+	 */
+	virtual inline bool blur() { return false; };
 
 private:
 	Gadget* _opener;

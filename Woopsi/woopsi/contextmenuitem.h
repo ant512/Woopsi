@@ -24,7 +24,7 @@ public:
 	 * @param clipRect The clipping rect to limit drawing to.
 	 */
 	virtual void draw(Rect clipRect);
-	
+
 	/**
 	 * Draw all visible regions of the menu.
 	 */
@@ -43,6 +43,18 @@ public:
 	 * @return True if the release was successful.
 	 */
 	bool release(s16 x, s16 y);
+
+	/**
+	 * Give the gadget focus.
+	 * @return True if the gadget received focus correctly.
+	 */
+	virtual inline bool focus() { return false; };
+
+	/**
+	 * Remove focus from the gadget.
+	 * @return True if the gadget lost focus correctly.
+	 */
+	virtual inline bool blur() { return false; };
 
 private:
 	u32 _value;
