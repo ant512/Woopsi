@@ -284,7 +284,7 @@ void PacMan::handleKeyPress(const EventArgs& e) {
 
 void PacMan::initGUI() {
 	// Create window
-	_window = new AmigaWindow(0, 13, 103, 150, "PacMan", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_window = new AmigaWindow(0, 13, 103, 150, "PacMan", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
 	_screen->addGadget(_window);
 	_window->setShiftClickChildren(false);
 	_window->addContextMenuItem("Reset", 1);

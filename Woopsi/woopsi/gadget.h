@@ -41,7 +41,7 @@ public:
 	 */
 	enum GadgetFlagType {
 		GADGET_BORDERLESS = 0x0001,		/**< Gadget has no border */
-		GADGET_CLOSEABLE = 0x0002,		/**< Gadget can be closed by the user */
+		GADGET_CLOSABLE = 0x0002,		/**< Gadget can be closed by the user */
 		GADGET_DRAGGABLE = 0x0004,		/**< Gadget can be dragged by the user */
 		GADGET_PERMEABLE = 0x0008		/**< Gadget's children can exceed this gadget's edges */
 	};
@@ -68,7 +68,7 @@ public:
 		u8 borderless : 1;				/**< True if the gadget is borderless. */
 		u8 draggable : 1;				/**< True if the gadget can be dragged. */
 		u8 drawingEnabled : 1;			/**< True if the gadget should be drawn. */
-		u8 closeable : 1;				/**< True if the gadget can be closed. */
+		u8 closable : 1;				/**< True if the gadget can be closed. */
 		u8 enabled : 1;					/**< True if the gadget is enabled. */
 		u8 decoration : 1;				/**< True if the gadget is a decoration. */
 		u8 permeable : 1;				/**< True if the gadget's children can exceed its dimensions. */

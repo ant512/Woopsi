@@ -28,6 +28,7 @@ Change Log
         - GraphicsPort drawing methods do not check Gadget::isDeleted() as it
           is checked in drawingEnabled().
      - MultiLineTextBox restores correct drawing state when resizing.
+     - Fixed spelling of "closeable" to "closable".
   
   - New Features:
      - Added ScrollingTextBox class.

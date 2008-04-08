@@ -16,7 +16,7 @@ Calculator::Calculator(AmigaScreen* screen) {
 }
 
 void Calculator::initGUI() {
-	_window = new AmigaWindow(0, 90, 60, 97, "Calc", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	_window = new AmigaWindow(0, 90, 60, 97, "Calc", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
 	_screen->addGadget(_window);
 
 	Gadget::Rect rect;

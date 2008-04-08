@@ -348,10 +348,10 @@ int main() {
 
 
 	// Add child windows
-	AmigaWindow* controlWindow = new AmigaWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* controlWindow = new AmigaWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
 	newScreen->addGadget(controlWindow);
 
-	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
 	newScreen->addGadget(textWindow);
 
 	//RadioButtonGroup* radioButtons = new RadioButtonGroup(0, 0);
@@ -366,7 +366,7 @@ int main() {
 	//controlWindow->addGadget(new CheckBox(60, 0, 12, 12));
 	//controlWindow->addGadget(new CheckBox(72, 0, 12, 12));
 
-	AmigaWindow* textTestWindow = new AmigaWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* textTestWindow = new AmigaWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
 	newScreen->addGadget(textTestWindow);
 
 	textTestWindow->getClientRect(rect);
@@ -446,7 +446,7 @@ int main() {
 	new PacMan(demoScreen);
 
 	// Bitmap button test
-	AmigaWindow* buttonWindow = new AmigaWindow(10, 10, 100, 100, "ButtonTest", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* buttonWindow = new AmigaWindow(10, 10, 100, 100, "ButtonTest", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
 	demoScreen->addGadget(buttonWindow);
 
 	buttonWindow->getClientRect(rect);

@@ -63,7 +63,7 @@ void AmigaWindow::setBorderless(bool isBorderless) {
 		if (isBorderless) {
 			// Remove borders
 
-			if (_flags.closeable) {
+			if (_flags.closable) {
 				_closeButton->close();
 			}
 
@@ -110,7 +110,7 @@ void AmigaWindow::createBorder() {
 	// Add gadgets to the start in reverse order
 
 	// Add close button
-	if (_flags.closeable) {
+	if (_flags.closable) {
 		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _font);
 		_closeButton->setEventHandler(this);
 		insertGadget(_closeButton);
@@ -122,7 +122,7 @@ void AmigaWindow::createBorder() {
 	insertGadget(_depthButton);
 
 	// Add top border
-	if (_flags.closeable) {
+	if (_flags.closable) {
 		_windowBorderTop = new WindowBorderTop(WINDOW_CLOSE_BUTTON_WIDTH, _width - WINDOW_CLOSE_BUTTON_WIDTH - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, _title, _font);
 	} else {
 		_windowBorderTop = new WindowBorderTop(0, _width - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, _title, _font);
@@ -284,7 +284,7 @@ bool AmigaWindow::resize(u16 width, u16 height) {
 		_height = height;
 
 		// Top border
-		if (_flags.closeable) {
+		if (_flags.closable) {
 			_windowBorderTop->resize(_width - WINDOW_CLOSE_BUTTON_WIDTH - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);
 		} else {
 			_windowBorderTop->resize(_width - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);

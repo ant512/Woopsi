@@ -23,7 +23,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	// Mask flags against bitmasks and logical NOT twice to obtain boolean values
 	_flags.borderless = (!(!(flags & GADGET_BORDERLESS)));
 	_flags.draggable = (!(!(flags & GADGET_DRAGGABLE)));
-	_flags.closeable = (!(!(flags & GADGET_CLOSEABLE)));
+	_flags.closable = (!(!(flags & GADGET_CLOSABLE)));
 
 	// Dragging values
 	_grabPointX = 0;

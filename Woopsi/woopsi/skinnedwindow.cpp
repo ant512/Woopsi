@@ -21,7 +21,7 @@ SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u
 	// Parse skin information
 	_flags.borderless = _skin->window.borderless;
 	_flags.permeable = _skin->window.permeable;
-	_flags.closeable = _skin->closeButton.visible;
+	_flags.closable = _skin->closeButton.visible;
 	_font = _skin->window.font.font;
 	_backColour = _skin->window.colours.back;
 	_shineColour = _skin->window.colours.shine;
@@ -78,7 +78,7 @@ void SkinnedWindow::setBorderless(bool isBorderless) {
 		if (isBorderless) {
 			// Remove borders
 
-			if (_flags.closeable) {
+			if (_flags.closable) {
 				_closeButton->close();
 			}
 
@@ -125,7 +125,7 @@ void SkinnedWindow::createBorder() {
 	// Add gadgets to the start in reverse order
 
 	// Add close button
-	if (_flags.closeable) {
+	if (_flags.closable) {
 		u16 closeY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->closeButton.bitmap.height / 2);
 		_closeButton = new SkinnedWindowCloseButton(_skin->closeButton.offsetX, closeY, _skin);
 		_closeButton->setEventHandler(this);
@@ -282,7 +282,7 @@ bool SkinnedWindow::resize(u16 width, u16 height) {
 		_height = height;
 
 		// Top border
-		if (_flags.closeable) {
+		if (_flags.closable) {
 			_windowBorderTop->resize(_width - WINDOW_CLOSE_BUTTON_WIDTH - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);
 		} else {
 			_windowBorderTop->resize(_width - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);
