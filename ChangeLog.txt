@@ -23,10 +23,10 @@ Change Log
         - Added Gadget::enableDrawing().
         - Added Gadget::disableDrawing().
         - Added Gadget::drawingEnabled().
-        - Gadget::drawingEnabled() only returns true if the gadget is not hidden
+        - Gadget::isDrawingEnabled() only returns true if the gadget is not hidden
           or deleted.
         - GraphicsPort drawing methods do not check Gadget::isDeleted() as it
-          is checked in drawingEnabled().
+          is checked in isDrawingEnabled().
      - MultiLineTextBox restores correct drawing state when resizing.
      - Fixed spelling of "closeable" to "closable".
      - Moved Gadget::_visibleRegionCacheInvalid bool into the flags struct.
