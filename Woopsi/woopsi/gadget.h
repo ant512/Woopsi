@@ -50,31 +50,32 @@ public:
 	 * Struct describing a rectangle.
 	 */
 	typedef struct {
-		s16 x;
-		s16 y;
-		s32 width;
-		s32 height;
+		s16 x;							/**< X co-ordinate of the rectangle. */
+		s16 y;							/**< Y co-ordinate of the rectangle. */
+		s32 width;						/**< Width of the rectangle. */
+		s32 height;						/**< Height of the rectangle. */
 	} Rect;
 
 	/**
 	 * Struct describing some basic properties of a gadget.
 	 */
 	typedef struct {
-		u8 clicked : 1;					/**< True if the gadget is currently clicked. */
-		u8 hasFocus : 1;				/**< True if the gadget has focus. */
-		u8 dragging : 1;				/**< True if the gadget is being dragged. */
-		u8 deleted : 1;					/**< True if the gadget has been deleted. */
-		u8 hidden : 1;					/**< True if the gadget has been hidden. */
-		u8 borderless : 1;				/**< True if the gadget is borderless. */
-		u8 draggable : 1;				/**< True if the gadget can be dragged. */
-		u8 drawingEnabled : 1;			/**< True if the gadget should be drawn. */
-		u8 closable : 1;				/**< True if the gadget can be closed. */
-		u8 enabled : 1;					/**< True if the gadget is enabled. */
-		u8 decoration : 1;				/**< True if the gadget is a decoration. */
-		u8 permeable : 1;				/**< True if the gadget's children can exceed its dimensions. */
-		u8 raisesEvents : 1;			/**< True if the gadget can raise events. */
-		u8 erased : 1;					/**< True if the gadget is currently erased from the frame buffer. */
-		u8 shiftClickChildren : 1;		/**< True if the gadget sends shift clicks to its children. */
+		u8 clicked : 1;						/**< True if the gadget is currently clicked. */
+		u8 hasFocus : 1;					/**< True if the gadget has focus. */
+		u8 dragging : 1;					/**< True if the gadget is being dragged. */
+		u8 deleted : 1;						/**< True if the gadget has been deleted. */
+		u8 hidden : 1;						/**< True if the gadget has been hidden. */
+		u8 borderless : 1;					/**< True if the gadget is borderless. */
+		u8 draggable : 1;					/**< True if the gadget can be dragged. */
+		u8 drawingEnabled : 1;				/**< True if the gadget can be drawn. */
+		u8 closable : 1;					/**< True if the gadget can be closed. */
+		u8 enabled : 1;						/**< True if the gadget is enabled. */
+		u8 decoration : 1;					/**< True if the gadget is a decoration. */
+		u8 permeable : 1;					/**< True if the gadget's children can exceed its dimensions. */
+		u8 raisesEvents : 1;				/**< True if the gadget can raise events. */
+		u8 erased : 1;						/**< True if the gadget is currently erased from the frame buffer. */
+		u8 shiftClickChildren : 1;			/**< True if the gadget sends shift clicks to its children. */
+		u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid */
 	} Flags;
 
 	/**
@@ -849,53 +850,52 @@ public:
 	virtual bool handleContextMenuSelection(u32 value);
 
 protected:
-	s16 _x;
-	s16 _y;
-	u16 _width;
-	u16 _height;
-	u32 _refcon;
+	s16 _x;								/**< X co-ordinate of the gadget, relative to parent */
+	s16 _y;								/**< Y co-ordinate of the gadget, relative to parent */
+	u16 _width;							/**< Width of the gadget */
+	u16 _height;						/**< Height of the gadget */
+	u32 _refcon;						/**< Identifying number of the gadget */
 
 	// Dragging variables
-	s16 _grabPointX;
-	s16 _grabPointY;
-	s16 _newX;
-	s16 _newY;
+	s16 _grabPointX;					/**< Physical space x co-ordinate where dragging began */
+	s16 _grabPointY;					/**< Physical space y co-ordinate where dragging began */
+	s16 _newX;							/**< Physical x co-ordinate where gadget is being dragged to */
+	s16 _newY;							/**< Physical y co-ordinate where gadget is being dragged to */
 
 	// Colour definitions
-	u16 _backColour;
-	u16 _shineColour;
-	u16 _highlightColour;
-	u16 _shadowColour;
-	u16 _fillColour;
-	u16 _darkColour;
+	u16 _backColour;					/**< Colour used as background */
+	u16 _shineColour;					/**< Colour used as light bevel edge */
+	u16 _highlightColour;				/**< Colour used as highlighted elements */
+	u16 _shadowColour;					/**< Colour used as dark bevel edge */
+	u16 _fillColour;					/**< Colour used as foreground fill */
+	u16 _darkColour;					/**< Colour used as scrollbar gutters etc */
 
 	// Status
-	Flags _flags;
+	Flags _flags;						/**< Flags struct */
 
 	// Event handling
-	EventHandler* _eventHandler;
+	EventHandler* _eventHandler;		/**< Pointer to the gadget's event handler */
 
 	// Hierarchy control
-	Gadget* _parent;
-	Gadget* _focusedGadget;
-	Gadget* _clickedGadget;
-	DynamicArray<Gadget*> _gadgets;
-	DynamicArray<Gadget*> _hiddenGadgets;
+	Gadget* _parent;						/**< Pointer to the gadget's parent */
+	Gadget* _focusedGadget;					/**< Pointer to the child gadget that has focus */
+	Gadget* _clickedGadget;					/**< Pointer to the child gadget that is clicked */
+	DynamicArray<Gadget*> _gadgets;			/**< List of child gadgets */
+	DynamicArray<Gadget*> _hiddenGadgets;	/**< List of hidden child gadgets */
 
 	// Decorations
-	u8 _decorationCount;
+	u8 _decorationCount;					/**< Total number of decoration child gadgets */
 
 	// Visible regions
-	DynamicArray<Rect> _visibleRegionCache;
-	bool _visibleRegionCacheInvalid;
+	DynamicArray<Rect> _visibleRegionCache;	/**< List of the gadget's visible regions */
 
-	OutlineType _outline;
-	CloseType _closeType;
+	OutlineType _outline;					/**< Type of outline the gadget uses */
+	CloseType _closeType;					/**< Type of close method that should be called for the gadget */
 
 	FontBase* _font;
 
 	// Context menu item definitions
-	DynamicArray<NameValuePair> _contextMenuItems;
+	DynamicArray<NameValuePair> _contextMenuItems;	/**< List of all context menu name/value pairs */
 
 	/**
 	 * Destructor.

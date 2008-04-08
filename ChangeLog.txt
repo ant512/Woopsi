@@ -29,6 +29,7 @@ Change Log
           is checked in drawingEnabled().
      - MultiLineTextBox restores correct drawing state when resizing.
      - Fixed spelling of "closeable" to "closable".
+     - Moved Gadget::_visibleRegionCacheInvalid bool into the flags struct.
   
   - New Features:
      - Added ScrollingTextBox class.

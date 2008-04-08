@@ -52,6 +52,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_flags.erased = true;
 	_flags.shiftClickChildren = true;
 	_flags.hidden = false;
+	_flags.visibleRegionCacheInvalid = true;
 
 	// Set hierarchy pointers
 	_parent = NULL;
@@ -63,7 +64,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_decorationCount = 0;
 	_refcon = 0;
 
-	_visibleRegionCacheInvalid = true;
+	
 	
 	_outline = OUTLINE_CLICK_DEPENDENT;
 	_closeType = CLOSE_TYPE_CLOSE;
@@ -1652,7 +1653,7 @@ void Gadget::setDragging(u16 x, u16 y) {
 
 void Gadget::cacheVisibleRects() {
 
-	if (_visibleRegionCacheInvalid) {
+	if (_flags.visibleRegionCacheInvalid) {
 		// Use internal region cache to store the non-overlapped rectangles
 		// We will use this to clip the gadget
 		_visibleRegionCache.clear();
@@ -1680,12 +1681,12 @@ void Gadget::cacheVisibleRects() {
 		// Tidy up
 		delete invisibleRects;
 
-		_visibleRegionCacheInvalid = false;
+		_flags.visibleRegionCacheInvalid = false;
 	}
 }
 
 void Gadget::invalidateVisibleRectCache() {
-	_visibleRegionCacheInvalid = true;
+	_flags.visibleRegionCacheInvalid = true;
 
 	// Invalidate child cache
 	for (u8 i = 0; i < _gadgets.size(); i++) {
