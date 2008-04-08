@@ -23,13 +23,13 @@ void SkinnedScreenTitle::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	if (_flags.clicked) {
-		if (_parent->isActive()) {
+		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.focusClick, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.blurClick, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
 		}
 	} else {
-		if (_parent->isActive()) {
+		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.focus, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.blur, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);

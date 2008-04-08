@@ -24,7 +24,7 @@ void SkinnedWindowBorderTop::draw(Rect clipRect) {
 	// Get a new graphics port
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	if (_parent->isActive()) {
+	if (_parent->hasFocus()) {
 		port->drawBitmap(0, 0, _skin->topLeftBorder.bitmap.width,
 							   _skin->topLeftBorder.bitmap.height,
 							   _skin->topLeftBorder.bitmap.focus,

@@ -168,16 +168,7 @@ bool AmigaWindow::click(s16 x, s16 y) {
 				// Handle click on window
 				_flags.clicked = true;
 
-				// Take focus away from child gadgets
-				if (_activeGadget != NULL) {
-					_activeGadget->blur();
-					_activeGadget = NULL;
-				}
-
-				// Give focus to this gadget
-				if (!_flags.active) {
-					focus();
-				}
+				setFocusedGadget(NULL);
 
 				// Tell parent that the clicked gadget has changed
 				if (_parent != NULL) {
@@ -248,9 +239,9 @@ bool AmigaWindow::blur() {
 		}
 
 		// Take focus away from child gadgets
-		if (_activeGadget != NULL) {
-			_activeGadget->blur();
-			_activeGadget = NULL;
+		if (_focusedGadget != NULL) {
+			_focusedGadget->blur();
+			_focusedGadget = NULL;
 		}
 
 		return true;

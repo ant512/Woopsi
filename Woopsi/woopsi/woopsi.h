@@ -117,12 +117,6 @@ public:
 	virtual bool vbl();
 
 	/**
-	 * Sets the active gadget pointer to the supplied gadget.
-	 * @param gadget The gadget to point the internal pointer at; must be a child of this gadget.
-	 */
-	virtual void setActiveGadget(Gadget* gadget);
-
-	/**
 	 * Swaps the depth of the supplied gadget.
 	 * This function presumes that all child gadgets are screens.
 	 * @param gadget The gadget to be depth-swapped.

@@ -199,7 +199,7 @@ bool SkinnedWindow::click(s16 x, s16 y) {
 bool SkinnedWindow::focus() {
 
 	if (_flags.enabled) {
-		if (!_flags.active) {
+		if (!_flags.hasFocus) {
 
 			// Handle focus gained on window
 			Gadget::focus();
@@ -226,10 +226,7 @@ bool SkinnedWindow::focus() {
 
 bool SkinnedWindow::blur() {
 
-	if (_flags.active) {
-
-		// Handle focus lost on window
-		Gadget::blur();
+	if (Gadget::blur()) {
 
 		// Run blur on borders
 		if (_windowBorderTop != NULL) {
@@ -246,9 +243,9 @@ bool SkinnedWindow::blur() {
 		}
 
 		// Take focus away from child gadgets
-		if (_activeGadget != NULL) {
-			_activeGadget->blur();
-			_activeGadget = NULL;
+		if (_focusedGadget != NULL) {
+			_focusedGadget->blur();
+			_focusedGadget = NULL;
 		}
 
 		return true;

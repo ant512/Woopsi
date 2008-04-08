@@ -9,36 +9,35 @@ Screen::Screen(char* title, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_
 	_flags.borderless = true;
 }
 
-void Screen::setActive(bool active) {
+bool Screen::focus() {
 
-	if (_flags.active != active) {
-		_flags.active = active;
-
-		if (_flags.active) {
+	if (_flags.enabled) {
+		if (!_flags.hasFocus) {
+			_flags.hasFocus = true;
 
 			raiseToTop();
 
-			// Notify parent if this gadget has become active
+			// Notify parent that this gadget has focus
 			if (_parent != NULL) {
-				_parent->setActiveGadget(this);
+				_parent->setFocusedGadget(this);
 			}
-		} else {
-			// Notify active child if this gadget has become inactive
-			if (_activeGadget != NULL) {
-				_activeGadget->blur();
-				_activeGadget = NULL;
-			}
+
+			raiseFocusEvent();
+
+			return true;
 		}
 	}
+
+	return false;
 }
 
-void Screen::setActiveGadget(Gadget* gadget) {
+void Screen::setFocusedGadget(Gadget* gadget) {
 
-	if (_activeGadget != gadget) {
+	if (_focusedGadget != gadget) {
 		
 		// Set the active gadget to inactive
-		if (_activeGadget != NULL) {
-			_activeGadget->blur();
+		if (_focusedGadget != NULL) {
+			_focusedGadget->blur();
 		}
 
 		if (gadget != NULL) {
@@ -67,16 +66,10 @@ void Screen::setActiveGadget(Gadget* gadget) {
 
 			// Draw the active gagdet
 			gadget->draw();
-			
-			// Remember the new active gadget
-			_activeGadget = gadget;
-		} else {
-			// Set the active gadget to inactive
-			if (_activeGadget != NULL) {
-				_activeGadget->blur();
-				_activeGadget = NULL;
-			}
 		}
+			
+		// Remember the new active gadget
+		_focusedGadget = gadget;
 
 		// Make screen active
 		focus();

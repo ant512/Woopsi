@@ -12,7 +12,7 @@ void WindowBorderBottom::draw(Rect clipRect) {
 	// Choose a colour depending on parent's active state
 	u16 colour = _fillColour;
 	if (_parent != NULL) {
-		colour = _parent->isActive() ? _highlightColour : _fillColour;
+		colour = _parent->hasFocus() ? _highlightColour : _fillColour;
 	}
 
 	// Get a new graphics port

@@ -60,20 +60,20 @@ public:
 	 * Struct describing some basic properties of a gadget.
 	 */
 	typedef struct {
-		u8 clicked : 1;
-		u8 active : 1;
-		u8 dragging : 1;
-		u8 deleted : 1;
-		u8 borderless : 1;
-		u8 draggable : 1;
-		u8 visible : 1;
-		u8 closeable : 1;
-		u8 enabled : 1;
-		u8 decoration : 1;
-		u8 permeable : 1;
-		u8 raisesEvents : 1;
-		u8 erased : 1;
-		u8 shiftClickChildren : 1;
+		u8 clicked : 1;					/**< True if the gadget is currently clicked. */
+		u8 hasFocus : 1;				/**< True if the gadget has focus. */
+		u8 dragging : 1;				/**< True if the gadget is being dragged. */
+		u8 deleted : 1;					/**< True if the gadget has been deleted. */
+		u8 borderless : 1;				/**< True if the gadget is borderless. */
+		u8 draggable : 1;				/**< True if the gadget can be dragged. */
+		u8 visible : 1;					/**< True if the gadget should be drawn. */
+		u8 closeable : 1;				/**< True if the gadget can be closed. */
+		u8 enabled : 1;					/**< True if the gadget is enabled. */
+		u8 decoration : 1;				/**< True if the gadget is a decoration. */
+		u8 permeable : 1;				/**< True if the gadget's children can exceed its dimensions. */
+		u8 raisesEvents : 1;			/**< True if the gadget can raise events. */
+		u8 erased : 1;					/**< True if the gadget is currently erased from the frame buffer. */
+		u8 shiftClickChildren : 1;		/**< True if the gadget sends shift clicks to its children. */
 	} Flags;
 
 	/**
@@ -128,7 +128,7 @@ public:
 	 * of the gadget with focus.
 	 * @return True if active.
 	 */
-	inline const bool isActive() const { return _flags.active; };
+	inline const bool hasFocus() const { return _flags.hasFocus; };
 
 	/**
 	 * Has the gadget been marked for deletion?
@@ -203,10 +203,10 @@ public:
 	inline Gadget* getParent() { return _parent; };
 
 	/**
-	 * Get a pointer to this gadget's active child.
-	 * @return This gadget's active child.
+	 * Get a pointer to this gadget's focused child.
+	 * @return This gadget's focused child.
 	 */
-	inline Gadget* getActiveGadget() { return _activeGadget; };
+	inline Gadget* getFocusedGadget() { return _focusedGadget; };
 
 	/**
 	 * Get the number of the screen that this gadget is currently displayed on.
@@ -454,7 +454,6 @@ public:
 	 * Erases the gadget, and sets it to invisible.  Gadgets hidden in
 	 * this way will be partioned off from other gadgets and will no
 	 * longer be processed.
-	 *
 	 * @return True if the gadget was hidden.
 	 * @see show()
 	 */
@@ -463,7 +462,6 @@ public:
 	/**
 	 * Sets the gadget to visible and redraws it.  Gadgets shown in this way
 	 * will be unpartioned and will be processed again.
-	 *
 	 * @return True if the gadget was shown.
 	 * @see hide()
 	 */
@@ -633,12 +631,12 @@ public:
 	bool moveHiddenToChildList(Gadget* gadget);
 
 	/**
-	 * Sets the supplied gadget as the active child.  The gadget must
+	 * Sets the supplied gadget as the focused child.  The gadget must
 	 * be a child of this gadget.
 	 * @param gadget A pointer to the child gadget.
-	 * @see getActiveGadget()
+	 * @see getFocusedGadget()
 	 */
-	virtual void setActiveGadget(Gadget* gadget);
+	virtual void setFocusedGadget(Gadget* gadget);
 
 	/**
 	 * Sets the supplied gadget as the clicked child.  The gadget must
@@ -868,7 +866,7 @@ protected:
 
 	// Hierarchy control
 	Gadget* _parent;
-	Gadget* _activeGadget;
+	Gadget* _focusedGadget;
 	Gadget* _clickedGadget;
 	DynamicArray<Gadget*> _gadgets;
 	DynamicArray<Gadget*> _hiddenGadgets;
@@ -885,7 +883,7 @@ protected:
 
 	FontBase* _font;
 
-	// Context menu
+	// Context menu item definitions
 	DynamicArray<NameValuePair> _contextMenuItems;
 
 	/**
@@ -898,12 +896,48 @@ protected:
 	 */
 	void init();
 
+	/**
+	 * Get the current physical display co-ordinate for the supplied y co-ordinate.
+	 * Woopsi treats the two displays as two viewports on the same logical space.
+	 * The lower half of the range of y co-ordinates is displayed on the bottom
+	 * screen, whilst the upper half of the range of y co-ordinates is displayed
+	 * on the top screen.  This function converts back into a value that can be
+	 * displayed on one of the screens.
+	 * Should be used in conjunction with calculatePhysicalScreenNumber to 
+	 * work out which screen to draw on.
+	 * @param y The y co-ordinate to check.
+	 * @return 
+	 * falls within the top screen.
+	 * @see calculatePhysicalScreenNumber()
+	 */
 	const s16 calculatePhysicalScreenY(s16 y) const;
+
+	/**
+	 * Get the current physical display number for the supplied y co-ordinate.
+	 * Should be used in conjunction with calculatePhysicalScreenY to convert
+	 * to a y co-ordinate that can be displayed.
+	 * @param y The y co-ordinate to check.
+	 * @return 0 if the co-ordinate falls within the bottom screen; 1 if it
+	 * falls within the top screen.
+	 * @see calculatePhysicalScreenY
+	 */
 	const u8 calculatePhysicalScreenNumber(s16 y) const;
 
-	// Drawing tools
+	/**
+	 * Clear a region by drawing a filled rect in the background colour.
+	 * @param clipRect The region to clear.
+	 */
 	void clear(Rect clipRect);
+
+	/**
+	 * Clear all visible regions of the gadget by drawing a filled rect
+	 * in the background colour.
+	 */
 	void clear();
+
+	/**
+	 * Draw all visible regions of this gadget's children.
+	 */
 	void drawChildren();
 
 	/**
@@ -914,39 +948,162 @@ protected:
 	s16 getGadgetIndex(Gadget* gadget);
 
 	/**
-	 * Make this child active or inactive.
-	 * @param active True to make the gadget active, false to make the gadget inactive.
+	 * Erase and remove the supplied child gadget from this gadget and
+	 * send it to the deletion queue.
+	 * @param gadget The gadget to close.
+	 * @see close().
 	 */
-	virtual void setActive(bool active);
-
 	virtual void closeChild(Gadget* gadget);
+
+	/**
+	 * Erase the supplied child gadget and move it out of the main child
+	 * list into the hidden list.  The gadget remains in memory and can
+	 * be restored by calling "show()" on the gadget.
+	 * @param gadget The gadget to hide.
+	 */
 	virtual void hideChild(Gadget* gadget);
 
+	/**
+	 * Redraws all regions of child gadgets that fall within the invalidRects
+	 * regions.
+	 * @param invalidRects List of invalid regions that need to be redrawn.
+	 * @param Pointer to the gadget that initiated the redraw.
+	 */
 	virtual void redrawDirtyChildren(DynamicArray<Rect>* invalidRects, Gadget* sender);
 
+	/**
+	 * Get a graphics port that can draw within this gadget's region.
+	 * The graphics port's drawing routines are automatically clipped to the
+	 * visible areas of this gadget.  Allows drawing over all regions of
+	 * the gadget, including the border.  The port must be deleted when
+	 * it is no longer required.
+	 * @return A new graphics port object.
+	 */
 	virtual GraphicsPort* newInternalGraphicsPort();
+
+	/**
+	 * Get a graphics port that can draw within the region of the supplied
+	 * clipping rect.  The port must be deleted when it is no longer required.
+	 * Note that the clipping rect should be clipped to the gadget's visible
+	 * region before creating the graphics port.
+	 * @return A new graphics port object.
+	 */
 	virtual GraphicsPort* newInternalGraphicsPort(Rect clipRect);
 
-	// Events
+	/**
+	 * Raise a click event to the event handler.
+	 * @param x The x co-ordinate of the click.
+	 * @param y The y co-ordinate of the click.
+	 */
 	void raiseClickEvent(s16 x, s16 y);
+
+	/**
+	 * Raise a shift click event to the event handler.
+	 * @param x The x co-ordinate of the click.
+	 * @param y The y co-ordinate of the click.
+	 */
 	void raiseShiftClickEvent(s16 x, s16 y);
+
+	/**
+	 * Raise a stylus release event to the event handler.
+	 * @param x The x co-ordinate of the release.
+	 * @param y The y co-ordinate of the release.
+	 */
 	void raiseReleaseEvent(s16 x, s16 y);
+
+	/**
+	 * Raise a stylus drag event to the event handler.
+	 * @param x The x co-ordinate of the stylus when the drag started.
+	 * @param y The y co-ordinate of the stylus when the drag started.
+	 * @param vX The horizontal distance dragged.
+	 * @param vY The vertical distance dragged.
+	 */
 	void raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY);
+
+	/**
+	 * Raise a VBL event to the event handler.
+	 */
 	void raiseVBLEvent();
+
+	/**
+	 * Raise a key press event to the event handler.
+	 * @param keyCode The code of the key that caused the event.
+	 */
 	void raiseKeyPressEvent(KeyCode keyCode);
+
+	/**
+	 * Raise a key release event to the event handler.
+	 * @param keyCode The code of the key that caused the event.
+	 */
 	void raiseKeyReleaseEvent(KeyCode keyCode);
+
+	/**
+	 * Raise a lid closed event to the event handler.
+	 */
 	void raiseLidClosedEvent();
+
+	/**
+	 * Raise a lid opened event to the event handler.
+	 */
 	void raiseLidOpenedEvent();
+
+	/**
+	 * Raise a focus event to the event handler.
+	 */
 	void raiseFocusEvent();
+
+	/**
+	 * Raise a blur event to the event handler.
+	 */
 	void raiseBlurEvent();
+
+	/**
+	 * Raise a close event to the event handler.
+	 */
 	void raiseCloseEvent();
+
+	/**
+	 * Raise a hide event to the event handler.
+	 */
 	void raiseHideEvent();
+
+	/**
+	 * Raise a show event to the event handler.
+	 */
 	void raiseShowEvent();
+
+	/**
+	 * Raise an enable event to the event handler.
+	 */
 	void raiseEnableEvent();
+
+	/**
+	 * Raise a disable event to the event handler.
+	 */
 	void raiseDisableEvent();
+
+	/**
+	 * Raise a value change event to the event handler.
+	 */
 	void raiseValueChangeEvent();
+
+	/**
+	 * Raise a resize event to the event handler.
+	 * @param width The new width of the gadget.
+	 * @param height The new height of the gadget.
+	 */
 	void raiseResizeEvent(u16 width, u16 height);
+
+	/**
+	 * Raise a move event to the event handler.
+	 * @param x The new x co-ordinate of the gadget.
+	 * @param y The new y co-ordinate of the gadget.
+	 */
 	void raiseMoveEvent(s16 x, s16 y);
+
+	/**
+	 * Raise a context menu selection event to the event handler.
+	 */
 	void raiseContextMenuSelectionEvent();
 };
 

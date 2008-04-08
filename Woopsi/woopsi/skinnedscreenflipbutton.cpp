@@ -26,13 +26,13 @@ void SkinnedScreenFlipButton::draw(Rect clipRect) {
 	port->drawFilledRect(0, 0, _width, _height, _backColour);
 
 	if (_flags.clicked) {
-		if (_parent->isActive()) {
+		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.focusClick, 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.blurClick, 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
 		}
 	} else {
-		if (_parent->isActive()) {
+		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.focus, 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.blur, 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);

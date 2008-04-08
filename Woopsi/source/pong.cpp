@@ -148,7 +148,7 @@ void Pong::handleVBL(const EventArgs& e) {
 }
 
 void Pong::handleKeyPress(const EventArgs& e) {
-	if (_window->isActive()) {
+	if (_window->hasFocus()) {
 		switch (e.keyCode) {
 			case KEY_CODE_UP:
 				_upHeld = true;
@@ -163,7 +163,7 @@ void Pong::handleKeyPress(const EventArgs& e) {
 }
 
 void Pong::handleKeyRelease(const EventArgs& e) {
-	if (_window->isActive()) {
+	if (_window->hasFocus()) {
 		switch (e.keyCode) {
 			case KEY_CODE_UP:
 				_upHeld = false;

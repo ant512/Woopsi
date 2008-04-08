@@ -39,8 +39,8 @@ bool DecorationGlyphButton::release(s16 x, s16 y) {
 }
 
 bool DecorationGlyphButton::focus() {
-	if (!_flags.active) {
-		_flags.active = true;
+	if (!_flags.hasFocus) {
+		_flags.hasFocus = true;
 
 		Gadget::draw();
 

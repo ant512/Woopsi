@@ -55,12 +55,12 @@ public:
 	virtual void draw(Rect clipRect);
 
 	/**
-	 * Sets the supplied gadget as the active child.  The gadget must
+	 * Sets the supplied gadget as the focused child.  The gadget must
 	 * be a child of this gadget.
 	 * @param gadget A pointer to the child gadget.
-	 * @see getActiveGadget()
+	 * @see getFocusedGadget()
 	 */
-	virtual void setActiveGadget(Gadget* gadget);
+	virtual void setFocusedGadget(Gadget* gadget);
 
 	/**
 	 * Swaps the depth of the supplied child gadget.
@@ -102,15 +102,15 @@ public:
 	 */
 	virtual bool flipScreens();
 
+	/**
+	 * Give the gadget focus.
+	 * @return True if the gadget received focus correctly.
+	 */
+	virtual bool focus();
+
 protected:
 	u8 _titleHeight;
 	char* _title;
-
-	/**
-	 * Make this child active or inactive.
-	 * @param active True to make the gadget active, false to make the gadget inactive.
-	 */
-	virtual void setActive(bool active);
 
 	/**
 	 * Destructor.

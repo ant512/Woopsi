@@ -256,7 +256,7 @@ void PacMan::handleVBL(const EventArgs& e) {
 }
 
 void PacMan::handleKeyPress(const EventArgs& e) {
-	if (_window->isActive()) {
+	if (_window->hasFocus()) {
 		if (e.gadget->getRefcon() == 1) {
 			switch (e.keyCode) {
 				case KEY_CODE_UP:

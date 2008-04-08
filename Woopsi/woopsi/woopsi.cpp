@@ -23,11 +23,7 @@ u32 Woopsi::_vblCount = 0;
 
 Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
 	_lidClosed = false;
-	_parent = NULL;
-	_clickedGadget = NULL;
-	_flags.clicked = false;
 	_flags.visible = true;
-	_activeGadget = NULL;
 
 	if (font == NULL) {
 		_font = getSystemFont();
@@ -84,17 +80,6 @@ bool Woopsi::vbl() {
 
 void Woopsi::draw(Gadget::Rect clipRect) {
 	clear(clipRect);
-}
-
-void Woopsi::setActiveGadget(Gadget* gadget) {
-	if (_activeGadget != gadget) {
-		// Deactivate the active screen
-		if (_activeGadget != NULL) {
-			_activeGadget->blur();
-		}
-
-		_activeGadget = gadget;
-	}
 }
 
 // Process all stylus input
@@ -183,77 +168,77 @@ bool Woopsi::release(s16 x, s16 y) {
 
 // Process all key input
 void Woopsi::handleKeys() {
-	if (_activeGadget != NULL) {
+	if (_focusedGadget != NULL) {
 		if (Pad.Newpress.A) {
-			_activeGadget->keyPress(KEY_CODE_A);
+			_focusedGadget->keyPress(KEY_CODE_A);
 		} else if (Pad.Released.A) {
-			_activeGadget->keyRelease(KEY_CODE_A);
+			_focusedGadget->keyRelease(KEY_CODE_A);
 		}
 
 		if (Pad.Newpress.B) {
-			_activeGadget->keyPress(KEY_CODE_B);
+			_focusedGadget->keyPress(KEY_CODE_B);
 		} else if (Pad.Released.B) {
-			_activeGadget->keyRelease(KEY_CODE_B);
+			_focusedGadget->keyRelease(KEY_CODE_B);
 		}
 
 		if (Pad.Newpress.X) {
-			_activeGadget->keyPress(KEY_CODE_X);
+			_focusedGadget->keyPress(KEY_CODE_X);
 		} else if (Pad.Released.X) {
-			_activeGadget->keyRelease(KEY_CODE_X);
+			_focusedGadget->keyRelease(KEY_CODE_X);
 		}
 
 		if (Pad.Newpress.Y) {
-			_activeGadget->keyPress(KEY_CODE_Y);
+			_focusedGadget->keyPress(KEY_CODE_Y);
 		} else if (Pad.Released.Y) {
-			_activeGadget->keyRelease(KEY_CODE_Y);
+			_focusedGadget->keyRelease(KEY_CODE_Y);
 		}
 
 		if (Pad.Newpress.L) {
-			_activeGadget->keyPress(KEY_CODE_L);
+			_focusedGadget->keyPress(KEY_CODE_L);
 		} else if (Pad.Released.L) {
-			_activeGadget->keyRelease(KEY_CODE_L);
+			_focusedGadget->keyRelease(KEY_CODE_L);
 		}
 
 		if (Pad.Newpress.R) {
-			_activeGadget->keyPress(KEY_CODE_R);
+			_focusedGadget->keyPress(KEY_CODE_R);
 		} else if (Pad.Released.R) {
-			_activeGadget->keyRelease(KEY_CODE_R);
+			_focusedGadget->keyRelease(KEY_CODE_R);
 		}
 
 		if (Pad.Newpress.Up) {
-			_activeGadget->keyPress(KEY_CODE_UP);
+			_focusedGadget->keyPress(KEY_CODE_UP);
 		} else if (Pad.Released.Up) {
-			_activeGadget->keyRelease(KEY_CODE_UP);
+			_focusedGadget->keyRelease(KEY_CODE_UP);
 		}
 
 		if (Pad.Newpress.Down) {
-			_activeGadget->keyPress(KEY_CODE_DOWN);
+			_focusedGadget->keyPress(KEY_CODE_DOWN);
 		} else if (Pad.Released.Down) {
-			_activeGadget->keyRelease(KEY_CODE_DOWN);
+			_focusedGadget->keyRelease(KEY_CODE_DOWN);
 		}
 
 		if (Pad.Newpress.Left) {
-			_activeGadget->keyPress(KEY_CODE_LEFT);
+			_focusedGadget->keyPress(KEY_CODE_LEFT);
 		} else if (Pad.Released.Left) {
-			_activeGadget->keyRelease(KEY_CODE_LEFT);
+			_focusedGadget->keyRelease(KEY_CODE_LEFT);
 		}
 
 		if (Pad.Newpress.Right) {
-			_activeGadget->keyPress(KEY_CODE_RIGHT);
+			_focusedGadget->keyPress(KEY_CODE_RIGHT);
 		} else if (Pad.Released.Right) {
-			_activeGadget->keyRelease(KEY_CODE_RIGHT);
+			_focusedGadget->keyRelease(KEY_CODE_RIGHT);
 		}
 
 		if (Pad.Newpress.Start) {
-			_activeGadget->keyPress(KEY_CODE_START);
+			_focusedGadget->keyPress(KEY_CODE_START);
 		} else if (Pad.Released.Start) {
-			_activeGadget->keyRelease(KEY_CODE_START);
+			_focusedGadget->keyRelease(KEY_CODE_START);
 		}
 
 		if (Pad.Newpress.Select) {
-			_activeGadget->keyPress(KEY_CODE_SELECT);
+			_focusedGadget->keyPress(KEY_CODE_SELECT);
 		} else if (Pad.Released.Select) {
-			_activeGadget->keyRelease(KEY_CODE_SELECT);
+			_focusedGadget->keyRelease(KEY_CODE_SELECT);
 		}
 	}
 }
@@ -496,8 +481,8 @@ void Woopsi::closeChild(Gadget* gadget) {
 		}
 
 		// Do we need to make another gadget active?
-		if (_activeGadget == gadget) {
-			_activeGadget = NULL;
+		if (_focusedGadget == gadget) {
+			_focusedGadget = NULL;
 		}
 
 		// Unset clicked gadget if necessary
@@ -524,8 +509,8 @@ void Woopsi::hideChild(Gadget* gadget) {
 		}
 
 		// Do we need to make another gadget active?
-		if (_activeGadget == gadget) {
-			_activeGadget = NULL;
+		if (_focusedGadget == gadget) {
+			_focusedGadget = NULL;
 		}
 
 		// Unset clicked gadget if necessary

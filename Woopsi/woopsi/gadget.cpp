@@ -56,7 +56,7 @@ void Gadget::init() {
 
 	_flags.clicked = false;
 	_flags.dragging = false;
-	_flags.active = false;
+	_flags.hasFocus = false;
 	_flags.deleted = false;
 	_flags.enabled = true;
 	_flags.visible = false;
@@ -66,7 +66,7 @@ void Gadget::init() {
 	_flags.erased = true;
 	_flags.shiftClickChildren = true;
 
-	_activeGadget = NULL;
+	_focusedGadget = NULL;
 	_clickedGadget = NULL;
 	_eventHandler = NULL;
 
@@ -112,37 +112,17 @@ void Gadget::setBorderless(bool isBorderless) {
 	invalidateVisibleRectCache();
 }
 
-void Gadget::setActive(bool active) {
+void Gadget::setFocusedGadget(Gadget* gadget) {
 
-	if (_flags.active != active) {
-		_flags.active = active;
-
-		if (_flags.active) {
-			// Notify parent if this gadget has become active
-			if (_parent != NULL) {
-				_parent->setActiveGadget(this);
-			}
-		} else {
-			// Notify active child if this gadget has become inactive
-			if (_activeGadget != NULL) {
-				_activeGadget->blur();
-				_activeGadget = NULL;
-			}
-		}
-	}
-}
-
-void Gadget::setActiveGadget(Gadget* gadget) {
-
-	if (_activeGadget != gadget) {
-		if (_activeGadget != NULL) {
+	if (_focusedGadget != gadget) {
+		if (_focusedGadget != NULL) {
 			// Blur the current active gadget
-			_activeGadget->blur();
+			_focusedGadget->blur();
 		}
 	}
 
 	// Remember the new active gadget
-	_activeGadget = gadget;
+	_focusedGadget = gadget;
 
 	// Make this gadget active too
 	focus();
@@ -1009,18 +989,18 @@ void Gadget::hideChild(Gadget* gadget) {
 			_clickedGadget->release(_clickedGadget->getX(), _clickedGadget->getY());
 		}
 
-		// Do we need to make another gadget active?
-		if (_activeGadget == gadget) {
+		// Do we need to give another gadget focus?
+		if (_focusedGadget == gadget) {
 
 			// Try to choose highest gadget
 			if (_gadgets.size() > 1) {
 				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 					if (_gadgets[i] != gadget) {
-						_activeGadget = _gadgets[i];
+						_focusedGadget = _gadgets[i];
 					}
 				}
 			} else {
-				_activeGadget = NULL;
+				_focusedGadget = NULL;
 			}
 		}
 
@@ -1030,12 +1010,12 @@ void Gadget::hideChild(Gadget* gadget) {
 		}
 
 		// Where should the focus go?
-		if (_activeGadget != NULL) {
+		if (_focusedGadget != NULL) {
 			// Send focus to the new active gadget
-			_activeGadget->focus();
+			_focusedGadget->focus();
 		} else {
 			// Give focus to this
-			setActiveGadget(NULL);
+			setFocusedGadget(NULL);
 		}
 
 		moveChildToHiddenList(gadget);
@@ -1057,17 +1037,17 @@ void Gadget::closeChild(Gadget* gadget) {
 		}
 
 		// Do we need to make another gadget active?
-		if (_activeGadget == gadget) {
+		if (_focusedGadget == gadget) {
 
 			// Try to choose highest gadget
 			if (_gadgets.size() > 1) {
 				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 					if (_gadgets[i] != gadget) {
-						_activeGadget = _gadgets[i];
+						_focusedGadget = _gadgets[i];
 					}
 				}
 			} else {
-				_activeGadget = NULL;
+				_focusedGadget = NULL;
 			}
 		}
 
@@ -1077,12 +1057,12 @@ void Gadget::closeChild(Gadget* gadget) {
 		}
 
 		// Where should the focus go?
-		if (_activeGadget != NULL) {
+		if (_focusedGadget != NULL) {
 			// Send focus to the new active gadget
-			_activeGadget->focus();
+			_focusedGadget->focus();
 		} else {
 			// Give focus to this
-			setActiveGadget(NULL);
+			setFocusedGadget(NULL);
 		}
 
 		moveChildToDeleteQueue(gadget);
@@ -1307,15 +1287,7 @@ bool Gadget::click(s16 x, s16 y) {
 				_flags.clicked = true;
 
 				// Take focus away from child gadgets
-				if (_activeGadget != NULL) {
-					_activeGadget->blur();
-					_activeGadget = NULL;
-				}
-
-				// Give focus to this gadget
-				if (!_flags.active) {
-					focus();
-				}
+				setFocusedGadget(NULL);
 
 				// Tell parent that the clicked gadget has changed
 				if (_parent != NULL) {
@@ -1349,15 +1321,7 @@ bool Gadget::shiftClick(s16 x, s16 y) {
 			// Handle clicks on this
 
 			// Take focus away from child gadgets
-			if (_activeGadget != NULL) {
-				_activeGadget->blur();
-				_activeGadget = NULL;
-			}
-
-			// Give focus to this gadget
-			if (!_flags.active) {
-				focus();
-			}
+			setFocusedGadget(NULL);
 
 			// Set up the context menu
 			showContextMenu(x, y);
@@ -1429,8 +1393,8 @@ bool Gadget::keyPress(KeyCode keyCode) {
 		raiseKeyPressEvent(keyCode);
 
 		// Handle active child
-		if (_activeGadget != NULL) {
-			_activeGadget->keyPress(keyCode);
+		if (_focusedGadget != NULL) {
+			_focusedGadget->keyPress(keyCode);
 		}
 
 		return true;
@@ -1446,8 +1410,8 @@ bool Gadget::keyRelease(KeyCode keyCode) {
 		raiseKeyReleaseEvent(keyCode);
 
 		// Handle active child
-		if (_activeGadget != NULL) {
-			_activeGadget->keyRelease(keyCode);
+		if (_focusedGadget != NULL) {
+			_focusedGadget->keyRelease(keyCode);
 		}
 
 		return true;
@@ -1476,8 +1440,13 @@ void Gadget::lidOpened() {
 
 bool Gadget::focus() {
 	if (_flags.enabled) {
-		if (!_flags.active) {
-			setActive(true);
+		if (!_flags.hasFocus) {
+			_flags.hasFocus = true;
+
+			// Notify parent that this gadget has focus
+			if (_parent != NULL) {
+				_parent->setFocusedGadget(this);
+			}
 
 			raiseFocusEvent();
 
@@ -1490,14 +1459,13 @@ bool Gadget::focus() {
 
 bool Gadget::blur() {
 
-	if (_flags.active) {
-
-		setActive(false);
+	if (_flags.hasFocus) {
+		_flags.hasFocus = false;
 
 		// Take focus away from child gadgets
-		if (_activeGadget != NULL) {
-			_activeGadget->blur();
-			_activeGadget = NULL;
+		if (_focusedGadget != NULL) {
+			_focusedGadget->blur();
+			_focusedGadget = NULL;
 		}
 
 		raiseBlurEvent();
@@ -1872,8 +1840,8 @@ bool Gadget::removeChild(Gadget* gadget) {
 		if (_gadgets[i] == gadget) {
 
 			// Do we need to make another gadget active?
-			if (_activeGadget == gadget) {
-				_activeGadget = NULL;
+			if (_focusedGadget == gadget) {
+				_focusedGadget = NULL;
 			}
 
 			// Unset clicked gadget if necessary

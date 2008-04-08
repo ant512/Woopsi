@@ -11,6 +11,10 @@ Change Log
        calling delete.
      - Textbox::resize() remembers correct value of visible flag.
      - Gadget::show() invalidates the rect cache correctly.
+     - Renamed Gadget "active" flag to "hasFocus".
+     - Renamed Gadget "setActiveGadget" to "setFocusedGadget".
+     - Renamed Gadget "_activeGadget" to "_focusedGadget".
+     - Refactored Gadget "setActive()" into "focus()" and "blur()" methods.
   
   - New Features:
      - Added ScrollingTextBox class.
