@@ -25,6 +25,8 @@ Change Log
         - Added Gadget::drawingEnabled().
         - Gadget::drawingEnabled() only returns true if the gadget is not hidden
           or deleted.
+        - GraphicsPort drawing methods do not check Gadget::isDeleted() as it
+          is checked in drawingEnabled().
   
   - New Features:
      - Added ScrollingTextBox class.
