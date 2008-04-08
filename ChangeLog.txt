@@ -38,6 +38,8 @@ Change Log
      - Added bonus code folder.
      - Moved LinkedList and LinkedListIterator classes from main codebase into
        bonus folder.
+     - Added Hashmap and HashmapIterator classes into bonus folder.
+     - Restored SimpleWindow and SimpleScreen classes in bonus folder.
      - Added getPreferredDimensions() to Gadget and Textbox classes.
      - Moved header includes from woopsi.h to new woopsiheaders.h to allow
        more streamlined binaries.
