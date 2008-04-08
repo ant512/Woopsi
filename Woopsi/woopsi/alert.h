@@ -14,7 +14,7 @@ class MultiLineTextBox;
 /**
  * Class providing a window containing a textbox and an OK button.  The contents of the textbox and the title
  * of the window can be set in the constructor.  Designed to show short messages to the user.
- * The contents of the window will automatically resize itself to fit the dimensions of the window.
+ * The contents of the window will automatically resize to fit the dimensions of the window.
  */
 class Alert : public AmigaWindow {
 public:
@@ -37,8 +37,8 @@ public:
 	virtual bool handleEvent(const EventArgs& e);
 
 protected:
-	Button* _button;
-	MultiLineTextBox* _textBox;
+	Button* _button;					/**< Pointer to the OK button */
+	MultiLineTextBox* _textBox;			/**< Pointer to the alert message box */
 
 	/**
 	 * Destructor.

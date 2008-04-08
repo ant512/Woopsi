@@ -546,7 +546,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\pacghost.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacghosts.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\pacman.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacmap.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacplayer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacsprite.cpp"
 				>
 			</File>
 			<File
@@ -562,7 +582,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\pacghost.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacghosts.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\pacman.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacmap.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacplayer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\pacsprite.h"
 				>
 			</File>
 			<File
