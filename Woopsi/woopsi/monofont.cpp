@@ -20,8 +20,8 @@ const u16 MonoFont::getPixel(const u32 position) const {
 
 // Scan a glyph for any data that can be drawn
 const bool MonoFont::scanGlyph(const u16 x, const u16 y) const {
-	u8 maxX = x + getWidth();
-	u8 maxY = y + getHeight();
+	u16 maxX = x + getWidth();
+	u16 maxY = y + getHeight();
 	u16 bitmapWidth = getBitmapWidth();
 	u32 pos = 0;
 
