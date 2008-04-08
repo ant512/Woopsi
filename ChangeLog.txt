@@ -31,6 +31,7 @@ Change Log
      - Fixed spelling of "closeable" to "closable".
      - Moved Gadget::_visibleRegionCacheInvalid bool into the flags struct.
      - Split PacMan demo into separate files for each class.
+     - Fixed Font and MonoFont scanGlyph() max co-ord overflows.
   
   - New Features:
      - Added ScrollingTextBox class.
