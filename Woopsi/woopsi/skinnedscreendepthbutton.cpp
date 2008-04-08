@@ -8,7 +8,7 @@ SkinnedScreenDepthButton::SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSki
 
 	// Parse skin information
 	_flags.borderless = _skin->depthButton.borderless;
-	_flags.visible = _skin->depthButton.visible;
+	_flags.drawingEnabled = _skin->depthButton.visible;
 	_width = _skin->depthButton.bitmap.width;
 	_height = _skin->depthButton.bitmap.height;
 	_font = _skin->screen.font.font;

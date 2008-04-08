@@ -9,7 +9,7 @@ SkinnedWindowCloseButton::SkinnedWindowCloseButton(s16 x, s16 y, const WindowSki
 	_height = _skin->closeButton.bitmap.width;
 	_width = _skin->closeButton.bitmap.height;
 	_flags.borderless = _skin->closeButton.borderless;
-	_flags.visible = _skin->closeButton.visible;
+	_flags.drawingEnabled = _skin->closeButton.visible;
 	_font = _skin->window.font.font;
 	_backColour = _skin->window.colours.back;
 	_shineColour = _skin->window.colours.shine;

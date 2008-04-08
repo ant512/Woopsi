@@ -123,11 +123,11 @@ bool ScrollbarHorizontal::resize(u16 width, u16 height) {
 	s16 value = getValue();
 	bool resized = false;
 	bool events = raisesEvents();
-	bool visible = isVisible();
+	bool drawing = _flags.drawingEnabled;
 
 	// Hide and disable drawing
 	erase();
-	setVisible(false);
+	_flags.drawingEnabled = false;
 
 	// Disable event raising
 	setRaisesEvents(false);
@@ -146,7 +146,7 @@ bool ScrollbarHorizontal::resize(u16 width, u16 height) {
 	}
 
 	// Show and reset drawing
-	setVisible(visible);
+	_flags.drawingEnabled = drawing;
 	draw();
 
 	// Reset event raising

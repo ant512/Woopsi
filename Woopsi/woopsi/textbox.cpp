@@ -161,11 +161,11 @@ bool Textbox::resize(u16 width, u16 height) {
 
 	// Remember current values
 	bool resized = false;
-	bool visible = _flags.visible;
+	bool drawing = _flags.drawingEnabled;
 
 	// Hide and disable drawing
 	erase();
-	setVisible(false);
+	_flags.drawingEnabled = false;
 
 	// Attempt to resize
 	if (Gadget::resize(width, height)) {
@@ -175,7 +175,7 @@ bool Textbox::resize(u16 width, u16 height) {
 	}
 
 	// Show and reset drawing
-	setVisible(visible);
+	_flags.drawingEnabled = drawing;
 	draw();
 	
 	return resized;

@@ -127,14 +127,14 @@ bool ScrollbarVertical::resize(u16 width, u16 height) {
 	s16 value = getValue();
 	bool resized = false;
 	bool events = raisesEvents();
-	bool visible = isVisible();
+	bool drawing = _flags.drawingEnabled;
 
 	// Disable event raising
 	setRaisesEvents(false);
 
 	// Hide and disable drawing
 	erase();
-	setVisible(false);
+	_flags.drawingEnabled = false;
 
 	if (Gadget::resize(width, height)) {
 
@@ -150,7 +150,7 @@ bool ScrollbarVertical::resize(u16 width, u16 height) {
 	}
 
 	// Show and reset drawing
-	setVisible(visible);
+	_flags.drawingEnabled = drawing;
 	draw();
 
 	// Reset event raising

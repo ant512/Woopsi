@@ -8,7 +8,7 @@ SkinnedScreenFlipButton::SkinnedScreenFlipButton(s16 x, s16 y, const ScreenSkin*
 
 	// Parse skin information
 	_flags.borderless = _skin->flipButton.borderless;
-	_flags.visible = _skin->flipButton.visible;
+	_flags.drawingEnabled = _skin->flipButton.visible;
 	_width = _skin->flipButton.bitmap.width;
 	_height = _skin->flipButton.bitmap.height;
 	_font = _skin->screen.font.font;

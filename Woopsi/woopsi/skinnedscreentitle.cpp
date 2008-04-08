@@ -6,7 +6,7 @@ SkinnedScreenTitle::SkinnedScreenTitle(char* text, const ScreenSkin* skin) : Scr
 	_skin = skin;
 
 	// Parse skin information
-	_flags.visible = _skin->titleBar.visible;
+	_flags.drawingEnabled = _skin->titleBar.visible;
 	_width = SCREEN_WIDTH;
 	_height = _skin->titleBar.bitmap.height;
 	_font = _skin->screen.font.font;

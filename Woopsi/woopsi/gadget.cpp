@@ -7,6 +7,8 @@
 #include "contextmenu.h"
 
 Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
+
+	// Set properties from parameters
 	_x = x;
 	_y = y;
 	_width = width;
@@ -18,14 +20,53 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 		_font = Woopsi::getSystemFont();
 	}
 
-	_parent = NULL;
-
 	// Mask flags against bitmasks and logical NOT twice to obtain boolean values
 	_flags.borderless = (!(!(flags & GADGET_BORDERLESS)));
 	_flags.draggable = (!(!(flags & GADGET_DRAGGABLE)));
 	_flags.closeable = (!(!(flags & GADGET_CLOSEABLE)));
 
-	init();
+	// Dragging values
+	_grabPointX = 0;
+	_grabPointY = 0;
+	_newX = 0;
+	_newY = 0;
+
+	// Set default colours
+	_backColour = woopsiRGB(20, 20, 20);
+	_shineColour = woopsiRGB(31, 31, 31);
+	_highlightColour = woopsiRGB(12, 17, 23);
+	_shadowColour = woopsiRGB(0, 0, 0);
+	_fillColour = woopsiRGB(24, 24, 24);
+	_darkColour = woopsiRGB(15, 15, 15);
+
+	// Set initial flag values
+	_flags.clicked = false;
+	_flags.dragging = false;
+	_flags.hasFocus = false;
+	_flags.deleted = false;
+	_flags.enabled = true;
+	_flags.drawingEnabled = false;
+	_flags.decoration = false;
+	_flags.permeable = false;
+	_flags.raisesEvents = true;
+	_flags.erased = true;
+	_flags.shiftClickChildren = true;
+	_flags.hidden = false;
+
+	// Set hierarchy pointers
+	_parent = NULL;
+	_focusedGadget = NULL;
+	_clickedGadget = NULL;
+	_eventHandler = NULL;
+
+	// Set other default values
+	_decorationCount = 0;
+	_refcon = 0;
+
+	_visibleRegionCacheInvalid = true;
+	
+	_outline = OUTLINE_CLICK_DEPENDENT;
+	_closeType = CLOSE_TYPE_CLOSE;
 }
 
 Gadget::~Gadget() {
@@ -41,41 +82,6 @@ Gadget::~Gadget() {
 
 	_gadgets.clear();
 	_hiddenGadgets.clear();
-}
-
-void Gadget::init() {
-	_grabPointX = 0;
-	_grabPointY = 0;
-
-	_backColour = woopsiRGB(20, 20, 20);
-	_shineColour = woopsiRGB(31, 31, 31);
-	_highlightColour = woopsiRGB(12, 17, 23);
-	_shadowColour = woopsiRGB(0, 0, 0);
-	_fillColour = woopsiRGB(24, 24, 24);
-	_darkColour = woopsiRGB(15, 15, 15);
-
-	_flags.clicked = false;
-	_flags.dragging = false;
-	_flags.hasFocus = false;
-	_flags.deleted = false;
-	_flags.enabled = true;
-	_flags.visible = false;
-	_flags.decoration = false;
-	_flags.permeable = false;
-	_flags.raisesEvents = true;
-	_flags.erased = true;
-	_flags.shiftClickChildren = true;
-
-	_focusedGadget = NULL;
-	_clickedGadget = NULL;
-	_eventHandler = NULL;
-
-	_decorationCount = 0;
-
-	_visibleRegionCacheInvalid = true;
-	
-	_outline = OUTLINE_CLICK_DEPENDENT;
-	_closeType = CLOSE_TYPE_CLOSE;
 }
 
 const s16 Gadget::getX() const {
@@ -94,13 +100,14 @@ const s16 Gadget::getY() const {
 	return _y;
 }
 
-const bool Gadget::isVisible() const {
+const bool Gadget::isDrawingEnabled() const {
 	if (_parent != NULL) {
-		if (_parent->isVisible()) {
-			return _flags.visible;
+		if (_parent->isDrawingEnabled()) {
+			// Drawing is enabled if the gadget is drawable, not deleted, and not hidden
+			return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.hidden));
 		}
 	} else {
-		return _flags.visible;
+		return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.hidden));
 	}
 
 	return false;
@@ -491,7 +498,7 @@ void Gadget::drawChildren() {
 }
 
 void Gadget::draw() {
-	if (isVisible()) {
+	if (isDrawingEnabled()) {
 		cacheVisibleRects();
 
 		// Create pointer to a vector to store the overlapped rectangles
@@ -538,7 +545,7 @@ void Gadget::draw() {
 // Called when erasing a gadget higher up the vector
 void Gadget::redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 
-	if (isVisible()) {
+	if (isDrawingEnabled()) {
 
 		// Draw any children first
 		redrawDirtyChildren(invalidRects, sender);
@@ -854,7 +861,7 @@ void Gadget::close() {
 		raiseCloseEvent();
 
 		_flags.deleted = true;
-		_flags.visible = false;
+		_flags.drawingEnabled = false;
 
 		erase();
 
@@ -867,13 +874,14 @@ void Gadget::close() {
 // Erases the gadget from the display and prevents it from being redrawn
 bool Gadget::hide() {
 
-	if (_flags.visible) {
+	if (!_flags.hidden) {
 
 		raiseHideEvent();
 
 		erase();
 
-		_flags.visible = false;
+		_flags.hidden = true;
+		_flags.drawingEnabled = false;
 
 		if (_parent != NULL) {
 			_parent->hideChild(this);
@@ -888,11 +896,12 @@ bool Gadget::hide() {
 // Re-enables drawing and draws the gadget to the display
 bool Gadget::show() {
 
-	if (!_flags.visible) {
+	if (_flags.hidden) {
 
 		raiseShowEvent();
 
-		_flags.visible = true;
+		_flags.drawingEnabled = true;
+		_flags.hidden = false;
 
 		if (_parent != NULL) {
 			_parent->moveHiddenToChildList(this);
@@ -980,7 +989,7 @@ void Gadget::hideChild(Gadget* gadget) {
 	if (gadget != NULL) {
 
 		// Ensure gadget knows it is being closed
-		if (gadget->isVisible()) {
+		if (!gadget->isHidden()) {
 			gadget->hide();
 		}
 
@@ -1259,10 +1268,10 @@ bool Gadget::resize(u16 width, u16 height) {
 }
 
 bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
-	bool wasVisible = _flags.visible;
-	setVisible(false);
+	bool wasDrawing = _flags.drawingEnabled;
+	_flags.drawingEnabled = false;
 	bool moved = moveTo(x, y);
-	setVisible(wasVisible);
+	_flags.drawingEnabled = wasDrawing;
 	return (resize(width, height) | moved);
 }
 
@@ -1564,7 +1573,7 @@ void Gadget::addGadget(Gadget* gadget) {
 			_gadgets.push_back(gadget);
 		}
 
-		gadget->setVisible(true);
+		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();
 	}
@@ -1585,7 +1594,7 @@ void Gadget::insertGadget(Gadget* gadget) {
 			_gadgets.insert(_gadgets.begin() + _decorationCount, gadget);
 		}
 
-		gadget->setVisible(true);
+		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();
 	}
@@ -1857,7 +1866,7 @@ bool Gadget::removeChild(Gadget* gadget) {
 			// Divorce child from parent
 			gadget->setParent(NULL);
 			
-			gadget->setVisible(false);
+			gadget->disableDrawing();
 
 			// Remove gadget from main vector
 			_gadgets.erase(_gadgets.begin() + i);
@@ -1876,7 +1885,7 @@ bool Gadget::removeChild(Gadget* gadget) {
 			// Remove gadget from hidden vector
 			_hiddenGadgets.erase(_hiddenGadgets.begin() + i);
 
-			gadget->setVisible(false);
+			gadget->disableDrawing();
 
 			return true;
 		}

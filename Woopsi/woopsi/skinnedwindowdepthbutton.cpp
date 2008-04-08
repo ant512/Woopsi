@@ -9,7 +9,7 @@ SkinnedWindowDepthButton::SkinnedWindowDepthButton(s16 x, s16 y, const WindowSki
 	_height = _skin->depthButton.bitmap.width;
 	_width = _skin->depthButton.bitmap.height;
 	_flags.borderless = _skin->depthButton.borderless;
-	_flags.visible = _skin->depthButton.visible;
+	_flags.drawingEnabled = _skin->depthButton.visible;
 	_font = _skin->depthButton.font.font;
 	_backColour = _skin->depthButton.colours.back;
 	_shineColour = _skin->depthButton.colours.shine;

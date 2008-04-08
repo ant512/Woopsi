@@ -23,7 +23,7 @@ u32 Woopsi::_vblCount = 0;
 
 Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
 	_lidClosed = false;
-	_flags.visible = true;
+	_flags.drawingEnabled = true;
 
 	if (font == NULL) {
 		_font = getSystemFont();
@@ -106,7 +106,7 @@ bool Woopsi::click(s16 x, s16 y) {
 		if (_gadgets[i]->click(x, y)) {
 
 			// Do we need to close the context menu?
-			if ((_gadgets[i] != _contextMenu) && (_contextMenu->isVisible())) {
+			if ((_gadgets[i] != _contextMenu) && (_contextMenu->isDrawingEnabled())) {
 				_contextMenu->hide();
 				_contextMenu->reset();
 			}
@@ -123,7 +123,7 @@ bool Woopsi::shiftClick(s16 x, s16 y) {
 	_flags.clicked = true;
 
 	// Close the existing context menu
-	if (_contextMenu->isVisible()) {
+	if (_contextMenu->isDrawingEnabled()) {
 		_contextMenu->hide();
 		_contextMenu->reset();
 	}
@@ -321,7 +321,7 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 		Gadget* topGadget = NULL;
 
 		for (u8 i = 0; i < _gadgets.size(); i++) {
-			if ((_gadgets[i]->isVisible()) && (!_gadgets[i]->isDeleted())) {
+			if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted())) {
 				if (_gadgets[i]->getPhysicalScreenNumber() == 1) {
 					topGadget = _gadgets[i];
 					break;
@@ -344,12 +344,12 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 				}
 			}
 
-			topGadget->setVisible(false);
+			topGadget->disableDrawing();
 
 			// Move to top of stack
 			topGadget->raiseToTop();
 
-			topGadget->setVisible(true);
+			topGadget->enableDrawing();
 
 			// Move to bottom screen
 			((Screen*)topGadget)->flipToBottomScreen();
@@ -504,7 +504,7 @@ void Woopsi::hideChild(Gadget* gadget) {
 	if (gadget != NULL) {
 
 		// Ensure gadget knows it is being closed
-		if (gadget->isVisible()) {
+		if (!gadget->isHidden()) {
 			gadget->hide();
 		}
 

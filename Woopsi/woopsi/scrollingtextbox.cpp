@@ -143,8 +143,8 @@ bool ScrollingTextBox::drag(s16 x, s16 y, s16 vX, s16 vY) {
 bool ScrollingTextBox::resize(u16 width, u16 height) {
 
 	// Prevent drawing
-	bool visible = isVisible();
-	setVisible(false);
+	bool drawing = _flags.drawingEnabled;
+	_flags.drawingEnabled = false;
 
 	// Ensure children are free to adjust
 	setPermeable(true);
@@ -163,7 +163,7 @@ bool ScrollingTextBox::resize(u16 width, u16 height) {
 	setPermeable(false);
 
 	// Reset drawing
-	setVisible(visible);
+	_flags.drawingEnabled = drawing;
 
 	return true;
 }

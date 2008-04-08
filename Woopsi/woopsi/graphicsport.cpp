@@ -86,7 +86,7 @@ void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u1
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Store current font colour
 	bool isMonochrome = font->isMonochrome();
@@ -110,7 +110,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter, u16 colou
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char* string, u16 colour) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Store current font colour
 	bool isMonochrome = font->isMonochrome();
@@ -134,7 +134,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char* string, u16 colo
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Convert char to char[]
 	char text[2];
@@ -152,7 +152,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char* string) {
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, char* string) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -334,7 +334,7 @@ void GraphicsPort::clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect&
 void GraphicsPort::drawHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -355,7 +355,7 @@ void GraphicsPort::drawHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 void GraphicsPort::drawVertLine(s16 x, s16 y, s16 height, u16 colour) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -375,7 +375,7 @@ void GraphicsPort::drawVertLine(s16 x, s16 y, s16 height, u16 colour) {
 void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -394,7 +394,7 @@ void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 // Draw filled circle - external function
 void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x0, &y0);
@@ -442,7 +442,7 @@ void GraphicsPort::clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, cons
 void GraphicsPort::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -468,7 +468,7 @@ void GraphicsPort::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Ignore command if gadget is borderless
 	if (_gadget->isBorderless()) return;
@@ -495,7 +495,7 @@ void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height) {
 void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shineColour, u16 shadowColour) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -521,7 +521,7 @@ void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shi
 void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -547,7 +547,7 @@ void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
 void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight) {
 	
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -576,7 +576,7 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 void GraphicsPort::drawXORHorizLine(s16 x, s16 y, s16 width) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -598,7 +598,7 @@ void GraphicsPort::drawXORHorizLine(s16 x, s16 y, s16 width) {
 void GraphicsPort::drawXORVertLine(s16 x, s16 y, s16 height) {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -678,7 +678,7 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 void GraphicsPort::clear() {
 
 	// Ignore command if gadget deleted or invisible
-	if ((_gadget->isDeleted()) || (!_gadget->isVisible())) return;
+	if ((_gadget->isDeleted()) || (!_gadget->isDrawingEnabled())) return;
 
 	_gadget->draw();
 }

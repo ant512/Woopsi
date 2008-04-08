@@ -64,9 +64,10 @@ public:
 		u8 hasFocus : 1;				/**< True if the gadget has focus. */
 		u8 dragging : 1;				/**< True if the gadget is being dragged. */
 		u8 deleted : 1;					/**< True if the gadget has been deleted. */
+		u8 hidden : 1;					/**< True if the gadget has been hidden. */
 		u8 borderless : 1;				/**< True if the gadget is borderless. */
 		u8 draggable : 1;				/**< True if the gadget can be dragged. */
-		u8 visible : 1;					/**< True if the gadget should be drawn. */
+		u8 drawingEnabled : 1;			/**< True if the gadget should be drawn. */
 		u8 closeable : 1;				/**< True if the gadget can be closed. */
 		u8 enabled : 1;					/**< True if the gadget is enabled. */
 		u8 decoration : 1;				/**< True if the gadget is a decoration. */
@@ -139,10 +140,12 @@ public:
 	inline const bool isDeleted() const { return _flags.deleted; };
 
 	/**
-	 * Is the gadget visible?
-	 * @return True if visible.
+	 * Is the gadget allowed to draw?  This function recurses up the gadget
+	 * hierarchy and only returns true if all of the gadgets in the ancestor
+	 * chain are visible.
+	 * @return True if drawing is enabled.
 	 */
-	const bool isVisible() const;
+	const bool isDrawingEnabled() const;
 
 	/**
 	 * Is the gadget a decoration?
@@ -171,6 +174,12 @@ public:
 	 * @return True if the gadget is currently clicked.
 	 */
 	inline const bool isClicked() const { return _flags.clicked; };
+
+	/**
+	 * Is the gadget hidden?
+	 * @return True if the gadget is hidden.
+	 */
+	inline const bool isHidden() const { return _flags.hidden; };
 
 	/**
 	 * Does the gadget shift-click its children?
@@ -364,13 +373,15 @@ public:
 	inline void setRaisesEvents(const bool raisesEvents) { _flags.raisesEvents = raisesEvents; };
 
 	/**
-	 * Sets the gadget visible or invisible. This does not redraw or
-	 * erase the gadget.  Gadgets hidden using this method will still
+	 * Disabled drawing of this gadget. Gadgets hidden using this method will still
 	 * be processed.
-	 *
-	 * @param visible The visibility state.
 	 */
-	inline void setVisible(const bool visible) { _flags.visible = visible; };
+	inline void disableDrawing() { _flags.drawingEnabled = false; };
+
+	/**
+	 * Enables drawing of this gadget.
+	 */
+	inline void enableDrawing() { _flags.drawingEnabled = true; };
 
 	/**
 	 * Sets the background colour.
@@ -890,11 +901,6 @@ protected:
 	 * Destructor.
 	 */
 	virtual ~Gadget();
-
-	/**
-	 * Initialise the gadget.
-	 */
-	void init();
 
 	/**
 	 * Get the current physical display co-ordinate for the supplied y co-ordinate.

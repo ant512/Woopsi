@@ -11,10 +11,20 @@ Change Log
        calling delete.
      - Textbox::resize() remembers correct value of visible flag.
      - Gadget::show() invalidates the rect cache correctly.
-     - Renamed Gadget "active" flag to "hasFocus".
-     - Renamed Gadget "setActiveGadget" to "setFocusedGadget".
-     - Renamed Gadget "_activeGadget" to "_focusedGadget".
-     - Refactored Gadget "setActive()" into "focus()" and "blur()" methods.
+     - Refactored active/inactive/focused/blurred system:
+        - Renamed Gadget "active" flag to "hasFocus".
+        - Renamed Gadget "setActiveGadget" to "setFocusedGadget".
+        - Renamed Gadget "_activeGadget" to "_focusedGadget".
+        - Refactored Gadget "setActive()" into "focus()" and "blur()" methods.
+     - Refactored visible/invisible system:
+        - Renamed Gadget "visible" flag to "drawingEnabled".
+        - Removed Gadget::setVisible().
+        - Removed Gadget::isVisible().
+        - Added Gadget::enableDrawing().
+        - Added Gadget::disableDrawing().
+        - Added Gadget::drawingEnabled().
+        - Gadget::drawingEnabled() only returns true if the gadget is not hidden
+          or deleted.
   
   - New Features:
      - Added ScrollingTextBox class.
@@ -26,6 +36,9 @@ Change Log
        more streamlined binaries.
      - Added Gadget::remove() and Gadget::removeChild() methods.
      - Started ContextMenu and ContextMenuItem classes.
+     - Added Gadget "hidden" flag to more accurately identify if a gadget has
+       been hidden.
+     - Added Gadget::isHidden() method.
 
 
   V0.30 (20080326)

@@ -39,10 +39,10 @@ void Debug::output(char* text) {
 
 		createDebug();
 
-		_debug->_textBox->setVisible(false);
+		_debug->_textBox->disableDrawing();
 		_debug->_textBox->addText(">");
 		_debug->_textBox->addText(text);
-		_debug->_textBox->setVisible(true);
+		_debug->_textBox->enableDrawing();
 		_debug->_textBox->addText("\n");
 	}
 }
@@ -101,7 +101,7 @@ void Debug::createGUI() {
 			_window->getClientRect(rect);
 
 			_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
-			_textBox->setVisible(false);
+			_textBox->disableDrawing();
 			_window->addGadget(_textBox);
 			_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
 			_textBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
@@ -109,7 +109,7 @@ void Debug::createGUI() {
 			_textBox->addText(WOOPSI_VERSION);
 			_textBox->addText("\n");
 			_textBox->addText(WOOPSI_COPYRIGHT);
-			_textBox->setVisible(true);
+			_textBox->enableDrawing();
 			_textBox->addText("\n");
 		}
 	}

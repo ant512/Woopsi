@@ -317,7 +317,7 @@ const u16 MultiLineTextBox::getCurrentPage() const {
 }
 
 bool MultiLineTextBox::resize(u16 width, u16 height) {
-	setVisible(false);
+	disableDrawing();
 
 	bool raiseEvent = false;
 
@@ -329,7 +329,7 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 	getClientRect(rect);
 	_canvasWidth = rect.width;
 
-	setVisible(true);
+	enableDrawing();
 
 	// Re-wrap the text
 	_text->setWidth(_width);
