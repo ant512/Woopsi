@@ -8,6 +8,7 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_maximumValue = 0;
 	_minimumGripHeight = 5;
 	_pageSize = 1;
+	_flags.permeable = true;
 
 	// Create grip
 	Rect rect;

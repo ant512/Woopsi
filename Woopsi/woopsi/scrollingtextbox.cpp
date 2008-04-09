@@ -92,7 +92,7 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 					if (_scrollbar != NULL) {
 						_scrollbar->setRaisesEvents(false);
 						_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
-						_scrollbar->setValue(_scrollbar->getMinimumValue());
+						//_scrollbar->setValue(_scrollbar->getMinimumValue());
 						_scrollbar->resizeGrip();
 						_scrollbar->setValue(0 - _textbox->getCanvasY());
 						_scrollbar->setRaisesEvents(true);
