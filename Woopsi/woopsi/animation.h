@@ -34,10 +34,10 @@ public:
 	 * Struct defining a single animation frame.
 	 */
 	typedef struct {
-		const u16* bitmap;
-		u16 width;
-		u16 height;
-		u8 delay;
+		const u16* bitmap;			/**< Pointer to the bitmap image */
+		u16 width;					/**< Width of the bitmap image */
+		u16 height;					/**< Height of the bitmap image */
+		u8 delay;					/**< Additional number of VBLs that this frame should be displayed for */
 	} AnimFrame;
 
 	/**
@@ -146,16 +146,16 @@ public:
 	void goToFrame(u16 frame);
 
 private:
-	DynamicArray<AnimFrame> _frames;
-	u8 _speed;
-	u16 _frameTimer;
-	u16 _currentFrame;
-	s8 _frameInc;
-	u16 _requestedLoops;
-	u16 _loopCount;
+	DynamicArray<AnimFrame> _frames;			/**< Array of animation frames */
+	u8 _speed;									/**< Speed of the animation (smaller = faster) */
+	u16 _frameTimer;							/**< Time that the current frame has been on screen */
+	u16 _currentFrame;							/**< Index of currently displayed frame */
+	s8 _frameInc;								/**< Value added to current frame index to move to next frame */
+	u16 _requestedLoops;						/**< Number of times animation should loop */
+	u16 _loopCount;								/**< Number of times animation has looped */
 
-	LoopType _loopType;
-	Status _status;
+	LoopType _loopType;							/**< Loop type of the animation */
+	Status _status;								/**< Current status (playing, stopped, etc) of the animation */
 
 	/**
 	 * Attempt to loop the animation once it reaches the end.

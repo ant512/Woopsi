@@ -87,7 +87,7 @@ protected:
 	virtual void createGlyphMap();
 
 private:
-	u8 _width;
+	u8 _width;							/**< The width of a single glyph */
 };
 
 #endif

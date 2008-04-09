@@ -42,9 +42,9 @@ public:
 	virtual bool handleEvent(const EventArgs& e);
 
 protected:
-	ScreenTitle* _screenTitle;
-	DecorationGlyphButton* _depthButton;
-	DecorationGlyphButton* _flipButton;
+	ScreenTitle* _screenTitle;						/**< Title of the screen */
+	DecorationGlyphButton* _depthButton;			/**< Pointer to the screen's depth button */
+	DecorationGlyphButton* _flipButton;				/**< Pointer to the screen's flip button */
 
 	/**
 	 * Destructor.

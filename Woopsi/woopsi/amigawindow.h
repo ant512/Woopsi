@@ -104,14 +104,14 @@ public:
 	virtual bool handleEvent(const EventArgs& e);
 
 protected:
-	char* _title;
+	char* _title;									/**< The window's title */
 
-	WindowBorderTop* _windowBorderTop;
-	WindowBorderSide* _windowBorderLeft;
-	WindowBorderSide* _windowBorderRight;
-	WindowBorderBottom* _windowBorderBottom;
-	WindowBorderButton* _closeButton;
-	WindowBorderButton* _depthButton;
+	WindowBorderTop* _windowBorderTop;				/**< Pointer to the top border */
+	WindowBorderSide* _windowBorderLeft;			/**< Pointer to the left border */
+	WindowBorderSide* _windowBorderRight;			/**< Pointer to the right border */
+	WindowBorderBottom* _windowBorderBottom;		/**< Pointer to the bottom border */
+	WindowBorderButton* _closeButton;				/**< Pointer to the close button */
+	WindowBorderButton* _depthButton;				/**< Pointer to the depth button */
 
 	/**
 	 * Create the window's border.

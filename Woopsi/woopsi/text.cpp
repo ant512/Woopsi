@@ -83,7 +83,6 @@ void Text::setWidth(u16 width) {
 	wrap();
 }
 
-// Wrap text to fit onto DS screens
 void Text::wrap() {
 
 	// Wipe the width variable

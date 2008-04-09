@@ -54,7 +54,7 @@ public:
 	s16 drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
 private:
-	const u16* _bitmap;
+	const u16* _bitmap;					/**< Pointer to the bitmap containing the font glyphs */
 	
 	/**
 	 * Scans the glyph bitmap at the specified co-ordinates to see if it contains data or

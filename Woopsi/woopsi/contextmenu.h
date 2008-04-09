@@ -8,17 +8,24 @@ using namespace std;
 
 class ContextMenuItem;
 
+/**
+ * The context menu is implemented as a member of the Woopsi class.
+ * It should not be instantiated elsewhere.  It offers a simple
+ * context-aware menu that opens when the user holds down a modifier
+ * key when tapping a gadget.
+ */
 class ContextMenu : public Gadget, public EventHandler {
 public:
 
 	/**
 	 * Constructor.
-	 * @
+	 * @param font The font to use with the context menu.
 	 */
 	ContextMenu(FontBase* font = NULL);
 
 	/**
 	 * Handles events raised by the gadget's sub-gadgets.
+	 * @param e The event arguments.
 	 */
 	virtual bool handleEvent(const EventArgs& e);
 
@@ -84,8 +91,8 @@ public:
 	virtual inline bool blur() { return false; };
 
 private:
-	Gadget* _opener;
-	u32 _value;
+	Gadget* _opener;				/**< Pointer to the gadget that opened the menu */
+	u32 _value;						/**< The value of the last selected menu item */
 
 	/**
 	 * Destructor.

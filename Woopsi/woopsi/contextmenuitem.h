@@ -5,6 +5,12 @@
 
 using namespace std;
 
+/**
+ * Class representing an item in the ContextMenu class.  Woopsi
+ * handles the creation of these items automatically based on a
+ * gadget's context menu item array, so these objects should
+ * not be created by any other code.
+ */
 class ContextMenuItem : public Textbox {
 public:
 
@@ -57,7 +63,7 @@ public:
 	virtual inline bool blur() { return false; };
 
 private:
-	u32 _value;
+	u32 _value;								/**< The value of the menu item */
 
 	/**
 	 * Destructor.
