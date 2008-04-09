@@ -36,6 +36,39 @@ public:
 	 */
 	const u16 getPixel(const u32 position) const;
 
+	/**
+	 * Draw an individual character of the font to the specified bitmap.
+	 * @param bitmap The bitmap to draw to.
+	 * @param bitmapWidth The width of the bitmap being drawn to.
+	 * @param bitmapHeight The height of the bitmap being drawn to.
+	 * @param letter The character to output.
+	 * @param x The x co-ordinate of the text.
+	 * @param y The y co-ordinate of the text.
+	 * @param clipX1 The left edge of the clipping rectangle.
+	 * @param clipY1 The top edge of the clipping rectangle.
+	 * @param clipX2 The right edge of the clipping rectangle.
+	 * @param clipY2 The bottom edge of the clipping rectangle.
+	 * @return The x co-ordinate for the next character to be drawn.
+	 */
+	s16 drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+
+	/**
+	 * Get the width of a string in pixels when drawn with this font.
+	 * @param text The string to check.
+	 * @return The width of the string in pixels.
+	 */
+	virtual u16 getStringWidth(char* text);
+
+	/**
+	 * Get the width of a string with a specified length in pixels when drawn with this font.
+	 * Useful if you want to determine the length of a string without a terminator, or
+	 * the length of a section of a string.
+	 * @param text The string to check.
+	 * @param length The length of the string in chars.
+	 * @return The width of the string in pixels.
+	 */
+	virtual u16 getStringWidth(char* text, u16 length);
+
 private:
 	const u16* _bitmap;
 	

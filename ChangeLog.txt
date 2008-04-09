@@ -48,6 +48,14 @@ Change Log
      - Added Gadget "hidden" flag to more accurately identify if a gadget has
        been hidden.
      - Added Gadget::isHidden() method.
+     - Font system improvements:
+        - Moved drawChar() function out of TextWriter into font classes to allow
+          fonts to draw themselves.
+        - FontBase::drawChar() returns the x co-ordinate for the next character,
+          allowing the font and TextWriter classes to handle proportional fonts.
+        - Added getStringWidth() functions for determining the pixel width of a
+          string when printed with a given font, allowing gadgets to work with
+          proportional fonts.
 
 
   V0.30 (20080326)
