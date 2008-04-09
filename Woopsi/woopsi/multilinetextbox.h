@@ -175,14 +175,6 @@ protected:
 	void stripTopLines(const u32 lines);
 
 	/**
-	 * Set the text to display.  Does not raise a value changed event
-	 * if raise Event is set to false.
-	 * @param text The new text to display.
-	 * @param raiseEvent Set to false to prevent raising a value changed event.
-	 */
-	virtual void setText(char* text, bool raiseEvent);
-
-	/**
 	 * Destructor.
 	 */
 	virtual ~MultiLineTextBox();

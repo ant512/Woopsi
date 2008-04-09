@@ -88,18 +88,11 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 
 			// Textbox events
 			switch (e.type) {
-				case EVENT_DRAG:
-					if (_scrollbar != NULL) {
-						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setValue(0 - _textbox->getCanvasY());
-						_scrollbar->setRaisesEvents(true);
-						return true;
-					}
-					break;
 				case EVENT_SCROLL:
 					if (_scrollbar != NULL) {
 						_scrollbar->setRaisesEvents(false);
 						_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
+						_scrollbar->setValue(_scrollbar->getMinimumValue());
 						_scrollbar->resizeGrip();
 						_scrollbar->setValue(0 - _textbox->getCanvasY());
 						_scrollbar->setRaisesEvents(true);
@@ -112,7 +105,7 @@ bool ScrollingTextBox::handleEvent(const EventArgs& e) {
 		}
 
 		// Raise events to event handler
-		if (_eventHandler != NULL) {
+		if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
 			EventArgs newEvent;
 			newEvent.eventX = e.eventX;
 			newEvent.eventY = e.eventY;
@@ -164,6 +157,8 @@ bool ScrollingTextBox::resize(u16 width, u16 height) {
 
 	// Reset drawing
 	_flags.drawingEnabled = drawing;
+
+	draw();
 
 	return true;
 }

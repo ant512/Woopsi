@@ -5,28 +5,14 @@
 
 Text::Text(FontBase* font, char* text, u16 width) {
 	_font = font;
-
-	// Recalculate width to match font
 	_width = width;
 	_lineSpacing = 1;
-	
-	calculateLineHeight();
 	
 	setText(text);
 }
 
 FontBase* Text::getFont() {
 	return _font;
-}
-
-// Calculates the pixel height of a text row
-void Text::calculateLineHeight() {
-	_lineHeight = _font->getHeight() + _lineSpacing;
-}
-
-// Calculates the total height in pixels of the text
-void Text::calculateTextPixelHeight() {
-	_textPixelHeight = _totalLines * _lineHeight;
 }
 
 // Calculate the length of an individual line
@@ -58,28 +44,20 @@ u8 Text::getLineTrimmedPixelLength(s32 lineNumber) {
 	return _font->getStringWidth(getLinePointer(lineNumber), getLineTrimmedLength(lineNumber));
 }
 
-// Returns a pointer to the start of a line of text
-char* Text::getLinePointer(s32 lineNumber) {
-	return _text + _linePositions[lineNumber];
-}
-
 // Set the text
 void Text::setText(char* text) {
 	_text = text;
-	
 	wrap();
 }
 
 // Set the line spacing
 void Text::setLineSpacing(u8 lineSpacing) {
 	_lineSpacing = lineSpacing;
-	
-	calculateLineHeight();
+	wrap();
 }
 
 void Text::setWidth(u16 width) {
 	_width = width;
-
 	wrap();
 }
 
@@ -145,9 +123,9 @@ void Text::wrap() {
 			if (lineWidth > _textPixelWidth) _textPixelWidth = lineWidth;
 		} else {
 
-		    // Add a blank row
-		    pos++;
-		    _linePositions.push_back(pos);
+			// Add a blank row
+			pos++;
+			_linePositions.push_back(pos);
 		}
 	}
 
@@ -155,13 +133,11 @@ void Text::wrap() {
 	// is the start of the first line
 	_totalLines = _linePositions.size() - 1;
 
-	calculateTextPixelHeight();
+	// Calculate the total height of the text
+	_textPixelHeight = _totalLines * (_font->getHeight() + _lineSpacing);
 }
 
 void Text::setFont(FontBase* font) {
 	_font = font;
-
-	calculateLineHeight();
-	
 	wrap();
 }

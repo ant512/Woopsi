@@ -89,7 +89,7 @@ public:
 	 * @param lineNumber The line to get a pointer to.
 	 * @return A pointer to the line.
 	 */
-	char* getLinePointer(s32 lineNumber);
+	inline char* getLinePointer(const s32 lineNumber) const { return _text + _linePositions[lineNumber]; };
 
 	/**
 	 * Get the total height of the text in pixels.
@@ -114,7 +114,7 @@ public:
 	 * height of the font plus the line spacing.
 	 * @return The height of a line.
 	 */
-	inline const u8 getLineHeight() const { return _lineHeight; };
+	inline const u8 getLineHeight() const { return _font->getHeight() + _lineSpacing; };
 
 	/**
 	 * Get the total number of lines in the text.
@@ -134,27 +134,10 @@ private:
 	DynamicArray<u32> _linePositions;		/**< Array containing start indexes of each wrapped line */
 	s32 _totalLines;						/**< Total number of lines of text */
 	u8 _lineSpacing;						/**< Spacing between lines of text */
-	u8 _lineHeight;							/**< Height of a line of text including spacing */
 	s32 _textPixelHeight;					/**< Total height of the wrapped text in pixels */
 	u8 _textPixelWidth;						/**< Total width of the wrapped text in pixels */
 	u16 _width;								/**< Width in pixels available to the text */
 	char* _text;							/**< String that the object works with */
-
-	/**
-	 * Calculate and buffer the pixel height of a single line of text.
-	 */
-	void calculateLineHeight();
-
-	/**
-	 * Calculate and buffer the number of pixels in the longest row
-	 * of text.
-	 */
-	void calculateMaxLineLength();
-
-	/**
-	 * Calculate and buffer the total pixel height of the text.
-	 */
-	void calculateTextPixelHeight();
 
 	/**
 	 * Wrap the text.

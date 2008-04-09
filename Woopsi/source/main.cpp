@@ -15,7 +15,7 @@
 #include "gadget.h"
 #include "woopsifuncs.h"
 
-
+/*
 int main() {
 
 	initWoopsiGfxMode();
@@ -71,7 +71,7 @@ int main() {
 	delete woopsiApplication;
 }
 
-/*
+
 int main2() {
 
 	initWoopsiGfxMode();
@@ -161,7 +161,7 @@ int mainOld() {
 
 	delete woopsiApplication;
 }
-
+*/
 
 int main() {
 	initWoopsiGfxMode();
@@ -497,4 +497,3 @@ int main() {
 
 	return 0;
 }
-*/
