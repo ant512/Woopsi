@@ -15,8 +15,6 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, char* title, char* text, FontB
 	getClientRect(rect);
 
 	// Calculate button dimensions
-	u16 len = strlen(buttonText);
-
 	Rect buttonRect;
 	buttonRect.width = _font->getStringWidth(buttonText) + (padding << 1);
 	buttonRect.height = _font->getHeight() + (padding << 1);

@@ -130,19 +130,16 @@ public:
 	
 private:
 
-	FontBase* _font;
-	DynamicArray<u32> _linePositions;
-	s32 _totalLines;
-	u8 _lineSpacing;
-	u8 _lineHeight;
-	s32 _textPixelHeight;
-	u8 _textPixelWidth;
-	u8 _maxLineLength;
-	s32 _firstLineIndex;
-	s32 _lastLineIndex;
-	s32 _textY;
-	u16 _width;
-	char* _text;
+	FontBase* _font;						/**< Font to be used for output */
+	DynamicArray<u32> _linePositions;		/**< Array containing start indexes of each wrapped line */
+	s32 _totalLines;						/**< Total number of lines of text */
+	u8 _lineSpacing;						/**< Spacing between lines of text */
+	u8 _lineHeight;							/**< Height of a line of text including spacing */
+	s32 _textPixelHeight;					/**< Total height of the wrapped text in pixels */
+	u8 _textPixelWidth;						/**< Total width of the wrapped text in pixels */
+	u8 _maxLineLength;						
+	u16 _width;								/**< Width in pixels available to the text */
+	char* _text;							/**< String that the object works with */
 
 	/**
 	 * Calculate and buffer the pixel height of a single line of text.

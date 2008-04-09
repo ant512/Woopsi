@@ -60,11 +60,11 @@ u8 Text::getLineTrimmedLength(s32 lineNumber) {
 }
 
 u8 Text::getLinePixelLength(s32 lineNumber) {
-	return getLineLength(lineNumber) * ((FixedWidthFontBase*)_font)->getWidth();
+	return _font->getStringWidth(getLinePointer(lineNumber), getLineLength(lineNumber));
 }
 
 u8 Text::getLineTrimmedPixelLength(s32 lineNumber) {
-	return getLineTrimmedLength(lineNumber) * ((FixedWidthFontBase*)_font)->getWidth();
+	return _font->getStringWidth(getLinePointer(lineNumber), getLineTrimmedLength(lineNumber));
 }
 
 // Returns a pointer to the start of a line of text
