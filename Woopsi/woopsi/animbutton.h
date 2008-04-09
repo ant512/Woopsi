@@ -32,8 +32,7 @@ public:
 	virtual inline void draw() { Gadget::draw(); };
 
 	/**
-	 * Draw the region of the button that falls within the clipRect.  Should not be
-	 * called.
+	 * Draw the region of the button that falls within the clipRect.
 	 * @param clipRect The clipping region to draw within.
 	 */
 	virtual void draw(Rect clipRect);
@@ -73,11 +72,11 @@ public:
 	bool release(s16 x, s16 y);
 
 protected:
-	Animation* _animNormal;
-	Animation* _animClicked;
-	u16 _animX;
-	u16 _animY;
-	bool _initialised;
+	Animation* _animNormal;				/**< Animation played when button is not clicked */
+	Animation* _animClicked;			/**< Animation played when button is clicked */
+	u16 _animX;							/**< X co-ordinate of the animations */
+	u16 _animY;							/**< Y co-ordinate of the animations */
+	bool _initialised;					/**< Tracks if the animation has started or not */
 
 	/**
 	 * Destructor.

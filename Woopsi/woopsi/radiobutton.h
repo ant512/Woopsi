@@ -71,7 +71,7 @@ public:
 	virtual void setState(RadioButtonState state);
 
 protected:
-	RadioButtonState _state;
+	RadioButtonState _state;				/**< The state of the radio button */
 
 	/**
 	 * Destructor.

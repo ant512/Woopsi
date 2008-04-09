@@ -56,11 +56,11 @@ enum KeyCode {
  * EventArgs struct.  Passed as the argument for every event.
  */
 typedef struct {
-	EventType type;
-	Gadget* gadget;
-	s16 eventX;
-	s16 eventY;
-	KeyCode keyCode;
+	EventType type;					/**< The type of event */
+	Gadget* gadget;					/**< Pointer to the gadget that raised the event */
+	s16 eventX;						/**< X co-ordinate of the event */
+	s16 eventY;						/**< Y co-ordinate of the event */
+	KeyCode keyCode;				/**< The key code that raised the event */
 } EventArgs;
 
 /**

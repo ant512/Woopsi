@@ -6,9 +6,27 @@
 
 using namespace std;
 
+/**
+ * Class representing a clickable button that contains a bitmap image instead of text.
+ * Displays two bitmaps, one when the button is clicked, and one when it isn't.  The
+ * bitmaps should be the same size.
+ */
 class BitmapButton : public Textbox {
 
 public:
+	/**
+	 * Constructor.
+	 * @param x The x co-ordinate of the button.
+	 * @param y The y co-ordinate of the button.
+	 * @param width The width of the button.
+	 * @param height The height of the button.
+	 * @param bitmapX The x co-ordinate at which the bitmaps will be drawn.
+	 * @param bitmapY The y co-ordinate at which the bitmaps will be drawn.
+	 * @param bitmapWidth The width of the bitmaps.
+	 * @param bitmapHeight The height of the bitmaps.
+	 * @param bitmapNormal Pointer to the unclicked bitmap.
+	 * @param bitmapClicked Pointer to the clicked bitmap.
+	 */
 	BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, const u16* bitmapNormal, const u16* bitmapClicked);
 
 	/**
@@ -16,15 +34,19 @@ public:
 	 */
 	virtual inline void draw() { Gadget::draw(); };
 
+	/**
+	 * Draw the region of the button that falls within the clipRect.
+	 * @param clipRect The clipping region to draw within.
+	 */
 	virtual void draw(Rect clipRect);
 
 protected:
-	const u16* _bitmapNormal;
-	const u16* _bitmapClicked;
-	u16 _bitmapWidth;
-	u16 _bitmapHeight;
-	u16 _bitmapX;
-	u16 _bitmapY;
+	const u16* _bitmapNormal;			/**< Bitmap to display when button is not clicked */
+	const u16* _bitmapClicked;			/**< Bitmap to display when button is clicked */
+	u16 _bitmapWidth;					/**< Width of the bitmaps */
+	u16 _bitmapHeight;					/**< Height of the bitmaps */
+	u16 _bitmapX;						/**< X co-ordinate of the bitmaps */
+	u16 _bitmapY;						/**< Y co-ordinate of the bitmaps */
 
 	/**
 	 * Destructor.
