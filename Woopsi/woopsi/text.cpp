@@ -1,4 +1,5 @@
 #include "text.h"
+#include "fixedwidthfontbase.h"
 
 // TODO: Allow line spacing to be set in constructor only, or make const
 // TODO: Check for other characters to split on
@@ -27,7 +28,9 @@ void Text::calculateLineHeight() {
 
 // Calculates the max chars per text row
 void Text::calculateMaxLineLength() {
-	_maxLineLength = (_width / _font->getWidth()) - 1;
+
+	// TODO: Make this work with proportional fonts
+	_maxLineLength = (_width / ((FixedWidthFontBase*)_font)->getWidth()) - 1;
 }
 
 // Calculates the total height in pixels of the text
@@ -57,11 +60,11 @@ u8 Text::getLineTrimmedLength(s32 lineNumber) {
 }
 
 u8 Text::getLinePixelLength(s32 lineNumber) {
-	return getLineLength(lineNumber) * _font->getWidth();
+	return getLineLength(lineNumber) * ((FixedWidthFontBase*)_font)->getWidth();
 }
 
 u8 Text::getLineTrimmedPixelLength(s32 lineNumber) {
-	return getLineTrimmedLength(lineNumber) * _font->getWidth();
+	return getLineTrimmedLength(lineNumber) * ((FixedWidthFontBase*)_font)->getWidth();
 }
 
 // Returns a pointer to the start of a line of text
@@ -229,7 +232,7 @@ void Text::wrap() {
 	// Total lines is 1 less than the size of the position array because the first element
 	// is the start of the first line
 	_totalLines = _linePositions.size() - 1;
-	_textPixelWidth *= _font->getWidth();
+	_textPixelWidth *= ((FixedWidthFontBase*)_font)->getWidth();
 
 	calculateTextPixelHeight();
 }

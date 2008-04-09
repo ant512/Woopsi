@@ -1,0 +1,37 @@
+#include "fixedwidthfontbase.h"
+
+FixedWidthFontBase::FixedWidthFontBase(const u16 bitmapWidth, const u16 bitmapHeight, const u8 width, const u8 height, const u16 transparentColour) : 
+	FontBase(bitmapWidth, bitmapHeight, height, transparentColour) {
+	_width = width;
+}
+
+void FixedWidthFontBase::createGlyphMap() {
+
+	initGlyphMap();
+
+	// Calculate the number of rows in the bitmap
+	u16 rows = getBitmapHeight() / getHeight();
+	
+	// Calculate the number of columns in the bitmap
+	u16 columns = getBitmapWidth() / getWidth();
+	
+	// Loop through each row of glyphs
+	for (u16 row = 0; row < rows; row++) {
+	
+		// Loop through each column of glyphs
+		for (u16 column = 0; column < columns; column++) {
+		
+			// Get the co-ordinates of the glyph
+			u16 glyphX = column * getWidth();
+			u16 glyphY = row * getHeight();
+			u8 glyph = column + (row * columns);
+			
+			// Scan the glyph
+			if (scanGlyph(glyphX, glyphY)) {
+			
+				// Glyph contains valid data - set the relevant bit
+				_glyphMap[glyph >> 3] |= (1 << (glyph % 8));
+			}
+		}
+	}
+}

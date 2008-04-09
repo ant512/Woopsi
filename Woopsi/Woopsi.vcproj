@@ -94,6 +94,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\fixedwidthfontbase.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\font.cpp"
 				>
 			</File>
@@ -333,6 +337,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\eventhandler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\fixedwidthfontbase.h"
 				>
 			</File>
 			<File

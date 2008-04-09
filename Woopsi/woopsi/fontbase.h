@@ -11,8 +11,7 @@ using namespace std;
 /**
  * Abstract class defining the basic properties of a font and providing some of the
  * essential functionality.  Should be used as a base class for all fonts.
- * This class does not currently allow for proportional fonts or non-bitmap fonts.  All
- * fonts must be fixed-width.
+ * This class does not currently allow for non-bitmap fonts.
  */
 class FontBase {
 
@@ -22,12 +21,11 @@ public:
 	 * Constructor.
 	 * @param bitmapWidth The width of the bitmap containing the font's glyph data.
 	 * @param bitmapHeight The height of the bitmap containing the font's glyph data.
-	 * @param width The width of an individual glyph.
-	 * @param height The height of an individual glyph.
+	 * @param height The height of the font in pixels.
 	 * @param transparentColour The colour in the font bitmap used as the background
 	 * colour.
 	 */
-	FontBase(const u16 bitmapWidth, const u16 bitmapHeight, const u8 width, const u8 height, const u16 transparentColour = 0);
+	FontBase(const u16 bitmapWidth, const u16 bitmapHeight, const u8 height, const u16 transparentColour = 0);
 	
 	/**
 	 * Destructor.
@@ -48,7 +46,7 @@ public:
 	 * @param y The y co-ordinate of the pixel.
 	 * @return The colour of the pixel.
 	 */
-	inline const u16 getPixel(const u16 x, const u16 y) const { return getPixel(x + (y * _width)); };
+	virtual const u16 getPixel(const u16 x, const u16 y) const = 0;
 	
 	/**
 	 * Gets the width of the font's glyph bitmap.
@@ -61,18 +59,6 @@ public:
 	 * @return The height of the font's glyph bitmap.
 	 */
 	inline const u16 getBitmapHeight() const { return _bitmapHeight; };
-	
-	/**
-	 * Gets the width of an individual glyph.
-	 * @return The width of an individual glyph.
-	 */
-	inline const u8 getWidth() const { return _width; };
-	
-	/**
-	 * Gets the height of an individual glyph.
-	 * @return The height of an individual glyph.
-	 */
-	inline const u8 getHeight() const { return _height; };
 	
 	/**
 	 * Checks if the glyph map to see if the glyph representing the specified character
@@ -103,12 +89,6 @@ public:
 	 * @return True if the current font is monochrome.
 	 */
 	inline const bool isMonochrome() const { return _isMonochrome; };
-	
-	/**
-	 * Get the width in pixels of the supplied string if printed using this font.
-	 * @return The pixel width of the string.
-	 */
-	inline const u8 getTextPixelWidth(const char* text) const { return strlen(text) * _width; };
 	
 	/**
 	 * Get the colour currently being used as the transparent background colour.
@@ -161,6 +141,19 @@ public:
 	 */
 	virtual u16 getStringWidth(char* text, u16 length) = 0;
 
+	/**
+	 * Get the width of an individual character.
+	 * @param letter The character to get the width of.
+	 * @return The width of the character in pixels.
+	 */
+	virtual u16 getCharWidth(char letter) = 0;
+
+	/**
+	 * Gets the height of the font.
+	 * @return The height of the font.
+	 */
+	inline const u8 getHeight() const { return _height; };
+
 protected:
 
 	/**
@@ -175,7 +168,7 @@ protected:
 	 * true to the map if data is found or false if no data is found.
 	 * @see initGlyphMap().
 	 */
-	void createGlyphMap();
+	virtual void createGlyphMap() = 0;
 
 	/**
 	 * Scans the glyph bitmap at the specified co-ordinates to see if it contains data or
@@ -186,12 +179,14 @@ protected:
 	 */
 	virtual const bool scanGlyph(const u16 x, const u16 y) const = 0;
 
+protected:
+	u8 _glyphMap[GLYPH_MAP_SIZE];
+
 private:
-	u8 _width;
 	u8 _height;
+	u8 _glyphHeight;
 	u16 _bitmapWidth;
 	u16 _bitmapHeight;
-	u8 _glyphMap[GLYPH_MAP_SIZE];
 	u16 _drawColour;
 	bool _isMonochrome;
 	u16 _transparentColour;

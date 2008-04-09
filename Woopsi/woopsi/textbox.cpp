@@ -64,13 +64,13 @@ void Textbox::calculateTextPosition() {
 	// Calculate horizontal position
 	switch (_hPos) {
 		case TEXT_POSITION_HORIZ_CENTRE:
-			_textX = (_width >> 1) - ((_font->getWidth() * strlen(_text)) >> 1);
+			_textX = (_width >> 1) - (_font->getStringWidth(_text) >> 1);
 			break;
 		case TEXT_POSITION_HORIZ_LEFT:
 			_textX = _padding;
 			break;
 		case TEXT_POSITION_HORIZ_RIGHT:
-			_textX = _width - (_font->getWidth() * strlen(_text)) - _padding;
+			_textX = _width - _font->getStringWidth(_text) - _padding;
 			break;
 	}
 }
@@ -185,6 +185,6 @@ bool Textbox::resize(u16 width, u16 height) {
 void Textbox::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
-	rect.width = (_padding << 1) + (_font->getWidth() * strlen(_text));
+	rect.width = (_padding << 1) + _font->getStringWidth(_text);
 	rect.height = (_padding << 1) + _font->getHeight();
 }

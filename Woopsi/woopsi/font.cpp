@@ -1,6 +1,6 @@
 #include "font.h"
 
-Font::Font(const u16* bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const u8 width, const u8 height, const u16 transparentColour) : FontBase(bitmapWidth, bitmapHeight, width, height, transparentColour) {
+Font::Font(const u16* bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const u8 width, const u8 height, const u16 transparentColour) : FixedWidthFontBase(bitmapWidth, bitmapHeight, width, height, transparentColour) {
 	_bitmap = bitmap;
 
 	setTransparentColour(transparentColour);
@@ -105,4 +105,8 @@ u16 Font::getStringWidth(char* text) {
 
 u16 Font::getStringWidth(char* text, u16 length) {
 	return length * getWidth();
+}
+
+u16 Font::getCharWidth(char letter) {
+	return getWidth();
 }

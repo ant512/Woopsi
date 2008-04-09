@@ -90,7 +90,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
 
 			// Precalculate lengths in characters and pixels
 			rowLength = _text->getLineTrimmedLength(currentTextRow);
-			rowPixelWidth = _text->getFont()->getWidth() * rowLength;
+			rowPixelWidth = _text->getFont()->getStringWidth(_text->getLinePointer(currentTextRow), rowLength);
 
 			textX = getRowX(rowPixelWidth) + _canvasX;
 			textY = getRowY(currentTextRow, rowCount) + _canvasY;

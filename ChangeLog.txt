@@ -56,6 +56,10 @@ Change Log
         - Added getStringWidth() functions for determining the pixel width of a
           string when printed with a given font, allowing gadgets to work with
           proportional fonts.
+        - Added FixedWidthFontBase base class for fixed width fonts.
+        - Removed all fixed-width code from FontBase.
+        - Upgraded gadgets to support proportional-width fonts (excluding
+          MultiLineTextBox).
 
 
   V0.30 (20080326)

@@ -2,14 +2,14 @@
 #define _FONT_H_
 
 #include <nds.h>
-#include "fontbase.h"
+#include "fixedwidthfontbase.h"
 
 using namespace std;
 
 /**
  * Fixed-width multicolour bitmap font that uses a 16-bit bitmap as its glyph data.
  */
-class Font : public FontBase {
+class Font : public FixedWidthFontBase {
 
 public:
 
@@ -57,7 +57,7 @@ public:
 	 * @param text The string to check.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(char* text);
+	u16 getStringWidth(char* text);
 
 	/**
 	 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -67,7 +67,14 @@ public:
 	 * @param length The length of the string in chars.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(char* text, u16 length);
+	u16 getStringWidth(char* text, u16 length);
+
+	/**
+	 * Get the width of an individual character.
+	 * @param letter The character to get the width of.
+	 * @return The width of the character in pixels.
+	 */
+	u16 getCharWidth(char letter);
 
 private:
 	const u16* _bitmap;

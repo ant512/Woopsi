@@ -2,7 +2,7 @@
 #define _MONO_FONT_H_
 
 #include <nds.h>
-#include "fontbase.h"
+#include "fixedwidthfontbase.h"
 
 using namespace std;
 
@@ -10,7 +10,7 @@ using namespace std;
  * Fixed-width monochrome bitmap font that uses a bitpacked bitmap of u16s as its glyph
  * data.  1 represents a filled pixel; 0 represents an empty pixel.
  */
-class MonoFont : public FontBase {
+class MonoFont : public FixedWidthFontBase {
 
 public:
 
@@ -58,7 +58,7 @@ public:
 	 * @param text The string to check.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(char* text);
+	u16 getStringWidth(char* text);
 
 	/**
 	 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -68,7 +68,14 @@ public:
 	 * @param length The length of the string in chars.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(char* text, u16 length);
+	u16 getStringWidth(char* text, u16 length);
+
+	/**
+	 * Get the width of an individual character.
+	 * @param letter The character to get the width of.
+	 * @return The width of the character in pixels.
+	 */
+	u16 getCharWidth(char letter);
 
 private:
 	const u16* _bitmap;
