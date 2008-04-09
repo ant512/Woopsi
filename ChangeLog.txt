@@ -36,6 +36,7 @@ Change Log
 	 - Tidied up Text class in general.
 	 - Bugfixes to ScrollingTextbox scrollbars.
 	 - Bugfixes to ScrollingTextbox event handling.
+	 - Bugfixes to vertical and horizontal grip dragging methods.
   
   - New Features:
      - Added ScrollingTextBox class.

@@ -54,21 +54,21 @@ bool SliderHorizontalGrip::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			// Do we need to move?
 			if (destX != _x) {
 
-				// Prevent grip from moving outside parent
-				if (destX < 0) {
-					destX = 0;
-				} else {
-					// Get parent rect
-					Rect rect;
-					_parent->getClientRect(rect);
+				// Get parent rect
+				Rect rect;
+				_parent->getClientRect(rect);
 
-					if (destX + _width > rect.width) {
-						destX = rect.width - _width + 1;
+				// Prevent grip from moving outside parent
+				if (destX < rect.x) {
+					destX = rect.x;
+				} else {
+					if (destX + _width > rect.width + rect.x) {
+						destX = (rect.width + rect.x) - _width ;
 					}
 				}
 
 				// Move to new location
-				moveTo(destX, 0);
+				moveTo(destX, rect.y);
 			}
 
 			raiseDragEvent(x, y, vX, vY);

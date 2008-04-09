@@ -3,7 +3,7 @@
 #include "slidervertical.h"
 
 ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
-	
+
 	_buttonHeight = 10;
 	_buttonScrollAmount = 10;
 
