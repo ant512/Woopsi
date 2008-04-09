@@ -137,7 +137,6 @@ private:
 	u8 _lineHeight;							/**< Height of a line of text including spacing */
 	s32 _textPixelHeight;					/**< Total height of the wrapped text in pixels */
 	u8 _textPixelWidth;						/**< Total width of the wrapped text in pixels */
-	u8 _maxLineLength;						
 	u16 _width;								/**< Width in pixels available to the text */
 	char* _text;							/**< String that the object works with */
 

@@ -1,9 +1,7 @@
 #include "text.h"
-#include "fixedwidthfontbase.h"
 
 // TODO: Allow line spacing to be set in constructor only, or make const
 // TODO: Check for other characters to split on
-// TODO: Finish text wrapping by pixel widths rather than string lengths
 
 Text::Text(FontBase* font, char* text, u16 width) {
 	_font = font;
@@ -13,7 +11,6 @@ Text::Text(FontBase* font, char* text, u16 width) {
 	_lineSpacing = 1;
 	
 	calculateLineHeight();
-	calculateMaxLineLength();
 	
 	setText(text);
 }
@@ -25,13 +22,6 @@ FontBase* Text::getFont() {
 // Calculates the pixel height of a text row
 void Text::calculateLineHeight() {
 	_lineHeight = _font->getHeight() + _lineSpacing;
-}
-
-// Calculates the max chars per text row
-void Text::calculateMaxLineLength() {
-
-	// TODO: Make this work with proportional fonts
-	_maxLineLength = (_width / ((FixedWidthFontBase*)_font)->getWidth()) - 1;
 }
 
 // Calculates the total height in pixels of the text
@@ -90,17 +80,11 @@ void Text::setLineSpacing(u8 lineSpacing) {
 void Text::setWidth(u16 width) {
 	_width = width;
 
-	calculateMaxLineLength();
-
 	wrap();
 }
 
 // Wrap text to fit onto DS screens
 void Text::wrap() {
-
-	u32 pos = 0;
-	u32 remainingSize = strlen(_text);
-	u32 totalSize = remainingSize;
 
 	// Wipe the width variable
 	_textPixelWidth = 0;
@@ -109,117 +93,64 @@ void Text::wrap() {
 	_linePositions.clear();
 
 	// Push first line start into vector
-	_linePositions.push_back(pos);
-	
-	// Pre-declare values for loop
-	u32 currentPos = pos;
-	u32 lastBreakPos = 0;
-	u8 lineLength = 0;
-	u16 linePixelWidth = 0;
-	bool gotBreak = false;
+	_linePositions.push_back(0);
 
-	// Keep looping until we run out of lines
-	while (remainingSize > 0) {
+	// Declare vars in advance of loop
+	u32 pos = 0;
+	u32 scanPos;
+	u32 lineWidth;
+	u32 breakPos;
 
-		currentPos = pos;
-		lastBreakPos = 0;
-		lineLength = 0;
-		linePixelWidth = 0;
-		gotBreak = false;
+	// Keep looping through text until we hit the terminator
+	while (_text[pos]) {
+		scanPos = pos;
+		breakPos = 0;
+		lineWidth = 0;
 
-		// Search for a break point (from left to right)
-		while ((linePixelWidth < _width) && (remainingSize > 0) && (currentPos < totalSize)) {
-			lineLength++;
-			linePixelWidth += _font->getCharWidth(_text[currentPos]);
-		
-			if (_text[currentPos] == '\n') {
-				// Got a return
+		// Search for line breaks and valid breakpoints until we exceed the width of the
+		// text field or we run out of string to process
+		while ((lineWidth + _font->getCharWidth(_text[scanPos]) < _width) && (_text[scanPos])) {
+			lineWidth += _font->getCharWidth(_text[scanPos]);
 
-				// Recalculate positions
-				if (remainingSize > lineLength) {
-					remainingSize -= lineLength;
-				} else {
-					remainingSize = 0;
-				}
+			// Check for line return
+			if (_text[scanPos] == '\n') {
 
-				// Advance to next character and remember we got a break
-				pos = currentPos + 1;
-				gotBreak = true;
-				
-				// Push next line start into vector
-				_linePositions.push_back(pos);
-				
+				// Remember this breakpoint
+				breakPos = scanPos;
 				break;
-				
-			} else if ((_text[currentPos] == ' ') ||
-					   (_text[currentPos] == ',') ||
-					   (_text[currentPos] == '.') ||
-					   (_text[currentPos] == '-') ||
-					   (_text[currentPos] == '_')) {
-			
+			} else if ((_text[scanPos] == ' ') ||
+					   (_text[scanPos] == ',') ||
+					   (_text[scanPos] == '.') ||
+					   (_text[scanPos] == '-') ||
+					   (_text[scanPos] == '_')) {
+
 				// Remember the most recent breakpoint
-				lastBreakPos = currentPos;
+				breakPos = scanPos;
 			}
 
-			// Move forward to next character
-			currentPos++;
+			// Move to the next character
+			scanPos++;
 		}
 
-		// Did we hit a line return?
-		if (!gotBreak) {
-		
-			// Did we find a breaking character?
-			if (lastBreakPos > 0) {
-				
-				// Got a breaking character
-				if (remainingSize > (lastBreakPos - pos)) {
-					remainingSize -= (lastBreakPos - pos);
-				} else {
-					remainingSize = 0;
-				}
+		// Process any found data
+		if (scanPos > pos) {
 
-				pos = lastBreakPos + 1;
-					
-				// Push next line start into vector if this line contains data
-				if (lineLength > 0) {
-					_linePositions.push_back(pos);
-				}
-			} else {
-		
-				// No break found
-				
-				if (remainingSize > _maxLineLength) {
-					// Add a whole row
-					remainingSize -= _maxLineLength;
-					pos += _maxLineLength;
-				} else {
-					// Add remaining text
-					pos += remainingSize;
-					remainingSize = 0;
-				}
-			
-				// Push next line start into vector if this line contains data
-				if (lineLength > 0) {
-					_linePositions.push_back(pos);
-				}
-			}
-		}
+			// If we didn't find a breakpoint split at the current position
+			if (breakPos == 0) breakPos = scanPos;
 
-		// Is this the longest line?
-		if (linePixelWidth > _textPixelWidth) _textPixelWidth = linePixelWidth;
-	}
+			// Add the start of the next line to the vector
+			pos = breakPos + 1;
+			_linePositions.push_back(pos);
 
-	// Add final string
-	if (remainingSize > 0) {
-		_linePositions.push_back(pos + remainingSize);
+			// Is this the longest line?
+			if (lineWidth > _textPixelWidth) _textPixelWidth = lineWidth;
+		} else {
 
-		// Check for longest line
-		if (_textPixelWidth < remainingSize) {
-			_textPixelWidth = remainingSize;
+		    // Add a blank row
+		    pos++;
+		    _linePositions.push_back(pos);
 		}
 	}
-	
-	// Precalculate some values
 
 	// Total lines is 1 less than the size of the position array because the first element
 	// is the start of the first line
@@ -232,7 +163,6 @@ void Text::setFont(FontBase* font) {
 	_font = font;
 
 	calculateLineHeight();
-	calculateMaxLineLength();
 	
 	wrap();
 }

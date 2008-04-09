@@ -15,7 +15,7 @@
 #include "gadget.h"
 #include "woopsifuncs.h"
 
-/*
+
 int main() {
 
 	initWoopsiGfxMode();
@@ -34,10 +34,30 @@ int main() {
 	// Create message
 	Gadget::Rect rect;
 	newWindow->getClientRect(rect);
-	Textbox* newTextbox = new Textbox(rect.x, rect.y, rect.width, rect.height, "Hello World?");
-	newTextbox->setTextPositionVert(Textbox::TEXT_POSITION_VERT_CENTRE);
-	newTextbox->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_CENTRE);
-	newWindow->addGadget(newTextbox);
+	//Textbox* newTextbox = new Textbox(rect.x, rect.y, rect.width, rect.height, "Hello World?");
+	//newTextbox->setTextPositionVert(Textbox::TEXT_POSITION_VERT_CENTRE);
+	//newTextbox->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_CENTRE);
+	//newWindow->addGadget(newTextbox);
+
+	// Text viewer
+	ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "Woopsi\n"
+		"------\n\n"
+		"This is a demo of a windowing system I'm working on "
+		"for the Nintendo DS, written in C++.  The aim of the "
+		"project is to create a simple windowing system that "
+		"other programmers can use for their applications, which "
+		"should decrease the tedious amount of GUI code that "
+		"people have to write.\n\n"
+		"The system itself is loosely based on the Commodore "
+		"Amiga's \"Intuition\" windowing system.  Everything "
+		"in the system is treated as a \"gadget\" (in the "
+		"same way that Windows treats everything as a sub-class "
+		"of a window), everything takes place within a \"screen\" "
+		"environment, and the look-and-feel of the system "
+		"intentionally resembles the old Amiga system.", Gadget::GADGET_DRAGGABLE, 50);
+	scrollingBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
+	scrollingBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
+	newWindow->addGadget(scrollingBox);
 
 	woopsiApplication->draw();
 
@@ -51,7 +71,7 @@ int main() {
 	delete woopsiApplication;
 }
 
-
+/*
 int main2() {
 
 	initWoopsiGfxMode();
@@ -141,7 +161,7 @@ int mainOld() {
 
 	delete woopsiApplication;
 }
-*/
+
 
 int main() {
 	initWoopsiGfxMode();
@@ -477,3 +497,4 @@ int main() {
 
 	return 0;
 }
+*/

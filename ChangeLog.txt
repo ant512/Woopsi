@@ -32,6 +32,7 @@ Change Log
      - Moved Gadget::_visibleRegionCacheInvalid bool into the flags struct.
      - Split PacMan demo into separate files for each class.
      - Fixed Font and MonoFont scanGlyph() max co-ord overflows.
+     - Rewritten Text::wrap() function to be faster and more efficient.
   
   - New Features:
      - Added ScrollingTextBox class.
@@ -58,8 +59,8 @@ Change Log
           proportional fonts.
         - Added FixedWidthFontBase base class for fixed width fonts.
         - Removed all fixed-width code from FontBase.
-        - Upgraded gadgets to support proportional-width fonts (excluding
-          MultiLineTextBox).
+        - Upgraded gadgets to support proportional fonts.
+        - Upgraded Text class to support proportional fonts.
      - Added GraphicsPort::drawBitmap() function that accepts a transparent
        colour value and does not draw that colour.
 
