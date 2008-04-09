@@ -36,7 +36,8 @@ Change Log
 	 - Tidied up Text class in general.
 	 - Bugfixes to ScrollingTextbox scrollbars.
 	 - Bugfixes to ScrollingTextbox event handling.
-	 - Bugfixes to vertical and horizontal grip dragging methods.
+	 - Vertical and horizontal grip respect borders of gutter when dragged.
+	 - Sliders check new value against max/min values when value is set.
   
   - New Features:
      - Added ScrollingTextBox class.

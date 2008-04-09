@@ -49,6 +49,12 @@ void SliderVertical::setValue(const s16 value) {
 	// for accuracy
 	Rect rect;
 	getClientRect(rect);
+
+	s16 newValue = value;
+
+	// Limit to max/min values
+	if (newValue > _maximumValue) newValue = _maximumValue;
+	if (newValue < _minimumValue) newValue = _minimumValue;
 	
 	// Can the grip move?
 	if (rect.height > _grip->getHeight()) {
@@ -57,7 +63,7 @@ void SliderVertical::setValue(const s16 value) {
 		u32 ratio = (rect.height << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// Convert value using ratio
-		s16 newGripY = rect.y + ((value * ratio) >> 8);
+		s16 newGripY = rect.y + ((newValue * ratio) >> 8);
 		
 		// Adjust new y so that it fits within gutter
 		if (newGripY + _grip->getHeight() > rect.y + rect.height) {

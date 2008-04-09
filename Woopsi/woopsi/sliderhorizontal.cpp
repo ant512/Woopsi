@@ -47,6 +47,12 @@ void SliderHorizontal::setValue(const s16 value) {
 	// for accuracy
 	Rect rect;
 	getClientRect(rect);
+
+	s16 newValue = value;
+
+	// Limit to max/min values
+	if (newValue > _maximumValue) newValue = _maximumValue;
+	if (newValue < _minimumValue) newValue = _minimumValue;
 	
 	// Can the grip move?
 	if (rect.width > _grip->getWidth()) {
@@ -55,7 +61,7 @@ void SliderHorizontal::setValue(const s16 value) {
 		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// Convert value using ratio
-		s16 newGripX = rect.x + ((value * ratio) >> 8);
+		s16 newGripX = rect.x + ((newValue * ratio) >> 8);
 		
 		// Adjust new x so that it fits within gutter
 		if (newGripX + _grip->getWidth() > rect.x + rect.width) {
