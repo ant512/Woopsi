@@ -53,30 +53,6 @@ public:
 	 */
 	s16 drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
-	/**
-	 * Get the width of a string in pixels when drawn with this font.
-	 * @param text The string to check.
-	 * @return The width of the string in pixels.
-	 */
-	u16 getStringWidth(char* text);
-
-	/**
-	 * Get the width of a string with a specified length in pixels when drawn with this font.
-	 * Useful if you want to determine the length of a string without a terminator, or
-	 * the length of a section of a string.
-	 * @param text The string to check.
-	 * @param length The length of the string in chars.
-	 * @return The width of the string in pixels.
-	 */
-	u16 getStringWidth(char* text, u16 length);
-
-	/**
-	 * Get the width of an individual character.
-	 * @param letter The character to get the width of.
-	 * @return The width of the character in pixels.
-	 */
-	u16 getCharWidth(char letter);
-
 private:
 	const u16* _bitmap;
 	

@@ -52,6 +52,30 @@ public:
 	 * @return The width of an individual glyph.
 	 */
 	inline const u8 getWidth() const { return _width; };
+
+	/**
+	 * Get the width of a string in pixels when drawn with this font.
+	 * @param text The string to check.
+	 * @return The width of the string in pixels.
+	 */
+	inline u16 getStringWidth(char* text) { return strlen(text) * getWidth(); };
+
+	/**
+	 * Get the width of a string with a specified length in pixels when drawn with this font.
+	 * Useful if you want to determine the length of a string without a terminator, or
+	 * the length of a section of a string.
+	 * @param text The string to check.
+	 * @param length The length of the string in chars.
+	 * @return The width of the string in pixels.
+	 */
+	inline u16 getStringWidth(char* text, u16 length) { return length * getWidth(); };
+
+	/**
+	 * Get the width of an individual character.
+	 * @param letter The character to get the width of.
+	 * @return The width of the character in pixels.
+	 */
+	inline u16 getCharWidth(char letter) { return getWidth(); };
 	
 protected: 
 	/**

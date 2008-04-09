@@ -222,6 +222,23 @@ public:
 	void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight);
 	
 	/**
+	 * Draw a bitmap to the port's bitmap, using the supplied transparent colour
+	 * as an invisibile colour.  This is considerably slower than the standard bitmap
+	 * drawing routine as it plots pixel-by-pixel instead of using a scanline DMA copy.
+	 * @param x The x co-ordinate to draw the bitmap to.
+	 * @param y The y co-ordinate to draw the bitmap to.
+	 * @param width The width of the bitmap to draw.
+	 * @param height The height of the bitmap to draw.
+	 * @param bitmap Pointer to the bitmap to draw.
+	 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
+	 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+	 * @param bitmapWidth The width of the supplied bitmap.
+	 * @param bitmapHeight The height of the supplied bitmap.
+	 * @param transparentColour The transparent colour used in the bitmap.
+	 */
+	void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour);
+
+	/**
 	 * Erases the graphics port's output by redrawing its gadget.
 	 */
 	void clear();
@@ -240,6 +257,7 @@ private:
 	void clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Gadget::Rect& clipRect);
 	void clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadget::Rect& clipRect);
 	void clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, const Gadget::Rect& clipRect);
+	void clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour, const Gadget::Rect& clipRect);
 	void clipText(s16 x, s16 y, FontBase* font, u16 length, char* string, const Gadget::Rect& clipRect);
 	void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Gadget::Rect& clipRect);
 	void clipXORPixel(s16 x, s16 y, const Gadget::Rect& clipRect);
@@ -252,6 +270,7 @@ private:
 	void drawClippedHorizLine(s16 x, s16 y, s16 width, u16 colour);
 	void drawClippedVertLine(s16 x, s16 y, s16 height, u16 colour);
 	void drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight);
+	void drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour);
 	void drawClippedXORPixel(s16 x, s16 y);
 	void drawClippedXORHorizLine(s16 x, s16 y, u16 width);
 	void drawClippedXORVertLine(s16 x, s16 y, u16 height);

@@ -572,6 +572,35 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 	}
 }
 
+//Draw bitmap with transparency - external function
+void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour) {
+	
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+
+	// Ensure width of rect being drawn into does not exceed size of bitmap
+	if (bitmapWidth - bitmapX < width) {
+		width = bitmapWidth - bitmapX;
+	}
+
+	if (bitmapHeight - bitmapY < height) {
+		height = bitmapHeight - bitmapY;
+	}
+
+	if (_clipRect == NULL) {
+		// Draw all visible rectangles
+		for (u8 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
+			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, _gadget->getVisibleRectCache()->at(i));
+		}
+	} else {
+		// Draw single rectangle
+		clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, *_clipRect);
+	}
+}
+
 // Draw XORed horizontal line - external function
 void GraphicsPort::drawXORHorizLine(s16 x, s16 y, s16 width) {
 
@@ -650,6 +679,40 @@ void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 	}
 }
 
+void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour, const Gadget::Rect& clipRect) {
+
+	// Get co-ords of screen section we're drawing to
+	s16 minX = x;
+	s16 minY = y;
+	s16 maxX = x + width - 1;
+	s16 maxY = y + height - 1;
+
+	// Attempt to clip
+	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
+
+		// Calculate new width and height
+		width = maxX - minX + 1;
+		height = maxY - minY + 1;
+
+		//Adjust bitmap co-ordinates to allow for clipping changes to visible section
+		if (minX > x) {
+			bitmapX += minX - x;
+		}
+		if (y < TOP_SCREEN_Y_OFFSET) {
+			if (minY > y) {
+				bitmapY += minY - y;
+			}
+		} else {
+			if (minY + TOP_SCREEN_Y_OFFSET > y) {
+				bitmapY += (minY + TOP_SCREEN_Y_OFFSET) - y;
+			}
+		}
+
+		// Draw the bitmap
+		drawClippedBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour);
+	}
+}
+
 void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight) {
 
 	// Precalculate line values for loop
@@ -662,15 +725,31 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 
 	u16 lastLine = y + height;
 
-	// Flush out the bitmap mem cache to ensure DMA can see correct data
-	//DC_FlushRange(srcLine0, width * height * sizeof(u16));
-
 	for (u16 i = y; i < lastLine; i++) {
 		while (DMA_Active());
 		DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
 
 		srcLinei += bitmapWidth;
 		destLinei += _bitmapWidth;
+	}
+}
+
+void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour) {
+
+	u16 source = 0;
+
+	// Plot pixels one by one, ignoring transparent pixels
+	for (s16 i = 0; i < width; i++) {
+		for (s16 j = 0; j < height; j++) {
+			
+			// Get the source colour from the supplied bitmap
+			source = bitmap[((bitmapY + j) * bitmapWidth) + (bitmapX + i)];
+
+			// Plot ignoring transparency
+			if (source != transparentColour) {
+				_bitmap[((y + j) * _bitmapWidth) + (x + i)] = source;
+			}
+		}
 	}
 }
 

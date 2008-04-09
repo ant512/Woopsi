@@ -94,11 +94,3 @@ s16 MonoFont::drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char lett
 
 	return x + getWidth();
 }
-
-u16 MonoFont::getStringWidth(char* text) {
-	return strlen(text) * getWidth();
-}
-
-u16 MonoFont::getStringWidth(char* text, u16 length) {
-	return length * getWidth();
-}

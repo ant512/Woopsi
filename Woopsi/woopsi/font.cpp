@@ -98,15 +98,3 @@ s16 Font::drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, 
 
 	return x + getWidth();
 }
-
-u16 Font::getStringWidth(char* text) {
-	return strlen(text) * getWidth();
-}
-
-u16 Font::getStringWidth(char* text, u16 length) {
-	return length * getWidth();
-}
-
-u16 Font::getCharWidth(char letter) {
-	return getWidth();
-}

@@ -3,6 +3,7 @@
 
 // TODO: Allow line spacing to be set in constructor only, or make const
 // TODO: Check for other characters to split on
+// TODO: Finish text wrapping by pixel widths rather than string lengths
 
 Text::Text(FontBase* font, char* text, u16 width) {
 	_font = font;
@@ -114,6 +115,7 @@ void Text::wrap() {
 	u32 currentPos = pos;
 	u32 lastBreakPos = 0;
 	u8 lineLength = 0;
+	u16 linePixelWidth = 0;
 	bool gotBreak = false;
 
 	// Keep looping until we run out of lines
@@ -122,11 +124,13 @@ void Text::wrap() {
 		currentPos = pos;
 		lastBreakPos = 0;
 		lineLength = 0;
+		linePixelWidth = 0;
 		gotBreak = false;
 
 		// Search for a break point (from left to right)
-		while ((lineLength < _maxLineLength) && (remainingSize > 0) && (currentPos < totalSize)) {
+		while ((linePixelWidth < _width) && (remainingSize > 0) && (currentPos < totalSize)) {
 			lineLength++;
+			linePixelWidth += _font->getCharWidth(_text[currentPos]);
 		
 			if (_text[currentPos] == '\n') {
 				// Got a return
@@ -202,19 +206,7 @@ void Text::wrap() {
 		}
 
 		// Is this the longest line?
-		if (_linePositions.size() > 1) {
-
-			// Calculate length of this line
-			if (_textPixelWidth < _linePositions[_linePositions.size() - 1] - _linePositions[_linePositions.size() - 2]) {
-		
-				// Update longest line length
-				_textPixelWidth = currentPos - pos;
-			}
-		} else {
-
-			// First line
-			_textPixelWidth = _linePositions[0];
-		}
+		if (linePixelWidth > _textPixelWidth) _textPixelWidth = linePixelWidth;
 	}
 
 	// Add final string
@@ -232,7 +224,6 @@ void Text::wrap() {
 	// Total lines is 1 less than the size of the position array because the first element
 	// is the start of the first line
 	_totalLines = _linePositions.size() - 1;
-	_textPixelWidth *= ((FixedWidthFontBase*)_font)->getWidth();
 
 	calculateTextPixelHeight();
 }

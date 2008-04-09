@@ -60,6 +60,8 @@ Change Log
         - Removed all fixed-width code from FontBase.
         - Upgraded gadgets to support proportional-width fonts (excluding
           MultiLineTextBox).
+     - Added GraphicsPort::drawBitmap() function that accepts a transparent
+       colour value and does not draw that colour.
 
 
   V0.30 (20080326)
