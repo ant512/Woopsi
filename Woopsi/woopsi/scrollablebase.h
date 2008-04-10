@@ -54,10 +54,10 @@ public:
 	virtual void jump(s32 x, s32 y) = 0;
 
 protected:
-	s32 _canvasX;
-	s32 _canvasY;
-	s32 _canvasWidth;
-	s32 _canvasHeight;
+	s32 _canvasX;						/**< X co-ordinate of the vitual canvas */
+	s32 _canvasY;						/**< Y co-ordinate of the virtual canvas */
+	s32 _canvasWidth;					/**< Width of the virtual canvas */
+	s32 _canvasHeight;					/**< Height of the virtual canvas */
 
 	/**
 	 * Sets the width of the virtual canvas.

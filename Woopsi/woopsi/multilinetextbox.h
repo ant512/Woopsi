@@ -1,3 +1,5 @@
+// TODO: Move responsibility for maintaining raw text pointer and memory allocation into Text class.
+
 #ifndef _MULTILINE_TEXTBOX_H_
 #define _MULTILINE_TEXTBOX_H_
 
@@ -137,14 +139,14 @@ public:
 	virtual bool resize(u16 width, u16 height);
 
 protected:
-	char* _rawText;
-	Text* _text;
-	u8 _visibleRows;
-	s16 _maxRows;
-	u32 _topRow;
-	u8 _padding;
-	TextPositionHoriz _hPos;
-	TextPositionVert _vPos;
+	char* _rawText;							/**< String that the textbox will display */
+	Text* _text;							/**< Text object that manipulates and wraps the raw text string */
+	u8 _visibleRows;						/**< Total number of rows that the textbox can display at once */
+	s16 _maxRows;							/**< Maximum number of rows that the textbox should buffer */
+	u32 _topRow;							/**< Index of the top row of text currently displayed */
+	u8 _padding;							/**< Padding around the text in pixels */
+	TextPositionHoriz _hPos;				/**< Horizontal alignment of the text */
+	TextPositionVert _vPos;					/**< Vertical alignment of the text */
 
 	/**
 	 * Gets the x position of a row of text based on the width of the row and the 

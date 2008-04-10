@@ -137,11 +137,11 @@ public:
 	virtual bool resize(u16 width, u16 height);
 
 protected:
-	SliderVerticalGrip* _grip;
-	s16 _minimumValue;
-	s16 _maximumValue;
-	s16 _minimumGripHeight;
-	s16 _pageSize;
+	SliderVerticalGrip* _grip;					/**< Pointer to the grip */
+	s16 _minimumValue;							/**< Minimum value that the grip can represent */
+	s16 _maximumValue;							/**< Maximum value that the grip can represent */
+	s16 _minimumGripHeight;						/**< Smallest height that the grip can become */
+	s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter */
 
 	/**
 	 * Destructor.

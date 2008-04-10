@@ -361,23 +361,6 @@ void ScrollingPanel::scrollChildren(s32 dx, s32 dy) {
 	}
 }
 
-bool ScrollingPanel::click(s16 x, s16 y) {
-
-	if (Gadget::click(x, y)) {
-
-		// Did we click a gadget?
-		if (_clickedGadget == NULL) {
-
-			// Start dragging
-			setDragging(x, y);
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
 bool ScrollingPanel::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 	if (_flags.enabled) {

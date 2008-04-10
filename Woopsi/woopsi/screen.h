@@ -109,8 +109,8 @@ public:
 	virtual bool focus();
 
 protected:
-	u8 _titleHeight;
-	char* _title;
+	u8 _titleHeight;						/**< Height of the title bar */
+	char* _title;							/**< Title of the screen */
 
 	/**
 	 * Destructor.

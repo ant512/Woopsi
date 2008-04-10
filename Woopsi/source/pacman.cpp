@@ -147,7 +147,7 @@ void PacMan::initGUI() {
 
 	_superBitmap = new SuperBitmap(rect.x, rect.y, _width, _height, _width, _height, false);
 	_window->addGadget(_superBitmap);
-	_superBitmap->setAllowStylusScroll(false);
+	_superBitmap->setDraggable(false);
 	_superBitmap->setRefcon(2);
 
 	_resetButton = new Button(rect.x + 18, rect.y + 114, 60, 14, "Reset");

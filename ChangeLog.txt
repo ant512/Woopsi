@@ -38,6 +38,9 @@ Change Log
 	 - Bugfixes to ScrollingTextbox event handling.
 	 - Vertical and horizontal grip respect borders of gutter when dragged.
 	 - Sliders check new value against max/min values when value is set.
+	 - Gadget::click() calls "setDragging()".
+	 - Gadget::drag() only raises drag events when _flag.dragging is set.
+	 - SuperBitmap uses standard dragging system instead of "allowStylusScroll".
   
   - New Features:
      - Added ScrollingTextBox class.

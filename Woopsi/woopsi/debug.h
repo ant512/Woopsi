@@ -37,12 +37,11 @@ public:
 	static void printf(const char *format, ...);
 
 private:
-	static Debug* _debug;
-	static Woopsi* _woopsi;
-	AmigaScreen* _screen;
-	AmigaWindow* _window;
-	ScrollingTextBox* _textBox;
-	MonoFont* _font;
+	static Debug* _debug;					/**< Pointer to the debug singleton */
+	AmigaScreen* _screen;					/**< Pointer to the debug screen */
+	AmigaWindow* _window;					/**< Pointer to the debug window */
+	ScrollingTextBox* _textBox;				/**< Pointer to the debug output textbox */
+	MonoFont* _font;						/**< Pointer to the debug font */
 
 	/** 
 	 * Constructor is private to force a singleton pattern.

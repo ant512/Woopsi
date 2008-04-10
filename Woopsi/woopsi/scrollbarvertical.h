@@ -141,11 +141,11 @@ public:
 
 
 protected:
-	SliderVertical* _slider;
-	Button* _upButton;
-	Button* _downButton;
-	u8 _buttonHeight;
-	u16 _buttonScrollAmount;
+	SliderVertical* _slider;					/**< Pointer to the slider gadget */
+	Button* _upButton;							/**< Pointer to the up button */
+	Button* _downButton;						/**< Pointer to the down button */
+	u8 _buttonHeight;							/**< Height of the buttons */
+	u16 _buttonScrollAmount;					/**< Amount that the grip moves when a button is clicked */
 
 	/**
 	 * Destructor.

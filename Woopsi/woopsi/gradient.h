@@ -46,11 +46,15 @@ public:
 	virtual bool resize(u16 width, u16 height);
 
 protected:
-	u16 _fromColour, _toColour;
-	s16 _numberR, _deltaR;
-	s16 _numberG, _deltaG;
-	s16 _numberB, _deltaB;
-	s16* _rowColour;
+	u16 _fromColour;			/**< Initial gradient colour */
+	u16 _toColour;				/**< Final gradient colour */
+	s16 _numberR;				/**< Number of steps to get from start to finish colour in red component */
+	s16 _numberG;				/**< Number of steps to get from start to finish colour in green component */
+	s16 _numberB;				/**< Number of steps to get from start to finish colour in blue component */
+	s16 _deltaR;				/**< Value that red component is incremented at each new gradient step */
+	s16 _deltaG;				/**< Value that green component is incremented at each new gradient step */
+	s16 _deltaB;				/**< Value that blue component is incremented at each new gradient step */
+	s16* _rowColour;			/**< Array of precalculated gradient colours for each step */
 	
 	/**
 	 * Precalculates the properties of the gradient to save processing time later.

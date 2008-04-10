@@ -851,31 +851,31 @@ public:
 	virtual bool handleContextMenuSelection(u32 value);
 
 protected:
-	s16 _x;								/**< X co-ordinate of the gadget, relative to parent */
-	s16 _y;								/**< Y co-ordinate of the gadget, relative to parent */
-	u16 _width;							/**< Width of the gadget */
-	u16 _height;						/**< Height of the gadget */
-	u32 _refcon;						/**< Identifying number of the gadget */
+	s16 _x;									/**< X co-ordinate of the gadget, relative to parent */
+	s16 _y;									/**< Y co-ordinate of the gadget, relative to parent */
+	u16 _width;								/**< Width of the gadget */
+	u16 _height;							/**< Height of the gadget */
+	u32 _refcon;							/**< Identifying number of the gadget */
 
 	// Dragging variables
-	s16 _grabPointX;					/**< Physical space x co-ordinate where dragging began */
-	s16 _grabPointY;					/**< Physical space y co-ordinate where dragging began */
-	s16 _newX;							/**< Physical x co-ordinate where gadget is being dragged to */
-	s16 _newY;							/**< Physical y co-ordinate where gadget is being dragged to */
+	s16 _grabPointX;						/**< Physical space x co-ordinate where dragging began */
+	s16 _grabPointY;						/**< Physical space y co-ordinate where dragging began */
+	s16 _newX;								/**< Physical x co-ordinate where gadget is being dragged to */
+	s16 _newY;								/**< Physical y co-ordinate where gadget is being dragged to */
 
 	// Colour definitions
-	u16 _backColour;					/**< Colour used as background */
-	u16 _shineColour;					/**< Colour used as light bevel edge */
-	u16 _highlightColour;				/**< Colour used as highlighted elements */
-	u16 _shadowColour;					/**< Colour used as dark bevel edge */
-	u16 _fillColour;					/**< Colour used as foreground fill */
-	u16 _darkColour;					/**< Colour used as scrollbar gutters etc */
+	u16 _backColour;						/**< Colour used as background */
+	u16 _shineColour;						/**< Colour used as light bevel edge */
+	u16 _highlightColour;					/**< Colour used as highlighted elements */
+	u16 _shadowColour;						/**< Colour used as dark bevel edge */
+	u16 _fillColour;						/**< Colour used as foreground fill */
+	u16 _darkColour;						/**< Colour used as scrollbar gutters etc */
 
 	// Status
-	Flags _flags;						/**< Flags struct */
+	Flags _flags;							/**< Flags struct */
 
 	// Event handling
-	EventHandler* _eventHandler;		/**< Pointer to the gadget's event handler */
+	EventHandler* _eventHandler;			/**< Pointer to the gadget's event handler */
 
 	// Hierarchy control
 	Gadget* _parent;						/**< Pointer to the gadget's parent */

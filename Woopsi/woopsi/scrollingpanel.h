@@ -37,14 +37,6 @@ public:
 	 * @param clipRect The region to draw.
 	 */
 	virtual void draw(Rect clipRect);
-
-	/**
-	 * Click the gadget at the specified co-ordinates.
-	 * @param x The x co-ordinate of the click.
-	 * @param y The y co-ordinate of the click.
-	 * @return True if the click was successful.
-	 */
-	virtual bool click(s16 x, s16 y);
 	
 	/**
 	 * Drag the gadget at the specified co-ordinates.

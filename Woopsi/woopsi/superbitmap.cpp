@@ -17,9 +17,9 @@ SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u
 
 	if (isDecoration) {
 		_flags.borderless = true;
-		_allowStylusScroll = false;
+		_flags.draggable = false;
 	} else {
-		_allowStylusScroll = true;
+		_flags.draggable = true;
 	}
 
 	initBitmap();
@@ -278,31 +278,29 @@ void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, char* string, u16 colou
 
 bool SuperBitmap::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
-	if (_flags.enabled) {
-		if (_flags.clicked && _allowStylusScroll) {
-			_bitmapX -= vX;
-			_bitmapY -= vY;
+	if ((_flags.enabled) && (_flags.dragging)) {
+		_bitmapX -= vX;
+		_bitmapY -= vY;
 
-			// Prevent scrolling outside boundaries of bitmap
-			if (_bitmapX < 0) {
-				_bitmapX = 0;
-			} else if (_bitmapX > _bitmapWidth - _width) {
-				_bitmapX = _bitmapWidth - _width;
-			}
-
-			if (_bitmapY < 0) {
-				_bitmapY = 0;
-			} else if (_bitmapY > _bitmapHeight - _height) {
-				_bitmapY = _bitmapHeight - _height;
-			}
-
-			// Redraw the gadget
-			draw();
-
-			raiseDragEvent(x, y, vX, vY);
-
-			return true;
+		// Prevent scrolling outside boundaries of bitmap
+		if (_bitmapX < 0) {
+			_bitmapX = 0;
+		} else if (_bitmapX > _bitmapWidth - _width) {
+			_bitmapX = _bitmapWidth - _width;
 		}
+
+		if (_bitmapY < 0) {
+			_bitmapY = 0;
+		} else if (_bitmapY > _bitmapHeight - _height) {
+			_bitmapY = _bitmapHeight - _height;
+		}
+
+		// Redraw the gadget
+		draw();
+
+		raiseDragEvent(x, y, vX, vY);
+
+		return true;
 	}
 
 	return false;

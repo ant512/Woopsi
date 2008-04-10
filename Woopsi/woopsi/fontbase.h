@@ -183,13 +183,12 @@ protected:
 	u8 _glyphMap[GLYPH_MAP_SIZE];
 
 private:
-	u8 _height;
-	u8 _glyphHeight;
-	u16 _bitmapWidth;
-	u16 _bitmapHeight;
-	u16 _drawColour;
-	bool _isMonochrome;
-	u16 _transparentColour;
+	u8 _height;								/**< Height of the font */
+	u16 _bitmapWidth;						/**< Width of the bitmap containing glyph data */
+	u16 _bitmapHeight;						/**< Height of the bitmap containing glyph data */
+	u16 _drawColour;						/**< Colour to draw the font with when rendering */
+	bool _isMonochrome;						/**< True if the font is not multicolour */
+	u16 _transparentColour;					/**< Background colour that should not be rendered */
 };
 
 #endif

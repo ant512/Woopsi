@@ -84,7 +84,7 @@ public:
 	virtual void draw(Rect clipRect);
 
 protected:
-	RadioButton* _selectedGadget;
+	RadioButton* _selectedGadget;				/**< Pointer to the currently selected radio button */
 
 	/**
 	 * Destructor.

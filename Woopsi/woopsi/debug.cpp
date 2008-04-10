@@ -10,7 +10,6 @@
 #include "scrollingtextbox.h"
 #include "monofont.h"
 
-Woopsi* Debug::_woopsi = NULL;
 Debug* Debug::_debug = NULL;
 
 Debug::Debug() {
@@ -71,46 +70,41 @@ void Debug::busyWait() {
 }
 
 void Debug::createGUI() {
-	if (_woopsi == NULL)
-		_woopsi = woopsiApplication;
 
-	if (_woopsi != NULL) {
+	// Add debug screen
+	if (_screen == NULL) {
+		_screen = new AmigaScreen("Debug");
+		woopsiApplication->addGadget(_screen);
+		_screen->draw();
+	}
 
-		// Add debug screen
-		if (_screen == NULL) {
-			_screen = new AmigaScreen("Debug");
-			_woopsi->addGadget(_screen);
-			_screen->draw();
-		}
+	// Add debug window
+	if (_window == NULL) {
+		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE);
+		_screen->addGadget(_window);
+		_window->draw();
+	}
 
-		// Add debug window
-		if (_window == NULL) {
-			_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE);
-			_screen->addGadget(_window);
-			_window->draw();
-		}
+	// Create font
+	if (_font == NULL) {
+		_font = new MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, 32768);
+	}
 
-		// Create font
-		if (_font == NULL) {
-			_font = new MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, 32768);
-		}
+	// Add textbox
+	if (_textBox == NULL) {
+		Gadget::Rect rect;
+		_window->getClientRect(rect);
 
-		// Add textbox
-		if (_textBox == NULL) {
-			Gadget::Rect rect;
-			_window->getClientRect(rect);
-
-			_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
-			_textBox->disableDrawing();
-			_window->addGadget(_textBox);
-			_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
-			_textBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
-			_textBox->addText("Woopsi Version ");
-			_textBox->addText(WOOPSI_VERSION);
-			_textBox->addText("\n");
-			_textBox->addText(WOOPSI_COPYRIGHT);
-			_textBox->enableDrawing();
-			_textBox->addText("\n");
-		}
+		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
+		_textBox->disableDrawing();
+		_window->addGadget(_textBox);
+		_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
+		_textBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
+		_textBox->addText("Woopsi Version ");
+		_textBox->addText(WOOPSI_VERSION);
+		_textBox->addText("\n");
+		_textBox->addText(WOOPSI_COPYRIGHT);
+		_textBox->enableDrawing();
+		_textBox->addText("\n");
 	}
 }

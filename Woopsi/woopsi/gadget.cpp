@@ -1304,6 +1304,9 @@ bool Gadget::click(s16 x, s16 y) {
 					_parent->setClickedGadget(this);
 				}
 
+				// Enable dragging
+				setDragging(x, y);
+
 				raiseClickEvent(x, y);
 			}
 
@@ -1376,7 +1379,7 @@ bool Gadget::release(s16 x, s16 y) {
 }
 
 bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	if (_flags.enabled) {
+	if ((_flags.enabled) && (_flags.dragging)) {
 		raiseDragEvent(x, y, vX, vY);
 
 		return true;

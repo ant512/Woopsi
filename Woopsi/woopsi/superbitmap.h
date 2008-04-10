@@ -45,12 +45,6 @@ public:
 	inline const u16* getBitmap() const { return _bitmap; };
 
 	/**
-	 * Disables and enables stylus scrolling.
-	 * @param allowStylusScroll True to enable stylus scrolling.
-	 */
-	inline void setAllowStylusScroll(bool allowStylusScroll) { _allowStylusScroll = allowStylusScroll; };
-
-	/**
 	 * Draws the gadget to the frawebuffer.
 	 */
 	virtual inline void draw() { Gadget::draw(); };
@@ -192,13 +186,11 @@ public:
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 protected:
-	TextWriter* _textWriter;
-	s32 _bitmapX;
-	s32 _bitmapY;
-	u16 _bitmapWidth;
-	u16 _bitmapHeight;
-	u16* _bitmap __attribute__ ((aligned (4)));
-	bool _allowStylusScroll;
+	s32 _bitmapX;									/**< X co-ordinate of the bitmap relative to the gadget */
+	s32 _bitmapY;									/**< Y co-ordinate of the bitmap relative to the gadget */
+	u16 _bitmapWidth;								/**< Width of the bitmap */
+	u16 _bitmapHeight;								/**< Height of the bitmap */
+	u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
 	
 	/**
 	 * Allocate the bitmap memory and clear it.

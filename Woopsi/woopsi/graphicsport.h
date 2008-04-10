@@ -244,12 +244,12 @@ public:
 	void clear();
 
 private:
-	Gadget* _gadget;
-	Gadget::Rect* _clipRect;
-	Gadget::Rect _rect;
-	u16* _bitmap;
-	u16 _bitmapWidth;
-	u16 _bitmapHeight;
+	Gadget* _gadget;							/**< Pointer to the gadget that the port will draw to */
+	Gadget::Rect* _clipRect;					/**< Clipping rect that the port must draw within */
+	Gadget::Rect _rect;							/**< Total area that the port can draw within */
+	u16* _bitmap;								/**< Bitmap that the port will draw to (should be in VRAM) */
+	u16 _bitmapWidth;							/**< Width of the bitmap that the port will draw to */
+	u16 _bitmapHeight;							/**< Height of the bitmap that the port will draw to */
 
 	// Internal clipping routines
 	void clipPixel(u16 x, u16 y, u16 colour, const Gadget::Rect& clipRect);

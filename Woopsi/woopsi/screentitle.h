@@ -46,7 +46,7 @@ public:
 	virtual bool click(s16 x, s16 y);
 
 protected:
-	char* _text;
+	char* _text;							/**< Text to display in the title bar */
 
 	/**
 	 * Destructor.

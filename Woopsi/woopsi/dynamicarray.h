@@ -95,9 +95,9 @@ public:
 	u32 begin() const;
 
 private:
-	T* _data;
-	s32 _size;
-	s32 _reservedSize;
+	T* _data;								/**< Internal array of data items */
+	s32 _size;								/**< Number of items in the array */
+	s32 _reservedSize;						/**< Total size of the array including unpopulated slots */
 
 	/**
 	 * Resize the array if it is full.

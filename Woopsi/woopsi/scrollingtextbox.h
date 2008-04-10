@@ -133,9 +133,9 @@ public:
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 protected:
-	MultiLineTextBox* _textbox;
-	ScrollbarVertical* _scrollbar;
-	u8 _scrollbarWidth;
+	MultiLineTextBox* _textbox;						/**< Pointer to the textbox */
+	ScrollbarVertical* _scrollbar;					/**< Pointer to the scrollbar */
+	u8 _scrollbarWidth;								/**< Width of the scrollbar */
 
 
 	/**
