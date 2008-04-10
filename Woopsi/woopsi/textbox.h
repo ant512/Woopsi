@@ -129,12 +129,12 @@ public:
 	virtual void getPreferredDimensions(Rect& rect) const;
 
 protected:
-	char* _text;
-	u16 _textX;
-	u16 _textY;
-	u8 _padding;
-	TextPositionHoriz _hPos;
-	TextPositionVert _vPos;
+	char* _text;							/**< String to display in the textbox */
+	u16 _textX;								/**< X co-ordinate of the text relative to the gadget */
+	u16 _textY;								/**< Y co-ordinate of the text relative to the gadget */
+	u8 _padding;							/**< Padding around the text in pixels */
+	TextPositionHoriz _hPos;				/**< Horizontal alignment of the text */
+	TextPositionVert _vPos;					/**< Vertical alignment of the text */
 
 	/**
 	 * Calculate the position of the string based on its length and the alignment options.

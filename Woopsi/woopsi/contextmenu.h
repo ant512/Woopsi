@@ -32,6 +32,7 @@ public:
 	/**
 	 * Add a new menu item to the gadget.
 	 * @param text Text to show in the item.
+	 * @param value The value of the item.
 	 */
 	virtual ContextMenuItem* newMenuItem(char* text, u32 value);
 

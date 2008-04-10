@@ -21,6 +21,7 @@ public:
 	 * @param width The width of the menu item.
 	 * @param height The height of the menu item.
 	 * @param text Pointer to a string to display in the menu item.
+	 * @param value The value of the item.
 	 * @param font The font to use in this menu item.
 	 */
 	ContextMenuItem(s16 x, s16 y, u16 width, u16 height, const char* text, u32 value, FontBase* font = NULL);

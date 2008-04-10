@@ -197,13 +197,13 @@ public:
 	const u32 getContextMenuValue() const;
 
 protected:
-	bool _lidClosed;
+	bool _lidClosed;									/**< Remembers the current state of the lid */
 	
-	static DynamicArray<Gadget*> _vblListeners;
-	static DynamicArray<Gadget*> _deleteQueue;
-	static FontBase* _systemFont;
-	static u32 _vblCount;
-	ContextMenu* _contextMenu;
+	static DynamicArray<Gadget*> _vblListeners;			/**< Array of gadgets that receive VBL events */
+	static DynamicArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion */
+	static FontBase* _systemFont;						/**< Pointer to the default font */
+	static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */
+	ContextMenu* _contextMenu;							/**< Pointer to the context menu */
 
 	/**
 	 * Closes a child gadget.
@@ -223,5 +223,9 @@ protected:
 	void processDeleteQueue();
 };
 
+/**
+ * Use the following define to access the Woopsi singleton object.
+ */
 #define woopsiApplication (Woopsi::singleton)
+
 #endif

@@ -21,7 +21,7 @@ public:
 	 * @param width The width of the button.
 	 * @param height The height of the button.
 	 * @param normalGlyph Character to display when unclicked.
-	 * @param bitmapClicked Character to display when clicked.
+	 * @param clickedGlyph Character to display when clicked.
 	 * @param font Font to use.
 	 */
 	DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font = NULL);

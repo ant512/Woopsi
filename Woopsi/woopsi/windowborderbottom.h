@@ -51,7 +51,7 @@ public:
 	virtual bool blur();
 
 protected:
-	u8 _sideBorderSize;
+	u8 _sideBorderSize;								/**< Width of the windw's side border */
 
 	/**
 	 * Destructor.
