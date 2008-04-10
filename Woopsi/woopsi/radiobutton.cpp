@@ -1,5 +1,3 @@
-// TODO: Switch to GraphicsPort
-
 #include "radiobutton.h"
 #include "radiobuttongroup.h"
 #include "graphicsport.h"
@@ -27,31 +25,28 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 
 void RadioButton::draw(Rect clipRect) {
 
-	clear(clipRect);
-
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+
+	// Clear the background
+	port->drawFilledRect(0, 0, _width, _height, _backColour);
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
-	
-	delete port;
 
-	// Choose appropriate glyph for state
-	char glyph = GLYPH_RADIO_BUTTON_OFF;
-
+	// Draw appropriate glyph for state
 	switch (_state) {
 		case RADIO_BUTTON_STATE_ON:
-			glyph = GLYPH_RADIO_BUTTON_ON;
+			port->drawText(_textX, _textY, _font, GLYPH_RADIO_BUTTON_ON);
 			break;
 		case RADIO_BUTTON_STATE_OFF:
-			glyph = GLYPH_RADIO_BUTTON_OFF;
+			port->drawText(_textX, _textY, _font, GLYPH_RADIO_BUTTON_OFF);
 			break;
 		case RADIO_BUTTON_STATE_MU:
-			glyph = GLYPH_RADIO_BUTTON_MU;
+			port->drawText(_textX, _textY, _font, GLYPH_RADIO_BUTTON_MU);
 			break;
 	}
 
-	TextWriter::drawChar(_font, glyph, getX() + _textX, getY() + _textY, clipRect.x, clipRect.y, clipRect.x + clipRect.width - 1, clipRect.y + clipRect.height - 1);
+	delete port;
 }
 
 bool RadioButton::click(s16 x, s16 y) {

@@ -1,5 +1,3 @@
-// TODO: Remove internal drawing and replace with graphicsport
-
 #include "checkbox.h"
 #include "graphicsport.h"
 
@@ -23,31 +21,28 @@ void CheckBox::setState(CheckBox::CheckBoxState state) {
 
 void CheckBox::draw(Rect clipRect) {
 
-	clear(clipRect);
-
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+
+	// Clear the background
+	port->drawFilledRect(0, 0, _width, _height, _backColour);
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
-	
-	delete port;
 
-	// Choose appropriate glyph for state
-	char glyph = GLYPH_CHECK_BOX_OFF;
-
+	// Draw appropriate glyph for state
 	switch (_state) {
 		case CHECK_BOX_STATE_ON:
-			glyph = GLYPH_CHECK_BOX_ON;
+			port->drawText(_textX, _textY, _font, GLYPH_CHECK_BOX_ON);
 			break;
 		case CHECK_BOX_STATE_OFF:
-			glyph = GLYPH_CHECK_BOX_OFF;
+			port->drawText(_textX, _textY, _font, GLYPH_CHECK_BOX_OFF);
 			break;
 		case CHECK_BOX_STATE_MU:
-			glyph = GLYPH_CHECK_BOX_MU;
+			port->drawText(_textX, _textY, _font, GLYPH_CHECK_BOX_MU);
 			break;
 	}
 
-	TextWriter::drawChar(_font, glyph, getX() + _textX, getY() + _textY, clipRect.x, clipRect.y, clipRect.x + clipRect.width - 1, clipRect.y + clipRect.height - 1);
+	delete port;
 }
 
 bool CheckBox::click(s16 x, s16 y) {

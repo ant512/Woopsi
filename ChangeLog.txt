@@ -41,6 +41,8 @@ Change Log
 	 - Gadget::click() calls "setDragging()".
 	 - Gadget::drag() only raises drag events when _flag.dragging is set.
 	 - SuperBitmap uses standard dragging system instead of "allowStylusScroll".
+	 - Checkbox uses graphics port for all drawing.
+	 - RadioButton uses graphics port for all drawing.
   
   - New Features:
      - Added ScrollingTextBox class.

@@ -1,7 +1,6 @@
 #include "text.h"
 
 // TODO: Allow line spacing to be set in constructor only, or make const
-// TODO: Check for other characters to split on
 
 Text::Text(FontBase* font, char* text, u16 width) {
 	_font = font;
@@ -99,6 +98,14 @@ void Text::wrap() {
 					   (_text[scanPos] == ',') ||
 					   (_text[scanPos] == '.') ||
 					   (_text[scanPos] == '-') ||
+					   (_text[scanPos] == ':') ||
+					   (_text[scanPos] == ';') ||
+					   (_text[scanPos] == '?') ||
+					   (_text[scanPos] == '!') ||
+					   (_text[scanPos] == '+') ||
+					   (_text[scanPos] == '"') ||
+					   (_text[scanPos] == '=') ||
+					   (_text[scanPos] == '/') ||
 					   (_text[scanPos] == '_')) {
 
 				// Remember the most recent breakpoint
