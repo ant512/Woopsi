@@ -33,7 +33,7 @@ const s16 SliderVertical::getValue() const {
 		u32 ratio = ((_maximumValue - _minimumValue) << 8) / rect.height;
 		
 		// Calculate value
-		u32 val = (_grip->getY() - getY()) * ratio;
+		u32 val = ((_grip->getY() - getY()) - rect.y) * ratio;
 
 		// Right shift to erase fractional part and return
 		return val >> 8;

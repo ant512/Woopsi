@@ -10,6 +10,8 @@ SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget
 	_pageSize = 1;
 	_flags.permeable = true;
 
+	_flags.borderless = false;
+
 	// Create grip
 	Rect rect;
 	getClientRect(rect);
@@ -31,7 +33,7 @@ const s16 SliderHorizontal::getValue() const {
 		u32 ratio = ((_maximumValue - _minimumValue) << 8) / rect.width;
 		
 		// Calculate value
-		u32 val = (_grip->getX() - getX()) * ratio;
+		u32 val = ((_grip->getX() - getX()) - rect.x) * ratio;
 
 		// Right shift to erase fractional part and return
 		return val >> 8;

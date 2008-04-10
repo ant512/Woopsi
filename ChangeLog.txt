@@ -43,6 +43,7 @@ Change Log
 	 - SuperBitmap uses standard dragging system instead of "allowStylusScroll".
 	 - Checkbox uses graphics port for all drawing.
 	 - RadioButton uses graphics port for all drawing.
+	 - Bugfixes to sliders.
   
   - New Features:
      - Added ScrollingTextBox class.
