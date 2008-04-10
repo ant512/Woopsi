@@ -185,6 +185,6 @@ bool Textbox::resize(u16 width, u16 height) {
 void Textbox::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
-	rect.width = (_padding << 1) + _font->getStringWidth(_text);
-	rect.height = (_padding << 1) + _font->getHeight();
+	rect.width = ((!_flags.borderless + _padding) << 1) + _font->getStringWidth(_text);
+	rect.height = ((!_flags.borderless + _padding) << 1) + _font->getHeight();
 }

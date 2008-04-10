@@ -20,7 +20,7 @@ ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
 	Rect clientRect;
 	getClientRect(clientRect);
 
-	// Get gadget's preferred size
+	// Get menu item's preferred size
 	Rect preferredRect;
 	item->getPreferredDimensions(preferredRect);
 
@@ -31,11 +31,15 @@ ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
 	// Adjust gadget's co-ordinates
 	item->moveTo(preferredRect.x, preferredRect.y);
 
-	// Resize this gadget if necessary
-	if (preferredRect.width + (clientRect.x << 1) > clientRect.width) {
-		clientRect.width = preferredRect.width + (clientRect.x << 1);
+	// Calculate new width of menu
+	if (preferredRect.width > clientRect.width) {
+		clientRect.width = preferredRect.width;
 	}
 
+	// Compensate for border
+	clientRect.width += (clientRect.x << 1);
+
+	// Calculate new height of menu
 	clientRect.height = (_gadgets.size() * preferredRect.height) + (clientRect.y << 1);
 
 	setPermeable(false);
@@ -81,6 +85,10 @@ void ContextMenu::draw(Rect clipRect) {
 bool ContextMenu::resize(u16 width, u16 height) {
 
 	if ((_width != width) || (_height != height)) {
+
+		erase();
+		disableDrawing();
+
 		_width = width;
 		_height = height;
 
@@ -102,6 +110,9 @@ bool ContextMenu::resize(u16 width, u16 height) {
 		}
 
 		setPermeable(false);
+
+		enableDrawing();
+		draw();
 
 		raiseResizeEvent(width, height);
 
