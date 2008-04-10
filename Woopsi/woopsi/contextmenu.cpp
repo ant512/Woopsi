@@ -14,8 +14,6 @@ ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
 	item->setEventHandler(this);
 	addGadget(item);
 
-	setPermeable(true);
-
 	// Get client area
 	Rect clientRect;
 	getClientRect(clientRect);
@@ -29,7 +27,9 @@ ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
 	preferredRect.y = clientRect.y + ((_gadgets.size() - 1) * preferredRect.height);
 
 	// Adjust gadget's co-ordinates
+	setPermeable(true);
 	item->moveTo(preferredRect.x, preferredRect.y);
+	setPermeable(false);
 
 	// Calculate new width of menu
 	if (preferredRect.width > clientRect.width) {
@@ -42,7 +42,25 @@ ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
 	// Calculate new height of menu
 	clientRect.height = (_gadgets.size() * preferredRect.height) + (clientRect.y << 1);
 
-	setPermeable(false);
+	// Ensure dimensions fit within screen
+	if (clientRect.width > SCREEN_WIDTH) clientRect.width = SCREEN_WIDTH;
+	if (clientRect.height > SCREEN_HEIGHT) clientRect.height = SCREEN_HEIGHT;
+
+	// Attempt to position menu so that it does not exceed the screen boundaries
+	s16 newX = _x;
+	s16 newY = _y;
+	if (getX() + clientRect.width > SCREEN_WIDTH) {
+		newX = SCREEN_WIDTH - clientRect.width;
+	}
+
+	if (getY() + clientRect.height > SCREEN_HEIGHT) {
+		newY = SCREEN_HEIGHT - clientRect.height;
+	}
+
+	// Move
+	disableDrawing();
+	moveTo(newX, newY);
+	enableDrawing();
 
 	resize(clientRect.width, clientRect.height);
 

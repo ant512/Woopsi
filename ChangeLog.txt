@@ -56,7 +56,7 @@ Change Log
      - Moved header includes from woopsi.h to new woopsiheaders.h to allow
        more streamlined binaries.
      - Added Gadget::remove() and Gadget::removeChild() methods.
-     - Started ContextMenu and ContextMenuItem classes.
+     - Added ContextMenu and ContextMenuItem classes.
      - Added Gadget "hidden" flag to more accurately identify if a gadget has
        been hidden.
      - Added Gadget::isHidden() method.

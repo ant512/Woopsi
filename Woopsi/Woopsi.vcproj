@@ -541,6 +541,10 @@
 				RelativePath=".\data\logo_wifi.bmp"
 				>
 			</File>
+			<File
+				RelativePath=".\Release\Woopsi.nds"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Source Files"
