@@ -68,15 +68,18 @@ Features
       are larger than the parent container;
     - Scroll bars;
     - Slider bars;
+    - Context-sensitive menu.
   - Skinnable screens and windows;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
   - Intelligent, optimised gadget drawing and erasing;
   - Event system;
   - Depth sorting;
+  - Automatic gadget garbage collection;
   - Complete API for constructing new gadgets:
-    - Extensible font system that supports monochrome and 16-bit font bitmaps
-      by default;
+    - Extensible font system that supports fixed-width bit-packed monochrome and
+      16-bit colour font bitmaps by default, with the capability for supporting
+      proportional fonts;
     - Text manipulation, including wrapping functions and width calculation;
     - Animation class with support for variable framerates and standard/pingpong
       looping;
@@ -88,9 +91,11 @@ Features
       - Filled and unfilled rectangles;
       - Filled and unfilled circles;
       - Bitmap blitting;
+      - Bitmap blitting with transparent colour key;
       - XOR horizontal/vertical lines and pixel plotting;
       - Flood fill.
-    - Linked list and dynamic array container classes.
+    - Linked list, dynamic array and hashmap template container classes and
+      iterator classes.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
   - Simplistic "multitasking" - each window runs simultaneously;
@@ -150,6 +155,7 @@ Credits and Acknowlegements
  - Coding and design                                - Antony Dzeryn
  - Testing, technical advice, other contributions   - Jeff Laing
  - PALib independence                               - Steve
+ - More testing and suggestions						- John Buxton
  - Simian Zombie logo                               - John Clay
  - Thanks to                                        - The devKitPro team
                                                     - The PALib team
