@@ -15,7 +15,7 @@ Change Log
      - Added "pythonscripts" folder with Jeff's "bmp2font" Python script for
        creating PackedFont-compatible fonts.
 
-  V0.31
+  V0.31 (20080411)
   
   - Fixes:
      - Started inlining methods that can be inlined.
