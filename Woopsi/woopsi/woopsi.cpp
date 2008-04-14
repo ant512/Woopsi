@@ -106,7 +106,7 @@ bool Woopsi::click(s16 x, s16 y) {
 		if (_gadgets[i]->click(x, y)) {
 
 			// Do we need to close the context menu?
-			if ((_gadgets[i] != _contextMenu) && (_contextMenu->isDrawingEnabled())) {
+			if ((_gadgets[i] != _contextMenu) && (!_contextMenu->isHidden())) {
 				_contextMenu->hide();
 				_contextMenu->reset();
 			}
@@ -123,7 +123,7 @@ bool Woopsi::shiftClick(s16 x, s16 y) {
 	_flags.clicked = true;
 
 	// Close the existing context menu
-	if (_contextMenu->isDrawingEnabled()) {
+	if (!_contextMenu->isHidden()) {
 		_contextMenu->hide();
 		_contextMenu->reset();
 	}

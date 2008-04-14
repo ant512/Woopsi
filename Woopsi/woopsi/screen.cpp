@@ -67,13 +67,13 @@ void Screen::setFocusedGadget(Gadget* gadget) {
 			// Draw the active gagdet
 			gadget->draw();
 		}
-			
-		// Remember the new active gadget
-		_focusedGadget = gadget;
-
-		// Make screen active
-		focus();
 	}
+
+	// Remember the new active gadget
+	_focusedGadget = gadget;
+
+	// Make screen active
+	focus();
 }
 
 void Screen::flipToTopScreen() {
@@ -94,6 +94,44 @@ bool Screen::flipScreens() {
 
 void Screen::draw(Rect clipRect) {
 	clear(clipRect);
+}
+
+bool Screen::click(s16 x, s16 y) {
+
+	if (_flags.enabled) {
+		if (checkCollision(x, y)) {
+
+			// Handle clicks on children
+			_clickedGadget = NULL;
+
+			// Work out which child was clicked
+			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				if (_gadgets[i]->click(x, y)) {
+					break;
+				}
+			}
+
+			// Handle clicks on this
+			if (_clickedGadget == NULL) {
+
+				_flags.clicked = true;
+
+				// Take focus away from child gadgets
+				setFocusedGadget(NULL);
+
+				// Tell parent that the clicked gadget has changed
+				if (_parent != NULL) {
+					_parent->setClickedGadget(this);
+				}
+
+				raiseClickEvent(x, y);
+			}
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool Screen::release(s16 x, s16 y) {

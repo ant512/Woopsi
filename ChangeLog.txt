@@ -5,15 +5,18 @@ Change Log
   
   - Fixes:
      - Moved abstract methods out of FontBase not needed by all fonts.
-	 - Renamed "checkGlyphData()" in font classes to "isCharBlank()".
-	 - Moved more code out of FontBase into FixedWidthFontBase.
-	 - Changed FontBase::clearColour() to support Jeff's new font classes.
-	 
+     - Renamed "checkGlyphData()" in font classes to "isCharBlank()".
+     - Moved more code out of FontBase into FixedWidthFontBase.
+     - Changed FontBase::clearColour() to support Jeff's new font classes.
+     - Screens receive focus correctly when clicked.
+     - Screens no longer start dragging when clicked other than in the titlebar.
+
   - New Features:
-	 - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
-	   font support).
+     - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
+       font support).
      - Added "pythonscripts" folder with Jeff's "bmp2font" Python script for
        creating PackedFont-compatible fonts.
+
 
   V0.31 (20080411)
   
