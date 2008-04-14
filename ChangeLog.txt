@@ -1,6 +1,20 @@
 Change Log
 ----------
 
+  V0.32
+  
+  - Fixes:
+     - Moved abstract methods out of FontBase not needed by all fonts.
+	 - Renamed "checkGlyphData()" in font classes to "isCharBlank()".
+	 - Moved more code out of FontBase into FixedWidthFontBase.
+	 - Changed FontBase::clearColour() to support Jeff's new font classes.
+	 
+  - New Features:
+	 - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
+	   font support).
+     - Added "pythonscripts" folder with Jeff's "bmp2font" Python script for
+       creating PackedFont-compatible fonts.
+
   V0.31
   
   - Fixes:
