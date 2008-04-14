@@ -1,7 +1,9 @@
 #include "fixedwidthfontbase.h"
 
 FixedWidthFontBase::FixedWidthFontBase(const u16 bitmapWidth, const u16 bitmapHeight, const u8 width, const u8 height, const u16 transparentColour) : 
-	FontBase(bitmapWidth, bitmapHeight, height, transparentColour) {
+	FontBase(height, transparentColour) {
+	_bitmapWidth = bitmapWidth;
+	_bitmapHeight = bitmapHeight;
 	_width = width;
 }
 
@@ -33,5 +35,12 @@ void FixedWidthFontBase::createGlyphMap() {
 				_glyphMap[glyph >> 3] |= (1 << (glyph % 8));
 			}
 		}
+	}
+}
+
+// Initialise the glyph map array
+void FixedWidthFontBase::initGlyphMap() {
+	for (u8 i = 0; i < GLYPH_MAP_SIZE; i++) {
+		_glyphMap[i] = 0;
 	}
 }

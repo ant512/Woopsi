@@ -126,6 +126,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\packedfont1.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\packedfont16.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\packedfontbase.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\radiobutton.cpp"
 				>
 			</File>
@@ -373,6 +385,18 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\multilinetextbox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\packedfont1.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\packedfont16.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\packedfontbase.h"
 				>
 			</File>
 			<File

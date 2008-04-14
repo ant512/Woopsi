@@ -1,0 +1,357 @@
+#! /usr/bin/env python
+#
+# Convert an input bitmap into an appropriate Woopsi Font object
+#
+# Usage: bmp2font [--bgcolor=HHHH] file.bmp
+#		  [--monochrome]
+#                 [--font=name]
+#
+# The assumption is that the input bitmap is a regular font
+# image - 32 characters across, 8 rows of characters making
+# a total of 256 characters.  All characters must be present,
+# the script computes the character heights and widths based
+# on the dimensions of the bitmap.
+#
+# The script will optimise its output where appropriate
+#
+import os,glob,re,sys,getopt,string,tempfile
+
+# --------------------------------------------------
+# return a printable representation of a character
+#
+def printable(ch):
+	if (ch < 32): return "0x%02x" % ch
+	if (ch < 127): return "'%c'" % ch
+	return "0x%02x" % ch
+
+# --------------------------------------------------
+# wrapper around template substitution to make it easier to read following code
+def write(fp,subs,text):
+	from string import Template
+	fp.write(Template(text).substitute(subs))
+
+# --------------------------------------------------
+# loads a .bmp file into memory, returns a tuple (data, width, height) where
+# data is short[width*height]
+#
+def loadbitmap(pathname):
+	# create a temporary filename
+	_temp = tempfile.mktemp(suffix=".s", prefix="git")
+
+	# spawn 'git', and use it to create us a .s file containing the bitmap
+	# data in nice easy HEX format...
+	os.spawnlp(
+		os.P_WAIT,
+		"git",		# command to execute
+		"git",		# ARGV[0]
+		pathname,	# source file
+		"-q",		# quietly
+		"-gu16",	# graphic datatype
+		"-gT!",		# force opaque bit
+		"-fh!",		# suppress .h
+		"-fts",		# file type: .s
+		"-o", _temp	# output filename
+	)
+
+	_shorts = []
+	_width = 0
+	_height = 0
+
+	_fp = open(_temp)
+	for _line in _fp:	
+		# in the file header will be some info like this:
+		# @	tinyfont, 128x24@16, 
+		# which tells us the bitmap size 
+		if re.search(r".*, [0-9]+x[0-9]+@16, $", _line):
+			_dims = re.findall(" ([0-9]+)x([0-9]+)@", _line)[0]
+			_width = int(_dims[0])
+			_height = int(_dims[1])
+			continue
+
+		# the data in the file consists of lines that look like this:
+		# .hword 0xFFFF,0xFFFF,0x801F,0x801F,0x801F,0x801F,0x801F,0x801F
+		# everything else can be discarded
+		if not re.match(r"\s+.hword\s", _line):
+			continue
+
+		# each line consists of 8 hex values
+		for _h in re.findall(r"0x([0-9A-F]{4})",_line):
+			_shorts.append(int(_h,16))
+
+	_fp.close()
+	
+	# clean away the temporary files, directory, etc
+	os.unlink(_temp);
+
+	# and return
+	return (_shorts,_width,_height)
+# --------------------------------------------------
+# function to convert a single bitmap file
+def convert(bitmap, fontname):
+	print "convert(%s,%s)"%(bitmap,fontname)
+	# retrieve binary data, with dimension
+	_shorts,_bmwidth,_bmheight = loadbitmap(bitmap)
+
+	# the bitmap *must* be a multiple of 32 wide, and 8 high since a font
+	# is 8 lines of 32 characters each (256) - we compute character size here
+	_cwidth = int(_bmwidth / 32)
+	if (_cwidth*32 != _bmwidth):
+		print "Width not multiple of 32"
+		exit(1)
+
+	_cheight = int(_bmheight / 8)
+	if (_cheight*8 != _bmheight):
+		print "Height not multiple of 8"
+		exit(1)
+
+	# get a default background color
+	_bg = _shorts[0] if (bgcolor is None) else bgcolor
+
+	# replace "background" colour with 0 for simpler coding.
+	_shorts = [(x if (x != _bg) else 0) for x in _shorts]
+
+	# build the bitmaps and widths for each character by brute force.
+	_bitmap = []
+	_pwidth = []
+	_offset = []
+	_first = -1
+	_last = 256
+	for _i in range(0,256):
+		# no data captured for this character so far
+		_bm = []
+		_np = 0
+		# compute start row - 32 glyphs per row, _cheight bitslices per row
+		_row = (_i/32)*_cheight*_bmwidth + (_i%32)*_cwidth
+		# iterate through each row in this character
+		for _r in range(0,_cheight):
+			# iterate through each pixel in that row
+			_pos = _row
+			for _c in range(0,_cwidth):
+				_pixel = _shorts[_pos]
+				_pos+=1
+				_bm.append(_pixel)
+				_np |= _pixel
+			# move down one row
+			_row+=_cwidth*32
+		# all pixels captured, append to the total bitmap array
+		_bitmap.append(_bm)
+		_pwidth.append(_cwidth)
+		_offset.append(0)
+
+		if (_first < 0 and _np>0): _first = _i
+		if (_np>0): _last = _i
+
+	# at this point, we have an array _bitmap[] which has an entry for every
+	# character in our font.  update minimum character widths in _pwidth[]
+	_widmax = 0
+	for _i in range(_first,_last+1):
+		_bm = _bitmap[_i]			# get this characters bitmap
+		_maxx = 0
+		for _r in range(0,_cheight):
+			for _c in range(0,_cwidth):
+				if _bm[_r*_cwidth+_c]>0 and _c > _maxx:
+					_maxx = _c
+		_pwidth[_i] = _maxx+1
+		if (_widmax < _pwidth[_i]):
+			_widmax = _pwidth[_i]
+
+#diagnostic - dump it out
+#	for _i in range(_first,_last+1):
+#		_bm = _bitmap[_i]			# get this characters bitmap
+#		print _i," is ",_pwidth[_i]," pixels wide"
+#		for _j in range(0,_cheight*_cwidth,_cwidth):
+#			print string.join(map(lambda x:"%04X"%x, _bm[_j:_j+_pwidth[_i]]))
+
+	# if its a mono-font, each character needs its bytes packed into a bit array.  for
+	# historic reasons, we pack into u16's rather than u8's which means we might waste
+	# a little space.  The packing logic here has to match the unpacking logic in
+	# PackedFont1::renderChar()
+	if monochrome:
+		for _i in range(_first,_last+1):
+			_bm = _bitmap[_i]		# get current bitmap
+			_packed = []
+			_curr = 0
+			_ncurr = 0x8000
+			for _j in range(0,_cheight*_cwidth,_cwidth):
+				for _k in range(0,_pwidth[_i]):
+					if (_bm[_j+_k]):
+						_curr |= _ncurr
+					_ncurr = _ncurr/2
+					if (0 == _ncurr):
+						_packed += [_curr]
+						_curr = 0
+						_ncurr = 0x8000
+
+			if (_ncurr != 0x8000): _packed += [_curr]
+
+			# and replace the original bitmap with the packed bitstring
+			_bitmap[_i] = _packed
+
+	# work out how many shorts we will be writing out...
+	_count = 0
+	if monochrome:
+		for _i in range(_first,_last+1):
+			_count += len(_bitmap[_i])
+	else:
+		for _i in range(_first,_last+1):
+			_count += _cheight*_pwidth[_i]
+
+	# work out what our superclass name is:
+	if monochrome:
+		_superclass = "PackedFont1"
+	else:
+		_superclass = "PackedFont16"
+
+	# build our dictionary of substitution values
+	subs={
+		"fontname"		:fontname,
+		"superclass"	:_superclass,
+		"bitmap"	:bitmap,
+		"count"		:_count,
+		"widmax"	:_widmax,
+		"chw"		:_cwidth,
+		"chh"		:_cheight,
+		"first"		:_first,
+		"last"		:_last,
+		"nchars"	:_last-_first+1
+	}
+
+	# now we can write the real files out
+	fp = open(fontname+".h", "w")
+	write(fp, subs, r"""
+//
+// $fontname.h
+//
+// Do not edit - created by 'bmp2font' from $bitmap
+//
+#pragma once
+#include "${superclass}.h"
+class ${fontname}: public ${superclass} {
+public:
+	${fontname}(u8 fixedWidth=0);
+};
+""")
+	fp.close()
+
+	# now the content file
+	fp = open(fontname+".cpp", "w")
+	write(fp,subs,r"""
+//
+// $fontname.cpp
+//
+// Do not edit - created by 'bmp2font' from $bitmap
+//
+#include "$fontname.h"
+#include <nds.h>		/* for u16 */
+
+static const u16 ${fontname}_glyphdata[$count] = {
+""")
+	_pos = 0
+	for _i in range(_first,_last+1):
+		_bm = _bitmap[_i]
+		_offset[_i] = _pos
+		if monochrome:
+			fp.write("/* %s */\t" % printable(_i))
+			for _j in _bm:
+				fp.write("0x%04X," % _j)
+				_pos += 1
+			fp.write("\n")
+		else:
+			fp.write("\t// %s\n" % printable(_i))
+			for _j in range(0,_cheight):
+				fp.write("\t")
+				for _k in range(0,_pwidth[_i]):
+					fp.write("0x%04X," % _bm[_j*_cwidth+_k])
+					_pos += 1
+				fp.write("\n")
+
+	write(fp,subs,r"""
+};
+
+static const u16 ${fontname}_offset[$nchars] = {
+""")
+	_j = 0
+	for _i in range(_first,_last+1):
+		fp.write("%5d," %_offset[_i])
+		_j += 1
+		if (_j % 16 == 0): fp.write("\n")
+	write(fp,subs,r"""
+};
+
+static const u8 ${fontname}_width[$nchars] = {
+""")
+	_j = 0
+	for _i in range(_first,_last+1):
+		fp.write("%2d," % _pwidth[_i])
+		_j += 1
+		if (_j % 16 == 0): fp.write("\n")
+	write(fp,subs,r"""
+};
+
+${fontname}::${fontname}(u8 fixedWidth)
+	: ${superclass}(
+		$first,
+		$last,
+		${fontname}_glyphdata,
+		${fontname}_offset,
+		${fontname}_width,
+		${chh},
+		${widmax}
+	)
+{
+	if (fixedWidth) setFontWidth(fixedWidth);
+}
+
+""")
+	fp.close()
+
+# --------------------------------------------------
+# main script logic starts here
+# --------------------------------------------------
+# extract and validate arguments
+bgcolor = None			# use color of pixel(0,0)
+monochrome = False
+fontname = None
+try:
+	opts,args=getopt.getopt(sys.argv[1:],"b:1f:",["bgcolor=","monochrome","font="])
+except getopt.error, msg:
+	print >>sys.stderr,  msg
+	print >>sys.stderr,  """
+usage: bmp2font [-b=HHHH | --bgcolor=HHHH] file.bmp ...
+                [-1      | --monochrome]
+                [-f=name | --font=name]
+"""
+	sys.exit(1)
+
+# --------------------------------------------------
+# process options
+for o,a in opts:
+	if (o in ("-b","--bgcolor")):
+		bgcolor = int(a,16)
+		continue
+
+	if (o in ("-1","--monochrome")):
+		monochrome = True
+		continue
+
+	if (o in ("-f","--font")):
+		fontname = a
+		continue
+
+	print >>sys.stderr, "getopt parsed unknown option, ",o
+	sys.exit(1)
+
+# --------------------------------------------------
+# process arguments
+if (len(args) < 1):
+	print "No bitmap file specified"
+	sys.exit(1)
+
+if (len(args) > 1):
+	print "More than one bitmap file specified"
+	sys.exit(1)
+
+if fontname is None:
+	(fontname,_) = os.path.splitext(os.path.basename(args[0]))
+
+convert(args[0], fontname)

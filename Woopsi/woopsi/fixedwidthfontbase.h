@@ -32,6 +32,18 @@ public:
 	virtual inline ~FixedWidthFontBase() { };
 
 	/**
+	 * Gets the width of the font's glyph bitmap.
+	 * @return The width of the font's glyph bitmap.
+	 */
+	inline const u16 getBitmapWidth() const { return _bitmapWidth; };
+	
+	/**
+	 * Gets the height of the font's glyph bitmap.
+	 * @return The height of the font's glyph bitmap.
+	 */
+	inline const u16 getBitmapHeight() const { return _bitmapHeight; };
+
+	/**
 	 * Get the colour of a pixel at a particular offset from the start of the bitmap.  Must
 	 * be overridden in subclasses.
 	 * @param position The offset of the pixel from the start of the bitmap.
@@ -76,6 +88,14 @@ public:
 	 * @return The width of the character in pixels.
 	 */
 	inline u16 getCharWidth(char letter) { return getWidth(); };
+
+	/**
+	 * Checks if supplied character is blank in the current font.
+	 * @param letter The character to check.
+	 * @return True if the glyph contains any pixels to be drawn.  False if the glyph is
+	 * blank.
+	 */
+	virtual inline const bool isCharBlank(const char letter) const { return (_glyphMap[letter >> 3] & (1 << (letter % 8))); };
 	
 protected: 
 	/**
@@ -86,8 +106,29 @@ protected:
 	 */
 	virtual void createGlyphMap();
 
+	/**
+	 * Scans the glyph bitmap at the specified co-ordinates to see if it contains data or
+	 * not.  Must be overridden.
+	 * @param x The x co-ordinate of the start of the glyph.
+	 * @param y The y co-ordinate of the start of the glyph.
+	 * @return True if the glyph bitmap contains data for this glyph.
+	 */
+	virtual const bool scanGlyph(const u16 x, const u16 y) const = 0;
+
+protected:
+
+	/**
+	 * Creates a map of which glyphs have data and which do not.
+	 * @see createGlyphMap().
+	 */
+	void initGlyphMap();
+
+	u8 _glyphMap[GLYPH_MAP_SIZE];
+
 private:
 	u8 _width;							/**< The width of a single glyph */
+	u16 _bitmapWidth;					/**< Width of the bitmap containing glyph data */
+	u16 _bitmapHeight;					/**< Height of the bitmap containing glyph data */
 };
 
 #endif
