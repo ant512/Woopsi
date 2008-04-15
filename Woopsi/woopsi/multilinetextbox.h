@@ -1,5 +1,3 @@
-// TODO: Move responsibility for maintaining raw text pointer and memory allocation into Text class.
-
 #ifndef _MULTILINE_TEXTBOX_H_
 #define _MULTILINE_TEXTBOX_H_
 
@@ -95,14 +93,6 @@ public:
 	virtual const u16 getCurrentPage() const;
 	
 	/**
-	 * Returns a pointer to the raw, unwrapped text used as the
-	 * primary data source for the textbox.  Altering this will
-	 * have undesired effects.
-	 * @return Pointer to the raw text.
-	 */
-	virtual inline const char* getRawText() const { return _rawText; };
-
-	/**
 	 * Returns a pointer to the Text object that contains the
 	 * wrapped text used in the textbox.  It is used as the
 	 * pre-processed data source for the textbox, and should
@@ -139,14 +129,13 @@ public:
 	virtual bool resize(u16 width, u16 height);
 
 protected:
-	char* _rawText;							/**< String that the textbox will display */
-	Text* _text;							/**< Text object that manipulates and wraps the raw text string */
-	u8 _visibleRows;						/**< Total number of rows that the textbox can display at once */
-	s16 _maxRows;							/**< Maximum number of rows that the textbox should buffer */
-	u32 _topRow;							/**< Index of the top row of text currently displayed */
-	u8 _padding;							/**< Padding around the text in pixels */
-	TextPositionHoriz _hPos;				/**< Horizontal alignment of the text */
-	TextPositionVert _vPos;					/**< Vertical alignment of the text */
+	Text* _text;						/**< Text object that manipulates and wraps the raw text string */
+	u8 _visibleRows;					/**< Total number of rows that the textbox can display at once */
+	s16 _maxRows;						/**< Maximum number of rows that the textbox should buffer */
+	u32 _topRow;						/**< Index of the top row of text currently displayed */
+	u8 _padding;						/**< Padding around the text in pixels */
+	TextPositionHoriz _hPos;			/**< Horizontal alignment of the text */
+	TextPositionVert _vPos;				/**< Vertical alignment of the text */
 
 	/**
 	 * Gets the x position of a row of text based on the width of the row and the 
@@ -169,12 +158,6 @@ protected:
 	 * Works out the number of visible rows within the textbox.
 	 */
 	void calculateTotalVisibleRows();
-
-	/**
-	 * Removes any lines of text from the start of the text buffer that are
-	 * outside the maximum number of rows allowed by the buffer settings.
-	 */
-	void stripTopLines(const u32 lines);
 
 	/**
 	 * Destructor.

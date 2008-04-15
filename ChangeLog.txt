@@ -10,6 +10,8 @@ Change Log
      - Changed FontBase::clearColour() to support Jeff's new font classes.
      - Screens receive focus correctly when clicked.
      - Screens no longer start dragging when clicked other than in the titlebar.
+     - Text class now responsible for maintaining string memory instead of
+       MultiLineTextBox.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

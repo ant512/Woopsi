@@ -27,13 +27,19 @@ public:
 	/**
 	 * Destructor.
 	 */
-	inline ~Text() { };
+	inline ~Text() { delete [] _text; };
 
 	/**
 	 * Set the text for the object to hold.
 	 * @param text Pointer to the text.
 	 */
-	void setText(char* text);
+	void setText(const char* text);
+
+	/**
+	 * Add new text to the end of the current string.
+	 * @param text Pointer to the text.
+	 */
+	void appendText(const char* text);
 	
 	/**
 	 * Set the vertical spacing between rows of text.
@@ -127,7 +133,18 @@ public:
 	 * @return Pointer to the font.
 	 */
 	FontBase* getFont();
+
+	/**
+	 * Removes lines of text from the start of the text buffer.
+	 * @param lines Number of lines to remove
+	 */
+	void stripTopLines(const u32 lines);
 	
+	/**
+	 * Wrap the text.
+	 */
+	void wrap();
+
 private:
 
 	FontBase* _font;						/**< Font to be used for output */
@@ -138,11 +155,6 @@ private:
 	u8 _textPixelWidth;						/**< Total width of the wrapped text in pixels */
 	u16 _width;								/**< Width in pixels available to the text */
 	char* _text;							/**< String that the object works with */
-
-	/**
-	 * Wrap the text.
-	 */
-	void wrap();
 };
 
 #endif

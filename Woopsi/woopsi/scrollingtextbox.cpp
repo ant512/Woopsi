@@ -34,10 +34,6 @@ void ScrollingTextBox::setTextPositionVert(MultiLineTextBox::TextPositionVert po
 	_textbox->setTextPositionVert(position);
 }
 
-const char* ScrollingTextBox::getRawText() const {
-	return _textbox->getRawText();
-}
-
 const Text* ScrollingTextBox::getText() const {
 	return _textbox->getText();
 }

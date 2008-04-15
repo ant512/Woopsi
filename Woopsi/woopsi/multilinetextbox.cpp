@@ -6,8 +6,6 @@
 #include "graphicsport.h"
 
 MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
-	
-	_rawText = NULL;
 
 	_outline = OUTLINE_IN;
 
@@ -39,9 +37,6 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* te
 MultiLineTextBox::~MultiLineTextBox() {
 	delete _text;
 	_text = NULL;
-
-	delete [] _rawText;
-	_rawText = NULL;
 }
 
 void MultiLineTextBox::draw(Rect clipRect) {
@@ -173,23 +168,11 @@ const Text* MultiLineTextBox::getText() const {
 
 void MultiLineTextBox::setText(char* text) {
 	
-	// Have we already created a block of memory that we need to free?
-	if (_rawText != NULL) {
-		// Free the memory
-		delete [] _rawText;
-	}
-
-	// Create new memory for string
-	_rawText = new char[strlen(text) + 1];
-
-	// Copy text
-	strcpy(_rawText, text);
-
-	_text->setText(_rawText);
+	_text->setText(text);
 
 	// Ensure that we have the correct number of rows
 	if (_text->getLineCount() > _maxRows) {
-		stripTopLines(_text->getLineCount() - _maxRows);
+		_text->stripTopLines(_text->getLineCount() - _maxRows);
 	}
 
 	Gadget::draw();
@@ -207,74 +190,29 @@ void MultiLineTextBox::setText(char* text) {
 
 void MultiLineTextBox::addText(char* text) {
 
-	if (_rawText != NULL) {
-		// Reserve memory for concatenated string
-		char* newText = new char[strlen(_rawText) + strlen(text) + 1];
+	_text->appendText(text);
 
-		// Copy old text into new text
-		strcpy(newText, _rawText);
-
-		// Concatenate strings
-		strcat(newText, text);
-
-		// Free existing memory
-		delete [] _rawText;
-
-		// Update pointer
-		_rawText = newText;
-
-		// Ensure that we have the correct number of rows
-		if (_text->getLineCount() > _maxRows) {
-			stripTopLines(_text->getLineCount() - _maxRows);
-		} else {
-			_text->setText(_rawText);
-		}
-
-		Gadget::draw();
-
-		// Update max scroll value
-		if (_text->getLineCount() > _visibleRows) {
-			_canvasHeight = _text->getPixelHeight() + (_padding << 1);
-
-			// Scroll to bottom of new text
-			jump(0, -_canvasHeight - _height);
-		}
-
-		raiseValueChangeEvent();
-	} else {
-		// No text, so set it for the first time
-		setText(text);
+	// Ensure that we have the correct number of rows
+	if (_text->getLineCount() > _maxRows) {
+		_text->stripTopLines(_text->getLineCount() - _maxRows);
 	}
+
+	Gadget::draw();
+
+	// Update max scroll value
+	if (_text->getLineCount() > _visibleRows) {
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+
+		// Scroll to bottom of new text
+		jump(0, -_canvasHeight - _height);
+	}
+
+	raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::setFont(FontBase* font) {
 	_font = font;
 	_text->setFont(font);
-}
-
-void MultiLineTextBox::stripTopLines(const u32 lines) {
-
-	// Get the start point of the text we want to keep
-	u16 textStart = 0;
-	
-	for (u32 i = 0; i < lines; i++) {
-		textStart += _text->getLineLength(i);
-	}
-
-	// Reserve memory for shortened string
-	u16 newLength = strlen(_rawText) - textStart;
-	char* newText = new char[newLength + 1];
-
-	// Copy old text into new text
-	strcpy(newText, (_rawText + textStart));
-
-	// Free existing memory
-	delete [] _rawText;
-
-	// Update pointer
-	_rawText = newText;
-
-	_text->setText(_rawText);
 }
 
 const u16 MultiLineTextBox::getPageCount() const {
@@ -330,11 +268,11 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 
 	// Re-wrap the text
 	_text->setWidth(_width);
-	_text->setText(_rawText);
+	_text->wrap();
 
 	// Ensure that we have the correct number of rows
 	if (_text->getLineCount() > _maxRows) {
-		stripTopLines(_text->getLineCount() - _maxRows);
+		_text->stripTopLines(_text->getLineCount() - _maxRows);
 		raiseEvent = true;
 	}
 

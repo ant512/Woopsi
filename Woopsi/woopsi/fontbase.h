@@ -40,7 +40,7 @@ public:
 	 * @return True if the glyph contains any pixels to be drawn.  False if the glyph is
 	 * blank.
 	 */
-	virtual inline const bool isCharBlank(const char letter) const = 0;
+	virtual const bool isCharBlank(const char letter) const = 0;
 	
 	/**
 	 * Sets the colour to use as the drawing colour.  If set, this overrides the colours

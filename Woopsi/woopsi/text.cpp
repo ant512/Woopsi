@@ -6,6 +6,7 @@ Text::Text(FontBase* font, char* text, u16 width) {
 	_font = font;
 	_width = width;
 	_lineSpacing = 1;
+	_text = NULL;
 	
 	setText(text);
 }
@@ -44,8 +45,39 @@ u8 Text::getLineTrimmedPixelLength(s32 lineNumber) {
 }
 
 // Set the text
-void Text::setText(char* text) {
-	_text = text;
+void Text::setText(const char* text) {
+	
+	// Have we already created a block of memory that we need to free?
+	if (_text != NULL) {
+		// Free the memory
+		delete [] _text;
+	}
+
+	// Create new memory for string
+	_text = new char[strlen(text) + 1];
+
+	// Copy text
+	strcpy(_text, text);
+
+	wrap();
+}
+
+void Text::appendText(const char* text) {
+	// Reserve memory for concatenated string
+	char* newText = new char[strlen(_text) + strlen(text) + 1];
+
+	// Copy old text into new text
+	strcpy(newText, _text);
+
+	// Concatenate strings
+	strcat(newText, text);
+
+	// Free existing memory
+	delete [] _text;
+
+	// Update pointer
+	_text = newText;
+
 	wrap();
 }
 
@@ -147,4 +179,26 @@ void Text::wrap() {
 void Text::setFont(FontBase* font) {
 	_font = font;
 	wrap();
+}
+
+void Text::stripTopLines(const u32 lines) {
+	// Get the start point of the text we want to keep
+	u16 textStart = 0;
+	
+	for (u32 i = 0; i < lines; i++) {
+		textStart += getLineLength(i);
+	}
+
+	// Reserve memory for shortened string
+	u16 newLength = strlen(_text) - textStart;
+	char* newText = new char[newLength + 1];
+
+	// Copy old text into new text
+	strcpy(newText, (_text + textStart));
+
+	// Free existing memory
+	delete [] _text;
+
+	// Update pointer
+	_text = newText;
 }

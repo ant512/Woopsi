@@ -60,14 +60,6 @@ public:
 	 * @see getPageCount().
 	 */
 	virtual const u16 getCurrentPage() const;
-	
-	/**
-	 * Returns a pointer to the raw, unwrapped text used as the
-	 * primary data source for the textbox.  Altering this will
-	 * have undesired effects.
-	 * @return Pointer to the raw text.
-	 */
-	virtual const char* getRawText() const;
 
 	/**
 	 * Returns a pointer to the Text object that contains the
