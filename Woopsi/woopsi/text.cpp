@@ -29,7 +29,7 @@ u8 Text::getLineTrimmedLength(s32 lineNumber) {
 	s16 length = getLineLength(lineNumber);
 
 	// Strip any trailing spaces, etc
-	while ((length > 0) && (!_font->isCharBlank(_text[_linePositions[lineNumber] + length - 1]))) {
+	while ((length > 0) && (_font->isCharBlank(_text[_linePositions[lineNumber] + length - 1]))) {
 		length--;
 	}
 
@@ -135,10 +135,8 @@ void Text::wrap() {
 					   (_text[scanPos] == '?') ||
 					   (_text[scanPos] == '!') ||
 					   (_text[scanPos] == '+') ||
-					   (_text[scanPos] == '"') ||
 					   (_text[scanPos] == '=') ||
-					   (_text[scanPos] == '/') ||
-					   (_text[scanPos] == '_')) {
+					   (_text[scanPos] == '/')) {
 
 				// Remember the most recent breakpoint
 				breakPos = scanPos;
@@ -153,6 +151,11 @@ void Text::wrap() {
 
 			// If we didn't find a breakpoint split at the current position
 			if (breakPos == 0) breakPos = scanPos;
+
+			// Trim preceeding spaces from the start of the next line
+			while (_text[breakPos + 1] == ' ') {
+				breakPos++;
+			}
 
 			// Add the start of the next line to the vector
 			pos = breakPos + 1;

@@ -44,7 +44,7 @@ const bool MonoFont::scanGlyph(const u16 x, const u16 y) const {
 s16 MonoFont::drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
 
 	// Check that the font has data for the glyph
-	if (isCharBlank(letter)) {
+	if (!isCharBlank(letter)) {
 	
 		u16 letterStart = letter * getWidth();
 		u8 letterStartY = 0;

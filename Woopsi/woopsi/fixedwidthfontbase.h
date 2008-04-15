@@ -95,7 +95,7 @@ public:
 	 * @return True if the glyph contains any pixels to be drawn.  False if the glyph is
 	 * blank.
 	 */
-	virtual inline const bool isCharBlank(const char letter) const { return (_glyphMap[letter >> 3] & (1 << (letter % 8))); };
+	virtual inline const bool isCharBlank(const char letter) const { return !(_glyphMap[letter >> 3] & (1 << (letter % 8))); };
 	
 protected: 
 	/**

@@ -1,5 +1,5 @@
-#ifndef _PACKED_FONT_1_
-#define _PACKED_FONT_1_
+#ifndef _PACKED_FONT_16_
+#define _PACKED_FONT_16_
 
 #include "packedfontbase.h"
 

@@ -12,6 +12,8 @@ Change Log
      - Screens no longer start dragging when clicked other than in the titlebar.
      - Text class now responsible for maintaining string memory instead of
        MultiLineTextBox.
+     - Text::wrap() trims spaces from the start of each line.
+	 - Text::wrap() breaks more sensibly at quotes, etc.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
