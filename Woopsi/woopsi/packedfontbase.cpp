@@ -9,7 +9,7 @@ u16 PackedFontBase::getCharWidth(char letter)
 {
 	if (_fontWidth) return _fontWidth;
 
-	if (letter < _first || letter > _last) return _widMax;
+	if (letter < _first || letter > _last) return _spWidth;
 	return _glyphWidth[letter - _first] + 1;
 }
 
@@ -18,8 +18,8 @@ u16 PackedFontBase::getCharWidth(char letter)
  */
 const bool PackedFontBase::isCharBlank(const char letter) const
 {
-	if (letter >= _first && letter <= _last) return _glyphWidth[letter - _first] == 0;
-	return true;
+	if (letter >= _first && letter <= _last) return _glyphWidth[letter - _first] != 0;
+	return false;
 }
 
 /**
@@ -78,14 +78,14 @@ s16 PackedFontBase::drawChar(
 {
 	// if there is no glyphdata for this letter, just advance by an 'm'
 	if (letter < _first || letter > _last) {
-		return x + _widMax;
+		return x + _spWidth;
 	}
 
 	// check what its pixel width is - zero means no such character so
-	// fall back on the width of an 'm'
+	// fall back on the width of a space
 	u16 pixelWidth = _glyphWidth[letter - _first];
 	if (pixelWidth == 0) {
-		return x + _widMax;
+		return x + _spWidth;
 	}
 
 	// pass off to a subclass for rendering

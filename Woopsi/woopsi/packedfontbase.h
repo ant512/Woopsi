@@ -19,6 +19,7 @@ public:
 	 * @param glyphOffset Offset into glyphData[] of character[i].
 	 * @param glyphWidth Pixel width of character[i].
 	 * @param height The height of the font.
+	 * @param spWidth The width of a space character
 	 * @param fixedWidth Character width (fixed), or 0 for proportional.
 	 */
 	PackedFontBase(
@@ -27,12 +28,13 @@ public:
 		const u16 *glyphOffset,
 		const u8 *glyphWidth,
 		const u8 height,
+		const u8 spWidth,
 		const u8 fixedWidth = 0)
 		:
 		  FontBase(height, 0),
 		  _first(first), _last(last),
 		  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
-		  _widMax(fixedWidth) { }
+		  _spWidth(spWidth), _widMax(fixedWidth) { }
 
 	/**
 	 * Makes this font fixed-width, though doesn't allow the spacing to be less
@@ -118,6 +120,7 @@ protected:
 	const u16 *_glyphOffset;
 	const u8 *_glyphWidth;
 	u8 _fontWidth;
+	u8 _spWidth;
 	u8 _widMax;
 };
 

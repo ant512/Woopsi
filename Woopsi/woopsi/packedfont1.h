@@ -16,6 +16,7 @@ public:
 	 * @param glyphData Packed array representing font.
 	 * @param glyphOffset Offset into glyphData[] of character[i].
 	 * @param glyphWidth Pixel width of character[i].
+	 * @param spwidth The height of a space
 	 * @param height The height of the font.
 	 * @param fixedWidth Character width (fixed), or 0 for proportional.
 	 */
@@ -25,9 +26,10 @@ public:
 		const u16 *glyphOffset,
 		const u8 *glyphWidth,
 		const u8 height,
+		const u8 spWidth,
 		const u8 fixedWidth = 0)
 		:
-		  PackedFontBase(first, last, glyphData, glyphOffset, glyphWidth, height, fixedWidth) { }
+		  PackedFontBase(first, last, glyphData, glyphOffset, glyphWidth, height, spWidth, fixedWidth) { }
 
 	/**
 	 * Render an individual character of the font to the specified bitmap.
