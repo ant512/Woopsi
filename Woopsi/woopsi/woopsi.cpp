@@ -32,7 +32,7 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 	// Create context menu
 	_contextMenu = new ContextMenu(_font);
 	addGadget(_contextMenu);
-	_contextMenu->hide();
+	_contextMenu->shelve();
 
 	singleton = this;
 }
@@ -106,8 +106,8 @@ bool Woopsi::click(s16 x, s16 y) {
 		if (_gadgets[i]->click(x, y)) {
 
 			// Do we need to close the context menu?
-			if ((_gadgets[i] != _contextMenu) && (!_contextMenu->isHidden())) {
-				_contextMenu->hide();
+			if ((_gadgets[i] != _contextMenu) && (!_contextMenu->isShelved())) {
+				_contextMenu->shelve();
 				_contextMenu->reset();
 			}
 
@@ -123,8 +123,8 @@ bool Woopsi::shiftClick(s16 x, s16 y) {
 	_flags.clicked = true;
 
 	// Close the existing context menu
-	if (!_contextMenu->isHidden()) {
-		_contextMenu->hide();
+	if (!_contextMenu->isShelved()) {
+		_contextMenu->shelve();
 		_contextMenu->reset();
 	}
 
@@ -504,8 +504,8 @@ void Woopsi::hideChild(Gadget* gadget) {
 	if (gadget != NULL) {
 
 		// Ensure gadget knows it is being closed
-		if (!gadget->isHidden()) {
-			gadget->hide();
+		if (!gadget->isShelved()) {
+			gadget->shelve();
 		}
 
 		// Do we need to make another gadget active?
@@ -523,7 +523,7 @@ void Woopsi::hideChild(Gadget* gadget) {
 			_decorationCount--;
 		}
 
-		moveChildToHiddenList(gadget);
+		moveChildToShelvedList(gadget);
 	}
 }
 

@@ -51,8 +51,9 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_flags.raisesEvents = true;
 	_flags.erased = true;
 	_flags.shiftClickChildren = true;
-	_flags.hidden = false;
+	_flags.shelved = false;
 	_flags.visibleRegionCacheInvalid = true;
+	_flags.hidden = false;
 
 	// Set hierarchy pointers
 	_parent = NULL;
@@ -63,8 +64,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	// Set other default values
 	_decorationCount = 0;
 	_refcon = 0;
-
-	
 	
 	_outline = OUTLINE_CLICK_DEPENDENT;
 	_closeType = CLOSE_TYPE_CLOSE;
@@ -76,13 +75,13 @@ Gadget::~Gadget() {
 		_gadgets[i]->destroy();
 	}
 
-	// Delete hidden children
-	for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
-		_hiddenGadgets[i]->destroy();
+	// Delete shelved children
+	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+		_shelvedGadgets[i]->destroy();
 	}
 
 	_gadgets.clear();
-	_hiddenGadgets.clear();
+	_shelvedGadgets.clear();
 }
 
 const s16 Gadget::getX() const {
@@ -104,11 +103,37 @@ const s16 Gadget::getY() const {
 const bool Gadget::isDrawingEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isDrawingEnabled()) {
-			// Drawing is enabled if the gadget is drawable, not deleted, and not hidden
-			return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.hidden));
+			// Drawing is enabled if the gadget is drawable, not deleted, and not shelved
+			return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
 		}
 	} else {
-		return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.hidden));
+		return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
+	}
+
+	return false;
+}
+
+const bool Gadget::isHidden() const {
+	if (_parent != NULL) {
+		if (!_parent->isHidden()) {
+			// Hidden if the gadget is deleted, shelved or hidden
+			return (_flags.deleted | _flags.shelved | _flags.hidden);
+		}
+	} else {
+		return (_flags.deleted | _flags.shelved | _flags.hidden);
+	}
+
+	return false;
+}
+
+const bool Gadget::isEnabled() const {
+	if (_parent != NULL) {
+		if (_parent->isEnabled()) {
+			// Enabled if the gadget is enabled, not deleted, not shelved and not hidden
+			return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) | (!_flags.hidden));
+		}
+	} else {
+		return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) | (!_flags.hidden));
 	}
 
 	return false;
@@ -178,12 +203,15 @@ void Gadget::clear() {
 // Check for single-point collisions
 bool Gadget::checkCollision(s16 x, s16 y) {
 
-	// Get the clipped rect
-	Rect rect;
-	getRectClippedToHierarchy(rect);
+	if (!isHidden()) {
 
-	if ((x >= rect.x) && (y >= rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
-		return true;
+		// Get the clipped rect
+		Rect rect;
+		getRectClippedToHierarchy(rect);
+
+		if ((x >= rect.x) && (y >= rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
+			return true;
+		}
 	}
 
 	return false;
@@ -191,12 +219,16 @@ bool Gadget::checkCollision(s16 x, s16 y) {
 
 // Check for collisions with another rectangle
 bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) {
-	// Get the clipped rect
-	Rect rect;
-	getRectClippedToHierarchy(rect);
 
-	if ((x + width >= rect.x) && (y + height >= rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
-		return true;
+	if (!isHidden()) {
+
+		// Get the clipped rect
+		Rect rect;
+		getRectClippedToHierarchy(rect);
+
+		if ((x + width >= rect.x) && (y + height >= rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
+			return true;
+		}
 	}
 
 	return false;
@@ -873,19 +905,19 @@ void Gadget::close() {
 }
 
 // Erases the gadget from the display and prevents it from being redrawn
-bool Gadget::hide() {
+bool Gadget::shelve() {
 
-	if (!_flags.hidden) {
+	if (!_flags.shelved) {
 
 		raiseHideEvent();
 
 		erase();
 
-		_flags.hidden = true;
+		_flags.shelved = true;
 		_flags.drawingEnabled = false;
 
 		if (_parent != NULL) {
-			_parent->hideChild(this);
+			_parent->shelveChild(this);
 		}
 
 		return true;
@@ -895,17 +927,17 @@ bool Gadget::hide() {
 }
 
 // Re-enables drawing and draws the gadget to the display
-bool Gadget::show() {
+bool Gadget::unshelve() {
 
-	if (_flags.hidden) {
+	if (_flags.shelved) {
 
 		raiseShowEvent();
 
 		_flags.drawingEnabled = true;
-		_flags.hidden = false;
+		_flags.shelved = false;
 
 		if (_parent != NULL) {
-			_parent->moveHiddenToChildList(this);
+			_parent->moveShelvedToChildList(this);
 			_parent->invalidateVisibleRectCache();	
 		}
 
@@ -936,15 +968,15 @@ void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
 	}
 }
 
-// Add a gadget to the hidden list ready for later processing
-bool Gadget::moveChildToHiddenList(Gadget* gadget) {
+// Add a gadget to the shelved list ready for later processing
+bool Gadget::moveChildToShelvedList(Gadget* gadget) {
 
 	// Locate gadget in main vector
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
 
-			// Add gadget to hidden vector
-			_hiddenGadgets.push_back(gadget);
+			// Add gadget to shelved vector
+			_shelvedGadgets.push_back(gadget);
 
 			// Remove gadget from main vector
 			_gadgets.erase(_gadgets.begin() + i);
@@ -956,12 +988,12 @@ bool Gadget::moveChildToHiddenList(Gadget* gadget) {
 	return false;
 }
 
-// Move a hidden gadget back to the child list
-bool Gadget::moveHiddenToChildList(Gadget* gadget) {
+// Move a shelved gadget back to the child list
+bool Gadget::moveShelvedToChildList(Gadget* gadget) {
 
-	// Locate gadget in hidden vector
-	for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
-		if (_hiddenGadgets[i] == gadget) {
+	// Locate gadget in shelved vector
+	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+		if (_shelvedGadgets[i] == gadget) {
 
 			// Process decorations and gadgets differently
 			if (gadget->isDecoration()) {
@@ -975,8 +1007,8 @@ bool Gadget::moveHiddenToChildList(Gadget* gadget) {
 				_gadgets.push_back(gadget);
 			}
 
-			// Remove gadget from hidden vector
-			_hiddenGadgets.erase(_hiddenGadgets.begin() + i);
+			// Remove gadget from shelved vector
+			_shelvedGadgets.erase(_shelvedGadgets.begin() + i);
 
 			return true;
 		}
@@ -985,13 +1017,13 @@ bool Gadget::moveHiddenToChildList(Gadget* gadget) {
 	return false;
 }
 
-// Hide a child
-void Gadget::hideChild(Gadget* gadget) {
+// Shelve a child
+void Gadget::shelveChild(Gadget* gadget) {
 	if (gadget != NULL) {
 
 		// Ensure gadget knows it is being closed
-		if (!gadget->isHidden()) {
-			gadget->hide();
+		if (!gadget->isShelved()) {
+			gadget->shelve();
 		}
 
 		// Unset clicked gadget if necessary
@@ -1002,15 +1034,13 @@ void Gadget::hideChild(Gadget* gadget) {
 		// Do we need to give another gadget focus?
 		if (_focusedGadget == gadget) {
 
+			_focusedGadget = NULL;
+
 			// Try to choose highest gadget
-			if (_gadgets.size() > 1) {
-				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-					if (_gadgets[i] != gadget) {
-						_focusedGadget = _gadgets[i];
-					}
+			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
+					_focusedGadget = _gadgets[i];
 				}
-			} else {
-				_focusedGadget = NULL;
 			}
 		}
 
@@ -1028,7 +1058,7 @@ void Gadget::hideChild(Gadget* gadget) {
 			setFocusedGadget(NULL);
 		}
 
-		moveChildToHiddenList(gadget);
+		moveChildToShelvedList(gadget);
 	}
 }
 
@@ -1049,15 +1079,13 @@ void Gadget::closeChild(Gadget* gadget) {
 		// Do we need to make another gadget active?
 		if (_focusedGadget == gadget) {
 
+			_focusedGadget = NULL;
+
 			// Try to choose highest gadget
-			if (_gadgets.size() > 1) {
-				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-					if (_gadgets[i] != gadget) {
-						_focusedGadget = _gadgets[i];
-					}
+			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
+					_focusedGadget = _gadgets[i];
 				}
-			} else {
-				_focusedGadget = NULL;
 			}
 		}
 
@@ -1082,23 +1110,20 @@ void Gadget::closeChild(Gadget* gadget) {
 bool Gadget::swapGadgetDepth(Gadget* gadget) {
 	
 	// Can we swap?
-	if (_gadgets.size() > 1) {
+	if ((_gadgets.size() > 1) && (!gadget->isDecoration())) {
 
 		u8 gadgetSource = 0;
 		u8 gadgetDest = 0;
 
 		// Locate the gadget in the vector
-		for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
-			if (gadget == _gadgets[i]) {
-				gadgetSource = i;
-				break;
-			}
-		}
+		gadgetSource = getGadgetIndex(gadget);
 
-		// Raise or lower?
-		if (gadgetSource < _gadgets.size() - 1) {
-			// Raise up one
-			gadgetDest = gadgetSource + 1;
+		// Attempt to raise up
+		s16 i = getHigherVisibleGadget(gadgetSource);
+
+		if (i > -1) {
+			// Raise
+			gadgetDest = i;
 		} else {
 			// Lower to bottom of stack
 			gadgetDest = _decorationCount;
@@ -1278,7 +1303,7 @@ bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
 
 bool Gadget::click(s16 x, s16 y) {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
 			// Handle clicks on children
@@ -1319,7 +1344,7 @@ bool Gadget::click(s16 x, s16 y) {
 
 bool Gadget::shiftClick(s16 x, s16 y) {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
 			// Work out which child was clicked
@@ -1379,7 +1404,7 @@ bool Gadget::release(s16 x, s16 y) {
 }
 
 bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	if ((_flags.enabled) && (_flags.dragging)) {
+	if ((isEnabled()) && (_flags.dragging)) {
 		raiseDragEvent(x, y, vX, vY);
 
 		return true;
@@ -1389,7 +1414,7 @@ bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 }
 
 bool Gadget::vbl() {
-	if (_flags.enabled) {
+	if (isEnabled()) {
 
 		raiseVBLEvent();
 
@@ -1400,7 +1425,7 @@ bool Gadget::vbl() {
 }
 
 bool Gadget::keyPress(KeyCode keyCode) {
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		
 		// Raise keypress for this gadget
 		raiseKeyPressEvent(keyCode);
@@ -1417,7 +1442,7 @@ bool Gadget::keyPress(KeyCode keyCode) {
 }
 
 bool Gadget::keyRelease(KeyCode keyCode) {
-	if (_flags.enabled) {
+	if (isEnabled()) {
 
 		// Raise key release for this gadget
 		raiseKeyReleaseEvent(keyCode);
@@ -1452,7 +1477,7 @@ void Gadget::lidOpened() {
 }
 
 bool Gadget::focus() {
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (!_flags.hasFocus) {
 			_flags.hasFocus = true;
 
@@ -1833,9 +1858,9 @@ void Gadget::unregisterChildrenFromVBL() {
 		Woopsi::unregisterFromVBL(_gadgets[i]);
 	}
 
-	// Unregister hidden children
-	for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
-		Woopsi::unregisterFromVBL(_hiddenGadgets[i]);
+	// Unregister shelved children
+	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+		Woopsi::unregisterFromVBL(_shelvedGadgets[i]);
 	}
 }
 
@@ -1879,15 +1904,15 @@ bool Gadget::removeChild(Gadget* gadget) {
 		}
 	}
 
-	// Try to locate in hidden vector
-	for (u8 i = 0; i < _hiddenGadgets.size(); i++) {
-		if (_hiddenGadgets[i] == gadget) {
+	// Try to locate in shelved vector
+	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+		if (_shelvedGadgets[i] == gadget) {
 
 			// Divorce child from parent
-			_hiddenGadgets[i]->setParent(NULL);
+			_shelvedGadgets[i]->setParent(NULL);
 
-			// Remove gadget from hidden vector
-			_hiddenGadgets.erase(_hiddenGadgets.begin() + i);
+			// Remove gadget from shelved vector
+			_shelvedGadgets.erase(_shelvedGadgets.begin() + i);
 
 			gadget->disableDrawing();
 
@@ -1917,7 +1942,7 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 			woopsiApplication->getContextMenu()->newMenuItem(_contextMenuItems[i].name, _contextMenuItems[i].value);
 		}
 		
-		woopsiApplication->getContextMenu()->show();
+		woopsiApplication->getContextMenu()->unshelve();
 	}
 }
 
@@ -1925,4 +1950,44 @@ bool Gadget::handleContextMenuSelection(u32 value) {
 	raiseContextMenuSelectionEvent();
 
 	return true;
+}
+
+bool Gadget::show() {
+	if (_flags.hidden) {
+		_flags.hidden = false;
+		draw();
+		return true;
+	}
+
+	return false;
+}
+
+bool Gadget::hide() {
+	if (!_flags.hidden) {
+		_flags.hidden = true;
+		erase();
+		return true;
+	}
+
+	return false;
+}
+
+const s16 Gadget::getHigherVisibleGadget(const u8 startIndex) const {
+	for (u8 i = startIndex; i < _gadgets.size(); i++) {
+		if (!_gadgets[i]->isHidden()) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+const s16 Gadget::getLowerVisibleGadget(const u8 startIndex) const {
+	for (s16 i = (s16)startIndex; i > -1; i--) {
+		if (!_gadgets[i]->isHidden()) {
+			return i;
+		}
+	}
+
+	return -1;
 }

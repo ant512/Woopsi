@@ -45,7 +45,7 @@ bool SliderVerticalGrip::release(s16 x, s16 y) {
 }
 
 bool SliderVerticalGrip::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (_flags.dragging) {
 
 			// Work out where we're moving to

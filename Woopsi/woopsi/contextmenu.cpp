@@ -80,7 +80,7 @@ bool ContextMenu::handleEvent(const EventArgs& e) {
 				_opener->handleContextMenuSelection(((ContextMenuItem*)e.gadget)->getValue());
 			}
 	
-			hide();
+			shelve();
 			return true;
 		}
 	}

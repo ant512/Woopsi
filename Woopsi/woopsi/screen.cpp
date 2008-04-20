@@ -11,7 +11,7 @@ Screen::Screen(char* title, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_
 
 bool Screen::focus() {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (!_flags.hasFocus) {
 			_flags.hasFocus = true;
 
@@ -98,7 +98,7 @@ void Screen::draw(Rect clipRect) {
 
 bool Screen::click(s16 x, s16 y) {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
 			// Handle clicks on children
@@ -164,7 +164,7 @@ bool Screen::release(s16 x, s16 y) {
 
 bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (_flags.dragging) {
 
 			// Calculate physical screen to use

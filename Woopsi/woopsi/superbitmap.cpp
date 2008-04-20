@@ -278,7 +278,7 @@ void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, char* string, u16 colou
 
 bool SuperBitmap::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
-	if ((_flags.enabled) && (_flags.dragging)) {
+	if ((isEnabled()) && (_flags.dragging)) {
 		_bitmapX -= vX;
 		_bitmapY -= vY;
 

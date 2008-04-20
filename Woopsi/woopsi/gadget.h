@@ -64,7 +64,7 @@ public:
 		u8 hasFocus : 1;					/**< True if the gadget has focus. */
 		u8 dragging : 1;					/**< True if the gadget is being dragged. */
 		u8 deleted : 1;						/**< True if the gadget has been deleted. */
-		u8 hidden : 1;						/**< True if the gadget has been hidden. */
+		u8 shelved : 1;						/**< True if the gadget has been shelved. */
 		u8 borderless : 1;					/**< True if the gadget is borderless. */
 		u8 draggable : 1;					/**< True if the gadget can be dragged. */
 		u8 drawingEnabled : 1;				/**< True if the gadget can be drawn. */
@@ -75,7 +75,8 @@ public:
 		u8 raisesEvents : 1;				/**< True if the gadget can raise events. */
 		u8 erased : 1;						/**< True if the gadget is currently erased from the frame buffer. */
 		u8 shiftClickChildren : 1;			/**< True if the gadget sends shift clicks to its children. */
-		u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid */
+		u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid. */
+		u8 hidden : 1;						/**< True if the gadget is hidden. */
 	} Flags;
 
 	/**
@@ -149,6 +150,22 @@ public:
 	const bool isDrawingEnabled() const;
 
 	/**
+	 * Is the gadget hidden?  This function recurses up the gadget
+	 * hierarchy and returns true if any of the gadgets in the ancestor
+	 * chain are hidden.
+	 * @return True if hidden.
+	 */
+	const bool isHidden() const;
+
+	/**
+	 * Is the gadget enabled?  This function recurses up the gadget
+	 * hierarchy and only returns true if all of the gadgets in the ancestor
+	 * chain are enabled.
+	 * @return True if enabled.
+	 */
+	const bool isEnabled() const;
+
+	/**
 	 * Is the gadget a decoration?
 	 * Decoration gadgets are children of, but also an essential component of,
 	 * another gadget.
@@ -177,10 +194,10 @@ public:
 	inline const bool isClicked() const { return _flags.clicked; };
 
 	/**
-	 * Is the gadget hidden?
-	 * @return True if the gadget is hidden.
+	 * Is the gadget shelved?
+	 * @return True if the gadget is shelved.
 	 */
-	inline const bool isHidden() const { return _flags.hidden; };
+	inline const bool isShelved() const { return _flags.shelved; };
 
 	/**
 	 * Does the gadget shift-click its children?
@@ -463,21 +480,35 @@ public:
 	virtual void close();
 
 	/**
-	 * Erases the gadget, and sets it to invisible.  Gadgets hidden in
-	 * this way will be partioned off from other gadgets and will no
-	 * longer be processed.
-	 * @return True if the gadget was hidden.
-	 * @see show()
+	 * Erases the gadget, removes it from the main hierarchy and sets it to
+	 * invisible.  Gadgets hidden in this way will be partioned off from
+	 * other gadgets and will no longer be processed.
+	 * @return True if the gadget was shelved.
+	 * @see unshelve()
 	 */
-	virtual bool hide();
+	virtual bool shelve();
 
 	/**
-	 * Sets the gadget to visible and redraws it.  Gadgets shown in this way
-	 * will be unpartioned and will be processed again.
+	 * Moves the gadget back into the hierarchy and redraws it.  Gadgets shown
+	 * in this way will be unpartioned and will be processed again.
+	 * @return True if the gadget was unshelved.
+	 * @see shelve()
+	 */
+	virtual bool unshelve();
+
+	/**
+	 * Draws the gadget and makes it visible.
 	 * @return True if the gadget was shown.
 	 * @see hide()
 	 */
 	virtual bool show();
+
+	/**
+	 * Erases the gadget and makes it invisible.
+	 * @return True if the gadget was hidden.
+	 * @see show()
+	 */
+	virtual bool hide();
 
 	/**
 	 * Click this gadget at the supplied co-ordinates.
@@ -622,25 +653,25 @@ public:
 	void moveChildToDeleteQueue(Gadget* gadget);
 
 	/**
-	 * Moves the supplied child gadget to the hidden gadget list.
+	 * Moves the supplied child gadget to the shelved gadget list.
 	 * For framework use only.
 	 * @param gadget A pointer to the child gadget.
 	 * @return True if the gadget was moved successfully.
-	 * @see moveHiddenToChildList()
+	 * @see moveShelvedToChildList()
 	 * @see hide()
 	 */
-	bool moveChildToHiddenList(Gadget* gadget);
+	bool moveChildToShelvedList(Gadget* gadget);
 
 	/**
-	 * Moves the supplied child gadget from the hidden list back
+	 * Moves the supplied child gadget from the shelved list back
 	 * to the child gadget list.
 	 * For framework use only.
-	 * @param gadget A pointer to the hidden gadget.
+	 * @param gadget A pointer to the shelved gadget.
 	 * @return True if the gadget was moved successfully.
-	 * @see moveChildtoHiddenList()
+	 * @see moveChildtoShelvedList()
 	 * @see show()
 	 */
-	bool moveHiddenToChildList(Gadget* gadget);
+	bool moveShelvedToChildList(Gadget* gadget);
 
 	/**
 	 * Sets the supplied gadget as the focused child.  The gadget must
@@ -882,7 +913,7 @@ protected:
 	Gadget* _focusedGadget;					/**< Pointer to the child gadget that has focus */
 	Gadget* _clickedGadget;					/**< Pointer to the child gadget that is clicked */
 	DynamicArray<Gadget*> _gadgets;			/**< List of child gadgets */
-	DynamicArray<Gadget*> _hiddenGadgets;	/**< List of hidden child gadgets */
+	DynamicArray<Gadget*> _shelvedGadgets;	/**< List of shelved child gadgets */
 
 	// Decorations
 	u8 _decorationCount;					/**< Total number of decoration child gadgets */
@@ -964,11 +995,11 @@ protected:
 
 	/**
 	 * Erase the supplied child gadget and move it out of the main child
-	 * list into the hidden list.  The gadget remains in memory and can
-	 * be restored by calling "show()" on the gadget.
+	 * list into the shelved list.  The gadget remains in memory and can
+	 * be restored by calling "unshelve()" on the gadget.
 	 * @param gadget The gadget to hide.
 	 */
-	virtual void hideChild(Gadget* gadget);
+	virtual void shelveChild(Gadget* gadget);
 
 	/**
 	 * Redraws all regions of child gadgets that fall within the invalidRects
@@ -1112,6 +1143,20 @@ protected:
 	 * Raise a context menu selection event to the event handler.
 	 */
 	void raiseContextMenuSelectionEvent();
+
+	/**
+	 * Get the index of the next visible gadget higher up the z-order.
+	 * @param startIndex The starting index.
+	 * @return The index of the next highest visible gadget.
+	 */
+	const s16 getHigherVisibleGadget(const u8 startIndex) const;
+
+	/**
+	 * Get the index of the next visible gadget lower down the z-order.
+	 * @param startIndex The starting index.
+	 * @return The index of the next lowest visible gadget.
+	 */
+	const s16 getLowerVisibleGadget(const u8 startIndex) const;
 };
 
 #endif

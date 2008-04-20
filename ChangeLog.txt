@@ -13,14 +13,21 @@ Change Log
      - Text class now responsible for maintaining string memory instead of
        MultiLineTextBox.
      - Text::wrap() trims spaces from the start of each line.
-	 - Text::wrap() breaks more sensibly at quotes, etc.
+     - Text::wrap() breaks more sensibly at quotes, etc.
+     - Closing/shelving a child gadget chooses a new focused gadget correctly if
+       the child is the only gadget in the list.
+     - Gadgets now check recursive isEnabled() function instead of using the
+       enabled flag directly.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
        font support).
      - Added "pythonscripts" folder with Jeff's "bmp2font" Python script for
        creating PackedFont-compatible fonts.
-
+     - Renamed existing show/hide system to shelve/unshelve and added true
+       show/hide system.
+     - Added Gadget::isEnabled().
+     
 
   V0.31 (20080411)
   

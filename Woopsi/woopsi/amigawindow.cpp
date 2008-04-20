@@ -140,7 +140,7 @@ void AmigaWindow::createBorder() {
 
 bool AmigaWindow::click(s16 x, s16 y) {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 			bool gotGadget = false;
 			_clickedGadget = NULL;
@@ -346,11 +346,12 @@ bool AmigaWindow::handleEvent(const EventArgs& e) {
 				switch (getCloseType()) {
 					case CLOSE_TYPE_CLOSE:
 						// Close the window
-						close();
+						//close();
+						hide();
 						break;
 					case CLOSE_TYPE_HIDE:
-						// Hide the window
-						hide();
+						// Shelve the window
+						shelve();
 						break;
 				}
 

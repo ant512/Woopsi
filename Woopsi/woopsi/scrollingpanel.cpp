@@ -363,7 +363,7 @@ void ScrollingPanel::scrollChildren(s32 dx, s32 dy) {
 
 bool ScrollingPanel::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 
 		// Where to process the drag event?
 		if (_flags.dragging) {

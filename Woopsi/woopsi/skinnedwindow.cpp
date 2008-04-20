@@ -150,7 +150,7 @@ void SkinnedWindow::createBorder() {
 
 bool SkinnedWindow::click(s16 x, s16 y) {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 			bool gotGadget = false;
 			_clickedGadget = NULL;
@@ -198,7 +198,7 @@ bool SkinnedWindow::click(s16 x, s16 y) {
 
 bool SkinnedWindow::focus() {
 
-	if (_flags.enabled) {
+	if (isEnabled()) {
 		if (!_flags.hasFocus) {
 
 			// Handle focus gained on window
@@ -345,7 +345,7 @@ bool SkinnedWindow::handleEvent(const EventArgs& e) {
 						break;
 					case CLOSE_TYPE_HIDE:
 						// Hide the window
-						hide();
+						shelve();
 						break;
 				}
 
