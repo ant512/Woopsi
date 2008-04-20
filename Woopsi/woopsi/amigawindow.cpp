@@ -346,12 +346,15 @@ bool AmigaWindow::handleEvent(const EventArgs& e) {
 				switch (getCloseType()) {
 					case CLOSE_TYPE_CLOSE:
 						// Close the window
-						//close();
-						hide();
+						close();
 						break;
-					case CLOSE_TYPE_HIDE:
+					case CLOSE_TYPE_SHELVE:
 						// Shelve the window
 						shelve();
+						break;
+					case CLOSE_TYPE_HIDE:
+						// Hide the window
+						hide();
 						break;
 				}
 

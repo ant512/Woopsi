@@ -33,7 +33,8 @@ public:
 	 */
 	enum CloseType {
 		CLOSE_TYPE_CLOSE = 0,			/**< Gadgets should call the close() method */
-		CLOSE_TYPE_HIDE = 1				/**< Gadgets should call the hide() method */
+		CLOSE_TYPE_HIDE = 1,			/**< Gadgets should call the hide() method */
+		CLOSE_TYPE_SHELVE = 2,			/**< Gadgets should call the shelve() method */
 	};
 
 	/**
