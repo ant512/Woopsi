@@ -31,6 +31,17 @@
 #define BOTTOM_SCREEN_NUMBER 0
 
 /**
+ * Number of VBLs within which a click the user can click again to fire a double-click.
+ */
+#define DOUBLE_CLICK_TIME 15
+
+/**
+ * Value added to click x and y to describe a box within which a click is counted as
+ * a double-click.
+ */
+#define DOUBLE_CLICK_BOUNDS 10
+
+/**
  * Woopsi version number.
  */
 #define WOOPSI_VERSION "0.31"

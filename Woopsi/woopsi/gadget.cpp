@@ -6,6 +6,9 @@
 #include "fontbase.h"
 #include "contextmenu.h"
 
+
+#include "debug.h"
+
 Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 
 	// Set properties from parameters
@@ -60,6 +63,13 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_focusedGadget = NULL;
 	_clickedGadget = NULL;
 	_eventHandler = NULL;
+
+	// Double-click
+	_lastClickTime = 0;
+	_lastClickX = 0;
+	_lastClickY = 0;
+	_doubleClickBounds = DOUBLE_CLICK_BOUNDS;
+	_doubleClickTime = DOUBLE_CLICK_TIME;
 
 	// Set other default values
 	_decorationCount = 0;
@@ -249,6 +259,20 @@ void Gadget::raiseClickEvent(s16 x, s16 y) {
 
 		EventArgs e;
 		e.type = EVENT_CLICK;
+		e.eventX = x;
+		e.eventY = y;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
+void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
+	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+
+		EventArgs e;
+		e.type = EVENT_DOUBLE_CLICK;
 		e.eventX = x;
 		e.eventY = y;
 		e.keyCode = KEY_CODE_NONE;
@@ -1303,6 +1327,15 @@ bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
 
 bool Gadget::click(s16 x, s16 y) {
 
+	// Check for a double-click
+	if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
+		if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
+			if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
+				return doubleClick(x, y);
+			}
+		}
+	}
+
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
@@ -1321,6 +1354,11 @@ bool Gadget::click(s16 x, s16 y) {
 
 				_flags.clicked = true;
 
+				// Record data for double-click
+				_lastClickTime = woopsiApplication->getVBLCount();
+				_lastClickX = x;
+				_lastClickY = y;
+
 				// Take focus away from child gadgets
 				setFocusedGadget(NULL);
 
@@ -1333,6 +1371,54 @@ bool Gadget::click(s16 x, s16 y) {
 				setDragging(x, y);
 
 				raiseClickEvent(x, y);
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Gadget::doubleClick(s16 x, s16 y) {
+
+	if (isEnabled()) {
+		if (checkCollision(x, y)) {
+
+			Debug::printf("clicked");
+
+			// Handle clicks on children
+			_clickedGadget = NULL;
+
+			// Work out which child was clicked
+			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				if (_gadgets[i]->doubleClick(x, y)) {
+					break;
+				}
+			}
+
+			// Handle clicks on this
+			if (_clickedGadget == NULL) {
+
+				_flags.clicked = true;
+
+				// Record data for double-click
+				_lastClickTime = woopsiApplication->getVBLCount();
+				_lastClickX = x;
+				_lastClickY = y;
+
+				// Take focus away from child gadgets
+				setFocusedGadget(NULL);
+
+				// Tell parent that the clicked gadget has changed
+				if (_parent != NULL) {
+					_parent->setClickedGadget(this);
+				}
+
+				// Enable dragging
+				setDragging(x, y);
+
+				raiseDoubleClickEvent(x, y);
 			}
 
 			return true;

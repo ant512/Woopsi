@@ -520,6 +520,14 @@ public:
 	virtual bool click(s16 x, s16 y);
 
 	/**
+	 * Double-click this gadget at the supplied co-ordinates.
+	 * @param x X co-ordinate of the click.
+	 * @param y Y co-ordinate of the click.
+	 * @return True if the click was successful.
+	 */
+	virtual bool doubleClick(s16 x, s16 y);
+
+	/**
 	 * Shift-click this gadget at the supplied co-ordinates.
 	 * @param x X co-ordinate of the click.
 	 * @param y Y co-ordinate of the click.
@@ -909,6 +917,13 @@ protected:
 	// Event handling
 	EventHandler* _eventHandler;			/**< Pointer to the gadget's event handler */
 
+	// Double-clicking
+	u32 _lastClickTime;						/**< VBL count when last clicked */
+	s16 _lastClickX;						/**< X co-ordinate of last click */
+	s16 _lastClickY;						/**< Y co-ordinate of last click */
+	s16 _doubleClickBounds;					/**< Area in which a click is assumed to be a double-click */
+	s16 _doubleClickTime;					/**< VBLs within which a second click must occur to class as a double-click */
+
 	// Hierarchy control
 	Gadget* _parent;						/**< Pointer to the gadget's parent */
 	Gadget* _focusedGadget;					/**< Pointer to the child gadget that has focus */
@@ -1035,6 +1050,13 @@ protected:
 	 * @param y The y co-ordinate of the click.
 	 */
 	void raiseClickEvent(s16 x, s16 y);
+
+	/**
+	 * Raise a double-click event to the event handler.
+	 * @param x The x co-ordinate of the click.
+	 * @param y The y co-ordinate of the click.
+	 */
+	void raiseDoubleClickEvent(s16 x, s16 y);
 
 	/**
 	 * Raise a shift click event to the event handler.

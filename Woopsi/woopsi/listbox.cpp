@@ -39,7 +39,7 @@ ListBoxItem* ListBox::newListBoxItem(const char* text, const u32 value) {
 }
 
 bool ListBox::handleEvent(const EventArgs& e) {
-	// Only handle click events
+	// Handle click events
 	if (e.type == EVENT_CLICK) {
 		if (e.gadget != NULL) {
 
@@ -52,6 +52,20 @@ bool ListBox::handleEvent(const EventArgs& e) {
 
 				// Unselect the gadget
 				setSelectedGadget(NULL);
+			}
+
+			return true;
+		}
+	}
+
+	// Handle double-click events
+	if (e.type == EVENT_DOUBLE_CLICK) {
+		if (e.gadget != NULL) {
+
+			if (e.gadget != _selectedGadget) {
+	
+				// Select the gadget
+				setSelectedGadget(e.gadget);
 			}
 
 			return true;
