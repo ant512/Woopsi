@@ -44,7 +44,7 @@ public:
 		GADGET_BORDERLESS = 0x0001,		/**< Gadget has no border */
 		GADGET_CLOSABLE = 0x0002,		/**< Gadget can be closed by the user */
 		GADGET_DRAGGABLE = 0x0004,		/**< Gadget can be dragged by the user */
-		GADGET_PERMEABLE = 0x0008		/**< Gadget's children can exceed this gadget's edges */
+		GADGET_PERMEABLE = 0x0008,		/**< Gadget's children can exceed this gadget's edges */
 	};
 
 	/**

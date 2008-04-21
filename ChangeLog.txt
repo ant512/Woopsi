@@ -21,6 +21,7 @@ Change Log
      - Removed WiFi icon due to problems with some loaders.
      - Moved ROM icon to icons directory to reduce ROM size.
      - Removed vector from woopsiheaders.h.
+     - Gadget constructor respects GADGET_PERMEABLE flag.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

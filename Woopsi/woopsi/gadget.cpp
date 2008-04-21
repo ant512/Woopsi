@@ -24,6 +24,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_flags.borderless = (!(!(flags & GADGET_BORDERLESS)));
 	_flags.draggable = (!(!(flags & GADGET_DRAGGABLE)));
 	_flags.closable = (!(!(flags & GADGET_CLOSABLE)));
+	_flags.permeable = (!(!(flags & GADGET_PERMEABLE)));
 
 	// Dragging values
 	_grabPointX = 0;
@@ -47,7 +48,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_flags.enabled = true;
 	_flags.drawingEnabled = false;
 	_flags.decoration = false;
-	_flags.permeable = false;
 	_flags.raisesEvents = true;
 	_flags.erased = true;
 	_flags.shiftClickChildren = true;
