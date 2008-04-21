@@ -343,6 +343,10 @@ bool SkinnedWindow::handleEvent(const EventArgs& e) {
 						// Close the window
 						close();
 						break;
+					case CLOSE_TYPE_SHELVE:
+						// Shelve the window
+						shelve();
+						break;
 					case CLOSE_TYPE_HIDE:
 						// Hide the window
 						shelve();
