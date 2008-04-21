@@ -6,9 +6,6 @@
 #include "fontbase.h"
 #include "contextmenu.h"
 
-
-#include "debug.h"
-
 Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 
 	// Set properties from parameters
@@ -1384,8 +1381,6 @@ bool Gadget::doubleClick(s16 x, s16 y) {
 
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
-
-			Debug::printf("clicked");
 
 			// Handle clicks on children
 			_clickedGadget = NULL;
