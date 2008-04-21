@@ -12,8 +12,8 @@ TEXT1 		:= PALib Project
 TEXT2 		:= Using PALib
 TEXT3 		:= www.palib.info
 
-ICON 		:= -b $(CURDIR)/../data/logo.bmp
-LOGO		:= -o $(CURDIR)/../data/logo_wifi.bmp
+ICON 		:= -b $(CURDIR)/../icon/logo.bmp
+#LOGO		:= -o $(CURDIR)/../data/logo_wifi.bmp
 
 #-------------------------------------------------------------------------------
 # TARGET is the name of the output file

@@ -18,6 +18,8 @@ Change Log
        the child is the only gadget in the list.
      - Gadgets now check recursive isEnabled() function instead of using the
        enabled flag directly.
+     - Removed WiFi icon due to problems with some loaders.
+     - Moved ROM icon to icons directory to reduce ROM size.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
