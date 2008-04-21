@@ -34,7 +34,7 @@ public:
 		  FontBase(height, 0),
 		  _first(first), _last(last),
 		  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
-		  _spWidth(spWidth), _widMax(fixedWidth) { }
+		  _spWidth(spWidth), _widMax(fixedWidth) { _fontWidth = 0;}
 
 	/**
 	 * Makes this font fixed-width, though doesn't allow the spacing to be less
