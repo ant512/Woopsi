@@ -20,6 +20,7 @@ Change Log
        enabled flag directly.
      - Removed WiFi icon due to problems with some loaders.
      - Moved ROM icon to icons directory to reduce ROM size.
+     - Removed vector from woopsiheaders.h.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
@@ -29,6 +30,7 @@ Change Log
      - Renamed existing show/hide system to shelve/unshelve and added true
        show/hide system.
      - Added Gadget::isEnabled().
+     - Added ListBox and ListBoxItem classes.
      
 
   V0.31 (20080411)

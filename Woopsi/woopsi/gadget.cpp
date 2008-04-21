@@ -1530,7 +1530,7 @@ bool Gadget::lowerToBottom() {
 	return false;
 }
 
-s16 Gadget::getGadgetIndex(Gadget* gadget) {
+const s16 Gadget::getGadgetIndex(const Gadget* gadget) const {
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
 			return i;

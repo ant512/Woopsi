@@ -433,6 +433,14 @@ int main() {
 	scrollingBox->addContextMenuItem("Test 4", 0);
 	scrollingBox->addContextMenuItem("Test 5", 0);
 
+	ListBox* listbox = new ListBox(30, 30, 100, 100);
+	textWindow->addGadget(listbox);
+	listbox->newListBoxItem("ListBox Test", 0, listbox->getShineColour(), listbox->getBackColour(), listbox->getShineColour(), listbox->getHighlightColour());
+	listbox->newListBoxItem("List Item 1", 1, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->newListBoxItem("List Item 2", 2, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->newListBoxItem("List Item 3", 3, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->newListBoxItem("List Item 4", 4, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+
 
 	//ContextMenu* menu = new ContextMenu();
 	//newScreen->addGadget(menu);

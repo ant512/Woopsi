@@ -2,7 +2,6 @@
 #define _WOOPSI_HEADERS_H_
 
 #include <nds.h>
-#include <vector>
 #include "sysfont.h"
 #include "bitmap.h"
 #include "fontbase.h"
@@ -46,6 +45,8 @@
 #include "scrollingtextbox.h"
 #include "contextmenu.h"
 #include "contextmenuitem.h"
+#include "listbox.h"
+#include "listboxitem.h"
 #include "woopsi.h"
 
 #endif

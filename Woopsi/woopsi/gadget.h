@@ -984,7 +984,7 @@ protected:
 	 * @param gadget The gadget to get the index of.
 	 * @return The index of the gadget.  -1 if the gadget is not found.
 	 */
-	s16 getGadgetIndex(Gadget* gadget);
+	const s16 getGadgetIndex(const Gadget* gadget) const;
 
 	/**
 	 * Erase and remove the supplied child gadget from this gadget and
