@@ -1385,9 +1385,12 @@ bool Gadget::doubleClick(s16 x, s16 y) {
 			// Handle clicks on children
 			_clickedGadget = NULL;
 
-			// Work out which child was clicked
+			// Work out which child was clicked.  Allow the
+			// child to determine if it has been double-clicked or not
+			// in case the second click has fallen on a different
+			// child to the first.
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->doubleClick(x, y)) {
+				if (_gadgets[i]->click(x, y)) {
 					break;
 				}
 			}
