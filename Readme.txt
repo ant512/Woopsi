@@ -77,9 +77,10 @@ Features
   - Depth sorting;
   - Automatic gadget garbage collection;
   - Complete API for constructing new gadgets:
-    - Extensible font system that supports fixed-width bit-packed monochrome and
-      16-bit colour font bitmaps by default, with the capability for supporting
-      proportional fonts;
+    - Extensible font system that supports:
+      - Fixed-width, bit-packed monochrome fonts;
+      - Fixed-width, 16-bit colour bitmap fonts;
+      - Compressed proportional fonts (monochrome and 16-bit).
     - Text manipulation, including wrapping functions and width calculation;
     - Animation class with support for variable framerates and standard/pingpong
       looping;
@@ -99,12 +100,12 @@ Features
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
   - Simplistic "multitasking" - each window runs simultaneously;
-  - Uses 16-bit display mode;
-  - Uses the old AmigaOS 3.0 "Topaz" font;
-  - Optional PALib support;
-  - Optional SDL layer to facilitate native compilation on non-DS platforms and
-    aid porting;
-  - Optional .a library build.
+  - Uses 16-bit framebuffer display mode;
+  - Multiple build options:
+    - With/without PALib support;
+    - SDL layer to facilitate native compilation on non-DS platforms and
+      aid porting;
+    - libwoopsi.a library build.
 
 
 Requirements

@@ -353,7 +353,7 @@ int main() {
 
 
 	// Create screens
-	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.31");
+	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.32");
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
