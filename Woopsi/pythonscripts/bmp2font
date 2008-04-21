@@ -17,6 +17,30 @@
 import os,glob,re,sys,getopt,string,tempfile
 
 # --------------------------------------------------
+# Try to locate git (or grit as its now known)
+# If its in PATH, that'll do
+# If not, try $DEVKITARM/bin
+# If not, try $DEVKITPRO/devkitARM/bin
+# If not, fail
+def findgit(name):
+	# look through PATH
+	for _d in os.environ["PATH"].split(os.pathsep):
+		_p = os.path.join(_d,name)
+		if (os.path.exists(_p)): return _p
+
+	# not found, look for DEVKITARM
+	_d = os.environ["DEVKITARM"]
+	if _d:
+		_p = os.path.join(_d,"bin",name)
+		if (os.path.exists(_p)): return _p
+	else:	# hmmm, no DEVKITARM
+		_d = os.environ["DEVKITPRO"]
+		if _d:
+			_p = os.path.join(_d,"devkitARM","bin",name)
+			if (os.path.exists(_p)): return _p
+	return None
+
+# --------------------------------------------------
 # return a printable representation of a character
 #
 def printable(ch):
@@ -39,19 +63,27 @@ def loadbitmap(pathname):
 	_temp = tempfile.mktemp(suffix=".s", prefix="git")
 
 	# spawn 'git', and use it to create us a .s file containing the bitmap
-	# data in nice easy HEX format...
-	os.spawnlp(
-		os.P_WAIT,
-		"git",		# command to execute
-		"git",		# ARGV[0]
-		pathname,	# source file
-		"-q",		# quietly
-		"-gu16",	# graphic datatype
-		"-gT!",		# force opaque bit
-		"-fh!",		# suppress .h
-		"-fts",		# file type: .s
-		"-o", _temp	# output filename
-	)
+	# data in nice easy HEX format... 
+	_git = findgit("grit") or findgit("git") or \
+		findgit("grit.exe") or findgit("git.exe")
+	if _git:
+		os.spawnl(
+			os.P_WAIT,
+			_git,		# command to execute
+			_git,		# ARGV[0]
+			pathname,	# source file
+			"-q",		# quietly
+			"-gu16",	# graphic datatype
+			"-gB16",	# upcast to 16bit
+			"-p!",		# no palettes 
+			"-gT!",		# force opaque bit
+			"-fh!",		# suppress .h
+			"-fts",		# file type: .s
+			"-o", _temp	# output filename
+		)
+	else:
+		print "Can't locate 'git' or 'grit'"
+		sys.exit(1)
 
 	_shorts = []
 	_width = 0
@@ -85,6 +117,7 @@ def loadbitmap(pathname):
 
 	# and return
 	return (_shorts,_width,_height)
+
 # --------------------------------------------------
 # function to convert a single bitmap file
 def convert(bitmap, fontname):
@@ -97,12 +130,12 @@ def convert(bitmap, fontname):
 	_cwidth = int(_bmwidth / 32)
 	if (_cwidth*32 != _bmwidth):
 		print "Width not multiple of 32"
-		exit(1)
+		sys.exit(1)
 
 	_cheight = int(_bmheight / 8)
 	if (_cheight*8 != _bmheight):
 		print "Height not multiple of 8"
-		exit(1)
+		sys.exit(1)
 
 	# get a default background color
 	_bg = _shorts[0] if (bgcolor is None) else bgcolor
