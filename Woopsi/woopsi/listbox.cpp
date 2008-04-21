@@ -96,7 +96,9 @@ void ListBox::setSelectedGadget(Gadget* gadget) {
 	if (gadget != _selectedGadget) {
 
 		// Unselect the current selected item
-		((ListBoxItem*)_selectedGadget)->unselect();
+		if (_selectedGadget != NULL) {
+			((ListBoxItem*)_selectedGadget)->unselect();
+		}
 
 		// Select the new item
 		_selectedGadget = gadget;
