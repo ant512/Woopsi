@@ -47,6 +47,7 @@
 #include "contextmenuitem.h"
 #include "listbox.h"
 #include "listboxitem.h"
+#include "progressbar.h"
 #include "woopsi.h"
 
 #endif

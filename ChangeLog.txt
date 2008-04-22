@@ -40,6 +40,7 @@ Change Log
      - Added Gadget::isEnabled().
      - Added ListBox and ListBoxItem classes.
      - Added double click events (optional per gadget via a flag).
+     - Added ProgressBar class.
      
 
   V0.31 (20080411)

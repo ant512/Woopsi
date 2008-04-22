@@ -146,6 +146,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\progressbar.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\radiobutton.cpp"
 				>
 			</File>
@@ -413,6 +417,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\packedfontbase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\progressbar.h"
 				>
 			</File>
 			<File

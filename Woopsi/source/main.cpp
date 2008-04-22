@@ -360,6 +360,11 @@ int main() {
 	AmigaScreen* newScreen2 = new AmigaScreen("Another screen");
 	woopsiApplication->addGadget(newScreen2);
 
+	// Add progress bar
+	ProgressBar* progressBar = new ProgressBar(20, 20, 100, 20);
+	progressBar->setMaximumValue(100);
+	newScreen2->addGadget(progressBar);
+
 	Gradient* gradient = new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
 	newScreen2->insertGadget(gradient);
 	gradient->addContextMenuItem("Context Menu", 0);
