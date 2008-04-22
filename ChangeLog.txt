@@ -42,7 +42,6 @@ Change Log
      - Added ListBox and ListBoxItem classes.
      - Added double click events (optional per gadget via a flag).
      - Added ProgressBar class.
-     
 
   V0.31 (20080411)
   
@@ -118,7 +117,6 @@ Change Log
      - Added GraphicsPort::drawBitmap() function that accepts a transparent
        colour value and does not draw that colour.
 
-
   V0.30 (20080326)
 
   - Fixes:
@@ -186,7 +184,6 @@ Change Log
      - Finished Alert class.
      - Added library makefile.
 
-
   V0.29 (20080111)
   
   - Fixes:
@@ -250,7 +247,6 @@ Change Log
 
   - Broken:
      - Vertical alignment in MultiLineTextBox other than top.
-
 
   V0.28 (20071214)
   
