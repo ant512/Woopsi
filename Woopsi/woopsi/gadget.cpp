@@ -81,7 +81,6 @@ Gadget::~Gadget() {
 
 	// Ensure that the gadget is disposed of correctly if it has not been sent to the deletion queue.
 	if (!_flags.deleted) {
-		raiseCloseEvent();
 
 		_flags.deleted = true;
 
