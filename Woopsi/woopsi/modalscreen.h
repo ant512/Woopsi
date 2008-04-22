@@ -8,7 +8,8 @@ using namespace std;
 
 /**
  * Invisible screen class.  Should be used whenever a modal window is needed, as it will block
- * out all interaction with any gadgets but its own children.
+ * out all interaction with any gadgets but its own children.  It should be closed when it
+ * is no longer needed or it will block interaction with all other gadgets.
  */
 class ModalScreen : public Screen {
 

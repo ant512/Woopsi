@@ -95,13 +95,12 @@ public:
 	/**
 	 * Drag the gadget to the supplied co-ordinates.
      * This will move the screen around the display as it is dragged,
-	 * using the DMA hardware to copy the rows up or down.  Note that
-	 * the routine does *not* clip to the visible portions of the gadget
-	 * as Woopsi assumes that a screen being dragged is at the top of the z-order.
-	 * This makes the routine faster, but it means that this function
-	 * must not be called if the screen is not at the top of the z-order
-	 * (ie. if you're trying to script the GUI instead of relying on
-	 * user interaction).
+	 * using the DMA hardware to copy the rows up or down.  DMA operations
+	 * are optimised based on the assumption that the screen will have at
+	 * most one rectangular region visible; since screens can only move
+	 * up or down and are guaranteed to reach the bottom of the DS' display,
+	 * this is a valid assumption to make and greatly reduces the complexity
+	 * of the routine.
 	 * @param x The x co-ordinate of the stylus.
 	 * @param y The y co-ordinate of the stylus.
 	 * @param vX The horizontal distance that the stylus was dragged.
