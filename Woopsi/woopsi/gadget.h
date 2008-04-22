@@ -23,38 +23,39 @@ public:
 	 * Enum describing the types of border around a gadget.
 	 */
 	enum OutlineType {
-		OUTLINE_CLICK_DEPENDENT = 0,	/**< Border depends on current click status */
-		OUTLINE_OUT = 1,				/**< Border is bevelled "out" */
-		OUTLINE_IN = 2					/**< Border is bevelled *in* */
+		OUTLINE_CLICK_DEPENDENT = 0,		/**< Border depends on current click status */
+		OUTLINE_OUT = 1,					/**< Border is bevelled "out" */
+		OUTLINE_IN = 2						/**< Border is bevelled *in* */
 	};
 
 	/**
 	 * Enum describing the way other gadgets should behave when they try to close this gadget.
 	 */
 	enum CloseType {
-		CLOSE_TYPE_CLOSE = 0,			/**< Gadgets should call the close() method */
-		CLOSE_TYPE_HIDE = 1,			/**< Gadgets should call the hide() method */
-		CLOSE_TYPE_SHELVE = 2,			/**< Gadgets should call the shelve() method */
+		CLOSE_TYPE_CLOSE = 0,				/**< Gadgets should call the close() method */
+		CLOSE_TYPE_HIDE = 1,				/**< Gadgets should call the hide() method */
+		CLOSE_TYPE_SHELVE = 2,				/**< Gadgets should call the shelve() method */
 	};
 
 	/**
 	 * Enum listing flags that can be set in the constructor's "flags" parameter.
 	 */
 	enum GadgetFlagType {
-		GADGET_BORDERLESS = 0x0001,		/**< Gadget has no border */
-		GADGET_CLOSABLE = 0x0002,		/**< Gadget can be closed by the user */
-		GADGET_DRAGGABLE = 0x0004,		/**< Gadget can be dragged by the user */
-		GADGET_PERMEABLE = 0x0008,		/**< Gadget's children can exceed this gadget's edges */
+		GADGET_BORDERLESS = 0x0001,			/**< Gadget has no border */
+		GADGET_CLOSABLE = 0x0002,			/**< Gadget can be closed by the user */
+		GADGET_DRAGGABLE = 0x0004,			/**< Gadget can be dragged by the user */
+		GADGET_PERMEABLE = 0x0008,			/**< Gadget's children can exceed this gadget's edges */
+		GADGET_DOUBLE_CLICKABLE = 0x0016	/**< Gadget can be double-clicked */
 	};
 
 	/**
 	 * Struct describing a rectangle.
 	 */
 	typedef struct {
-		s16 x;							/**< X co-ordinate of the rectangle. */
-		s16 y;							/**< Y co-ordinate of the rectangle. */
-		s32 width;						/**< Width of the rectangle. */
-		s32 height;						/**< Height of the rectangle. */
+		s16 x;								/**< X co-ordinate of the rectangle. */
+		s16 y;								/**< Y co-ordinate of the rectangle. */
+		s32 width;							/**< Width of the rectangle. */
+		s32 height;							/**< Height of the rectangle. */
 	} Rect;
 
 	/**
@@ -78,6 +79,7 @@ public:
 		u8 shiftClickChildren : 1;			/**< True if the gadget sends shift clicks to its children. */
 		u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid. */
 		u8 hidden : 1;						/**< True if the gadget is hidden. */
+		u8 doubleClickable : 1;				/**< True if the gadget can be double-clicked */
 	} Flags;
 
 	/**
@@ -181,6 +183,12 @@ public:
 	 * @return True if permeable.
 	 */
 	inline const bool isPermeable() const { return _flags.permeable; };
+
+	/**
+	 * IS the gadget double-clickable?
+	 * @return True if the gadget watches for double-clicks.
+	 */
+	inline const bool isDoubleClickable() const { return _flags.doubleClickable; };
 
 	/**
 	 * Does the gadget have a border?
@@ -371,6 +379,12 @@ public:
 	 * @param isPermeable The permeable state.
 	 */
 	inline void setPermeable(const bool isPermeable) { _flags.permeable = isPermeable; };
+
+	/**
+	 * Sets whether or not the gadgets processes double-clicks.
+	 * @param isDoubleClickable The double-clickable state.
+	 */
+	inline void setDoubleClickable(const bool isDoubleClickable) { _flags.doubleClickable = isDoubleClickable; };
 
 	/**
 	 * Sets the outline type to use when drawing the gadget's border.

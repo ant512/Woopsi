@@ -25,6 +25,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_flags.draggable = (!(!(flags & GADGET_DRAGGABLE)));
 	_flags.closable = (!(!(flags & GADGET_CLOSABLE)));
 	_flags.permeable = (!(!(flags & GADGET_PERMEABLE)));
+	_flags.doubleClickable = (!(!(flags & GADGET_DOUBLE_CLICKABLE)));
 
 	// Dragging values
 	_grabPointX = 0;
@@ -1325,10 +1326,18 @@ bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
 bool Gadget::click(s16 x, s16 y) {
 
 	// Check for a double-click
-	if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
-		if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
-			if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
-				return doubleClick(x, y);
+	if (_flags.doubleClickable) {
+
+		// Within the allowed time?
+		if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
+
+			// Within the allowed region?
+			if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
+				if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
+
+					// Process click as a double-click
+					return doubleClick(x, y);
+				}
 			}
 		}
 	}

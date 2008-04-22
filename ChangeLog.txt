@@ -32,7 +32,7 @@ Change Log
        show/hide system.
      - Added Gadget::isEnabled().
      - Added ListBox and ListBoxItem classes.
-     - Added double click events.
+     - Added double click events (optional per gadget via a flag).
      
 
   V0.31 (20080411)
