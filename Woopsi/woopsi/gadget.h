@@ -513,6 +513,7 @@ public:
 
 	/**
 	 * Draws the gadget and makes it visible.
+	 * Does not steal focus from other gadgets.
 	 * @return True if the gadget was shown.
 	 * @see hide()
 	 */
@@ -520,6 +521,7 @@ public:
 
 	/**
 	 * Erases the gadget and makes it invisible.
+	 * Does not re-assign focus to another gadget.
 	 * @return True if the gadget was hidden.
 	 * @see show()
 	 */
