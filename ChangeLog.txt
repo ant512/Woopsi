@@ -22,6 +22,8 @@ Change Log
      - Moved ROM icon to icons directory to reduce ROM size.
      - Removed vector from woopsiheaders.h.
      - Gadget constructor respects GADGET_PERMEABLE flag.
+     - Renamed Woopsi::play() to Woopsi::run().
+     - Protected methods within Woopsi class that should not be public.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

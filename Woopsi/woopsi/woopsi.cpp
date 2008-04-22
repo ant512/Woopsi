@@ -44,18 +44,7 @@ Woopsi::~Woopsi() {
 	_contextMenu = NULL;
 }
 
-// Add a new screen
-Screen* Woopsi::newScreen(char* title) {
-
-	// Create a new screen
-	Screen* newScreen = new Screen(title, _font);
-	addGadget(newScreen);
-	newScreen->focus();
-
-	return newScreen;
-}
-
-void Woopsi::play() {
+void Woopsi::run() {
 	vbl();
 	handleStylus();
 	handleKeys();
@@ -291,14 +280,6 @@ bool Woopsi::swapGadgetDepth(Gadget* gadget) {
 			// Invalidate from the top screen down
 			_gadgets[_gadgets.size() - 1]->invalidateVisibleRectCache();
 			invalidateLowerGadgetsVisibleRectCache(_gadgets[_gadgets.size() - 1]);
-
-			// Redraw the bottom screen
-			//Rect rect;
-			//rect.x = 0;
-			//rect.y = 0;
-			//rect.width = SCREEN_WIDTH;
-			//rect.height = SCREEN_HEIGHT;
-			//eraseRect(rect);
 
 			gadget->draw();
 

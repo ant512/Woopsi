@@ -35,17 +35,10 @@ public:
 	virtual ~Woopsi();
 
 	/**
-	 * Add a new screen to the Woopsi instance.
-	 * This should be removed.
-	 * @param title The title of the new screen.
-	 */
-	virtual Screen* newScreen(char* title);
-	
-	/**
 	 * Run the Woopsi instace.
 	 * This should be called every VBL in order for Woopsi to work.
 	 */
-	virtual void play();
+	virtual void run();
 	
 	/**
 	 * Draw the entire Woopsi GUI to the display.
@@ -61,21 +54,6 @@ public:
 	 */
 	virtual void draw(Rect clipRect);
 	
-	/**
-	 * Process stylus events and send throughout the hierarchy.
-	 */
-	virtual void handleStylus();
-
-	/**
-	 * Process keypad events and send throughout the hierarchy.
-	 */
-	virtual void handleKeys();
-
-	/**
-	 * Process lid events and send throughout the hierarchy.
-	 */
-	virtual void handleLid();
-
 	/**
 	 * Receive stylus clicks and process them.
 	 * @param x The x co-ordinate of the click.
@@ -111,12 +89,6 @@ public:
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 	/**
-	 * Receive and process VBLs.
-	 * @return True if VBL was processed.
-	 */
-	virtual bool vbl();
-
-	/**
 	 * Swaps the depth of the supplied gadget.
 	 * This function presumes that all child gadgets are screens.
 	 * @param gadget The gadget to be depth-swapped.
@@ -143,12 +115,6 @@ public:
 	 * @return A pointer to the system font.
 	 */
 	static FontBase* getSystemFont();
-
-	/**
-	 * Deletes the system font.
-	 * Note that this should not be called.
-	 */
-	static void deleteSystemFont();
 
 	/**
 	 * Add the supplied gadget to the list of gadgets that receive VBL notifications.
@@ -221,6 +187,32 @@ protected:
 	 * Close the context menu.
 	 */
 	void closeContextMenu();
+
+	/**
+	 * Process stylus events and send throughout the hierarchy.
+	 */
+	virtual void handleStylus();
+
+	/**
+	 * Process keypad events and send throughout the hierarchy.
+	 */
+	virtual void handleKeys();
+
+	/**
+	 * Process lid events and send throughout the hierarchy.
+	 */
+	virtual void handleLid();
+
+	/**
+	 * Receive and process VBLs.
+	 * @return True if VBL was processed.
+	 */
+	virtual bool vbl();
+
+	/**
+	 * Deletes the system font.
+	 */
+	static void deleteSystemFont();
 };
 
 /**
