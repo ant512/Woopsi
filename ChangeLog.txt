@@ -24,6 +24,8 @@ Change Log
      - Gadget constructor respects GADGET_PERMEABLE flag.
      - Renamed Woopsi::play() to Woopsi::run().
      - Protected methods within Woopsi class that should not be public.
+     - Gadget::unregisterChildrenFromVBL() recurses through child tree and
+       unregisters all descendents.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

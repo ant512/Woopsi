@@ -1948,12 +1948,22 @@ void Gadget::unregisterChildrenFromVBL() {
 
 	// Unregister children
 	for (u8 i = 0; i < _gadgets.size(); i++) {
+
+		// Unregister the gadget
 		Woopsi::unregisterFromVBL(_gadgets[i]);
+
+		// Unregister its children
+		_gadgets[i]->unregisterChildrenFromVBL();
 	}
 
 	// Unregister shelved children
 	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+
+		// Unregister the gadget
 		Woopsi::unregisterFromVBL(_shelvedGadgets[i]);
+
+		// Unregister its children
+		_shelvedGadgets[i]->unregisterChildrenFromVBL();
 	}
 }
 

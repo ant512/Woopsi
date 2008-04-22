@@ -22,7 +22,7 @@ DynamicArray<Gadget*> Woopsi::_deleteQueue;
 u32 Woopsi::_vblCount = 0;
 
 Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
-	_lidClosed = false;
+	_lidClosed = woopsiLidClosed();
 	_flags.drawingEnabled = true;
 
 	if (font == NULL) {
