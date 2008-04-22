@@ -68,7 +68,9 @@ Features
       are larger than the parent container;
     - Scroll bars;
     - Slider bars;
-    - Context-sensitive menu.
+    - Context-sensitive menu;
+    - List boxes;
+    - Progress bars.
   - Skinnable screens and windows;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
