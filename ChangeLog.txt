@@ -30,6 +30,7 @@ Change Log
        directly and the correct deletion queue method is bypassed.
      - Context menu shelved if the gadget that opened it gets closed.
      - Slider/scrollbar inaccuracies fixed.
+	 - Fixed rounding errors in TextBox alignment.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

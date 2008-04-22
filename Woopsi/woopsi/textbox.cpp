@@ -51,7 +51,7 @@ void Textbox::calculateTextPosition() {
 	// Calculate vertical position
 	switch (_vPos) {
 		case TEXT_POSITION_VERT_CENTRE:
-			_textY = (_height >> 1) - (_font->getHeight() >> 1);
+			_textY = (_height - _font->getHeight()) >> 1;
 			break;
 		case TEXT_POSITION_VERT_TOP:
 			_textY = _padding;
@@ -64,7 +64,7 @@ void Textbox::calculateTextPosition() {
 	// Calculate horizontal position
 	switch (_hPos) {
 		case TEXT_POSITION_HORIZ_CENTRE:
-			_textX = (_width >> 1) - (_font->getStringWidth(_text) >> 1);
+			_textX = (_width - _font->getStringWidth(_text)) >> 1;
 			break;
 		case TEXT_POSITION_HORIZ_LEFT:
 			_textX = _padding;
