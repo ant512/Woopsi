@@ -35,6 +35,9 @@ const s16 SliderVertical::getValue() const {
 		// Calculate value
 		u32 val = ((_grip->getY() - getY()) - rect.y) * ratio;
 
+		// Round up
+		val += val & 128;
+
 		// Right shift to erase fractional part and return
 		return val >> 8;
 	} else {
@@ -63,7 +66,16 @@ void SliderVertical::setValue(const s16 value) {
 		u32 ratio = (rect.height << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// Convert value using ratio
-		s16 newGripY = rect.y + ((newValue * ratio) >> 8);
+		s16 newGripY = (newValue * ratio);
+
+		// Round up
+		newGripY += newGripY & 128;
+
+		// Bitshift down
+		newGripY >>= 8;
+
+		// Add containing client co-ords
+		newGripY += rect.y;
 		
 		// Adjust new y so that it fits within gutter
 		if (newGripY + _grip->getHeight() > rect.y + rect.height) {
@@ -155,6 +167,9 @@ void SliderVertical::resizeGrip() {
 		// New height is equivalent to the height of the gutter minus
 		// the ratio-converted overflow height
 		newHeight = (rect.height << 8) - (overspill * ratio);
+
+		// Round up
+		newHeight += newHeight & 128;
 
 		// Bitshift to remove fraction
 		newHeight >>= 8;

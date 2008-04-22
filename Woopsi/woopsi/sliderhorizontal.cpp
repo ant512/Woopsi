@@ -35,6 +35,9 @@ const s16 SliderHorizontal::getValue() const {
 		// Calculate value
 		u32 val = ((_grip->getX() - getX()) - rect.x) * ratio;
 
+		// Round up
+		val += val & 128;
+
 		// Right shift to erase fractional part and return
 		return val >> 8;
 	} else {
@@ -61,10 +64,19 @@ void SliderHorizontal::setValue(const s16 value) {
 	
 		// Calculate ratio (max fractional value of 255)
 		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
-		
+
 		// Convert value using ratio
-		s16 newGripX = rect.x + ((newValue * ratio) >> 8);
-		
+		s16 newGripX = (newValue * ratio);
+
+		// Round up
+		newGripX += newGripX & 128;
+
+		// Bitshift down
+		newGripX >>= 8;
+
+		// Add containing client co-ords
+		newGripX += rect.x;
+
 		// Adjust new x so that it fits within gutter
 		if (newGripX + _grip->getWidth() > rect.x + rect.width) {
 			newGripX = (rect.x + rect.width) - _grip->getWidth();
@@ -155,7 +167,10 @@ void SliderHorizontal::resizeGrip() {
 		// New width is equivalent to the width of the gutter minus
 		// the ratio-converted overflow width
 		newWidth = (rect.width << 8) - (overspill * ratio);
-		
+
+		// Round up
+		newWidth += newWidth & 128;
+
 		// Bitshift to remove fraction
 		newWidth >>= 8;
 
