@@ -441,17 +441,6 @@ int main() {
 	listbox->newListBoxItem("List Item 3", 3, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
 	listbox->newListBoxItem("List Item 4", 4, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
 
-
-	//ContextMenu* menu = new ContextMenu();
-	//newScreen->addGadget(menu);
-	//menu->newMenuItem("test 1");
-	//menu->newMenuItem("test 2");
-	//menu->newMenuItem("test  3");
-	//menu->newMenuItem("test   4");
-
-	//menu->clear();
-	//menu->newMenuItem("gogogo");
-
 	// Add Welcome notice
 	newScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
 
@@ -491,13 +480,7 @@ int main() {
 	// Infinite loop to keep the program running
 	while (1)
 	{
-		woopsiApplication->play();
-
-		//if (Pad.Held.A) {
-		//	multiText->addText("Text");
-		//	Debug::output(&woopsi, "go");
-		//}
-
+		woopsiApplication->run();
 		woopsiWaitVBL();
 	}
 	

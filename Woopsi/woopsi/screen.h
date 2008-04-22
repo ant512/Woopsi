@@ -9,6 +9,7 @@ using namespace std;
 /**
  * Class representing a basic, empty screen.  All gadgets, except for the Woopsi object
  * itself, must ultimately have a screen at the top of their hierarchies (below Woopsi).
+ * Screen gadgets can only be children of the Woopsi object.
  */
 class Screen : public Gadget {
 
@@ -63,7 +64,13 @@ public:
 	virtual void setFocusedGadget(Gadget* gadget);
 
 	/**
-	 * Swaps the depth of the supplied child gadget.
+	 * Swaps the depth of the supplied child gadget.  The child
+	 * gadget is assumed to be a window, and although this is not a requirement,
+	 * it does mean that child gadgets are depth-swapped as windows would
+	 * be expected to.  If the gadget is not at the top of the z-order of the
+	 * gadgets is collides with, it is raised above those gadgets.  If it is
+	 * at the top of the z-order of the gadgets it collides with, it is
+	 * dropped down to the bottom of that z-order.
 	 * @param gadget A pointer to the child gadget that needs to swap depths.
 	 * @return True if the swap was successful.
 	 */
@@ -87,6 +94,14 @@ public:
 
 	/**
 	 * Drag the gadget to the supplied co-ordinates.
+     * This will move the screen around the display as it is dragged,
+	 * using the DMA hardware to copy the rows up or down.  Note that
+	 * the routine does *not* clip to the visible portions of the gadget
+	 * as Woopsi assumes that a screen being dragged is at the top of the z-order.
+	 * This makes the routine faster, but it means that this function
+	 * must not be called if the screen is not at the top of the z-order
+	 * (ie. if you're trying to script the GUI instead of relying on
+	 * user interaction).
 	 * @param x The x co-ordinate of the stylus.
 	 * @param y The y co-ordinate of the stylus.
 	 * @param vX The horizontal distance that the stylus was dragged.
