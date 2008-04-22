@@ -106,9 +106,8 @@ bool Woopsi::click(s16 x, s16 y) {
 		if (_gadgets[i]->click(x, y)) {
 
 			// Do we need to close the context menu?
-			if ((_gadgets[i] != _contextMenu) && (!_contextMenu->isShelved())) {
-				_contextMenu->shelve();
-				_contextMenu->reset();
+			if (_gadgets[i] != _contextMenu) {
+				closeContextMenu();
 			}
 
 			return true;
@@ -123,10 +122,7 @@ bool Woopsi::shiftClick(s16 x, s16 y) {
 	_flags.clicked = true;
 
 	// Close the existing context menu
-	if (!_contextMenu->isShelved()) {
-		_contextMenu->shelve();
-		_contextMenu->reset();
-	}
+	closeContextMenu();
 
 	// Work out which gadget was clicked
 	for (s16 i = _gadgets.size() - 1; i > -1; i--) {
@@ -467,10 +463,6 @@ void Woopsi::addToDeleteQueue(Gadget* gadget) {
 	_deleteQueue.push_back(gadget);
 }
 
-u32 Woopsi::getVBLCount() {
-	return _vblCount;
-}
-
 // Close a child
 void Woopsi::closeChild(Gadget* gadget) {
 	if (gadget != NULL) {
@@ -529,4 +521,11 @@ void Woopsi::hideChild(Gadget* gadget) {
 
 const u32 Woopsi::getContextMenuValue() const {
 	return _contextMenu->getValue();
+}
+
+void Woopsi::closeContextMenu() {
+	if (!_contextMenu->isShelved()) {
+		_contextMenu->shelve();
+		_contextMenu->reset();
+	}
 }

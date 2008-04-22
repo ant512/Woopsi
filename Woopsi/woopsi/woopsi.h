@@ -176,18 +176,13 @@ public:
 	 * The count will eventually overflow the 32-bit int and reset to 0.  Developers must allow for this.
 	 * @return The VBL count.
 	 */
-	static u32 getVBLCount();
+	static inline u32 getVBLCount() { return _vblCount; };
 
 	/**
 	 * Get a pointer to the context menu.
 	 * @return Pointer to the context menu.
 	 */
 	inline ContextMenu* getContextMenu() { return _contextMenu; };
-	
-	/**
-	 * Show the context menu.
-	 */
-	void showContextMenu();
 
 	/**
 	 * Get the current value of the context menu, as determined
@@ -221,6 +216,11 @@ protected:
 	 * Delete any gadgets in the deletion queue.
 	 */
 	void processDeleteQueue();
+
+	/**
+	 * Close the context menu.
+	 */
+	void closeContextMenu();
 };
 
 /**
