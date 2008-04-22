@@ -126,6 +126,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\modalscreen.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\monofont.cpp"
 				>
 			</File>
@@ -397,6 +401,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\listboxitem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\modalscreen.h"
 				>
 			</File>
 			<File

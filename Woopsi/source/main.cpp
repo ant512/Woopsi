@@ -5,6 +5,7 @@
 #include "calculator.h"
 #include "pong.h"
 #include "pacman.h"
+#include "modalscreen.h"
 #include "bitmap/all_gfx.c"
 #include "bitmap/all_gfx.h"
 
@@ -446,9 +447,6 @@ int main() {
 	listbox->newListBoxItem("List Item 3", 3, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
 	listbox->newListBoxItem("List Item 4", 4, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
 
-	// Add Welcome notice
-	newScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
-
 	// Add another screen
 	AmigaScreen* demoScreen = new AmigaScreen("Demos");
 	woopsiApplication->addGadget(demoScreen);
@@ -476,6 +474,13 @@ int main() {
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y, 92, 28, 0, 0, 92, 28, bittest1_Bitmap, bittest4_Bitmap));
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 28, 92, 28, 0, 0, 92, 28, bittest2_Bitmap, bittest5_Bitmap));
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 56, 92, 27, 0, 0, 92, 28, bittest3_Bitmap, bittest6_Bitmap));
+
+
+	// Add Welcome notice
+	ModalScreen* modalScreen = new ModalScreen("Modal Screen");
+	woopsiApplication->addGadget(modalScreen);
+	modalScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
+
 
 	// Move new screen to the back
 	//woopsi.swapGadgetDepth(demoScreen);

@@ -43,6 +43,8 @@ Change Log
      - Added ListBox and ListBoxItem classes.
      - Added double click events (optional per gadget via a flag).
      - Added ProgressBar class.
+     - Added ModalScreen class, which can be used as a container for modal
+       windows.
 
   V0.31 (20080411)
   
