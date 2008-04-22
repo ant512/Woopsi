@@ -29,7 +29,6 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 		_font = getSystemFont();
 	}
 
-	// Create context menu
 	_contextMenu = new ContextMenu(_font);
 	addGadget(_contextMenu);
 	_contextMenu->shelve();
@@ -96,7 +95,7 @@ bool Woopsi::click(s16 x, s16 y) {
 
 			// Do we need to close the context menu?
 			if (_gadgets[i] != _contextMenu) {
-				closeContextMenu();
+				shelveContextMenu();
 			}
 
 			return true;
@@ -110,8 +109,8 @@ bool Woopsi::shiftClick(s16 x, s16 y) {
 
 	_flags.clicked = true;
 
-	// Close the existing context menu
-	closeContextMenu();
+	// Shelve the existing context menu
+	shelveContextMenu();
 
 	// Work out which gadget was clicked
 	for (s16 i = _gadgets.size() - 1; i > -1; i--) {
@@ -434,13 +433,6 @@ void Woopsi::processDeleteQueue() {
 }
 
 void Woopsi::addToDeleteQueue(Gadget* gadget) {
-
-	// Ensure that gadget is no longer receiving VBL events
-	unregisterFromVBL(gadget);
-
-	// Ensure gadget's children are no longer receiving VBL events
-	gadget->unregisterChildrenFromVBL();
-
 	_deleteQueue.push_back(gadget);
 }
 
@@ -504,7 +496,7 @@ const u32 Woopsi::getContextMenuValue() const {
 	return _contextMenu->getValue();
 }
 
-void Woopsi::closeContextMenu() {
+void Woopsi::shelveContextMenu() {
 	if (!_contextMenu->isShelved()) {
 		_contextMenu->shelve();
 		_contextMenu->reset();

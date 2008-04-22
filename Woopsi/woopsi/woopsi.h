@@ -157,6 +157,11 @@ public:
 	 */
 	const u32 getContextMenuValue() const;
 
+	/**
+	 * Shelve the context menu.
+	 */
+	void shelveContextMenu();
+
 protected:
 	bool _lidClosed;									/**< Remembers the current state of the lid */
 	
@@ -182,11 +187,6 @@ protected:
 	 * Delete any gadgets in the deletion queue.
 	 */
 	void processDeleteQueue();
-
-	/**
-	 * Close the context menu.
-	 */
-	void closeContextMenu();
 
 	/**
 	 * Process stylus events and send throughout the hierarchy.

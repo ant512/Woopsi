@@ -78,6 +78,28 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 }
 
 Gadget::~Gadget() {
+
+	// Ensure that the gadget is disposed of correctly if it has not been sent to the deletion queue.
+	if (!_flags.deleted) {
+		raiseCloseEvent();
+
+		_flags.deleted = true;
+
+		// Prevent gadget from receiving VBLs
+		woopsiApplication->unregisterFromVBL(this);
+		unregisterChildrenFromVBL();
+
+		// Close the context menu if we're closing the gadget that opened it
+		if (woopsiApplication->getContextMenu()->getOpener() == this) {
+			woopsiApplication->shelveContextMenu();
+		}
+
+		// Divorce child from parent
+		if (_parent != NULL) {
+			_parent->removeChild(this);
+		}
+	}
+
 	// Delete children
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->destroy();
@@ -1125,6 +1147,15 @@ void Gadget::closeChild(Gadget* gadget) {
 			setFocusedGadget(NULL);
 		}
 
+		// Ensure that gadget is no longer receiving VBL events
+		woopsiApplication->unregisterFromVBL(gadget);
+		gadget->unregisterChildrenFromVBL();
+
+		// Close the context menu if we're closing the gadget that opened it
+		if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
+			woopsiApplication->shelveContextMenu();
+		}
+
 		moveChildToDeleteQueue(gadget);
 	}
 }
@@ -1993,6 +2024,11 @@ bool Gadget::removeChild(Gadget* gadget) {
 			// Decrease decoration count if necessary
 			if (gadget->isDecoration()) {
 				_decorationCount--;
+			}
+
+			// Close the context menu if we're removing the gadget that opened it
+			if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
+				woopsiApplication->shelveContextMenu();
 			}
 
 			// Divorce child from parent

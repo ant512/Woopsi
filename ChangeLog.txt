@@ -26,6 +26,9 @@ Change Log
      - Protected methods within Woopsi class that should not be public.
      - Gadget::unregisterChildrenFromVBL() recurses through child tree and
        unregisters all descendents.
+     - Gadget destructor will perform all deletion operations if it is called
+       directly and the correct deletion queue method is bypassed.
+     - Context menu shelved if the gadget that opened it gets closed.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
