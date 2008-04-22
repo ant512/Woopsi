@@ -491,11 +491,11 @@ void Woopsi::closeChild(Gadget* gadget) {
 	}
 }
 
-// Hide a child
-void Woopsi::hideChild(Gadget* gadget) {
+// Shelve a child
+void Woopsi::shelveChild(Gadget* gadget) {
 	if (gadget != NULL) {
 
-		// Ensure gadget knows it is being closed
+		// Ensure gadget knows it is being shelved
 		if (!gadget->isShelved()) {
 			gadget->shelve();
 		}

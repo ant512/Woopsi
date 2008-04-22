@@ -207,10 +207,10 @@ protected:
 	virtual void closeChild(Gadget* gadget);
 	
 	/**
-	 * Hides a child gadget.
-	 * @param gadget The child gadget to hide.
+	 * Shelves a child gadget.
+	 * @param gadget The child gadget to shelve.
 	 */
-	virtual void hideChild(Gadget* gadget);
+	virtual void shelveChild(Gadget* gadget);
 
 	/**
 	 * Delete any gadgets in the deletion queue.
