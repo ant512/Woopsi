@@ -477,9 +477,9 @@ int main() {
 
 
 	// Add Welcome notice
-	ModalScreen* modalScreen = new ModalScreen("Modal Screen");
-	woopsiApplication->addGadget(modalScreen);
-	modalScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
+	//ModalScreen* modalScreen = new ModalScreen("Modal Screen");
+	//woopsiApplication->addGadget(modalScreen);
+	//modalScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
 
 
 	// Move new screen to the back

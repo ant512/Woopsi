@@ -1,5 +1,5 @@
-#ifndef _SCREEN_BASE_H_
-#define _SCREEN_BASE_H_
+#ifndef _SCREEN_H_
+#define _SCREEN_H_
 
 #include <nds.h>
 #include "gadget.h"
