@@ -19,7 +19,7 @@ public:
 	 * @param title The title of the screen; not displayed by default.
 	 * @param font The font to use with the screen.
 	 */
-	ModalScreen(char* title, FontBase* font = NULL);
+	inline ModalScreen() : Screen("") { };
 	
 	/**
 	 * Override the Gadget::draw() method.
@@ -32,7 +32,10 @@ public:
 	 * @param clipRect The clipping region to draw.
 	 * @see draw()
 	 */
-	virtual void draw(Rect clipRect);
+	virtual inline void draw(Rect clipRect) {
+		_flags.erased = false;
+		erase();
+	}
 
 protected:
 
