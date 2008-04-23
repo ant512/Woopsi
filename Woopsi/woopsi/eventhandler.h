@@ -31,7 +31,9 @@ enum EventType {
 	EVENT_SCROLL = 19,					/**< Gadget has been scrolled */
 	EVENT_SHIFT_CLICK = 20,				/**< Gadget has been shift-clicked */
 	EVENT_CONTEXT_MENU_SELECTION = 21,	/**< Item selected in gadget's context menu */
-	EVENT_DOUBLE_CLICK = 22				/**< Gadget has been double-clicked */
+	EVENT_DOUBLE_CLICK = 22,			/**< Gadget has been double-clicked */
+	EVENT_SHELVE = 23,					/**< Gadget has been shelved */
+	EVENT_UNSHELVE = 24					/**< Shelved gadget has been unshelved */
 };
 
 /**

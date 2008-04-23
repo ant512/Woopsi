@@ -37,6 +37,9 @@
 			<li>Scrolling panels, for containing graphics or gadgets within regions that are larger than the parent container</li>
 			<li>Scroll bars</li>
 			<li>Slider bars</li>
+			<li>Context-sensitive menu</li>
+			<li>List boxes</li>
+			<li>Progress bars</li>
 		</ul>
 		<li>Skinnable screens and windows</li>
 		<li>Draggable gadgets, including draggable windows and screens</li>
@@ -46,7 +49,12 @@
 		<li>Depth sorting</li>
 		<li>Complete API for constructing new gadgets:</li>
 		<ul>
-			<li>Extensible font system that supports monochrome and 16-bit font bitmaps by default</li>
+			<li>Extensible font system that supports:</li>
+			<ul>
+				<li>Fixed-width, bit-packed monochrome fonts</li>
+				<li>Fixed-width, 16-bit colour bitmap fonts</li>
+				<li>Compressed proportional fonts (monochrome and 16-bit).</li>
+			</ul>
 			<li>Text manipulation, including wrapping functions and width calculation</li>
 			<li>Animation class with support for variable framerates and standard/pingpong looping</li>
 			<li>GraphicsPort class providing depth-sorted, clipped, hardware-accelerated drawing functions:</li>
@@ -57,18 +65,21 @@
 				<li>Filled and unfilled rectangles</li>
 				<li>Filled and unfilled circles</li>
 				<li>Bitmap blitting</li>
+				<li>Bitmap blitting with transparent colour key</li>
 				<li>XOR horizontal/vertical lines and pixel plotting</li>
 				<li>Flood fill</li>
 			</ul>
-			<li>Linked list and dynamic array container classes</li>
+			<li>Linked list, dynamic array and hashmap template container classes and iterator classes.</li>
 		</ul>
 		<li>Object-orientated design for easy integration into other C++ software</li>
 		<li>Simple API for rapid GUI creation</li>
 		<li>Simplistic "multitasking" - each window runs simultaneously</li>
-		<li>Uses 16-bit display mode</li>
-		<li>Uses the old AmigaOS 3.0 "Topaz" font</li>
-		<li>Optional PALib support</li>
-		<li>Optional SDL layer to facilitate native compilation on non-DS platforms and aid porting</li>
-		<li>Optional .a library build</li>
+		<li>Uses 16-bit framebuffer display mode</li>
+		<li>Multiple build options:</li>
+		<ul>
+			<li>With/without PALib support</li>
+			<li>SDL layer to facilitate native compilation on non-DS platforms and aid porting</li>
+			<li>libwoopsi.a library build</li>
+		</ul>
 	</ul>
 </div>

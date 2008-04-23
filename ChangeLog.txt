@@ -45,6 +45,7 @@ Change Log
      - Added ProgressBar class.
      - Added ModalScreen class, which can be used as a container for modal
        windows.
+     - Added EVENT_SHELVE and EVENT_UNSHELVE events.
 
   V0.31 (20080411)
   

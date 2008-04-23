@@ -126,10 +126,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\modalscreen.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\monofont.cpp"
 				>
 			</File>

@@ -1150,6 +1150,16 @@ protected:
 	void raiseShowEvent();
 
 	/**
+	 * Raise a shelve event to the event handler.
+	 */
+	void raiseShelveEvent();
+
+	/**
+	 * Raise a unshelve event to the event handler.
+	 */
+	void raiseUnshelveEvent();
+
+	/**
 	 * Raise an enable event to the event handler.
 	 */
 	void raiseEnableEvent();

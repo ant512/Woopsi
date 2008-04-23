@@ -19,47 +19,58 @@
 
 <div id="content">
 	<h1>Developer Guide - Running the GUI</h1>
-	<p>If you were to take the code from the <a href="create.html">Creating a Simple GUI</a> section, insert it into a project and run it, you'd find that nothing happened.  We're missing two vital steps - we need to draw the GUI, and then we need to ensure that Woopsi is running.  To do that, we just need to call two of Woopsi's functions, like this:</p>
+	<p>If you were to take the code from the <a href="create.html">Creating a Simple GUI</a> section, insert it into a project and run it, you'd find that nothing happened.  We're missing a few vital steps.  We need to initialise the DS before we begin creating the GUI.  Once the GUI is set up, we need to draw it and ensure that Woopsi is running.</p>
+	
+	<p>Setting up the DS just entails calling this function at the top of your main() routine:</p>
+	
+	<pre><code>// Initialise the DS
+initWoopsiGfxMode();</code></pre>
+
+	<p>After calling that function, you need to set up the GUI as described in the <a href="create.html">Creating a Simple GUI</a> section.  Once your GUI is set up, Woopsi is run using the following code:</p>
 
 	<pre><code>// Draw the GUI
-woopsi.draw();
+woopsiApplication->draw();
 
 // Infinite loop to keep the program running
-while (1)
-{
-	woopsi.play();
+while (1) {
+	woopsiApplication->run();
 	PA_WaitForVBL();
 }</code></pre>
 
 	<p>The code below provides a complete version of the GUI we've defined that you can copy into your "main.cpp" file and run:</p>
 
 	<pre><code>// Includes
-#include &lt;PA9.h&gt;
-#include "woopsi.h"
+#include "woopsiheaders.h"
 
 int main()
 {
-	PA_Init();    // Initializes PA_Lib
-	PA_InitVBL(); // Initializes a standard VBL
+	// Create woopsi
+	woopsiApplication = new Woopsi();
 
-	// Initialise the screen
-	PA_Init16bitBg(0, 0);
+	// Create screen
+	AmigaScreen* screen = new AmigaScreen("My Screen");
+	woopsiApplication->addGadget(screen);
 
-	// Create a simple GUI
-	Woopsi woopsi;
-	Screen* screen = woopsi.addScreen("My Screen");
-	Window* window = screen->addWindow(20, 20, 100, 100, "My Window", false, true);
-	Button* button = window->addButton(5, 5, 60, 60, "My Button"));
+	// Create window
+	AmigaWindow* window = new AmigaWindow(20, 20, 100, 100, "My Window", GADGET_DRAGGABLE);
+	screen->addGadget(window);
+
+	// Create button
+	Button* button = new Button(5, 5, 60, 60, "Hello World!");
+	window->addGadget(button);
 
 	// Draw the GUI
-	woopsi.draw();
+	woopsiApplication->draw();
 
 	// Infinite loop to keep the program running
 	while (1)
 	{
-		woopsi.play();
+		woopsiApplication->run();
 		PA_WaitForVBL();
 	}
+	
+	// Clean up
+	delete woopsiApplication;
 
 	return 0;
 }</code></pre>

@@ -29,27 +29,27 @@
 	<pre><code>class Calculator : EventHandler {
 public:
 	// Constructor signature
-	Calculator(Woopsi* woopsi);
+	Calculator();
 
 	// Event handling signatures
-	void handleClick(EventArgs e);
+	void handleEvent(EventArgs& e);
 };</code></pre>
 
-	<p>Note that the constructor accepts a pointer to an instance of Woopsi.  This is necessary to allow us to add a new screen to the Woopsi instance.  Also note that we haven't declared a destructor - as Woopsi manages everything for us, we don't need one.</p>
+	<p>Note that we haven't declared a destructor - as Woopsi manages everything for us, we don't need one.</p>
 	<p>This template is missing some important elements.  We're all set up to handle events now, but we haven't got any gadgets to fire events, a window or a screen to contain it.  We're also missing the preprocessor directives that identify whether or not we've already included this file, and the Woopsi include.</p>
-	<p>Let's address the gadget problem first.  We need a pointer to a screen, and we also need a pointer to a window.  We also know that we need to output the calculator's value somewhere, so we need a pointer to a textbox gadget.  Finally, we need a dozen or so buttons, but we don't need to store pointers to any of these.  As we won't need to actually perform any operations on the buttons once they have been created, we can allow Woopsi to manage the button pointers for us.  The only interaction we have with the buttons is via the event system, and again, Woopsi will handle all of that.</p>
+	<p>Let's address the gadget problem first.  We need a pointer to a screen, and we also need a pointer to a window.  We know that we need to output the calculator's value somewhere, so we need a pointer to a textbox gadget.  Finally, we need a dozen or so buttons, but we don't need to store pointers to any of these.  As we won't need to actually perform any operations on the buttons once they have been created, we can allow Woopsi to manage the button pointers for us.  The only interaction we have with the buttons is via the event system, and again, Woopsi will handle all of that.</p>
 	<p>Adding the preprocessor directives is a simple matter of following standard C++ conventions, as is including the Woopsi header file.</p>
 	<p>The code below contains the complete class with the new additions in place.  If you wanted to add this to a project, you would need to copy the code into a file called "calculator.h" and add it to your project.  I've added a few other variables and functions in that we will need later; don't worry about these at the moment.</p>
 	<pre><code>#ifndef _CALCULATOR_H_
 #define _CALCULATOR_H_
 
-#include "woopsi.h"
+#include "woopsiheaders.h"
 
 class Calculator : EventHandler {
 private:
 	// Woopsi gadget pointers
-	Screen* screen;
-	Window* window;
+	AmigaScreen* screen;
+	AmigaWindow* window;
 	Textbox* output;
 
 	// Variables for other functionality
@@ -60,57 +60,62 @@ private:
 	
 public:
 	// Constructor signature
-	Calculator(Woopsi* woopsi);
+	Calculator();
 
-	// Event handling signatures
-	void handleClick(EventArgs e);
+	// Event handling signature
+	void handleEvent(EventArgs& e);
 };
 
 #endif</code></pre>
 
 	<h2>Creating the GUI</h2>
 	<p>Now that we have the class definition, we need to start fleshing out the functions.  The constructor will need to create the new screen, window and gadgets, and it will need to wire up the button click events.  The constructor looks like this:</p>
-	<pre><code>Calculator::Calculator(Woopsi* woopsi) {
+	<pre><code>Calculator::Calculator() {
 	
 	// Create the screen
-	this->screen = woopsi->addScreen("Calculator");
+	screen = new AmigaScreen("Calculator");
+	woopsiApplication->addGadget(this->screen);
 
 	// Create the window
-	window = screen->addWindow(0, 90, 60, 97, "Calc", false, true);
+	window = new AmigaWindow(0, 90, 60, 97, "Calc", GADGET_DRAGGABLE | GADGET_CLOSABLE);
+	screen->addGadget(window);
 
 	// Create the textbox
-	output = window->addTextbox(0, 0, 52, 16, "0");
+	output = new Textbox(0, 0, 52, 16, "0");
+	window->addGadget(output);
 	
 	// Align the text right
-	output->setTextPositionHoriz(Textbox::textPositionHorizRight);
+	output->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_RIGHT);
 
 	// Create a temporary vector to store button pointers
-	vector<Button*> buttons;
+	DynamicArray<Button*> buttons;
 	
 	// Create all buttons
-	buttons.push_back(window->addButton(0, 16, 13, 16, "7"));
-	buttons.push_back(window->addButton(13, 16, 13, 16, "8"));
-	buttons.push_back(window->addButton(26, 16, 13, 16, "9"));
-	buttons.push_back(window->addButton(39, 16, 13, 16, "*"));
+	buttons.push_back(new Button(0, 16, 13, 16, "7"));
+	buttons.push_back(new Button(13, 16, 13, 16, "8"));
+	buttons.push_back(new Button(26, 16, 13, 16, "9"));
+	buttons.push_back(new Button(39, 16, 13, 16, "*"));
 
-	buttons.push_back(window->addButton(0, 32, 13, 16, "4"));
-	buttons.push_back(window->addButton(13, 32, 13, 16, "5"));
-	buttons.push_back(window->addButton(26, 32, 13, 16, "6"));
-	buttons.push_back(window->addButton(39, 32, 13, 16, "-"));
+	buttons.push_back(new Button(0, 32, 13, 16, "4"));
+	buttons.push_back(new Button(13, 32, 13, 16, "5"));
+	buttons.push_back(new Button(26, 32, 13, 16, "6"));
+	buttons.push_back(new Button(39, 32, 13, 16, "-"));
 
-	buttons.push_back(window->addButton(0, 48, 13, 16, "1"));
-	buttons.push_back(window->addButton(13, 48, 13, 16, "2"));
-	buttons.push_back(window->addButton(26, 48, 13, 16, "3"));
-	buttons.push_back(window->addButton(39, 48, 13, 16, "+"));
+	buttons.push_back(new Button(0, 48, 13, 16, "1"));
+	buttons.push_back(new Button(13, 48, 13, 16, "2"));
+	buttons.push_back(new Button(26, 48, 13, 16, "3"));
+	buttons.push_back(new Button(39, 48, 13, 16, "+"));
 
-	buttons.push_back(window->addButton(0, 64, 13, 16, "0"));
-	buttons.push_back(window->addButton(13, 64, 13, 16, "C"));
-	buttons.push_back(window->addButton(26, 64, 13, 16, "="));
-	buttons.push_back(window->addButton(39, 64, 13, 16, "/"));
+	buttons.push_back(new Button(0, 64, 13, 16, "0"));
+	buttons.push_back(new Button(13, 64, 13, 16, "C"));
+	buttons.push_back(new Button(26, 64, 13, 16, "="));
+	buttons.push_back(new Button(39, 64, 13, 16, "/"));
 
-	// Wire up button events
+	// Wire up button events add add them to the window
 	for (u8 i = 0; i < buttons.size(); i++) {
 		buttons[i]->setEventHandler(this);
+		buttons[i]->setRefCon(i);
+		window->addGadget(buttons[i]);
 	}
 }</pre></code>
 
@@ -119,6 +124,8 @@ public:
 		<li>Pushing the button pointers into a vector</li>
 		<li>Looping through the button vector once it is fully populated</li>
 		<li>Setting each button's event handler property to "this"</li>
+		<li>Giving each button a distinct "ref con", which is just a numeric value</li>
+		<li>Adding each button to the window</li>
 	</ul>
 	<p>You may notice that we allow the button vector to go out of scope without deleting the buttons.  This is intentional.  We don't need to retain pointers to the buttons outside of Woopsi - we will rely on Woopsi to handle all of the button functionality.  Woopsi automatically deletes any gagdets when it is itself deleted.</p>
 	<p>This constructor should be copied into a new file called "calculator.cpp" and included in your project.  You will need to include the header file we've already created by adding this directive to the top of the file:</p>
@@ -126,31 +133,63 @@ public:
 	
 	<h2>Event Handling</h2>
 	<p>At this point, we have a complete GUI for our calculator.  All of the visual elements are in place.  However, the GUI doesn't actually do anything yet - clicking a button has no effect.  Before the GUI will work, and before the code will compile, we need to fill out the event handler functions.</p>
-	<p>The only event we are interested in for the calculator project is the button click.  The "handleClick()" function will get called when any of the buttons are clicked.  It needs to be able to determine which button was pressed and then take the appropriate action.  Fortunately, the nature of a calculator makes this an easy thing to achieve.  Woopsi's Button class has a "getText()" function that we can use to get a button's text, and as each button has unique text, we can easily figure out which one fired the event using a set of "if" statements:</p>
+	<p>The only event we are interested in for the calculator project is the button click.  The "handleEvent()" function will get called when any of the buttons triggers any event, so we need a way to identify which event has been fired, and which button has fired the event.  Once we know that information, we can take the appropriate action.</p>
+	<p>We determine the type of event by checking the values of the EventArgs struct:</p>
 
-	<pre><code>void Calculator::handleClick(EventArgs e) {
-	if (strcmp(((Button*)e.gadget)->getText(), "=") == 0) {
-		// Handle equals button
-	} else if (strcmp(((Button*)e.gadget)->getText(), "C") == 0) {
-		// Handle clear button
-	} else if (strcmp(((Button*)e.gadget)->getText(), "+") == 0) {
-		// Handle add button
-	} else if (strcmp(((Button*)e.gadget)->getText(), "-") == 0) {
-		// Handle subtract button
-	} else if (strcmp(((Button*)e.gadget)->getText(), "*") == 0) {
-		// Handle multiply button
-	} else if (strcmp(((Button*)e.gadget)->getText(), "/") == 0) {
-		// Handle divide button
-	} else {
-		// Handle numeric button
+	<pre><code>void Calculator::handleEvent(EventArgs& e) {
+	switch (e.type) {
+		case EVENT_CLICK:
+			// Click has occurred
+			break;
+		default:
+			return;
 	}
 }</code></pre>
 
-	<p>This code introduces the <a href="../arguments.html">EventArgs</a> struct.  All we're interested in for the purposes of this function is the gadget that fired the event, which is sent to the function as the EventArgs' "gadget" member.  We cast the gadget to a button, extract the text using the "getText()" method, and compare the text with the various operators.  If the button matches one of our operators we handle its action; otherwise, the button must be numeric so we handle it as such.</p>
+	<p>We can check for any other of Woopsi's supported events by adding extra cases into the switch statement.</p>
+	
+	<p>Determining which button was clicked is also very easy.  As we gave each button a unique refcon, we can embed another switch statement into the handleEvent method:</p>
+
+	<pre><code>void Calculator::handleEvent(EventArgs& e) {
+	switch (e.type) {
+		case EVENT_CLICK:
+		
+			// Click has occurred
+			switch (e.gadget->getRefCon()) {
+				case 14:
+					// Handle equals button
+					break;
+				case 13:
+					// Handle clear button
+					break;
+				case 11:
+					// Handle add button
+					break;
+				case 7:
+					// Handle subtract button
+					break;
+				case 3:
+					// Handle multiply button
+					break;
+				case 15:
+					// Handle divide button
+					break;
+				default:
+					// Handle numeric button
+					break;
+			}
+			break;
+			
+		default:
+			return;
+	}
+}</code></pre>
+
+	<p>The gadget that fired the event is sent to the function as the EventArgs' "gadget" member.  We determine its refcon and act appropriately for that button.  If the button is one of the operators we handle its action; otherwise, the button is numeric and we handle it as such.</p>
 	
 	<p>Although we now know which button has been pressed, and can handle it accordingly, we aren't actually doing anything with the event yet.  Let's handle the numeric buttons first.</p>
 	
-	<p>When a numeric button is clicked, we want to display that number in the output pox.  The method of output is dependent on the last button that was clicked.  If we're clicking a number for the first time, or have just clicked an operator button, we need to wipe the display and set it to the number of the current button.  If the last button to be pressed was a number, we know that this press represents another digit in a larger number, so we want to append this new number to the display instead of wiping it.  The "addText()" function that we previously prototyped can be filled out to handle this:</p>
+	<p>When a numeric button is clicked, we want to display that number in the output box.  The method of output is dependent on the last button that was clicked.  If we're clicking a number for the first time, or have just clicked an operator button, we need to wipe the display and set it to the number of the current button.  If the last button to be pressed was a number, we know that this press represents another digit in a larger number, so we want to append this new number to the display instead of wiping it.  The "addText()" function that we previously prototyped can be filled out to handle this:</p>
 	
 	<pre><code>void Calculator::addText(char* text) {
 	if ((strcmp(output->getText(), "0") == 0) || (wipeNeeded)) {
@@ -161,63 +200,74 @@ public:
 			output->addText(text);
 		}
 	}
-
-	output->draw();
 }</code></pre>
 
-	<p>This function works out whether we need to append to or reset the output text.  Ignoring the logic of the function, which isn't particularly important here, the three most interesting functions are all members of the <a href="../classes/textbox.html">TextBox</a> class.  "setText()" will wipe the text and replace it with the supplied value.  "addText" appends text to the right-hand side of the textbox.  Finally, "draw()" redraws the textbox.  "draw()" is not called automatically by the setters because we may encounter a situation wherein we want to change a textbox's contents without redrawing it.</p>
+	<p>This function works out whether we need to append to or reset the output text.  Ignoring the logic of the function, which isn't particularly important here, the three most interesting functions are all members of the <a href="../classes/textbox.html">TextBox</a> class.  "setText()" will wipe the text and replace it with the supplied value.  "addText" appends text to the right-hand side of the textbox.</p>
 	
-	<p>We need to call this new function in our "handleClick()" function.  We also need to make sure that any clicks on the operator buttons inform the calculator that we will need to wipe the display the next time a number is clicked.  Finally, we need to make the "clear" button reset the display using the "setText()" and "draw()" TextBox functions.  Our "handleClick()" function now looks like this:</p>
+	<p>We need to call this new function in our "handleEvent()" function.  We also need to make sure that any clicks on the operator buttons inform the calculator that we will need to wipe the display the next time a number is clicked.  Finally, we need to make the "clear" button reset the display using the "setText()" TextBox function.  Our "handleEvent()" function now looks like this:</p>
 	
-	<pre><code>void Calculator::handleClick(EventArgs e) {
-	if (strcmp(((Button*)e.gadget)->getText(), "=") == 0) {
-		// Handle equals button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "C") == 0) {
-		// Handle clear button
-		output->setText("0");
-		output->draw();
-	} else if (strcmp(((Button*)e.gadget)->getText(), "+") == 0) {
-		// Handle add button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "-") == 0) {
-		// Handle subtract button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "*") == 0) {
-		// Handle multiply button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "/") == 0) {
-		// Handle divide button
-		wipeNeeded = true;
-	} else {
-		// Handle numeric button
-		addText(((Button*)e.gadget)->getText());
+	<pre><code>void Calculator::handleEvent(EventArgs& e) {
+	switch (e.type) {
+		case EVENT_CLICK:
+		
+			// Click has occurred
+			switch (e.gadget->getRefCon()) {
+				case 14:
+					// Handle equals button
+					wipeNeeded = true;
+					break;
+				case 13:
+					// Handle clear button
+					output->setText("0");
+					break;
+				case 11:
+					// Handle add button
+					wipeNeeded = true;
+					break;
+				case 7:
+					// Handle subtract button
+					wipeNeeded = true;
+					break;
+				case 3:
+					// Handle multiply button
+					wipeNeeded = true;
+					break;
+				case 15:
+					// Handle divide button
+					wipeNeeded = true;
+					break;
+				default:
+					// Handle numeric button
+					addText(((Button*)e.gadget)->getText());
+					break;
+			}
+			break;
+			
+		default:
+			return;
 	}
 }</code></pre>
-
+	
 	<p>We've now achieved everything we set out to.  We have a fully-functional calculator GUI that can identify when buttons are clicked and which button has been clicked.  Based on that information, we can update the calculator's display appropriately.</p>
 	
 	<p>As stated earlier, we haven't actually written the calculation code; if you are interested in that, you can have a look at the calculator class in the Woopsi sourcecode.</p>
 	
 	<p>Adding the calculator into an existing Woopsi project is easy.  The code to do this, which you should include somewhere in your "main()" function in "main.cpp" (or somewhere appropriate to your project) is:</p>
 	
-	<pre><code>Woopsi woopsi;
-Calculator *calc = new Calculator(&woopsi);</code></pre>
-	
-	<p>Of course, if you have already created an instance of Woopsi, you do not need to create another - just pass that instance into the calculator's constructor as a pointer.</p>
+	<pre><code>Calculator *calc = new Calculator();</code></pre>
 	
 	<p>To recap on the sourcecode, this is the full "calculator.h" code:</p>
 	
 	<pre><code>#ifndef _CALCULATOR_H_
 #define _CALCULATOR_H_
 
-#include "woopsi.h"
+#include "woopsiheaders.h"
 
 class Calculator : EventHandler {
 private:
 	// Woopsi gadget pointers
-	Screen* screen;
-	Window* window;
+	AmigaScreen* screen;
+	AmigaWindow* window;
 	Textbox* output;
 
 	// Variables for other functionality
@@ -227,11 +277,11 @@ private:
 	void addText(char* text);
 	
 public:
-	// Constructor and destructor signatures
-	Calculator(Woopsi* woopsi);
+	// Constructor signature
+	Calculator();
 
-	// Event handling signatures
-	void handleClick(EventArgs e);
+	// Event handling signature
+	void handleEvent(EventArgs& e);
 };
 
 #endif</code></pre>
@@ -240,73 +290,94 @@ public:
 	
 	<pre><code>#include "calculator.h"
 	
-Calculator::Calculator(Woopsi* woopsi) {
+Calculator::Calculator() {
 	
 	// Create the screen
-	this->screen = woopsi.addScreen("Calculator");
+	screen = new AmigaScreen("Calculator");
+	woopsiApplication->addGadget(this->screen);
 
 	// Create the window
-	window = screen->addWindow(0, 90, 60, 97, "Calc", false, true);
+	window = new AmigaWindow(0, 90, 60, 97, "Calc", GADGET_DRAGGABLE | GADGET_CLOSABLE);
+	screen->addGadget(window);
 
 	// Create the textbox
-	output = window->addTextbox(0, 0, 52, 16, "0");
+	output = new Textbox(0, 0, 52, 16, "0");
+	window->addGadget(output);
 	
 	// Align the text right
-	output->setTextPositionHoriz(Textbox::textPositionHorizRight);
+	output->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_RIGHT);
 
 	// Create a temporary vector to store button pointers
-	vector<Button*> buttons;
+	DynamicArray<Button*> buttons;
 	
 	// Create all buttons
-	buttons.push_back(window->addButton(0, 16, 13, 16, "7"));
-	buttons.push_back(window->addButton(13, 16, 13, 16, "8"));
-	buttons.push_back(window->addButton(26, 16, 13, 16, "9"));
-	buttons.push_back(window->addButton(39, 16, 13, 16, "*"));
+	buttons.push_back(new Button(0, 16, 13, 16, "7"));
+	buttons.push_back(new Button(13, 16, 13, 16, "8"));
+	buttons.push_back(new Button(26, 16, 13, 16, "9"));
+	buttons.push_back(new Button(39, 16, 13, 16, "*"));
 
-	buttons.push_back(window->addButton(0, 32, 13, 16, "4"));
-	buttons.push_back(window->addButton(13, 32, 13, 16, "5"));
-	buttons.push_back(window->addButton(26, 32, 13, 16, "6"));
-	buttons.push_back(window->addButton(39, 32, 13, 16, "-"));
+	buttons.push_back(new Button(0, 32, 13, 16, "4"));
+	buttons.push_back(new Button(13, 32, 13, 16, "5"));
+	buttons.push_back(new Button(26, 32, 13, 16, "6"));
+	buttons.push_back(new Button(39, 32, 13, 16, "-"));
 
-	buttons.push_back(window->addButton(0, 48, 13, 16, "1"));
-	buttons.push_back(window->addButton(13, 48, 13, 16, "2"));
-	buttons.push_back(window->addButton(26, 48, 13, 16, "3"));
-	buttons.push_back(window->addButton(39, 48, 13, 16, "+"));
+	buttons.push_back(new Button(0, 48, 13, 16, "1"));
+	buttons.push_back(new Button(13, 48, 13, 16, "2"));
+	buttons.push_back(new Button(26, 48, 13, 16, "3"));
+	buttons.push_back(new Button(39, 48, 13, 16, "+"));
 
-	buttons.push_back(window->addButton(0, 64, 13, 16, "0"));
-	buttons.push_back(window->addButton(13, 64, 13, 16, "C"));
-	buttons.push_back(window->addButton(26, 64, 13, 16, "="));
-	buttons.push_back(window->addButton(39, 64, 13, 16, "/"));
+	buttons.push_back(new Button(0, 64, 13, 16, "0"));
+	buttons.push_back(new Button(13, 64, 13, 16, "C"));
+	buttons.push_back(new Button(26, 64, 13, 16, "="));
+	buttons.push_back(new Button(39, 64, 13, 16, "/"));
 
-	// Wire up button events
+	// Wire up button events add add them to the window
 	for (u8 i = 0; i < buttons.size(); i++) {
 		buttons[i]->setEventHandler(this);
+		buttons[i]->setRefCon(i);
+		window->addGadget(buttons[i]);
 	}
 }
 
-void Calculator::handleClick(EventArgs e) {
-	if (strcmp(((Button*)e.gadget)->getText(), "=") == 0) {
-		// Handle equals button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "C") == 0) {
-		// Handle clear button
-		output->setText("0");
-		output->draw();
-	} else if (strcmp(((Button*)e.gadget)->getText(), "+") == 0) {
-		// Handle add button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "-") == 0) {
-		// Handle subtract button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "*") == 0) {
-		// Handle multiply button
-		wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "/") == 0) {
-		// Handle divide button
-		wipeNeeded = true;
-	} else {
-		// Handle numeric button
-		addText(((Button*)e.gadget)->getText());
+void Calculator::handleEvent(EventArgs& e) {
+	switch (e.type) {
+		case EVENT_CLICK:
+		
+			// Click has occurred
+			switch (e.gadget->getRefCon()) {
+				case 14:
+					// Handle equals button
+					wipeNeeded = true;
+					break;
+				case 13:
+					// Handle clear button
+					output->setText("0");
+					break;
+				case 11:
+					// Handle add button
+					wipeNeeded = true;
+					break;
+				case 7:
+					// Handle subtract button
+					wipeNeeded = true;
+					break;
+				case 3:
+					// Handle multiply button
+					wipeNeeded = true;
+					break;
+				case 15:
+					// Handle divide button
+					wipeNeeded = true;
+					break;
+				default:
+					// Handle numeric button
+					addText(((Button*)e.gadget)->getText());
+					break;
+			}
+			break;
+			
+		default:
+			return;
 	}
 }
 
@@ -319,8 +390,6 @@ void Calculator::addText(char* text) {
 			output->addText(text);
 		}
 	}
-
-	output->draw();
 }</pre></code>
 
 </div>

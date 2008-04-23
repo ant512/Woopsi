@@ -483,6 +483,34 @@ void Gadget::raiseShowEvent() {
 	}
 }
 
+void Gadget::raiseShelveEvent() {
+	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+
+		EventArgs e;
+		e.type = EVENT_SHELVE;
+		e.eventX = 0;
+		e.eventY = 0;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
+void Gadget::raiseUnshelveEvent() {
+	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+
+		EventArgs e;
+		e.type = EVENT_UNSHELVE;
+		e.eventX = 0;
+		e.eventY = 0;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
 void Gadget::raiseEnableEvent() {
 	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
 
@@ -952,7 +980,7 @@ bool Gadget::shelve() {
 
 	if (!_flags.shelved) {
 
-		raiseHideEvent();
+		raiseShelveEvent();
 
 		erase();
 
@@ -974,7 +1002,7 @@ bool Gadget::unshelve() {
 
 	if (_flags.shelved) {
 
-		raiseShowEvent();
+		raiseUnshelveEvent();
 
 		_flags.drawingEnabled = true;
 		_flags.shelved = false;
@@ -2093,6 +2121,8 @@ bool Gadget::handleContextMenuSelection(u32 value) {
 bool Gadget::show() {
 	if (_flags.hidden) {
 		_flags.hidden = false;
+
+		raiseShowEvent();
 		draw();
 		return true;
 	}
@@ -2103,6 +2133,8 @@ bool Gadget::show() {
 bool Gadget::hide() {
 	if (!_flags.hidden) {
 		_flags.hidden = true;
+
+		raiseHideEvent();
 		erase();
 		return true;
 	}

@@ -31,6 +31,8 @@
 
 	<ul>
 		<li>Click - fired when a gadget is pressed by the stylus</li>
+		<li>Double-click - fired when a gadget is tapped twice by the stylus within a short period of time</li>
+		<li>Shift-click - fired when a gadget is pressed by the stylus whilst the user holds down one or both of the shoulder buttons</li>
 		<li>Drag - fired when a gadget is dragged by the stylus</li>
 		<li>Release - fired when the stylus is removed from the touch screen</li>
 		<li>VBL - fired when a vertical blank occurs</li>
@@ -42,24 +44,30 @@
 		<li>Blur - fired when a gadget loses focus</li>
 		<li>Hide - fired when a gadget is hidden</li>
 		<li>Show - fired when a gadget is shown</li>
+		<li>Shelve - fired when a gadget is shelved</li>
+		<li>Unshelve - fired when a gadget is unshelved</li>
 		<li>Close - fired when a gadget is closed</li>
 		<li>Resize - fired when a gadget is resized</li>
 		<li>Move - fired when a gadget is moved</li>
 		<li>Value changed - fired when a gadget's value changes</li>
+		<li>Enable - fired when a gadget is enabled</li>
+		<li>Disable - fired when a gadget is disabled</li>
+		<li>Context menu selection - fired when a context menu belonging to a gadget has a new selection made</li>
+		<li>Scroll - fired when a scrolling gadget scrolls</li>
 	</ul>
 	
 	<p>Not every gadget will fire every event.  The "value changed" event only makes sense for textboxes, radio buttons, and so on.  Windows do not have their values changed, since they do not store an internal value to change.</p>
 	
 	<h2>User Actions</h2>
 	
-	<p>User actions are detected by the main Woopsi class and distributed through the gadget hierarchy to any relevant gadgets.  They are distributed differently depending on the nature of the action.  Clicks, for example, are routed to the gadget that was clicked; the clicked gadget then raises a "clicked" event that can be processed by an EventHandler.  Vertical blanks, on the other hand, are sent to all gadgets, so that all gadgets receive a "heartbeat" and can, if necessary, keep themselves constantly updated.</p>
+	<p>User actions are detected by the main Woopsi class and distributed through the gadget hierarchy to any relevant gadgets.  They are distributed differently depending on the nature of the action.  Clicks, for example, are routed to the gadget that was clicked; the clicked gadget then raises a "clicked" event that can be processed by an EventHandler.  Conversely, lid opening or closing is sent to all gadgets so that they can perform any halt operations.</p>
 	
 	<p>User actions are distributed through the Woopsi hierarchy like this:</p>
 
 	<ul>
 		<li>Stylus clicks are sent to the gadget that was clicked</li>
 		<li>Stylus releases are sent only to the gadget that was released</li>
-		<li>Vertical blanks are sent to all gadgets</li>
+		<li>Vertical blanks are sent to gadgets that have been set up to listen for them</li>
 		<li>Key presses are sent to the gadget that currently has focus and its parents</li>
 		<li>Key releases are sent to all gadgets that currently has focus and its parents</li>
 		<li>Lid opened events are sent to all gadgets</li>
