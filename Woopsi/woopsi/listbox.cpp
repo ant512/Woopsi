@@ -5,7 +5,6 @@
 ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_selectedGadget = NULL;
 	_outline = OUTLINE_IN;
-	_flags.doubleClickable = true;
 }
 
 ListBoxItem* ListBox::newListBoxItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {

@@ -10,6 +10,7 @@ ListBoxItem::ListBoxItem(s16 x, s16 y, u16 width, u16 height, const char* text, 
 	_normalBackColour = normalBackColour;
 	_selectedTextColour = selectedTextColour;
 	_selectedBackColour = selectedBackColour;
+	_flags.doubleClickable = true;
 }
 
 void ListBoxItem::draw(Rect clipRect) {
