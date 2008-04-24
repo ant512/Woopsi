@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
 	Demo demo;
 	demo.main(argc, argv);
 
-#if USING_SDL
+#ifdef USING_SDL
 
 	// Shut down SDL systems
 	SDL_Quit();
