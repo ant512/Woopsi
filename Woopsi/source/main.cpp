@@ -1,167 +1,10 @@
 // Includes
-//#include <nds.h>
 #include "woopsiheaders.h"
-
 #include "calculator.h"
 #include "pong.h"
 #include "pacman.h"
 #include "bitmap/all_gfx.c"
 #include "bitmap/all_gfx.h"
-
-#include "woopsi.h"
-#include "amigascreen.h"
-#include "amigawindow.h"
-#include "textbox.h"
-#include "gadget.h"
-#include "woopsifuncs.h"
-
-/*
-int main() {
-
-	initWoopsiGfxMode();
-
-	// Create woopsi
-	woopsiApplication = new Woopsi();
-
-	// Create screen
-	AmigaScreen* newScreen = new AmigaScreen("Test");
-	woopsiApplication->addGadget(newScreen);
-
-	// Create window
-	AmigaWindow* newWindow = new AmigaWindow(0, 13, 256, 179, "Test", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
-	newScreen->addGadget(newWindow);
-
-	// Create message
-	Gadget::Rect rect;
-	newWindow->getClientRect(rect);
-	//Textbox* newTextbox = new Textbox(rect.x, rect.y, rect.width, rect.height, "Hello World?");
-	//newTextbox->setTextPositionVert(Textbox::TEXT_POSITION_VERT_CENTRE);
-	//newTextbox->setTextPositionHoriz(Textbox::TEXT_POSITION_HORIZ_CENTRE);
-	//newWindow->addGadget(newTextbox);
-
-	// Text viewer
-	ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "Woopsi\n"
-		"------\n\n"
-		"This is a demo of a windowing system I'm working on "
-		"for the Nintendo DS, written in C++.  The aim of the "
-		"project is to create a simple windowing system that "
-		"other programmers can use for their applications, which "
-		"should decrease the tedious amount of GUI code that "
-		"people have to write.\n\n"
-		"The system itself is loosely based on the Commodore "
-		"Amiga's \"Intuition\" windowing system.  Everything "
-		"in the system is treated as a \"gadget\" (in the "
-		"same way that Windows treats everything as a sub-class "
-		"of a window), everything takes place within a \"screen\" "
-		"environment, and the look-and-feel of the system "
-		"intentionally resembles the old Amiga system.", Gadget::GADGET_DRAGGABLE, 50);
-	scrollingBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
-	scrollingBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
-	newWindow->addGadget(scrollingBox);
-
-	woopsiApplication->draw();
-
-	// Infinite loop to keep the program running
-	while (1)
-	{
-		woopsiApplication->play();
-		woopsiWaitVBL();
-	}
-
-	delete woopsiApplication;
-}
-
-
-int main2() {
-
-	initWoopsiGfxMode();
-
-	// Create woopsi
-	woopsiApplication = new Woopsi();
-
-	// Create screens
-	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.30");
-	woopsiApplication->addGadget(newScreen);
-
-	//new PacMan(newScreen);
-
-	woopsiApplication->draw();
-
-	// Infinite loop to keep the program running
-	while (1)
-	{
-		woopsiApplication->play();
-		woopsiWaitVBL();
-	}
-
-	delete woopsiApplication;
-}
-
-int mainOld() {
-
-	initWoopsiGfxMode();
-
-	// Create woopsi
-	woopsiApplication = new Woopsi();
-
-	// Create screens
-	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.28");
-	woopsiApplication->addGadget(newScreen);
-	newScreen->setPermeable(true);
-
-	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSEABLE | Gadget::GADGET_DRAGGABLE);
-	newScreen->addGadget(textWindow);
-
-	ScrollingPanel* panel1 = new ScrollingPanel(20, 20, 50, 50, Gadget::GADGET_DRAGGABLE);
-	//panel1->setMinScrollX(-20);
-	//panel1->setMaxScrollX(20);
-	//panel1->setMinScrollY(-20);
-	//panel1->setMaxScrollY(20);
-
-	ScrollingPanel* panel2 = new ScrollingPanel(10, 10, 30, 30, Gadget::GADGET_DRAGGABLE);
-	//panel2->setMinScrollX(-20);
-	//panel2->setMaxScrollX(20);
-	//panel2->setMinScrollY(-20);
-	//panel2->setMaxScrollY(20);
-
-
-	panel2->addGadget(new Button(5, 5, 20, 20, "Text"));
-	panel1->addGadget(panel2);
-
-	textWindow->addGadget(panel1);
-
-
-	woopsiApplication->draw();
-
-	// Infinite loop to keep the program running
-	while (1)
-	{
-		woopsiApplication->play();
-
-		if ((Pad.Held.Left) && (Pad.Held.Up)) {
-			panel1->scroll(-3, -3);
-		} else if ((Pad.Held.Left) && (Pad.Held.Down)) {
-			panel1->scroll(-3, 3);
-		} else if ((Pad.Held.Right) && (Pad.Held.Up)) {
-			panel1->scroll(3, -3);
-		} else if ((Pad.Held.Right) && (Pad.Held.Down)) {
-			panel1->scroll(3, 3);
-		} else if (Pad.Held.Left) {
-			panel1->scroll(-3, 0);
-		} else if (Pad.Held.Right) {
-			panel1->scroll(3, 0);
-		} else if (Pad.Held.Up) {
-			panel1->scroll(0, -3);
-		} else if (Pad.Held.Down) {
-			panel1->scroll(0, 3);
-		}
-
-		woopsiWaitVBL();
-	}
-
-	delete woopsiApplication;
-}
-*/
 
 int main() {
 
@@ -397,12 +240,6 @@ int main() {
 	textTestWindow->getClientRect(rect);
 	textTestWindow->addGadget(new MultiLineTextBox(rect.x, rect.y, 80, 80, "This is some\ntest text", Gadget::GADGET_DRAGGABLE, 5));
 
-	//ScrollbarHorizontal* scrollbar = new ScrollbarHorizontal(10, 30, 50, 15);
-	//scrollbar->setMaximumValue(50);
-	//scrollbar->setPageSize(6);
-	//scrollbar->resizeGrip();
-	//textTestWindow->addGadget(scrollbar);
-
 	// Controls
 	controlWindow->getClientRect(rect);
 	controlWindow->addGadget(new Button(rect.x, rect.y, 41, 16, "Home"));
@@ -456,13 +293,13 @@ int main() {
 	demoScreen->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
 
 	// Create calculator app
-	new Calculator(demoScreen);
+	Calculator* calc = new Calculator(demoScreen);
 
 	// Create Pong app
-	new Pong(demoScreen);
+	Pong* pong = new Pong(demoScreen);
 
 	// Create Pacman app
-	new PacMan(demoScreen);
+	PacMan* pac = new PacMan(demoScreen);
 
 	// Bitmap button test
 	AmigaWindow* buttonWindow = new AmigaWindow(10, 10, 100, 100, "ButtonTest", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
@@ -490,6 +327,10 @@ int main() {
 	// Shutdown Woopsi
 	woopsiApplication->shutdown();
 	
+	// Clean up
+	delete calc;
+	delete pong;
+	delete pac;
 	delete woopsiApplication;
 
 	return 0;

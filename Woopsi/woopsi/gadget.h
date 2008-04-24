@@ -915,7 +915,7 @@ public:
 	/**
 	 * Stop the gadget running modally.
 	 */
-	void stopModal();
+	inline void stopModal() { _flags.modal = false; };
 
 protected:
 	s16 _x;									/**< X co-ordinate of the gadget, relative to parent */

@@ -109,19 +109,15 @@ void PacMan::handleKeyPress(const EventArgs& e) {
 		if (e.gadget->getRefcon() == 1) {
 			switch (e.keyCode) {
 				case KEY_CODE_UP:
-					Debug::printf("PacMan: Up pressed.");
 					_player->setBufferedDirection(1);
 					break;
 				case KEY_CODE_DOWN:
-					Debug::printf("PacMan: Down pressed.");
 					_player->setBufferedDirection(2);
 					break;
 				case KEY_CODE_LEFT:
-					Debug::printf("PacMan: Left pressed.");
 					_player->setBufferedDirection(3);
 					break;
 				case KEY_CODE_RIGHT:
-					Debug::printf("PacMan: Right pressed.");
 					_player->setBufferedDirection(4);
 					break;
 				default:

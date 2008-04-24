@@ -2184,7 +2184,3 @@ void Gadget::goModal() {
 		woopsiApplication->processOneVBL(this);
 	}
 }
-
-void Gadget::stopModal() {
-	_flags.modal = false;
-}

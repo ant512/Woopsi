@@ -74,6 +74,8 @@ Features
   - Skinnable screens and windows;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
+  - Built-in debug console;
+  - All gadgets can become modal;
   - Intelligent, optimised gadget drawing and erasing;
   - Event system;
   - Depth sorting;
@@ -128,8 +130,7 @@ Requirements
    - Replace the "Makefile" with "Makefile.libnds".
    
   Woopsi has been developed using devkitPro r20, VC++ 2005 Express, and the last
-  official version of PALib (070323).  It has not been tested with newer
-  versions of these programs.
+  official version of PALib (070323).  It is known to work with devkitPro r21.
   
 
 SDL Compatibility
