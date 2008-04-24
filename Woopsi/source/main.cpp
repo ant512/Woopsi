@@ -164,7 +164,6 @@ int mainOld() {
 */
 
 int main() {
-	initWoopsiGfxMode();
 
 	// Create woopsi
 	woopsiApplication = new Woopsi();
