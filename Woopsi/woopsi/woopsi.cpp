@@ -47,13 +47,6 @@ Woopsi::~Woopsi() {
 	_contextMenu = NULL;
 }
 
-void Woopsi::startup() {
-
-	// Ensure everything gets drawn
-	_flags.drawingEnabled = true;
-	draw();
-}
-
 void Woopsi::runLoop() {
 
 	// Remember that Woopsi is running

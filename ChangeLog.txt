@@ -32,6 +32,7 @@ Change Log
      - Slider/scrollbar inaccuracies fixed.
 	 - Fixed rounding errors in TextBox alignment.
      - Documentation updates.
+     - Switched demo code to follow Jeff's design pattern.
 	 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

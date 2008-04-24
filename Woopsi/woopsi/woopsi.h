@@ -37,7 +37,10 @@ public:
 	/**
 	 * Called once at startup.
 	 */
-	virtual void startup();
+	virtual inline void startup() {
+		enableDrawing();
+		draw();
+	};
 
 	/**
 	 * Main run loop.
@@ -183,6 +186,22 @@ public:
 	 * Aborts the main runloop, allowing other code to take over.
 	 */
 	inline void abortRunLoop() { _running = false; };
+
+	/**
+	 * Main entry point for a Woopsi application.
+	 */
+	virtual inline int main(int argc, char* argv[]) {
+		startup();
+
+		// Ensure everything gets drawn
+		enableDrawing();
+		draw();
+
+		runLoop();
+		shutdown();
+
+		return 0;
+	}
 
 protected:
 	bool _lidClosed;									/**< Remembers the current state of the lid */
