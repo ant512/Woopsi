@@ -34,6 +34,11 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 	_contextMenu->shelve();
 
 	singleton = this;
+
+	_running = false;
+
+	// Set up DS display hardware
+	initWoopsiGfxMode();
 }
 
 Woopsi::~Woopsi() {
@@ -43,11 +48,22 @@ Woopsi::~Woopsi() {
 	_contextMenu = NULL;
 }
 
-void Woopsi::run(Gadget* gadget) {
+void Woopsi::runLoop() {
+
+	// Remember that Woopsi is running
+	_running = true;
+
+	while (_running) {
+		processOneVBL();
+	}
+}
+
+void Woopsi::processOneVBL(Gadget* gadget) {
 	handleVBL();
 	handleStylus(gadget);
 	handleKeys();
 	handleLid();
+	woopsiWaitVBL();
 }
 
 void Woopsi::handleVBL() {

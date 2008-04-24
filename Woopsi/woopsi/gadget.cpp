@@ -2181,8 +2181,7 @@ void Gadget::goModal() {
 	focus();
 
 	while (_flags.modal) {
-		woopsiApplication->run(this);
-		woopsiWaitVBL();
+		woopsiApplication->processOneVBL(this);
 	}
 }
 

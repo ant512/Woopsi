@@ -46,6 +46,7 @@ Change Log
      - Added ProgressBar class.
      - Added EVENT_SHELVE and EVENT_UNSHELVE events.
      - Gadgets can become modal.
+     - Added Jeff's application control code to Woopsi class.
 
   V0.31 (20080411)
   

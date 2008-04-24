@@ -35,12 +35,27 @@ public:
 	virtual ~Woopsi();
 
 	/**
-	 * Run the Woopsi instace.
+	 * Called once at startup
+	 */
+	virtual inline void startup() { };
+
+	/**
+	 * Main run loop.
+	 */
+	virtual void runLoop();
+
+	/**
+	 * Run at application shutdown
+	 */
+	virtual inline void shutdown() { };
+
+	/**
+	 * Run the Woopsi instance.
 	 * This should be called every VBL in order for Woopsi to work.
 	 * @param gadget Sub-gadget to run, used for modal gadgets; omit
 	 * this parameter to run the whole system.
 	 */
-	virtual void run(Gadget* gadget = NULL);
+	virtual void processOneVBL(Gadget* gadget = NULL);
 	
 	/**
 	 * Draw the entire Woopsi GUI to the display.
@@ -164,6 +179,11 @@ public:
 	 */
 	void shelveContextMenu();
 
+	/**
+	 * Aborts the main runloop, allowing other code to take over.
+	 */
+	inline void abortRunLoop() { _running = false; };
+
 protected:
 	bool _lidClosed;									/**< Remembers the current state of the lid */
 	
@@ -172,6 +192,7 @@ protected:
 	static FontBase* _systemFont;						/**< Pointer to the default font */
 	static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */
 	ContextMenu* _contextMenu;							/**< Pointer to the context menu */
+	bool _running;										/**< Woopsi runs its main loop only if this is true*/
 
 	/**
 	 * Closes a child gadget.

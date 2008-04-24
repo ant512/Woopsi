@@ -488,12 +488,10 @@ int main() {
 	// Make welcome notice modal
 	alert->goModal();
 
-	// Infinite loop to keep the program running
-	while (1)
-	{
-		woopsiApplication->run();
-		woopsiWaitVBL();
-	}
+	// Set Woopsi running
+	woopsiApplication->startup();
+	woopsiApplication->runLoop();
+	woopsiApplication->shutdown();
 	
 	delete woopsiApplication;
 
