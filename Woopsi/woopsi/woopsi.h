@@ -35,9 +35,9 @@ public:
 	virtual ~Woopsi();
 
 	/**
-	 * Called once at startup
+	 * Called once at startup.
 	 */
-	virtual inline void startup() { };
+	virtual void startup();
 
 	/**
 	 * Main run loop.
@@ -45,7 +45,7 @@ public:
 	virtual void runLoop();
 
 	/**
-	 * Run at application shutdown
+	 * Run at application shutdown.
 	 */
 	virtual inline void shutdown() { };
 

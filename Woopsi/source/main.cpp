@@ -478,18 +478,16 @@ int main() {
 	Alert* alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
 	newScreen2->addGadget(alert);
 
-
-	// Move new screen to the back
-	//woopsi.swapGadgetDepth(demoScreen);
-
-	woopsiApplication->draw();
+	// Startup Woopsi
+	woopsiApplication->startup();
 
 	// Make welcome notice modal
 	alert->goModal();
 
-	// Set Woopsi running
-	woopsiApplication->startup();
+	// Run Woopsi
 	woopsiApplication->runLoop();
+
+	// Shutdown Woopsi
 	woopsiApplication->shutdown();
 	
 	delete woopsiApplication;

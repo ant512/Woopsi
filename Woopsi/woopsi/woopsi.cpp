@@ -23,7 +23,6 @@ u32 Woopsi::_vblCount = 0;
 
 Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
 	_lidClosed = woopsiLidClosed();
-	_flags.drawingEnabled = true;
 
 	if (font == NULL) {
 		_font = getSystemFont();
@@ -46,6 +45,13 @@ Woopsi::~Woopsi() {
 	_font = NULL;
 	singleton = NULL;
 	_contextMenu = NULL;
+}
+
+void Woopsi::startup() {
+
+	// Ensure everything gets drawn
+	_flags.drawingEnabled = true;
+	draw();
 }
 
 void Woopsi::runLoop() {

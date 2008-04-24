@@ -32,7 +32,7 @@ Change Log
      - Slider/scrollbar inaccuracies fixed.
 	 - Fixed rounding errors in TextBox alignment.
      - Documentation updates.
-
+	 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
        font support).
