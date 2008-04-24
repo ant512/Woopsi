@@ -22,19 +22,21 @@ DynamicArray<Gadget*> Woopsi::_deleteQueue;
 u32 Woopsi::_vblCount = 0;
 
 Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
-	_lidClosed = woopsiLidClosed();
+	_lidClosed = false;
+	_running = false;
 
+	// Get system font if no font supplied
 	if (font == NULL) {
 		_font = getSystemFont();
 	}
 
+	// Create context menu
 	_contextMenu = new ContextMenu(_font);
 	addGadget(_contextMenu);
 	_contextMenu->shelve();
 
+	// Set up singleton pointer
 	singleton = this;
-
-	_running = false;
 
 	// Set up DS display hardware
 	initWoopsiGfxMode();
