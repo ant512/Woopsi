@@ -37,15 +37,22 @@ public:
 	/**
 	 * Called once at startup.
 	 */
-	virtual inline void startup() {
-		enableDrawing();
-		draw();
-	};
+	virtual inline void startup() {	};
+
+	/**
+	 * Run any code that needs to execute before the main loop starts up.
+	 */
+	virtual inline void preLoop() { };
 
 	/**
 	 * Main run loop.
 	 */
 	virtual void runLoop();
+
+	/**
+	 * Run any code that needs to execute after the main loop ends.
+	 */
+	virtual inline void postLoop() { };
 
 	/**
 	 * Run at application shutdown.
@@ -191,11 +198,15 @@ public:
 	 * Main entry point for a Woopsi application.
 	 */
 	virtual inline int main(int argc, char* argv[]) {
-		startup();
-		runLoop();
-		shutdown();
+		startup();			// Run any setup code
+		enableDrawing();	// Ensure Woopsi can now draw itself
+		draw();				// Draw initial state
+		preLoop();			// Run any code that needs to execute before the main loop
+		runLoop();			// Run the main Woopsi loop
+		postLoop();			// Run any code that needs to execute after the main loop
+		shutdown();			// Run any shutdown code
 
-		return 0;
+		return 0;			// Quit
 	}
 
 protected:

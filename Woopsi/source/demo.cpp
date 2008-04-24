@@ -308,14 +308,14 @@ void Demo::startup() {
 
 
 	// Add Welcome notice
-	Alert* alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
-	newScreen2->addGadget(alert);
+	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
+	newScreen2->addGadget(_alert);
+}
 
-	// Run base startup
-	Woopsi::startup();
+void Demo::preLoop() {
 
 	// Make welcome notice modal
-	alert->goModal();
+	_alert->goModal();
 }
 
 void Demo::shutdown() {
@@ -324,7 +324,4 @@ void Demo::shutdown() {
 	delete _calculator;
 	delete _pong;
 	delete _pacMan;
-
-	// Run base shutdown
-	Woopsi::shutdown();
 }
