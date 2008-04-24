@@ -41,6 +41,8 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 }
 
 Woopsi::~Woopsi() {
+	abortRunLoop();
+
 	deleteSystemFont();
 	_font = NULL;
 	singleton = NULL;
