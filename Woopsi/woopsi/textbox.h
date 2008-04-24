@@ -139,7 +139,7 @@ protected:
 	/**
 	 * Calculate the position of the string based on its length and the alignment options.
 	 */
-	void calculateTextPosition();
+	virtual void calculateTextPosition();
 
 	/**
 	 * Destructor.

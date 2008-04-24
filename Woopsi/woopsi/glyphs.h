@@ -18,5 +18,6 @@
 #define GLYPH_ARROW_DOWN 142
 #define GLYPH_ARROW_LEFT 143
 #define GLYPH_ARROW_RIGHT 144
+#define GLYPH_CYCLE 145
 
 #endif

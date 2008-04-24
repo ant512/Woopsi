@@ -86,6 +86,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\cyclebutton.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\debug.cpp"
 				>
 			</File>
@@ -341,6 +345,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\contextmenuitem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\cyclebutton.h"
 				>
 			</File>
 			<File
