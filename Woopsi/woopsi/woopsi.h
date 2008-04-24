@@ -192,11 +192,6 @@ public:
 	 */
 	virtual inline int main(int argc, char* argv[]) {
 		startup();
-
-		// Ensure everything gets drawn
-		enableDrawing();
-		draw();
-
 		runLoop();
 		shutdown();
 
