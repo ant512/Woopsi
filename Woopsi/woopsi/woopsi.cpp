@@ -56,9 +56,41 @@ void Woopsi::runLoop() {
 	// Remember that Woopsi is running
 	_running = true;
 
+#ifdef USING_SDL
+
+	// SDL main loop
+	SDL_Event event;
+	bool quit = false;
+
+	// Infinite loop to keep the program running
+	while (!quit && _running)
+	{
+		processOneVBL();
+
+		// Check for SDL quit
+		while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.scancode == 53) {
+                        // Escape pressed
+                        quit = true;
+                    }
+                    break;
+            }
+		}
+	}
+
+#else
+
+	// Standard DS loop
 	while (_running) {
 		processOneVBL();
 	}
+
+#endif
 }
 
 void Woopsi::processOneVBL(Gadget* gadget) {

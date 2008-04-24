@@ -9,7 +9,10 @@
 
 u16* DrawBg[2];
 
+// Are we using PALib?
 #ifndef USING_PALIB
+
+// No PALib, so use LibNDS
 
 _pads Pad;
 _stylus Stylus;
@@ -112,8 +115,9 @@ void woopsiWaitVBL() {
 	swiWaitForVBlank();
 }
 
-
 #else
+
+// Using PALib
 
 bool woopsiLidClosed() {
 	return PA_LidClosed();

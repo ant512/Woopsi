@@ -49,6 +49,7 @@ Change Log
      - Gadgets can become modal.
      - Added Jeff's application control code to Woopsi class.
      - Added CycleButton class.
+     - Merged SDL loop code into Woopsi class.
 
   V0.31 (20080411)
   
