@@ -37,8 +37,10 @@ public:
 	/**
 	 * Run the Woopsi instace.
 	 * This should be called every VBL in order for Woopsi to work.
+	 * @param gadget Sub-gadget to run, used for modal gadgets; omit
+	 * this parameter to run the whole system.
 	 */
-	virtual void run();
+	virtual void run(Gadget* gadget = NULL);
 	
 	/**
 	 * Draw the entire Woopsi GUI to the display.
@@ -190,8 +192,10 @@ protected:
 
 	/**
 	 * Process stylus events and send throughout the hierarchy.
+	 * @param gadget Sub-gadget to process, used for modal gadgets; omit
+	 * this parameter to run the whole system.
 	 */
-	virtual void handleStylus();
+	virtual void handleStylus(Gadget* gadget);
 
 	/**
 	 * Process keypad events and send throughout the hierarchy.
@@ -204,15 +208,32 @@ protected:
 	virtual void handleLid();
 
 	/**
-	 * Receive and process VBLs.
-	 * @return True if VBL was processed.
+	 * Process VBLs and send to all registered gadgets.
 	 */
-	virtual bool vbl();
+	virtual void handleVBL();
 
 	/**
 	 * Deletes the system font.
 	 */
 	static void deleteSystemFont();
+
+	/**
+	 * Click the specified gadget at the supplied co-ordinates.
+	 * @param x X co-ordinate of the click.
+	 * @param y Y co-ordinate of the click.
+	 * @param gadget Pointer to the gadget to click.
+	 * @return True if the click was successful.
+	 */
+	virtual bool click(s16 x, s16 y, Gadget* gadget);
+
+	/**
+	 * Shift-click this gadget at the supplied co-ordinates.
+	 * @param x X co-ordinate of the click.
+	 * @param y Y co-ordinate of the click.
+ 	 * @param gadget Pointer to the gadget to click.
+	 * @return True if the click was successful.
+	 */
+	virtual bool shiftClick(s16 x, s16 y, Gadget* gadget);
 };
 
 /**

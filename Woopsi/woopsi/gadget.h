@@ -79,7 +79,8 @@ public:
 		u8 shiftClickChildren : 1;			/**< True if the gadget sends shift clicks to its children. */
 		u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid. */
 		u8 hidden : 1;						/**< True if the gadget is hidden. */
-		u8 doubleClickable : 1;				/**< True if the gadget can be double-clicked */
+		u8 doubleClickable : 1;				/**< True if the gadget can be double-clicked. */
+		u8 modal : 1;						/**< True if the gadget is modal. */
 	} Flags;
 
 	/**
@@ -905,6 +906,16 @@ public:
 	 * @param value The value selected.
 	 */
 	virtual bool handleContextMenuSelection(u32 value);
+
+	/**
+	 * Run the gadget modally.
+	 */
+	void goModal();
+
+	/**
+	 * Stop the gadget running modally.
+	 */
+	void stopModal();
 
 protected:
 	s16 _x;									/**< X co-ordinate of the gadget, relative to parent */

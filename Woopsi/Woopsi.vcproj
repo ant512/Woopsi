@@ -400,10 +400,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\modalscreen.h"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\monofont.h"
 				>
 			</File>

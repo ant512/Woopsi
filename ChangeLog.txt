@@ -31,6 +31,7 @@ Change Log
      - Context menu shelved if the gadget that opened it gets closed.
      - Slider/scrollbar inaccuracies fixed.
 	 - Fixed rounding errors in TextBox alignment.
+     - Documentation updates.
 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
@@ -43,9 +44,8 @@ Change Log
      - Added ListBox and ListBoxItem classes.
      - Added double click events (optional per gadget via a flag).
      - Added ProgressBar class.
-     - Added ModalScreen class, which can be used as a container for modal
-       windows.
      - Added EVENT_SHELVE and EVENT_UNSHELVE events.
+     - Gadgets can become modal.
 
   V0.31 (20080411)
   

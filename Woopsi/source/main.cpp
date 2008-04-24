@@ -5,7 +5,6 @@
 #include "calculator.h"
 #include "pong.h"
 #include "pacman.h"
-#include "modalscreen.h"
 #include "bitmap/all_gfx.c"
 #include "bitmap/all_gfx.h"
 
@@ -477,15 +476,17 @@ int main() {
 
 
 	// Add Welcome notice
-	//ModalScreen* modalScreen = new ModalScreen("Modal Screen");
-	//woopsiApplication->addGadget(modalScreen);
-	//modalScreen->addGadget(new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!"));
+	Alert* alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
+	newScreen2->addGadget(alert);
 
 
 	// Move new screen to the back
 	//woopsi.swapGadgetDepth(demoScreen);
 
 	woopsiApplication->draw();
+
+	// Make welcome notice modal
+	alert->goModal();
 
 	// Infinite loop to keep the program running
 	while (1)

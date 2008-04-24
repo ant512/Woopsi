@@ -43,14 +43,14 @@ Woopsi::~Woopsi() {
 	_contextMenu = NULL;
 }
 
-void Woopsi::run() {
-	vbl();
-	handleStylus();
+void Woopsi::run(Gadget* gadget) {
+	handleVBL();
+	handleStylus(gadget);
 	handleKeys();
 	handleLid();
 }
 
-bool Woopsi::vbl() {
+void Woopsi::handleVBL() {
 
 	// Increase vbl counter
 	_vblCount++;
@@ -62,8 +62,6 @@ bool Woopsi::vbl() {
 
 	// Delete any queued gadgets
 	processDeleteQueue();
-
-	return true;
 }
 
 void Woopsi::draw(Gadget::Rect clipRect) {
@@ -71,12 +69,34 @@ void Woopsi::draw(Gadget::Rect clipRect) {
 }
 
 // Process all stylus input
-void Woopsi::handleStylus() {
+void Woopsi::handleStylus(Gadget* gadget) {
+
+	// All gadgets
 	if (Stylus.Newpress) {
 		if (Pad.Held.L || Pad.Held.R) {
-			shiftClick(Stylus.X, Stylus.Y);
+
+			// Working with a modal gadget or the whole structure?
+			if (gadget == NULL) {
+
+				// All gadgets
+				shiftClick(Stylus.X, Stylus.Y);
+			} else {
+
+				// One gadget
+				shiftClick(Stylus.X, Stylus.Y, gadget);
+			}
 		} else {
-			click(Stylus.X, Stylus.Y);
+
+			// Working with a modal gadget or the whole structure?
+			if (gadget == NULL) {
+
+				// All gadgets
+				click(Stylus.X, Stylus.Y);
+			} else {
+
+				// One gadget
+				click(Stylus.X, Stylus.Y, gadget);
+			}
 		}
 	} else if (Stylus.Held) {
 		drag(Stylus.X, Stylus.Y, Stylus.Vx, Stylus.Vy);
@@ -105,6 +125,24 @@ bool Woopsi::click(s16 x, s16 y) {
 	return false;
 }
 
+bool Woopsi::click(s16 x, s16 y, Gadget* gadget) {
+
+	_flags.clicked = true;
+
+	// Work out which gadget was clicked
+	if (gadget->click(x, y)) {
+
+		// Do we need to close the context menu?
+		if (gadget != _contextMenu) {
+			shelveContextMenu();
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
 bool Woopsi::shiftClick(s16 x, s16 y) {
 
 	_flags.clicked = true;
@@ -117,6 +155,21 @@ bool Woopsi::shiftClick(s16 x, s16 y) {
 		if (_gadgets[i]->shiftClick(x, y)) {
 			return true;
 		}
+	}
+
+	return false;
+}
+
+bool Woopsi::shiftClick(s16 x, s16 y, Gadget* gadget) {
+
+	_flags.clicked = true;
+
+	// Shelve the existing context menu
+	shelveContextMenu();
+
+	// Work out which gadget was clicked
+	if (gadget->shiftClick(x, y)) {
+		return true;
 	}
 
 	return false;

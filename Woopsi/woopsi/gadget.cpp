@@ -55,6 +55,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_flags.shelved = false;
 	_flags.visibleRegionCacheInvalid = true;
 	_flags.hidden = false;
+	_flags.modal = false;
 
 	// Set hierarchy pointers
 	_parent = NULL;
@@ -967,6 +968,9 @@ void Gadget::close() {
 		_flags.deleted = true;
 		_flags.drawingEnabled = false;
 
+		// Ensure the gadget isn't running modally
+		stopModal();
+
 		erase();
 
 		if (_parent != NULL) {
@@ -986,6 +990,9 @@ bool Gadget::shelve() {
 
 		_flags.shelved = true;
 		_flags.drawingEnabled = false;
+
+		// Ensure the gadget isn't running modally
+		stopModal();
 
 		if (_parent != NULL) {
 			_parent->shelveChild(this);
@@ -2134,6 +2141,9 @@ bool Gadget::hide() {
 	if (!_flags.hidden) {
 		_flags.hidden = true;
 
+		// Ensure the gadget isn't running modally
+		stopModal();
+
 		raiseHideEvent();
 		erase();
 		return true;
@@ -2160,4 +2170,22 @@ const s16 Gadget::getLowerVisibleGadget(const u8 startIndex) const {
 	}
 
 	return -1;
+}
+
+void Gadget::goModal() {
+
+	// Remember that we're running modally
+	_flags.modal = true;
+
+	// Steal focus
+	focus();
+
+	while (_flags.modal) {
+		woopsiApplication->run(this);
+		woopsiWaitVBL();
+	}
+}
+
+void Gadget::stopModal() {
+	_flags.modal = false;
 }
