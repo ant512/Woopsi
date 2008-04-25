@@ -2180,7 +2180,7 @@ void Gadget::goModal() {
 	// Steal focus
 	focus();
 
-#ifdef USING_SDL
+#ifdef _SDL_H_
 
 	// SDL main loop
 	SDL_Event event;

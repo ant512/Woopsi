@@ -35,29 +35,25 @@ public:
 	virtual ~Woopsi();
 
 	/**
-	 * Called once at startup.
+	 * Initialise the application.  All initial GUI creation should go into this method.
+	 * This method must call enableDrawing() and draw() at some point.
 	 */
-	virtual inline void startup() {	};
+	virtual inline void startup() { };
 
 	/**
-	 * Run any code that needs to execute before the main loop starts up.
-	 */
-	virtual inline void preLoop() { };
-
-	/**
-	 * Main run loop.
+	 * Main loop.
 	 */
 	virtual void runLoop();
 
 	/**
-	 * Run any code that needs to execute after the main loop ends.
+	 * Shut down the application.  This base method will shut down the SDL system,
+	 * so it must be called as the last function if overridden in an SDL application.
 	 */
-	virtual inline void postLoop() { };
-
-	/**
-	 * Run at application shutdown.
-	 */
-	virtual inline void shutdown() { };
+	virtual inline void shutdown() {
+#ifdef _SDL_H_
+		SDL_Quit();
+#endif
+	};
 
 	/**
 	 * Run the Woopsi instance.
@@ -198,15 +194,11 @@ public:
 	 * Main entry point for a Woopsi application.
 	 */
 	virtual inline int main(int argc, char* argv[]) {
-		startup();			// Run any setup code
-		enableDrawing();	// Ensure Woopsi can now draw itself
-		draw();				// Draw initial state
-		preLoop();			// Run any code that needs to execute before the main loop
-		runLoop();			// Run the main Woopsi loop
-		postLoop();			// Run any code that needs to execute after the main loop
-		shutdown();			// Run any shutdown code
+		startup();				// Run any setup code
+		runLoop();				// Run the main Woopsi loop
+		shutdown();				// Run any shutdown code
 
-		return 0;			// Quit
+		return 0;
 	}
 
 protected:

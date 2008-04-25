@@ -5,14 +5,5 @@ int main(int argc, char* argv[]) {
 
 	// Create the demo application
 	Demo demo;
-	demo.main(argc, argv);
-
-#ifdef USING_SDL
-
-	// Shut down SDL systems
-	SDL_Quit();
-
-#endif
-
-	return 0;
+	return demo.main(argc, argv);
 }

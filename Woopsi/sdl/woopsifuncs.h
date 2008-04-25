@@ -9,8 +9,6 @@
 
 #include "SDL.h"
 
-#define USING_SDL
-
 #define woopsiRGB(r, g, b) (((b) << 10) | ((g) << 5) | (r) | (1 << 15))
 
 #define DMA_ON 0x80000000
