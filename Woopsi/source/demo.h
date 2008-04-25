@@ -13,7 +13,6 @@ class Alert;
 class Demo : public Woopsi {
 public:
 	void startup();
-	void preLoop();
 	void shutdown();
 
 private:

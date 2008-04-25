@@ -18,11 +18,9 @@
 
 <div id="content">
 	<h1>Gadget Developer Guide - Style Guide</h1>
-	<p>If you intend to submit your new Woopsi developments back into the main source tree, you <em>must</em> follow this style guide.  You may not agree with the style I have adopted (and you're welcome to let me know how I can improve it in future projects), but this project's style is set in stone.</p>
+	<p>If you intend to submit your new Woopsi developments back into the main source tree, you should follow this style guide.  I will reformat exceptional submissions that do not follow this style before including them.  Other submissions that do not follow this style will be rejected.  You may not agree with the style I have adopted (and you're welcome to let me know how I can improve it in future projects), but this project's style is set in stone.</p>
 	
-	<p>Unless I've made a horrendous mistake.<p>
-	
-	<p>If you are not intending to share your work, I'd strongly suggest that you still follow the style guide - internal consistency is very important.  You can of course adopt your own style - as you're not sharing anyway, who cares?</p>
+	<p>If you are not intending to share your work, I'd strongly suggest that you still follow the style guide - internal consistency is very important.</p>
 	
 	<h2>Naming Conventions</h2>
 	
@@ -33,25 +31,24 @@
 		<pre><code>u8 _width;</code></pre></li>
 		<li>Class names should be in <strong>UpperCamelCase</strong>, eg:
 		<pre><code>class WindowBorder</code></pre></li>
-		<li>Class names should not have any distinguishing prefix or suffix</li>
-		<li>Pointer names should not have any distinguishing prefix or suffix</li>
+		<li>Class names should not have a distinguishing prefix or suffix</li>
+		<li>Pointer names should not have a distinguishing prefix or suffix</li>
 		<li>Function names should be in <strong>lowerCamelCase</strong>, eg:
 		<pre><code>void doSomeStuff();</code></pre></li>
 		<li>Function names should start with a verb</li>
 		<li>Do not use hungarian notation</li>
 		<li>Enum names should be in <strong>UpperCamelCase</strong>, eg:
 		<pre><code>enum OutlineType { };</code></pre></li>
-		<li>Enum items should be in UPPER_CASE, with words separated by underscores.  The name should begin with a word that associates it wirh the name of the enum, eg:
+		<li>Enum items should be in <strong>UPPER_CASE</strong>, with words separated by underscores.  The name should begin with a word that associates it wirh the name of the enum, eg:
 		<pre><code>enum OutlineType {
 	OUTLINE_CLICK_DEPENDENT = 0,
 	OUTLINE_OUT = 1,
 	OUTLINE_IN = 2
 };</code></pre></li>
-		<li>Preprocessor defines to avoid including the same file twice should be in the format "_CLASSNAME_H_"</li>
+		<li>Preprocessor guards should be in the format "_CLASSNAME_H_"; include extra underscores within the classname if appropriate</li>
 		<li>Use short variable names(i, j, k, etc) for iterator variables, eg:
-		<pre><code>for (u8 j = 0; j < 10; j++) { }</code></pre></li>
-		<li>Pointers should have the pointer symbol next to the type, not the variable name:
-		<pre><code>char* myChar;</code></pre></li>
+		<pre><code>for (u8 j = 0; j &lt; 10; j++) { }</code></pre></li>
+		<li>Ensure that your spelling is correct</li>
 	</ul>
 	
 	<h2>Formatting</h2>
@@ -71,12 +68,25 @@ for (u8 i = 0; i < 10; i++) { }</code></pre></li>
 		<pre><code>i = 0
 j > 3
 k < 4 : k = 4 ? k = 5</code></pre></li>
+		<li>Pointer/reference declarations should have the pointer/reference symbol next to the type, not the variable name:
+		<pre><code>char* myChar;</code></pre>
+		<pre><code>EventArgs& e;</code></pre></li>
 		<li>There is no requirement for lines to be shorter than 80 characters; if you must split lines for the sake of readability, choose a sensible split point and indent after the split</li>
 	</ul>
 	
 	<h2>Structure</h2>
 	<ul>
 		<li>Use getters and setters instead of public class variables</li>
+		<li>All code should be within classes, not global variables/functions</li>
+	</ul>
+	
+	<h2>Coding</h2>
+	<p>It is important to remember that the DS is an embedded system.  You cannot follow the same approach to coding for the DS that you take for coding desktop applications.  With that in mind:</p>
+	<ul>
+		<li>Never use floats</li>
+		<li>Never use RTTI</li>
+		<li>Never use exceptions</li>
+		<li>Never use the STL</li>
 	</ul>
 	
 	<p>I recommend looking through the existing sourcecode and following the standards laid out there.</p>
