@@ -21,7 +21,7 @@ CycleButton::~CycleButton() {
 	_options.clear();
 }
 
-void CycleButton::newOption(const char* text, const u32 value) {
+void CycleButton::addOption(const char* text, const u32 value) {
 
 	// Create new memory for string
 	char* newText = new char[strlen(text) + 1];

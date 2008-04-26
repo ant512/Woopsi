@@ -48,7 +48,7 @@ public:
 	 * @param text The text of the option.
 	 * @param value The value of the option.
 	 */
-	void newOption(const char* text, const u32 value);
+	void addOption(const char* text, const u32 value);
 
 	/**
 	 * Get the value of the current option.

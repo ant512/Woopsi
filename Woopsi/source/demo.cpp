@@ -207,8 +207,8 @@ void Demo::startup() {
 
 	// Add cycle gadget
 	CycleButton* cycle = new CycleButton(20, 50, 100, 20);
-	cycle->newOption("test 1", 0);
-	cycle->newOption("test 2", 0);
+	cycle->addOption("test 1", 0);
+	cycle->addOption("test 2", 0);
 	newScreen2->addGadget(cycle);
 
 	Gradient* gradient = new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
