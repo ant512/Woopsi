@@ -33,6 +33,8 @@ Change Log
 	 - Fixed rounding errors in TextBox alignment.
      - Documentation updates.
      - Switched demo code to follow Jeff's design pattern.
+     - Changed Woopsi queue handling to use while loops, so that unexpected
+       changes to the lists don't cause crashes.
 	 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

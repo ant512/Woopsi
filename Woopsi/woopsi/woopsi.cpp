@@ -98,8 +98,10 @@ void Woopsi::handleVBL() {
 	_vblCount++;
 
 	// VBL
-	for (u8 i = 0; i < _vblListeners.size(); i++) {
+	s32 i = 0;
+	while (i < _vblListeners.size()) {
 		_vblListeners[i]->vbl();
+		i++;
 	}
 
 	// Delete any queued gadgets
@@ -331,8 +333,10 @@ void Woopsi::handleLid() {
 		_lidClosed = true;
 
 		// Run lid closed on all gadgets
-		for (u8 i = 0; i < _gadgets.size(); i++) {
+		s32 i = 0;
+		while (i < _gadgets.size()) {
 			_gadgets[i]->lidClosed();
+			i++;
 		}
 
 	} else if (!woopsiLidClosed() && _lidClosed) {
@@ -341,8 +345,10 @@ void Woopsi::handleLid() {
 		_lidClosed = false;
 
 		// Run lid opened on all gadgets
-		for (u8 i = 0; i < _gadgets.size(); i++) {
+		s32 i = 0;
+		while (i < _gadgets.size()) {
 			_gadgets[i]->lidOpened();
+			i++;
 		}
 	}
 }
@@ -492,7 +498,7 @@ void Woopsi::deleteSystemFont() {
 void Woopsi::registerForVBL(Gadget* gadget) {
 
 	// Ensure gadget is not already in the list
-	for (u8 i = 0; i < _vblListeners.size(); i++) {
+	for (s32 i = 0; i < _vblListeners.size(); i++) {
 		if (_vblListeners[i] == gadget) {
 			return;
 		}
@@ -505,7 +511,7 @@ void Woopsi::registerForVBL(Gadget* gadget) {
 void Woopsi::unregisterFromVBL(Gadget* gadget) {
 	
 	// Locate gadget in the list
-	for (u8 i = 0; i < _vblListeners.size(); i++) {
+	for (s32 i = 0; i < _vblListeners.size(); i++) {
 		if (_vblListeners[i] == gadget) {
 			_vblListeners.erase(_vblListeners.begin() + i);
 			return;
@@ -517,14 +523,13 @@ void Woopsi::unregisterFromVBL(Gadget* gadget) {
 // Delete all gadgets in the queue
 void Woopsi::processDeleteQueue() {
 
-	if (_deleteQueue.size() > 0) {
-
-		for (u8 i = 0; i < _deleteQueue.size(); i++) {
-			_deleteQueue[i]->destroy();
-		}
-
-		_deleteQueue.clear();
+	s32 i = 0;
+	while (i < _deleteQueue.size()) {
+		_deleteQueue[i]->destroy();
+		i++;
 	}
+
+	_deleteQueue.clear();
 }
 
 void Woopsi::addToDeleteQueue(Gadget* gadget) {
