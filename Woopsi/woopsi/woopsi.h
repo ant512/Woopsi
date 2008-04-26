@@ -41,9 +41,9 @@ public:
 	virtual inline void startup() { };
 
 	/**
-	 * Main loop.
+	 * Run the gadget modally.
 	 */
-	virtual void runLoop();
+	void goModal();
 
 	/**
 	 * Shut down the application.  This base method will shut down the SDL system,
@@ -186,16 +186,11 @@ public:
 	void shelveContextMenu();
 
 	/**
-	 * Aborts the main runloop, allowing other code to take over.
-	 */
-	inline void abortRunLoop() { _running = false; };
-
-	/**
 	 * Main entry point for a Woopsi application.
 	 */
 	virtual inline int main(int argc, char* argv[]) {
 		startup();				// Run any setup code
-		runLoop();				// Run the main Woopsi loop
+		goModal();				// Run the main Woopsi loop
 		shutdown();				// Run any shutdown code
 
 		return 0;
@@ -209,7 +204,6 @@ protected:
 	static FontBase* _systemFont;						/**< Pointer to the default font */
 	static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */
 	ContextMenu* _contextMenu;							/**< Pointer to the context menu */
-	bool _running;										/**< Woopsi runs its main loop only if this is true*/
 
 	/**
 	 * Closes a child gadget.

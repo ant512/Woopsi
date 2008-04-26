@@ -85,13 +85,16 @@ Gadget::~Gadget() {
 
 		_flags.deleted = true;
 
-		// Prevent gadget from receiving VBLs
-		woopsiApplication->unregisterFromVBL(this);
-		unregisterChildrenFromVBL();
+		if (woopsiApplication != NULL) {
 
-		// Close the context menu if we're closing the gadget that opened it
-		if (woopsiApplication->getContextMenu()->getOpener() == this) {
-			woopsiApplication->shelveContextMenu();
+			// Prevent gadget from receiving VBLs
+			woopsiApplication->unregisterFromVBL(this);
+			unregisterChildrenFromVBL();
+
+			// Close the context menu if we're closing the gadget that opened it
+			if (woopsiApplication->getContextMenu()->getOpener() == this) {
+				woopsiApplication->shelveContextMenu();
+			}
 		}
 
 		// Divorce child from parent
@@ -167,6 +170,14 @@ const bool Gadget::isEnabled() const {
 	}
 
 	return false;
+}
+
+const bool Gadget::isModal() const {
+	if ((woopsiApplication != NULL) && (woopsiApplication != this)) {
+		return woopsiApplication->isModal() & _flags.modal;
+	} else {
+		return _flags.modal;
+	}
 }
 
 void Gadget::setBorderless(bool isBorderless) {
@@ -2180,40 +2191,8 @@ void Gadget::goModal() {
 	// Steal focus
 	focus();
 
-#ifdef _SDL_H_
-
-	// SDL main loop
-	SDL_Event event;
-	bool quit = false;
-
-	// Infinite loop to keep the program running
-	while (!quit && _flags.modal)
-	{
-		woopsiApplication->processOneVBL(this);
-
-		// Check for SDL quit
-		while (SDL_PollEvent(&event)) {
-            switch (event.type) {
-                case SDL_QUIT:
-                    quit = true;
-                    break;
-                case SDL_KEYDOWN:
-                    if (event.key.keysym.scancode == 53) {
-                        // Escape pressed
-                        quit = true;
-                    }
-                    break;
-            }
-		}
-	}
-
-#else
-
-	// Standard DS loop
-	while (_flags.modal) {
+	// Loop until no longer modal
+	while (isModal() && (woopsiApplication != NULL)) {
 		woopsiApplication->processOneVBL(this);
 	}
-
-#endif
-
 }

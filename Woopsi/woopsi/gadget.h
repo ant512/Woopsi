@@ -210,6 +210,12 @@ public:
 	inline const bool isShelved() const { return _flags.shelved; };
 
 	/**
+	 * Is the gadget modal?  Only true if the Woopsi singleton is also modal.
+	 * @return True if the gadget is modal.
+	 */
+	const bool isModal() const;
+
+	/**
 	 * Does the gadget shift-click its children?
 	 * @return True if the gadget shift-clicks its children.
 	 */

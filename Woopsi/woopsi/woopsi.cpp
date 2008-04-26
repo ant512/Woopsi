@@ -23,7 +23,10 @@ u32 Woopsi::_vblCount = 0;
 
 Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
 	_lidClosed = false;
-	_running = false;
+	_flags.modal = true;
+
+	// Set up singleton pointer
+	singleton = this;
 
 	// Get system font if no font supplied
 	if (font == NULL) {
@@ -35,62 +38,27 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 	addGadget(_contextMenu);
 	_contextMenu->shelve();
 
-	// Set up singleton pointer
-	singleton = this;
-
 	// Set up DS display hardware
 	initWoopsiGfxMode();
 }
 
 Woopsi::~Woopsi() {
-	abortRunLoop();
-
+	stopModal();
 	deleteSystemFont();
 	_font = NULL;
 	singleton = NULL;
 	_contextMenu = NULL;
 }
 
-void Woopsi::runLoop() {
+void Woopsi::goModal() {
 
 	// Remember that Woopsi is running
-	_running = true;
+	_flags.modal = true;
 
-#ifdef _SDL_H_
-
-	// SDL main loop
-	SDL_Event event;
-	bool quit = false;
-
-	// Infinite loop to keep the program running
-	while (!quit && _running)
-	{
-		processOneVBL();
-
-		// Check for SDL quit
-		while (SDL_PollEvent(&event)) {
-            switch (event.type) {
-                case SDL_QUIT:
-                    quit = true;
-                    break;
-                case SDL_KEYDOWN:
-                    if (event.key.keysym.scancode == 53) {
-                        // Escape pressed
-                        quit = true;
-                    }
-                    break;
-            }
-		}
+	// Loop until no longer modal
+	while (_flags.modal) {
+		woopsiApplication->processOneVBL(this);
 	}
-
-#else
-
-	// Standard DS loop
-	while (_running) {
-		processOneVBL();
-	}
-
-#endif
 }
 
 void Woopsi::processOneVBL(Gadget* gadget) {
@@ -99,6 +67,29 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 	handleKeys();
 	handleLid();
 	woopsiWaitVBL();
+
+#ifdef _SDL_H_
+
+	// SDL event pump
+	SDL_Event event;
+
+	// Check for SDL quit
+	while (SDL_PollEvent(&event)) {
+        switch (event.type) {
+            case SDL_QUIT:
+                stopModal();
+				return;
+            case SDL_KEYDOWN:
+                if (event.key.keysym.scancode == 53) {
+                    // Escape pressed
+					stopModal();
+					return;
+                }
+                break;
+        }
+	}
+
+#endif
 }
 
 void Woopsi::handleVBL() {
