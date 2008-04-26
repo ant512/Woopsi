@@ -27,7 +27,6 @@ public:
 	 * @param y The y co-ordinate of the button, relative to its parent.
 	 * @param width The width of the button.
 	 * @param height The height of the button.
-	 * @param text The text for the button to display.
 	 * @param font The font that the button should use.
 	 */
 	CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);

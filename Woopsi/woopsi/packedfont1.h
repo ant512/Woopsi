@@ -16,7 +16,7 @@ public:
 	 * @param glyphData Packed array representing font.
 	 * @param glyphOffset Offset into glyphData[] of character[i].
 	 * @param glyphWidth Pixel width of character[i].
-	 * @param spwidth The height of a space
+	 * @param spWidth The height of a space
 	 * @param height The height of the font.
 	 * @param fixedWidth Character width (fixed), or 0 for proportional.
 	 */
@@ -37,7 +37,6 @@ public:
 	 * @param pixelsPerRow The number of pixels to render per row (for this character)
 	 * @param bitmap Top-left corner of output space to draw to.
 	 * @param bitmapWidth The width of the bitmap being drawn to.
-	 * @param bitmapHeight The height of the bitmap being drawn to.
 	 * @param x The x co-ordinate of the text.
 	 * @param y The y co-ordinate of the text.
 	 * @param clipX1 The left edge of the clipping rectangle.

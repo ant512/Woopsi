@@ -35,19 +35,27 @@ public:
 	virtual ~Woopsi();
 
 	/**
-	 * Initialise the application.  All initial GUI creation should go into this method.
-	 * This method must call enableDrawing() and draw() at some point.
+	 * Initialise the application.  All initial GUI creation, hardware setup, etc, should
+	 * be done in an override of this method.  The base method should be called as the
+	 * first instruction in the overridden function.
+	 * This method must call enableDrawing() and draw() at some point or nothing will
+	 * be visible.
 	 */
 	virtual inline void startup() { };
 
 	/**
-	 * Run the gadget modally.
+	 * Run the gadget modally.  This will run the Woopsi application until stopModal()
+	 * is called.
 	 */
 	void goModal();
 
 	/**
-	 * Shut down the application.  This base method will shut down the SDL system,
-	 * so it must be called as the last function if overridden in an SDL application.
+	 * Shut down the application.  All non-gadget objects should be deleted in an override
+	 * of this function, and all hardware should be shut down, etc.
+	 * This base method will shut down the SDL system, so it must be called as the last
+	 * function if overridden in an SDL application.  If you don't want to let Woopsi
+	 * shut down SDL (if you have another chunk of code to run later, for example),
+	 * you will need to shut down SDL yourself.
 	 */
 	virtual inline void shutdown() {
 #ifdef USING_SDL
@@ -56,7 +64,7 @@ public:
 	};
 
 	/**
-	 * Run the Woopsi instance.
+	 * Run all code that needs to take place once a frame.
 	 * This should be called every VBL in order for Woopsi to work.
 	 * @param gadget Sub-gadget to run, used for modal gadgets; omit
 	 * this parameter to run the whole system.
@@ -65,7 +73,8 @@ public:
 	
 	/**
 	 * Draw the entire Woopsi GUI to the display.
-	 * Should be called before the main loop runs.
+	 * Should be called once in the startup() method.
+	 * @see startup()
 	 */
 	virtual inline void draw() { Gadget::draw(); };
 	

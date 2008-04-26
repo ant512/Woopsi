@@ -19,6 +19,10 @@ public:
 	 * @param height The height of the listbox item.
 	 * @param text Pointer to a string to display in the menu item.
 	 * @param value The value of the item.
+	 * @param normalTextColour Colour for text output when unselected.
+	 * @param normalBackColour Colour for background when unselected.
+	 * @param selectedTextColour Colour for text output when selected.
+	 * @param selectedBackColour Colour for background when selected.
 	 * @param font The font to use in this menu item.
 	 */
 	ListBoxItem(s16 x, s16 y, u16 width, u16 height, const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour, FontBase* font = NULL);
