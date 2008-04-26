@@ -82,17 +82,17 @@ bool ListBox::handleEvent(const EventArgs& e) {
 	return false;
 }
 
-//void ListBox::draw(Rect clipRect) {
-//
-//	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-//
-//	port->drawFilledRect(0, 0, _width, _height, _backColour);
-//
-//	// Draw outline
-//	port->drawBevelledRect(0, 0, _width, _height);
-//
-//	delete port;
-//}
+void ListBox::draw(Rect clipRect) {
+
+	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+
+	port->drawFilledRect(0, 0, _width, _height, _backColour);
+
+	// Draw outline
+	port->drawBevelledRect(0, 0, _width, _height);
+
+	delete port;
+}
 
 void ListBox::setSelectedIndex(const s32 index) {
 	setSelectedGadget(_gadgets[index]);

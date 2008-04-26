@@ -52,12 +52,12 @@ public:
 	 * Draw the region of the menu within the clipping rect.
 	 * @param clipRect The clipping rect to limit drawing to.
 	 */
-	//virtual void draw(Rect clipRect);
+	virtual void draw(Rect clipRect);
 
 	/**
 	 * Draw all visible regions of the gadget.
 	 */
-	//virtual inline void draw() { Gadget::draw(); };
+	virtual inline void draw() { Gadget::draw(); };
 
 	/**
 	 * Get the selected index.  Returns -1 if nothing is selected.
