@@ -6,9 +6,10 @@
 #ifndef _WOOPSIFUNCS_H_
 #define _WOOPSIFUNCS_H_
 
+#include <nds.h>
+
 #ifdef USING_SDL
 
-#include <nds.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -139,7 +140,6 @@ void DC_FlushRange(const void *base, u32 size);
 #include <PA9.h>
 #else
 
-#include <nds.h>
 #include <nds/memory.h>
 #include <nds/bios.h>
 

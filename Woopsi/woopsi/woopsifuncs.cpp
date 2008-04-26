@@ -3,9 +3,10 @@
  * - Minor modifications and SDL code by Ant
  */
 
+#include <nds.h>
+
 #ifdef USING_SDL
 
-#include <nds.h>
 #include <string.h>
 #include "woopsifuncs.h"
 #include "defines.h"
@@ -357,8 +358,7 @@ void DC_FlushRange(const void *base, u32 size) {
 }
 
 #else
- 
-#include <nds.h>
+
 #include <string.h>
 #include "woopsifuncs.h"
 
