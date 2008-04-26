@@ -286,7 +286,7 @@ bool Gadget::checkCollision(Gadget* gadget) {
 }
 
 void Gadget::raiseClickEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_CLICK;
@@ -300,7 +300,7 @@ void Gadget::raiseClickEvent(s16 x, s16 y) {
 }
 
 void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_DOUBLE_CLICK;
@@ -314,7 +314,7 @@ void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
 }
 
 void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_SHIFT_CLICK;
@@ -328,7 +328,7 @@ void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
 }
 
 void Gadget::raiseReleaseEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_RELEASE;
@@ -342,7 +342,7 @@ void Gadget::raiseReleaseEvent(s16 x, s16 y) {
 }
 
 void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_DRAG;
@@ -356,7 +356,7 @@ void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
 }
 
 void Gadget::raiseVBLEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_VBL;
@@ -370,7 +370,7 @@ void Gadget::raiseVBLEvent() {
 }
 
 void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_KEY_PRESS;
@@ -384,7 +384,7 @@ void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
 }
 
 void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_KEY_RELEASE;
@@ -398,7 +398,7 @@ void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
 }
 
 void Gadget::raiseLidClosedEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_LID_CLOSED;
@@ -412,7 +412,7 @@ void Gadget::raiseLidClosedEvent() {
 }
 
 void Gadget::raiseLidOpenedEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_LID_OPENED;
@@ -426,7 +426,7 @@ void Gadget::raiseLidOpenedEvent() {
 }
 
 void Gadget::raiseFocusEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_FOCUS;
@@ -440,7 +440,7 @@ void Gadget::raiseFocusEvent() {
 }
 
 void Gadget::raiseBlurEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_BLUR;
@@ -454,7 +454,7 @@ void Gadget::raiseBlurEvent() {
 }
 
 void Gadget::raiseCloseEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_CLOSE;
@@ -468,7 +468,7 @@ void Gadget::raiseCloseEvent() {
 }
 
 void Gadget::raiseHideEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_HIDE;
@@ -482,7 +482,7 @@ void Gadget::raiseHideEvent() {
 }
 
 void Gadget::raiseShowEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_SHOW;
@@ -496,7 +496,7 @@ void Gadget::raiseShowEvent() {
 }
 
 void Gadget::raiseShelveEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_SHELVE;
@@ -510,7 +510,7 @@ void Gadget::raiseShelveEvent() {
 }
 
 void Gadget::raiseUnshelveEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_UNSHELVE;
@@ -524,7 +524,7 @@ void Gadget::raiseUnshelveEvent() {
 }
 
 void Gadget::raiseEnableEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_ENABLE;
@@ -538,7 +538,7 @@ void Gadget::raiseEnableEvent() {
 }
 
 void Gadget::raiseDisableEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_DISABLE;
@@ -552,7 +552,7 @@ void Gadget::raiseDisableEvent() {
 }
 
 void Gadget::raiseValueChangeEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_VALUE_CHANGE;
@@ -566,7 +566,7 @@ void Gadget::raiseValueChangeEvent() {
 }
 
 void Gadget::raiseResizeEvent(u16 width, u16 height) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_RESIZE;
@@ -580,7 +580,7 @@ void Gadget::raiseResizeEvent(u16 width, u16 height) {
 }
 
 void Gadget::raiseMoveEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_MOVE;
@@ -594,7 +594,7 @@ void Gadget::raiseMoveEvent(s16 x, s16 y) {
 }
 
 void Gadget::raiseContextMenuSelectionEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_CONTEXT_MENU_SELECTION;
@@ -996,6 +996,7 @@ void Gadget::close() {
 
 		_flags.deleted = true;
 		_flags.drawingEnabled = false;
+		_flags.raisesEvents = false;
 
 		// Ensure the gadget isn't running modally
 		stopModal();

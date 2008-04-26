@@ -261,7 +261,7 @@ public:
 	 * Check if this gadget raises events or not.
 	 * @return True if events are enabled.
 	 */
-	inline const bool raisesEvents() const { return _flags.raisesEvents; };
+	inline const bool raisesEvents() const { return _flags.raisesEvents & !_flags.deleted; };
 
 	/**
 	 * Insert the dimensions that this gadget wants to have into the rect

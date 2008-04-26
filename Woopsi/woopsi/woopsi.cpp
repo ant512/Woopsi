@@ -94,15 +94,15 @@ void Woopsi::handleVBL() {
 	// Increase vbl counter
 	_vblCount++;
 
+	// Delete any queued gadgets
+	processDeleteQueue();
+
 	// VBL
 	s32 i = 0;
 	while (i < _vblListeners.size()) {
 		_vblListeners[i]->vbl();
 		i++;
 	}
-
-	// Delete any queued gadgets
-	processDeleteQueue();
 }
 
 void Woopsi::draw(Gadget::Rect clipRect) {
