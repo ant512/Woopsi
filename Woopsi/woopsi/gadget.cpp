@@ -96,11 +96,6 @@ Gadget::~Gadget() {
 				woopsiApplication->shelveContextMenu();
 			}
 		}
-
-		// Divorce child from parent
-		if (_parent != NULL) {
-			_parent->removeChild(this);
-		}
 	}
 
 	// Delete children
@@ -134,7 +129,12 @@ const s16 Gadget::getY() const {
 }
 
 const bool Gadget::isDeleted() const {
-	if ((_parent != NULL) && (_parent->isDeleted())) return true;
+	if (_parent != NULL) {
+		if (_parent->isDeleted()) {
+			return true;
+		}
+	}
+
 	return _flags.deleted;
 }
 
@@ -161,17 +161,17 @@ const bool Gadget::isHidden() const {
 		return (_flags.deleted | _flags.shelved | _flags.hidden);
 	}
 
-	return false;
+	return true;
 }
 
 const bool Gadget::isEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isEnabled()) {
 			// Enabled if the gadget is enabled, not deleted, not shelved and not hidden
-			return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) | (!_flags.hidden));
+			return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
 		}
 	} else {
-		return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) | (!_flags.hidden));
+		return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
 	}
 
 	return false;
