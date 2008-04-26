@@ -7,6 +7,8 @@
 #include <math.h>
 #include "SDL.h"
 
+#define USING_SDL
+
 #define u16 Uint16
 #define s16 Sint16
 #define u8 Uint8
