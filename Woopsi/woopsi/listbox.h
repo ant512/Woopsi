@@ -1,7 +1,7 @@
 #ifndef _LISTBOX_H_
 #define _LISTBOX_H_
 
-#include "gadget.h"
+#include "scrollingpanel.h"
 #include "eventhandler.h"
 
 using namespace std;
@@ -10,7 +10,7 @@ class ListBoxItem;
 
 /**
  */
-class ListBox : public Gadget, public EventHandler {
+class ListBox : public ScrollingPanel, public EventHandler {
 public:
 
 	/**
@@ -52,12 +52,12 @@ public:
 	 * Draw the region of the menu within the clipping rect.
 	 * @param clipRect The clipping rect to limit drawing to.
 	 */
-	virtual void draw(Rect clipRect);
+	//virtual void draw(Rect clipRect);
 
 	/**
 	 * Draw all visible regions of the gadget.
 	 */
-	virtual inline void draw() { Gadget::draw(); };
+	//virtual inline void draw() { Gadget::draw(); };
 
 	/**
 	 * Get the selected index.  Returns -1 if nothing is selected.

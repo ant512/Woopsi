@@ -2,9 +2,10 @@
 #include "listboxitem.h"
 #include "graphicsport.h"
 
-ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, 0, font) {
+ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : ScrollingPanel(x, y, width, height, 0, font) {
 	_selectedGadget = NULL;
 	_outline = OUTLINE_IN;
+	_flags.draggable = true;
 }
 
 ListBoxItem* ListBox::newListBoxItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
@@ -26,10 +27,14 @@ ListBoxItem* ListBox::newListBoxItem(const char* text, const u32 value, const u1
 	preferredRect.y = clientRect.y + ((_gadgets.size() - 1) * preferredRect.height);
 	preferredRect.width = clientRect.width;
 
+	// Need to adjust canvas size?
+	s32 newCanvasHeight = preferredRect.y + preferredRect.height;
+	if (newCanvasHeight > _canvasHeight) _canvasHeight = newCanvasHeight;
+
 	// Adjust gadget's co-ordinates
-	setPermeable(true);
 	item->changeDimensions(preferredRect.x, preferredRect.y, preferredRect.width, preferredRect.height);
-	setPermeable(false);
+	
+	invalidateVisibleRectCache();
 
 	return item;
 }
@@ -42,6 +47,8 @@ bool ListBox::handleEvent(const EventArgs& e) {
 	// Handle click events
 	if (e.type == EVENT_CLICK) {
 		if (e.gadget != NULL) {
+
+			setDragging(e.eventX, e.eventY);
 
 			// Selecting or deselecting?
 			if (e.gadget != _selectedGadget) {
@@ -75,17 +82,17 @@ bool ListBox::handleEvent(const EventArgs& e) {
 	return false;
 }
 
-void ListBox::draw(Rect clipRect) {
-
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
-
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
-
-	delete port;
-}
+//void ListBox::draw(Rect clipRect) {
+//
+//	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+//
+//	port->drawFilledRect(0, 0, _width, _height, _backColour);
+//
+//	// Draw outline
+//	port->drawBevelledRect(0, 0, _width, _height);
+//
+//	delete port;
+//}
 
 void ListBox::setSelectedIndex(const s32 index) {
 	setSelectedGadget(_gadgets[index]);

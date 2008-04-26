@@ -36,6 +36,7 @@ Change Log
      - Changed Woopsi queue handling to use while loops, so that unexpected
        changes to the lists don't cause crashes.
      - All attempts to dereference woopsiApplication check for NULL first.
+     - Gadget::redrawDirty() clips to parent dimensions correctly.
 	 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

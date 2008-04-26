@@ -665,19 +665,37 @@ void Gadget::redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 
 		// Draw any children first
 		redrawDirtyChildren(invalidRects, sender);
-
+	
+		// Create an array that will contain all of the rects from the
+		// original array that overlap this gadget
 		DynamicArray<Rect>* overlappingRects = new DynamicArray<Rect>();
 
 		// Remove any non-overlapping rectangles from dirty vector and add to
 		// overlapping vector
 		splitRectangles(invalidRects, overlappingRects, sender);
 
-		// Draw overlapped rects
+		// Create an array that will contain all of the rects that overlap this
+		// gadget clipped to its parent
+		DynamicArray<Rect>* rectsToDraw = new DynamicArray<Rect>();
+		
+		// Split from overlappingRects into rectsToDraw, giving us an array
+		// of rects that overlap only the visible portions of this gadget
+		splitRectangles(overlappingRects, rectsToDraw, sender);
+		
+		// Draw the dirty rects
+		for (u8 i = 0; i < rectsToDraw->size(); i++) {
+			draw(rectsToDraw->at(i));
+		}
+		
+		// Copy all of the overlapping rects we didn't draw back to the main
+		// array of rects that need to be drawn by another gadget
 		for (u8 i = 0; i < overlappingRects->size(); i++) {
-			draw(overlappingRects->at(i));
+			invalidRects->push_back(overlappingRects->at(i));
 		}
 
+		// Clean up
 		delete overlappingRects;
+		delete rectsToDraw;
 	}
 }
 
