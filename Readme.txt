@@ -129,6 +129,12 @@ Requirements
   
    - Replace the "Makefile" with "Makefile.libnds".
    
+  To build a library version of Woopsi:
+  
+   - Open a CLI;
+   - Navigate to the Woopsi directory that contains the makefiles;
+   - Type "make -f Makefile.lib", sans quotes.
+   
   Woopsi has been developed using devkitPro r20, VC++ 2005 Express, and the last
   official version of PALib (070323).  It is known to work with devkitPro r21.
   
