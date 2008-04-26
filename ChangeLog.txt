@@ -35,6 +35,7 @@ Change Log
      - Switched demo code to follow Jeff's design pattern.
      - Changed Woopsi queue handling to use while loops, so that unexpected
        changes to the lists don't cause crashes.
+     - All attempts to dereference woopsiApplication check for NULL first.
 	 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional

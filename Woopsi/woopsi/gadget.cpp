@@ -1193,12 +1193,14 @@ void Gadget::closeChild(Gadget* gadget) {
 		}
 
 		// Ensure that gadget is no longer receiving VBL events
-		woopsiApplication->unregisterFromVBL(gadget);
-		gadget->unregisterChildrenFromVBL();
+		if (woopsiApplication != NULL) {
+			woopsiApplication->unregisterFromVBL(gadget);
+			gadget->unregisterChildrenFromVBL();
 
-		// Close the context menu if we're closing the gadget that opened it
-		if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
-			woopsiApplication->shelveContextMenu();
+			// Close the context menu if we're closing the gadget that opened it
+			if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
+				woopsiApplication->shelveContextMenu();
+			}
 		}
 
 		moveChildToDeleteQueue(gadget);
@@ -1405,14 +1407,16 @@ bool Gadget::click(s16 x, s16 y) {
 	if (_flags.doubleClickable) {
 
 		// Within the allowed time?
-		if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
+		if (woopsiApplication != NULL) {
+			if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
 
-			// Within the allowed region?
-			if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
-				if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
+				// Within the allowed region?
+				if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
+					if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
 
-					// Process click as a double-click
-					return doubleClick(x, y);
+						// Process click as a double-click
+						return doubleClick(x, y);
+					}
 				}
 			}
 		}
@@ -1437,7 +1441,12 @@ bool Gadget::click(s16 x, s16 y) {
 				_flags.clicked = true;
 
 				// Record data for double-click
-				_lastClickTime = woopsiApplication->getVBLCount();
+				if (woopsiApplication != NULL) {
+					_lastClickTime = woopsiApplication->getVBLCount();
+				} else {
+					_lastClickTime = 0;
+				}
+
 				_lastClickX = x;
 				_lastClickY = y;
 
@@ -1486,7 +1495,12 @@ bool Gadget::doubleClick(s16 x, s16 y) {
 				_flags.clicked = true;
 
 				// Record data for double-click
-				_lastClickTime = woopsiApplication->getVBLCount();
+				if (woopsiApplication != NULL) {
+					_lastClickTime = woopsiApplication->getVBLCount();
+				} else {
+					_lastClickTime = 0;
+				}
+
 				_lastClickX = x;
 				_lastClickY = y;
 
@@ -2072,8 +2086,10 @@ bool Gadget::removeChild(Gadget* gadget) {
 			}
 
 			// Close the context menu if we're removing the gadget that opened it
-			if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
-				woopsiApplication->shelveContextMenu();
+			if (woopsiApplication != NULL) {
+				if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
+					woopsiApplication->shelveContextMenu();
+				}
 			}
 
 			// Divorce child from parent
@@ -2117,16 +2133,18 @@ void Gadget::addContextMenuItem(char* name, u32 value) {
 
 void Gadget::showContextMenu(s16 x, s16 y) {
 
-	if (_contextMenuItems.size() > 0) {
-		woopsiApplication->getContextMenu()->reset();
-		woopsiApplication->getContextMenu()->moveTo(x, y);
-		woopsiApplication->getContextMenu()->setOpener(this);
+	if (woopsiApplication != NULL) {
+		if (_contextMenuItems.size() > 0) {
+			woopsiApplication->getContextMenu()->reset();
+			woopsiApplication->getContextMenu()->moveTo(x, y);
+			woopsiApplication->getContextMenu()->setOpener(this);
 
-		for (u8 i = 0; i < _contextMenuItems.size(); i++) {
-			woopsiApplication->getContextMenu()->newMenuItem(_contextMenuItems[i].name, _contextMenuItems[i].value);
+			for (u8 i = 0; i < _contextMenuItems.size(); i++) {
+				woopsiApplication->getContextMenu()->newMenuItem(_contextMenuItems[i].name, _contextMenuItems[i].value);
+			}
+			
+			woopsiApplication->getContextMenu()->unshelve();
 		}
-		
-		woopsiApplication->getContextMenu()->unshelve();
 	}
 }
 

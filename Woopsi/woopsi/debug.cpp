@@ -35,14 +35,15 @@ void Debug::createDebug() {
 
 void Debug::output(char* text) {
 	if (DEBUG_ACTIVE) {
+		if (woopsiApplication != NULL) {
+			createDebug();
 
-		createDebug();
-
-		_debug->_textBox->disableDrawing();
-		_debug->_textBox->addText(">");
-		_debug->_textBox->addText(text);
-		_debug->_textBox->enableDrawing();
-		_debug->_textBox->addText("\n");
+			_debug->_textBox->disableDrawing();
+			_debug->_textBox->addText(">");
+			_debug->_textBox->addText(text);
+			_debug->_textBox->enableDrawing();
+			_debug->_textBox->addText("\n");
+		}
 	}
 }
 
