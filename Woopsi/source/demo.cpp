@@ -9,6 +9,8 @@
 
 void Demo::startup() {
 
+	Woopsi::startup();
+
 	// Create screen skin
 	ScreenSkin* screenSkin = new ScreenSkin;
 	screenSkin->screen.colours.back = woopsiRGB(8, 8, 8);
@@ -330,4 +332,6 @@ void Demo::shutdown() {
 	delete _calculator;
 	delete _pong;
 	delete _pacMan;
+
+	Woopsi::shutdown();
 }

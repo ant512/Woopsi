@@ -52,9 +52,6 @@ Woopsi::~Woopsi() {
 
 void Woopsi::goModal() {
 
-	// Remember that Woopsi is running
-	_flags.modal = true;
-
 	// Loop until no longer modal
 	while (_flags.modal) {
 		processOneVBL();
