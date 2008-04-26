@@ -133,6 +133,11 @@ const s16 Gadget::getY() const {
 	return _y;
 }
 
+const bool Gadget::isDeleted() const {
+	if ((_parent != NULL) && (_parent->isDeleted())) return true;
+	return _flags.deleted;
+}
+
 const bool Gadget::isDrawingEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isDrawingEnabled()) {

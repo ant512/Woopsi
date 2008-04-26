@@ -138,12 +138,14 @@ public:
 	inline const bool hasFocus() const { return _flags.hasFocus; };
 
 	/**
-	 * Has the gadget been marked for deletion?
+	 * Has the gadget been marked for deletion?  This function recurses up the gadget
+	 * hierarchy and only returns true if all of the gadgets in the ancestor
+	 * chain are not deleted.  
 	 * Gadgets marked for deletion are automatically deleted and should not be
 	 * interacted with.
 	 * @return True if marked for deletion.
 	 */
-	inline const bool isDeleted() const { return _flags.deleted; };
+	const bool isDeleted() const;
 
 	/**
 	 * Is the gadget allowed to draw?  This function recurses up the gadget
@@ -261,7 +263,7 @@ public:
 	 * Check if this gadget raises events or not.
 	 * @return True if events are enabled.
 	 */
-	inline const bool raisesEvents() const { return _flags.raisesEvents & !_flags.deleted; };
+	inline const bool raisesEvents() const { return _flags.raisesEvents & !isDeleted(); };
 
 	/**
 	 * Insert the dimensions that this gadget wants to have into the rect

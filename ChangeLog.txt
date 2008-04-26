@@ -40,6 +40,7 @@ Change Log
      - Woopsi's gadget delete queue gets processed before the VBL listeners,
        ensuring that deleted gadgets no longer try to fire events.
      - Deleted gadgets no longer raise events.
+     - Gadget::isDeleted() recurses up through hierarchy.
 	 
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
