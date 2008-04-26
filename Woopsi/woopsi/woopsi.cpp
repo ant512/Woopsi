@@ -68,7 +68,7 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 	handleLid();
 	woopsiWaitVBL();
 
-#ifdef _SDL_H_
+#ifdef USING_SDL
 
 	// SDL event pump
 	SDL_Event event;

@@ -50,7 +50,7 @@ public:
 	 * so it must be called as the last function if overridden in an SDL application.
 	 */
 	virtual inline void shutdown() {
-#ifdef _SDL_H_
+#ifdef USING_SDL
 		SDL_Quit();
 #endif
 	};
