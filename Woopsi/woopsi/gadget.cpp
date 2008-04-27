@@ -180,9 +180,9 @@ const bool Gadget::isEnabled() const {
 const bool Gadget::isModal() const {
 	if ((woopsiApplication != NULL) && (woopsiApplication != this)) {
 		return woopsiApplication->isModal() & _flags.modal;
-	} else {
-		return _flags.modal;
 	}
+
+	return _flags.modal;
 }
 
 void Gadget::setBorderless(bool isBorderless) {
