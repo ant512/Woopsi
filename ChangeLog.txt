@@ -1,7 +1,15 @@
 Change Log
 ----------
 
-  V0.32
+  V0.33
+  
+  - Fixes:
+  
+  
+  - New Features:
+  
+
+  V0.32 (200804327)
   
   - Fixes:
      - Moved abstract methods out of FontBase not needed by all fonts.
