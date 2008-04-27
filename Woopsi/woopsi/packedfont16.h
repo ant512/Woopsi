@@ -1,3 +1,7 @@
+/* Contributed by Jeff Laing
+ * 20080414
+ */
+
 #ifndef _PACKED_FONT_16_
 #define _PACKED_FONT_16_
 
