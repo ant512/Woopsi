@@ -8,7 +8,8 @@ Change Log
 	 - Deleted ListBoxItem class.
   
   - New Features:
-	 - ListBox rewritten to be a single gadget instead of a compound gadget.  
+	 - ListBox rewritten to be a single gadget instead of a compound gadget.
+     - ListBox allows multiple selection.
 
   V0.32 (200804327)
   
