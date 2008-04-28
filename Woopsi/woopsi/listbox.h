@@ -16,10 +16,11 @@ public:
 	typedef struct {
 		char* text;							/**< Text to display for option. */
 		u32 value;							/**< Option value. */
-		u16 normalTextColour;				/**< Colour used for text when not selected */
-		u16 normalBackColour;				/**< Colour used for background when not selected */
-		u16 selectedTextColour;				/**< Colour used for text when selected */
-		u16 selectedBackColour;				/**< Colour used for background when selected */
+		u16 normalTextColour;				/**< Colour used for text when not selected. */
+		u16 normalBackColour;				/**< Colour used for background when not selected. */
+		u16 selectedTextColour;				/**< Colour used for text when selected. */
+		u16 selectedBackColour;				/**< Colour used for background when selected. */
+		bool selected;						/**< True if the option is selected. */
 	} ListBoxOption;
 	
 	/**
@@ -65,7 +66,7 @@ public:
 	 * Get the selected index.  Returns -1 if nothing is selected.
 	 * @return The selected index.
 	 */
-	inline const s32 getSelectedIndex() const { return _selectedIndex; };
+	const s32 getSelectedIndex() const;
 
 	/**
 	 * Sets the selected index.  Specify -1 to select nothing.
@@ -77,7 +78,7 @@ public:
 	 * Get the selected index.  Returns -1 if nothing is selected.
 	 * @return The selected index.
 	 */
-	inline const ListBoxOption* getSelectedOption() const { return _options[_selectedIndex]; };
+	const ListBoxOption* getSelectedOption() const;
 	
 	/**
 	 * Click this gadget at the supplied co-ordinates.
@@ -94,16 +95,22 @@ public:
 	 * @return True if the click was successful.
 	 */
 	virtual bool doubleClick(s16 x, s16 y);
+	
+	/**
+	 * Sets whether multiple selections are possible or not.
+	 * @param allowMultipleSelections True to allow multiple selections.
+	 */
+	virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) { _allowMultipleSelections = allowMultipleSelections; };
 
 private:
 	DynamicArray<ListBoxOption*> _options;			/**< Array of options. */
-	s32 _selectedIndex;								/**< Index of the currently selected option. */
 	u8 _optionPadding;								/**< Padding between options. */
+	bool _allowMultipleSelections;					/**< If true, multiple options can be selected. */
 
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~ListBox() { };
+	virtual ~ListBox();
 };
 
 #endif
