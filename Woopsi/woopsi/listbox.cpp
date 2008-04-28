@@ -1,93 +1,91 @@
 #include "listbox.h"
-#include "listboxitem.h"
 #include "graphicsport.h"
+#include "fontbase.h"
 
 ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : ScrollingPanel(x, y, width, height, 0, font) {
-	_selectedGadget = NULL;
+	_selectedIndex = -1;
 	_outline = OUTLINE_IN;
 	_flags.draggable = true;
+	_flags.doubleClickable = true;
+	_optionPadding = 2;
 }
 
-ListBoxItem* ListBox::newListBoxItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
-	// Create listbox item
-	ListBoxItem* item = new ListBoxItem(0, 0, 0, 0, text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour, _font);
-	item->setEventHandler(this);
-	addGadget(item);
-
+void ListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
+	
+	// Create new memory for string
+	char* newText = new char[strlen(text) + 1];
+	
+	// Copy text
+	strcpy(newText, text);
+	
+	// Create new option
+	ListBoxOption* newOption = new ListBoxOption;
+	newOption->text = newText;
+	newOption->value = value;
+	newOption->normalTextColour = normalTextColour;
+	newOption->normalBackColour = normalBackColour;
+	newOption->selectedTextColour = selectedTextColour;
+	newOption->selectedBackColour = selectedBackColour;
+	
+	// Add to option array
+	_options.push_back(newOption);
+	
 	// Get client area
 	Rect clientRect;
 	getClientRect(clientRect);
 
-	// Get menu item's preferred size
-	Rect preferredRect;
-	item->getPreferredDimensions(preferredRect);
-
-	// Adjust rect's co-ordinates
-	preferredRect.x = clientRect.x;
-	preferredRect.y = clientRect.y + ((_gadgets.size() - 1) * preferredRect.height);
-	preferredRect.width = clientRect.width;
-
 	// Need to adjust canvas size?
-	s32 newCanvasHeight = preferredRect.y + preferredRect.height;
+	s32 newCanvasHeight = (_options.size() * (_font->getHeight() + (_optionPadding << 1))) - 1;
 	if (newCanvasHeight > _canvasHeight) _canvasHeight = newCanvasHeight;
-
-	// Adjust gadget's co-ordinates
-	item->changeDimensions(preferredRect.x, preferredRect.y, preferredRect.width, preferredRect.height);
-	
-	invalidateVisibleRectCache();
-
-	return item;
 }
 
-ListBoxItem* ListBox::newListBoxItem(const char* text, const u32 value) {
-	return newListBoxItem(text, value, _shadowColour, _backColour, _shadowColour, _highlightColour);
-}
-
-bool ListBox::handleEvent(const EventArgs& e) {
-	// Handle click events
-	if (e.type == EVENT_CLICK) {
-		if (e.gadget != NULL) {
-
-			setDragging(e.eventX, e.eventY);
-
-			// Selecting or deselecting?
-			if (e.gadget != _selectedGadget) {
-	
-				// Select the gadget
-				setSelectedGadget(e.gadget);
-			} else {
-
-				// Unselect the gadget
-				setSelectedGadget(NULL);
-			}
-
-			return true;
-		}
-	}
-
-	// Handle double-click events
-	if (e.type == EVENT_DOUBLE_CLICK) {
-		if (e.gadget != NULL) {
-
-			if (e.gadget != _selectedGadget) {
-	
-				// Select the gadget
-				setSelectedGadget(e.gadget);
-			}
-
-			return true;
-		}
-	}
-
-	return false;
+void ListBox::addOption(const char* text, const u32 value) {
+	addOption(text, value, _shadowColour, _backColour, _shadowColour, _highlightColour);
 }
 
 void ListBox::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
+	
 	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	
+	// TODO: Optimise this so that it limits its drawing to the clip rect's dimensios
+	// (at present it draws the entire gadget, although 99% of this drawing is clipped out)
+	
+	// Precalc values for option draw loop
+	s16 optionHeight = _font->getHeight() + (_optionPadding << 1);
+	s32 topOption = -_canvasY / optionHeight;
+	s16 y = _canvasY + (topOption * optionHeight);
+	s32 i = topOption;
 
+	// Loop through all options drawing each one
+	while ((i < _options.size()) & (y < _height)) {
+		
+		// Is the option selected?
+		if (_selectedIndex == i) {
+			
+			// Draw background
+			if (_options[i]->selectedBackColour != _backColour) {
+				port->drawFilledRect(0, y, _width, optionHeight, _options[i]->selectedBackColour);
+			}
+		
+			// Draw text
+			port->drawText(_optionPadding, y + _optionPadding, _font, _options[i]->text, _options[i]->selectedTextColour);
+		} else {
+			
+			// Draw background
+			if (_options[i]->normalBackColour != _backColour) {
+				port->drawFilledRect(0, y, _width, optionHeight, _options[i]->normalBackColour);
+			}
+			
+			// Draw text
+			port->drawText(_optionPadding, y + _optionPadding, _font, _options[i]->text, _options[i]->normalTextColour);
+		}
+		
+		i++;
+		y += optionHeight;
+	}
+	
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
 
@@ -95,36 +93,31 @@ void ListBox::draw(Rect clipRect) {
 }
 
 void ListBox::setSelectedIndex(const s32 index) {
-	setSelectedGadget(_gadgets[index]);
+	_selectedIndex = index;
+	draw();
+	
+	raiseValueChangeEvent();
 }
 
-void ListBox::setSelectedGadget(Gadget* gadget) {
-
-	if (gadget != _selectedGadget) {
-
-		// Unselect the current selected item
-		if (_selectedGadget != NULL) {
-			((ListBoxItem*)_selectedGadget)->unselect();
+bool ListBox::click(s16 x, s16 y) {
+	if (Gadget::click(x, y)) {
+		
+		// Calculate which gadget was clicked
+		s32 newSelectedIndex = (-_canvasY + (y - getY())) / (_font->getHeight() + (_optionPadding << 1));
+		
+		// Are we setting or unsetting?
+		if (newSelectedIndex == _selectedIndex) {
+			
+			// Unselecting
+			setSelectedIndex(-1);
+		} else {
+		
+			// Selecting
+			setSelectedIndex(newSelectedIndex);
 		}
-
-		// Select the new item
-		_selectedGadget = gadget;
-
-		if (_selectedGadget != NULL) {
-			((ListBoxItem*)_selectedGadget)->select();
-		}
-
-		// Raise value changed event
-		if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-
-			EventArgs newEvent;
-			newEvent.eventX = 0;
-			newEvent.eventY = 0;
-			newEvent.gadget = this;
-			newEvent.keyCode = KEY_CODE_NONE;
-			newEvent.type = EVENT_VALUE_CHANGE;
-
-			_eventHandler->handleEvent(newEvent);
-		}
+		
+		return true;
 	}
+	
+	return false;
 }

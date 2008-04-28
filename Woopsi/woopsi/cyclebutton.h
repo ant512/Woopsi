@@ -65,8 +65,8 @@ public:
 	virtual bool release(s16 x, s16 y);
 
 protected:
-	DynamicArray<CycleButtonOption*> _options;
-	s16 _selectedIndex;
+	DynamicArray<CycleButtonOption*> _options;		/**< Array of options. */
+	s16 _selectedIndex;								/**< Index of the currently selected option. */
 
 	/**
 	 * Prevent recalculation of text positions.

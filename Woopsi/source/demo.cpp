@@ -280,19 +280,20 @@ void Demo::startup() {
 
 	ListBox* listbox = new ListBox(30, 30, 100, 100);
 	textWindow->addGadget(listbox);
-	listbox->newListBoxItem("ListBox Test", 0, listbox->getShineColour(), listbox->getBackColour(), listbox->getShineColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 1", 1, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 2", 2, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 3", 3, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 4", 4, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 5", 5, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 6", 6, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 7", 7, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 8", 8, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 9", 9, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 10", 10, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 11", 11, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->newListBoxItem("List Item 12", 12, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	
+	listbox->addOption("ListBox Test", 0, listbox->getShineColour(), listbox->getBackColour(), listbox->getShineColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 1", 1, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 2", 2, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 3", 3, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 4", 4, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 5", 5, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 6", 6, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 7", 7, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 8", 8, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 9", 9, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 10", 10, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 11", 11, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 12", 12, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
 
 	// Add another screen
 	AmigaScreen* demoScreen = new AmigaScreen("Demos");
