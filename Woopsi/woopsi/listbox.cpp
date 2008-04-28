@@ -1,6 +1,7 @@
 #include "listbox.h"
 #include "graphicsport.h"
 #include "fontbase.h"
+#include "woopsi.h"
 
 ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : ScrollingPanel(x, y, width, height, 0, font) {
 	_selectedIndex = -1;
@@ -100,24 +101,118 @@ void ListBox::setSelectedIndex(const s32 index) {
 }
 
 bool ListBox::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
-		
-		// Calculate which gadget was clicked
-		s32 newSelectedIndex = (-_canvasY + (y - getY())) / (_font->getHeight() + (_optionPadding << 1));
-		
-		// Are we setting or unsetting?
-		if (newSelectedIndex == _selectedIndex) {
-			
-			// Unselecting
-			setSelectedIndex(-1);
-		} else {
-		
-			// Selecting
-			setSelectedIndex(newSelectedIndex);
+
+	// Check for a double-click
+	if (_flags.doubleClickable) {
+
+		// Within the allowed time?
+		if (woopsiApplication != NULL) {
+			if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
+
+				// Within the allowed region?
+				if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
+					if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
+
+						// Process click as a double-click
+						return doubleClick(x, y);
+					}
+				}
+			}
 		}
-		
-		return true;
 	}
-	
+
+	if (isEnabled()) {
+		if (checkCollision(x, y)) {
+
+			// Calculate which option was clicked
+			s32 newSelectedIndex = (-_canvasY + (y - getY())) / (_font->getHeight() + (_optionPadding << 1));	
+			
+			// Are we setting or unsetting?
+			if (newSelectedIndex == _selectedIndex) {
+				
+				// Unselecting
+				setSelectedIndex(-1);
+			} else {
+			
+				// Selecting
+				setSelectedIndex(newSelectedIndex);
+			}
+
+
+			// Standard click code follows, sans sub-gadget stuff
+			_flags.clicked = true;
+
+			// Record data for double-click
+			if (woopsiApplication != NULL) {
+				_lastClickTime = woopsiApplication->getVBLCount();
+			} else {
+				_lastClickTime = 0;
+			}
+
+			_lastClickX = x;
+			_lastClickY = y;
+
+			// Take focus away from child gadgets
+			setFocusedGadget(NULL);
+
+			// Tell parent that the clicked gadget has changed
+			if (_parent != NULL) {
+				_parent->setClickedGadget(this);
+			}
+
+			// Enable dragging
+			setDragging(x, y);
+
+			raiseClickEvent(x, y);
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ListBox::doubleClick(s16 x, s16 y) {
+
+	if (isEnabled()) {
+		if (checkCollision(x, y)) {
+
+			// Calculate which option was clicked
+			s32 newSelectedIndex = (-_canvasY + (y - getY())) / (_font->getHeight() + (_optionPadding << 1));	
+
+			// Double-click - select the item
+			setSelectedIndex(newSelectedIndex);
+
+
+			// Standard double-click code follows, sans sub-gadget stuff
+			_flags.clicked = true;
+
+			// Record data for double-click
+			if (woopsiApplication != NULL) {
+				_lastClickTime = woopsiApplication->getVBLCount();
+			} else {
+				_lastClickTime = 0;
+			}
+
+			_lastClickX = x;
+			_lastClickY = y;
+
+			// Take focus away from child gadgets
+			setFocusedGadget(NULL);
+
+			// Tell parent that the clicked gadget has changed
+			if (_parent != NULL) {
+				_parent->setClickedGadget(this);
+			}
+
+			// Enable dragging
+			setDragging(x, y);
+
+			raiseDoubleClickEvent(x, y);
+
+			return true;
+		}
+	}
+
 	return false;
 }

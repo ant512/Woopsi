@@ -4,10 +4,11 @@ Change Log
   V0.33
   
   - Fixes:
-  
+     - Gadget::click() checks correct class variable for double click timer.
+	 - Deleted ListBoxItem class.
   
   - New Features:
-  
+	 - ListBox rewritten to be a single gadget instead of a compound gadget.  
 
   V0.32 (200804327)
   
