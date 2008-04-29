@@ -294,6 +294,7 @@ void Demo::startup() {
 	listbox->addOption("List Item 10", 10, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
 	listbox->addOption("List Item 11", 11, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
 	listbox->addOption("List Item 12", 12, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->removeOption(9);
 
 	// Add another screen
 	AmigaScreen* demoScreen = new AmigaScreen("Demos");

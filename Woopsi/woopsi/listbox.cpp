@@ -43,17 +43,28 @@ void ListBox::addOption(const char* text, const u32 value, const u16 normalTextC
 	// Add to option array
 	_options.push_back(newOption);
 	
-	// Get client area
-	Rect clientRect;
-	getClientRect(clientRect);
-
-	// Need to adjust canvas size?
-	s32 newCanvasHeight = (_options.size() * (_font->getHeight() + (_optionPadding << 1))) - 1;
-	if (newCanvasHeight > _canvasHeight) _canvasHeight = newCanvasHeight;
+	resizeCanvas();
 }
 
 void ListBox::addOption(const char* text, const u32 value) {
 	addOption(text, value, _shadowColour, _backColour, _shadowColour, _highlightColour);
+}
+
+void ListBox::removeOption(const s32 index) {
+
+	// Bounds check
+	if (index < _options.size()) {
+
+		// Delete the option
+		delete _options[index]->text;
+		delete _options[index];
+
+		// Erase the option from the list
+		_options.erase(index);
+
+		// Shrink the canvas
+		resizeCanvas();
+	}
 }
 
 void ListBox::draw(Rect clipRect) {
@@ -66,7 +77,7 @@ void ListBox::draw(Rect clipRect) {
 	// (at present it draws the entire gadget, although 99% of this drawing is clipped out)
 	
 	// Precalc values for option draw loop
-	s16 optionHeight = _font->getHeight() + (_optionPadding << 1);
+	s16 optionHeight = getOptionHeight();
 	s32 topOption = -_canvasY / optionHeight;
 	s16 y = _canvasY + (topOption * optionHeight);
 	s32 i = topOption;
@@ -106,18 +117,7 @@ void ListBox::draw(Rect clipRect) {
 }
 
 void ListBox::setSelectedIndex(const s32 index) {
-	
-	// Unset all indexes
-	for (s32 i = 0; i < _options.size(); i++) {
-		_options[i]->selected = false;
-	}
-	
-	// Select new index
-	_options[index]->selected = true;
-	
-	draw();
-	
-	raiseValueChangeEvent();
+	setOptionSelected(index, true);
 }
 
 const s32 ListBox::getSelectedIndex() const {
@@ -140,6 +140,55 @@ const ListBox::ListBoxOption* ListBox::getSelectedOption() const {
 	}
 	
 	return NULL;
+}
+
+void ListBox::selectOption(const s32 index) {
+	setOptionSelected(index, true);
+}
+
+void ListBox::deselectOption(const s32 index) {
+	setOptionSelected(index, false);
+}
+
+void ListBox::setOptionSelected(const s32 index, bool selected) {
+
+	// Deselect old options if we're making an option selected and we're not a multiple list
+	if (((!_allowMultipleSelections) || (index == -1)) && (selected)) {
+		for (s32 i = 0; i < _options.size(); i++) {
+			_options[i]->selected = false;
+		}
+	}
+
+	// Select or deselect the new option
+	if ((index > -1) && (index < _options.size())) {
+		_options[index]->selected = selected;
+	}
+	
+	draw();
+	
+	raiseValueChangeEvent();
+}
+
+void ListBox::deselectAllOptions() {
+	for (s32 i = 0; i < _options.size(); i++) {
+		_options[i]->selected = false;
+	}
+
+	draw();
+	
+	raiseValueChangeEvent();
+}
+
+void ListBox::selectAllOptions() {
+	if (_allowMultipleSelections) {
+		for (s32 i = 0; i < _options.size(); i++) {
+			_options[i]->selected = true;
+		}
+
+		draw();
+		
+		raiseValueChangeEvent();
+	}
 }
 
 bool ListBox::click(s16 x, s16 y) {
@@ -167,12 +216,12 @@ bool ListBox::click(s16 x, s16 y) {
 		if (checkCollision(x, y)) {
 
 			// Calculate which option was clicked
-			s32 newSelectedIndex = (-_canvasY + (y - getY())) / (_font->getHeight() + (_optionPadding << 1));	
+			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 			
 			// Are we setting or unsetting?
 			if (_options[newSelectedIndex]->selected) {
 				
-				// Unselecting
+				// Deselecting
 				_options[newSelectedIndex]->selected = false;
 				draw();
 			} else {
@@ -226,7 +275,7 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 		if (checkCollision(x, y)) {
 
 			// Calculate which option was clicked
-			s32 newSelectedIndex = (-_canvasY + (y - getY())) / (_font->getHeight() + (_optionPadding << 1));	
+			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 
 			// Double-click - select the item exclusively
 			setSelectedIndex(newSelectedIndex);
@@ -263,4 +312,21 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 	}
 
 	return false;
+}
+
+u16 ListBox::getOptionHeight() {
+	return _font->getHeight() + (_optionPadding << 1);
+}
+
+void ListBox::resizeCanvas() {
+
+	// Get client area
+	Rect rect;
+	getClientRect(rect);
+
+	// Resize the canvas
+	_canvasHeight = (_options.size() * getOptionHeight()) - 1;
+
+	// Ensure canvas is at least as tall as the gadget
+	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;
 }

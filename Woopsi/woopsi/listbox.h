@@ -34,14 +34,20 @@ public:
 	ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
 
 	/**
-	 * Add a new option to the gadget using default colours.
+	 * Add a new option to the gadget using default colours.  Does not redraw the gadget.
 	 * @param text Text to show in the option.
 	 * @param value The value of the option.
 	 */
 	virtual void addOption(const char* text, const u32 value);
 
 	/**
-	 * Add a new option to the gadget.
+	 * Remove an option from the gadget by its index.  Does not redraw the gadget.
+	 * @param index The index of the option to remove.
+	 */
+	virtual void removeOption(const s32 index);
+
+	/**
+	 * Add a new option to the gadget.  Does not redraw the gadget.
 	 * @param text Text to show in the option.
 	 * @param value The value of the option.
 	 * @param normalTextColour Colour to draw the text with when not selected.
@@ -50,6 +56,32 @@ public:
 	 * @param selectedBackColour Colour to draw the background with when selected.
 	 */
 	virtual void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
+
+	/**
+	 * Select an option by its index.  Does not deselect any other selected options.
+	 * Redraws the gadget and raises a value changed event.
+	 * @param index The index of the option to select.
+	 */
+	virtual void selectOption(const s32 index);
+
+	/**
+	 * Select an option by its index.  Does not deselect any other selected options.
+	 * Redraws the gadget and raises a value changed event.
+	 * @param index The index of the option to select.
+	 */
+	virtual void deselectOption(const s32 index);
+
+	/**
+	 * Select all options.  Does nothing if the listbox does not allow multiple selections.
+	 * Redraws the gadget and raises a value changed event.
+	 */
+	virtual void selectAllOptions();
+
+	/**
+	 * Deselect all options.
+	 * Redraws the gadget and raises a value changed event.
+	 */
+	virtual void deselectAllOptions();
 
 	/**
 	 * Draw the region of the menu within the clipping rect.
@@ -63,22 +95,25 @@ public:
 	virtual inline void draw() { Gadget::draw(); };
 
 	/**
-	 * Get the selected index.  Returns -1 if nothing is selected.
+	 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
+	 * option is selected, the index of the first selected option is returned.
 	 * @return The selected index.
 	 */
-	const s32 getSelectedIndex() const;
+	virtual const s32 getSelectedIndex() const;
 
 	/**
-	 * Sets the selected index.  Specify -1 to select nothing.
+	 * Sets the selected index.  Specify -1 to select nothing.  Resets any
+	 * other selected items to deselected.
+	 * Redraws the gadget and raises a value changed event.
 	 * @param The selected index.
 	 */
-	void setSelectedIndex(const s32 index);
+	virtual void setSelectedIndex(const s32 index);
 
 	/**
-	 * Get the selected index.  Returns -1 if nothing is selected.
-	 * @return The selected index.
+	 * Get the selected option.  Returns NULL if nothing is selected.
+	 * @return The selected option.
 	 */
-	const ListBoxOption* getSelectedOption() const;
+	virtual const ListBoxOption* getSelectedOption() const;
 	
 	/**
 	 * Click this gadget at the supplied co-ordinates.
@@ -98,11 +133,24 @@ public:
 	
 	/**
 	 * Sets whether multiple selections are possible or not.
+	 * Does not redraw the gadget.
 	 * @param allowMultipleSelections True to allow multiple selections.
 	 */
 	virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) { _allowMultipleSelections = allowMultipleSelections; };
 
-private:
+	/**
+	 * Resize the scrolling canvas to encompass all options.
+	 * Does not redraw the gadget.
+	 */
+	virtual void resizeCanvas();
+
+	/**
+	 * Get the selected index.  Returns -1 if nothing is selected.
+	 * @return The selected index.
+	 */
+	virtual inline const ListBoxOption* getOption(const s32 index) const { return _options[index]; };
+
+protected:
 	DynamicArray<ListBoxOption*> _options;			/**< Array of options. */
 	u8 _optionPadding;								/**< Padding between options. */
 	bool _allowMultipleSelections;					/**< If true, multiple options can be selected. */
@@ -111,6 +159,21 @@ private:
 	 * Destructor.
 	 */
 	virtual ~ListBox();
+
+	/**
+	 * Get the height of a single option.
+	 * @return The height of an option.
+	 */
+	virtual u16 getOptionHeight();
+
+	/**
+	 * Select or deselect an option by its index.  Does not deselect any other selected options.
+	 * Set index to -1 to select nothing.
+	 * Redraws the gadget and raises a value changed event.
+	 * @param index The index of the option to select.
+	 * @param selected True to select the option, false to deselect it.
+	 */
+	virtual void setOptionSelected(const s32 index, const bool selected);
 };
 
 #endif
