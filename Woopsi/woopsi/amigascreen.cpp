@@ -25,8 +25,8 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 			// Remove borders
 			_screenTitle->close();
-			_depthButton->close();
-			_flipButton->close();
+			if (_depthButton != NULL) _depthButton->close();
+			if (_flipButton != NULL) _flipButton->close();
 
 			_screenTitle = NULL;
 			_depthButton = NULL;

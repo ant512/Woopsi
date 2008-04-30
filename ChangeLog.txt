@@ -9,6 +9,7 @@ Change Log
      - Removed "closable" from gadget flags.
      - SkinnedWindow resizes titlebar correctly.
      - Wired up SkinnedWindow depth button visibility to skin data.
+     - More consistent names for SkinnedScreen button pointers.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
@@ -19,7 +20,9 @@ Change Log
      - SkinnedWindow allows depth and close buttons to be shown/hidden at will.
      - Screen constructor accepts flags parameter.
      - AmigaScreen constructor accepts flags parameter.
+     - SkinnedScreen constructor accepts flags parameter.
      - AmigaScreen allows depth and flip buttons to be shown/hidden at will.
+	 - SkinnedScreen allows depth and flip buttons to be shown/hidden at will.
 
   V0.32 (200804327)
   

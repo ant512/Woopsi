@@ -151,7 +151,7 @@ void Demo::startup() {
 	windowSkin->bottomRightBorder.bitmap.height = 5;
 	
 	// Create skinned screen
-	SkinnedScreen* sknScreen = new SkinnedScreen("Skin", screenSkin);
+	SkinnedScreen* sknScreen = new SkinnedScreen("Skin", Gadget::GADGET_DRAGGABLE, SkinnedScreen::SKINNED_SCREEN_SHOW_FLIP | SkinnedScreen::SKINNED_SCREEN_SHOW_DEPTH, screenSkin);
 	woopsiApplication->addGadget(sknScreen);
 
 	// Create skinned window

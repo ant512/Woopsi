@@ -3,11 +3,11 @@
 #include "skinnedscreentitle.h"
 #include "skinnedscreen.h"
 
-SkinnedScreen::SkinnedScreen(char* title, const ScreenSkin* skin) : Screen(title, NULL) {
+SkinnedScreen::SkinnedScreen(char* title, u32 flags, u32 screenFlags, const ScreenSkin* skin) : Screen(title, flags, NULL) {
 
 	_screenTitle = NULL;
-	_screenDepthButton = NULL;
-	_screenFlipButton = NULL;
+	_depthButton = NULL;
+	_flipButton = NULL;
 
 	_skin = skin;
 
@@ -22,6 +22,9 @@ SkinnedScreen::SkinnedScreen(char* title, const ScreenSkin* skin) : Screen(title
 	_shadowColour = _skin->screen.colours.shadow;
 	_fillColour = _skin->screen.colours.fill;
 
+	_screenFlags.showFlipButton = _skin->flipButton.visible;
+	_screenFlags.showDepthButton = _skin->depthButton.visible;
+
 	setBorderless(!_flags.borderless);
 }
 
@@ -31,12 +34,12 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 
 			// Remove borders
 			_screenTitle->close();
-			_screenDepthButton->close();
-			_screenFlipButton->close();
+			if (_depthButton != NULL) _depthButton->close();
+			if (_flipButton != NULL) _flipButton->close();
 
 			_screenTitle = NULL;
-			_screenDepthButton = NULL;
-			_screenFlipButton = NULL;
+			_depthButton = NULL;
+			_flipButton = NULL;
 
 			_flags.borderless = true;
 		} else {
@@ -51,16 +54,21 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 			}
 
 			_screenTitle = new SkinnedScreenTitle(_title, _skin);
-			_screenFlipButton = new SkinnedScreenFlipButton(flipX, 0, _skin);
-			_screenDepthButton = new SkinnedScreenDepthButton(depthX, 0, _skin);
-
-			insertGadget(_screenFlipButton);
-			insertGadget(_screenDepthButton);
 			insertGadget(_screenTitle);
 
-			// Set this as the border gadget event hander
-			_screenFlipButton->setEventHandler(this);
-			_screenDepthButton->setEventHandler(this);
+			// Create depth button
+			if (_screenFlags.showDepthButton) {
+				_depthButton = new SkinnedScreenDepthButton(depthX, 0, _skin);
+				_depthButton->setEventHandler(this);
+				addGadget(_depthButton);
+			}
+
+			// Create flip button
+			if (_screenFlags.showFlipButton) {
+				_flipButton = new SkinnedScreenFlipButton(flipX, 0, _skin);
+				_flipButton->setEventHandler(this);
+				addGadget(_flipButton);
+			}
 
 			_flags.borderless = false;
 		}
@@ -81,12 +89,12 @@ bool SkinnedScreen::handleEvent(const EventArgs& e) {
 		if (e.gadget != NULL) {
 
 			// Process decoration gadgets only
-			if (e.gadget == _screenFlipButton) {
+			if (e.gadget == _flipButton) {
 
 				// Flip screens
 				flipScreens();
 				return true;
-			} else if (e.gadget == _screenDepthButton) {
+			} else if (e.gadget == _depthButton) {
 
 				// Depth swap to bottom of stack
 				lowerToBottom();
@@ -97,4 +105,56 @@ bool SkinnedScreen::handleEvent(const EventArgs& e) {
 	}
 
 	return false;
+}
+
+void SkinnedScreen::showFlipButton() {
+	if ((!_flags.borderless) && (!_screenFlags.showFlipButton)) {
+		_screenFlags.showFlipButton = true;
+
+		// Calculate button position
+		u16 flipX = _width - _skin->flipButton.bitmap.width;
+
+		// Recreate flip button
+		_flipButton = new SkinnedScreenFlipButton(flipX, 0, _skin);
+		_flipButton->setEventHandler(this);
+		addGadget(_flipButton);
+
+		_flipButton->draw();
+	}
+}
+
+void SkinnedScreen::showDepthButton() {
+	if ((!_flags.borderless) && (!_screenFlags.showDepthButton)) {
+		_screenFlags.showDepthButton = true;
+
+		// Calculate button position
+		u16 depthX = _width - _skin->depthButton.bitmap.width;
+		
+		// Recreate depth button
+		_depthButton = new SkinnedScreenDepthButton(depthX, 0, _skin);
+		_depthButton->setEventHandler(this);
+		addGadget(_depthButton);
+
+		_depthButton->draw();
+	}
+}
+
+void SkinnedScreen::hideFlipButton() {
+	if ((!_flags.borderless) && (_screenFlags.showFlipButton)) {
+		_screenFlags.showFlipButton = false;
+		
+		// Delete flip button
+		_flipButton->close();
+		_flipButton = NULL;
+	}
+}
+
+void SkinnedScreen::hideDepthButton() {
+	if ((!_flags.borderless) && (_screenFlags.showDepthButton)) {
+		_screenFlags.showDepthButton = false;
+		
+		// Delete close button
+		_depthButton->close();
+		_depthButton = NULL;
+	}
 }
