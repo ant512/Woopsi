@@ -28,11 +28,11 @@ public:
 	};
 
 	/**
-	 * Struct describing some basic properties of an AmigaWindow.
+	 * Struct describing some basic properties of an SkinnedWindow.
 	 */
 	typedef struct {
-		u8 showClose : 1;					/**< True if the close button is visible. */
-		u8 showDepth : 1;					/**< True if the depth button is visible. */
+		u8 showCloseButton : 1;					/**< True if the close button is visible. */
+		u8 showDepthButton : 1;					/**< True if the depth button is visible. */
 	} SkinnedWindowFlags;
 
 	SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, WindowSkin* skin);
@@ -52,6 +52,46 @@ public:
 
 	virtual bool resize(u16 width, u16 height);
 	virtual bool handleEvent(const EventArgs& e);
+
+	/**
+	 * Shows the close button if it is hidden.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void showCloseButton();
+
+	/**
+	 * Shows the depth button if it is hidden.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void showDepthButton();
+
+	/**
+	 * Hides the close button if it is visible.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void hideCloseButton();
+
+	/**
+	 * Hides the depth button if it is hidden.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void hideDepthButton();
+
+	/**
+	 * Does the window have a close button?
+	 * @return True if the window has a close button.
+	 */
+	virtual inline const bool hasCloseButton() const { return _windowFlags.showCloseButton; };
+
+	/**
+	 * Does the window have a depth button?
+	 * @return True if the window has a depth button.
+	 */
+	virtual inline const bool hasDepthButton() const { return _windowFlags.showDepthButton; };
 
 protected:
 	char* _title;

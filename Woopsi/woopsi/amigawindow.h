@@ -147,6 +147,19 @@ public:
 	 */
 	virtual void hideDepthButton();
 
+	/**
+	 * Does the window have a close button?
+	 * @return True if the window has a close button.
+	 */
+	virtual inline const bool hasCloseButton() const { return _windowFlags.showCloseButton; };
+
+	/**
+	 * Does the window have a depth button?
+	 * @return True if the window has a depth button.
+	 */
+	virtual inline const bool hasDepthButton() const { return _windowFlags.showDepthButton; };
+
+
 protected:
 	char* _title;									/**< The window's title */
 	AmigaWindowFlags _windowFlags;					/**< AmigaWindow-specific flags */

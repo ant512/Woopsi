@@ -1,5 +1,6 @@
 #include "skinnedwindowbordertop.h"
 #include "graphicsport.h"
+#include "skinnedwindow.h"
 
 SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, char* text, const WindowSkin* skin) : WindowBorderTop(x, width, 0, text) {
 
@@ -84,7 +85,7 @@ void SkinnedWindowBorderTop::draw(Rect clipRect) {
 	u8 textY = (_skin->topCentreBorder.bitmap.height / 2) - (_font->getHeight() / 2);
 	u8 textX = 4;
 
-	if (_skin->closeButton.visible) {
+	if (((SkinnedWindow*)_parent)->hasCloseButton()) {
 		textX += _skin->closeButton.bitmap.width + _skin->closeButton.offsetX;
 	}
 

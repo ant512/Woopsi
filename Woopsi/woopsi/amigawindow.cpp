@@ -150,14 +150,6 @@ void AmigaWindow::createBorder() {
 
 bool AmigaWindow::click(s16 x, s16 y) {
 
-	if (_windowFlags.showCloseButton) {
-		hideCloseButton();
-		hideDepthButton();
-	} else {
-		showCloseButton();
-		showDepthButton();
-	}
-
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 			bool gotGadget = false;

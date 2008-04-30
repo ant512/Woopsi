@@ -5,16 +5,18 @@ Change Log
   
   - Fixes:
      - Gadget::click() checks correct class variable for double click timer.
-	 - Deleted ListBoxItem class.
-	 - Removed "closable" from gadget flags.
-	 - SkinnedWindow resizes titlebar correctly.
-	 - Wired up SkinnedWindow depth button visibility to skin data.
+     - Deleted ListBoxItem class.
+     - Removed "closable" from gadget flags.
+     - SkinnedWindow resizes titlebar correctly.
+     - Wired up SkinnedWindow depth button visibility to skin data.
   
   - New Features:
-	 - ListBox rewritten to be a single gadget instead of a compound gadget.
+     - ListBox rewritten to be a single gadget instead of a compound gadget.
      - ListBox allows multiple selection.
      - Added extra flags to AmigaWindow and SkinnedWindow classes allowing close
-       and depth gadgets to be hidden.
+       and depth gadgets to be hidden when gadgets are constructed.
+     - AmigaWindow allows depth and close buttons to be shown/hidden at will.
+     - SkinnedWindow allows depth and close buttons to be shown/hidden at will.
 
   V0.32 (200804327)
   
@@ -45,7 +47,7 @@ Change Log
        directly and the correct deletion queue method is bypassed.
      - Context menu shelved if the gadget that opened it gets closed.
      - Slider/scrollbar inaccuracies fixed.
-	 - Fixed rounding errors in TextBox alignment.
+     - Fixed rounding errors in TextBox alignment.
      - Documentation updates.
      - Switched demo code to follow Jeff's design pattern.
      - Changed Woopsi queue handling to use while loops, so that unexpected
@@ -56,7 +58,7 @@ Change Log
        ensuring that deleted gadgets no longer try to fire events.
      - Deleted gadgets no longer raise events.
      - Gadget::isDeleted() recurses up through hierarchy.
-	 
+
   - New Features:
      - Added PackedFontBase, PackedFont1 and PackedFont16 classes (proportional
        font support).
@@ -108,17 +110,17 @@ Change Log
      - Split PacMan demo into separate files for each class.
      - Fixed Font and MonoFont scanGlyph() max co-ord overflows.
      - Rewritten Text::wrap() function to be faster and more efficient.
-	 - Tidied up Text class in general.
-	 - Bugfixes to ScrollingTextbox scrollbars.
-	 - Bugfixes to ScrollingTextbox event handling.
-	 - Vertical and horizontal grip respect borders of gutter when dragged.
-	 - Sliders check new value against max/min values when value is set.
-	 - Gadget::click() calls "setDragging()".
-	 - Gadget::drag() only raises drag events when _flag.dragging is set.
-	 - SuperBitmap uses standard dragging system instead of "allowStylusScroll".
-	 - Checkbox uses graphics port for all drawing.
-	 - RadioButton uses graphics port for all drawing.
-	 - Bugfixes to sliders.
+     - Tidied up Text class in general.
+     - Bugfixes to ScrollingTextbox scrollbars.
+     - Bugfixes to ScrollingTextbox event handling.
+     - Vertical and horizontal grip respect borders of gutter when dragged.
+     - Sliders check new value against max/min values when value is set.
+     - Gadget::click() calls "setDragging()".
+     - Gadget::drag() only raises drag events when _flag.dragging is set.
+     - SuperBitmap uses standard dragging system instead of "allowStylusScroll".
+     - Checkbox uses graphics port for all drawing.
+     - RadioButton uses graphics port for all drawing.
+     - Bugfixes to sliders.
   
   - New Features:
      - Added ScrollingTextBox class.
