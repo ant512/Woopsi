@@ -6,10 +6,15 @@ Change Log
   - Fixes:
      - Gadget::click() checks correct class variable for double click timer.
 	 - Deleted ListBoxItem class.
+	 - Removed "closable" from gadget flags.
+	 - SkinnedWindow resizes titlebar correctly.
+	 - Wired up SkinnedWindow depth button visibility to skin data.
   
   - New Features:
 	 - ListBox rewritten to be a single gadget instead of a compound gadget.
      - ListBox allows multiple selection.
+     - Added extra flags to AmigaWindow and SkinnedWindow classes allowing close
+       and depth gadgets to be hidden.
 
   V0.32 (200804327)
   

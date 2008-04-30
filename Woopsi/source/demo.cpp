@@ -155,7 +155,7 @@ void Demo::startup() {
 	woopsiApplication->addGadget(sknScreen);
 
 	// Create skinned window
-	SkinnedWindow* sknWindow = new SkinnedWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, windowSkin);
+	SkinnedWindow* sknWindow = new SkinnedWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, SkinnedWindow::SKINNED_WINDOW_SHOW_CLOSE | SkinnedWindow::SKINNED_WINDOW_SHOW_DEPTH, windowSkin);
 	sknScreen->addGadget(sknWindow);
 
 	// Attach bitmap
@@ -170,7 +170,7 @@ void Demo::startup() {
 	superBitmap->drawFilledRect(10, 40, 20, 20, woopsiRGB(31, 0, 0));
 
 	// Anim button test
-	SkinnedWindow* ikWindow = new SkinnedWindow(30, 30, 121, 71, "IK", Gadget::GADGET_DRAGGABLE, windowSkin);
+	SkinnedWindow* ikWindow = new SkinnedWindow(30, 30, 121, 71, "IK", Gadget::GADGET_DRAGGABLE, SkinnedWindow::SKINNED_WINDOW_SHOW_CLOSE | SkinnedWindow::SKINNED_WINDOW_SHOW_DEPTH, windowSkin);
 	sknScreen->addGadget(ikWindow);
 	ikWindow->getClientRect(rect);
 
@@ -220,10 +220,10 @@ void Demo::startup() {
 
 
 	// Add child windows
-	AmigaWindow* controlWindow = new AmigaWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* controlWindow = new AmigaWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	newScreen->addGadget(controlWindow);
 
-	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	newScreen->addGadget(textWindow);
 
 	//RadioButtonGroup* radioButtons = new RadioButtonGroup(0, 0);
@@ -238,7 +238,7 @@ void Demo::startup() {
 	//controlWindow->addGadget(new CheckBox(60, 0, 12, 12));
 	//controlWindow->addGadget(new CheckBox(72, 0, 12, 12));
 
-	AmigaWindow* textTestWindow = new AmigaWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* textTestWindow = new AmigaWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	newScreen->addGadget(textTestWindow);
 
 	textTestWindow->getClientRect(rect);
@@ -316,7 +316,7 @@ void Demo::startup() {
 	_pacMan = new PacMan(demoScreen);
 
 	// Bitmap button test
-	AmigaWindow* buttonWindow = new AmigaWindow(10, 10, 100, 100, "ButtonTest", Gadget::GADGET_CLOSABLE | Gadget::GADGET_DRAGGABLE);
+	AmigaWindow* buttonWindow = new AmigaWindow(10, 10, 100, 100, "ButtonTest", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE);
 	demoScreen->addGadget(buttonWindow);
 
 	buttonWindow->getClientRect(rect);

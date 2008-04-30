@@ -3,7 +3,7 @@
 #include "multilinetextbox.h"
 #include "text.h"
 
-Alert::Alert(s16 x, s16 y, u16 width, u16 height, char* title, char* text, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, font) {
+Alert::Alert(s16 x, s16 y, u16 width, u16 height, char* title, char* text, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	// Define OK button text
 	char* buttonText = "OK";

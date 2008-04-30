@@ -81,7 +81,7 @@ void Debug::createGUI() {
 
 	// Add debug window
 	if (_window == NULL) {
-		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE);
+		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE, 0);
 		_screen->addGadget(_window);
 		_window->draw();
 	}

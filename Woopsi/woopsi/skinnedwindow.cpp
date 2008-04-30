@@ -6,7 +6,7 @@
 #include "skinnedwindowclosebutton.h"
 #include "skinnedwindowdepthbutton.h"
 
-SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, WindowSkin* skin) : Window(x, y, width, height, title, flags, NULL) {
+SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, WindowSkin* skin) : Window(x, y, width, height, title, flags, NULL) {
 	_title = title;
 
 	_windowBorderTop = NULL;
@@ -21,13 +21,15 @@ SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u
 	// Parse skin information
 	_flags.borderless = _skin->window.borderless;
 	_flags.permeable = _skin->window.permeable;
-	_flags.closable = _skin->closeButton.visible;
 	_font = _skin->window.font.font;
 	_backColour = _skin->window.colours.back;
 	_shineColour = _skin->window.colours.shine;
 	_highlightColour = _skin->window.colours.highlight;
 	_shadowColour = _skin->window.colours.shadow;
 	_fillColour = _skin->window.colours.fill;
+
+	_windowFlags.showClose = _skin->closeButton.visible;
+	_windowFlags.showDepth = _skin->depthButton.visible;
 
 	// Add border to gadget list
 	if (!_flags.borderless) {
@@ -78,16 +80,17 @@ void SkinnedWindow::setBorderless(bool isBorderless) {
 		if (isBorderless) {
 			// Remove borders
 
-			if (_flags.closable) {
-				_closeButton->close();
-			}
+			// Close buttons if they are open
+			if (_windowFlags.showClose) _closeButton->close();
+			if (_windowFlags.showDepth) _depthButton->close();
 
-			_depthButton->close();
+			// Close all border gadgets
 			_windowBorderLeft->close();
 			_windowBorderRight->close();
 			_windowBorderBottom->close();
 			_windowBorderTop->close();
 
+			// Reset pointers
 			_closeButton = NULL;
 			_depthButton = NULL;
 			_windowBorderBottom = NULL;
@@ -125,7 +128,7 @@ void SkinnedWindow::createBorder() {
 	// Add gadgets to the start in reverse order
 
 	// Add close button
-	if (_flags.closable) {
+	if (_windowFlags.showClose) {
 		u16 closeY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->closeButton.bitmap.height / 2);
 		_closeButton = new SkinnedWindowCloseButton(_skin->closeButton.offsetX, closeY, _skin);
 		_closeButton->setEventHandler(this);
@@ -133,10 +136,12 @@ void SkinnedWindow::createBorder() {
 	}
 
 	// Add depth button
-	u16 depthY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->depthButton.bitmap.height / 2);
-	_depthButton = new SkinnedWindowDepthButton(_width - _skin->depthButton.bitmap.width - _skin->depthButton.offsetX, depthY, _skin);
-	_depthButton->setEventHandler(this);
-	insertGadget(_depthButton);
+	if (_windowFlags.showDepth) {
+		u16 depthY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->depthButton.bitmap.height / 2);
+		_depthButton = new SkinnedWindowDepthButton(_width - _skin->depthButton.bitmap.width - _skin->depthButton.offsetX, depthY, _skin);
+		_depthButton->setEventHandler(this);
+		insertGadget(_depthButton);
+	}
 
 	_windowBorderTop = new SkinnedWindowBorderTop(0, _width, _title, _skin);
 	_windowBorderLeft = new SkinnedWindowBorderLeft(0, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
@@ -210,12 +215,9 @@ bool SkinnedWindow::focus() {
 				_windowBorderTop->draw();
 				_windowBorderLeft->draw();
 				_windowBorderRight->draw();
-				_depthButton->draw();
-			}
 
-			// Run focus on close button
-			if (_closeButton != NULL) {
-				_closeButton->draw();
+				if (_closeButton != NULL) _closeButton->draw();
+				if (_depthButton != NULL) _depthButton->draw();
 			}
 
 			return true;
@@ -234,12 +236,9 @@ bool SkinnedWindow::blur() {
 			_windowBorderTop->draw();
 			_windowBorderLeft->draw();
 			_windowBorderRight->draw();
-			_depthButton->draw();
-		}
 
-		// Run blur on close button
-		if (_closeButton != NULL) {
-			_closeButton->draw();
+			if (_closeButton != NULL) _closeButton->draw();
+			if (_depthButton != NULL) _depthButton->draw();
 		}
 
 		// Take focus away from child gadgets
@@ -281,13 +280,7 @@ bool SkinnedWindow::resize(u16 width, u16 height) {
 		_width = width;
 		_height = height;
 
-		// Top border
-		if (_flags.closable) {
-			_windowBorderTop->resize(_width - WINDOW_CLOSE_BUTTON_WIDTH - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);
-		} else {
-			_windowBorderTop->resize(_width - WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT);
-		}
-
+		_windowBorderTop->resize(_width, WINDOW_TITLE_HEIGHT);
 		_windowBorderLeft->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 		_windowBorderRight->moveTo(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT);
 		_windowBorderRight->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
@@ -295,7 +288,7 @@ bool SkinnedWindow::resize(u16 width, u16 height) {
 		_windowBorderBottom->moveTo(0, _height - WINDOW_BORDER_SIZE);
 
 		// Depth button
-		_depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
+		if (_windowFlags.showDepth) _depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
 
 		draw();
 

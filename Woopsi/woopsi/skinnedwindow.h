@@ -18,7 +18,24 @@ class SkinnedWindowBorderTop;
 class SkinnedWindow : public Window, public EventHandler  {
 
 public:
-	SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, WindowSkin* skin);
+
+	/**
+	 * Enum listing flags that can be set in the constructor's "windowFlags" parameter.
+	 */
+	enum SkinnedWindowFlagType {
+		SKINNED_WINDOW_SHOW_CLOSE = 0x0001,					/**< Window shows close button */
+		SKINNED_WINDOW_SHOW_DEPTH = 0x0002					/**< Window shows depth button */
+	};
+
+	/**
+	 * Struct describing some basic properties of an AmigaWindow.
+	 */
+	typedef struct {
+		u8 showClose : 1;					/**< True if the close button is visible. */
+		u8 showDepth : 1;					/**< True if the depth button is visible. */
+	} SkinnedWindowFlags;
+
+	SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, WindowSkin* skin);
 
 	virtual void setBorderless(bool isBorderless);
 
@@ -39,6 +56,7 @@ public:
 protected:
 	char* _title;
 	const WindowSkin* _skin;
+	SkinnedWindowFlags _windowFlags;					/**< AmigaWindow-specific flags */
 
 	SkinnedWindowBorderTop* _windowBorderTop;
 	SkinnedWindowBorderLeft* _windowBorderLeft;

@@ -34,18 +34,20 @@ public:
 	enum CloseType {
 		CLOSE_TYPE_CLOSE = 0,				/**< Gadgets should call the close() method */
 		CLOSE_TYPE_HIDE = 1,				/**< Gadgets should call the hide() method */
-		CLOSE_TYPE_SHELVE = 2,				/**< Gadgets should call the shelve() method */
+		CLOSE_TYPE_SHELVE = 2				/**< Gadgets should call the shelve() method */
 	};
 
 	/**
 	 * Enum listing flags that can be set in the constructor's "flags" parameter.
 	 */
 	enum GadgetFlagType {
-		GADGET_BORDERLESS = 0x0001,			/**< Gadget has no border */
-		GADGET_CLOSABLE = 0x0002,			/**< Gadget can be closed by the user */
-		GADGET_DRAGGABLE = 0x0004,			/**< Gadget can be dragged by the user */
-		GADGET_PERMEABLE = 0x0008,			/**< Gadget's children can exceed this gadget's edges */
-		GADGET_DOUBLE_CLICKABLE = 0x0016	/**< Gadget can be double-clicked */
+		GADGET_BORDERLESS = 0x0001,					/**< Gadget has no border */
+		GADGET_DRAGGABLE = 0x0002,					/**< Gadget can be dragged by the user */
+		GADGET_PERMEABLE = 0x0004,					/**< Gadget's children can exceed this gadget's edges */
+		GADGET_DOUBLE_CLICKABLE = 0x0008,			/**< Gadget can be double-clicked */
+		GADGET_NO_SHIFT_CLICK_CHILDREN = 0x0010,	/**< Gadget does not send shift clicks to children */
+		GADGET_NO_RAISE_EVENTS = 0x0020,			/**< Gadget does not raise events */
+		GADGET_DECORATION = 0x0040					/**< Gadget is a decoration */
 	};
 
 	/**
@@ -70,7 +72,6 @@ public:
 		u8 borderless : 1;					/**< True if the gadget is borderless. */
 		u8 draggable : 1;					/**< True if the gadget can be dragged. */
 		u8 drawingEnabled : 1;				/**< True if the gadget can be drawn. */
-		u8 closable : 1;					/**< True if the gadget can be closed. */
 		u8 enabled : 1;						/**< True if the gadget is enabled. */
 		u8 decoration : 1;					/**< True if the gadget is a decoration. */
 		u8 permeable : 1;					/**< True if the gadget's children can exceed its dimensions. */

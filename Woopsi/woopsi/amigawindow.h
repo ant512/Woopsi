@@ -22,17 +22,33 @@ class AmigaWindow : public Window, public EventHandler {
 public:
 
 	/**
+	 * Enum listing flags that can be set in the constructor's "windowFlags" parameter.
+	 */
+	enum AmigaWindowFlagType {
+		AMIGA_WINDOW_SHOW_CLOSE = 0x0001,					/**< Window shows close button */
+		AMIGA_WINDOW_SHOW_DEPTH = 0x0002					/**< Window shows depth button */
+	};
+
+	/**
+	 * Struct describing some basic properties of an AmigaWindow.
+	 */
+	typedef struct {
+		u8 showClose : 1;					/**< True if the close button is visible. */
+		u8 showDepth : 1;					/**< True if the depth button is visible. */
+	} AmigaWindowFlags;
+
+	/**
 	 * Constructor.
 	 * @param x The x co-ordinate of the window, relative to its parent.
 	 * @param y The y co-ordinate of the window, relative to its parent.
 	 * @param width The width of the window.
 	 * @param height The height of the window.
 	 * @param title The text that should appear in the title bar.
-	 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the
-	 * Amiga borders.  Setting GADGET_CLOSEABLE shows the close button.
+	 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the Amiga borders.
+	 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
 	 * @param font The font to use for the window.
 	 */
-	AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font = NULL);
+	AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, FontBase* font = NULL);
 
 	/**
 	 * Show or hide the Amiga borders.
@@ -105,6 +121,7 @@ public:
 
 protected:
 	char* _title;									/**< The window's title */
+	AmigaWindowFlags _windowFlags;					/**< AmigaWindow-specific flags */
 
 	WindowBorderTop* _windowBorderTop;				/**< Pointer to the top border */
 	WindowBorderSide* _windowBorderLeft;			/**< Pointer to the left border */
