@@ -2,7 +2,7 @@
 #include "woopsi.h"
 #include "woopsifuncs.h"
 
-Screen::Screen(char* title, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, GADGET_DRAGGABLE, font) {
+Screen::Screen(char* title, u32 flags, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, flags, font) {
 	_titleHeight = 0;
 	_title = title;
 

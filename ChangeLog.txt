@@ -17,6 +17,9 @@ Change Log
        and depth gadgets to be hidden when gadgets are constructed.
      - AmigaWindow allows depth and close buttons to be shown/hidden at will.
      - SkinnedWindow allows depth and close buttons to be shown/hidden at will.
+     - Screen constructor accepts flags parameter.
+     - AmigaScreen constructor accepts flags parameter.
+     - AmigaScreen allows depth and flip buttons to be shown/hidden at will.
 
   V0.32 (200804327)
   

@@ -74,7 +74,7 @@ void Debug::createGUI() {
 
 	// Add debug screen
 	if (_screen == NULL) {
-		_screen = new AmigaScreen("Debug");
+		_screen = new AmigaScreen("Debug", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 		woopsiApplication->addGadget(_screen);
 		_screen->draw();
 	}

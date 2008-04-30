@@ -193,11 +193,11 @@ void Demo::startup() {
 
 
 	// Create screens
-	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.32");
+	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.32", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
-	AmigaScreen* newScreen2 = new AmigaScreen("Another screen");
+	AmigaScreen* newScreen2 = new AmigaScreen("Another screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen2);
 
 	// Add progress bar
@@ -297,7 +297,7 @@ void Demo::startup() {
 	listbox->removeOption(9);
 
 	// Add another screen
-	AmigaScreen* demoScreen = new AmigaScreen("Demos");
+	AmigaScreen* demoScreen = new AmigaScreen("Demos", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(demoScreen);
 	demoScreen->setPermeable(true);
 	demoScreen->flipToTopScreen();

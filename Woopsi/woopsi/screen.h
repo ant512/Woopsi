@@ -4,6 +4,10 @@
 #include <nds.h>
 #include "gadget.h"
 
+#define SCREEN_TITLE_HEIGHT 13
+#define SCREEN_FLIP_BUTTON_WIDTH 16
+#define SCREEN_DEPTH_BUTTON_WIDTH 16
+
 using namespace std;
 
 /**
@@ -19,7 +23,7 @@ public:
 	 * @param title The title of the screen; not displayed by default.
 	 * @param font The font to use with the screen.
 	 */
-	Screen(char* title, FontBase* font = NULL);
+	Screen(char* title, u32 flags, FontBase* font = NULL);
 	
 	/**
 	 * Insert the properties of the space within this gadget that is available

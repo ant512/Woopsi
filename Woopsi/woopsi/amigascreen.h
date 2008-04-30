@@ -25,9 +25,25 @@ class AmigaScreen : public Screen, public EventHandler {
 public:
 
 	/**
+	 * Enum listing flags that can be set in the constructor's "screenFlags" parameter.
+	 */
+	enum AmigaScreenFlagType {
+		AMIGA_SCREEN_SHOW_FLIP = 0x0001,			/**< Screen shows flip button */
+		AMIGA_SCREEN_SHOW_DEPTH = 0x0002			/**< Screen shows depth button */
+	};
+
+	/**
+	 * Struct describing some basic properties of an AmigaScreen.
+	 */
+	typedef struct {
+		u8 showFlipButton : 1;						/**< True if the flip button is visible. */
+		u8 showDepthButton : 1;						/**< True if the depth button is visible. */
+	} AmigaScreenFlags;
+
+	/**
 	 * Constructor.
 	 */
-	AmigaScreen(char* title, FontBase* font = NULL);
+	AmigaScreen(char* title, u32 flags, u32 screenFlags, FontBase* font = NULL);
 
 	/**
 	 * Sets this gadget's border state.  Setting to false hides the title bar.
@@ -36,15 +52,57 @@ public:
 	virtual void setBorderless(bool isBorderless);
 
 	/**
-	 * Handles events fired by the decoration gadgets.
-	 * @param e The event arguments.
+	 * Handle events fired by decoration gadgets.
+	 * @param e Event arguments to process.
+	 * @return True if the event was processed.
 	 */
 	virtual bool handleEvent(const EventArgs& e);
+
+	/**
+	 * Shows the flip button if it is hidden.  Has no effect
+	 * if the screen is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void showFlipButton();
+
+	/**
+	 * Shows the depth button if it is hidden.  Has no effect
+	 * if the screen is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void showDepthButton();
+
+	/**
+	 * Hides the flip button if it is visible.  Has no effect
+	 * if the screen is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void hideFlipButton();
+
+	/**
+	 * Hides the depth button if it is hidden.  Has no effect
+	 * if the screen is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void hideDepthButton();
+
+	/**
+	 * Does the screen have a flip button?
+	 * @return True if the screen has a flip button.
+	 */
+	virtual inline const bool hasFlipButton() const { return _screenFlags.showFlipButton; };
+
+	/**
+	 * Does the screen have a depth button?
+	 * @return True if the screen has a depth button.
+	 */
+	virtual inline const bool hasDepthButton() const { return _screenFlags.showDepthButton; };
 
 protected:
 	ScreenTitle* _screenTitle;						/**< Title of the screen */
 	DecorationGlyphButton* _depthButton;			/**< Pointer to the screen's depth button */
 	DecorationGlyphButton* _flipButton;				/**< Pointer to the screen's flip button */
+	AmigaScreenFlags _screenFlags;					/**< AmigaScreen-specific flags */
 
 	/**
 	 * Destructor.
