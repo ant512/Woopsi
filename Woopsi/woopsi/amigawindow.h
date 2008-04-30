@@ -25,16 +25,16 @@ public:
 	 * Enum listing flags that can be set in the constructor's "windowFlags" parameter.
 	 */
 	enum AmigaWindowFlagType {
-		AMIGA_WINDOW_SHOW_CLOSE = 0x0001,					/**< Window shows close button */
-		AMIGA_WINDOW_SHOW_DEPTH = 0x0002					/**< Window shows depth button */
+		AMIGA_WINDOW_SHOW_CLOSE = 0x0001,			/**< Window shows close button */
+		AMIGA_WINDOW_SHOW_DEPTH = 0x0002			/**< Window shows depth button */
 	};
 
 	/**
 	 * Struct describing some basic properties of an AmigaWindow.
 	 */
 	typedef struct {
-		u8 showClose : 1;					/**< True if the close button is visible. */
-		u8 showDepth : 1;					/**< True if the depth button is visible. */
+		u8 showCloseButton : 1;						/**< True if the close button is visible. */
+		u8 showDepthButton : 1;						/**< True if the depth button is visible. */
 	} AmigaWindowFlags;
 
 	/**
@@ -118,6 +118,34 @@ public:
 	 * @return True if the event was processed.
 	 */
 	virtual bool handleEvent(const EventArgs& e);
+
+	/**
+	 * Shows the close button if it is hidden.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void showCloseButton();
+
+	/**
+	 * Shows the depth button if it is hidden.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void showDepthButton();
+
+	/**
+	 * Hides the close button if it is visible.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void hideCloseButton();
+
+	/**
+	 * Hides the depth button if it is hidden.  Has no effect
+	 * if the window is borderless.
+	 * Will redraw the gadget.
+	 */
+	virtual void hideDepthButton();
 
 protected:
 	char* _title;									/**< The window's title */
