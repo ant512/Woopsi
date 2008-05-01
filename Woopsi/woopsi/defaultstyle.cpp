@@ -1,4 +1,5 @@
 #include "defaultstyle.h"
+#include "defines.h"
 
 u16 DefaultStyle::backColour = woopsiRGB(20, 20, 20);
 u16 DefaultStyle::shineColour = woopsiRGB(31, 31, 31);
