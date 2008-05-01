@@ -155,6 +155,18 @@ public:
 	 */
 	virtual void sort();
 
+	/**
+	 * Get the total number of options.
+	 * @return The number of options.
+	 */
+	virtual inline const s32 getOptionCount() const { return _options.size(); };
+
+	/**
+	 * Get the height of a single option.
+	 * @return The height of an option.
+	 */
+	virtual const u16 getOptionHeight() const;
+
 protected:
 	DynamicArray<ListBoxOption*> _options;			/**< Array of options. */
 	u8 _optionPadding;								/**< Padding between options. */
@@ -164,12 +176,6 @@ protected:
 	 * Destructor.
 	 */
 	virtual ~ListBox();
-
-	/**
-	 * Get the height of a single option.
-	 * @return The height of an option.
-	 */
-	virtual const u16 getOptionHeight() const;
 
 	/**
 	 * Select or deselect an option by its index.  Does not deselect any other selected options.

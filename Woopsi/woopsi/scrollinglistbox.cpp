@@ -1,5 +1,6 @@
 #include "scrollinglistbox.h"
 #include "scrollbarvertical.h"
+#include "debug.h"
 
 ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_scrollbarWidth = 9;
@@ -16,8 +17,8 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase
 	_listbox->getClientRect(rect);
 	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, font);
 	_scrollbar->setMinimumValue(0);
-	_scrollbar->setMaximumValue(_listbox->getCanvasHeight());
-	_scrollbar->setPageSize(rect.height);
+	_scrollbar->setMaximumValue(0);
+	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
 	_scrollbar->setEventHandler(this);
 	_scrollbar->resizeGrip();
 
@@ -40,7 +41,7 @@ bool ScrollingListBox::handleEvent(const EventArgs& e) {
 				case EVENT_VALUE_CHANGE:
 					if (_listbox != NULL) {
 						_listbox->setRaisesEvents(false);
-						_listbox->jump(0, 0 - _scrollbar->getValue());
+						_listbox->jump(0, 0 - (_scrollbar->getValue() * _listbox->getOptionHeight()));
 						_listbox->setRaisesEvents(true);
 						return true;
 					}
@@ -50,14 +51,12 @@ bool ScrollingListBox::handleEvent(const EventArgs& e) {
 			}
 		} else if (e.gadget == _listbox) {
 
-			// Textbox events
+			// Listbox events
 			switch (e.type) {
 				case EVENT_SCROLL:
 					if (_scrollbar != NULL) {
 						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setMaximumValue(_listbox->getCanvasHeight());
-						_scrollbar->resizeGrip();
-						_scrollbar->setValue(0 - _listbox->getCanvasY());
+						_scrollbar->setValue((0 - _listbox->getCanvasY()) / _listbox->getOptionHeight());
 						_scrollbar->setRaisesEvents(true);
 						return true;
 					}
@@ -108,6 +107,11 @@ bool ScrollingListBox::resize(u16 width, u16 height) {
 	_listbox->resize(width - _scrollbarWidth, height);
 	_scrollbar->resize(_scrollbarWidth, height);
 
+	// Adjust scrollbar page size
+	Rect rect;
+	getClientRect(rect);
+	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
+
 	// Move the scrollbar
 	_scrollbar->moveTo(width - _scrollbarWidth, 0);
 
@@ -130,15 +134,18 @@ void ScrollingListBox::setFont(FontBase* font) {
 
 void ScrollingListBox::addOption(const char* text, const u32 value) {
 	_listbox->addOption(text, value);
-	_scrollbar->draw();
+	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->resizeGrip();
 }
 
 void ScrollingListBox::removeOption(const s32 index) {
 	_listbox->removeOption(index);
-	_scrollbar->draw();
+	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->resizeGrip();
 }
 
 void ScrollingListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 	_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
-	_scrollbar->draw();
+	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->resizeGrip();
 }

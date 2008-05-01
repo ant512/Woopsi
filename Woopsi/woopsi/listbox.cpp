@@ -325,7 +325,7 @@ void ListBox::resizeCanvas() {
 	getClientRect(rect);
 
 	// Resize the canvas
-	_canvasHeight = (_options.size() * getOptionHeight()) - 1;
+	_canvasHeight = (_options.size() * getOptionHeight());
 
 	// Ensure canvas is at least as tall as the gadget
 	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;

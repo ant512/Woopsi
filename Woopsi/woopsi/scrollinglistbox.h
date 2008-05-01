@@ -153,6 +153,22 @@ public:
 	};
 
 	/**
+	 * Get the total number of options.
+	 * @return The number of options.
+	 */
+	virtual inline const s32 getOptionCount() const {
+		return _listbox->getOptionCount();
+	};
+
+	/**
+	 * Get the height of a single option.
+	 * @return The height of an option.
+	 */
+	virtual inline const u16 getOptionHeight() const {
+		return _listbox->getOptionHeight();
+	};
+
+	/**
 	 * Handles events raised by its sub-gadgets.
 	 */
 	virtual bool handleEvent(const EventArgs& e);
