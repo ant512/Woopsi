@@ -187,7 +187,7 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, char* stri
 }
 
 // Draw a single pixel to the bitmap
-void GraphicsPort::drawClippedPixel(u16 x, u16 y, u16 colour) {
+void GraphicsPort::drawClippedPixel(s16 x, s16 y, u16 colour) {
 	u32 pos = (y * _bitmapWidth) + x;
 	_bitmap[pos] = colour;
 }
@@ -209,7 +209,7 @@ void GraphicsPort::drawClippedHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 
 /// Draw a vertical line - internal function
 void GraphicsPort::drawClippedVertLine(s16 x, s16 y, s16 height, u16 colour) {
-	for (u16 i = y; i < y + height; i++) {
+	for (s16 i = y; i < y + height; i++) {
 		drawClippedPixel(x, i, colour);
 	}
 }
@@ -817,4 +817,41 @@ bool GraphicsPort::clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Gad
 
 	// Return true as box can be drawn
 	return true;
+}
+
+void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
+
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+
+	if (_clipRect == NULL) {
+		// Draw all visible rects
+		for (u8 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
+			clipPixel(x, y, colour, _gadget->getVisibleRectCache()->at(i));
+		}
+	} else {
+		// Draw single rectangle
+		clipPixel(x, y, colour, *_clipRect);
+	}
+}
+
+// Clip and draw pixel
+void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipRect) {
+	s16 clipX1 = clipRect.x;
+	s16 clipY1 = clipRect.y;
+	s16 clipX2 = clipRect.x + clipRect.width - 1;
+	s16 clipY2 = clipRect.y + clipRect.height - 1;
+
+	// Attempt to clip and draw
+	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
+		// Compensate for top screen offset
+		if (y >= TOP_SCREEN_Y_OFFSET) {
+			y -= TOP_SCREEN_Y_OFFSET;
+		}
+	
+		drawClippedPixel(x, y, colour);
+	}
 }

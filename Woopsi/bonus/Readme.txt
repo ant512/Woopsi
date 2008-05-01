@@ -18,3 +18,8 @@ Collections
   instead using its own DynamicArray class.  This is done to reduce the size of
   the Woopsi ROM.  The collections in this folder are a linked list and a
   hashmap.  Both have associated iterator classes.
+  
+Gadgets
+-------
+
+  Extra gadgets that aren't officially part of Woopsi.

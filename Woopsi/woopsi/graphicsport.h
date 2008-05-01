@@ -57,7 +57,7 @@ public:
 	 * @param y The y co-ordinate of the pixel.
 	 * @param colour The colour of the pixel.
 	 */
-	void drawPixel(u16 x, u16 y, u16 colour);
+	void drawPixel(s16 x, s16 y, u16 colour);
 	
 	/**
 	 * Draw a filled rectangle to the bitmap.
@@ -252,7 +252,7 @@ private:
 	u16 _bitmapHeight;							/**< Height of the bitmap that the port will draw to */
 
 	// Internal clipping routines
-	void clipPixel(u16 x, u16 y, u16 colour, const Gadget::Rect& clipRect);
+	void clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipRect);
 	void clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Gadget::Rect& clipRect);
 	void clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Gadget::Rect& clipRect);
 	void clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadget::Rect& clipRect);
@@ -265,7 +265,7 @@ private:
 	void clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect& clipRect);
 
 	// Drawing functions that take pre-clipped values
-	void drawClippedPixel(u16 x, u16 y, u16 colour);
+	void drawClippedPixel(s16 x, s16 y, u16 colour);
 	void drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
 	void drawClippedHorizLine(s16 x, s16 y, s16 width, u16 colour);
 	void drawClippedVertLine(s16 x, s16 y, s16 height, u16 colour);

@@ -10,6 +10,7 @@ Change Log
      - SkinnedWindow resizes titlebar correctly.
      - Wired up SkinnedWindow depth button visibility to skin data.
      - More consistent names for SkinnedScreen button pointers.
+     - Added missing GraphicsPort::drawPixel() functions.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
@@ -25,6 +26,7 @@ Change Log
      - SkinnedScreen allows depth and flip buttons to be shown/hidden at will.
      - Added ScrollingListBox class.
      - Added DefaultStyle class for control over gadget default colours.
+     - Added DimmedScreen class to the bonus folder.
 
   V0.32 (200804327)
   
