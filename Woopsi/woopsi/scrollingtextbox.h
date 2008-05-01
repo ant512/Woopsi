@@ -129,7 +129,6 @@ protected:
 	ScrollbarVertical* _scrollbar;					/**< Pointer to the scrollbar */
 	u8 _scrollbarWidth;								/**< Width of the scrollbar */
 
-
 	/**
 	 * Destructor.
 	 */

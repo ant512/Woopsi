@@ -48,6 +48,7 @@
 #include "listbox.h"
 #include "progressbar.h"
 #include "cyclebutton.h"
+#include "scrollinglistbox.h"
 #include "woopsi.h"
 
 #endif

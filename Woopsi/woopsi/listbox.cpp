@@ -333,6 +333,7 @@ void ListBox::resizeCanvas() {
 
 void ListBox::sort() {
 	quickSort(0, _options.size() - 1);
+	draw();
 }
 
 void ListBox::quickSort(const s32 start, const s32 end) {

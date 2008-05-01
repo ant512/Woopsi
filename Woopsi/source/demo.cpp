@@ -278,7 +278,7 @@ void Demo::startup() {
 	scrollingBox->addContextMenuItem("Test 4", 0);
 	scrollingBox->addContextMenuItem("Test 5", 0);
 
-	ListBox* listbox = new ListBox(30, 30, 100, 100);
+	ScrollingListBox* listbox = new ScrollingListBox(30, 30, 100, 100);
 	textWindow->addGadget(listbox);
 	
 	listbox->addOption("ListBox Test", 0, listbox->getShineColour(), listbox->getBackColour(), listbox->getShineColour(), listbox->getHighlightColour());
