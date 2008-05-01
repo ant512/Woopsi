@@ -372,10 +372,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\dimmedscreen.h"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\dynamicarray.h"
 				>
 			</File>
