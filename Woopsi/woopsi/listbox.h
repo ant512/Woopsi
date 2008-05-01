@@ -169,7 +169,7 @@ protected:
 	 * Get the height of a single option.
 	 * @return The height of an option.
 	 */
-	virtual u16 getOptionHeight();
+	virtual const u16 getOptionHeight() const;
 
 	/**
 	 * Select or deselect an option by its index.  Does not deselect any other selected options.

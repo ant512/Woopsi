@@ -314,7 +314,7 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 	return false;
 }
 
-u16 ListBox::getOptionHeight() {
+const u16 ListBox::getOptionHeight() const {
 	return _font->getHeight() + (_optionPadding << 1);
 }
 
