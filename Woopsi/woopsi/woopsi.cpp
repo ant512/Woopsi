@@ -5,6 +5,7 @@
 #include "font.h"
 #include "sysfont.h"
 #include "contextmenu.h"
+#include "defaultstyle.h"
 
 // Instantiate singleton
 Woopsi* Woopsi::singleton = NULL;
@@ -474,6 +475,11 @@ void Woopsi::eraseRect(Rect rect) {
 
 // Return a pointer to the static system font
 FontBase* Woopsi::getSystemFont() {
+
+	// Attempt to retrieve the DefaultStyle font
+	if (DefaultStyle::font != NULL) {
+		_systemFont = DefaultStyle::font;
+	}
 
 	// Create font instance if it does not exist yet
 	if (_systemFont == NULL) {
