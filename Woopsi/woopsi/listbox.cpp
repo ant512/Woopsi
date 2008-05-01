@@ -330,3 +330,37 @@ void ListBox::resizeCanvas() {
 	// Ensure canvas is at least as tall as the gadget
 	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;
 }
+
+void ListBox::sort() {
+	quickSort(0, _options.size() - 1);
+}
+
+void ListBox::quickSort(const s32 start, const s32 end) {
+	if (end > start) {
+
+		int left = start;
+		int right = end;
+
+		char* pivot = _options[(start + end) >> 1]->text;
+
+		do {
+			while ((strcmp(_options[left]->text, pivot) < 0) && (left < end)) left++;
+			while ((strcmp(_options[right]->text, pivot) > 0) && (right > start)) right--;
+
+			if (left > right) break;
+
+			swapOptions(left, right);
+			left++;
+			right--;
+		} while (left <= right);
+
+		quickSort(start, right);
+		quickSort(left, end);
+	}
+}
+
+void ListBox::swapOptions(const s32 index1, const s32 index2) {
+	ListBoxOption* tmp = _options[index1];
+	_options[index1] = _options[index2];
+	_options[index2] = tmp;
+}

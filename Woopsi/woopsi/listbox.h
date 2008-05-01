@@ -150,6 +150,11 @@ public:
 	 */
 	virtual inline const ListBoxOption* getOption(const s32 index) const { return _options[index]; };
 
+	/**
+	 * Sort the options alphabetically by the text of the options.
+	 */
+	virtual void sort();
+
 protected:
 	DynamicArray<ListBoxOption*> _options;			/**< Array of options. */
 	u8 _optionPadding;								/**< Padding between options. */
@@ -174,6 +179,16 @@ protected:
 	 * @param selected True to select the option, false to deselect it.
 	 */
 	virtual void setOptionSelected(const s32 index, const bool selected);
+
+	/**
+	 * Quick sort the options alphabetically by the text of the options.
+	 */
+	virtual void quickSort(const s32 start, const s32 end);
+
+	/**
+	 * Swap the locations of two options in the array.
+	 */
+	virtual void swapOptions(const s32 index1, const s32 index2);
 };
 
 #endif
