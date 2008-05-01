@@ -478,7 +478,7 @@ FontBase* Woopsi::getSystemFont() {
 
 	// Attempt to retrieve the DefaultStyle font
 	if (DefaultStyle::font != NULL) {
-		_systemFont = DefaultStyle::font;
+		return DefaultStyle::font;
 	}
 
 	// Create font instance if it does not exist yet
