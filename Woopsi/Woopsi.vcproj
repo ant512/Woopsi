@@ -98,6 +98,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\defaultstyle.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\fixedwidthfontbase.cpp"
 				>
 			</File>
@@ -294,10 +298,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Release\Woopsi.nds"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\woopsifuncs.cpp"
 				>
 			</File>
@@ -361,6 +361,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\decorationglyphbutton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\defaultstyle.h"
 				>
 			</File>
 			<File

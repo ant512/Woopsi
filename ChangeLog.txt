@@ -22,8 +22,9 @@ Change Log
      - AmigaScreen constructor accepts flags parameter.
      - SkinnedScreen constructor accepts flags parameter.
      - AmigaScreen allows depth and flip buttons to be shown/hidden at will.
-	 - SkinnedScreen allows depth and flip buttons to be shown/hidden at will.
+     - SkinnedScreen allows depth and flip buttons to be shown/hidden at will.
      - Added ScrollingListBox class.
+     - Added DefaultStyle class for control over gadget default colours.
 
   V0.32 (200804327)
   
