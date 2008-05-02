@@ -201,6 +201,14 @@ public:
 	 */
 	virtual void setFont(FontBase* font);
 
+	/**
+	 * Sets the outline type of the list box.
+	 * @param outline The outline type.
+	 */
+	inline void setOutlineType(const OutlineType outline) {
+		_listbox->setOutlineType(outline);
+	};
+
 protected:
 	ListBox* _listbox;									/**< Pointer to the list box */
 	ScrollbarVertical* _scrollbar;						/**< Pointer to the scrollbar */
