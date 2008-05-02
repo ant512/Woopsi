@@ -8,7 +8,7 @@
 #include "radiobuttongroup.h"
 #include "checkbox.h"
 
-SimpleWindow::SimpleWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font) : AmigaWindow(x, y, width, height, title, flags, font) {
+SimpleWindow::SimpleWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font) : AmigaWindow(x, y, width, height, title, flags, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH, font) {
 }
 
 SimpleWindow::~SimpleWindow() {

@@ -3,7 +3,7 @@
 #include "superbitmap.h"
 #include "alert.h"
 
-SimpleScreen::SimpleScreen(char* title, FontBase* font) : AmigaScreen(title, font) {
+SimpleScreen::SimpleScreen(char* title, FontBase* font) : AmigaScreen(title, Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP, font) {
 }
 
 SimpleScreen::~SimpleScreen() {
