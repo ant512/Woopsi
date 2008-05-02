@@ -9,6 +9,15 @@ using namespace std;
  * Hacky class that, rather than drawing to the screen, dims it to half of its intensity.
  * Can be used as a screen for modal windows giving an Ubuntu-style faded background.  All
  * child gadgets of the screen are not dimmed.
+ * Note that any activity that takes place behind the screen won't actually get drawn.  If,
+ * for example, you open a screen and put an animation on it, then open a DimmedScreen
+ * above it, the animation will appear to freeze.  This is because the bottom screen does
+ * not think it is visible since another screen is open above it.
+ * There are two workarounds for this.  One is to stop all animations/VBL events/etc on
+ * lower gadgets when opening a DimmedScreen so that they *do* actually freeze.  The other
+ * way is to register the DimmedScreen for VBL events and redraw every time a VBL event
+ * is raised, but this is likely to be very slow.
+ * 
  */
 class DimmedScreen : public Screen {
 public:
