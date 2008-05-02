@@ -10,6 +10,9 @@ using namespace std;
 class ScrollbarVertical;
 
 /**
+ * Gadget containing a ListBox and a vertical scrollbar.  Exposed
+ * methods are more or less identical to the methods exposed by the ListBox
+ * to ensure that the two are interchangeable.
  */
 class ScrollingListBox : public Gadget, public EventHandler {
 public:

@@ -6,6 +6,12 @@
 using namespace std;
 
 /**
+ * Class providing a scrollable list of options.  The ListBox can be set up to only allow one
+ * selection or multiple selections.  Processes double-clicks and raises double-click events,
+ * so that a double-click on an option can be made to automatically select and close a
+ * window/etc.
+ * The options themselves have user-definable text and background colours for their selected
+ * and unselected states.
  */
 class ListBox : public ScrollingPanel {
 public:
