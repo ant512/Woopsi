@@ -5,14 +5,18 @@
 
 using namespace std;
 
+/**
+ * Hacky class that, rather than drawing to the screen, dims it to half of its intensity.
+ * Can be used as a screen for modal windows giving an Ubuntu-style faded background.  All
+ * child gadgets of the screen are not dimmed.
+ */
 class DimmedScreen : public Screen {
 public:
 	/**
 	 * Constructor.
-	 * @param title The title of the screen; not displayed by default.
 	 * @param font The font to use with the screen.
 	 */
-	DimmedScreen(char* title, u32 flags, FontBase* font = NULL) : Screen(title, flags, font) { };
+	DimmedScreen() : Screen("", 0) { };
 
 	/**
 	 * Override the Gadget::draw() method.
@@ -43,18 +47,11 @@ public:
 				// Get pixel data directly from the framebuffer
 				u16 colour = *(DrawBg[screen] + (x + (y * SCREEN_WIDTH)));
 				
-				// Split into components
-				s16 r = colour & 31;
-				s16 g = (colour >> 5) & 31;
-				s16 b = (colour >> 10) & 31;
-			
-				// Dim the colour
-				if (r > 10) r -= 10; else r = 0;
-				if (g > 10) g -= 10; else g = 0;
-				if (b > 10) b -= 10; else b = 0;
+				// Halve the intensity of the colour (cheers Jeff)
+				colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
 
 				// Write back to framebuffer
-				*(DrawBg[screen] + (x + (y * SCREEN_WIDTH))) = woopsiRGB(r, g, b);
+				*(DrawBg[screen] + (x + (y * SCREEN_WIDTH))) = 0x8000 | colour;
 			}
 		}
 
