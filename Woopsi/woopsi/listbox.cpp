@@ -271,8 +271,8 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 
 			// Double-click - select the item exclusively
+			deselectAllOptions();
 			setSelectedIndex(newSelectedIndex);
-
 
 			// Standard double-click code follows, sans sub-gadget stuff
 			_flags.clicked = true;
