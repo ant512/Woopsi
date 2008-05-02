@@ -28,6 +28,7 @@ Change Log
      - Added DefaultStyle class for control over gadget default colours.
      - Added DimmedScreen class to the bonus folder.
      - Added Requester class.
+     - Added FileRequester class to the bonus folder.
 
   V0.32 (200804327)
   

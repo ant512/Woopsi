@@ -12,9 +12,18 @@ class Button;
  * Class providing a window containing a listbox, an OK button and a Cancel button.
  * Designed to allow users selection a file from the filesytem.  When a file is
  * selected the requester will automatically close.
+ *
  * To read the value of the selected option or options, you should listen for the
  * value changed event.  This will fire when the user double-clicks an option or
  * clicks the OK button.
+ *
+ * To add this class to a project:
+ * - Enable libfat in the makefile by changing the line that reads "LIBS	:= -lnds9" to
+ *   "LIBS	:= -lfat -lnds9";
+ * - Call "fatInitDefault();" somewhere in your setup code.
+ *
+ * Note that including libfat increases the ROM size by ~100K.  Also note that this
+ * code is not compatible with the SDL build of Woopsi.
  */
 class FileRequester : public AmigaWindow {
 public:

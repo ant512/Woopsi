@@ -61,21 +61,24 @@ bool ScrollingListBox::handleEvent(const EventArgs& e) {
 						return true;
 					}
 					break;
+
+				case EVENT_DOUBLE_CLICK:
+
+					// Raise double-click events from list box to event handler
+					if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
+						EventArgs newEvent;
+						newEvent.eventX = e.eventX;
+						newEvent.eventY = e.eventY;
+						newEvent.gadget = this;
+						newEvent.keyCode = e.keyCode;
+						newEvent.type = e.type;
+
+						_eventHandler->handleEvent(newEvent);
+					}
+					break;
 				default:
 					break;
 			}
-		}
-
-		// Raise events to event handler
-		if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-			EventArgs newEvent;
-			newEvent.eventX = e.eventX;
-			newEvent.eventY = e.eventY;
-			newEvent.gadget = this;
-			newEvent.keyCode = e.keyCode;
-			newEvent.type = e.type;
-
-			_eventHandler->handleEvent(newEvent);
 		}
 	}
 
@@ -148,4 +151,13 @@ void ScrollingListBox::removeOption(const s32 index) {
 	_listbox->removeOption(index);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
 	_scrollbar->resizeGrip();
+
+	// Reposition grip if necessary
+	if (_scrollbar->getValue() > _listbox->getOptionCount()) _scrollbar->setValue(0);
 }
+
+void ScrollingListBox::removeAllOptions() {
+	_listbox->removeAllOptions();
+	_scrollbar->setMaximumValue(0);
+	_scrollbar->setValue(0);
+};

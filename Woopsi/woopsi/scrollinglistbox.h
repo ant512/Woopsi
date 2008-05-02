@@ -54,9 +54,7 @@ public:
 	/**
 	 * Remove all options from the gadget.  Does not redraw the gadget.
 	 */
-	virtual inline void removeAllOptions() {
-		_listbox->removeAllOptions();
-	};
+	virtual void removeAllOptions();
 
 	/**
 	 * Select an option by its index.  Does not deselect any other selected options.
