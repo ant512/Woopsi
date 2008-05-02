@@ -1,5 +1,5 @@
-#ifndef _REQUESTER_H_
-#define _REQUESTER_H_
+#ifndef _FILE_REQUESTER_H_
+#define _FILE_REQUESTER_H_
 
 #include "amigawindow.h"
 #include "scrollinglistbox.h"
@@ -10,14 +10,15 @@ class Button;
 
 /**
  * Class providing a window containing a listbox, an OK button and a Cancel button.
- * Designed to allow users to make a selection from a number of options.  When an
- * option is selected the requester will automatically close.
+ * Designed to allow users selection a file from the filesytem.  When a file is
+ * selected the requester will automatically close.
  * To read the value of the selected option or options, you should listen for the
  * value changed event.  This will fire when the user double-clicks an option or
  * clicks the OK button.
  */
-class Requester : public AmigaWindow {
+class FileRequester : public AmigaWindow {
 public:
+
 	/**
 	 * Constructor.
 	 * @param x The x co-ordinate of the window.
@@ -28,7 +29,7 @@ public:
 	 * @param text The text to display in the window.
 	 * @param font Optional font to use for text output.
 	 */
-	Requester(s16 x, s16 y, u16 width, u16 height, char* title, FontBase* font = NULL);
+	FileRequester(s16 x, s16 y, u16 width, u16 height, char* title, char* path, FontBase* font = NULL);
 
 	/**
 	 * Handles events raised by its sub-gadgets.
@@ -129,15 +130,33 @@ public:
 	 */
 	virtual bool resize(u16 width, u16 height);
 
+	/**
+	 * Set the displayed path.
+	 * @param path The new path.
+	 */
+	virtual void setPath(const char* path);
+
+	/**
+	 * Append a new path component to the current path.  Automatically
+	 * inserts trailing slash.
+	 */
+	virtual void appendPath(const char* path);
+
 protected:
 	Button* _okButton;					/**< Pointer to the OK button */
 	Button* _cancelButton;				/**< Pointer to the cancel button */
 	ScrollingListBox* _listbox;			/**< Pointer to the list box */
+	char* _path;						/**< Path currently displayed */
 
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~Requester() { };
+	virtual inline ~FileRequester() { };
+
+	/**
+	 * Populate list with directory data.
+	 */
+	virtual void readDirectory();
 };
 
 #endif

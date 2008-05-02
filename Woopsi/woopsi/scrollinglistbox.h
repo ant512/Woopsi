@@ -45,12 +45,18 @@ public:
 	 */
 	virtual void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
 
-
 	/**
 	 * Remove an option from the gadget by its index.  Does not redraw the gadget.
 	 * @param index The index of the option to remove.
 	 */
 	virtual void removeOption(const s32 index);
+
+	/**
+	 * Remove all options from the gadget.  Does not redraw the gadget.
+	 */
+	virtual inline void removeAllOptions() {
+		_listbox->removeAllOptions();
+	};
 
 	/**
 	 * Select an option by its index.  Does not deselect any other selected options.

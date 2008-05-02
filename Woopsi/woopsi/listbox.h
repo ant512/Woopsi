@@ -53,6 +53,11 @@ public:
 	virtual void removeOption(const s32 index);
 
 	/**
+	 * Remove all options from the gadget.  Does not redraw the gadget.
+	 */
+	virtual void removeAllOptions();
+
+	/**
 	 * Add a new option to the gadget.  Does not redraw the gadget.
 	 * @param text Text to show in the option.
 	 * @param value The value of the option.

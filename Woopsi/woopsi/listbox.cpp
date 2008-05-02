@@ -12,14 +12,7 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Scrollin
 }
 
 ListBox::~ListBox() {
-	
-	// Delete all option data
-	for (s32 i = 0; i < _options.size(); i++) {
-		delete _options[i]->text;
-		delete _options[i];
-	}
-	
-	_options.clear();
+	removeAllOptions();
 }
 
 void ListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
@@ -364,4 +357,15 @@ void ListBox::swapOptions(const s32 index1, const s32 index2) {
 	ListBoxOption* tmp = _options[index1];
 	_options[index1] = _options[index2];
 	_options[index2] = tmp;
+}
+
+void ListBox::removeAllOptions() {
+
+	// Delete all option data
+	for (s32 i = 0; i < _options.size(); i++) {
+		delete _options[i]->text;
+		delete _options[i];
+	}
+	
+	_options.clear();
 }

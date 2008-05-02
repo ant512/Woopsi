@@ -29,7 +29,7 @@
 				CleanCommandLine="make clean"
 				Output="$(ConfigurationName)\$(ProjectName).nds"
 				PreprocessorDefinitions="WIN32;NDEBUG;VC7"
-				IncludeSearchPath="&quot;$(DKP_HOME)\PAlib\include\nds&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\arm7&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\arm9&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\netinet&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\sys&quot;"
+				IncludeSearchPath="&quot;$(DKP_HOME)\PAlib\include\nds&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\arm7&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\arm9&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\netinet&quot;;&quot;$(DKP_HOME)\PAlib\include\nds\sys&quot;;&quot;$(DKP_HOME)\libnds\include&quot;"
 				ForcedIncludes=""
 				AssemblySearchPath=""
 				ForcedUsingAssemblies=""
