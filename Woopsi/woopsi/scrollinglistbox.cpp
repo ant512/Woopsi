@@ -138,14 +138,14 @@ void ScrollingListBox::addOption(const char* text, const u32 value) {
 	_scrollbar->resizeGrip();
 }
 
-void ScrollingListBox::removeOption(const s32 index) {
-	_listbox->removeOption(index);
+void ScrollingListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
+	_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
 	_scrollbar->resizeGrip();
 }
 
-void ScrollingListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
-	_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
+void ScrollingListBox::removeOption(const s32 index) {
+	_listbox->removeOption(index);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
 	_scrollbar->resizeGrip();
 }

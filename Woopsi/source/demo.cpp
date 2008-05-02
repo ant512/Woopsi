@@ -330,11 +330,24 @@ void Demo::startup() {
 	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
 	newScreen2->addGadget(_alert);
 
+	Requester* req = new Requester(10, 10, 140, 100, "Text");
+	req->addOption("Req Test 1", 1);
+	req->addOption("Req Test 2", 2);
+	req->addOption("Req Test 3", 3);
+	req->addOption("Req Test 4", 4);
+	req->addOption("Req Test 5", 5);
+	req->addOption("Req Test 6", 6);
+	req->addOption("Req Test 7", 7);
+	req->addOption("Req Test 8", 8);
+	req->addOption("Req Test 9", 9);
+	newScreen2->addGadget(req);
+
+
 	enableDrawing();	// Ensure Woopsi can now draw itself
 	draw();				// Draw initial state
 
 	// Make welcome notice modal
-	_alert->goModal();
+	//_alert->goModal();
 }
 
 void Demo::shutdown() {

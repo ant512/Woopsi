@@ -49,6 +49,7 @@
 #include "progressbar.h"
 #include "cyclebutton.h"
 #include "scrollinglistbox.h"
+#include "requester.h"
 #include "woopsi.h"
 
 #endif

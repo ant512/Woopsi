@@ -162,6 +162,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\requester.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\screen.cpp"
 				>
 			</File>
@@ -441,6 +445,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\radiobuttongroup.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\requester.h"
 				>
 			</File>
 			<File

@@ -27,6 +27,7 @@ Change Log
      - Added ScrollingListBox class.
      - Added DefaultStyle class for control over gadget default colours.
      - Added DimmedScreen class to the bonus folder.
+     - Added Requester class.
 
   V0.32 (200804327)
   

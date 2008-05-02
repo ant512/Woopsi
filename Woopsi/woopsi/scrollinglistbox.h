@@ -35,12 +35,6 @@ public:
 	virtual void addOption(const char* text, const u32 value);
 
 	/**
-	 * Remove an option from the gadget by its index.  Does not redraw the gadget.
-	 * @param index The index of the option to remove.
-	 */
-	virtual void removeOption(const s32 index);
-
-	/**
 	 * Add a new option to the gadget.  Does not redraw the gadget.
 	 * @param text Text to show in the option.
 	 * @param value The value of the option.
@@ -50,6 +44,13 @@ public:
 	 * @param selectedBackColour Colour to draw the background with when selected.
 	 */
 	virtual void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
+
+
+	/**
+	 * Remove an option from the gadget by its index.  Does not redraw the gadget.
+	 * @param index The index of the option to remove.
+	 */
+	virtual void removeOption(const s32 index);
 
 	/**
 	 * Select an option by its index.  Does not deselect any other selected options.
