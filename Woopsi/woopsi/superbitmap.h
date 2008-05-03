@@ -172,6 +172,16 @@ public:
 	virtual void floodFill(s16 x, s16 y, u16 newColour);
 
 	/**
+	 * Draw an unfilled ellipse to the bitmap.
+	 * @param xCentre The x co-ordinate of the ellipse's centre.
+	 * @param yCentre The y co-ordinate of the ellipse's centre.
+	 * @param horizRadius The size of the ellipse's horizontal radius.
+	 * @param vertRadius The size of the ellipse's vertical radius.
+	 * @param colour The colour of the ellipse.
+	 */
+	virtual void drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
+
+	/**
 	 * Erases the internal bitmap by filling it with the gadget's back colour.
 	 */
 	virtual void clearBitmap();
@@ -184,11 +194,6 @@ public:
 	 * @param vY The vertical drag distance.
 	 */
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
-
-
-
-
-void drawEllipse(s16 xCentre, s16 yCentre, s16 semiMajorAxis, s16 semiMinorAxis, u16 colour);
 
 protected:
 	s32 _bitmapX;									/**< X co-ordinate of the bitmap relative to the gadget */
