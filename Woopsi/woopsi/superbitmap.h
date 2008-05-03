@@ -137,7 +137,7 @@ public:
 	 * @param font The font to draw with.
 	 * @param string The string to output.
 	 */
-	virtual void drawText(s16 x, s16 y, FontBase* font, char* string);
+	virtual void drawText(s16 x, s16 y, FontBase* font, const char* string);
 	
 	/**
 	 * Draw a string to the internal bitmap in a specific colour.
@@ -147,7 +147,7 @@ public:
 	 * @param string The string to output.
 	 * @param colour The colour of the string.
 	 */
-	virtual void drawText(s16 x, s16 y, FontBase* font, char* string, u16 colour);
+	virtual void drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour);
 	
 	/**
 	 * Draw an external bitmap to the internal bitmap.

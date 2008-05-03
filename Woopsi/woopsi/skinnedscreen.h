@@ -31,7 +31,7 @@ public:
 		u8 showDepthButton : 1;						/**< True if the depth button is visible. */
 	} SkinnedScreenFlags;
 
-	SkinnedScreen(char* title, u32 flags, u32 screenFlags, const ScreenSkin* skin);
+	SkinnedScreen(const char* title, u32 flags, u32 screenFlags, const ScreenSkin* skin);
 
 	virtual void setBorderless(bool isBorderless);
 	virtual bool handleEvent(const EventArgs& e);

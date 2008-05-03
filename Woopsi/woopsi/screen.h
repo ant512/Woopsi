@@ -23,7 +23,7 @@ public:
 	 * @param title The title of the screen; not displayed by default.
 	 * @param font The font to use with the screen.
 	 */
-	Screen(char* title, u32 flags, FontBase* font = NULL);
+	Screen(const char* title, u32 flags, FontBase* font = NULL);
 	
 	/**
 	 * Insert the properties of the space within this gadget that is available
@@ -134,6 +134,12 @@ public:
 	 */
 	virtual bool focus();
 
+	/**
+	 * Set the title of the screen.
+	 * @param title The new title.
+	 */
+	void setTitle(const char* title);
+
 protected:
 	u8 _titleHeight;						/**< Height of the title bar */
 	char* _title;							/**< Title of the screen */
@@ -141,7 +147,11 @@ protected:
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~Screen() { };
+	virtual inline ~Screen() {
+		if (_title != NULL) {
+			delete [] _title;
+		}
+	};
 };
 
 #endif

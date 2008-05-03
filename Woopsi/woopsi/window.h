@@ -30,7 +30,7 @@ public:
 	 * @param flags Standard gadget flags bitmask.
 	 * @param font Font to use with this window.
 	 */
-	Window(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font = NULL);
+	Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, FontBase* font = NULL);
 
 	/**
 	 * Draws the gadget.
@@ -63,13 +63,23 @@ public:
 	 */
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
+	/**
+	 * Set the title of the window.
+	 * @param title The new title.
+	 */
+	void setTitle(const char* title);
+
 protected:
 	char* _title;							/**< Title of the window */
 
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~Window() { };
+	virtual inline ~Window() {
+		if (_title != NULL) {
+			delete [] _title;
+		}
+	};
 };
 
 #endif

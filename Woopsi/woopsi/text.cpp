@@ -2,7 +2,7 @@
 
 // TODO: Allow line spacing to be set in constructor only, or make const
 
-Text::Text(FontBase* font, char* text, u16 width) {
+Text::Text(FontBase* font, const char* text, u16 width) {
 	_font = font;
 	_width = width;
 	_lineSpacing = 1;

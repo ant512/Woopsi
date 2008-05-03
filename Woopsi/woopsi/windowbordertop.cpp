@@ -2,12 +2,12 @@
 #include "graphicsport.h"
 #include <string.h>
 
-WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, char* text, FontBase* font) : Gadget(x, 0, width, height, GADGET_BORDERLESS, font) {
+WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, 0, width, height, GADGET_BORDERLESS, font) {
 	_flags.decoration = true;
 
-	// Create a copy of the text
-	_text = new char[strlen(text) + 1];
-	strcpy(_text, text);
+	// Don't create a copy of the text, since we want to point at the title stored in 
+	// the parent window
+	_text = text;
 }
 
 void WindowBorderTop::draw(Rect clipRect) {

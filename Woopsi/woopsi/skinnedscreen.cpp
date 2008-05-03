@@ -3,7 +3,7 @@
 #include "skinnedscreentitle.h"
 #include "skinnedscreen.h"
 
-SkinnedScreen::SkinnedScreen(char* title, u32 flags, u32 screenFlags, const ScreenSkin* skin) : Screen(title, flags, NULL) {
+SkinnedScreen::SkinnedScreen(const char* title, u32 flags, u32 screenFlags, const ScreenSkin* skin) : Screen(title, flags, NULL) {
 
 	_screenTitle = NULL;
 	_depthButton = NULL;

@@ -4,8 +4,7 @@
 #include "windowborderbottom.h"
 #include "windowborderbutton.h"
 
-AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, FontBase* font) : Window(x, y, width, height, title, flags, font) {
-	_title = title;
+AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font) : Window(x, y, width, height, title, flags, font) {
 
 	_windowBorderTop = NULL;
 	_windowBorderLeft = NULL;

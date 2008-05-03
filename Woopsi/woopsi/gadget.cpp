@@ -100,6 +100,11 @@ Gadget::~Gadget() {
 		}
 	}
 
+	// Delete context menu data
+	for (s32 i = 0; i < _contextMenuItems.size(); i++) {
+		delete [] _contextMenuItems[i].name;
+	}
+
 	// Delete children
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->destroy();
@@ -2149,9 +2154,14 @@ bool Gadget::removeChild(Gadget* gadget) {
 	return false;
 }
 
-void Gadget::addContextMenuItem(char* name, u32 value) {
+void Gadget::addContextMenuItem(const char* name, u32 value) {
+	
+	// Create a copy of the string
+	char* newName = new char[strlen(name) + 1];
+	strcpy(newName, name);
+
 	NameValuePair newItem;
-	newItem.name = name;
+	newItem.name = newName;
 	newItem.value = value;
 
 	_contextMenuItems.push_back(newItem);

@@ -70,7 +70,7 @@ public:
 	 * @param text The string to check.
 	 * @return The width of the string in pixels.
 	 */
-	inline u16 getStringWidth(char* text) { return strlen(text) * getWidth(); };
+	inline u16 getStringWidth(const char* text) { return strlen(text) * getWidth(); };
 
 	/**
 	 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -80,7 +80,7 @@ public:
 	 * @param length The length of the string in chars.
 	 * @return The width of the string in pixels.
 	 */
-	inline u16 getStringWidth(char* text, u16 length) { return length * getWidth(); };
+	inline u16 getStringWidth(const char* text, u16 length) { return length * getWidth(); };
 
 	/**
 	 * Get the width of an individual character.

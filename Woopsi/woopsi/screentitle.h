@@ -22,7 +22,7 @@ public:
 	 * @param text The text to display in the title bar.
 	 * @param font The font to use for the title bar.
 	 */
-	ScreenTitle(u16 height, char* text, FontBase* font = NULL);
+	ScreenTitle(u16 height, const char* text, FontBase* font = NULL);
 
 	/**
 	 * Override the Gadget::draw() method.
@@ -46,16 +46,12 @@ public:
 	virtual bool click(s16 x, s16 y);
 
 protected:
-	char* _text;							/**< Text to display in the title bar */
+	const char* _text;							/**< Text to display in the title bar */
 
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~ScreenTitle() {
-		if (_text != NULL) {
-			delete [] _text;
-		}
-	}
+	virtual inline ~ScreenTitle() {	};
 };
 
 #endif

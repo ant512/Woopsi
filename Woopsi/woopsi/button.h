@@ -21,7 +21,7 @@ public:
 	 * @param text The text for the button to display.
 	 * @param font The font that the button should use.
 	 */
-	Button(s16 x, s16 y, u16 width, u16 height, char* text, FontBase* font = NULL);
+	Button(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font = NULL);
 
 	/**
 	 * Constructor for buttons that display a single char.

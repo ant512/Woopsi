@@ -6,8 +6,7 @@
 #include "skinnedwindowclosebutton.h"
 #include "skinnedwindowdepthbutton.h"
 
-SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, WindowSkin* skin) : Window(x, y, width, height, title, flags, NULL) {
-	_title = title;
+SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, WindowSkin* skin) : Window(x, y, width, height, title, flags, NULL) {
 
 	_windowBorderTop = NULL;
 	_windowBorderLeft = NULL;

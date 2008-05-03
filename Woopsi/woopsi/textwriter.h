@@ -30,7 +30,7 @@ public:
 	 * @param clipX2 The right edge of the clipping rectangle.
 	 * @param clipY2 The bottom edge of the clipping rectangle.
 	 */
-	static void drawString(FontBase* font, char* string, u8 length, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+	static void drawString(FontBase* font, const char* string, u8 length, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 	
 	/**
 	 * Output an entire string to the specified bitmap.
@@ -49,7 +49,7 @@ public:
 	 * @param clipX2 The right edge of the clipping rectangle.
 	 * @param clipY2 The bottom edge of the clipping rectangle.
 	 */
-	static void drawString(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, FontBase* font, char* string, u8 length, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+	static void drawString(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, FontBase* font, const char* string, u8 length, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 	
 	/**
 	 * Output a single character to one of the DS' screens.  The screen number is

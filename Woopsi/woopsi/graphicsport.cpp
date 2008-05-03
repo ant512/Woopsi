@@ -107,7 +107,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter, u16 colou
 }
 
 // Print a string in a specific colour
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char* string, u16 colour) {
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour) {
 
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
@@ -145,11 +145,11 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter) {
 	drawText(x, y, font, text);
 }
 
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char* string) {
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const char* string) {
 	drawText(x, y, font, strlen(string), string);
 }
 
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, char* string) {
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string) {
 
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
@@ -169,7 +169,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, char* stri
 }
 
 // Clip and draw text
-void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, char* string, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Gadget::Rect& clipRect) {
 	s16 clipX1 = clipRect.x;
 	s16 clipY1 = clipRect.y;
 	s16 clipX2 = clipRect.x + clipRect.width - 1;

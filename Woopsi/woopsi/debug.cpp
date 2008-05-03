@@ -33,7 +33,7 @@ void Debug::createDebug() {
 	}
 }
 
-void Debug::output(char* text) {
+void Debug::output(const char* text) {
 	if (DEBUG_ACTIVE) {
 		if (woopsiApplication != NULL) {
 			createDebug();

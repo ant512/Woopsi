@@ -21,7 +21,7 @@ public:
 	 * @param text The text to display in the title bar.
 	 * @param font The font to display the text with.
 	 */
-	WindowBorderTop(s16 x, u16 width, u16 height, char* text, FontBase* font = NULL);
+	WindowBorderTop(s16 x, u16 width, u16 height, const char* text, FontBase* font = NULL);
 
 	/**
 	 * Draws the gadget.
@@ -57,16 +57,12 @@ public:
 	virtual bool click(s16 x, s16 y);
 
 protected:
-	char* _text;								/**< Text to display in the gadget */
+	const char* _text;								/**< Text to display in the gadget */
 
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~WindowBorderTop() {
-		if (_text != NULL) {
-			delete [] _text;
-		}
-	};
+	virtual inline ~WindowBorderTop() {	};
 };
 
 #endif

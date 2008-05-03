@@ -2,7 +2,7 @@
 #include "graphicsport.h"
 #include "skinnedwindow.h"
 
-SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, char* text, const WindowSkin* skin) : WindowBorderTop(x, width, 0, text) {
+SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, const char* text, const WindowSkin* skin) : WindowBorderTop(x, width, 0, text) {
 
 	_skin = skin;
 

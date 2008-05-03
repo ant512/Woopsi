@@ -32,7 +32,7 @@ public:
 	 * 0 will make the textbox track only the visible rows.
 	 * @param font The font to use in this text box.
 	 */
-	ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
+	ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
 
 	/**
 	 * Set the horizontal alignment of text within the textbox.
@@ -74,14 +74,14 @@ public:
 	 * Set the text displayed in the textbox.
 	 * @param text String to display.
 	 */
-	virtual void setText(char* text);
+	virtual void setText(const char* text);
 
 	/**
 	 * Append new text to the end of the current text
 	 * displayed in the textbox.
 	 * @param text String to append.
 	 */
-	virtual void addText(char* text);
+	virtual void addText(const char* text);
 
 	/**
 	 * Set the font used in the textbox.

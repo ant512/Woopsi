@@ -10,7 +10,7 @@ using namespace std;
 class SkinnedScreenTitle : public ScreenTitle {
 
 public:
-	SkinnedScreenTitle(char* text, const ScreenSkin* skin);
+	SkinnedScreenTitle(const char* text, const ScreenSkin* skin);
 
 	/**
 	 * Override the Gadget::draw() method.

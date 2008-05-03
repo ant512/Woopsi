@@ -2,12 +2,12 @@
 #include "graphicsport.h"
 #include <string.h>
 
-ScreenTitle::ScreenTitle(u16 height, char* text, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, height, GADGET_BORDERLESS, font) {
+ScreenTitle::ScreenTitle(u16 height, const char* text, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, height, GADGET_BORDERLESS, font) {
 	_flags.decoration = true;
 
-	// Create a copy of the text
-	_text = new char[strlen(text) + 1];
-	strcpy(_text, text);
+	// Don't create a copy of the title text, as we want to point to the title stored in
+	// the parent screen
+	_text = text;
 }
 
 void ScreenTitle::draw(Rect clipRect) {

@@ -48,7 +48,7 @@ public:
 	 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
 	 * @param font The font to use for the window.
 	 */
-	AmigaWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, FontBase* font = NULL);
+	AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font = NULL);
 
 	/**
 	 * Show or hide the Amiga borders.
@@ -161,7 +161,6 @@ public:
 
 
 protected:
-	char* _title;									/**< The window's title */
 	AmigaWindowFlags _windowFlags;					/**< AmigaWindow-specific flags */
 
 	WindowBorderTop* _windowBorderTop;				/**< Pointer to the top border */

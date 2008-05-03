@@ -1,7 +1,8 @@
 #include "window.h"	
 
-Window::Window(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
-	_title = title;
+Window::Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
+	_title = NULL;
+	setTitle(title);
 }
 
 bool Window::release(s16 x, s16 y) {
@@ -103,4 +104,21 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 void Window::draw(Rect clipRect) {
 	clear(clipRect);
+}
+
+void Window::setTitle(const char* title) {
+
+	// Have we already created a block of memory that we need to free?
+	if (_title != NULL) {
+		// Free the memory
+		delete [] _title;
+	}
+
+	// Create new memory for string
+	_title = new char[strlen(title) + 1];
+
+	// Copy text
+	strcpy(_title, title);
+
+	draw();
 }

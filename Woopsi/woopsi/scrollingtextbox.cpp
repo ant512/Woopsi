@@ -1,7 +1,7 @@
 #include "scrollingtextbox.h"
 #include "scrollbarvertical.h"
 
-ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows, FontBase* font) : Gadget(x, y, width, height, flags, font) {
+ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, FontBase* font) : Gadget(x, y, width, height, flags, font) {
 	_scrollbarWidth = 9;
 
 	setBorderless(true);
@@ -38,12 +38,12 @@ const Text* ScrollingTextBox::getText() const {
 	return _textbox->getText();
 }
 
-void ScrollingTextBox::setText(char* text) {
+void ScrollingTextBox::setText(const char* text) {
 	_textbox->setText(text);
 	_scrollbar->draw();
 }
 
-void ScrollingTextBox::addText(char* text) {
+void ScrollingTextBox::addText(const char* text) {
 	_textbox->addText(text);
 	_scrollbar->draw();
 }

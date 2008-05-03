@@ -34,7 +34,7 @@ public:
 	 * @param text Text to show in the item.
 	 * @param value The value of the item.
 	 */
-	virtual ContextMenuItem* newMenuItem(char* text, u32 value);
+	virtual ContextMenuItem* newMenuItem(const char* text, u32 value);
 
 	/**
 	 * Draw the region of the menu within the clipping rect.

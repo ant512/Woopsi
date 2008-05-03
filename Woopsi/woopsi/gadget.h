@@ -901,7 +901,7 @@ public:
 	 * @param name The name of the menu item.
 	 * @param value The value of the menu item.
 	 */
-	void addContextMenuItem(char* name, u32 value);
+	void addContextMenuItem(const char* name, u32 value);
 
 	/**
 	 * Show the context menu for this gadget at the specified co-ordinates.

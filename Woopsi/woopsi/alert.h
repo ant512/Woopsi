@@ -29,7 +29,7 @@ public:
 	 * @param text The text to display in the window.
 	 * @param font Optional font to use for text output.
 	 */
-	Alert(s16 x, s16 y, u16 width, u16 height, char* title, char* text, FontBase* font = NULL);
+	Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, FontBase* font = NULL);
 
 	/**
 	 * Handles events raised by its sub-gadgets.

@@ -22,7 +22,7 @@ public:
 	 * @param text A string that this text object should wrap around.
 	 * @param width The pixel width at which the text should wrap.
 	 */
-	Text(FontBase* font, char* text, u16 width);
+	Text(FontBase* font, const char* text, u16 width);
 
 	/**
 	 * Destructor.

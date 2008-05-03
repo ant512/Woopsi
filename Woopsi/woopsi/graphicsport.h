@@ -166,7 +166,7 @@ public:
 	 * @param font The font to draw with.
 	 * @param string The string to output.
 	 */
-	void drawText(s16 x, s16 y, FontBase* font, char* string);
+	void drawText(s16 x, s16 y, FontBase* font, const char* string);
 	
 	/**
 	 * Draw a particular length of a string to the bitmap.
@@ -176,7 +176,7 @@ public:
 	 * @param length The number of characters to output.
 	 * @param string The string to output.
 	 */
-	void drawText(s16 x, s16 y, FontBase* font, u16 length, char* string);
+	void drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string);
 	
 	/**
 	 * Draw a single character to the bitmap.
@@ -195,7 +195,7 @@ public:
 	 * @param string The string to output.
 	 * @param colour The colour of the string.
 	 */
-	void drawText(s16 x, s16 y, FontBase* font, char* string, u16 colour);
+	void drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour);
 	
 	/**
 	 * Draw a single character to the bitmap in a specific colour.
@@ -258,7 +258,7 @@ private:
 	void clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadget::Rect& clipRect);
 	void clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, const Gadget::Rect& clipRect);
 	void clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour, const Gadget::Rect& clipRect);
-	void clipText(s16 x, s16 y, FontBase* font, u16 length, char* string, const Gadget::Rect& clipRect);
+	void clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Gadget::Rect& clipRect);
 	void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Gadget::Rect& clipRect);
 	void clipXORPixel(s16 x, s16 y, const Gadget::Rect& clipRect);
 	void clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect& clipRect);

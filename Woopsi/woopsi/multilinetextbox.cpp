@@ -5,7 +5,7 @@
 #include "text.h"
 #include "graphicsport.h"
 
-MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
+MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
 
 	_outline = OUTLINE_IN;
 
@@ -166,7 +166,7 @@ const Text* MultiLineTextBox::getText() const {
 	return _text;
 }
 
-void MultiLineTextBox::setText(char* text) {
+void MultiLineTextBox::setText(const char* text) {
 	
 	_text->setText(text);
 
@@ -188,7 +188,7 @@ void MultiLineTextBox::setText(char* text) {
 	raiseValueChangeEvent();
 }
 
-void MultiLineTextBox::addText(char* text) {
+void MultiLineTextBox::addText(const char* text) {
 
 	_text->appendText(text);
 

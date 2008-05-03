@@ -251,12 +251,12 @@ void SuperBitmap::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
 	}
 }
 
-void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, char* string) {
+void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, const char* string) {
 	TextWriter::drawString(_bitmap, _bitmapWidth, _bitmapHeight, font, string, strlen(string), x, y, 0, 0, _bitmapWidth - 1, _bitmapHeight - 1);
 }
 
 // Print a string in a specific colour
-void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, char* string, u16 colour) {
+void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour) {
 
 	// Store current font colour
 	bool isMonochrome = font->isMonochrome();

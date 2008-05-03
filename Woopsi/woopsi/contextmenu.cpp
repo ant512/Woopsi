@@ -8,7 +8,7 @@ ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 	_value = 0;
 }
 
-ContextMenuItem* ContextMenu::newMenuItem(char* text, u32 value) {
+ContextMenuItem* ContextMenu::newMenuItem(const char* text, u32 value) {
 	// Create menu item
 	ContextMenuItem* item = new ContextMenuItem(0, 0, 0, 0, text, value, _font);
 	item->setEventHandler(this);

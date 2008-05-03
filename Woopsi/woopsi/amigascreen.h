@@ -43,7 +43,7 @@ public:
 	/**
 	 * Constructor.
 	 */
-	AmigaScreen(char* title, u32 flags, u32 screenFlags, FontBase* font = NULL);
+	AmigaScreen(const char* title, u32 flags, u32 screenFlags, FontBase* font = NULL);
 
 	/**
 	 * Sets this gadget's border state.  Setting to false hides the title bar.

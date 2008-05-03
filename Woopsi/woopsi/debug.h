@@ -68,7 +68,7 @@ private:
 	 * Print a string to the debug console.
 	 * @param msg The string to print.
 	 */
-	void output(char* msg);
+	void output(const char* msg);
 };
 
 #endif

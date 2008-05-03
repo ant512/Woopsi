@@ -35,7 +35,7 @@ public:
 		u8 showDepthButton : 1;					/**< True if the depth button is visible. */
 	} SkinnedWindowFlags;
 
-	SkinnedWindow(s16 x, s16 y, u16 width, u16 height, char* title, u32 flags, u32 windowFlags, WindowSkin* skin);
+	SkinnedWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, WindowSkin* skin);
 
 	virtual void setBorderless(bool isBorderless);
 
@@ -94,7 +94,6 @@ public:
 	virtual inline const bool hasDepthButton() const { return _windowFlags.showDepthButton; };
 
 protected:
-	char* _title;
 	const WindowSkin* _skin;
 	SkinnedWindowFlags _windowFlags;					/**< AmigaWindow-specific flags */
 
