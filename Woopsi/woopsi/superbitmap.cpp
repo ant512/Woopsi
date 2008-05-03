@@ -486,3 +486,68 @@ bool SuperBitmap::clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height)
 	// Return true as box can be drawn
 	return true;
 }
+
+void SuperBitmap::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
+
+	s16 x = 0;
+	s16 y = vertRadius;
+
+	// Precalculate squares of axes for speed
+	s32 horizSquare = horizRadius * horizRadius;
+	s32 vertSquare = vertRadius * vertRadius;
+
+	s32 crit1 = -((horizSquare >> 2) + (horizRadius % 2) + vertSquare);
+	s32 crit2 = -((vertSquare >> 2) + (vertRadius % 2) + horizSquare);
+	s32 crit3 = -((vertSquare >> 2) + (vertRadius % 2));
+
+	s32 t = -horizSquare * y;
+	s32 dxt = vertSquare * x << 1;
+	s32 dyt = -horizSquare * y << 1;
+	s32 d2xt = vertSquare << 1;
+	s32 d2yt = horizSquare << 1;
+
+	// Loop until the ellipse is drawn - each iteration draws a point in every
+	// quarter of the ellipse
+	while ((y >= 0) && (x <= horizRadius)) {
+
+		// Draw this point
+		drawPixel(xCentre + x, yCentre + y, colour);
+
+		// Draw the opposite point only if it will not overlap the first
+		if ((x != 0) || (y != 0)) {
+			drawPixel(xCentre - x, yCentre - y, colour);
+		}
+
+		// Draw the next two points if they will not overlap the previous
+		// two points
+		if ((x != 0) && (y != 0)) {
+			drawPixel(xCentre + x, yCentre - y, colour);
+			drawPixel(xCentre - x, yCentre + y, colour);
+		}
+
+		if ((t + (vertSquare * x) <= crit1) || (t + (horizSquare * y) <= crit3)) {
+
+			// Inc x
+			x++;
+			dxt += d2xt;
+			t += dxt;
+		} else if (t - (horizSquare * y) > crit2) {
+
+			// Inc y
+			y--;
+			dyt += d2yt;
+			t += dyt;
+		} else {
+
+			// Inc x
+			x++;
+			dxt += d2xt;
+			t += dxt;
+
+			// Inc y
+			y--;
+			dyt += d2yt;
+			t += dyt;
+		}
+	}
+}

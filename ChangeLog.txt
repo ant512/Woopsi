@@ -33,6 +33,7 @@ Change Log
      - Added Requester class.
      - Added FileRequester class to the bonus folder.
      - Added Window and Screen setTitle() methods.
+     - Added drawEllipse() to the SuperBitmap class.
 
   V0.32 (200804327)
   

@@ -185,6 +185,11 @@ public:
 	 */
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
+
+
+
+void drawEllipse(s16 xCentre, s16 yCentre, s16 semiMajorAxis, s16 semiMinorAxis, u16 colour);
+
 protected:
 	s32 _bitmapX;									/**< X co-ordinate of the bitmap relative to the gadget */
 	s32 _bitmapY;									/**< Y co-ordinate of the bitmap relative to the gadget */
