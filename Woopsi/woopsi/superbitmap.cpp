@@ -487,6 +487,9 @@ bool SuperBitmap::clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height)
 	return true;
 }
 
+// Code borrowed from http://enchantia.com/software/graphapp/doc/tech/ellipses.html
+// and partially rendered readable.  This is L. Patrick's implementation of Doug
+// McIlroy's ellipse algorithm.
 void SuperBitmap::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
 
 	s16 x = 0;
