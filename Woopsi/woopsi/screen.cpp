@@ -1,3 +1,4 @@
+#include <string.h>
 #include "screen.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"

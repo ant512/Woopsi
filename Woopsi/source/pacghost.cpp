@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "pacghost.h"
 #include "pacman.h"
 #include "pacplayer.h"

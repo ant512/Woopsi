@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "pacghosts.h"
 #include "pacman.h"
 #include "superbitmap.h"

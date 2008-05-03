@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "calculator.h"
 #include "amigawindow.h"
 #include "amigascreen.h"
