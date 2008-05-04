@@ -178,8 +178,18 @@ bool SkinnedWindow::click(s16 x, s16 y) {
 
 			// Did we click a gadget?
 			if (!gotGadget) {
+
 				// Handle click on window
-				Gadget::click(x, y);
+				_flags.clicked = true;
+
+				setFocusedGadget(NULL);
+
+				// Tell parent that the clicked gadget has changed
+				if (_parent != NULL) {
+					_parent->setClickedGadget(this);
+				}
+
+				raiseClickEvent(x, y);
 			}
 
 			// Do we need to draw the XOR rect?

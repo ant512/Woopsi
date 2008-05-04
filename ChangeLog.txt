@@ -14,6 +14,7 @@ Change Log
      - Made char pointers const-correct for devkitPro r23 compatibility.
      - System makes copies of string data where appropriate.
      - Removed duplicate title string pointer from window classes.
+     - SkinnedWindow only drags when titlebar clicked, not any border gadget.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
@@ -34,6 +35,7 @@ Change Log
      - Added FileRequester class to the bonus folder.
      - Added Window and Screen setTitle() methods.
      - Added drawEllipse() to the SuperBitmap class.
+     - Added drawFilledEllipse() to the SuperBitmap class.
 
   V0.32 (200804327)
   
