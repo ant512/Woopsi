@@ -87,7 +87,7 @@ public:
 	 * option is selected, the index of the first selected option is returned.
 	 * @return The selected index.
 	 */
-	virtual const s32 getSelectedIndex() const {
+	virtual inline const s32 getSelectedIndex() const {
 		return _listbox->getSelectedIndex();
 	};
 
