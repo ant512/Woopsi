@@ -3,14 +3,17 @@
 #include <sys/dir.h>
 #include "filerequester.h"
 #include "button.h"
-#include "dynamicarray.h"
+#include "filepath.h"
 
-FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, char* title, char* path, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
+FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	_flags.shiftClickChildren = false;
 
 	// Padding around the gadgets
 	u8 padding = 2;
+
+	// Create the path object
+	_path = new FilePath(path);
 
 	Rect rect;
 	getClientRect(rect);
@@ -54,6 +57,10 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, char* title, c
 	setPath(path);
 }
 
+FileRequester::~FileRequester() {
+	delete _path;
+}
+
 bool FileRequester::resize(u16 width, u16 height) {
 	return false;
 }
@@ -90,7 +97,7 @@ bool FileRequester::handleEvent(const EventArgs& e) {
 				if (e.gadget == _listbox) {
 
 					// Work out which option was clicked - if it was a directory, we move to the new path
-					const ListBox::ListBoxOption* selected = getSelectedOption();
+					const ListData::ListDataItem* selected = getSelectedOption();
 
 					if (selected != NULL) {
 
@@ -139,15 +146,18 @@ void FileRequester::readDirectory() {
 	char fileName[256];
 	s32 fileNumber = 0;
 
-	DIR_ITER* dir = diropen(_path);
+	DIR_ITER* dir = diropen(_path->getPath());
 
 	// Did we get the dir successfully?
 	if (dir == NULL) return;
 
-	// Create vectors to store file and directory data
-	DynamicArray<char*> files;
-	DynamicArray<char*> directories;
-	DynamicArray<char*>* currentArray = NULL;
+	// Create lists to store file and directory data
+	ListData files;
+	ListData directories;
+
+	// Ensure lists automatically sort their data
+	files.setSortInsertedItems(true);
+	directories.setSortInsertedItems(true);
 
 	// Read data into options list
 	while (dirnext(dir, fileName, &st) == 0) 
@@ -160,43 +170,40 @@ void FileRequester::readDirectory() {
 		if (st.st_mode & S_IFDIR) {
 
 			// Directory
-			currentArray = &directories;
+			directories.addItem(storedFilename, 0, _shineColour, _backColour, _shineColour, _highlightColour);
 		} else {
 
 			// File
-			currentArray = &files;
+			files.addItem(storedFilename, 0, _shadowColour, _backColour, _shadowColour, _highlightColour);
 		}
-
-		// Sorted insert into correct array
-		s32 i = 0;
-
-		// Locate slot where new name should go
-		while ((i < currentArray->size()) && (strcmp(currentArray->at(i), storedFilename) < 0)) {
-			i++;
-		}
-
-		// Insert new name
-		currentArray->insert(i, storedFilename);
 	}
 
 	// Push all directories and files into options list and delete all stored filenames
-	for (s32 i = 0; i < directories.size(); i++) {
+	for (s32 i = 0; i < directories.getItemCount(); i++) {
 
-		// Add option
-		addOption(directories[i], fileNumber, _shineColour, _backColour, _shineColour, _highlightColour);
-
-		// Delete data
-		delete [] directories[i];
+		// Add directory
+		_listbox->addOption(
+			directories.getItem(i)->text,
+			fileNumber,
+			directories.getItem(i)->normalTextColour,
+			directories.getItem(i)->normalBackColour,
+			directories.getItem(i)->selectedTextColour,
+			directories.getItem(i)->selectedBackColour
+		);
 		
 		fileNumber++;
 	}
-	for (s32 i = 0; i < files.size(); i++) {
+	for (s32 i = 0; i < files.getItemCount(); i++) {
 
-		// Add option
-		addOption(files[i], fileNumber);
-
-		// Delete data
-		delete [] files[i];
+		// Add file
+		_listbox->addOption(
+			files.getItem(i)->text,
+			fileNumber,
+			files.getItem(i)->normalTextColour,
+			files.getItem(i)->normalBackColour,
+			files.getItem(i)->selectedTextColour,
+			files.getItem(i)->selectedBackColour
+		);
 		
 		fileNumber++;
 	}
@@ -209,68 +216,14 @@ void FileRequester::readDirectory() {
 }
 
 void FileRequester::setPath(const char* path) {
-	// Delete existing path memory
-	if (_path != NULL) {
-		delete [] _path;
-	}
-
-	// Set new path
-	_path = new char[strlen(path) + 1];
-
-	strcpy(_path, path);
+	_path->setPath(path);
 
 	// Fetch new directory data
 	readDirectory();
 }
 
 void FileRequester::appendPath(const char* path) {
-
-	// Ensure path exists
-	if (_path == NULL) {
-		setPath(path);
-		return;
-	}
-
-	// Abort if path is current directory
-	if (strcmp(path, ".") == 0) return;
-
-	// Handle parent directory
-	if (strcmp(path, "..") == 0) {
-
-		// Abort if we're at the root directory already
-		if (strlen(_path) == 1) return;
-
-		// Locate start of the previous directory in the path string
-		// by moving backwards along the string hunting slashes
-		char* lastSlash = _path + strlen(_path) - 2;
-		while (*lastSlash != '/') {
-			lastSlash--;
-		}
-
-		// Append terminator after previous slash to truncate string
-		lastSlash[1] = '\0';
-
-		// Fetch new directory data
-		readDirectory();
-
-		return;
-	}
-
-	// Append valid path to existing path
-
-	// Create new path memory
-	char* newPath = new char[strlen(path) + strlen(_path) + 2];
-
-	// Concat strings
-	strcpy(newPath, _path);
-	strcat(newPath, path);
-	strcat(newPath, "/");
-
-	// Delete old path
-	delete [] _path;
-
-	// Update pointer
-	_path = newPath;
+	_path->appendPath(path);
 
 	// Fetch new directory data
 	readDirectory();

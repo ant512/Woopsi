@@ -37,6 +37,7 @@ Change Log
      - Added drawEllipse() to the SuperBitmap class.
      - Added drawFilledEllipse() to the SuperBitmap class.
      - Added ListData class.
+     - Added FilePath class to bonus folder.
 
   V0.32 (200804327)
   

@@ -214,6 +214,12 @@ public:
 		_listbox->setOutlineType(outline);
 	};
 
+	/**
+	 * Sets whether or not items added to the list are automatically sorted on insert or not.
+	 * @param sortInsertedItems True to enable sort on insertion.
+	 */
+	virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _listbox->setSortInsertedItems(sortInsertedItems); };
+
 protected:
 	ListBox* _listbox;									/**< Pointer to the list box */
 	ScrollbarVertical* _scrollbar;						/**< Pointer to the scrollbar */

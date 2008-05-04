@@ -131,15 +131,21 @@ public:
 	virtual void setItemSelected(const s32 index, const bool selected);
 
 	/**
-	 * Sets whether multiple selections are possible or not.
-	 * Does not redraw the gadget.
-	 * @param allowMultipleSelections True to allow multiple selections.
+	 * Returns whether multiple selections are possible or not.
+	 * @return True if multiple selections are allowed.
 	 */
 	virtual inline const bool allowsMultipleSelections() const { return _allowMultipleSelections; };
+
+	/**
+	 * Sets whether or not items added to the list are automatically sorted on insert or not.
+	 * @param sortInsertedItems True to enable sort on insertion.
+	 */
+	virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _sortInsertedItems = sortInsertedItems; };
 
 protected:
 	DynamicArray<ListDataItem*> _items;			/**< Collection of list data items. */
 	bool _allowMultipleSelections;				/**< If true, multiple options can be selected. */
+	bool _sortInsertedItems;					/**< Automatically sorts items on insertion if true. */
 
 	/**
 	 * Quick sort the items alphabetically by the text of the items.

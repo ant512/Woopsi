@@ -3,10 +3,12 @@
 
 #include "amigawindow.h"
 #include "scrollinglistbox.h"
+#include "listdata.h"
 
 using namespace std;
 
 class Button;
+class FilePath;
 
 /**
  * Class providing a window containing a listbox, an OK button and a Cancel button.
@@ -38,7 +40,7 @@ public:
 	 * @param text The text to display in the window.
 	 * @param font Optional font to use for text output.
 	 */
-	FileRequester(s16 x, s16 y, u16 width, u16 height, char* title, char* path, FontBase* font = NULL);
+	FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, FontBase* font = NULL);
 
 	/**
 	 * Handles events raised by its sub-gadgets.
@@ -95,7 +97,7 @@ public:
 	 * Get the selected option.  Returns NULL if nothing is selected.
 	 * @return The selected option.
 	 */
-	virtual inline const ListBox::ListBoxOption* getSelectedOption() const {
+	virtual inline const ListData::ListDataItem* getSelectedOption() const {
 		return _listbox->getSelectedOption();
 	};
 
@@ -112,7 +114,7 @@ public:
 	 * Get the specified option.
 	 * @return The specified option.
 	 */
-	virtual inline const ListBox::ListBoxOption* getOption(const s32 index) const {
+	virtual inline const ListData::ListDataItem* getOption(const s32 index) const {
 		return _listbox->getOption(index);
 	};
 
@@ -155,12 +157,12 @@ protected:
 	Button* _okButton;					/**< Pointer to the OK button */
 	Button* _cancelButton;				/**< Pointer to the cancel button */
 	ScrollingListBox* _listbox;			/**< Pointer to the list box */
-	char* _path;						/**< Path currently displayed */
+	FilePath* _path;					/**< Path currently displayed */
 
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~FileRequester() { };
+	virtual ~FileRequester();
 
 	/**
 	 * Populate list with directory data.

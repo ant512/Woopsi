@@ -3,6 +3,7 @@
 
 ListData::ListData() {
 	_allowMultipleSelections = true;
+	_sortInsertedItems = false;
 }
 
 ListData::~ListData() {
@@ -27,8 +28,16 @@ void ListData::addItem(const char* text, const u32 value, const u16 normalTextCo
 	newItem->selectedBackColour = selectedBackColour;
 	newItem->selected = false;
 	
-	// Add to option array
-	_items.push_back(newItem);
+	// Determine insert type
+	if (_sortInsertedItems) {
+		
+		// Sorted insert
+		_items.insert(getInsertionIndex(text), newItem);
+	} else {
+
+		// Append
+		_items.push_back(newItem);
+	}
 }
 
 void ListData::removeItem(const s32 index) {

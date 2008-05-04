@@ -173,6 +173,12 @@ public:
 	 */
 	virtual const u16 getOptionHeight() const;
 
+	/**
+	 * Sets whether or not items added to the list are automatically sorted on insert or not.
+	 * @param sortInsertedItems True to enable sort on insertion.
+	 */
+	virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _options.setSortInsertedItems(sortInsertedItems); };
+
 protected:
 	ListData _options;								/**< Option storage. */
 	u8 _optionPadding;								/**< Padding between options. */
