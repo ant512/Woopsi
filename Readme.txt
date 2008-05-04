@@ -70,7 +70,10 @@ Features
     - Slider bars;
     - Context-sensitive menu;
     - List boxes;
-    - Progress bars.
+    - Progress bars;
+    - Requesters;
+    - File requesters;
+    - Cycle buttons.
   - Skinnable screens and windows;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
@@ -136,7 +139,7 @@ Requirements
    - Type "make -f Makefile.lib", sans quotes.
    
   Woopsi has been developed using devkitPro r20, VC++ 2005 Express, and the last
-  official version of PALib (070323).  It is known to work with devkitPro r21.
+  official version of PALib (070323).  It has been tested with devkitPro r23.
   
 
 SDL Compatibility
@@ -176,10 +179,9 @@ Credits and Acknowlegements
 Links
 -----
 
- - http://ant.simianzombie.com/blog                 - DS development blog
+ - http://ant.simianzombie.com/blog                 - Woopsi development blog
  - http://ant.simianzombie.com/forum                - Woopsi forum
  - http://www.sourceforge.net/projects/woopsi       - Woopsi SourceForge page
- - http://woopsi.sourceforge.net                    - Woopsi documentation
 
 
 Email
