@@ -8,34 +8,14 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Scrollin
 	_flags.draggable = true;
 	_flags.doubleClickable = true;
 	_optionPadding = 2;
-	_allowMultipleSelections = true;
 }
 
-ListBox::~ListBox() {
-	removeAllOptions();
-}
+ListBox::~ListBox() { }
 
 void ListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
-	
-	// Create new memory for string
-	char* newText = new char[strlen(text) + 1];
-	
-	// Copy text
-	strcpy(newText, text);
-	
-	// Create new option
-	ListBoxOption* newOption = new ListBoxOption;
-	newOption->text = newText;
-	newOption->value = value;
-	newOption->normalTextColour = normalTextColour;
-	newOption->normalBackColour = normalBackColour;
-	newOption->selectedTextColour = selectedTextColour;
-	newOption->selectedBackColour = selectedBackColour;
-	newOption->selected = false;
-	
-	// Add to option array
-	_options.push_back(newOption);
-	
+	_options.addItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
+
+	// Grow the canvas
 	resizeCanvas();
 }
 
@@ -44,20 +24,10 @@ void ListBox::addOption(const char* text, const u32 value) {
 }
 
 void ListBox::removeOption(const s32 index) {
+	_options.removeItem(index);
 
-	// Bounds check
-	if (index < _options.size()) {
-
-		// Delete the option
-		delete _options[index]->text;
-		delete _options[index];
-
-		// Erase the option from the list
-		_options.erase(index);
-
-		// Shrink the canvas
-		resizeCanvas();
-	}
+	// Shrink the canvas
+	resizeCanvas();
 }
 
 void ListBox::draw(Rect clipRect) {
@@ -76,27 +46,27 @@ void ListBox::draw(Rect clipRect) {
 	s32 i = topOption;
 
 	// Loop through all options drawing each one
-	while ((i < _options.size()) & (y < _height)) {
+	while ((i < _options.getItemCount()) & (y < _height)) {
 		
 		// Is the option selected?
-		if (_options[i]->selected) {
+		if (_options.getItem(i)->selected) {
 			
 			// Draw background
-			if (_options[i]->selectedBackColour != _backColour) {
-				port->drawFilledRect(0, y, _width, optionHeight, _options[i]->selectedBackColour);
+			if (_options.getItem(i)->selectedBackColour != _backColour) {
+				port->drawFilledRect(0, y, _width, optionHeight, _options.getItem(i)->selectedBackColour);
 			}
 		
 			// Draw text
-			port->drawText(_optionPadding, y + _optionPadding, _font, _options[i]->text, _options[i]->selectedTextColour);
+			port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->selectedTextColour);
 		} else {
 			
 			// Draw background
-			if (_options[i]->normalBackColour != _backColour) {
-				port->drawFilledRect(0, y, _width, optionHeight, _options[i]->normalBackColour);
+			if (_options.getItem(i)->normalBackColour != _backColour) {
+				port->drawFilledRect(0, y, _width, optionHeight, _options.getItem(i)->normalBackColour);
 			}
 			
 			// Draw text
-			port->drawText(_optionPadding, y + _optionPadding, _font, _options[i]->text, _options[i]->normalTextColour);
+			port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->normalTextColour);
 		}
 		
 		i++;
@@ -114,25 +84,11 @@ void ListBox::setSelectedIndex(const s32 index) {
 }
 
 const s32 ListBox::getSelectedIndex() const {
-
-	// Get the first selected index
-	for (s32 i = 0; i < _options.size(); i++) {
-		if (_options[i]->selected) return i;
-	}
-	
-	return -1;
+	return _options.getSelectedIndex();
 }
 
-const ListBox::ListBoxOption* ListBox::getSelectedOption() const {
-	
-	// Get the first selected option
-	s32 index = getSelectedIndex();
-	
-	if (index > -1) {
-		return _options[index];
-	}
-	
-	return NULL;
+const ListData::ListDataItem* ListBox::getSelectedOption() const {
+	return _options.getSelectedItem();
 }
 
 void ListBox::selectOption(const s32 index) {
@@ -145,17 +101,7 @@ void ListBox::deselectOption(const s32 index) {
 
 void ListBox::setOptionSelected(const s32 index, bool selected) {
 
-	// Deselect old options if we're making an option selected and we're not a multiple list
-	if (((!_allowMultipleSelections) || (index == -1)) && (selected)) {
-		for (s32 i = 0; i < _options.size(); i++) {
-			_options[i]->selected = false;
-		}
-	}
-
-	// Select or deselect the new option
-	if ((index > -1) && (index < _options.size())) {
-		_options[index]->selected = selected;
-	}
+	_options.setItemSelected(index, selected);
 	
 	draw();
 	
@@ -163,9 +109,7 @@ void ListBox::setOptionSelected(const s32 index, bool selected) {
 }
 
 void ListBox::deselectAllOptions() {
-	for (s32 i = 0; i < _options.size(); i++) {
-		_options[i]->selected = false;
-	}
+	_options.deselectAllItems();
 
 	draw();
 	
@@ -173,15 +117,11 @@ void ListBox::deselectAllOptions() {
 }
 
 void ListBox::selectAllOptions() {
-	if (_allowMultipleSelections) {
-		for (s32 i = 0; i < _options.size(); i++) {
-			_options[i]->selected = true;
-		}
+	_options.selectAllItems();
 
-		draw();
-		
-		raiseValueChangeEvent();
-	}
+	draw();
+
+	raiseValueChangeEvent();
 }
 
 bool ListBox::click(s16 x, s16 y) {
@@ -212,19 +152,19 @@ bool ListBox::click(s16 x, s16 y) {
 			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 			
 			// Are we setting or unsetting?
-			if (_options[newSelectedIndex]->selected) {
+			if (_options.getItem(newSelectedIndex)->selected) {
 				
 				// Deselecting
-				_options[newSelectedIndex]->selected = false;
+				_options.getItem(newSelectedIndex)->selected = false;
 				draw();
 			} else {
 			
 				// Selecting
-				if (_allowMultipleSelections) {
-					_options[newSelectedIndex]->selected = true;
+				if (_options.allowsMultipleSelections()) {
+					_options.getItem(newSelectedIndex)->selected = true;
 					draw();
 				} else {
-					setSelectedIndex(newSelectedIndex);
+					_options.setSelectedIndex(newSelectedIndex);
 				}
 			}
 
@@ -318,54 +258,17 @@ void ListBox::resizeCanvas() {
 	getClientRect(rect);
 
 	// Resize the canvas
-	_canvasHeight = (_options.size() * getOptionHeight());
+	_canvasHeight = (_options.getItemCount() * getOptionHeight());
 
 	// Ensure canvas is at least as tall as the gadget
 	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;
 }
 
 void ListBox::sort() {
-	quickSort(0, _options.size() - 1);
+	_options.sort();
 	draw();
 }
 
-void ListBox::quickSort(const s32 start, const s32 end) {
-	if (end > start) {
-
-		int left = start;
-		int right = end;
-
-		char* pivot = _options[(start + end) >> 1]->text;
-
-		do {
-			while ((strcmp(_options[left]->text, pivot) < 0) && (left < end)) left++;
-			while ((strcmp(_options[right]->text, pivot) > 0) && (right > start)) right--;
-
-			if (left > right) break;
-
-			swapOptions(left, right);
-			left++;
-			right--;
-		} while (left <= right);
-
-		quickSort(start, right);
-		quickSort(left, end);
-	}
-}
-
-void ListBox::swapOptions(const s32 index1, const s32 index2) {
-	ListBoxOption* tmp = _options[index1];
-	_options[index1] = _options[index2];
-	_options[index2] = tmp;
-}
-
 void ListBox::removeAllOptions() {
-
-	// Delete all option data
-	for (s32 i = 0; i < _options.size(); i++) {
-		delete _options[i]->text;
-		delete _options[i];
-	}
-	
-	_options.clear();
+	_options.removeAllItems();
 }

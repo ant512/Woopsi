@@ -2,6 +2,7 @@
 #define _LISTBOX_H_
 
 #include "scrollingpanel.h"
+#include "listdata.h"
 
 using namespace std;
 
@@ -15,19 +16,6 @@ using namespace std;
  */
 class ListBox : public ScrollingPanel {
 public:
-	
-	/**
-	 * Struct defining a single listbox option.
-	 */
-	typedef struct {
-		char* text;							/**< Text to display for option. */
-		u32 value;							/**< Option value. */
-		u16 normalTextColour;				/**< Colour used for text when not selected. */
-		u16 normalBackColour;				/**< Colour used for background when not selected. */
-		u16 selectedTextColour;				/**< Colour used for text when selected. */
-		u16 selectedBackColour;				/**< Colour used for background when selected. */
-		bool selected;						/**< True if the option is selected. */
-	} ListBoxOption;
 	
 	/**
 	 * Constructor.
@@ -114,7 +102,7 @@ public:
 
 	/**
 	 * Sets the selected index.  Specify -1 to select nothing.  Resets any
-	 * other selected items to deselected.
+	 * other selected options to deselected.
 	 * Redraws the gadget and raises a value changed event.
 	 * @param The selected index.
 	 */
@@ -124,7 +112,7 @@ public:
 	 * Get the selected option.  Returns NULL if nothing is selected.
 	 * @return The selected option.
 	 */
-	virtual const ListBoxOption* getSelectedOption() const;
+	virtual const ListData::ListDataItem* getSelectedOption() const;
 	
 	/**
 	 * Click this gadget at the supplied co-ordinates.
@@ -150,16 +138,23 @@ public:
 	virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) { _allowMultipleSelections = allowMultipleSelections; };
 
 	/**
+	 * Sets whether multiple selections are possible or not.
+	 * Does not redraw the gadget.
+	 * @param allowMultipleSelections True to allow multiple selections.
+	 */
+	virtual inline const bool allowsMultipleSelections() const { return _options.allowsMultipleSelections(); };
+
+	/**
 	 * Resize the scrolling canvas to encompass all options.
 	 * Does not redraw the gadget.
 	 */
 	virtual void resizeCanvas();
 
 	/**
-	 * Get the selected index.  Returns -1 if nothing is selected.
-	 * @return The selected index.
+	 * Get the specified option.
+	 * @return The specified option.
 	 */
-	virtual inline const ListBoxOption* getOption(const s32 index) const { return _options[index]; };
+	virtual inline ListData::ListDataItem* getOption(const s32 index) { return _options.getItem(index); };
 
 	/**
 	 * Sort the options alphabetically by the text of the options.
@@ -170,7 +165,7 @@ public:
 	 * Get the total number of options.
 	 * @return The number of options.
 	 */
-	virtual inline const s32 getOptionCount() const { return _options.size(); };
+	virtual inline const s32 getOptionCount() const { return _options.getItemCount(); };
 
 	/**
 	 * Get the height of a single option.
@@ -179,7 +174,7 @@ public:
 	virtual const u16 getOptionHeight() const;
 
 protected:
-	DynamicArray<ListBoxOption*> _options;			/**< Array of options. */
+	ListData _options;								/**< Option storage. */
 	u8 _optionPadding;								/**< Padding between options. */
 	bool _allowMultipleSelections;					/**< If true, multiple options can be selected. */
 
@@ -196,16 +191,6 @@ protected:
 	 * @param selected True to select the option, false to deselect it.
 	 */
 	virtual void setOptionSelected(const s32 index, const bool selected);
-
-	/**
-	 * Quick sort the options alphabetically by the text of the options.
-	 */
-	virtual void quickSort(const s32 start, const s32 end);
-
-	/**
-	 * Swap the locations of two options in the array.
-	 */
-	virtual void swapOptions(const s32 index1, const s32 index2);
 };
 
 #endif

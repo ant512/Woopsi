@@ -130,6 +130,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\listdata.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\monofont.cpp"
 				>
 			</File>
@@ -413,6 +417,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\listbox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\listdata.h"
 				>
 			</File>
 			<File

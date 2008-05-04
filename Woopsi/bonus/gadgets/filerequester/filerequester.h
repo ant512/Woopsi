@@ -109,8 +109,8 @@ public:
 	};
 
 	/**
-	 * Get the selected index.  Returns -1 if nothing is selected.
-	 * @return The selected index.
+	 * Get the specified option.
+	 * @return The specified option.
 	 */
 	virtual inline const ListBox::ListBoxOption* getOption(const s32 index) const {
 		return _listbox->getOption(index);

@@ -36,6 +36,7 @@ Change Log
      - Added Window and Screen setTitle() methods.
      - Added drawEllipse() to the SuperBitmap class.
      - Added drawFilledEllipse() to the SuperBitmap class.
+     - Added ListData class.
 
   V0.32 (200804327)
   
