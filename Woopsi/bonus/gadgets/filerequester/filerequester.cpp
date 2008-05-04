@@ -5,8 +5,6 @@
 #include "button.h"
 #include "dynamicarray.h"
 
-#include "debug.h"
-
 FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, char* title, char* path, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	_flags.shiftClickChildren = false;
