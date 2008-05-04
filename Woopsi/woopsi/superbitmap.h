@@ -180,6 +180,16 @@ public:
 	 * @param colour The colour of the ellipse.
 	 */
 	virtual void drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
+	
+	/**
+	 * Draw a filled ellipse to the bitmap.
+	 * @param xCentre The x co-ordinate of the ellipse's centre.
+	 * @param yCentre The y co-ordinate of the ellipse's centre.
+	 * @param horizRadius The size of the ellipse's horizontal radius.
+	 * @param vertRadius The size of the ellipse's vertical radius.
+	 * @param colour The colour of the ellipse.
+	 */
+	virtual void drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
 
 	/**
 	 * Erases the internal bitmap by filling it with the gadget's back colour.

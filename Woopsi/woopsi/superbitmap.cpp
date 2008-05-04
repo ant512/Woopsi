@@ -554,3 +554,100 @@ void SuperBitmap::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 ver
 		}
 	}
 }
+
+// Code borrowed from http://enchantia.com/software/graphapp/doc/tech/ellipses.html
+// This is L. Patrick's implementation of a filled ellipse algorithm that uses
+// filled rects to draw the ellipse. 
+void SuperBitmap::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
+
+	/* e(x,y) = b^2*x^2 + a^2*y^2 - a^2*b^2 */
+	s16 x = 0;
+	s16 y = vertRadius;
+	
+	s16 rx = x;
+	s16 ry = y;
+	u16 width = 1;
+	u16 height = 1;
+	
+	s32 horizSquare = horizRadius * horizRadius;
+	s32 vertSquare = vertRadius * vertRadius;
+	
+	s32 crit1 = -((horizSquare >> 2) + (horizRadius % 2) + vertSquare);
+	s32 crit2 = -((vertSquare >> 2) + (vertRadius % 2) + horizSquare);
+	s32 crit3 = -((vertSquare >> 2) + (vertRadius % 2));
+	
+	s32 t = -horizSquare * y;
+	s32 dxt = vertSquare * x << 1;
+	s32 dyt = -horizSquare * y << 1;
+	s32 d2xt = vertSquare << 1;
+	s32 d2yt = horizSquare << 1;
+		
+	if (vertRadius == 0) {
+		drawFilledRect(xCentre - horizRadius, yCentre, (horizRadius << 1) + 1, 1, colour);
+		return;
+	}
+	
+	while ((y >= 0) && (x <= horizRadius)) {
+		
+		if ((t + (vertSquare * x) <= crit1) || (t + (horizSquare * y) <= crit3)) {
+			
+			if (height == 1) {
+				// Draw nothing
+			} else if (ry * 2 + 1 > (height - 1) * 2) {
+				drawFilledRect(xCentre - rx, yCentre - ry, width, height - 1, colour);
+				drawFilledRect(xCentre - rx, yCentre + ry + 1 - height, width, height - 1, colour);
+				ry -= height-1;
+				height = 1;
+			} else {
+				drawFilledRect(xCentre - rx, yCentre - ry, width, ry * 2 + 1, colour);
+				ry -= ry;
+				height = 1;
+			}
+				
+			// Inc x
+			x++;
+			dxt += d2xt;
+			t += dxt;
+			
+			rx++;
+			width += 2;
+		} else if (t - (horizSquare * y) > crit2) { /* e(x+1/2,y-1) > 0 */
+
+			// Inc y
+			y--;
+			dyt += d2yt;
+			t += dyt;
+			
+			height++;
+		} else {
+			if (ry*2+1 > height*2) {
+				drawFilledRect(xCentre - rx, yCentre - ry, width, height, colour);
+				drawFilledRect(xCentre - rx, yCentre + ry + 1 - height, width, height, colour);
+			} else {
+				drawFilledRect(xCentre - rx, yCentre - ry, width, ry * 2 + 1, colour);
+			}
+			
+			// Inc x
+			x++;
+			dxt += d2xt;
+			t += dxt;
+			
+			// Inc y
+			y--;
+			dyt += d2yt;
+			t += dyt;
+			
+			rx++;
+			width += 2;
+			ry -= height;
+			height = 1;
+		}
+	}
+		
+	if (ry > height) {
+		drawFilledRect(xCentre - rx, yCentre - ry, width, height, colour);
+		drawFilledRect(xCentre - rx, yCentre + ry + 1 - height, width, height, colour);
+	} else {
+		drawFilledRect(xCentre - rx, yCentre - ry, width, ry * 2 + 1, colour);
+	}
+}

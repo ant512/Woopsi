@@ -168,7 +168,7 @@ void Demo::startup() {
 	// Draw on superbitmap
 	superBitmap->drawFilledCircle(10, 10, 20, woopsiRGB(31, 31, 31));
 	superBitmap->drawFilledRect(10, 40, 20, 20, woopsiRGB(31, 0, 0));
-	superBitmap->drawEllipse(40, 40, 30, 10, woopsiRGB(10, 31, 0));
+	superBitmap->drawFilledEllipse(60, 60, 10, 30, woopsiRGB(10, 31, 0));
 
 	// Anim button test
 	SkinnedWindow* ikWindow = new SkinnedWindow(30, 30, 121, 71, "IK", Gadget::GADGET_DRAGGABLE, SkinnedWindow::SKINNED_WINDOW_SHOW_CLOSE | SkinnedWindow::SKINNED_WINDOW_SHOW_DEPTH, windowSkin);
