@@ -62,16 +62,7 @@ bool Requester::handleEvent(const EventArgs& e) {
 				} else if (e.gadget == _okButton) {
 
 					// Raise value changed event to event handler
-					if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-						EventArgs newEvent;
-						newEvent.eventX = e.eventX;
-						newEvent.eventY = e.eventY;
-						newEvent.gadget = this;
-						newEvent.keyCode = e.keyCode;
-						newEvent.type = EVENT_VALUE_CHANGE;
-
-						_eventHandler->handleEvent(newEvent);
-					}
+					raiseValueChangeEvent();
 
 					// Close the window
 					close();
@@ -82,16 +73,7 @@ bool Requester::handleEvent(const EventArgs& e) {
 				if (e.gadget == _listbox) {
 
 					// Raise value changed event to event handler
-					if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-						EventArgs newEvent;
-						newEvent.eventX = e.eventX;
-						newEvent.eventY = e.eventY;
-						newEvent.gadget = this;
-						newEvent.keyCode = e.keyCode;
-						newEvent.type = EVENT_VALUE_CHANGE;
-
-						_eventHandler->handleEvent(newEvent);
-					}
+					raiseValueChangeEvent();
 
 					// Close the window
 					close();

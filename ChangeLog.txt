@@ -17,6 +17,8 @@ Change Log
      - SkinnedWindow only drags when titlebar clicked, not any border gadget.
      - Fixed crash when gadget closed but parent subsequently points one of its
        pointers back at it.
+     - Fixed checkbox incorrectly setting font pointer instead of leaving it to
+       the base class.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
@@ -39,7 +41,8 @@ Change Log
      - Added drawEllipse() to the SuperBitmap class.
      - Added drawFilledEllipse() to the SuperBitmap class.
      - Added ListData class.
-     - Added FilePath class to bonus folder.
+     - Added FilePath class to bonus folder
+     - Added gadget test screen to demo.
 
   V0.32 (200804327)
   

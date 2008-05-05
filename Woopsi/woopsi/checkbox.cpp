@@ -2,8 +2,6 @@
 #include "graphicsport.h"
 
 CheckBox::CheckBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, GLYPH_CHECK_BOX_ON, font) {
-	_font = font;
-
 	_state = CHECK_BOX_STATE_OFF;
 	_flags.borderless = false;
 	_outline = OUTLINE_OUT;

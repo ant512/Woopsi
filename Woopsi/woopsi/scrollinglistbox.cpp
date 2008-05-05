@@ -65,16 +65,7 @@ bool ScrollingListBox::handleEvent(const EventArgs& e) {
 				case EVENT_DOUBLE_CLICK:
 
 					// Raise double-click events from list box to event handler
-					if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-						EventArgs newEvent;
-						newEvent.eventX = e.eventX;
-						newEvent.eventY = e.eventY;
-						newEvent.gadget = this;
-						newEvent.keyCode = e.keyCode;
-						newEvent.type = e.type;
-
-						_eventHandler->handleEvent(newEvent);
-					}
+					raiseDoubleClickEvent(e.eventX, e.eventY);
 					break;
 				default:
 					break;

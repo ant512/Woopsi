@@ -206,12 +206,6 @@ void Demo::startup() {
 	progressBar->setMaximumValue(100);
 	newScreen2->addGadget(progressBar);
 
-	// Add cycle gadget
-	CycleButton* cycle = new CycleButton(20, 50, 100, 20);
-	cycle->addOption("test 1", 0);
-	cycle->addOption("test 2", 0);
-	newScreen2->addGadget(cycle);
-
 	Gradient* gradient = new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
 	newScreen2->insertGadget(gradient);
 	gradient->addContextMenuItem("Context Menu", 0);
@@ -226,18 +220,6 @@ void Demo::startup() {
 
 	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	newScreen->addGadget(textWindow);
-
-	//RadioButtonGroup* radioButtons = new RadioButtonGroup(0, 0);
-	//controlWindow->addGadget(radioButtons);
-
-	//radioButtons->newRadioButton(0, 0, 12, 12);
-	//radioButtons->newRadioButton(12, 0, 12, 12);
-	//radioButtons->newRadioButton(24, 0, 12, 12);
-	//radioButtons->newRadioButton(36, 0, 12, 12);
-
-	//controlWindow->addGadget(new CheckBox(48, 0, 12, 12));
-	//controlWindow->addGadget(new CheckBox(60, 0, 12, 12));
-	//controlWindow->addGadget(new CheckBox(72, 0, 12, 12));
 
 	AmigaWindow* textTestWindow = new AmigaWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	newScreen->addGadget(textTestWindow);
@@ -279,24 +261,7 @@ void Demo::startup() {
 	scrollingBox->addContextMenuItem("Test 4", 0);
 	scrollingBox->addContextMenuItem("Test 5", 0);
 
-	ScrollingListBox* listbox = new ScrollingListBox(30, 30, 100, 100);
-	textWindow->addGadget(listbox);
-	
-	listbox->addOption("ListBox Test", 0, listbox->getShineColour(), listbox->getBackColour(), listbox->getShineColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 1", 1, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 4", 4, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 12", 12, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 5", 5, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 2", 2, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 7", 7, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 8", 8, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 6", 6, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 3", 3, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 9", 9, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 10", 10, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->addOption("List Item 11", 11, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
-	listbox->removeOption(9);
-	listbox->sort();
+
 
 	// Add another screen
 	AmigaScreen* demoScreen = new AmigaScreen("Demos", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
@@ -326,10 +291,79 @@ void Demo::startup() {
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 28, 92, 28, 0, 0, 92, 28, bittest2_Bitmap, bittest5_Bitmap));
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 56, 92, 27, 0, 0, 92, 28, bittest3_Bitmap, bittest6_Bitmap));
 
+	// Gadget test
+	AmigaScreen* gadgetTestScreen = new AmigaScreen("Gadget test", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	woopsiApplication->addGadget(gadgetTestScreen);
 
-	// Add Welcome notice
-	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
-	newScreen2->addGadget(_alert);
+	AmigaWindow* gadgetTestWindow = new AmigaWindow(0, 13, 256, 179, "Gadget Test", 0, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	gadgetTestScreen->addGadget(gadgetTestWindow);
+
+	// Create listbox
+	ScrollingListBox* listbox = new ScrollingListBox(6, 40, 100, 100);
+	gadgetTestWindow->addGadget(listbox);
+	listbox->addOption("ListBox Test", 0, listbox->getShineColour(), listbox->getBackColour(), listbox->getShineColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 1", 1, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 4", 4, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 12", 12, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 5", 5, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 2", 2, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 7", 7, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 8", 8, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 6", 6, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 3", 3, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 9", 9, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 10", 10, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->addOption("List Item 11", 11, listbox->getShadowColour(), listbox->getBackColour(), listbox->getShadowColour(), listbox->getHighlightColour());
+	listbox->removeOption(9);
+	listbox->sort();
+
+	// Create cycle gadget
+	CycleButton* cycle = new CycleButton(6, 15, 100, 20);
+	cycle->addOption("test 1", 0);
+	cycle->addOption("test 2", 0);
+	gadgetTestWindow->addGadget(cycle);
+
+	RadioButtonGroup* radioButtons = new RadioButtonGroup(110, 15);
+	gadgetTestWindow->addGadget(radioButtons);
+
+	radioButtons->newRadioButton(0, 0, 12, 12);
+	radioButtons->newRadioButton(0, 12, 12, 12);
+	radioButtons->newRadioButton(0, 24, 12, 12);
+	radioButtons->newRadioButton(0, 36, 12, 12);
+
+	Textbox* rlabel1 = new Textbox(125, 14, 60, 14, "Radio 1");
+	rlabel1->setBorderless(true);
+	gadgetTestWindow->addGadget(rlabel1);
+
+	Textbox* rlabel2 = new Textbox(125, 26, 60, 14, "Radio 2");
+	rlabel2->setBorderless(true);
+	gadgetTestWindow->addGadget(rlabel2);
+
+	Textbox* rlabel3 = new Textbox(125, 38, 60, 14, "Radio 3");
+	rlabel3->setBorderless(true);
+	gadgetTestWindow->addGadget(rlabel3);
+
+	Textbox* rlabel4 = new Textbox(125, 50, 60, 14, "Radio 4");
+	rlabel4->setBorderless(true);
+	gadgetTestWindow->addGadget(rlabel4);
+
+	gadgetTestWindow->addGadget(new CheckBox(110, 72, 12, 12));
+	gadgetTestWindow->addGadget(new CheckBox(110, 86, 12, 12));
+	gadgetTestWindow->addGadget(new CheckBox(110, 100, 12, 12));
+
+	Textbox* clabel1 = new Textbox(125, 70, 60, 14, "Check 1");
+	clabel1->setBorderless(true);
+	gadgetTestWindow->addGadget(clabel1);
+
+	Textbox* clabel2 = new Textbox(125, 84, 60, 14, "Check 2");
+	clabel2->setBorderless(true);
+	gadgetTestWindow->addGadget(clabel2);
+
+	Textbox* clabel3 = new Textbox(125, 98, 60, 14, "Check 3");
+	clabel3->setBorderless(true);
+	gadgetTestWindow->addGadget(clabel3);
+
+
 
 	Requester* req = new Requester(10, 10, 140, 100, "Text");
 	req->addOption("Req Test 1", 1);
@@ -344,11 +378,15 @@ void Demo::startup() {
 	newScreen2->addGadget(req);
 
 
+	// Add Welcome notice
+	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
+	newScreen2->addGadget(_alert);
+
 	enableDrawing();	// Ensure Woopsi can now draw itself
 	draw();				// Draw initial state
 
 	// Make welcome notice modal
-	//_alert->goModal();
+	_alert->goModal();
 }
 
 void Demo::shutdown() {
