@@ -99,6 +99,8 @@ Gadget::~Gadget() {
 			}
 		}
 	}
+	
+	_parent->forgetGadget(this);
 
 	// Delete context menu data
 	for (s32 i = 0; i < _contextMenuItems.size(); i++) {
@@ -1076,9 +1078,6 @@ void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
 
 			// Add gadget to Woopsi's delete vector
 			Woopsi::addToDeleteQueue(gadget);
-
-			// Divorce child from parent
-			gadget->setParent(NULL);
 
 			// Remove gadget from main vector
 			_gadgets.erase(_gadgets.begin() + i);
@@ -2097,36 +2096,37 @@ bool Gadget::remove() {
 }
 
 bool Gadget::removeChild(Gadget* gadget) {
+
+	// Do we need to make another gadget active?
+	if (_focusedGadget == gadget) {
+		_focusedGadget = NULL;
+	}
+
+	// Unset clicked gadget if necessary
+	if (_clickedGadget == gadget) {
+		_clickedGadget = NULL;
+	}
+
+	// Decrease decoration count if necessary
+	if (gadget->isDecoration()) {
+		_decorationCount--;
+	}
+
+	// Close the context menu if we're removing the gadget that opened it
+	if (woopsiApplication != NULL) {
+		if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
+			woopsiApplication->shelveContextMenu();
+		}
+	}
+
+	// Divorce child from parent
+	gadget->setParent(NULL);
+	
+	gadget->disableDrawing();
+
 	// Locate gadget in main vector
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
-
-			// Do we need to make another gadget active?
-			if (_focusedGadget == gadget) {
-				_focusedGadget = NULL;
-			}
-
-			// Unset clicked gadget if necessary
-			if (_clickedGadget == gadget) {
-				_clickedGadget = NULL;
-			}
-
-			// Decrease decoration count if necessary
-			if (gadget->isDecoration()) {
-				_decorationCount--;
-			}
-
-			// Close the context menu if we're removing the gadget that opened it
-			if (woopsiApplication != NULL) {
-				if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
-					woopsiApplication->shelveContextMenu();
-				}
-			}
-
-			// Divorce child from parent
-			gadget->setParent(NULL);
-			
-			gadget->disableDrawing();
 
 			// Remove gadget from main vector
 			_gadgets.erase(_gadgets.begin() + i);
@@ -2249,4 +2249,9 @@ void Gadget::goModal() {
 	while (isModal() && (woopsiApplication != NULL)) {
 		woopsiApplication->processOneVBL(this);
 	}
+}
+
+void Gadget::forgetGadget(Gadget* gadget) {
+	if (_clickedGadget == gadget) _clickedGadget = NULL;
+	if (_focusedGadget == gadget) _focusedGadget = NULL;
 }

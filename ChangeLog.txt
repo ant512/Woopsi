@@ -15,6 +15,8 @@ Change Log
      - System makes copies of string data where appropriate.
      - Removed duplicate title string pointer from window classes.
      - SkinnedWindow only drags when titlebar clicked, not any border gadget.
+     - Fixed crash when gadget closed but parent subsequently points one of its
+       pointers back at it.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.

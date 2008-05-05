@@ -925,6 +925,14 @@ public:
 	 * Stop the gadget running modally.
 	 */
 	inline void stopModal() { _flags.modal = false; };
+	
+	
+	/**
+	 * Reset the clicked and focused gadget pointers if they point at the
+	 * specified gadget.
+	 * @param gadget The gadget to forget.
+	 */
+	void forgetGadget(Gadget* gadget);
 
 protected:
 	s16 _x;									/**< X co-ordinate of the gadget, relative to parent */
