@@ -100,7 +100,9 @@ Gadget::~Gadget() {
 		}
 	}
 	
-	_parent->forgetGadget(this);
+	if (_parent != NULL) {
+		_parent->removeChild(this);
+	}
 
 	// Delete context menu data
 	for (s32 i = 0; i < _contextMenuItems.size(); i++) {
@@ -1020,6 +1022,9 @@ void Gadget::close() {
 		if (_parent != NULL) {
 			_parent->closeChild(this);
 		}
+
+		// Ensure that this gadget can no longer affect the decoration count
+		_flags.decoration = false;
 	}
 }
 
@@ -2249,9 +2254,4 @@ void Gadget::goModal() {
 	while (isModal() && (woopsiApplication != NULL)) {
 		woopsiApplication->processOneVBL(this);
 	}
-}
-
-void Gadget::forgetGadget(Gadget* gadget) {
-	if (_clickedGadget == gadget) _clickedGadget = NULL;
-	if (_focusedGadget == gadget) _focusedGadget = NULL;
 }
