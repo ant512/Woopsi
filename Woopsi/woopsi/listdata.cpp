@@ -162,9 +162,6 @@ void ListData::removeAllItems() {
 	_items.clear();
 }
 
-
-
-
 const s32 ListData::getInsertionIndex(const char* text) const {
 
 	s32 i = 0;
