@@ -6,7 +6,7 @@
 Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	// Define OK button text
-	char* buttonText = "OK";
+	const char* buttonText = "OK";
 
 	// Padding around the main text
 	u8 padding = 2;
