@@ -1696,18 +1696,21 @@ void Gadget::lidOpened() {
 
 bool Gadget::focus() {
 	if (isEnabled()) {
-		if (!_flags.hasFocus) {
-			_flags.hasFocus = true;
 
-			// Notify parent that this gadget has focus
-			if (_parent != NULL) {
-				_parent->setFocusedGadget(this);
-			}
+		// Remember if the gadget has focus
+		u8 hadFocus = _flags.hasFocus;
 
-			raiseFocusEvent();
+		_flags.hasFocus = true;
 
-			return true;
+		// Notify parent that this gadget has focus
+		if (_parent != NULL) {
+			_parent->setFocusedGadget(this);
 		}
+
+	// Raise an event only if the gadget did not have focus
+	if (!hadFocus) {
+		raiseFocusEvent();
+		return true;
 	}
 
 	return false;
@@ -1715,17 +1718,20 @@ bool Gadget::focus() {
 
 bool Gadget::blur() {
 
-	if (_flags.hasFocus) {
-		_flags.hasFocus = false;
+	// Remember if the gadget had focus
+	bool hadFocus = _flags.hasFocus;
 
-		// Take focus away from child gadgets
-		if (_focusedGadget != NULL) {
-			_focusedGadget->blur();
-			_focusedGadget = NULL;
-		}
+	_flags.hasFocus = false;
 
+	// Take focus away from child gadgets
+	if (_focusedGadget != NULL) {
+		_focusedGadget->blur();
+		_focusedGadget = NULL;
+	}
+
+	// Raise an event only if the gadget had focus
+	if (hadFocus) {
 		raiseBlurEvent();
-
 		return true;
 	}
 

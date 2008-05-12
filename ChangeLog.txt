@@ -24,6 +24,8 @@ Change Log
      - Scrollbar buttons default to adjusting grip value by 1.
      - Gadget::addGadget() checks to see if new children want to steal the focus
        and will grant it if necessary.
+     - Focus and blur propagate throughout the gadget ancestor list even if a
+       gadget along the way already has focus (or not).
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
