@@ -108,10 +108,12 @@ bool SliderVertical::click(s16 x, s16 y) {
 			// Which way should the grip move?
 			if (y > _grip->getY()) {
 				// Move grip down
-				jumpGrip(1);
+				setValue(getValue() + _pageSize);
+				//jumpGrip(1);
 			} else {
 				// Move grip up
-				jumpGrip(0);
+				setValue(getValue() - _pageSize);
+				//jumpGrip(0);
 			}
 		}
 

@@ -5,7 +5,7 @@
 ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 	
 	_buttonWidth = 10;
-	_buttonScrollAmount = 10;
+	_buttonScrollAmount = 1;
 
 	// Create the children
 	_slider = new SliderHorizontal(0, 0, width - (_buttonWidth << 1), height);

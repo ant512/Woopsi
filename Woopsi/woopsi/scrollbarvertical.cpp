@@ -5,7 +5,7 @@
 ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 
 	_buttonHeight = 10;
-	_buttonScrollAmount = 10;
+	_buttonScrollAmount = 1;
 
 	// Create the children
 	_slider = new SliderVertical(0, 0, width, height - (_buttonHeight << 1));

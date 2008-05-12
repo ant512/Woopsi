@@ -108,10 +108,12 @@ bool SliderHorizontal::click(s16 x, s16 y) {
 			// Which way should the grip move?
 			if (x > _grip->getX()) {
 				// Move grip right
-				jumpGrip(1);
+				setValue(getValue() + _pageSize);
+				//jumpGrip(1);
 			} else {
 				// Move grip left
-				jumpGrip(0);
+				setValue(getValue() - _pageSize);
+				//jumpGrip(0);
 			}
 		}
 

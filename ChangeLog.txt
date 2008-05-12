@@ -20,6 +20,8 @@ Change Log
      - Fixed checkbox incorrectly setting font pointer instead of leaving it to
        the base class.
      - Fixed overflow in slider grip position calculations.
+     - Slider grip moves one page width/height when the gutter is clicked.
+     - Scrollbar buttons default to adjusting grip value by 1.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
