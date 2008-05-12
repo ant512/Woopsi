@@ -1820,6 +1820,11 @@ void Gadget::addGadget(Gadget* gadget) {
 			_gadgets.push_back(gadget);
 		}
 
+		// Should the gadget steal the focus?
+		if (gadget->hasFocus()) {
+			setFocusedGadget(gadget);
+		}
+
 		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();

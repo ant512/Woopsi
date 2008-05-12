@@ -22,6 +22,8 @@ Change Log
      - Fixed overflow in slider grip position calculations.
      - Slider grip moves one page width/height when the gutter is clicked.
      - Scrollbar buttons default to adjusting grip value by 1.
+     - Gadget::addGadget() checks to see if new children want to steal the focus
+       and grant it if necessary.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
