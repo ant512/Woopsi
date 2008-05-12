@@ -19,6 +19,7 @@ Change Log
        pointers back at it.
      - Fixed checkbox incorrectly setting font pointer instead of leaving it to
        the base class.
+     - Fixed overflow in slider grip position calculations.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.

@@ -66,7 +66,7 @@ void SliderHorizontal::setValue(const s16 value) {
 		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
 
 		// Convert value using ratio
-		s16 newGripX = (newValue * ratio);
+		s32 newGripX = (newValue * ratio);
 
 		// Round up
 		newGripX += newGripX & 128;
@@ -185,7 +185,7 @@ void SliderHorizontal::resizeGrip() {
 
 void SliderHorizontal::jumpGrip(u8 direction) {
 
-	s16 newGripX;
+	s32 newGripX;
 
 	// Which way should the grip move?
 	if (direction == 1) {
