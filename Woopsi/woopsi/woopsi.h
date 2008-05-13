@@ -203,7 +203,20 @@ public:
 		shutdown();				// Run any shutdown code
 
 		return 0;
-	}
+	};
+
+	/**
+	 * Set the clicked gadget pointer.  Note that this should not be
+	 * called by code other than within the Woopsi library itself.
+	 * @param gadget The new clicked gadget.
+	 */
+	inline void setClickedGadget(Gadget* gadget) { _clickedGadget = gadget; };
+
+	/**
+	 * Get the clicked gadget pointer.  
+	 * @return Pointer to the clicked gadget.
+	 */
+	inline Gadget* getClickedGadget() { return _clickedGadget; };
 
 protected:
 	bool _lidClosed;									/**< Remembers the current state of the lid */
@@ -213,6 +226,7 @@ protected:
 	static FontBase* _systemFont;						/**< Pointer to the default font */
 	static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */
 	ContextMenu* _contextMenu;							/**< Pointer to the context menu */
+	Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked */
 
 	/**
 	 * Closes a child gadget.

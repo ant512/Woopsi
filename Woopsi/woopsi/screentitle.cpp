@@ -4,6 +4,7 @@
 
 ScreenTitle::ScreenTitle(u16 height, const char* text, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, height, GADGET_BORDERLESS, font) {
 	_flags.decoration = true;
+	_flags.draggable = true;
 
 	// Don't create a copy of the title text, as we want to point to the title stored in
 	// the parent screen
@@ -20,16 +21,10 @@ void ScreenTitle::draw(Rect clipRect) {
 	delete port;
 }
 
-bool ScreenTitle::click(s16 x, s16 y) {
+bool ScreenTitle::focus() {
+	return true;
+}
 
-	if (Gadget::click(x, y)) {
-		// Tell parent that it is being dragged
-		if (_parent != NULL) {
-			_parent->setDragging(x, y);
-		}
-
-		return true;
-	}
-
-	return false;
+bool ScreenTitle::blur() {
+	return true;
 }

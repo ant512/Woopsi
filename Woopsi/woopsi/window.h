@@ -69,6 +69,13 @@ public:
 	 */
 	void setTitle(const char* title);
 
+	/**
+	 * Notify this gadget that it is being dragged, and set its drag point.
+	 * @param x The x co-ordinate of the drag position relative to this gadget.
+	 * @param y The y co-ordinate of the drag position relative to this gadget.
+	 */
+	virtual void setDragging(u16 x, u16 y);
+
 protected:
 	char* _title;							/**< Title of the window */
 

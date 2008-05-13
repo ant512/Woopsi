@@ -25,6 +25,7 @@ u32 Woopsi::_vblCount = 0;
 Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
 	_lidClosed = false;
 	_flags.modal = true;
+	_clickedGadget = NULL;
 
 	// Set up singleton pointer
 	singleton = this;
@@ -237,6 +238,7 @@ bool Woopsi::release(s16 x, s16 y) {
 		// Release clicked gadget
 		if (_clickedGadget != NULL) {
 			_clickedGadget->release(x, y);
+			_clickedGadget = NULL;
 		}
 
 		return true;

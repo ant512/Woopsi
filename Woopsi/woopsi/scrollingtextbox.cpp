@@ -120,15 +120,6 @@ void ScrollingTextBox::draw(Rect clipRect) {
 	clear(clipRect);
 }
 
-bool ScrollingTextBox::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	// Handle child dragging
-	if (_clickedGadget != NULL) {
-		return _clickedGadget->drag(x, y, vX, vY);
-	}
-
-	return false;
-}
-
 bool ScrollingTextBox::resize(u16 width, u16 height) {
 
 	// Prevent drawing

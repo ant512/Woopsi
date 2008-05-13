@@ -717,14 +717,6 @@ public:
 	virtual void setFocusedGadget(Gadget* gadget);
 
 	/**
-	 * Sets the supplied gadget as the clicked child.  The gadget must
-	 * be a child of this gadget.
-	 * @param gadget A pointer to the child gadget.
-	 * @see getClickedGadget()
-	 */
-	virtual void setClickedGadget(Gadget* gadget);
-
-	/**
 	 * Checks if the supplied co-ordinates collide with this gadget.
 	 * @param x The x co-ordinate to check.
 	 * @param y The y co-ordinate to check.
@@ -793,7 +785,7 @@ public:
 	 * @param x The x co-ordinate of the drag position relative to this gadget.
 	 * @param y The y co-ordinate of the drag position relative to this gadget.
 	 */
-	void setDragging(u16 x, u16 y);
+	virtual void setDragging(u16 x, u16 y);
 
 	/**
 	 * Rebuild the list of this gadget's visible regions
@@ -963,7 +955,6 @@ protected:
 	// Hierarchy control
 	Gadget* _parent;						/**< Pointer to the gadget's parent */
 	Gadget* _focusedGadget;					/**< Pointer to the child gadget that has focus */
-	Gadget* _clickedGadget;					/**< Pointer to the child gadget that is clicked */
 	DynamicArray<Gadget*> _gadgets;			/**< List of child gadgets */
 	DynamicArray<Gadget*> _shelvedGadgets;	/**< List of shelved child gadgets */
 
@@ -1109,6 +1100,13 @@ protected:
 	void raiseReleaseEvent(s16 x, s16 y);
 
 	/**
+	 * Raise a stylus release-outside event to the event handler.
+	 * @param x The x co-ordinate of the release.
+	 * @param y The y co-ordinate of the release.
+	 */
+	void raiseReleaseOutsideEvent(s16 x, s16 y);
+
+	/**
 	 * Raise a stylus drag event to the event handler.
 	 * @param x The x co-ordinate of the stylus when the drag started.
 	 * @param y The y co-ordinate of the stylus when the drag started.
@@ -1206,7 +1204,7 @@ protected:
 	 * @param x The new x co-ordinate of the gadget.
 	 * @param y The new y co-ordinate of the gadget.
 	 */
-	void raiseMoveEvent(s16 x, s16 y);
+	void raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY);
 
 	/**
 	 * Raise a context menu selection event to the event handler.

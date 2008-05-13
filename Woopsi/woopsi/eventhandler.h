@@ -13,27 +13,28 @@ enum EventType {
 	EVENT_CLICK = 1,					/**< Gadget has been clicked */
 	EVENT_DRAG = 2,						/**< Gadget has been dragged */
 	EVENT_RELEASE = 3,					/**< Gadget has been released (ie. stylus removed from screen) */
-	EVENT_KEY_PRESS = 4,				/**< DS button or d-pad has been pressed */
-	EVENT_KEY_RELEASE = 5,				/**< DS button or d-pad has been released */
-	EVENT_VBL = 6,						/**< Vertical blank has occurred */
-	EVENT_LID_OPENED = 7,				/**< DS' lid has been opened */
-	EVENT_LID_CLOSED = 8,				/**< DS' lid has been closed */
-	EVENT_FOCUS = 9,					/**< Gadget has received focus */
-	EVENT_BLUR = 10,					/**< Gadget has lost focus */
-	EVENT_CLOSE = 11,					/**< Gadget has been closed */
-	EVENT_HIDE = 12,					/**< Gadget has been hidden */
-	EVENT_SHOW = 13,					/**< Hidden gadget has been made visible */
-	EVENT_ENABLE = 14,					/**< Disabled gadget has been enabled */
-	EVENT_DISABLE = 15,					/**< Enabled gadget has been disabled */
-	EVENT_VALUE_CHANGE = 16,			/**< Gadget has changed value */
-	EVENT_RESIZE = 17,					/**< Gadget has been resized */
-	EVENT_MOVE = 18,					/**< Gadget has been moved */
-	EVENT_SCROLL = 19,					/**< Gadget has been scrolled */
-	EVENT_SHIFT_CLICK = 20,				/**< Gadget has been shift-clicked */
-	EVENT_CONTEXT_MENU_SELECTION = 21,	/**< Item selected in gadget's context menu */
-	EVENT_DOUBLE_CLICK = 22,			/**< Gadget has been double-clicked */
-	EVENT_SHELVE = 23,					/**< Gadget has been shelved */
-	EVENT_UNSHELVE = 24					/**< Shelved gadget has been unshelved */
+	EVENT_RELEASE_OUTSIDE = 4,			/**< Gadget has been released with the stylus outside the gadget */
+	EVENT_KEY_PRESS = 5,				/**< DS button or d-pad has been pressed */
+	EVENT_KEY_RELEASE = 6,				/**< DS button or d-pad has been released */
+	EVENT_VBL = 7,						/**< Vertical blank has occurred */
+	EVENT_LID_OPENED = 8,				/**< DS' lid has been opened */
+	EVENT_LID_CLOSED = 9,				/**< DS' lid has been closed */
+	EVENT_FOCUS = 10,					/**< Gadget has received focus */
+	EVENT_BLUR = 11,					/**< Gadget has lost focus */
+	EVENT_CLOSE = 12,					/**< Gadget has been closed */
+	EVENT_HIDE = 13,					/**< Gadget has been hidden */
+	EVENT_SHOW = 14,					/**< Hidden gadget has been made visible */
+	EVENT_ENABLE = 15,					/**< Disabled gadget has been enabled */
+	EVENT_DISABLE = 16,					/**< Enabled gadget has been disabled */
+	EVENT_VALUE_CHANGE = 17,			/**< Gadget has changed value */
+	EVENT_RESIZE = 18,					/**< Gadget has been resized */
+	EVENT_MOVE = 19,					/**< Gadget has been moved */
+	EVENT_SCROLL = 20,					/**< Gadget has been scrolled */
+	EVENT_SHIFT_CLICK = 21,				/**< Gadget has been shift-clicked */
+	EVENT_CONTEXT_MENU_SELECTION = 22,	/**< Item selected in gadget's context menu */
+	EVENT_DOUBLE_CLICK = 23,			/**< Gadget has been double-clicked */
+	EVENT_SHELVE = 24,					/**< Gadget has been shelved */
+	EVENT_UNSHELVE = 25					/**< Shelved gadget has been unshelved */
 };
 
 /**
@@ -63,6 +64,8 @@ typedef struct {
 	Gadget* gadget;					/**< Pointer to the gadget that raised the event */
 	s16 eventX;						/**< X co-ordinate of the event */
 	s16 eventY;						/**< Y co-ordinate of the event */
+	s16 eventVX;					/**< X distance moved during event, for dragging */
+	s16 eventVY;					/**< Y distance moved during event, for dragging */
 	KeyCode keyCode;				/**< The key code that raised the event */
 } EventArgs;
 

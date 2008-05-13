@@ -26,6 +26,12 @@ Change Log
        and will grant it if necessary.
      - Focus and blur propagate throughout the gadget ancestor list even if a
        gadget along the way already has focus (or not).
+     - Moved _clickedGadget pointer into Woopsi class and deleted all other
+       occurences.
+     - Changed _clickedGadget handling so that release works with the single
+       pointer in Woopsi.
+     - Windows drag correctly if only one co-ordinate has changed.
+     - Screen title bar no longer steals focus when clicked.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
@@ -50,6 +56,10 @@ Change Log
      - Added ListData class.
      - Added FilePath class to bonus folder
      - Added gadget test screen to demo.
+     - Added release-outside event that fires if the stylus is released outside
+       the boundaries of the gadget.
+     - Added eventVX and eventVY to EventArgs struct.
+     - Drag and move events populate eventVX and eventVY EventArgs properties.
 
   V0.32 (200804327)
   

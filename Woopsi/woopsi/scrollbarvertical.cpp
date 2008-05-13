@@ -61,15 +61,6 @@ void ScrollbarVertical::draw() {
 void ScrollbarVertical::draw(Rect clipRect) {
 }
 
-bool ScrollbarVertical::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	// Handle child dragging
-	if (_clickedGadget != NULL) {
-		return _clickedGadget->drag(x, y, vX, vY);
-	}
-
-	return false;
-}
-
 bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 
 	// Check which gadget fired the event

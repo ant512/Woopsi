@@ -39,28 +39,6 @@ const u8 AmigaWindow::getTitleHeight() const {
 	return 0;
 }
 
-void AmigaWindow::setClickedGadget(Gadget* gadget) {
-	if (_clickedGadget != gadget) {
-		_clickedGadget = gadget;
-
-		// Only remember we clicked a gadget if we didn't click
-		// a border gadget
-		if ((_clickedGadget == _windowBorderBottom) ||
-			(_clickedGadget == _windowBorderLeft) ||
-			(_clickedGadget == _windowBorderRight) ||
-			(_clickedGadget == _windowBorderTop)) {
-
-			// Forget the clicked gadget
-			_clickedGadget = NULL;
-		}
-
-		// Notify parent
-		if (_parent != NULL) {
-			_parent->setClickedGadget(this);
-		}
-	}
-}
-
 void AmigaWindow::setBorderless(bool isBorderless) {
 	if (isBorderless != _flags.borderless) {
 		if (isBorderless) {
@@ -141,6 +119,11 @@ void AmigaWindow::createBorder() {
 	_windowBorderRight = new WindowBorderSide(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderBottom = new WindowBorderBottom(0, _height - WINDOW_BORDER_SIZE, _width, WINDOW_BORDER_SIZE, WINDOW_BORDER_SIZE);
 
+	_windowBorderTop->setEventHandler(this);
+	_windowBorderLeft->setEventHandler(this);
+	_windowBorderRight->setEventHandler(this);
+	_windowBorderBottom->setEventHandler(this);
+
 	insertGadget(_windowBorderBottom);
 	insertGadget(_windowBorderRight);
 	insertGadget(_windowBorderLeft);
@@ -151,52 +134,20 @@ bool AmigaWindow::click(s16 x, s16 y) {
 
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
-			bool gotGadget = false;
-			_clickedGadget = NULL;
 
-			// Work out which gadget was clicked
+			// Try to click a child gadget
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
-
-					// Only remember we clicked a gadget if we didn't click
-					// a border gadget
-					if (_clickedGadget != NULL) {
-						if ((_clickedGadget != _closeButton) &&
-							(_clickedGadget != _depthButton)) {
-							gotGadget = true;
-						}
-					}
-
-					break;
+					return true;
 				}
 			}
 
-			// Did we click a gadget?
-			if (!gotGadget) {
+			// Handle click on window
+			_flags.clicked = true;
 
-				// Handle click on window
-				_flags.clicked = true;
+			setFocusedGadget(NULL);
 
-				setFocusedGadget(NULL);
-
-				// Tell parent that the clicked gadget has changed
-				if (_parent != NULL) {
-					_parent->setClickedGadget(this);
-				}
-
-				raiseClickEvent(x, y);
-			}
-
-			// Do we need to draw the XOR rect?
-			if (_flags.dragging) {
-				// Get a graphics port from the parent screen
-				GraphicsPort* port = _parent->newGraphicsPort();
-
-				// Draw rect
-				port->drawXORRect(_newX, _newY, _width, _height);
-
-				delete port;
-			}
+			raiseClickEvent(x, y);
 
 			return true;
 		}
@@ -331,38 +282,82 @@ void AmigaWindow::getClientRect(Rect& rect) const {
 }
 
 bool AmigaWindow::handleEvent(const EventArgs& e) {
-	// Only handle release events
-	if (e.type == EVENT_RELEASE) {
+	
+	if (e.gadget != NULL) {
+		switch (e.type) {
+			case EVENT_RELEASE:
 
-		// Was an interesting gadget released?
-		if (e.gadget != NULL) {
+				if (e.gadget == _depthButton) {
 
-			// Process decoration gadgets only
-			if (e.gadget == _depthButton) {
+					// Swap depths
+					swapDepth();
+					return true;
+				} else if (e.gadget == _closeButton) {
 
-				// Swap depths
-				swapDepth();
-				return true;
-			} else if (e.gadget == _closeButton) {
+					// Work out which close type to use
+					switch (getCloseType()) {
+						case CLOSE_TYPE_CLOSE:
+							// Close the window
+							close();
+							break;
+						case CLOSE_TYPE_SHELVE:
+							// Shelve the window
+							shelve();
+							break;
+						case CLOSE_TYPE_HIDE:
+							// Hide the window
+							hide();
+							break;
+					}
 
-				// Work out which close type to use
-				switch (getCloseType()) {
-					case CLOSE_TYPE_CLOSE:
-						// Close the window
-						close();
-						break;
-					case CLOSE_TYPE_SHELVE:
-						// Shelve the window
-						shelve();
-						break;
-					case CLOSE_TYPE_HIDE:
-						// Hide the window
-						hide();
-						break;
+					return true;
+				} else if (e.gadget == _windowBorderTop) {
+
+					// Release the window
+					release(e.eventX, e.eventY);
+					return true;
 				}
+				break;
 
-				return true;
-			}
+			case EVENT_CLICK:
+
+				if (e.gadget == _windowBorderTop) {
+		
+					// Top border - focus and drag
+					focus();
+					setDragging(e.eventX, e.eventY);
+					return true;
+
+				} else if ((e.gadget == _windowBorderBottom) ||
+					(e.gadget == _windowBorderLeft) ||
+					(e.gadget == _windowBorderRight) ||
+					(e.gadget == _depthButton) ||
+					(e.gadget == _closeButton)) {
+
+					// Other borders - focus only
+					focus();
+					return true;
+				}
+				break;
+
+			case EVENT_DRAG:
+
+				if (e.gadget == _windowBorderTop) {
+					drag(e.eventX, e.eventY, e.eventVX, e.eventVY);
+					return true;
+				}
+				break;
+
+			case EVENT_RELEASE_OUTSIDE:
+
+				if (e.gadget == _windowBorderTop) {
+					release(e.eventX, e.eventY);
+					return true;
+				}
+				break;
+
+			default:
+				break;
 		}
 	}
 

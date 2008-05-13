@@ -183,16 +183,6 @@ public:
 	virtual bool handleEvent(const EventArgs& e);
 
 	/**
-	 * Drag the gadget at the specified co-ordinates.
-	 * @param x The x co-ordinate of the drag.
-	 * @param y The y co-ordinate of the drag.
-	 * @param vX The x distance of the drag.
-	 * @param vY The y distance of the drag.
-	 * @return True if the drag was processed by the gadget.
-	 */
-	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
-
-	/**
 	 * Resize the textbox to the new dimensions.
 	 * @param width The new width.
 	 * @param height The new height.

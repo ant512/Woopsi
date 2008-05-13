@@ -104,31 +104,23 @@ bool Screen::click(s16 x, s16 y) {
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
-			// Handle clicks on children
-			_clickedGadget = NULL;
-
 			// Work out which child was clicked
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
-					break;
+					return true;
 				}
 			}
 
 			// Handle clicks on this
-			if (_clickedGadget == NULL) {
+			_flags.clicked = true;
 
-				_flags.clicked = true;
+			// Take focus away from child gadgets
+			setFocusedGadget(NULL);
 
-				// Take focus away from child gadgets
-				setFocusedGadget(NULL);
+			// Tell parent that the clicked gadget has changed
+			woopsiApplication->setClickedGadget(this);
 
-				// Tell parent that the clicked gadget has changed
-				if (_parent != NULL) {
-					_parent->setClickedGadget(this);
-				}
-
-				raiseClickEvent(x, y);
-			}
+			raiseClickEvent(x, y);
 
 			return true;
 		}
@@ -143,16 +135,8 @@ bool Screen::release(s16 x, s16 y) {
 	if (_flags.dragging) {
 		_y = _newY;
 
-		_clickedGadget = NULL;
-
 		// Handle release on screen
 		Gadget::release(x, y);
-
-		return true;
-	} else if (_clickedGadget != NULL) {
-
-		// Run release on clicked gadget
-		_clickedGadget->release(x, y);
 
 		return true;
 	} else if (_flags.clicked) {
@@ -314,14 +298,6 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			}
 
 			return true;
-		} else {
-
-			// Run drag on the clicked gadget
-			if (_clickedGadget != NULL) {
-				_clickedGadget->drag(x, y, vX, vY);
-
-				return true;
-			}
 		}
 	}
 

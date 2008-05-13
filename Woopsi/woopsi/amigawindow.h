@@ -77,14 +77,6 @@ public:
 	virtual void getClientRect(Rect& rect) const;
 
 	/**
-	 * Sets the supplied gadget as the clicked child.  The gadget must
-	 * be a child of this gadget.
-	 * @param gadget A pointer to the child gadget.
-	 * @see getClickedGadget()
-	 */
-	virtual void setClickedGadget(Gadget* gadget);
-
-	/**
 	 * Click this gadget at the supplied co-ordinates.
 	 * @param x X co-ordinate of the click.
 	 * @param y Y co-ordinate of the click.
@@ -158,7 +150,6 @@ public:
 	 * @return True if the window has a depth button.
 	 */
 	virtual inline const bool hasDepthButton() const { return _windowFlags.showDepthButton; };
-
 
 protected:
 	AmigaWindowFlags _windowFlags;					/**< AmigaWindow-specific flags */

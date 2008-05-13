@@ -1,5 +1,6 @@
 #include "windowborderside.h"
 #include "graphicsport.h"
+#include "woopsi.h"
 
 WindowBorderSide::WindowBorderSide(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 

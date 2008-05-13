@@ -62,7 +62,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	// Set hierarchy pointers
 	_parent = NULL;
 	_focusedGadget = NULL;
-	_clickedGadget = NULL;
 	_eventHandler = NULL;
 
 	// Double-click
@@ -96,6 +95,11 @@ Gadget::~Gadget() {
 			// Close the context menu if we're closing the gadget that opened it
 			if (woopsiApplication->getContextMenu()->getOpener() == this) {
 				woopsiApplication->shelveContextMenu();
+			}
+
+			// Unset the clicked pointer if necessary
+			if (woopsiApplication->getClickedGadget() == this) {
+				woopsiApplication->setClickedGadget(NULL);
 			}
 		}
 	}
@@ -218,15 +222,6 @@ void Gadget::setFocusedGadget(Gadget* gadget) {
 	focus();
 }
 
-void Gadget::setClickedGadget(Gadget* gadget) {
-	_clickedGadget = gadget;
-
-	// Notify parent
-	if (_parent != NULL) {
-		_parent->setClickedGadget(this);
-	}
-}
-
 const u8 Gadget::calculatePhysicalScreenNumber(s16 y) const {
 	if (y & TOP_SCREEN_Y_OFFSET) {
 		// Top screen
@@ -308,6 +303,8 @@ void Gadget::raiseClickEvent(s16 x, s16 y) {
 		e.type = EVENT_CLICK;
 		e.eventX = x;
 		e.eventY = y;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -322,6 +319,8 @@ void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
 		e.type = EVENT_DOUBLE_CLICK;
 		e.eventX = x;
 		e.eventY = y;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -336,6 +335,8 @@ void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
 		e.type = EVENT_SHIFT_CLICK;
 		e.eventX = x;
 		e.eventY = y;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -350,6 +351,24 @@ void Gadget::raiseReleaseEvent(s16 x, s16 y) {
 		e.type = EVENT_RELEASE;
 		e.eventX = x;
 		e.eventY = y;
+		e.eventVX = 0;
+		e.eventVY = 0;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
+void Gadget::raiseReleaseOutsideEvent(s16 x, s16 y) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
+
+		EventArgs e;
+		e.type = EVENT_RELEASE_OUTSIDE;
+		e.eventX = x;
+		e.eventY = y;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -364,6 +383,8 @@ void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
 		e.type = EVENT_DRAG;
 		e.eventX = x;
 		e.eventY = y;
+		e.eventVX = vX;
+		e.eventVY = vY;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -378,6 +399,8 @@ void Gadget::raiseVBLEvent() {
 		e.type = EVENT_VBL;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -392,6 +415,8 @@ void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
 		e.type = EVENT_KEY_PRESS;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = keyCode;
 		e.gadget = this;
 
@@ -406,6 +431,8 @@ void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
 		e.type = EVENT_KEY_RELEASE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = keyCode;
 		e.gadget = this;
 
@@ -420,6 +447,8 @@ void Gadget::raiseLidClosedEvent() {
 		e.type = EVENT_LID_CLOSED;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -434,6 +463,8 @@ void Gadget::raiseLidOpenedEvent() {
 		e.type = EVENT_LID_OPENED;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -448,6 +479,8 @@ void Gadget::raiseFocusEvent() {
 		e.type = EVENT_FOCUS;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -462,6 +495,8 @@ void Gadget::raiseBlurEvent() {
 		e.type = EVENT_BLUR;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -476,6 +511,8 @@ void Gadget::raiseCloseEvent() {
 		e.type = EVENT_CLOSE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -490,6 +527,8 @@ void Gadget::raiseHideEvent() {
 		e.type = EVENT_HIDE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -504,6 +543,8 @@ void Gadget::raiseShowEvent() {
 		e.type = EVENT_SHOW;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -518,6 +559,8 @@ void Gadget::raiseShelveEvent() {
 		e.type = EVENT_SHELVE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -532,6 +575,8 @@ void Gadget::raiseUnshelveEvent() {
 		e.type = EVENT_UNSHELVE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -546,6 +591,8 @@ void Gadget::raiseEnableEvent() {
 		e.type = EVENT_ENABLE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -560,6 +607,8 @@ void Gadget::raiseDisableEvent() {
 		e.type = EVENT_DISABLE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -574,6 +623,8 @@ void Gadget::raiseValueChangeEvent() {
 		e.type = EVENT_VALUE_CHANGE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -588,6 +639,8 @@ void Gadget::raiseResizeEvent(u16 width, u16 height) {
 		e.type = EVENT_RESIZE;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -595,13 +648,15 @@ void Gadget::raiseResizeEvent(u16 width, u16 height) {
 	}
 }
 
-void Gadget::raiseMoveEvent(s16 x, s16 y) {
+void Gadget::raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY) {
 	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
 		e.type = EVENT_MOVE;
 		e.eventX = x;
 		e.eventY = y;
+		e.eventVX = vX;
+		e.eventVY = vY;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -616,6 +671,8 @@ void Gadget::raiseContextMenuSelectionEvent() {
 		e.type = EVENT_CONTEXT_MENU_SELECTION;
 		e.eventX = 0;
 		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -1151,8 +1208,9 @@ void Gadget::shelveChild(Gadget* gadget) {
 		}
 
 		// Unset clicked gadget if necessary
-		if (_clickedGadget == gadget) {
-			_clickedGadget->release(_clickedGadget->getX(), _clickedGadget->getY());
+		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+		if (clickedGadget == gadget) {
+			clickedGadget->release(clickedGadget->getX(), clickedGadget->getY());
 		}
 
 		// Do we need to give another gadget focus?
@@ -1196,8 +1254,9 @@ void Gadget::closeChild(Gadget* gadget) {
 		}
 
 		// Unset clicked gadget if necessary
-		if (_clickedGadget == gadget) {
-			_clickedGadget->release(_clickedGadget->getX(), _clickedGadget->getY());
+		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+		if (clickedGadget == gadget) {
+			clickedGadget->release(clickedGadget->getX(), clickedGadget->getY());
 		}
 
 		// Do we need to make another gadget active?
@@ -1373,12 +1432,15 @@ bool Gadget::moveTo(s16 x, s16 y) {
 	if ((_x != x) || (_y != y)) {
 		erase();
 
+		s16 oldX = _x;
+		s16 oldY = _y;
+
 		_x = x;
 		_y = y;
 
 		draw();
 
-		raiseMoveEvent(x, y);
+		raiseMoveEvent(x, y, x - oldX, y - oldY);
 
 		return true;
 	}
@@ -1460,44 +1522,36 @@ bool Gadget::click(s16 x, s16 y) {
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
-			// Handle clicks on children
-			_clickedGadget = NULL;
-
 			// Work out which child was clicked
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
-					break;
+					return true;
 				}
 			}
 
 			// Handle clicks on this
-			if (_clickedGadget == NULL) {
+			_flags.clicked = true;
 
-				_flags.clicked = true;
-
-				// Record data for double-click
-				if (woopsiApplication != NULL) {
-					_lastClickTime = woopsiApplication->getVBLCount();
-				} else {
-					_lastClickTime = 0;
-				}
-
-				_lastClickX = x;
-				_lastClickY = y;
-
-				// Take focus away from child gadgets
-				setFocusedGadget(NULL);
-
-				// Tell parent that the clicked gadget has changed
-				if (_parent != NULL) {
-					_parent->setClickedGadget(this);
-				}
-
-				// Enable dragging
-				setDragging(x, y);
-
-				raiseClickEvent(x, y);
+			// Record data for double-click
+			if (woopsiApplication != NULL) {
+				_lastClickTime = woopsiApplication->getVBLCount();
+			} else {
+				_lastClickTime = 0;
 			}
+
+			_lastClickX = x;
+			_lastClickY = y;
+
+			// Take focus away from child gadgets
+			setFocusedGadget(NULL);
+
+			// Tell Woopsi that the clicked gadget has changed
+			woopsiApplication->setClickedGadget(this);
+
+			// Enable dragging
+			setDragging(x, y);
+
+			raiseClickEvent(x, y);
 
 			return true;
 		}
@@ -1511,47 +1565,38 @@ bool Gadget::doubleClick(s16 x, s16 y) {
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
-			// Handle clicks on children
-			_clickedGadget = NULL;
-
 			// Work out which child was clicked.  Allow the
 			// child to determine if it has been double-clicked or not
 			// in case the second click has fallen on a different
 			// child to the first.
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
-					break;
+					return true;
 				}
 			}
 
-			// Handle clicks on this
-			if (_clickedGadget == NULL) {
+			_flags.clicked = true;
 
-				_flags.clicked = true;
-
-				// Record data for double-click
-				if (woopsiApplication != NULL) {
-					_lastClickTime = woopsiApplication->getVBLCount();
-				} else {
-					_lastClickTime = 0;
-				}
-
-				_lastClickX = x;
-				_lastClickY = y;
-
-				// Take focus away from child gadgets
-				setFocusedGadget(NULL);
-
-				// Tell parent that the clicked gadget has changed
-				if (_parent != NULL) {
-					_parent->setClickedGadget(this);
-				}
-
-				// Enable dragging
-				setDragging(x, y);
-
-				raiseDoubleClickEvent(x, y);
+			// Record data for double-click
+			if (woopsiApplication != NULL) {
+				_lastClickTime = woopsiApplication->getVBLCount();
+			} else {
+				_lastClickTime = 0;
 			}
+
+			_lastClickX = x;
+			_lastClickY = y;
+
+			// Take focus away from child gadgets
+			setFocusedGadget(NULL);
+
+			// Tell Woopsi that the clicked gadget has changed
+			woopsiApplication->setClickedGadget(this);
+
+			// Enable dragging
+			setDragging(x, y);
+
+			raiseDoubleClickEvent(x, y);
 
 			return true;
 		}
@@ -1593,26 +1638,21 @@ bool Gadget::shiftClick(s16 x, s16 y) {
 
 bool Gadget::release(s16 x, s16 y) {
 
-	// Handle release on clicked child
-	if (_clickedGadget != NULL) {
-		_clickedGadget->release(x, y);
-		return true;
-	}
-
-	// Handle release on this
 	if (_flags.clicked) {
 		_flags.clicked = false;
 		_flags.dragging = false;
 
-		// Tell the parent that the gadget has been released
-		if (_parent != NULL) {
-			_parent->setClickedGadget(NULL);
+		if (woopsiApplication->getClickedGadget() == this) {
+			woopsiApplication->setClickedGadget(NULL);
 		}
 
-		// Only fire a release event if the stylus was released
-		// over this gadget
+		// Determine which release event to fire
 		if (checkCollision(x, y)) {
+			// Release occurred within gadget; raise release
 			raiseReleaseEvent(x, y);
+		} else {
+			// Release occurred outside gadget; raise release
+			raiseReleaseOutsideEvent(x, y);
 		}
 
 		return true;
@@ -1707,10 +1747,11 @@ bool Gadget::focus() {
 			_parent->setFocusedGadget(this);
 		}
 
-	// Raise an event only if the gadget did not have focus
-	if (!hadFocus) {
-		raiseFocusEvent();
-		return true;
+		// Raise an event only if the gadget did not have focus
+		if (!hadFocus) {
+			raiseFocusEvent();
+			return true;
+		}
 	}
 
 	return false;
@@ -2119,8 +2160,9 @@ bool Gadget::removeChild(Gadget* gadget) {
 	}
 
 	// Unset clicked gadget if necessary
-	if (_clickedGadget == gadget) {
-		_clickedGadget = NULL;
+	Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+	if (clickedGadget == gadget) {
+		clickedGadget->release(clickedGadget->getX(), clickedGadget->getY());
 	}
 
 	// Decrease decoration count if necessary

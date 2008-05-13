@@ -375,10 +375,6 @@ bool ScrollingPanel::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			raiseDragEvent(x, y, vX, vY);
 
 			return true;
-		} else if (_clickedGadget != NULL) {
-
-			// Run drag on children
-			return _clickedGadget->drag(x, y, vX, vY);
 		}
 	}
 

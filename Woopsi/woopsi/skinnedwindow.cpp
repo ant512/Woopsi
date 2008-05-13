@@ -5,6 +5,7 @@
 #include "skinnedwindowborderbottom.h"
 #include "skinnedwindowclosebutton.h"
 #include "skinnedwindowdepthbutton.h"
+#include "woopsi.h"
 
 SkinnedWindow::SkinnedWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, WindowSkin* skin) : Window(x, y, width, height, title, flags, NULL) {
 
@@ -53,25 +54,25 @@ const u8 SkinnedWindow::getTitleHeight() const {
 }
 
 void SkinnedWindow::setClickedGadget(Gadget* gadget) {
-	if (_clickedGadget != gadget) {
-		_clickedGadget = gadget;
+	//if (_clickedGadget != gadget) {
+	//	_clickedGadget = gadget;
 
-		// Only remember we clicked a gadget if we didn't click
-		// a border gadget
-		if ((_clickedGadget == _windowBorderBottom) ||
-			(_clickedGadget == _windowBorderLeft) ||
-			(_clickedGadget == _windowBorderRight) ||
-			(_clickedGadget == _windowBorderTop)) {
+	//	// Only remember we clicked a gadget if we didn't click
+	//	// a border gadget
+	//	if ((_clickedGadget == _windowBorderBottom) ||
+	//		(_clickedGadget == _windowBorderLeft) ||
+	//		(_clickedGadget == _windowBorderRight) ||
+	//		(_clickedGadget == _windowBorderTop)) {
 
-			// Forget the clicked gadget
-			_clickedGadget = NULL;
-		}
+	//		// Forget the clicked gadget
+	//		_clickedGadget = NULL;
+	//	}
 
-		// Notify parent
-		if (_parent != NULL) {
-			_parent->setClickedGadget(this);
-		}
-	}
+	//	// Notify parent
+	//	if (_parent != NULL) {
+	//		_parent->setClickedGadget(this);
+	//	}
+	//}
 }
 
 void SkinnedWindow::setBorderless(bool isBorderless) {
@@ -156,41 +157,23 @@ bool SkinnedWindow::click(s16 x, s16 y) {
 
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
-			bool gotGadget = false;
-			_clickedGadget = NULL;
 
 			// Work out which gadget was clicked
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
-
-					// Only remember we clicked a gadget if we didn't click
-					// a border gadget
-					if (_clickedGadget != NULL) {
-						if ((_clickedGadget != _closeButton) &&
-							(_clickedGadget != _depthButton)) {
-							gotGadget = true;
-						}
-					}
-
-					break;
+					return true;
 				}
 			}
 
-			// Did we click a gadget?
-			if (!gotGadget) {
+			// Handle click on window
+			_flags.clicked = true;
 
-				// Handle click on window
-				_flags.clicked = true;
+			setFocusedGadget(NULL);
 
-				setFocusedGadget(NULL);
+			// Tell Woopsi that the clicked gadget has changed
+			woopsiApplication->setClickedGadget(this);
 
-				// Tell parent that the clicked gadget has changed
-				if (_parent != NULL) {
-					_parent->setClickedGadget(this);
-				}
-
-				raiseClickEvent(x, y);
-			}
+			raiseClickEvent(x, y);
 
 			// Do we need to draw the XOR rect?
 			if (_flags.dragging) {

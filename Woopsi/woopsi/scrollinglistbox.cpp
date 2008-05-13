@@ -76,15 +76,6 @@ bool ScrollingListBox::handleEvent(const EventArgs& e) {
 	return false;
 }
 
-bool ScrollingListBox::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	// Handle child dragging
-	if (_clickedGadget != NULL) {
-		return _clickedGadget->drag(x, y, vX, vY);
-	}
-
-	return false;
-}
-
 bool ScrollingListBox::resize(u16 width, u16 height) {
 
 	// Prevent drawing

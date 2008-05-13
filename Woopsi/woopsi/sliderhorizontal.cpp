@@ -103,7 +103,7 @@ bool SliderHorizontal::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
 
 		// Did we click a gadget?
-		if (_clickedGadget == NULL) {
+		if (_flags.clicked) {
 
 			// Which way should the grip move?
 			if (x > _grip->getX()) {
@@ -118,15 +118,6 @@ bool SliderHorizontal::click(s16 x, s16 y) {
 		}
 
 		return true;
-	}
-
-	return false;
-}
-
-bool SliderHorizontal::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	// Handle child dragging
-	if (_clickedGadget != NULL) {
-		return _clickedGadget->drag(x, y, vX, vY);
 	}
 
 	return false;

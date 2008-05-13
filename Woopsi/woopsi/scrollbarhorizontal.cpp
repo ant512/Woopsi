@@ -57,15 +57,6 @@ void ScrollbarHorizontal::setPageSize(s16 pageSize) {
 void ScrollbarHorizontal::draw(Rect clipRect) {
 }
 
-bool ScrollbarHorizontal::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	// Handle child dragging
-	if (_clickedGadget != NULL) {
-		return _clickedGadget->drag(x, y, vX, vY);
-	}
-
-	return false;
-}
-
 bool ScrollbarHorizontal::handleEvent(const EventArgs& e) {
 
 	// Check which gadget fired the event

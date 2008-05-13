@@ -185,10 +185,8 @@ bool ListBox::click(s16 x, s16 y) {
 			// Take focus away from child gadgets
 			setFocusedGadget(NULL);
 
-			// Tell parent that the clicked gadget has changed
-			if (_parent != NULL) {
-				_parent->setClickedGadget(this);
-			}
+			// Tell Woopsi that the clicked gadget has changed
+			woopsiApplication->setClickedGadget(this);
 
 			// Enable dragging
 			setDragging(x, y);
@@ -230,10 +228,8 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 			// Take focus away from child gadgets
 			setFocusedGadget(NULL);
 
-			// Tell parent that the clicked gadget has changed
-			if (_parent != NULL) {
-				_parent->setClickedGadget(this);
-			}
+			// Tell Woopsi that the clicked gadget has changed
+			woopsiApplication->setClickedGadget(this);
 
 			// Enable dragging
 			setDragging(x, y);

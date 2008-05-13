@@ -18,15 +18,7 @@ bool Window::release(s16 x, s16 y) {
 
 		moveTo(_newX, _newY);
 
-		_clickedGadget = NULL;
-
 		Gadget::release(x, y);
-
-		return true;
-	} else if (_clickedGadget != NULL) {
-
-		// Release clicked gadget
-		_clickedGadget->release(x, y);
 
 		return true;
 	} else if (_flags.clicked) {
@@ -50,7 +42,7 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			s16 destY = y - _grabPointY - _parent->getY();
 
 			// Do we need to move?
-			if ((destX != _x) && (destY != _y)) {
+			if ((destX != _x) || (destY != _y)) {
 
 				// Prevent window from moving outside screen
 				if (!_parent->isPermeable()) {
@@ -89,13 +81,6 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 			raiseDragEvent(x, y, vX, vY);
 
 			return true;
-		} else {
-			// Handle child dragging
-			if (_clickedGadget != NULL) {
-				_clickedGadget->drag(x, y, vX, vY);
-
-				return true;
-			}
 		}
 	}
 	
@@ -121,4 +106,26 @@ void Window::setTitle(const char* title) {
 	strcpy(_title, title);
 
 	draw();
+}
+
+// Set the drag point and tell that gadget that it is being dragged
+void Window::setDragging(u16 x, u16 y) {
+	if (_flags.draggable) {
+		_flags.dragging = true;
+		_flags.clicked = true;
+		_grabPointX = x - getX();
+		_grabPointY = y - getY();
+		_newX = _x;
+		_newY = _y;
+
+		// Draw XOR rect
+
+		// Get a graphics port from the parent screen
+		GraphicsPort* port = _parent->newGraphicsPort();
+
+		// Draw rect
+		port->drawXORRect(_newX, _newY, _width, _height);
+
+		delete port;
+	}
 }
