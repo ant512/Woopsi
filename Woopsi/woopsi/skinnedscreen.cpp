@@ -54,6 +54,7 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 			}
 
 			_screenTitle = new SkinnedScreenTitle(_title, _skin);
+			_screenTitle->setEventHandler(this);
 			insertGadget(_screenTitle);
 
 			// Create depth button
@@ -80,27 +81,54 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 }
 
 bool SkinnedScreen::handleEvent(const EventArgs& e) {
-	// Only handle release events
-	if (e.type == EVENT_RELEASE) {
+	if (e.gadget != NULL) {
+		switch (e.type) {
+			case EVENT_RELEASE:
 
-		// Was an interesting gadget released?
-		// Ensure we check for NULL so we don't confuse a borderless
-		// screen's NULL decorator pointers with any other events
-		if (e.gadget != NULL) {
+				// Process decoration gadgets only
+				if (e.gadget == _flipButton) {
 
-			// Process decoration gadgets only
-			if (e.gadget == _flipButton) {
+					// Flip screens
+					flipScreens();
+					return true;
+				} else if (e.gadget == _depthButton) {
 
-				// Flip screens
-				flipScreens();
-				return true;
-			} else if (e.gadget == _depthButton) {
+					// Depth swap to bottom of stack
+					lowerToBottom();
+					blur();
+					return true;
+				} else if (e.gadget == _screenTitle) {
 
-				// Depth swap to bottom of stack
-				lowerToBottom();
-				blur();
-				return true;
-			}
+					release(e.eventX, e.eventY);
+					return true;
+				}
+				break;
+
+			case EVENT_CLICK:
+
+				if (e.gadget == _screenTitle) {
+					setDragging(e.eventX, e.eventY);
+				}
+				break;
+
+			case EVENT_DRAG:
+
+				if (e.gadget == _screenTitle) {
+					drag(e.eventX, e.eventY, e.eventVX, e.eventVY);
+					return true;
+				}
+				break;
+
+			case EVENT_RELEASE_OUTSIDE:
+
+				if (e.gadget == _screenTitle) {
+					release(e.eventX, e.eventY);
+					return true;
+				}
+				break;
+
+			default:
+				break;
 		}
 	}
 

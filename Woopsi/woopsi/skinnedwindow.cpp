@@ -53,28 +53,6 @@ const u8 SkinnedWindow::getTitleHeight() const {
 	return 0;
 }
 
-void SkinnedWindow::setClickedGadget(Gadget* gadget) {
-	//if (_clickedGadget != gadget) {
-	//	_clickedGadget = gadget;
-
-	//	// Only remember we clicked a gadget if we didn't click
-	//	// a border gadget
-	//	if ((_clickedGadget == _windowBorderBottom) ||
-	//		(_clickedGadget == _windowBorderLeft) ||
-	//		(_clickedGadget == _windowBorderRight) ||
-	//		(_clickedGadget == _windowBorderTop)) {
-
-	//		// Forget the clicked gadget
-	//		_clickedGadget = NULL;
-	//	}
-
-	//	// Notify parent
-	//	if (_parent != NULL) {
-	//		_parent->setClickedGadget(this);
-	//	}
-	//}
-}
-
 void SkinnedWindow::setBorderless(bool isBorderless) {
 	if (isBorderless != _flags.borderless) {
 		if (isBorderless) {
@@ -147,6 +125,12 @@ void SkinnedWindow::createBorder() {
 	_windowBorderLeft = new SkinnedWindowBorderLeft(0, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
 	_windowBorderRight = new SkinnedWindowBorderRight(_width - _skin->rightBorder.bitmap.width, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
 	_windowBorderBottom = new SkinnedWindowBorderBottom(0, _height - _skin->bottomCentreBorder.bitmap.height, _width, _skin);
+
+	_windowBorderTop->setEventHandler(this);
+	_windowBorderLeft->setEventHandler(this);
+	_windowBorderRight->setEventHandler(this);
+	_windowBorderBottom->setEventHandler(this);
+
 	insertGadget(_windowBorderBottom);
 	insertGadget(_windowBorderRight);
 	insertGadget(_windowBorderLeft);
@@ -158,7 +142,7 @@ bool SkinnedWindow::click(s16 x, s16 y) {
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
-			// Work out which gadget was clicked
+			// Try to click a child gadget
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
 					return true;
@@ -174,17 +158,6 @@ bool SkinnedWindow::click(s16 x, s16 y) {
 			woopsiApplication->setClickedGadget(this);
 
 			raiseClickEvent(x, y);
-
-			// Do we need to draw the XOR rect?
-			if (_flags.dragging) {
-				// Get a graphics port from the parent screen
-				GraphicsPort* port = _parent->newGraphicsPort();
-
-				// Draw rect
-				port->drawXORRect(_newX, _newY, _width, _height);
-
-				delete port;
-			}
 
 			return true;
 		}
@@ -308,38 +281,82 @@ void SkinnedWindow::getClientRect(Rect& rect) const {
 }
 
 bool SkinnedWindow::handleEvent(const EventArgs& e) {
-	// Only handle release events
-	if (e.type == EVENT_RELEASE) {
 
-		// Was an interesting gadget released?
-		if (e.gadget != NULL) {
+	if (e.gadget != NULL) {
+		switch (e.type) {
+			case EVENT_RELEASE:
 
-			// Process decoration gadgets only
-			if (e.gadget == _depthButton) {
+				if (e.gadget == _depthButton) {
 
-				// Swap depths
-				swapDepth();
-				return true;
-			} else if (e.gadget == _closeButton) {
+					// Swap depths
+					swapDepth();
+					return true;
+				} else if (e.gadget == _closeButton) {
 
-				// Work out which close type to use
-				switch (getCloseType()) {
-					case CLOSE_TYPE_CLOSE:
-						// Close the window
-						close();
-						break;
-					case CLOSE_TYPE_SHELVE:
-						// Shelve the window
-						shelve();
-						break;
-					case CLOSE_TYPE_HIDE:
-						// Hide the window
-						shelve();
-						break;
+					// Work out which close type to use
+					switch (getCloseType()) {
+						case CLOSE_TYPE_CLOSE:
+							// Close the window
+							close();
+							break;
+						case CLOSE_TYPE_SHELVE:
+							// Shelve the window
+							shelve();
+							break;
+						case CLOSE_TYPE_HIDE:
+							// Hide the window
+							hide();
+							break;
+					}
+
+					return true;
+				} else if (e.gadget == _windowBorderTop) {
+
+					// Release the window
+					release(e.eventX, e.eventY);
+					return true;
 				}
+				break;
 
-				return true;
-			}
+			case EVENT_CLICK:
+
+				if (e.gadget == _windowBorderTop) {
+		
+					// Top border - focus and drag
+					focus();
+					setDragging(e.eventX, e.eventY);
+					return true;
+
+				} else if ((e.gadget == _windowBorderBottom) ||
+					(e.gadget == _windowBorderLeft) ||
+					(e.gadget == _windowBorderRight) ||
+					(e.gadget == _depthButton) ||
+					(e.gadget == _closeButton)) {
+
+					// Other borders - focus only
+					focus();
+					return true;
+				}
+				break;
+
+			case EVENT_DRAG:
+
+				if (e.gadget == _windowBorderTop) {
+					drag(e.eventX, e.eventY, e.eventVX, e.eventVY);
+					return true;
+				}
+				break;
+
+			case EVENT_RELEASE_OUTSIDE:
+
+				if (e.gadget == _windowBorderTop) {
+					release(e.eventX, e.eventY);
+					return true;
+				}
+				break;
+
+			default:
+				break;
 		}
 	}
 

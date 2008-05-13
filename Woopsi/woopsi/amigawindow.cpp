@@ -3,6 +3,7 @@
 #include "windowborderside.h"
 #include "windowborderbottom.h"
 #include "windowborderbutton.h"
+#include "woopsi.h"
 
 AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font) : Window(x, y, width, height, title, flags, font) {
 
@@ -146,6 +147,9 @@ bool AmigaWindow::click(s16 x, s16 y) {
 			_flags.clicked = true;
 
 			setFocusedGadget(NULL);
+
+			// Tell Woopsi that the clicked gadget has changed
+			woopsiApplication->setClickedGadget(this);
 
 			raiseClickEvent(x, y);
 

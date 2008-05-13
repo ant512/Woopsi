@@ -44,8 +44,6 @@ public:
 
 	virtual void getClientRect(Rect& rect) const;
 
-	virtual void setClickedGadget(Gadget* gadget);
-
 	virtual bool click(s16 x, s16 y);
 	virtual bool focus();
 	virtual bool blur();
