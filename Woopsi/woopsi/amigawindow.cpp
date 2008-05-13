@@ -149,7 +149,9 @@ bool AmigaWindow::click(s16 x, s16 y) {
 			setFocusedGadget(NULL);
 
 			// Tell Woopsi that the clicked gadget has changed
-			woopsiApplication->setClickedGadget(this);
+			if (woopsiApplication != NULL) {
+				woopsiApplication->setClickedGadget(this);
+			}
 
 			raiseClickEvent(x, y);
 
