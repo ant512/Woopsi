@@ -108,16 +108,17 @@ void Text::wrap() {
 	u32 scanPos;
 	u32 lineWidth;
 	u32 breakPos;
+	bool endReached = false;
 
 	// Keep looping through text until we hit the terminator
-	while (_text[pos]) {
+	while (!endReached) {
 		scanPos = pos;
 		breakPos = 0;
 		lineWidth = 0;
 
 		// Search for line breaks and valid breakpoints until we exceed the width of the
 		// text field or we run out of string to process
-		while ((lineWidth + _font->getCharWidth(_text[scanPos]) < _width) && (_text[scanPos])) {
+		while (lineWidth + _font->getCharWidth(_text[scanPos]) < _width) {
 			lineWidth += _font->getCharWidth(_text[scanPos]);
 
 			// Check for line return
@@ -136,10 +137,17 @@ void Text::wrap() {
 					   (_text[scanPos] == '!') ||
 					   (_text[scanPos] == '+') ||
 					   (_text[scanPos] == '=') ||
-					   (_text[scanPos] == '/')) {
+					   (_text[scanPos] == '/') ||
+					   (_text[scanPos] == '\0')) {
 
 				// Remember the most recent breakpoint
 				breakPos = scanPos;
+
+				// Terminate?
+				if (_text[scanPos] == '\0') {
+				    endReached = true;
+                    break;
+				}
 			}
 
 			// Move to the next character
