@@ -2164,9 +2164,11 @@ bool Gadget::removeChild(Gadget* gadget) {
 	}
 
 	// Unset clicked gadget if necessary
-	Gadget* clickedGadget = woopsiApplication->getClickedGadget();
-	if (clickedGadget == gadget) {
-		clickedGadget->release(clickedGadget->getX(), clickedGadget->getY());
+	if (woopsiApplication != NULL) {
+		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+		if (clickedGadget == gadget) {
+			clickedGadget->release(clickedGadget->getX(), clickedGadget->getY());
+		}
 	}
 
 	// Decrease decoration count if necessary
