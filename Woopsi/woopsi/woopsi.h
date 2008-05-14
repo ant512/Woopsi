@@ -210,7 +210,18 @@ public:
 	 * called by code other than within the Woopsi library itself.
 	 * @param gadget The new clicked gadget.
 	 */
-	inline void setClickedGadget(Gadget* gadget) { _clickedGadget = gadget; };
+	inline void setClickedGadget(Gadget* gadget) {
+
+		// Do we have a clicked gadget already?
+		if (_clickedGadget != NULL) {
+
+			// Ensure that the existing clicked gadget is released *outside* its bounds
+			_clickedGadget->release(_clickedGadget->getX() - 10, 0);
+		}
+		
+		// Update the pointer
+		_clickedGadget = gadget;
+	};
 
 	/**
 	 * Get the clicked gadget pointer.  
