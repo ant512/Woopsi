@@ -7,7 +7,7 @@ Text::Text(FontBase* font, const char* text, u16 width) {
 	_width = width;
 	_lineSpacing = 1;
 	_text = NULL;
-	
+
 	setText(text);
 }
 
@@ -21,7 +21,7 @@ u8 Text::getLineLength(s32 lineNumber) {
 		return _linePositions[lineNumber + 1] - _linePositions[lineNumber];
 	}
 
-	return strlen(_text) - _linePositions[lineNumber]; 
+	return strlen(_text) - _linePositions[lineNumber];
 }
 
 // Calculate the length of an individual line sans right-hand spaces
@@ -46,7 +46,7 @@ u8 Text::getLineTrimmedPixelLength(s32 lineNumber) {
 
 // Set the text
 void Text::setText(const char* text) {
-	
+
 	// Have we already created a block of memory that we need to free?
 	if (_text != NULL) {
 		// Free the memory
@@ -195,9 +195,10 @@ void Text::setFont(FontBase* font) {
 void Text::stripTopLines(const u32 lines) {
 	// Get the start point of the text we want to keep
 	u16 textStart = 0;
-	
+
 	for (u32 i = 0; i < lines; i++) {
 		textStart += getLineLength(i);
+		_totalLines--;
 	}
 
 	// Reserve memory for shortened string

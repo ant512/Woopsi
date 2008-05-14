@@ -91,7 +91,7 @@ public:
 	 * @see getPageCount().
 	 */
 	virtual const u16 getCurrentPage() const;
-	
+
 	/**
 	 * Returns a pointer to the Text object that contains the
 	 * wrapped text used in the textbox.  It is used as the
@@ -138,7 +138,7 @@ protected:
 	TextPositionVert _vPos;				/**< Vertical alignment of the text */
 
 	/**
-	 * Gets the x position of a row of text based on the width of the row and the 
+	 * Gets the x position of a row of text based on the width of the row and the
 	 * type of horizontal alignment currently set.
 	 * @param rowPixelWidth The width of the row.
 	 * @return The x co-ordinate of the row.
@@ -152,7 +152,7 @@ protected:
 	 * @param screenRows The number of visible rows within the textbox.
 	 * @return The y co-ordinate of the specified row of text.
 	 */
-	s16 getRowY(u8 screenRow, u8 screenRows);
+	s16 getRowY(u8 screenRow);
 
 	/**
 	 * Works out the number of visible rows within the textbox.
