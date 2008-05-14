@@ -143,7 +143,11 @@ s16 MultiLineTextBox::getRowY(u8 screenRow) {
 			textY = _padding + (screenRow * _text->getLineHeight());
 			break;
 		case TEXT_POSITION_VERT_BOTTOM:
-			//textY = (rect.height - (_text->getLineHeight() * (screenRows - screenRow))) - _padding;
+
+			// Calculate the maximum number of rows
+            s32 screenRows = rect.height / _text->getLineHeight();
+
+			textY = (rect.height - (_text->getLineHeight() * (screenRows - screenRow))) - _padding;
 			break;
 	}
 
@@ -179,9 +183,9 @@ void MultiLineTextBox::setText(const char* text) {
 	// Ensure that we have the correct number of rows
 	if (_text->getLineCount() > _maxRows) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
-	}
 
-	_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+	}
 
 	Gadget::draw();
 
@@ -283,6 +287,8 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 	// Ensure that we have the correct number of rows
 	if (_text->getLineCount() > _maxRows) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
+
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 		raiseEvent = true;
 	}
 

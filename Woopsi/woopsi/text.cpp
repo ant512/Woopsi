@@ -17,7 +17,7 @@ FontBase* Text::getFont() {
 
 // Calculate the length of an individual line
 u8 Text::getLineLength(s32 lineNumber) {
-	if (lineNumber < _totalLines - 1) {
+	if (lineNumber < getLineCount() - 1) {
 		return _linePositions[lineNumber + 1] - _linePositions[lineNumber];
 	}
 
@@ -179,12 +179,8 @@ void Text::wrap() {
 		}
 	}
 
-	// Total lines is 1 less than the size of the position array because the first element
-	// is the start of the first line
-	_totalLines = _linePositions.size() - 1;
-
 	// Calculate the total height of the text
-	_textPixelHeight = _totalLines * (_font->getHeight() + _lineSpacing);
+	_textPixelHeight = getLineCount() * (_font->getHeight() + _lineSpacing);
 }
 
 void Text::setFont(FontBase* font) {
@@ -192,13 +188,12 @@ void Text::setFont(FontBase* font) {
 	wrap();
 }
 
-void Text::stripTopLines(const u32 lines) {
+void Text::stripTopLines(const s32 lines) {
 	// Get the start point of the text we want to keep
 	u16 textStart = 0;
 
-	for (u32 i = 0; i < lines; i++) {
+	for (s32 i = 0; i < lines; i++) {
 		textStart += getLineLength(i);
-		_totalLines--;
 	}
 
 	// Reserve memory for shortened string
@@ -213,4 +208,7 @@ void Text::stripTopLines(const u32 lines) {
 
 	// Update pointer
 	_text = newText;
+
+	// Rewrap the text
+	wrap();
 }

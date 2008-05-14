@@ -126,7 +126,7 @@ public:
 	 * Get the total number of lines in the text.
 	 * @return The line count.
 	 */
-	inline const s32 getLineCount() const { return _totalLines; };
+	inline const s32 getLineCount() const { return _linePositions.size() - 1; };
 
 	/**
 	 * Get a pointer to the Text object's font.
@@ -138,7 +138,7 @@ public:
 	 * Removes lines of text from the start of the text buffer.
 	 * @param lines Number of lines to remove
 	 */
-	void stripTopLines(const u32 lines);
+	void stripTopLines(const s32 lines);
 	
 	/**
 	 * Wrap the text.
@@ -149,7 +149,6 @@ private:
 
 	FontBase* _font;						/**< Font to be used for output */
 	DynamicArray<u32> _linePositions;		/**< Array containing start indexes of each wrapped line */
-	s32 _totalLines;						/**< Total number of lines of text */
 	u8 _lineSpacing;						/**< Spacing between lines of text */
 	s32 _textPixelHeight;					/**< Total height of the wrapped text in pixels */
 	u8 _textPixelWidth;						/**< Total width of the wrapped text in pixels */

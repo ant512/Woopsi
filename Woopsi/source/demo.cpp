@@ -237,23 +237,26 @@ void Demo::startup() {
 
 	// Text viewer
 	textWindow->getClientRect(rect);
-	ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "Woopsi\n"
-		"------\n\n"
-		"This is a demo of a windowing system I'm working on "
-		"for the Nintendo DS, written in C++.  The aim of the "
-		"project is to create a simple windowing system that "
-		"other programmers can use for their applications, which "
-		"should decrease the tedious amount of GUI code that "
-		"people have to write.\n\n"
-		"The system itself is loosely based on the Commodore "
-		"Amiga's \"Intuition\" windowing system.  Everything "
-		"in the system is treated as a \"gadget\" (in the "
-		"same way that Windows treats everything as a sub-class "
-		"of a window), everything takes place within a \"screen\" "
-		"environment, and the look-and-feel of the system "
-		"intentionally resembles the old Amiga system.", Gadget::GADGET_DRAGGABLE, 50);
+	//ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "Woopsi\n"
+	//	"------\n\n"
+	//	"This is a demo of a windowing system I'm working on "
+	//	"for the Nintendo DS, written in C++.  The aim of the "
+	//	"project is to create a simple windowing system that "
+	//	"other programmers can use for their applications, which "
+	//	"should decrease the tedious amount of GUI code that "
+	//	"people have to write.\n\n"
+	//	"The system itself is loosely based on the Commodore "
+	//	"Amiga's \"Intuition\" windowing system.  Everything "
+	//	"in the system is treated as a \"gadget\" (in the "
+	//	"same way that Windows treats everything as a sub-class "
+	//	"of a window), everything takes place within a \"screen\" "
+	//	"environment, and the look-and-feel of the system "
+	//	"intentionally resembles the old Amiga system.", Gadget::GADGET_DRAGGABLE, 50);
+
+	ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "1\n2\n3\n4\n5", Gadget::GADGET_DRAGGABLE, 0);
+
 	scrollingBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
-	scrollingBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
+	scrollingBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_BOTTOM);
 	textWindow->addGadget(scrollingBox);
 
 	scrollingBox->addContextMenuItem("Context Menu 2", 0);
