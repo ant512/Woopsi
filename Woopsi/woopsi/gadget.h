@@ -1203,6 +1203,8 @@ protected:
 	 * Raise a move event to the event handler.
 	 * @param x The new x co-ordinate of the gadget.
 	 * @param y The new y co-ordinate of the gadget.
+	 * @param vX The horizontal distance moved.
+	 * @param vY The vertical distance moved.
 	 */
 	void raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY);
 
@@ -1210,6 +1212,23 @@ protected:
 	 * Raise a context menu selection event to the event handler.
 	 */
 	void raiseContextMenuSelectionEvent();
+
+	/**
+	 * Raise an action event to the event handler.  This should be called when
+	 * a gadget's purpose has been fulfilled.  For example, in the case of a
+	 * button, this event is raised when the button is released within its
+	 * boundaries.  The button has produced a valid click, and thus fulfilled
+	 * its purpose, so it needs to raise an "action" event.
+	 * Not all parameters are valid for every event, but since each gadget will
+	 * raise an action event specific to its own behaviour this function allows
+	 * all EventArgs values to be set.
+	 * @param x The x co-ordinate of the event.
+	 * @param y The y co-ordinate of the event.
+	 * @param vX Horizontal difference involved in the event.
+	 * @param vY Vertical difference involved in the event.
+	 * @param keyCode Keycode of the event.
+	 */
+	void raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode);
 
 	/**
 	 * Get the index of the next visible gadget higher up the z-order.

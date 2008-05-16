@@ -34,7 +34,8 @@ enum EventType {
 	EVENT_CONTEXT_MENU_SELECTION = 22,	/**< Item selected in gadget's context menu */
 	EVENT_DOUBLE_CLICK = 23,			/**< Gadget has been double-clicked */
 	EVENT_SHELVE = 24,					/**< Gadget has been shelved */
-	EVENT_UNSHELVE = 25					/**< Shelved gadget has been unshelved */
+	EVENT_UNSHELVE = 25,				/**< Shelved gadget has been unshelved */
+	EVENT_ACTION = 26					/**< Gadget has performed its action (ie. button released) */
 };
 
 /**

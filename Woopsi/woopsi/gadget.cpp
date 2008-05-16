@@ -664,6 +664,22 @@ void Gadget::raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY) {
 	}
 }
 
+void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
+
+		EventArgs e;
+		e.type = EVENT_ACTION;
+		e.eventX = x;
+		e.eventY = y;
+		e.eventVX = vX;
+		e.eventVY = vY;
+		e.keyCode = keyCode;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
 void Gadget::raiseContextMenuSelectionEvent() {
 	if ((_eventHandler != NULL) && (raisesEvents())) {
 
