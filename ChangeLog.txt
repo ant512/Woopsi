@@ -61,6 +61,7 @@ Change Log
        the boundaries of the gadget.
      - Added eventVX and eventVY to EventArgs struct.
      - Drag and move events populate eventVX and eventVY EventArgs properties.
+     - Added EVENT_ACTION event.
 
   V0.32 (200804327)
   
