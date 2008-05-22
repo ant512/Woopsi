@@ -17,8 +17,8 @@ enum EventType {
 	EVENT_KEY_PRESS = 5,				/**< DS button or d-pad has been pressed */
 	EVENT_KEY_RELEASE = 6,				/**< DS button or d-pad has been released */
 	EVENT_VBL = 7,						/**< Vertical blank has occurred */
-	EVENT_LID_OPENED = 8,				/**< DS' lid has been opened */
-	EVENT_LID_CLOSED = 9,				/**< DS' lid has been closed */
+	EVENT_LID_OPEN = 8,					/**< DS' lid has been opened */
+	EVENT_LID_CLOSE = 9,				/**< DS' lid has been closed */
 	EVENT_FOCUS = 10,					/**< Gadget has received focus */
 	EVENT_BLUR = 11,					/**< Gadget has lost focus */
 	EVENT_CLOSE = 12,					/**< Gadget has been closed */

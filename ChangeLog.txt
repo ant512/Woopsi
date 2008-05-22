@@ -38,6 +38,10 @@ Change Log
      - Textbox no longer redraws when clicked; functionality moved into Button
        and ContextMenuItem classes.
      - Removed redundant DecorationGlyphButton::release().
+     - Fixed tense in DS lid close/open events, so the events are now called
+       "EVENT_LID_CLOSE" and "EVENT_LID_OPEN", and the methods to work with them
+       are called "raiseLidCloseEvent()", "raiseLidOpenEvent()", "lidClose()"
+       and "lidOpen()".
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.

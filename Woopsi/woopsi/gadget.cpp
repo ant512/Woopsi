@@ -440,11 +440,11 @@ void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
 	}
 }
 
-void Gadget::raiseLidClosedEvent() {
+void Gadget::raiseLidCloseEvent() {
 	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
-		e.type = EVENT_LID_CLOSED;
+		e.type = EVENT_LID_CLOSE;
 		e.eventX = 0;
 		e.eventY = 0;
 		e.eventVX = 0;
@@ -456,11 +456,11 @@ void Gadget::raiseLidClosedEvent() {
 	}
 }
 
-void Gadget::raiseLidOpenedEvent() {
+void Gadget::raiseLidOpenEvent() {
 	if ((_eventHandler != NULL) && (raisesEvents())) {
 
 		EventArgs e;
-		e.type = EVENT_LID_OPENED;
+		e.type = EVENT_LID_OPEN;
 		e.eventX = 0;
 		e.eventY = 0;
 		e.eventVX = 0;
@@ -1736,21 +1736,21 @@ bool Gadget::keyRelease(KeyCode keyCode) {
 	return false;
 }
 
-void Gadget::lidClosed() {
-	raiseLidClosedEvent();
+void Gadget::lidClose() {
+	raiseLidCloseEvent();
 
 	// Run lid closed on all gadgets
 	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidClosed();
+		_gadgets[i]->lidClose();
 	}
 }
 
-void Gadget::lidOpened() {
-	raiseLidOpenedEvent();
+void Gadget::lidOpen() {
+	raiseLidOpenEvent();
 
 	// Run lid opened on all gadgets
 	for (u8 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->lidOpened();
+		_gadgets[i]->lidOpen();
 	}
 }
 

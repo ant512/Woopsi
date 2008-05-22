@@ -603,13 +603,13 @@ public:
 	 * Inform the gadget that the lid has closed.
 	 * @see lidOpened()
 	 */
-	virtual void lidClosed();
+	virtual void lidClose();
 
 	/**
 	 * Inform the gadget that the lid has opened.
 	 * @see lidClosed()
 	 */
-	virtual void lidOpened();
+	virtual void lidOpen();
 
 	/**
 	 * Give the gadget focus.
@@ -1135,12 +1135,12 @@ protected:
 	/**
 	 * Raise a lid closed event to the event handler.
 	 */
-	void raiseLidClosedEvent();
+	void raiseLidCloseEvent();
 
 	/**
 	 * Raise a lid opened event to the event handler.
 	 */
-	void raiseLidOpenedEvent();
+	void raiseLidOpenEvent();
 
 	/**
 	 * Raise a focus event to the event handler.

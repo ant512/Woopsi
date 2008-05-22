@@ -335,7 +335,7 @@ void Woopsi::handleLid() {
 		// Run lid closed on all gadgets
 		s32 i = 0;
 		while (i < _gadgets.size()) {
-			_gadgets[i]->lidClosed();
+			_gadgets[i]->lidClose();
 			i++;
 		}
 
@@ -347,7 +347,7 @@ void Woopsi::handleLid() {
 		// Run lid opened on all gadgets
 		s32 i = 0;
 		while (i < _gadgets.size()) {
-			_gadgets[i]->lidOpened();
+			_gadgets[i]->lidOpen();
 			i++;
 		}
 	}
