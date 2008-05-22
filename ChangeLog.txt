@@ -68,6 +68,8 @@ Change Log
      - Drag and move events populate eventVX and eventVY EventArgs properties.
      - Added EVENT_ACTION event.
      - Button, AnimButton and BitmapButton all raise EVENT_ACTION events.
+     - CycleGadget raises EVENT_VALUE_CHANGE events when released if the value
+       has changed.
 
   V0.32 (200804327)
   

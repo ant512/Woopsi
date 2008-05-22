@@ -1,5 +1,6 @@
 #include "cyclebutton.h"
 #include "graphicsport.h"
+#include "woopsi.h"
 
 CycleButton::CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, "", font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
@@ -83,19 +84,40 @@ void CycleButton::draw(Rect clipRect) {
 }
 
 bool CycleButton::release(s16 x, s16 y) {
-	if (Gadget::release(x, y)) {
+
+	if (_flags.clicked) {
+		_flags.clicked = false;
+		_flags.dragging = false;
+
+		if (woopsiApplication->getClickedGadget() == this) {
+			woopsiApplication->setClickedGadget(NULL);
+		}
+
+		// Determine which release event to fire
 		if (checkCollision(x, y)) {
-
+			
 			// Choose next option
-			_selectedIndex++;
+			if (_options.size() > 1) {
+				_selectedIndex++;
 
-			// Wrap around
-			if (_selectedIndex >= _options.size()) {
-				_selectedIndex = 0;
+				// Wrap around
+				if (_selectedIndex >= _options.size()) {
+					_selectedIndex = 0;
+				}
+
+				// Raise "value change" event
+				raiseValueChangeEvent();
 			}
+
+			// Release occurred within gadget; raise release
+			raiseReleaseEvent(x, y);
+		} else {
+			// Release occurred outside gadget; raise release
+			raiseReleaseOutsideEvent(x, y);
 		}
 
 		draw();
+
 		return true;
 	}
 
