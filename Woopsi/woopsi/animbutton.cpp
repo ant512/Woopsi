@@ -2,7 +2,7 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 
-AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, NULL) {
+AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, 0, NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 
 	_animX = animX;
