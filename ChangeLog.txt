@@ -1,7 +1,7 @@
 Change Log
 ----------
 
-  V0.33
+  V0.33 (20080522)
   
   - Fixes:
      - Gadget::click() checks correct class variable for double click timer.
