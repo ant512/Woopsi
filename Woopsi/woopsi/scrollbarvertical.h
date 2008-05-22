@@ -129,6 +129,11 @@ public:
 	 */
 	virtual bool resize(u16 width, u16 height);
 
+	/**
+	 * Process up/down button repeats via the VBL system.
+	 * @return True if the function ran succesfully.
+	 */
+	virtual bool vbl();
 
 protected:
 	SliderVertical* _slider;					/**< Pointer to the slider gadget */
@@ -136,6 +141,8 @@ protected:
 	Button* _downButton;						/**< Pointer to the down button */
 	u8 _buttonHeight;							/**< Height of the buttons */
 	u16 _buttonScrollAmount;					/**< Amount that the grip moves when a button is clicked */
+	u32 _lastScrollTime;						/**< Stores the vbl count when a button last triggered a grip movement */
+	u8 _scrollTimeout;							/**< VBLs needed until a button triggers another grip movement */
 
 	/**
 	 * Destructor.

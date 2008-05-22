@@ -1,6 +1,7 @@
 #include "scrollbarvertical.h"
 #include "button.h"
 #include "slidervertical.h"
+#include "woopsi.h"
 
 ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 
@@ -16,6 +17,9 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBa
 
 	_downButton = new Button(0, height - _buttonHeight, width, _buttonHeight, GLYPH_ARROW_DOWN, _font);
 	_downButton->setEventHandler(this);
+
+	_lastScrollTime = 0;
+	_scrollTimeout = 15;
 
 	addGadget(_slider);
 	addGadget(_upButton);
@@ -81,19 +85,55 @@ bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 		}
 	} else if (e.gadget == _upButton) {
 
-		// Up button; only interested in the release event
-		if (e.type == EVENT_RELEASE) {
+		switch(e.type) {
+			
+			case EVENT_CLICK:
+				
+				// Register the list for VBL events
+				woopsiApplication->registerForVBL(this);
 
-			// Move the grip up
-			_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+				// Reset timer
+				_lastScrollTime = woopsiApplication->getVBLCount();
+
+				// Move the grip up
+				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+				break;
+
+			case EVENT_RELEASE:
+			case EVENT_RELEASE_OUTSIDE:
+
+				// Unregister the list from the VBL system
+				woopsiApplication->unregisterFromVBL(this);
+				break;
+
+			default:
+				break;
 		}
 	} else if (e.gadget == _downButton) {
 
-		// Down button; only handle release event
-		if (e.type == EVENT_RELEASE) {
+		switch(e.type) {
+			
+			case EVENT_CLICK:
+				
+				// Register the list for VBL events
+				woopsiApplication->registerForVBL(this);
+
+				// Reset timer
+				_lastScrollTime = woopsiApplication->getVBLCount();
 
 			// Move the grip down
 			_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+				break;
+
+			case EVENT_RELEASE:
+			case EVENT_RELEASE_OUTSIDE:
+
+				// Unregister the list from the VBL system
+				woopsiApplication->unregisterFromVBL(this);
+				break;
+
+			default:
+				break;
 		}
 	}
 
@@ -148,4 +188,29 @@ bool ScrollbarVertical::resize(u16 width, u16 height) {
 	setRaisesEvents(events);
 
 	return resized;
+}
+
+bool ScrollbarVertical::vbl() {
+	if (Gadget::vbl()) {
+
+		if (woopsiApplication->getVBLCount() - _lastScrollTime == _scrollTimeout) {
+
+			// Which gadget is clicked?
+			if (_upButton->isClicked()) {
+
+				// Move the grip up
+				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+			} else if (_downButton->isClicked()) {
+
+				// Move the grip down
+				_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+			}
+
+			_lastScrollTime = woopsiApplication->getVBLCount();
+		}
+
+		return true;
+	}
+
+	return false;
 }
