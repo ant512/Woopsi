@@ -37,6 +37,7 @@ Change Log
      - AnimButton inherits from Gadget instead of Textbox.
      - Textbox no longer redraws when clicked; functionality moved into Button
        and ContextMenuItem classes.
+     - Removed redundant DecorationGlyphButton::release().
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.
@@ -66,6 +67,7 @@ Change Log
      - Added eventVX and eventVY to EventArgs struct.
      - Drag and move events populate eventVX and eventVY EventArgs properties.
      - Added EVENT_ACTION event.
+     - Button, AnimButton and BitmapButton all raise EVENT_ACTION events.
 
   V0.32 (200804327)
   

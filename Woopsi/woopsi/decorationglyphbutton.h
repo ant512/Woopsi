@@ -43,14 +43,6 @@ public:
 	 */
 	virtual bool focus();
 
-	/**
-	 * Release this gadget at the supplied co-ordinates
-	 * @param x X co-ordinate of the release.
-	 * @param y Y co-ordinate of the release.
-	 * @return True if the release was successful.
-	 */
-	virtual bool release(s16 x, s16 y);
-
 protected:
 	char _normalGlyph;						/** Character to display when unclicked */
 	char _clickedGlyph;						/** Character to display when clicked */

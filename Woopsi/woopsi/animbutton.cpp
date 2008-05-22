@@ -1,5 +1,6 @@
 #include "animbutton.h"
 #include "graphicsport.h"
+#include "woopsi.h"
 
 AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
@@ -73,6 +74,8 @@ bool AnimButton::vbl() {
 
 bool AnimButton::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
+
+		// Swap animations
 		_animNormal->stop();
 		_animClicked->play();
 
@@ -83,7 +86,28 @@ bool AnimButton::click(s16 x, s16 y) {
 }
 
 bool AnimButton::release(s16 x, s16 y) {
-	if (Gadget::release(x, y)) {
+
+	if (_flags.clicked) {
+		_flags.clicked = false;
+		_flags.dragging = false;
+
+		if (woopsiApplication->getClickedGadget() == this) {
+			woopsiApplication->setClickedGadget(NULL);
+		}
+
+		// Determine which release event to fire
+		if (checkCollision(x, y)) {
+			// Release occurred within gadget; raise release
+			raiseReleaseEvent(x, y);
+
+			// Also raise "action" event
+			raiseActionEvent(x, y, 0, 0, KEY_CODE_NONE);
+		} else {
+			// Release occurred outside gadget; raise release
+			raiseReleaseOutsideEvent(x, y);
+		}
+
+		// Swap animations
 		_animNormal->play();
 		_animClicked->stop();
 

@@ -28,16 +28,6 @@ void DecorationGlyphButton::draw(Rect clipRect) {
 	delete port;
 }
 
-bool DecorationGlyphButton::release(s16 x, s16 y) {
-
-	if (Gadget::release(x, y)) {
-		Gadget::draw();
-		return true;
-	}
-
-	return false;
-}
-
 bool DecorationGlyphButton::focus() {
 	if (!_flags.hasFocus) {
 		_flags.hasFocus = true;
