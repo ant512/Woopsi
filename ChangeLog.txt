@@ -76,6 +76,7 @@ Change Log
        has changed.
      - ScrollbarVertical up/down buttons repeat when held.
      - ScrollbarHorizontal left/right buttons repeat when held.
+     - Added makefiles to "Hello World" examples.
 
   V0.32 (200804327)
   
