@@ -23,6 +23,15 @@ void ContextMenuItem::draw(Rect clipRect) {
 	delete port;
 }
 
+bool ContextMenuItem::click(s16 x, s16 y) {
+	if (Gadget::click(x, y)) {
+		draw();
+		return true;
+	}
+
+	return false;
+}
+
 bool ContextMenuItem::release(s16 x, s16 y) {
 	if (Gadget::release(x, y)) {
 		draw();

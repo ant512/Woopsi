@@ -33,6 +33,10 @@ Change Log
      - Windows drag correctly if only one co-ordinate has changed.
      - Screen title bar no longer steals focus when clicked.
      - Text::wrap() recognises the end of a single-line string correctly.
+     - BitmapButton inherits from Gadget instead of Textbox.
+     - AnimButton inherits from Gadget instead of Textbox.
+     - Textbox no longer redraws when clicked; functionality moved into Button
+       and ContextMenuItem classes.
   
   - New Features:
      - ListBox rewritten to be a single gadget instead of a compound gadget.

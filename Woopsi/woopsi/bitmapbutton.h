@@ -2,7 +2,7 @@
 #define _BITMAP_BUTTON_H_
 
 #include <nds.h>
-#include "textbox.h"
+#include "gadget.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ using namespace std;
  * Displays two bitmaps, one when the button is clicked, and one when it isn't.  The
  * bitmaps should be the same size.
  */
-class BitmapButton : public Textbox {
+class BitmapButton : public Gadget {
 
 public:
 	/**
@@ -39,6 +39,22 @@ public:
 	 * @param clipRect The clipping region to draw within.
 	 */
 	virtual void draw(Rect clipRect);
+
+	/**
+	 * Click this gadget at the supplied co-ordinates.
+	 * @param x X co-ordinate of the click.
+	 * @param y Y co-ordinate of the click.
+	 * @return True if the click was successful.
+	 */
+	virtual bool click(s16 x, s16 y);
+	
+	/**
+	 * Release this gadget at the supplied co-ordinates
+	 * @param x X co-ordinate of the release.
+	 * @param y Y co-ordinate of the release.
+	 * @return True if the release was successful.
+	 */
+	virtual bool release(s16 x, s16 y);
 
 protected:
 	const u16* _bitmapNormal;			/**< Bitmap to display when button is not clicked */

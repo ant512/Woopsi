@@ -1,7 +1,7 @@
 #include "bitmapbutton.h"
 #include "graphicsport.h"
 
-BitmapButton::BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, const u16* bitmapNormal, const u16* bitmapClicked) : Textbox(x, y, width, height, "", NULL) {
+BitmapButton::BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, const u16* bitmapNormal, const u16* bitmapClicked) : Gadget(x, y, width, height, NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 
 	_bitmapWidth = bitmapWidth;
@@ -29,4 +29,22 @@ void BitmapButton::draw(Rect clipRect) {
 	port->drawBevelledRect(0, 0, _width, _height);
 
 	delete port;
+}
+
+bool BitmapButton::click(s16 x, s16 y) {
+	if (Gadget::click(x, y)) {
+		draw();
+		return true;
+	}
+
+	return false;
+}
+
+bool BitmapButton::release(s16 x, s16 y) {
+	if (Gadget::release(x, y)) {
+		draw();
+		return true;
+	}
+
+	return false;
 }

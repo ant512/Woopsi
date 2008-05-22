@@ -44,6 +44,14 @@ public:
 	inline u32 getValue() { return _value; };
 
 	/**
+	 * Click this gadget at the supplied co-ordinates.
+	 * @param x X co-ordinate of the click.
+	 * @param y Y co-ordinate of the click.
+	 * @return True if the click was successful.
+	 */
+	virtual bool click(s16 x, s16 y);
+
+	/**
 	 * Release this gadget at the supplied co-ordinates
 	 * @param x X co-ordinate of the release.
 	 * @param y Y co-ordinate of the release.

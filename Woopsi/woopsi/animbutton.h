@@ -2,7 +2,7 @@
 #define _ANIM_BUTTON_H_
 
 #include <nds.h>
-#include "textbox.h"
+#include "gadget.h"
 #include "animation.h"
 
 using namespace std;
@@ -11,7 +11,7 @@ using namespace std;
  * Button class that has an animation running in its clickable area.  Note that the
  * bitmaps used in the animation should all be the same size.
  */
-class AnimButton : public Textbox {
+class AnimButton : public Gadget {
 
 public:
 

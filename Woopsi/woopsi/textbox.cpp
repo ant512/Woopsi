@@ -139,24 +139,6 @@ void Textbox::addText(const char* text) {
 	calculateTextPosition();
 }
 
-bool Textbox::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
-		draw();
-		return true;
-	}
-
-	return false;
-}
-
-bool Textbox::release(s16 x, s16 y) {
-	if (Gadget::release(x, y)) {
-		draw();
-		return true;
-	}
-
-	return false;
-}
-
 bool Textbox::resize(u16 width, u16 height) {
 
 	// Remember current values
