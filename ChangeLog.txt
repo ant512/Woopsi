@@ -70,7 +70,8 @@ Change Log
      - Button, AnimButton and BitmapButton all raise EVENT_ACTION events.
      - CycleGadget raises EVENT_VALUE_CHANGE events when released if the value
        has changed.
-     - ScrollbarVertical up/down button repeats when held.
+     - ScrollbarVertical up/down buttons repeat when held.
+     - ScrollbarHorizontal left/right buttons repeat when held.
 
   V0.32 (200804327)
   

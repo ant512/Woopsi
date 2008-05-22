@@ -19,7 +19,7 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBa
 	_downButton->setEventHandler(this);
 
 	_lastScrollTime = 0;
-	_scrollTimeout = 15;
+	_scrollTimeout = 10;
 
 	addGadget(_slider);
 	addGadget(_upButton);
