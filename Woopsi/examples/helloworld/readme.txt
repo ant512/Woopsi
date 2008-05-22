@@ -22,3 +22,10 @@ Hello World
   call the base "Woopsi::shutdown()" method as the last instruction, although
   this requirement can be ignored if you are working with an SDL build of Woopsi
   and want to manually shut down the SDL subsystems.
+
+Building the Example
+--------------------
+
+  To build this example, open a shell, navigate to this directory, and type
+  "make".  Note that this will also compile the Woopsi source; this will be
+  necessary until Woopsi ships as a library.
