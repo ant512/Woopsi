@@ -21,6 +21,7 @@ public:
 	/**
 	 * Constructor.
 	 * @param title The title of the screen; not displayed by default.
+	 * @param flags Bitmask specifying some set-up values for the screen.
 	 * @param font The font to use with the screen.
 	 */
 	Screen(const char* title, u32 flags, FontBase* font = NULL);

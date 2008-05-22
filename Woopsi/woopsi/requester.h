@@ -26,7 +26,6 @@ public:
 	 * @param width The width of the window.
 	 * @param height The height of the window.
 	 * @param title The title of the window.
-	 * @param text The text to display in the window.
 	 * @param font Optional font to use for text output.
 	 */
 	Requester(s16 x, s16 y, u16 width, u16 height, const char* title, FontBase* font = NULL);

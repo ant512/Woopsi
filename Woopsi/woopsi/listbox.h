@@ -104,7 +104,7 @@ public:
 	 * Sets the selected index.  Specify -1 to select nothing.  Resets any
 	 * other selected options to deselected.
 	 * Redraws the gadget and raises a value changed event.
-	 * @param The selected index.
+	 * @param index The selected index.
 	 */
 	virtual void setSelectedIndex(const s32 index);
 
@@ -140,7 +140,7 @@ public:
 	/**
 	 * Sets whether multiple selections are possible or not.
 	 * Does not redraw the gadget.
-	 * @param allowMultipleSelections True to allow multiple selections.
+	 * @return True if multiple selections are allowed.
 	 */
 	virtual inline const bool allowsMultipleSelections() const { return _options.allowsMultipleSelections(); };
 

@@ -115,7 +115,7 @@ public:
 	 * Sets the selected index.  Specify -1 to select nothing.  Resets any
 	 * other selected items to deselected.
 	 * Redraws the gadget and raises a value changed event.
-	 * @param The selected index.
+	 * @param index The selected index.
 	 */
 	virtual inline void setSelectedIndex(const s32 index) {
 		_listbox->setSelectedIndex(index);

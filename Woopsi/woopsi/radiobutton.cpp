@@ -50,7 +50,7 @@ void RadioButton::draw(Rect clipRect) {
 }
 
 bool RadioButton::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
+	if (Button::click(x, y)) {
 
 		setState(RADIO_BUTTON_STATE_ON);
 

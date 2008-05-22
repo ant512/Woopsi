@@ -149,7 +149,6 @@ protected:
 	 * Gets the y position of the specified row of text based on the type of
 	 * vertical alignment currently set.
 	 * @param screenRow The row number to find the y co-ordinate of.
-	 * @param screenRows The number of visible rows within the textbox.
 	 * @return The y co-ordinate of the specified row of text.
 	 */
 	s16 getRowY(u8 screenRow);
