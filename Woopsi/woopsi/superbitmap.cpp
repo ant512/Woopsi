@@ -2,7 +2,6 @@
 #include "textwriter.h"
 #include "graphicsport.h"
 #include "woopsifuncs.h"
-#include "debug.h"
 
 // Constructor - allocates mem for bitmap
 SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS, font) {
@@ -376,12 +375,8 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 			rowWidth++;
 		}
 
-
-			//Debug::printf("go %d", x1);
-
 		// Draw line
 		drawHorizLine(rowStart, y, rowWidth, newColour);
-		draw();
 	}
 
 	delete stack;
