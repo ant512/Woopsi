@@ -80,6 +80,16 @@ public:
 
 		_flags.erased = false;
 	};
+	
+	/**
+	 * Destructor.
+	 */
+	virtual inline ~DimmedScreen() { };
+	
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline DimmedScreen(const DimmedScreen& dimmedScreen) : Screen(dimmedScreen) { };
 };
 
 #endif
