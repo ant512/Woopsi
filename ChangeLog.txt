@@ -12,6 +12,9 @@ Change Log
      - Fixed bug in SuperBitmap::floodFill() that prevented rows above the
        initial click point being filled and occasionally froze the DS.
      - Fixed path null pointer crash in FileRequester constructor.
+     - SuperBitmap::drawHorizLine() no longer tries to DMA_Force() if the width
+       of the line is 1.
+     - Fixed size of data stored in SuperBitmap floodFill's stack.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.

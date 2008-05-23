@@ -2,6 +2,7 @@
 #include "textwriter.h"
 #include "graphicsport.h"
 #include "woopsifuncs.h"
+#include "debug.h"
 
 // Constructor - allocates mem for bitmap
 SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS, font) {
@@ -124,7 +125,7 @@ void SuperBitmap::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 		while (DMA_Active());
 
 		// Duplicate pixel
-		DMA_Force(*pos, (pos + 1), width - 1, DMA_16NOW);
+		if (width > 1) DMA_Force(*pos, (pos + 1), width - 1, DMA_16NOW);
 	}
 }
 
@@ -320,13 +321,13 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 	if (oldColour == newColour) return;
 
 	// Initalise stack
-	DynamicArray<u16>* stack = new DynamicArray<u16>();
+	DynamicArray<s32>* stack = new DynamicArray<s32>();
 
 	s16 x1; 
 	u8 spanUp, spanDown;
-	u16 rowThis, rowUp, rowDown;
+	s32 rowThis, rowUp, rowDown;
 	s16 rowStart;
-	s16 rowWidth;
+	u16 rowWidth;
 
 	// Push initial value onto the stack
 	pushStack(x, y, stack);
@@ -367,7 +368,7 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 			if ((!spanDown) && (y < _bitmapHeight - 1) && (_bitmap[x1 + rowDown] == oldColour)) {
 				pushStack(x1, y + 1, stack);
 				spanDown = 1;
-			} else if (spanDown && (y < _bitmapHeight - 1) && (_bitmap[x1 + rowDown] != oldColour)) {
+			} else if ((spanDown) && (y < _bitmapHeight - 1) && (_bitmap[x1 + rowDown] != oldColour)) {
 				spanDown = 0;
 			}
 
@@ -375,17 +376,21 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 			rowWidth++;
 		}
 
+
+			//Debug::printf("go %d", x1);
+
 		// Draw line
 		drawHorizLine(rowStart, y, rowWidth, newColour);
+		draw();
 	}
 
 	delete stack;
 }
 
 // Floodfill stack functions
-bool SuperBitmap::popStack(s16* x, s16* y, DynamicArray<u16>* stack) { 
+bool SuperBitmap::popStack(s16* x, s16* y, DynamicArray<s32>* stack) { 
 	if (stack->size() > 0) { 
-		u16 val = stack->at(stack->size() - 1);
+		s32 val = stack->at(stack->size() - 1);
 		*y = val / _bitmapWidth;
 		*x = val % _bitmapWidth;
 		stack->pop_back();
@@ -395,8 +400,8 @@ bool SuperBitmap::popStack(s16* x, s16* y, DynamicArray<u16>* stack) {
 	}    
 }
 
-void SuperBitmap::pushStack(s16 x, s16 y, DynamicArray<u16>* stack) {
-	stack->push_back(x + (y << 8));
+void SuperBitmap::pushStack(s16 x, s16 y, DynamicArray<s32>* stack) {
+	stack->push_back(x + (y * _bitmapWidth));
 }     
 
 //Draw bitmap to the internal bitmap
