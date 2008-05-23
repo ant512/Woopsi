@@ -4,8 +4,11 @@ Change Log
   V0.34
   - Fixes:
      - All gadgets have protected copy constructors.
+     - Added destructor to DimmedScreen class.
   
   - New Features:
+     - FileRequester tidied up and flags parameter added to constructor.
+     - Added FileRequester demo to examples directory.
 
 
   V0.33b (20080522)

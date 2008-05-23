@@ -5,7 +5,7 @@
 #include "button.h"
 #include "filepath.h"
 
-FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
+FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, u32 flags, FontBase* font) : AmigaWindow(x, y, width, height, title, flags, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	_flags.shiftClickChildren = false;
 
@@ -77,16 +77,7 @@ bool FileRequester::handleEvent(const EventArgs& e) {
 				} else if (e.gadget == _okButton) {
 
 					// Raise value changed event to event handler
-					if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-						EventArgs newEvent;
-						newEvent.eventX = e.eventX;
-						newEvent.eventY = e.eventY;
-						newEvent.gadget = this;
-						newEvent.keyCode = e.keyCode;
-						newEvent.type = EVENT_VALUE_CHANGE;
-
-						_eventHandler->handleEvent(newEvent);
-					}
+					raiseValueChangeEvent();
 
 					// Close the window
 					close();
@@ -109,16 +100,7 @@ bool FileRequester::handleEvent(const EventArgs& e) {
 						} else {
 
 							// File selected; raise event
-							if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-								EventArgs newEvent;
-								newEvent.eventX = e.eventX;
-								newEvent.eventY = e.eventY;
-								newEvent.gadget = this;
-								newEvent.keyCode = e.keyCode;
-								newEvent.type = EVENT_VALUE_CHANGE;
-
-								_eventHandler->handleEvent(newEvent);
-							}
+							raiseValueChangeEvent();
 
 							// Close the window
 							close();
