@@ -7,6 +7,10 @@ Change Log
      - All gadgets have protected copy constructors.
      - Added destructor to DimmedScreen class.
      - Replaced SuperBitmap::drawLine() with a function that works correctly.
+     - Fixed crash in SuperBitmap::floodFill() when pixel stack overflowed the
+       DS' stack.
+     - Fixed bug in SuperBitmap::floodFill() that prevented rows above the
+       initial click point being filled and occasionally froze the DS.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.

@@ -320,7 +320,7 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 	if (oldColour == newColour) return;
 
 	// Initalise stack
-	DynamicArray<u16> stack;
+	DynamicArray<u16>* stack = new DynamicArray<u16>();
 
 	s16 x1; 
 	u8 spanUp, spanDown;
@@ -329,14 +329,14 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 	s16 rowWidth;
 
 	// Push initial value onto the stack
-	pushStack(x, y, &stack);
+	pushStack(x, y, stack);
 
 	// Continue until stack is empty
-	while (popStack(&x, &y, &stack)) {
+	while (popStack(&x, &y, stack)) {
 
 		x1 = x;
 		rowThis = y * _bitmapWidth;
-		rowUp = (y - 1) * _bitmapHeight;
+		rowUp = (y - 1) * _bitmapWidth;
 		rowDown = (y + 1) * _bitmapWidth;
 
 		// Locate leftmost column on screen in this row containing old colour
@@ -357,7 +357,7 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 
 			// Check pixel above
 			if ((!spanUp) && (y > 0) && (_bitmap[x1 + rowUp] == oldColour)) {
-				pushStack(x1, y - 1, &stack);
+				pushStack(x1, y - 1, stack);
 				spanUp = 1;
 			} else if ((spanUp) && (y > 0) && (_bitmap[x1 + rowUp] != oldColour)) {
 				spanUp = 0;
@@ -365,7 +365,7 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 
 			// Check pixel below
 			if ((!spanDown) && (y < _bitmapHeight - 1) && (_bitmap[x1 + rowDown] == oldColour)) {
-				pushStack(x1, y + 1, &stack);
+				pushStack(x1, y + 1, stack);
 				spanDown = 1;
 			} else if (spanDown && (y < _bitmapHeight - 1) && (_bitmap[x1 + rowDown] != oldColour)) {
 				spanDown = 0;
@@ -378,6 +378,8 @@ void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
 		// Draw line
 		drawHorizLine(rowStart, y, rowWidth, newColour);
 	}
+
+	delete stack;
 }
 
 // Floodfill stack functions
