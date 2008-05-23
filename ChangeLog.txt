@@ -11,6 +11,7 @@ Change Log
        DS' stack.
      - Fixed bug in SuperBitmap::floodFill() that prevented rows above the
        initial click point being filled and occasionally froze the DS.
+     - Fixed path null pointer crash in FileRequester constructor.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.

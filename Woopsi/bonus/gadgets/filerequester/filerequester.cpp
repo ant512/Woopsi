@@ -53,7 +53,6 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 	_cancelButton->setEventHandler(this);
 	addGadget(_cancelButton);
 
-	_path = NULL;
 	setPath(path);
 }
 
