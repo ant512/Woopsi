@@ -6,6 +6,7 @@ Change Log
   - Fixes:
      - All gadgets have protected copy constructors.
      - Added destructor to DimmedScreen class.
+     - Replaced SuperBitmap::drawLine() with a function that works correctly.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.

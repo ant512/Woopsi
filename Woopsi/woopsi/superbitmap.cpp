@@ -152,43 +152,43 @@ void SuperBitmap::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 	drawVertLine(x, y, height, colour);					// Left
 }
 
-void SuperBitmap::drawLine(s16 x1, s16 y1, u16 x2, u16 y2, u16 colour) {
-	int slope;
-	int dx, dy, incE, incNE, d, x, y;
-
-	// Reverse lines where x1 > x2
-	if (x1 > x2) {
-		drawLine(x2, y2, x1, y1, colour);
-		return;
-	}
-
+void SuperBitmap::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
+	int dx, dy, inx, iny, e;
+	
 	dx = x2 - x1;
 	dy = y2 - y1;
+	inx = dx > 0 ? 1 : -1;
+	iny = dy > 0 ? 1 : -1;
 
-	// Adjust y-increment for negatively sloped lines
-	if (dy < 0) {
-		slope = -1;
-		dy = -dy;
+	if (dx < 0) dx = -dx;
+	if (dy < 0) dy = -dy;
+	
+	if (dx >= dy) {
+		dy <<= 1;
+		e = dy - dx;
+		dx <<= 1;
+		while (x1 != x2) {
+			drawPixel(x1, y1,colour);
+			if (e >= 0) {
+					y1 += iny;
+					e-= dx;
+			}
+			e += dy; x1 += inx;
+		}
 	} else {
-		slope = 1;
-	}
-
-	// Bresenham constants
-	incE = 2 * dy;
-	incNE = 2 * dy - 2 * dx;
-	d = 2 * dy - dx;
-	y = y1;
-
-	// Blit
-	for (x = x1; x <= x2; x++) {
-		drawPixel(x, y, colour);
-		if (d <= 0) {
-			d += incE;
-		} else {
-			d += incNE;
-			y += slope;
+		dx <<= 1;
+		e = dx - dy;
+		dy <<= 1;
+		while (y1 != y2) {
+			drawPixel(x1, y1, colour);
+			if (e >= 0) {
+					x1 += inx;
+					e -= dy;
+			}
+			e += dx; y1 += iny;
 		}
 	}
+	drawPixel(x1, y1, colour);
 }
 
 void SuperBitmap::drawCircle(s16 x0, s16 y0, u16 radius, u16 colour) {

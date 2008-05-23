@@ -110,7 +110,7 @@ public:
 	 * @param y2 The y co-ordinate of the end point of the line.
 	 * @param colour The colour of the rectangle.
 	 */
-	virtual void drawLine(s16 x1, s16 y1, u16 x2, u16 y2, u16 colour);
+	virtual void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
 	
 	/**
 	 * Draw an unfilled circle to the internal bitmap.

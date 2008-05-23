@@ -115,6 +115,27 @@ public:
 		
 		return true;
 	};
+	
+	bool drag(s16 x, s16 y, s16 vX, s16 vY) {
+		switch(_mode) {
+			case CANVAS_MODE_DOTTED_DRAW:
+				_superBitmap->drawPixel(x, y, _foregroundColour);
+				break;
+			
+			case CANVAS_MODE_SOLID_DRAW:
+				_superBitmap->drawLine(_oldStylusX, _oldStylusY, x, y, _foregroundColour);
+				break;
+			
+			default:
+				break;
+		}
+
+		_superBitmap->draw();
+		_oldStylusX = x;
+		_oldStylusY = y;
+		
+		return true;
+	};
 		
 private:
 	SuperBitmap* _superBitmap;
