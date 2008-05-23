@@ -22,7 +22,7 @@ ICON 		:= $(CURDIR)/../../../icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source data gfx ../../woopsi ../../bonus/gadgets/filerequester
+SOURCES		:=	source data gfx ../../woopsi ../../bonus/gadgets/dimmedscreen
 INCLUDES	:=	include
 DEFINES		:=
 
@@ -32,8 +32,8 @@ DEFINES		:=
 # If USE_PALIB is defined, compile/link against PALib
 #-------------------------------------------------------------------------------
 #USE_WOOPSI	= 1
-USE_FAT		= 1
-USE_PALIB	= 1
+#USE_FAT		= 1
+#USE_PALIB	= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our
 # resultant .nds from working on some loaders.  By default, ndstool puts boot

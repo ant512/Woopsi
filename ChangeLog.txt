@@ -9,6 +9,8 @@ Change Log
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.
      - Added FileRequester demo to examples directory.
+     - Added DimmedScreen demo to examples directory.
+     - Fixes to example makefiles.
 
 
   V0.33b (20080522)
