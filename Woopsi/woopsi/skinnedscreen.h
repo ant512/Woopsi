@@ -88,6 +88,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~SkinnedScreen() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SkinnedScreen(const SkinnedScreen& skinnedScreen) : Screen(skinnedScreen) { };
 };
 
 #endif

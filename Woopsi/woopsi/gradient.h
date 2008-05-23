@@ -69,7 +69,12 @@ protected:
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~Gradient() {}
+	virtual inline ~Gradient() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Gradient(const Gradient& gradient) : Gadget(gradient) { };
 };
 
 #endif

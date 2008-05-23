@@ -249,6 +249,11 @@ protected:
 	virtual inline ~SuperBitmap() {
 		delete[] _bitmap;
 	};
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SuperBitmap(const SuperBitmap& superBitmap) : Gadget(superBitmap) { };
 };
 
 #endif

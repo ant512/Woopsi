@@ -44,6 +44,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~Alert() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Alert(const Alert& alert) : AmigaWindow(alert) { };
 };
 
 #endif

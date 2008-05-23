@@ -123,6 +123,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~ScrollingTextBox() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ScrollingTextBox(const ScrollingTextBox& scrollingTextBox) : Gadget(scrollingTextBox) { };
 };
 
 #endif

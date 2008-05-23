@@ -68,6 +68,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~BitmapButton() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline BitmapButton(const BitmapButton& bitmapButton) : Gadget(bitmapButton) { };
 };
 
 #endif

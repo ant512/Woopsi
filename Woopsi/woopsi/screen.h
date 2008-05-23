@@ -153,6 +153,11 @@ protected:
 			delete [] _title;
 		}
 	};
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Screen(const Screen& screen) : Gadget(screen) { };
 };
 
 #endif

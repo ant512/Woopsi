@@ -43,6 +43,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~WindowBorderButton() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline WindowBorderButton(const WindowBorderButton& windowBorderButton) : DecorationGlyphButton(windowBorderButton) { };
 };
 
 #endif

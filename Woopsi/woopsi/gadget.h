@@ -1243,6 +1243,11 @@ protected:
 	 * @return The index of the next lowest visible gadget.
 	 */
 	const s16 getLowerVisibleGadget(const u8 startIndex) const;
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Gadget(const Gadget& gadget) { };
 };
 
 #endif

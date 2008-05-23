@@ -26,6 +26,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~SkinnedScreenTitle() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SkinnedScreenTitle(const SkinnedScreenTitle& skinnedScreenTitle) : ScreenTitle(skinnedScreenTitle) { };
 };
 
 #endif

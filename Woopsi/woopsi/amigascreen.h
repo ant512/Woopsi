@@ -108,6 +108,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~AmigaScreen() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline AmigaScreen(const AmigaScreen& amigaScreen) : Screen(amigaScreen) { };
 };
 
 #endif

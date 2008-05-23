@@ -79,6 +79,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~ProgressBar() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ProgressBar(const ProgressBar& progressBar) : Gadget(progressBar) { };
 };
 
 #endif

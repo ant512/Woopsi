@@ -162,6 +162,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual ~MultiLineTextBox();
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline MultiLineTextBox(const MultiLineTextBox& multiLineTextBox) : ScrollingPanel(multiLineTextBox) { };
 };
 
 #endif

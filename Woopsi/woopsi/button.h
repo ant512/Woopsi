@@ -68,6 +68,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~Button() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Button(const Button& button) : Textbox(button) { };
 };
 
 #endif

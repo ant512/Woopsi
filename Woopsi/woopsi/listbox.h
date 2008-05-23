@@ -197,6 +197,11 @@ protected:
 	 * @param selected True to select the option, false to deselect it.
 	 */
 	virtual void setOptionSelected(const s32 index, const bool selected);
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ListBox(const ListBox& listBox) : ScrollingPanel(listBox) { };
 };
 
 #endif

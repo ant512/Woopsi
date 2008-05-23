@@ -137,6 +137,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~SliderVertical() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SliderVertical(const SliderVertical& sliderVertical) : Gadget(sliderVertical) { };
 };
 
 #endif

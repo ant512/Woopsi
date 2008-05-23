@@ -26,6 +26,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~SkinnedScreenFlipButton() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SkinnedScreenFlipButton(const SkinnedScreenFlipButton& skinnedScreenFlipButton) : DecorationGlyphButton(skinnedScreenFlipButton) { };
 };
 
 #endif

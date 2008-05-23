@@ -51,6 +51,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~DecorationGlyphButton() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline DecorationGlyphButton(const DecorationGlyphButton& decorationGlyphButton) : Button(decorationGlyphButton) { };
 };
 
 #endif

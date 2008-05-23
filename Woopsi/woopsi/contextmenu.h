@@ -99,6 +99,11 @@ private:
 	 * Destructor.
 	 */
 	virtual inline ~ContextMenu() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ContextMenu(const ContextMenu& contextMenu) : Gadget(contextMenu) { };
 };
 
 #endif

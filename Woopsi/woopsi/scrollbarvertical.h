@@ -148,6 +148,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~ScrollbarVertical() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ScrollbarVertical(const ScrollbarVertical& scrollbarVertical) : Gadget(scrollbarVertical) { };
 };
 
 #endif

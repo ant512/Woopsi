@@ -219,6 +219,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~ScrollingListBox() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ScrollingListBox(const ScrollingListBox& scrollingListBox) : Gadget(scrollingListBox) { };
 };
 
 #endif

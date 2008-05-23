@@ -77,6 +77,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual ~CycleButton();
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline CycleButton(const CycleButton& cycleButton) : Button(cycleButton) { };
 };
 
 #endif

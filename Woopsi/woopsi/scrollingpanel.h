@@ -114,11 +114,15 @@ protected:
 	 */
 	void raiseScrollEvent();
 
-	
 	/**
 	 * Destructor.
 	 */
 	virtual ~ScrollingPanel() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ScrollingPanel(const ScrollingPanel& scrollingPanel) : Gadget(scrollingPanel) { };
 };
 
 #endif

@@ -78,6 +78,11 @@ private:
 	 * Destructor.
 	 */
 	virtual inline ~ContextMenuItem() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ContextMenuItem(const ContextMenuItem& contextMenuItem) : Textbox(contextMenuItem) { };
 };
 
 #endif

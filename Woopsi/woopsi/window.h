@@ -87,6 +87,11 @@ protected:
 			delete [] _title;
 		}
 	};
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Window(const Window& window) : Gadget(window) { };
 };
 
 #endif

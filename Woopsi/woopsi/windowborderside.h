@@ -52,6 +52,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~WindowBorderSide() { };
+	
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline WindowBorderSide(const WindowBorderSide& windowBorderSide) : Gadget(windowBorderSide) { };
 };
 
 #endif

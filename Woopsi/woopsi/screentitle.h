@@ -56,6 +56,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~ScreenTitle() {	};
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline ScreenTitle(const ScreenTitle& screenTitle) : Gadget(screenTitle) { };
 };
 
 #endif

@@ -366,8 +366,6 @@ void Demo::startup() {
 	clabel3->setBorderless(true);
 	gadgetTestWindow->addGadget(clabel3);
 
-
-
 	Requester* req = new Requester(10, 10, 140, 100, "Text");
 	req->addOption("Req Test 1", 1);
 	req->addOption("Req Test 2", 2);

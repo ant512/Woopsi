@@ -300,6 +300,11 @@ protected:
 	 * @return True if the click was successful.
 	 */
 	virtual bool shiftClick(s16 x, s16 y, Gadget* gadget);
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Woopsi(const Woopsi& woopsi) : Gadget(woopsi) { };
 };
 
 /**

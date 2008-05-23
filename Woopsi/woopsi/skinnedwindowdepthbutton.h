@@ -26,6 +26,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~SkinnedWindowDepthButton() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SkinnedWindowDepthButton(const SkinnedWindowDepthButton& skinnedWindowDepthButton) : DecorationGlyphButton(skinnedWindowDepthButton) { };
 };
 
 #endif

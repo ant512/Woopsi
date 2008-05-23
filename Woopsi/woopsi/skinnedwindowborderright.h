@@ -25,6 +25,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~SkinnedWindowBorderRight() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SkinnedWindowBorderRight(const SkinnedWindowBorderRight& skinnedWindowBorderRight) : WindowBorderSide(skinnedWindowBorderRight) { };
 };
 
 #endif

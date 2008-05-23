@@ -1,6 +1,13 @@
 Change Log
 ----------
 
+  V0.34
+  - Fixes:
+     - All gadgets have protected copy constructors.
+  
+  - New Features:
+
+
   V0.33b (20080522)
   
   - Fixes:

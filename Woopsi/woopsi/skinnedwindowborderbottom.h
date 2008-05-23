@@ -26,6 +26,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~SkinnedWindowBorderBottom() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline SkinnedWindowBorderBottom(const SkinnedWindowBorderBottom& skinnedWindowBorderBottom) : WindowBorderBottom(skinnedWindowBorderBottom) { };
 };
 
 #endif

@@ -90,6 +90,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual ~RadioButtonGroup() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline RadioButtonGroup(const RadioButtonGroup& radioButtonGroup) : Gadget(radioButtonGroup) { };
 };
 
 #endif

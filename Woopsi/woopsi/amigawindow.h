@@ -170,6 +170,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~AmigaWindow() { }
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline AmigaWindow(const AmigaWindow& amigaWindow) : Window(amigaWindow) { };
 };
 
 #endif

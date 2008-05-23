@@ -82,6 +82,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual ~AnimButton();
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline AnimButton(const AnimButton& animButton) : Gadget(animButton) { };
 };
 
 #endif

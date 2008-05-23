@@ -77,6 +77,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~RadioButton() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline RadioButton(const RadioButton& radioButton) : Button(radioButton) { };
 };
 
 #endif

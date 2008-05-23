@@ -132,6 +132,11 @@ protected:
 		delete[] _text;
 		_text = NULL;
 	};
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Textbox(const Textbox& textbox) : Gadget(textbox) { };
 };
 
 #endif

@@ -138,6 +138,11 @@ protected:
 	 * Destructor.
 	 */
 	virtual inline ~Requester() { };
+
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline Requester(const Requester& requester) : AmigaWindow(requester) { };
 };
 
 #endif
