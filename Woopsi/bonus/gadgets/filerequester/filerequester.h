@@ -168,6 +168,11 @@ protected:
 	 * Populate list with directory data.
 	 */
 	virtual void readDirectory();
+	
+	/**
+	 * Copy constructor is protected to prevent usage.
+	 */
+	inline FileRequester(const FileRequester& fileRequester) : AmigaWindow(fileRequester) { };
 };
 
 #endif
