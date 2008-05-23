@@ -15,9 +15,9 @@ DimmedScreen
   gadget's draw(Rect) *erases* the clipping rect before it does anything else.
   This makes the gadget transparent, since trying to draw it allows all of the
   gadgets behind it to show through.  After erasing the rect, the draw(Rect)
-  method scans through the framebuffer, reading out the value if each pixel
-  within the clipping region, halving the value of each of its RGB components,
-  and writing the new value back.  This halves the brightness of the pixels.
+  method scans through the framebuffer, reads out the value if each pixel
+  within the clipping region, halves the value of each of its RGB components,
+  and writes the new value back.
   
   The DimmedScreen has a big limitation, which is why it is not part of the main
   library.  If the screen sits above an animated gadget, that gadget will appear
