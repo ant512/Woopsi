@@ -13,6 +13,7 @@ Change Log
      - Added DimmedScreen demo to examples directory.
      - Fixes to example makefiles.
      - Added DimmedScreen readme file.
+     - Added WPaint to examples directory.
 
 
   V0.33b (20080522)
