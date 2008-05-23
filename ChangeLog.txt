@@ -2,6 +2,7 @@ Change Log
 ----------
 
   V0.34
+  
   - Fixes:
      - All gadgets have protected copy constructors.
      - Added destructor to DimmedScreen class.
@@ -11,6 +12,7 @@ Change Log
      - Added FileRequester demo to examples directory.
      - Added DimmedScreen demo to examples directory.
      - Fixes to example makefiles.
+     - Added DimmedScreen readme file.
 
 
   V0.33b (20080522)

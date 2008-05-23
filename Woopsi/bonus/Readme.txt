@@ -15,11 +15,13 @@ Collections
 -----------
 
   Woopsi intentionally makes no use of the STL collection classes (vector, etc),
-  instead using its own DynamicArray class.  This is done to reduce the size of
-  the Woopsi ROM.  The collections in this folder are a linked list and a
+  instead making use of its own DynamicArray class.  This is done to reduce the
+  size of Woopsi ROMs.  The collections in this folder are a linked list and a
   hashmap.  Both have associated iterator classes.
   
 Gadgets
 -------
 
-  Extra gadgets that aren't officially part of Woopsi.
+  Extra gadgets that aren't officially part of Woopsi, or have external
+  dependencies that will bulk up the size of the ROM if they were included by
+  default.
