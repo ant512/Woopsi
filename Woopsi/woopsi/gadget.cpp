@@ -1895,6 +1895,8 @@ void Gadget::addGadget(Gadget* gadget) {
 		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();
+
+		gadget->draw();
 	}
 }
 
@@ -1916,6 +1918,8 @@ void Gadget::insertGadget(Gadget* gadget) {
 		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();
+
+		gadget->draw();
 	}
 }
 

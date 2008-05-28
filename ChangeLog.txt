@@ -23,6 +23,7 @@ Change Log
      - Fixes to example makefiles.
      - Added DimmedScreen readme file.
      - Added WPaint to examples directory.
+     - Gadgets get drawn automatically when added to their parents.
 
 
   V0.33b (20080522)
