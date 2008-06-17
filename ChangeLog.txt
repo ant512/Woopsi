@@ -17,6 +17,8 @@ Change Log
      - Fixed size of data stored in SuperBitmap floodFill's stack.
      - Removed bitshifts from Screen::Drag() that would prevent resizing the
        screen on alternative platforms.
+     - Windows can no longer be dragged vertically out of non-permeable screens
+       that are themselves dragged down.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.

@@ -52,7 +52,7 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 						destX = _parent->getWidth() - _width;
 					}
 
-					if (destY + _height > _parent->getY() + _parent->getHeight()) {
+					if (destY + _height > _parent->getHeight()) {
 						destY = _parent->getHeight() - _height;
 					}
 				}
