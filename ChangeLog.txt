@@ -15,6 +15,8 @@ Change Log
      - SuperBitmap::drawHorizLine() no longer tries to DMA_Force() if the width
        of the line is 1.
      - Fixed size of data stored in SuperBitmap floodFill's stack.
+     - Removed bitshifts from Screen::Drag() that would prevent resizing the
+       screen on alternative platforms.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.

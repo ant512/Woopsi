@@ -217,8 +217,8 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 						// Precalculate values
 						if (vY > 0) {
 							// Scroll down
-							srcLinei = DrawBg[screenNumber] + getX() + ((visibleRects->at(0).y + visibleRects->at(0).height - vY - 1) << 8);
-							lineInc = 1 << 8;
+							srcLinei = DrawBg[screenNumber] + getX() + ((visibleRects->at(0).y + visibleRects->at(0).height - vY - 1) * SCREEN_WIDTH);
+							lineInc = SCREEN_WIDTH;
 							destLinei = srcLinei + (vY * lineInc);
 
 							for (u8 i = 0; i < visibleRects->at(0).height; i++) {
@@ -232,8 +232,8 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 							}
 						} else if (vY < 0) {
 							// Scroll up
-							srcLinei = DrawBg[screenNumber] + getX() + (visibleRects->at(0).y << 8);
-							lineInc = 1 << 8;
+							srcLinei = DrawBg[screenNumber] + getX() + (visibleRects->at(0).y * SCREEN_WIDTH);
+							lineInc = SCREEN_WIDTH;
 							destLinei = srcLinei + (vY * lineInc);
 
 							for (u8 i = 0; i < visibleRects->at(0).height; i++) {
