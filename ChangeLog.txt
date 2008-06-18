@@ -19,6 +19,7 @@ Change Log
        screen on alternative platforms.
      - Windows can no longer be dragged vertically out of non-permeable screens
        that are themselves dragged down.
+     - Fixed crash when dragging screen in SDL build.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.

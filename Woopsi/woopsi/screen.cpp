@@ -221,7 +221,7 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 							lineInc = SCREEN_WIDTH;
 							destLinei = srcLinei + (vY * lineInc);
 
-							for (u8 i = 0; i < visibleRects->at(0).height; i++) {
+							for (u8 i = 0; i < visibleRects->at(0).height - vY; i++) {
 								while(DMA_Active());
 								DMA_Copy(srcLinei, destLinei, _width, DMA_16NOW);
 								
