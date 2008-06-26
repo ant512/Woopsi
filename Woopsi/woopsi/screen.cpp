@@ -158,6 +158,12 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 			// Calculate physical screen to use
 			u8 screenNumber = calculatePhysicalScreenNumber(y);
+
+			// Abort dragging if not dragging the bottom screen; will only be an issue in SDL code
+#ifdef USING_SDL
+			if (screenNumber != 0) return false;
+#endif
+
 			y = calculatePhysicalScreenY(y);
 
 			// Work out where we're moving to
