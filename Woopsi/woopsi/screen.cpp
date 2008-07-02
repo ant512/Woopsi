@@ -34,51 +34,6 @@ bool Screen::focus() {
 	return false;
 }
 
-void Screen::setFocusedGadget(Gadget* gadget) {
-
-	if (_focusedGadget != gadget) {
-		
-		// Set the active gadget to inactive
-		if (_focusedGadget != NULL) {
-			_focusedGadget->blur();
-		}
-
-		if (gadget != NULL) {
-
-			// Activate a new gadget
-
-			// Locate the new active gadget in the array
-			s16 gadgetIndex = getGadgetIndex(gadget);
-
-			// Push the gadget onto the end of the vector to raise it to the top
-			if ((gadgetIndex >= _decorationCount) && (gadgetIndex < (s16)_gadgets.size() - 1)) {
-
-				// Remove the gadget from its current location in the stack
-				_gadgets.erase(_gadgets.begin() + gadgetIndex);
-
-				// Add gadget to the end of the stack
-				_gadgets.push_back(gadget);
-			}
-
-			// Invalidate all gadgets that collide with the depth-swapped gadget
-			for (u8 i = 0; i < _gadgets.size(); i++) {
-				if (_gadgets[i]->checkCollision(gadget)) {
-					_gadgets[i]->invalidateVisibleRectCache();
-				}
-			}
-
-			// Draw the active gagdet
-			gadget->draw();
-		}
-	}
-
-	// Remember the new active gadget
-	_focusedGadget = gadget;
-
-	// Make screen active
-	focus();
-}
-
 void Screen::flipToTopScreen() {
 	moveTo(0, TOP_SCREEN_Y_OFFSET);
 }

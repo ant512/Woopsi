@@ -408,6 +408,38 @@ void Gadget::raiseVBLEvent() {
 	}
 }
 
+void Gadget::raiseMoveForwardEvent() {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
+
+		EventArgs e;
+		e.type = EVENT_MOVE_FORWARD;
+		e.eventX = 0;
+		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
+void Gadget::raiseMoveBackwardEvent() {
+	if ((_eventHandler != NULL) && (raisesEvents())) {
+
+		EventArgs e;
+		e.type = EVENT_MOVE_BACKWARD;
+		e.eventX = 0;
+		e.eventY = 0;
+		e.eventVX = 0;
+		e.eventVY = 0;
+		e.keyCode = KEY_CODE_NONE;
+		e.gadget = this;
+
+		_eventHandler->handleEvent(e);
+	}
+}
+
 void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
 	if ((_eventHandler != NULL) && (raisesEvents())) {
 
@@ -1801,7 +1833,10 @@ bool Gadget::blur() {
 
 bool Gadget::raiseToTop() {
 	if (_parent != NULL) {
-		return _parent->raiseGadgetToTop(this);
+		if (_parent->raiseGadgetToTop(this)) {
+			raiseMoveForwardEvent();
+			return true;
+		}
 	}
 
 	return false;
@@ -1809,7 +1844,10 @@ bool Gadget::raiseToTop() {
 
 bool Gadget::lowerToBottom() {
 	if (_parent != NULL) {
-		return _parent->lowerGadgetToBottom(this);
+		if (_parent->lowerGadgetToBottom(this)) {
+			raiseMoveBackwardEvent();
+			return true;
+		}
 	}
 
 	return false;
@@ -1830,20 +1868,22 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 	// Locate gadget in the stack
 	s16 index = getGadgetIndex(gadget);
 
-	if (index > -1) {
-		if ((u16)index < _gadgets.size() - 1) {
+	if ((index > -1) && (index < (s16)_gadgets.size() - 1)) {
+		_gadgets.erase(_gadgets.begin() + index);
+		_gadgets.push_back(gadget);
 
-			_gadgets.erase(_gadgets.begin() + index);
-			_gadgets.push_back(gadget);
+		gadget->invalidateVisibleRectCache();
 
-			// Handle visible region caching
-			gadget->invalidateVisibleRectCache();
-			invalidateLowerGadgetsVisibleRectCache(gadget);
-
-			gadget->draw();
-
-			return true;
+		// Invalidate all gadgets that collide with the depth-swapped gadget
+		for (u8 i = 0; i < _gadgets.size(); i++) {
+			if (_gadgets[i]->checkCollision(gadget)) {
+				_gadgets[i]->invalidateVisibleRectCache();
+			}
 		}
+
+		gadget->draw();
+
+		return true;
 	}
 
 	return false;
@@ -1854,7 +1894,7 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 	// Locate gadget in the stack
 	s16 index = getGadgetIndex(gadget);
 
-	if (index > 0) {
+	if (index > _decorationCount) {
 		gadget->erase();
 
 		// Handle visible region caching

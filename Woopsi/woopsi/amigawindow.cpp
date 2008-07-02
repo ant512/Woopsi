@@ -136,6 +136,8 @@ bool AmigaWindow::click(s16 x, s16 y) {
 	if (isEnabled()) {
 		if (checkCollision(x, y)) {
 
+			raiseToTop();
+
 			// Try to click a child gadget
 			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {

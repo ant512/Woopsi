@@ -1121,6 +1121,16 @@ protected:
 	void raiseVBLEvent();
 
 	/**
+	 * Raise a move forward event to the event handler.
+	 */
+	void raiseMoveForwardEvent();
+
+	/**
+	 * Raise a move backward event to the event handler.
+	 */
+	void raiseMoveBackwardEvent();
+
+	/**
 	 * Raise a key press event to the event handler.
 	 * @param keyCode The code of the key that caused the event.
 	 */

@@ -21,6 +21,11 @@ Change Log
        that are themselves dragged down.
      - Fixed crash when dragging screen in SDL build.
      - Added John's fix to limit SDL screen dragging to bottom screen.
+     - Gadget::lowerGadgetToBottom() does not try to move decorations.
+     - Gadget::raiseGadgetToTop() only invalidates the rect cache of any gadgets
+       it collides with.
+     - AmigaWindow controls how it moves to the top of the parent gadget stack
+       rather than the Screen gadget.
   
   - New Features:
      - FileRequester tidied up and flags parameter added to constructor.
@@ -30,6 +35,7 @@ Change Log
      - Added DimmedScreen readme file.
      - Added WPaint to examples directory.
      - Gadgets get drawn automatically when added to their parents.
+     - Added EVENT_MOVE_FORWARD and EVENT_MOVE_BACKWARD events.
 
 
   V0.33b (20080522)

@@ -35,7 +35,9 @@ enum EventType {
 	EVENT_DOUBLE_CLICK = 23,			/**< Gadget has been double-clicked */
 	EVENT_SHELVE = 24,					/**< Gadget has been shelved */
 	EVENT_UNSHELVE = 25,				/**< Shelved gadget has been unshelved */
-	EVENT_ACTION = 26					/**< Gadget has performed its action (ie. button released) */
+	EVENT_ACTION = 26,					/**< Gadget has performed its action (ie. button released) */
+	EVENT_MOVE_FORWARD = 27,			/**< Gadget has been raised up its parent's gadget stack */
+	EVENT_MOVE_BACKWARD = 28			/**< Gadget has been lowered down its parent's gadget stack */
 };
 
 /**

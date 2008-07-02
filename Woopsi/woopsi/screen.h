@@ -61,14 +61,6 @@ public:
 	virtual void draw(Rect clipRect);
 
 	/**
-	 * Sets the supplied gadget as the focused child.  The gadget must
-	 * be a child of this gadget.
-	 * @param gadget A pointer to the child gadget.
-	 * @see getFocusedGadget()
-	 */
-	virtual void setFocusedGadget(Gadget* gadget);
-
-	/**
 	 * Swaps the depth of the supplied child gadget.  The child
 	 * gadget is assumed to be a window, and although this is not a requirement,
 	 * it does mean that child gadgets are depth-swapped as windows would
