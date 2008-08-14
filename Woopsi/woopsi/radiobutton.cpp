@@ -33,17 +33,26 @@ void RadioButton::draw(Rect clipRect) {
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
 
-	// Draw appropriate glyph for state
+	// Work out which glyph to draw
+	char glyph = GLYPH_RADIO_BUTTON_ON;
+
 	switch (_state) {
 		case RADIO_BUTTON_STATE_ON:
-			port->drawText(_textX, _textY, _font, GLYPH_RADIO_BUTTON_ON);
+			glyph = GLYPH_RADIO_BUTTON_ON;
 			break;
 		case RADIO_BUTTON_STATE_OFF:
-			port->drawText(_textX, _textY, _font, GLYPH_RADIO_BUTTON_OFF);
+			glyph = GLYPH_RADIO_BUTTON_OFF;
 			break;
 		case RADIO_BUTTON_STATE_MU:
-			port->drawText(_textX, _textY, _font, GLYPH_RADIO_BUTTON_MU);
+			glyph = GLYPH_RADIO_BUTTON_MU;
 			break;
+	}
+
+	// Draw button
+	if (isEnabled()) {
+		port->drawText(_textX, _textY, _font, glyph);
+	} else {
+		port->drawText(_textX, _textY, _font, glyph, _darkColour);
 	}
 
 	delete port;

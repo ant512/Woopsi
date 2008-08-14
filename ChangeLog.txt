@@ -11,9 +11,10 @@ Change Log
      - CheckBox has different appearance when disabled.
      - ContextMenuItem has different appearance when disabled.
      - CycleButton has different appearance when disabled.
+     - RadioButton has different appearance when disabled.
      
 
-  V0.34
+  V0.34 (20080702)
   
   - Fixes:
      - All gadgets have protected copy constructors.
