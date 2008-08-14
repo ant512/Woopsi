@@ -1,7 +1,7 @@
 #include "textbox.h"
 #include "graphicsport.h"
 
-Textbox::Textbox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, y, width, height, 0, font) {
+TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_text = NULL;
 
 	_outline = OUTLINE_IN;
@@ -14,7 +14,7 @@ Textbox::Textbox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase
 	calculateTextPosition();
 }
 
-Textbox::Textbox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBase* font) : Gadget(x, y, width, height, 0, font) {
+TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_text = NULL;
 
 	_outline = OUTLINE_IN;
@@ -31,7 +31,7 @@ Textbox::Textbox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBas
 	calculateTextPosition();
 }
 
-void Textbox::draw(Rect clipRect) {
+void TextBox::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
@@ -46,7 +46,7 @@ void Textbox::draw(Rect clipRect) {
 }
 
 // Calculate values for centralised text
-void Textbox::calculateTextPosition() {
+void TextBox::calculateTextPosition() {
 
 	// Calculate vertical position
 	switch (_vPos) {
@@ -75,21 +75,21 @@ void Textbox::calculateTextPosition() {
 	}
 }
 
-void Textbox::setTextPositionHoriz(TextPositionHoriz position) {
+void TextBox::setTextPositionHoriz(TextPositionHoriz position) {
 	_hPos = position;
 	calculateTextPosition();
 
 	draw();
 }
 
-void Textbox::setTextPositionVert(TextPositionVert position) {
+void TextBox::setTextPositionVert(TextPositionVert position) {
 	_vPos = position;
 	calculateTextPosition();
 
 	draw();
 }
 
-void Textbox::setText(const char* text) {
+void TextBox::setText(const char* text) {
 	
 	// Have we already created a block of memory that we need to free?
 	if (_text != NULL) {
@@ -110,7 +110,7 @@ void Textbox::setText(const char* text) {
 	raiseValueChangeEvent();
 }
 
-void Textbox::addText(const char* text) {
+void TextBox::addText(const char* text) {
 
 	if (_text != NULL) {
 		// Reserve memory for concatenated string
@@ -139,7 +139,7 @@ void Textbox::addText(const char* text) {
 	calculateTextPosition();
 }
 
-bool Textbox::resize(u16 width, u16 height) {
+bool TextBox::resize(u16 width, u16 height) {
 
 	// Remember current values
 	bool resized = false;
@@ -164,7 +164,7 @@ bool Textbox::resize(u16 width, u16 height) {
 }
 
 // Get the preferred dimensions of the gadget
-void Textbox::getPreferredDimensions(Rect& rect) const {
+void TextBox::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
 	rect.width = ((!_flags.borderless + _padding) << 1) + _font->getStringWidth(_text);

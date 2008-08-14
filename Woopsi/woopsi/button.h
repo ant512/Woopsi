@@ -9,7 +9,7 @@ using namespace std;
 /**
  * Clickable button gadget.  Displays text within the button.
  */
-class Button : public Textbox {
+class Button : public TextBox {
 public:
 
 	/**
@@ -72,7 +72,7 @@ protected:
 	/**
 	 * Copy constructor is protected to prevent usage.
 	 */
-	inline Button(const Button& button) : Textbox(button) { };
+	inline Button(const Button& button) : TextBox(button) { };
 };
 
 #endif

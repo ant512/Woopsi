@@ -11,7 +11,7 @@ using namespace std;
  * gadget's context menu item array, so these objects should
  * not be created by any other code.
  */
-class ContextMenuItem : public Textbox {
+class ContextMenuItem : public TextBox {
 public:
 
 	/**
@@ -82,7 +82,7 @@ private:
 	/**
 	 * Copy constructor is protected to prevent usage.
 	 */
-	inline ContextMenuItem(const ContextMenuItem& contextMenuItem) : Textbox(contextMenuItem) { };
+	inline ContextMenuItem(const ContextMenuItem& contextMenuItem) : TextBox(contextMenuItem) { };
 };
 
 #endif

@@ -338,19 +338,19 @@ void Demo::startup() {
 	radioButtons->newRadioButton(0, 24, 12, 12);
 	radioButtons->newRadioButton(0, 36, 12, 12);
 
-	Textbox* rlabel1 = new Textbox(125, 14, 60, 14, "Radio 1");
+	TextBox* rlabel1 = new TextBox(125, 14, 60, 14, "Radio 1");
 	rlabel1->setBorderless(true);
 	gadgetTestWindow->addGadget(rlabel1);
 
-	Textbox* rlabel2 = new Textbox(125, 26, 60, 14, "Radio 2");
+	TextBox* rlabel2 = new TextBox(125, 26, 60, 14, "Radio 2");
 	rlabel2->setBorderless(true);
 	gadgetTestWindow->addGadget(rlabel2);
 
-	Textbox* rlabel3 = new Textbox(125, 38, 60, 14, "Radio 3");
+	TextBox* rlabel3 = new TextBox(125, 38, 60, 14, "Radio 3");
 	rlabel3->setBorderless(true);
 	gadgetTestWindow->addGadget(rlabel3);
 
-	Textbox* rlabel4 = new Textbox(125, 50, 60, 14, "Radio 4");
+	TextBox* rlabel4 = new TextBox(125, 50, 60, 14, "Radio 4");
 	rlabel4->setBorderless(true);
 	gadgetTestWindow->addGadget(rlabel4);
 
@@ -362,15 +362,15 @@ void Demo::startup() {
 	gadgetTestWindow->addGadget(new CheckBox(110, 86, 12, 12));
 	gadgetTestWindow->addGadget(new CheckBox(110, 100, 12, 12));
 
-	Textbox* clabel1 = new Textbox(125, 70, 60, 14, "Check 1");
+	TextBox* clabel1 = new TextBox(125, 70, 60, 14, "Check 1");
 	clabel1->setBorderless(true);
 	gadgetTestWindow->addGadget(clabel1);
 
-	Textbox* clabel2 = new Textbox(125, 84, 60, 14, "Check 2");
+	TextBox* clabel2 = new TextBox(125, 84, 60, 14, "Check 2");
 	clabel2->setBorderless(true);
 	gadgetTestWindow->addGadget(clabel2);
 
-	Textbox* clabel3 = new Textbox(125, 98, 60, 14, "Check 3");
+	TextBox* clabel3 = new TextBox(125, 98, 60, 14, "Check 3");
 	clabel3->setBorderless(true);
 	gadgetTestWindow->addGadget(clabel3);
 

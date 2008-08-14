@@ -4,6 +4,7 @@ Change Log
   V0.35
   
   - Fixes:
+     - Renamed "Textbox" to "TextBox".
   
   - New Features:
      - Button has different appearance when disabled.

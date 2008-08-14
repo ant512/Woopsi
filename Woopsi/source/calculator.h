@@ -6,7 +6,7 @@
 
 class AmigaScreen;
 class AmigaWindow;
-class Textbox;
+class TextBox;
 
 class Calculator : EventHandler {
 
@@ -20,7 +20,7 @@ public:
 private:
 	AmigaScreen* _screen;
 	AmigaWindow* _window;
-	Textbox* _output;
+	TextBox* _output;
 	s32 _val1;
 	s32 _val2;
 	u8 _opCode;
