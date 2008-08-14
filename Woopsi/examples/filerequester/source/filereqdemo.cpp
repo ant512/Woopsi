@@ -21,8 +21,8 @@ void FileReqDemo::startup() {
 	window->getClientRect(rect);
 	
 	// Add textbox - this will tell the user that we're waiting for the FAT system to start up
-	_textbox = new Textbox(rect.x, rect.y, rect.width, rect.height, "Initialising FAT...");
-	_textbox->setTextPositionVert(Textbox::TEXT_POSITION_VERT_TOP);
+	_textbox = new TextBox(rect.x, rect.y, rect.width, rect.height, "Initialising FAT...");
+	_textbox->setTextPositionVert(TextBox::TEXT_POSITION_VERT_TOP);
 	window->addGadget(_textbox);
 
 	// Ensure Woopsi can draw itself

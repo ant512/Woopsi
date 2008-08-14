@@ -20,7 +20,7 @@ void HelloWorld::startup() {
 	window->getClientRect(rect);
 	
 	// Add textbox
-	Textbox* textbox = new Textbox(rect.x, rect.y, rect.width, rect.height, "Hello World!");
+	TextBox* textbox = new TextBox(rect.x, rect.y, rect.width, rect.height, "Hello World!");
 	window->addGadget(textbox);
 
 	// Ensure Woopsi can draw itself

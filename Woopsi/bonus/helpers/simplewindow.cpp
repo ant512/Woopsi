@@ -33,9 +33,9 @@ BitmapButton* SimpleWindow::newBitmapButton(s16 x, s16 y, u16 width, u16 height,
 	return newButton;
 }
 
-Textbox* SimpleWindow::newTextbox(s16 x, s16 y, u16 width, u16 height, char* text) {
+Textbox* SimpleWindow::newTextBox(s16 x, s16 y, u16 width, u16 height, char* text) {
 	// Create a new textbox
-	Textbox* newTextBox = new Textbox(getBorderSize() + x, getTitleHeight() + y, width, height, text, _font);
+	TextBox* newTextBox = new TextBox(getBorderSize() + x, getTitleHeight() + y, width, height, text, _font);
 	addGadget(newTextBox);
 
 	return newTextBox;

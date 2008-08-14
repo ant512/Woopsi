@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Textbox;
+class TextBox;
 
 class FileReqDemo : public Woopsi, public EventHandler {
 public:
@@ -15,7 +15,7 @@ public:
 	bool handleEvent(const EventArgs& e);
 	
 private:
-	Textbox* _textbox;
+	TextBox* _textbox;
 };
 
 #endif
