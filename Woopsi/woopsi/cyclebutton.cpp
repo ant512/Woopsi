@@ -43,7 +43,23 @@ void CycleButton::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	if (!_flags.clicked) {
+	if (!isEnabled()) {
+
+		// Draw disabled state
+		port->drawFilledRect(0, 0, _width, _height, _backColour);
+
+		// Draw cycle glyph
+		port->drawText(_padding, _textY, _font, GLYPH_CYCLE, _darkColour);
+
+		// Draw separator
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _shadowColour);
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _shineColour);
+
+		// Only draw text if options exist
+		if (_options.size() > 0) {
+			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text, _darkColour);
+		}
+	} else if (!isClicked()) {
 
 		// Draw normal state
 		port->drawFilledRect(0, 0, _width, _height, _backColour);

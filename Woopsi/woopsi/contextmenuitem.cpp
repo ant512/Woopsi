@@ -12,10 +12,16 @@ void ContextMenuItem::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	if (isClicked()) {
+	if (!isEnabled()) {
+		// Draw disabled item
+		port->drawFilledRect(0, 0, _width, _height, _shineColour);
+		port->drawText(_textX, _textY, _font, _text, _darkColour);
+	} else if (isClicked()) {
+		// Draw clicked item
 		port->drawFilledRect(0, 0, _width, _height, _shadowColour);
 		port->drawText(_textX, _textY, _font, _text, _shineColour);
 	} else {
+		// Draw standard item
 		port->drawFilledRect(0, 0, _width, _height, _shineColour);
 		port->drawText(_textX, _textY, _font, _text);
 	}

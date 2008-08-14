@@ -229,7 +229,11 @@ void Demo::startup() {
 
 	// Controls
 	controlWindow->getClientRect(rect);
-	controlWindow->addGadget(new Button(rect.x, rect.y, 41, 16, "Home"));
+
+	Button* homeButton = new Button(rect.x, rect.y, 41, 16, "Home");
+	homeButton->disable();
+
+	controlWindow->addGadget(homeButton);
 	controlWindow->addGadget(new Button(rect.x + 41, rect.y, 49, 16, "Index"));
 	controlWindow->addGadget(new Button(rect.x + 90, rect.y, 17, 16, "<"));
 	controlWindow->addGadget(new Button(rect.x + 107, rect.y, 17, 16, ">"));
@@ -350,7 +354,11 @@ void Demo::startup() {
 	rlabel4->setBorderless(true);
 	gadgetTestWindow->addGadget(rlabel4);
 
-	gadgetTestWindow->addGadget(new CheckBox(110, 72, 12, 12));
+	CheckBox* check1 = new CheckBox(110, 72, 12, 12);
+	check1->setState(CheckBox::CHECK_BOX_STATE_ON);
+	check1->disable();
+
+	gadgetTestWindow->addGadget(check1);
 	gadgetTestWindow->addGadget(new CheckBox(110, 86, 12, 12));
 	gadgetTestWindow->addGadget(new CheckBox(110, 100, 12, 12));
 

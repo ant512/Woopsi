@@ -27,17 +27,26 @@ void CheckBox::draw(Rect clipRect) {
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
 
-	// Draw appropriate glyph for state
+	// Work out which glyph to draw
+	char glyph = GLYPH_CHECK_BOX_ON;
+
 	switch (_state) {
 		case CHECK_BOX_STATE_ON:
-			port->drawText(_textX, _textY, _font, GLYPH_CHECK_BOX_ON);
+			glyph = GLYPH_CHECK_BOX_ON;
 			break;
 		case CHECK_BOX_STATE_OFF:
-			port->drawText(_textX, _textY, _font, GLYPH_CHECK_BOX_OFF);
+			glyph = GLYPH_CHECK_BOX_OFF;
 			break;
 		case CHECK_BOX_STATE_MU:
-			port->drawText(_textX, _textY, _font, GLYPH_CHECK_BOX_MU);
+			glyph = GLYPH_CHECK_BOX_MU;
 			break;
+	}
+
+	// Draw tick
+	if (isEnabled()) {
+		port->drawText(_textX, _textY, _font, glyph);
+	} else {
+		port->drawText(_textX, _textY, _font, glyph, _darkColour);
 	}
 
 	delete port;

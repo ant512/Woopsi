@@ -1,6 +1,17 @@
 Change Log
 ----------
 
+  V0.35
+  
+  - Fixes:
+  
+  - New Features:
+     - Button has different appearance when disabled.
+     - CheckBox has different appearance when disabled.
+     - ContextMenuItem has different appearance when disabled.
+     - CycleButton has different appearance when disabled.
+     
+
   V0.34
   
   - Fixes:

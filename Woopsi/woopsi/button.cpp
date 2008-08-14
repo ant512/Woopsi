@@ -14,7 +14,13 @@ void Button::draw(Rect clipRect) {
 		
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	if (!_flags.clicked) {
+	if (!isEnabled()) {
+
+		// Draw disabled state
+		port->drawFilledRect(0, 0, _width, _height, _backColour);
+
+		port->drawText(_textX, _textY, _font, _text, _darkColour);
+	} else if (!isClicked()) {
 
 		// Draw normal state
 		port->drawFilledRect(0, 0, _width, _height, _backColour);
