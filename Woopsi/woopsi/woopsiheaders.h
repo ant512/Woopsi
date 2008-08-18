@@ -73,5 +73,6 @@
 #include "windowbordertop.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
+#include "woopsikeyboard.h"
 
 #endif

@@ -10,7 +10,7 @@
 void Demo::startup() {
 
 	Woopsi::startup();
-
+/*
 	// Create screen skin
 	ScreenSkin* screenSkin = new ScreenSkin;
 	screenSkin->screen.colours.back = woopsiRGB(8, 8, 8);
@@ -191,13 +191,15 @@ void Demo::startup() {
 	butt->setBorderless(true);
 	ikWindow->addGadget(butt);
 	Woopsi::registerForVBL(butt);
-
+*/
 
 	// Create screens
 	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.32", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
+	newScreen->addGadget(new WoopsiKeyboard(0, 0, 320, 192, "Keyboard"));
+/*
 	AmigaScreen* newScreen2 = new AmigaScreen("Another screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen2);
 
@@ -391,19 +393,21 @@ void Demo::startup() {
 	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
 	newScreen2->addGadget(_alert);
 
+*/
+
 	enableDrawing();	// Ensure Woopsi can now draw itself
 	draw();				// Draw initial state
 
 	// Make welcome notice modal
-	_alert->goModal();
+	//_alert->goModal();
 }
 
 void Demo::shutdown() {
 	
 	// Clean up
-	delete _calculator;
-	delete _pong;
-	delete _pacMan;
+	//delete _calculator;
+	//delete _pong;
+	//delete _pacMan;
 
 	Woopsi::shutdown();
 }

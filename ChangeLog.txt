@@ -12,6 +12,7 @@ Change Log
      - ContextMenuItem has different appearance when disabled.
      - CycleButton has different appearance when disabled.
      - RadioButton has different appearance when disabled.
+     - Added Keyboard gadget.
      
 
   V0.34 (20080702)
