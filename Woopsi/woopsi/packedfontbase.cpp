@@ -1,4 +1,4 @@
-#include "PackedFontBase.h"
+#include "packedfontbase.h"
 
 /**
  * Get the width of an individual character.

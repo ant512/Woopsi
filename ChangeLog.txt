@@ -5,6 +5,9 @@ Change Log
   
   - Fixes:
      - Renamed "Textbox" to "TextBox".
+     - Correct case of "PackedFontBase.h" include in "packedfontbase.cpp"
+       (thanks Gattman, bug 2101099).
+     - Swapped GLYPH_XXX defines to an enum to follow C++ conventions.
   
   - New Features:
      - Button has different appearance when disabled.
@@ -13,6 +16,7 @@ Change Log
      - CycleButton has different appearance when disabled.
      - RadioButton has different appearance when disabled.
      - Added Keyboard gadget.
+     - Added backspace, return and shift glyphs to sysfont.
      
 
   V0.34 (20080702)
