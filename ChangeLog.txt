@@ -7,7 +7,7 @@ Change Log
      - Renamed "Textbox" to "TextBox".
      - Correct case of "PackedFontBase.h" include in "packedfontbase.cpp"
        (thanks Gattman, bug 2101099).
-     - Swapped GLYPH_XXX defines to an enum to follow C++ conventions.
+     - Removed offcolour pixels from around @ symbol in sysfont bitmap.
   
   - New Features:
      - Button has different appearance when disabled.

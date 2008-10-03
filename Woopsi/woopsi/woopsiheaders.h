@@ -74,5 +74,6 @@
 #include "woopsi.h"
 #include "woopsifuncs.h"
 #include "woopsikeyboard.h"
+#include "woopsikey.h"
 
 #endif

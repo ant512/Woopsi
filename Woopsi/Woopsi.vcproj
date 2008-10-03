@@ -310,6 +310,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\woopsikey.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\woopsikeyboard.cpp"
 				>
 			</File>
@@ -609,6 +613,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\woopsiheaders.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\woopsikey.h"
 				>
 			</File>
 			<File

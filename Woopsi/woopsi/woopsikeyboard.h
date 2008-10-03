@@ -6,21 +6,7 @@
 
 using namespace std;
 
-class Button;
-
-enum Key {
-	KEY_NONE = 0,
-	KEY_1 = 1,
-	KEY_2 = 2,
-	KEY_3 = 3,
-	KEY_4 = 4,
-	KEY_5 = 5,
-	KEY_6 = 6,
-	KEY_7 = 7,
-	KEY_8 = 8,
-	KEY_9 = 9,
-	KEY_0 = 10
-};
+class WoopsiKey;
 
 /**
  * Class providing a window containing a multitude of buttons arranged like a keyboard.
@@ -45,10 +31,54 @@ public:
 	 */
 	virtual bool handleEvent(const EventArgs& e);
 
-protected:
-	Button* _button;					/**< Pointer to the OK button */
-	Button* _lastButtonReleased;		/**< Pointer to the last button released */
+	/**
+	 * Get a pointer to the last key that was released.
+	 */
+	inline const WoopsiKey* getLastKeyReleased() { return _lastKeyReleased; };
 
+protected:
+	WoopsiKey* _lastKeyReleased;		/**< Pointer to the last key released */
+	WoopsiKey* _shiftKey;				/**< Pointer to the shift key */
+	WoopsiKey* _controlKey;				/**< Pointer to the control key */
+	WoopsiKey* _capsLockKey;			/**< Pointer to the caps lock key */
+	bool _isShiftDown;
+	bool _isControlDown;
+	bool _isCapsLockDown;
+
+	/**
+	 * Swap the keyboard layout to the correct display based on current modifier keys.
+	 */
+	void showCorrectKeys();
+
+	/**
+	 * Swap the keyboard layout to the standard display.
+	 */
+	void showNormalKeys();
+
+	/**
+	 * Swap the keyboard layout to the shifted display.
+	 */
+	void showShiftKeys();
+
+	/**
+	 * Swap the keyboard layout to the controlled display.
+	 */
+	void showControlKeys();
+
+	/**
+	 * Swap the keyboard layout to the shifted and controlled display.
+	 */
+	void showShiftControlKeys();
+
+	/**
+	 * Swap the keyboard layout to the caps locked display.
+	 */
+	void showCapsLockKeys();
+
+	/**
+	 * Swap the keyboard layout to the controlled and caps locked display.
+	 */
+	void showControlCapsLockKeys();
 
 	/**
 	 * Destructor.
