@@ -46,7 +46,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	buttonY += buttonHeight + 1;
 
 	// Caps ASDFGHJKL Return
-	_capsLockKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, "Caps", WoopsiKey::KEY_CAPS_LOCK);
+	_capsLockKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, GLYPH_CAPS_LOCK, WoopsiKey::KEY_CAPS_LOCK);
 	addGadget(_capsLockKey);
 	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "a", "A", "a", "A", "A", "A"));
 	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "s", "S", "s", "S", "S", "S"));

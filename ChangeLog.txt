@@ -16,7 +16,7 @@ Change Log
      - CycleButton has different appearance when disabled.
      - RadioButton has different appearance when disabled.
      - Added Keyboard gadget.
-     - Added backspace, return and shift glyphs to sysfont.
+     - Added backspace, return, shift and caps lock glyphs to sysfont.
      
 
   V0.34 (20080702)

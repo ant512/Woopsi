@@ -22,5 +22,6 @@
 #define GLYPH_BACKSPACE 146
 #define GLYPH_RETURN 147
 #define GLYPH_SHIFT 148
+#define GLYPH_CAPS_LOCK 149
 
 #endif
