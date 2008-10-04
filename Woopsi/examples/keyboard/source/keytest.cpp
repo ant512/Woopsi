@@ -17,7 +17,7 @@ void KeyTest::startup() {
 	outScreen->flipToTopScreen();
 
 	// Add output window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", 0, 0);
 	outScreen->addGadget(window);
 
 	// Get available area within window
@@ -56,7 +56,17 @@ bool KeyTest::handleEvent(const EventArgs& e) {
 	if (e.gadget != NULL) {
 		if (e.gadget == _keyboard) {
 			if (e.type == EVENT_ACTION) {
-				_output->addText(_keyboard->getLastKeyClicked()->getText());
+				const WoopsiKey* key = _keyboard->getLastKeyClicked();
+				
+				switch (key->getKeyType()) {
+					case WoopsiKey::KEY_ALPHA_NUMERIC_SYMBOL:
+						_output->addText(key->getText());
+						break;
+					case WoopsiKey::KEY_SPACE:
+						_output->addText(" ");
+					default:
+						break;
+				}
 			}
 		}
 	}

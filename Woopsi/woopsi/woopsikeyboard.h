@@ -36,25 +36,25 @@ public:
 	 * Get a pointer to the last key that was clicked.
 	 * @return Pointer to the last key that was clicked.
 	 */
-	inline const WoopsiKey* getLastKeyClicked() { return _lastKeyClicked; };
+	inline const WoopsiKey* getLastKeyClicked() const { return _lastKeyClicked; };
 
 	/**
 	 * Check if the shift key is held down.
 	 * @return True if shift is down.
 	 */
-	inline bool isShiftDown() { return _isShiftDown; };
+	inline const bool isShiftDown() const { return _isShiftDown; };
 
 	/**
 	 * Check if the control key is held down.
 	 * @return True if control is down.
 	 */
-	inline bool isControlDown() { return _isControlDown; };
+	inline const bool isControlDown() const { return _isControlDown; };
 
 	/**
 	 * Check if the caps lock key is held down.
 	 * @return True if caps lock is down.
 	 */
-	inline bool isCapsLockDown() { return _isCapsLockDown; };
+	inline const bool isCapsLockDown() const { return _isCapsLockDown; };
 
 protected:
 	WoopsiKey* _lastKeyClicked;		/**< Pointer to the last key clicked */

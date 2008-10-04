@@ -22,7 +22,8 @@ public:
 		KEY_CONTROL = 4,
 		KEY_SHIFT = 5,
 		KEY_CAPS_LOCK = 6,
-		KEY_BACKSPACE = 7
+		KEY_BACKSPACE = 7,
+		KEY_SPACE = 8
 	};
 
 	enum KeyMode {
@@ -81,7 +82,7 @@ public:
 	 * Return the type of key this object represents.
 	 * @return The key type.
 	 */
-	inline KeyType getKeyType() { return _keyType; };
+	inline const KeyType getKeyType() const { return _keyType; };
 
 	/**
 	 * Set the type of this key.

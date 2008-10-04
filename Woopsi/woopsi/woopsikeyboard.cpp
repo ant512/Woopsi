@@ -83,7 +83,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "`", "~", "`", "~", "`", "`"));
 	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, ";", ":", ";", ":", ";", ";"));
 	addGadget(new WoopsiKey(buttonX + (3 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "'", "\"", "'", "\"", "'", "'"));
-	addGadget(new WoopsiKey(buttonX + (4 * (1 + buttonWidth)), buttonY, 4 + (buttonWidth * 5), buttonHeight, "Space"));
+	addGadget(new WoopsiKey(buttonX + (4 * (1 + buttonWidth)), buttonY, 4 + (buttonWidth * 5), buttonHeight, "Space", WoopsiKey::KEY_SPACE));
 	addGadget(new WoopsiKey(buttonX + (9 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "[", "{", "[", "{", "[", "["));
 	addGadget(new WoopsiKey(buttonX + (10 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "]", "}", "]", "}", "]", "]"));
 	addGadget(new WoopsiKey(buttonX + (11 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "\\", "|", "\\", "|", "\\", "\\"));
@@ -113,6 +113,7 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 					case WoopsiKey::KEY_BACKSPACE:
 					case WoopsiKey::KEY_RETURN:
 					case WoopsiKey::KEY_NONE:
+					case WoopsiKey::KEY_SPACE:
 
 						// Swap key modes
 						if (_isShiftDown || _isControlDown) {
@@ -154,12 +155,6 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 				// we want to ensure that the keyboard state (ie. text on the buttons)
 				// doesn't change before the handler has used this info.
 				switch (key->getKeyType()) {
-					case WoopsiKey::KEY_ALPHA_NUMERIC_SYMBOL:
-					case WoopsiKey::KEY_BACKSPACE:
-					case WoopsiKey::KEY_RETURN:
-					case WoopsiKey::KEY_NONE:
-						// Do nothing special for non-modifier keys
-						break;
 					case WoopsiKey::KEY_CAPS_LOCK:
 
 						// Set the outline type so the key is obviously stuck down,
@@ -207,6 +202,9 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 
 						// Update the keyboard
 						showCorrectKeys();
+						break;
+					default:
+						// Do nothing special for non-modifier keys
 						break;
 				}
 			}
