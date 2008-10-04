@@ -97,6 +97,12 @@ public:
 	virtual void addText(const char* text);
 
 	/**
+	 * Append new text to the end of the current text displayed in the textbox.
+	 * @param text Char to append.
+	 */
+	virtual void addText(const char text);
+
+	/**
 	 * Resize the gadget to the new dimensions.
 	 * @param width The new width.
 	 * @param height The new height.

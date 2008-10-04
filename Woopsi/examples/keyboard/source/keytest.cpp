@@ -25,7 +25,7 @@ void KeyTest::startup() {
 	window->getClientRect(rect);
 	
 	// Add textbox
-	_output = new TextBox(rect.x, rect.y, rect.width, rect.height, "");
+	_output = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0, 10);
 	window->addGadget(_output);
 	
 	/* Code below creates input screen and associated gadgets */
@@ -37,7 +37,6 @@ void KeyTest::startup() {
 	_keyboard = new WoopsiKeyboard(0, 0, 256, 192, "Keyboard");
 	_keyboard->setEventHandler(this);
 	inScreen->addGadget(_keyboard);
-	
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
@@ -58,14 +57,9 @@ bool KeyTest::handleEvent(const EventArgs& e) {
 			if (e.type == EVENT_ACTION) {
 				const WoopsiKey* key = _keyboard->getLastKeyClicked();
 				
-				switch (key->getKeyType()) {
-					case WoopsiKey::KEY_ALPHA_NUMERIC_SYMBOL:
-						_output->addText(key->getText());
-						break;
-					case WoopsiKey::KEY_SPACE:
-						_output->addText(" ");
-					default:
-						break;
+				// Append key value to output box if the last key was not a modifier
+				if (key->getValue() != '\0') {
+					_output->addText(key->getValue());
 				}
 			}
 		}

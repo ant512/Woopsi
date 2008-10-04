@@ -115,6 +115,12 @@ public:
 	virtual void addText(const char* text);
 
 	/**
+	 * Append new text to the end of the current text displayed in the textbox.
+	 * @param text Char to append.
+	 */
+	virtual void addText(const char text);
+
+	/**
 	 * Set the font used in the textbox.
 	 * @param font Pointer to the new font.
 	 */

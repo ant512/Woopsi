@@ -224,6 +224,15 @@ void MultiLineTextBox::addText(const char* text) {
 	raiseValueChangeEvent();
 }
 
+void MultiLineTextBox::addText(const char text) {
+
+	char* newText = new char[2];
+	newText[0] = text;
+	newText[1] = '\0';
+
+	addText(newText);
+}
+
 void MultiLineTextBox::setFont(FontBase* font) {
 	_font = font;
 	_text->setFont(font);

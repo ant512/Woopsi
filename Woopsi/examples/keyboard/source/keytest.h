@@ -4,7 +4,7 @@
 #include "woopsi.h"
 #include "eventhandler.h"
 #include "woopsikeyboard.h"
-#include "textbox.h"
+#include "multilinetextbox.h"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ public:
 	
 private:
 	WoopsiKeyboard* _keyboard;
-	TextBox* _output;
+	MultiLineTextBox* _output;
 };
 
 #endif

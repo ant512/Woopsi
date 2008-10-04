@@ -139,6 +139,15 @@ void TextBox::addText(const char* text) {
 	calculateTextPosition();
 }
 
+void TextBox::addText(const char text) {
+
+	char* newText = new char[2];
+	newText[0] = text;
+	newText[1] = '\0';
+
+	addText(newText);
+}
+
 bool TextBox::resize(u16 width, u16 height) {
 
 	// Remember current values

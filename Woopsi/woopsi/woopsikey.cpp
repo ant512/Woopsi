@@ -90,3 +90,35 @@ void WoopsiKey::setKeyMode(KeyMode keyMode) {
 			break;
 	}
 }
+
+const char WoopsiKey::getValue() const {
+	switch (_keyType) {
+		case KEY_SPACE:
+			// Return a blank space for the spacebar
+			return ' ';
+		case KEY_ALPHA_NUMERIC_SYMBOL:
+			// Return the correct char for the current key mode
+			switch (_keyMode) {
+				case KEY_MODE_NORMAL:
+					// Return the first char in the string; we assume that
+					// an alphanumeric or symbolic key has only one char displayed
+					return _normalText[0];
+				case KEY_MODE_SHIFT:
+					return _shiftText[0];
+				case KEY_MODE_CONTROL:
+					return _controlText[0];
+				case KEY_MODE_SHIFT_CONTROL:
+					return _shiftControlText[0];
+				case KEY_MODE_CAPS_LOCK:
+					return _capsLockText[0];
+				case KEY_MODE_CONTROL_CAPS_LOCK:
+					return _controlCapsLockText[0];
+			}
+		case KEY_RETURN:
+			// Return a line breaking character
+			return 10;
+		default:
+			// Return null chars for modifier keys
+			return '\0';
+	}
+}

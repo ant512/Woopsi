@@ -18,7 +18,8 @@ Change Log
      - Added Keyboard gadget.
      - Added all missing 7-bit ASCII glyphs to sysfont.
      - Added keyboard example.
-     
+     - Added TextBox::addText(char).
+     - Added MultiLineTextBox::addText(char).
 
   V0.34 (20080702)
   

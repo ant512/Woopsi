@@ -16,23 +16,31 @@ public:
 	 * Enum listing all possible types of key
 	 */
 	enum KeyType {
-		KEY_NONE = 0,
-		KEY_ALPHA_NUMERIC_SYMBOL = 1,
-		KEY_RETURN = 3,
-		KEY_CONTROL = 4,
-		KEY_SHIFT = 5,
-		KEY_CAPS_LOCK = 6,
-		KEY_BACKSPACE = 7,
-		KEY_SPACE = 8
+		KEY_NONE = 0,						/**< No key; for completeness only */
+		KEY_ALPHA_NUMERIC_SYMBOL = 1,		/**< Character, number or symbol key */
+		KEY_RETURN = 3,						/**< Return/enter key */
+		KEY_CONTROL = 4,					/**< Control (Ctrl) key */
+		KEY_SHIFT = 5,						/**< Shift key */
+		KEY_CAPS_LOCK = 6,					/**< Caps lock key */
+		KEY_BACKSPACE = 7,					/**< Backspace (ie delete) key */
+		KEY_SPACE = 8						/**< Space bar */
 	};
 
+	/**
+	 * Enum listing all possible modes a key can be in.  The modes reflect
+	 * the keyboard state (ie. which modifiers are held down?), and each key
+	 * has a separate string to display for each different mode.
+	 * There is no mode for shift and caps lock nor for shift, caps lock and
+	 * control, since in those situations the functionality of caps lock
+	 * is already provided by the shift key.
+	 */
 	enum KeyMode {
-		KEY_MODE_NORMAL = 0,
-		KEY_MODE_SHIFT = 1,
-		KEY_MODE_CONTROL = 2,
-		KEY_MODE_SHIFT_CONTROL = 3,
-		KEY_MODE_CAPS_LOCK = 4,
-		KEY_MODE_CONTROL_CAPS_LOCK = 5
+		KEY_MODE_NORMAL = 0,				/**< No modifiers held */
+		KEY_MODE_SHIFT = 1,					/**< Shift key held */
+		KEY_MODE_CONTROL = 2,				/**< Control key held */
+		KEY_MODE_SHIFT_CONTROL = 3,			/**< Shift and control held */
+		KEY_MODE_CAPS_LOCK = 4,				/**< Caps lock held */
+		KEY_MODE_CONTROL_CAPS_LOCK = 5		/**< Control and caps lock held */
 	};
 
 	/**
@@ -90,7 +98,19 @@ public:
 	 */
 	inline void setKeyType(KeyType keyType) { _keyType = keyType; };
 
+	/**
+	 * Set the mode of the key.  Should only be called by the keyboard
+	 * itself.
+	 * @param keyMode The new mode for this key.
+	 */
 	void setKeyMode(KeyMode keyMode);
+
+	/**
+	 * Get the value represented by this key.  This is the text that should (for example)
+	 * be printed to the screen when the key is clicked.  Modifier keys return '\0'.
+	 * @return The value of the key
+	 */
+	const char getValue() const;
 
 protected:
 	KeyType _keyType;					/**< Type of key represented by this object */
