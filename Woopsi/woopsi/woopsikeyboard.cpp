@@ -1,6 +1,8 @@
 #include "woopsikeyboard.h"
 #include "button.h"
 #include "woopsikey.h"
+#include "woopsi.h"
+#include "woopsitimer.h"
 
 WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
@@ -88,6 +90,12 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	addGadget(new WoopsiKey(buttonX + (10 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "]", "}", "]", "}", "]", "]"));
 	addGadget(new WoopsiKey(buttonX + (11 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "\\", "|", "\\", "|", "\\", "\\"));
 
+	// Create the timer
+	_initialRepeatTime = 25;
+	_secondaryRepeatTime = 5;
+	_timer = new WoopsiTimer(_initialRepeatTime, true);
+	addGadget(_timer);
+
 	// Set event handlers
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->setEventHandler(this);
@@ -97,12 +105,32 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 
 	if (e.gadget != NULL) {
+
+		// Do not want to process decorations
 		if (!e.gadget->isDecoration()) {
 
-			// Gadget not a decoration, so must be a key
+			// Check if the event was fired by the timer (key repeat)
+			if (e.gadget == _timer) {
+				if (e.type == EVENT_ACTION) {
+					if (_lastKeyClicked != NULL) {
+						if (_lastKeyClicked->isClicked()) {
+
+							// Event is a key repeat, so fire another action event
+							raiseActionEvent(e.eventX, e.eventY, e.eventVX, e.eventVY, e.keyCode);
+
+							// Ensure that subsequent repeats are faster
+							_timer->setTimeout(_secondaryRepeatTime);
+
+							return true;
+						}
+					}
+				}
+			}
+
+			// Gadget not a decoration and not a timer, so must be a key
 			WoopsiKey* key = (WoopsiKey*)e.gadget;
 
-			if (e.type == EVENT_RELEASE) {
+			if ((e.type == EVENT_RELEASE) || (e.type == EVENT_RELEASE_OUTSIDE)) {
 				// When a key is released, we need to restore the shift and
 				// control keys back to their released state if they are
 				// currently held.  Can't do this as part of the click event
@@ -140,7 +168,14 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 						break;
 				}
 
+				// Stop the timer
+				_timer->stop();
+
 			} else if (e.type == EVENT_CLICK) {
+
+				// Start the timer
+				_timer->setTimeout(_initialRepeatTime);
+				_timer->start();
 		
 				// Need to check for buttons being clicked so that we can 
 				// handle key repeats correctly

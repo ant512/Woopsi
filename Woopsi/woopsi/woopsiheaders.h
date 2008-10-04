@@ -75,5 +75,6 @@
 #include "woopsifuncs.h"
 #include "woopsikeyboard.h"
 #include "woopsikey.h"
+#include "woopsitimer.h"
 
 #endif

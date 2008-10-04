@@ -7,6 +7,7 @@
 using namespace std;
 
 class WoopsiKey;
+class WoopsiTimer;
 
 /**
  * Class providing a window containing a multitude of buttons arranged like a keyboard.
@@ -64,6 +65,9 @@ protected:
 	bool _isShiftDown;				/**< True if shift key is currently in down position */
 	bool _isControlDown;			/**< True if control key is currently in down position */
 	bool _isCapsLockDown;			/**< True if caps lock key is currently in down position */
+	WoopsiTimer* _timer;			/**< Timer for handling key repeats */
+	u32 _initialRepeatTime;			/**< Time until held key starts to repeat */
+	u32 _secondaryRepeatTime;		/**< Time until a key already repeating repeats again */
 
 	/**
 	 * Swap the keyboard layout to the correct display based on current modifier keys.

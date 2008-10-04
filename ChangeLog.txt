@@ -20,6 +20,7 @@ Change Log
      - Added keyboard example.
      - Added TextBox::addText(char).
      - Added MultiLineTextBox::addText(char).
+     - Added WoopsiTimer gadget.
 
   V0.34 (20080702)
   

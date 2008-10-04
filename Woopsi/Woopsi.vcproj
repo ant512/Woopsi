@@ -317,6 +317,10 @@
 				RelativePath=".\woopsi\woopsikeyboard.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\woopsi\woopsitimer.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Woopsi Header Files"
@@ -621,6 +625,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\woopsikeyboard.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\woopsitimer.h"
 				>
 			</File>
 		</Filter>

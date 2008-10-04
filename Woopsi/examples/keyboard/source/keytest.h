@@ -17,6 +17,7 @@ public:
 private:
 	WoopsiKeyboard* _keyboard;
 	MultiLineTextBox* _output;
+	WoopsiTimer* _timer;
 };
 
 #endif
