@@ -78,7 +78,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	buttonY += buttonHeight + 1;
 
 	// Ctrl ;'# Space [] backslash
-	_controlKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, "Ctrl", WoopsiKey::KEY_CONTROL);
+	_controlKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, GLYPH_CONTROL, WoopsiKey::KEY_CONTROL);
 	addGadget(_controlKey);
 	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "`", "~", "`", "~", "`", "`"));
 	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, ";", ":", ";", ":", ";", ";"));

@@ -23,5 +23,6 @@
 #define GLYPH_RETURN 147
 #define GLYPH_SHIFT 148
 #define GLYPH_CAPS_LOCK 149
+#define GLYPH_CONTROL 150
 
 #endif
