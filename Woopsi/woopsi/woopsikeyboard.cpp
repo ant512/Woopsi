@@ -100,6 +100,11 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	for (u8 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->setEventHandler(this);
 	}
+
+	// Set initial modifier state
+	_isShiftDown = false;
+	_isCapsLockDown = false;
+	_isControlDown = false;
 }
 
 bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
@@ -125,6 +130,9 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 						}
 					}
 				}
+
+				// Abort processing now that we know the timer fired the event
+				return false;
 			}
 
 			// Gadget not a decoration and not a timer, so must be a key
@@ -172,10 +180,6 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 				_timer->stop();
 
 			} else if (e.type == EVENT_CLICK) {
-
-				// Start the timer
-				_timer->setTimeout(_initialRepeatTime);
-				_timer->start();
 		
 				// Need to check for buttons being clicked so that we can 
 				// handle key repeats correctly
@@ -239,7 +243,10 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 						showCorrectKeys();
 						break;
 					default:
-						// Do nothing special for non-modifier keys
+
+						// Start the timer
+						_timer->setTimeout(_initialRepeatTime);
+						_timer->start();
 						break;
 				}
 			}
@@ -268,36 +275,48 @@ void WoopsiKeyboard::showCorrectKeys() {
 
 void WoopsiKeyboard::showNormalKeys() {
 	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
-		((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_NORMAL);
+		if (_gadgets[i] != _timer) {
+			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_NORMAL);
+		}
 	}
 }
 
 void WoopsiKeyboard::showShiftKeys() {
 	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
-		((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_SHIFT);
+		if (_gadgets[i] != _timer) {
+			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_SHIFT);
+		}
 	}
 }
 
 void WoopsiKeyboard::showControlKeys() {
 	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
-		((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CONTROL);
+		if (_gadgets[i] != _timer) {
+			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CONTROL);
+		}
 	}
 }
 
 void WoopsiKeyboard::showShiftControlKeys() {
 	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
-		((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_SHIFT_CONTROL);
+		if (_gadgets[i] != _timer) {
+			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_SHIFT_CONTROL);
+		}
 	}
 }
 
 void WoopsiKeyboard::showCapsLockKeys() {
 	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
-		((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CAPS_LOCK);
+		if (_gadgets[i] != _timer) {
+			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CAPS_LOCK);
+		}
 	}
 }
 
 void WoopsiKeyboard::showControlCapsLockKeys() {
 	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
-		((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CONTROL_CAPS_LOCK);
+		if (_gadgets[i] != _timer) {
+			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CONTROL_CAPS_LOCK);
+		}
 	}
 }
