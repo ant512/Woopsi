@@ -7,6 +7,10 @@ WoopsiTimer::WoopsiTimer(u32 timeout, bool repeat) : Gadget(0, 0, 0, 0, 0) {
 	_frameCount = 0;
 	_isRunning = false;
 
+	// Ensure that Woopsi makes no attempt to draw this gadget
+	hide();
+
+	// Ensure that this gadget receives VBL notifications
 	woopsiApplication->registerForVBL(this);
 }
 
