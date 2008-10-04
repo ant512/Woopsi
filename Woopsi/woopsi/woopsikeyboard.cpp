@@ -16,8 +16,8 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 
 	// 1234567890-=
 	addGadget(new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, "1", "!", "1", "!", "1", "1"));
-	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "2", "\"", "2", "\"", "2", "2"));
-	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "3", "£", "3", "£", "3", "3"));
+	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "2", "@", "2", "@", "2", "2"));
+	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "3", "#", "3", "#", "3", "3"));
 	addGadget(new WoopsiKey(buttonX + (3 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "4", "$", "4", "$", "4", "4"));
 	addGadget(new WoopsiKey(buttonX + (4 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "5", "%", "5", "%", "5", "5"));
 	addGadget(new WoopsiKey(buttonX + (5 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "6", "^", "6", "^", "6", "6"));
@@ -80,9 +80,9 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	// Ctrl ;'# Space [] backslash
 	_controlKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, "Ctrl", WoopsiKey::KEY_CONTROL);
 	addGadget(_controlKey);
-	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, ";", ":", ";", ":", ";", ";"));
-	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "'", "@", "'", "@", "'", "'"));
-	addGadget(new WoopsiKey(buttonX + (3 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "#", "~", "#", "~", "#", "#"));
+	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "`", "~", "`", "~", "`", "`"));
+	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, ";", ":", ";", ":", ";", ";"));
+	addGadget(new WoopsiKey(buttonX + (3 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "'", "\"", "'", "\"", "'", "'"));
 	addGadget(new WoopsiKey(buttonX + (4 * (1 + buttonWidth)), buttonY, 4 + (buttonWidth * 5), buttonHeight, "Space"));
 	addGadget(new WoopsiKey(buttonX + (9 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "[", "{", "[", "{", "[", "["));
 	addGadget(new WoopsiKey(buttonX + (10 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "]", "}", "]", "}", "]", "]"));
@@ -95,22 +95,19 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 }
 
 bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
-	// Only handle release events
-	if (e.type == EVENT_RELEASE) {
-		if (e.gadget != NULL) {
-			if (!e.gadget->isDecoration()) {
-				// Gadget not a decoration, so must be a key
-				WoopsiKey* key = (WoopsiKey*)e.gadget;
 
-				_lastKeyReleased = key;
+	if (e.gadget != NULL) {
+		if (!e.gadget->isDecoration()) {
 
-				// Inform the keyboard's event handler that something has happened
-				raiseActionEvent(e.eventX, e.eventY, e.eventVX, e.eventVY, e.keyCode);
+			// Gadget not a decoration, so must be a key
+			WoopsiKey* key = (WoopsiKey*)e.gadget;
 
-				// Process the key after the handler has dealt with it and update
-				// the keyboard accordingly.  We do this after the handler because
-				// we want to ensure that the keyboard state (ie. text on the buttons)
-				// doesn't change before the handler has used this info.
+			if (e.type == EVENT_RELEASE) {
+				// When a key is released, we need to restore the shift and
+				// control keys back to their released state if they are
+				// currently held.  Can't do this as part of the click event
+				// because key repeats won't work in that situation.
+
 				switch (key->getKeyType()) {
 					case WoopsiKey::KEY_ALPHA_NUMERIC_SYMBOL:
 					case WoopsiKey::KEY_BACKSPACE:
@@ -136,6 +133,32 @@ bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
 							// Update the keyboard
 							showCorrectKeys();
 						}
+						break;
+					default:
+						// Do nothing if other keys are released
+						break;
+				}
+
+			} else if (e.type == EVENT_CLICK) {
+		
+				// Need to check for buttons being clicked so that we can 
+				// handle key repeats correctly
+
+				_lastKeyClicked = key;
+
+				// Inform the keyboard's event handler that something has happened
+				raiseActionEvent(e.eventX, e.eventY, e.eventVX, e.eventVY, e.keyCode);
+
+				// Process the key after the handler has dealt with it and update
+				// the keyboard accordingly.  We do this after the handler because
+				// we want to ensure that the keyboard state (ie. text on the buttons)
+				// doesn't change before the handler has used this info.
+				switch (key->getKeyType()) {
+					case WoopsiKey::KEY_ALPHA_NUMERIC_SYMBOL:
+					case WoopsiKey::KEY_BACKSPACE:
+					case WoopsiKey::KEY_RETURN:
+					case WoopsiKey::KEY_NONE:
+						// Do nothing special for non-modifier keys
 						break;
 					case WoopsiKey::KEY_CAPS_LOCK:
 

@@ -28,22 +28,42 @@ public:
 
 	/**
 	 * Handles events raised by its sub-gadgets.
+	 * @param e Event data to process.
 	 */
 	virtual bool handleEvent(const EventArgs& e);
 
 	/**
-	 * Get a pointer to the last key that was released.
+	 * Get a pointer to the last key that was clicked.
+	 * @return Pointer to the last key that was clicked.
 	 */
-	inline const WoopsiKey* getLastKeyReleased() { return _lastKeyReleased; };
+	inline const WoopsiKey* getLastKeyClicked() { return _lastKeyClicked; };
+
+	/**
+	 * Check if the shift key is held down.
+	 * @return True if shift is down.
+	 */
+	inline bool isShiftDown() { return _isShiftDown; };
+
+	/**
+	 * Check if the control key is held down.
+	 * @return True if control is down.
+	 */
+	inline bool isControlDown() { return _isControlDown; };
+
+	/**
+	 * Check if the caps lock key is held down.
+	 * @return True if caps lock is down.
+	 */
+	inline bool isCapsLockDown() { return _isCapsLockDown; };
 
 protected:
-	WoopsiKey* _lastKeyReleased;		/**< Pointer to the last key released */
-	WoopsiKey* _shiftKey;				/**< Pointer to the shift key */
-	WoopsiKey* _controlKey;				/**< Pointer to the control key */
-	WoopsiKey* _capsLockKey;			/**< Pointer to the caps lock key */
-	bool _isShiftDown;
-	bool _isControlDown;
-	bool _isCapsLockDown;
+	WoopsiKey* _lastKeyClicked;		/**< Pointer to the last key clicked */
+	WoopsiKey* _shiftKey;			/**< Pointer to the shift key */
+	WoopsiKey* _controlKey;			/**< Pointer to the control key */
+	WoopsiKey* _capsLockKey;		/**< Pointer to the caps lock key */
+	bool _isShiftDown;				/**< True if shift key is currently in down position */
+	bool _isControlDown;			/**< True if control key is currently in down position */
+	bool _isCapsLockDown;			/**< True if caps lock key is currently in down position */
 
 	/**
 	 * Swap the keyboard layout to the correct display based on current modifier keys.
