@@ -16,7 +16,8 @@ Change Log
      - CycleButton has different appearance when disabled.
      - RadioButton has different appearance when disabled.
      - Added Keyboard gadget.
-     - Added all missinh 7-bit ASCII glyphs to sysfont.
+     - Added all missing 7-bit ASCII glyphs to sysfont.
+     - Added keyboard example.
      
 
   V0.34 (20080702)
