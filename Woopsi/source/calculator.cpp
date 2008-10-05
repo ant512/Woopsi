@@ -56,13 +56,13 @@ void Calculator::initGUI() {
 	}
 }
 
-void Calculator::addText(const char* text) {
+void Calculator::appendText(const char* text) {
 	if ((strcmp(_output->getText(), "0") == 0) || (_wipeNeeded)) {
 		_wipeNeeded = false;
 		_output->setText(text);
 	} else {
 		if (strlen(_output->getText()) < 5) {
-			_output->addText(text);
+			_output->appendText(text);
 		}
 	}
 
@@ -266,6 +266,6 @@ void Calculator::handleClick(const EventArgs& e) {
 		doDivide();
 		_wipeNeeded = true;
 	} else {
-		addText(((Button*)e.gadget)->getText());
+		appendText(((Button*)e.gadget)->getText());
 	}
 }

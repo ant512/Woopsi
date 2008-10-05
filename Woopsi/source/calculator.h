@@ -33,7 +33,7 @@ private:
 	void doDivide();
 	void doEquals();
 	void updateDisplay();
-	void addText(const char* text);
+	void appendText(const char* text);
 	void doFunction();
 	void initGUI();
 

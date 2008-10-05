@@ -9,6 +9,7 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_padding = 2;
+	_cursorPos = 0;
 
 	setText(text);
 	calculateTextPosition();
@@ -97,8 +98,11 @@ void TextBox::setText(const char* text) {
 		delete[] _text;
 	}
 
+	// Move cursor to end of new text
+	_cursorPos = strlen(text);
+
 	// Create new memory for string
-	_text = new char[strlen(text) + 1];
+	_text = new char[_cursorPos + 1];
 
 	// Copy text
 	strcpy(_text, text);
@@ -117,13 +121,19 @@ void TextBox::setText(const char text) {
 	newText[1] = '\0';
 
 	setText(newText);
+
+	delete[] newText;
 }
 
-void TextBox::addText(const char* text) {
+void TextBox::appendText(const char* text) {
 
 	if (_text != NULL) {
+
+		// Move cursor to end of new string
+		_cursorPos = strlen(_text) + strlen(text);
+
 		// Reserve memory for concatenated string
-		char* newText = new char[strlen(_text) + strlen(text) + 2];
+		char* newText = new char[_cursorPos + 1];
 
 		// Copy old text into new text
 		strcpy(newText, _text);
@@ -148,13 +158,62 @@ void TextBox::addText(const char* text) {
 	calculateTextPosition();
 }
 
-void TextBox::addText(const char text) {
+void TextBox::appendText(const char text) {
 
 	char* newText = new char[2];
 	newText[0] = text;
 	newText[1] = '\0';
 
-	addText(newText);
+	appendText(newText);
+
+	delete[] newText;
+}
+
+void TextBox::insertTextAtCursor(const char* text) {
+
+	if (_text != NULL) {
+
+		u32 oldLen = strlen(_text);
+		u32 insertLen = strlen(text);
+
+		// Reserve memory for new string
+		char* newText = new char[oldLen + insertLen + 1];
+
+		// Copy start of existing string into new string
+		strncpy(newText, _text, _cursorPos);
+
+		// Copy insert into new string
+		strncpy(newText + _cursorPos, text, insertLen);
+
+		// Copy end of existing string into new string
+		strcpy(newText + _cursorPos + insertLen, _text + _cursorPos);
+
+		// Move cursor to end of inserted text
+		_cursorPos += insertLen;
+
+		// Delete existing string
+		delete[] _text;
+
+		// Swap pointers
+		_text = newText;
+
+		draw();
+
+		raiseValueChangeEvent();
+	} else {
+		// No text, so set it for the first time
+		setText(text);
+	}
+}
+
+void TextBox::insertTextAtCursor(const char text) {
+	char* newText = new char[2];
+	newText[0] = text;
+	newText[1] = '\0';
+
+	insertTextAtCursor(newText);
+
+	delete[] newText;
 }
 
 bool TextBox::resize(u16 width, u16 height) {
@@ -187,4 +246,9 @@ void TextBox::getPreferredDimensions(Rect& rect) const {
 	rect.y = _y;
 	rect.width = ((!_flags.borderless + _padding) << 1) + _font->getStringWidth(_text);
 	rect.height = ((!_flags.borderless + _padding) << 1) + _font->getHeight();
+}
+
+void TextBox::moveCursorToPosition(const u32 position) {
+	u32 len = strlen(_text);
+	_cursorPos = len >= position ? position : len;
 }

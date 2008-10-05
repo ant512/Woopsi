@@ -12,6 +12,10 @@ Change Log
      - SkinnedWindows move to front when clicked.
      - Renamed TextBox::TextPositionXXX to TextAlignmentXXX, along with all
        related functions and similar in MultiLineTextBox and ScrollingTextBox.
+     - TextBox::addText() was allocating one byte too many when concatenating
+       strings.
+     - Renamed TextBox::addText() to appendText() for consistency with other
+       classes.
 	 
   - New Features:
      - Button has different appearance when disabled.
@@ -19,7 +23,7 @@ Change Log
      - ContextMenuItem has different appearance when disabled.
      - CycleButton has different appearance when disabled.
      - RadioButton has different appearance when disabled.
-     - Added Keyboard gadget.
+     - Added WoopsiKeyboard gadget.
      - Added all missing 7-bit ASCII glyphs to sysfont.
      - Added keyboard example.
      - Added TextBox::addText(char).
@@ -34,7 +38,7 @@ Change Log
      - AnimButton automatically animates as it has as built-in timer gadget.
      - Added missing glyphs to tinyfont.bmp.
      - Added timer example.
-
+     - Added cursor functionality to TextBox.
 
   V0.34 (20080702)
   

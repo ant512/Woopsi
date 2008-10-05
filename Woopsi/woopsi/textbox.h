@@ -100,13 +100,25 @@ public:
 	 * Append new text to the end of the current text displayed in the textbox.
 	 * @param text String to append.
 	 */
-	virtual void addText(const char* text);
+	virtual void appendText(const char* text);
 
 	/**
 	 * Append new text to the end of the current text displayed in the textbox.
 	 * @param text Char to append.
 	 */
-	virtual void addText(const char text);
+	virtual void appendText(const char text);
+
+	/**
+	 * Insert text at the current cursor position.
+	 * @param text The text to insert.
+	 */
+	virtual void insertTextAtCursor(const char* text);
+
+	/**
+	 * Insert text at the current cursor position.
+	 * @param text Char to insert.
+	 */
+	virtual void insertTextAtCursor(const char text);
 
 	/**
 	 * Resize the gadget to the new dimensions.
@@ -124,6 +136,14 @@ public:
 	 */
 	virtual void getPreferredDimensions(Rect& rect) const;
 
+	/**
+	 * Move the cursor to the text position specified.  0 indicates the start
+	 * of the string.  If position is greater than the length of the string,
+	 * the cursor is moved to the end of the string.
+	 * @param position The new cursor position.
+	 */
+	virtual void moveCursorToPosition(const u32 position);
+
 protected:
 	char* _text;							/**< String to display in the textbox */
 	u16 _textX;								/**< X co-ordinate of the text relative to the gadget */
@@ -131,6 +151,7 @@ protected:
 	u8 _padding;							/**< Padding around the text in pixels */
 	TextAlignmentHoriz _hAlignment;			/**< Horizontal alignment of the text */
 	TextAlignmentVert _vAlignment;			/**< Vertical alignment of the text */
+	u32 _cursorPos;							/**< Position of the cursor within the string */
 
 	/**
 	 * Calculate the position of the string based on its length and the alignment options.

@@ -207,6 +207,8 @@ void MultiLineTextBox::setText(const char text) {
 	newText[1] = '\0';
 
 	setText(newText);
+
+	delete[] newText;
 }
 
 void MultiLineTextBox::addText(const char* text) {
@@ -240,6 +242,8 @@ void MultiLineTextBox::addText(const char text) {
 	newText[1] = '\0';
 
 	addText(newText);
+
+	delete[] newText;
 }
 
 void MultiLineTextBox::setFont(FontBase* font) {
