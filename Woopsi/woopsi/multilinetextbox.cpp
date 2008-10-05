@@ -9,8 +9,8 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 
 	_outline = OUTLINE_IN;
 
-	_hPos = TEXT_POSITION_HORIZ_CENTRE;
-	_vPos = TEXT_POSITION_VERT_CENTRE;
+	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
+	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_padding = 2;
 	_topRow = 0;
 
@@ -99,12 +99,12 @@ u8 MultiLineTextBox::getRowX(u8 rowPixelWidth) {
 	getClientRect(rect);
 
 	// Calculate horizontal position
-	switch (_hPos) {
-		case TEXT_POSITION_HORIZ_CENTRE:
+	switch (_hAlignment) {
+		case TEXT_ALIGNMENT_HORIZ_CENTRE:
 			return ((rect.width - (_padding << 1)) - rowPixelWidth) >> 1;
-		case TEXT_POSITION_HORIZ_LEFT:
+		case TEXT_ALIGNMENT_HORIZ_LEFT:
 			return _padding;
-		case TEXT_POSITION_HORIZ_RIGHT:
+		case TEXT_ALIGNMENT_HORIZ_RIGHT:
 			return rect.width - rowPixelWidth - _padding;
 	}
 
@@ -124,8 +124,8 @@ s16 MultiLineTextBox::getRowY(u8 screenRow) {
 	getClientRect(rect);
 
 	// Calculate vertical position
-	switch (_vPos) {
-		case TEXT_POSITION_VERT_CENTRE:
+	switch (_vAlignment) {
+		case TEXT_ALIGNMENT_VERT_CENTRE:
 
 			// Calculate the maximum number of rows
             canvasRows = _canvasHeight / _text->getLineHeight();
@@ -139,10 +139,10 @@ s16 MultiLineTextBox::getRowY(u8 screenRow) {
             // Calculate the row Y co-ordinate
 			textY = startPos + (screenRow * _text->getLineHeight());
 			break;
-		case TEXT_POSITION_VERT_TOP:
+		case TEXT_ALIGNMENT_VERT_TOP:
 			textY = _padding + (screenRow * _text->getLineHeight());
 			break;
-		case TEXT_POSITION_VERT_BOTTOM:
+		case TEXT_ALIGNMENT_VERT_BOTTOM:
 
 			// Calculate the maximum number of rows
             s32 screenRows = rect.height / _text->getLineHeight();
@@ -162,13 +162,13 @@ void MultiLineTextBox::calculateTotalVisibleRows() {
 	_visibleRows = (rect.height - (_padding << 1)) / _text->getLineHeight();
 }
 
-void MultiLineTextBox::setTextPositionHoriz(TextPositionHoriz position) {
-	_hPos = position;
+void MultiLineTextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
+	_hAlignment = alignment;
 	Gadget::draw();
 }
 
-void MultiLineTextBox::setTextPositionVert(TextPositionVert position) {
-	_vPos = position;
+void MultiLineTextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
+	_vAlignment = alignment;
 	Gadget::draw();
 }
 

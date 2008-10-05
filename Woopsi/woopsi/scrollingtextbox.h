@@ -36,15 +36,15 @@ public:
 
 	/**
 	 * Set the horizontal alignment of text within the textbox.
-	 * @param position The horizontal position of the text.
+	 * @param alignment The horizontal position of the text.
 	 */
-	virtual void setTextPositionHoriz(MultiLineTextBox::TextPositionHoriz position);
+	virtual void setTextAlignmentHoriz(MultiLineTextBox::TextAlignmentHoriz alignment);
 
 	/**
 	 * Set the vertical alignment of text within the textbox.
-	 * @param position The vertical position of the text.
+	 * @param alignment The vertical position of the text.
 	 */
-	virtual void setTextPositionVert(MultiLineTextBox::TextPositionVert position);
+	virtual void setTextAlignmentVert(MultiLineTextBox::TextAlignmentVert alignment);
 
 	/**
 	 * Returns the number of "pages" that the text spans.  A page

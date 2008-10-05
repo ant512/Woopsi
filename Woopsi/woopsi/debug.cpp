@@ -99,8 +99,8 @@ void Debug::createGUI() {
 		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
 		_textBox->disableDrawing();
 		_window->addGadget(_textBox);
-		_textBox->setTextPositionHoriz(MultiLineTextBox::TEXT_POSITION_HORIZ_LEFT);
-		_textBox->setTextPositionVert(MultiLineTextBox::TEXT_POSITION_VERT_TOP);
+		_textBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
+		_textBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 		_textBox->addText("Woopsi Version ");
 		_textBox->addText(WOOPSI_VERSION);
 		_textBox->addText("\n");

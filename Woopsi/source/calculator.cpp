@@ -25,7 +25,7 @@ void Calculator::initGUI() {
 
 	// Controls
 	_output = new TextBox(rect.x, rect.y, 52, 16, "0");
-	_output->setTextPositionHoriz(TextBox::TEXT_POSITION_HORIZ_RIGHT);
+	_output->setTextAlignmentHoriz(TextBox::TEXT_ALIGNMENT_HORIZ_RIGHT);
 	_window->addGadget(_output);
 
 	DynamicArray<Button*> buttons;

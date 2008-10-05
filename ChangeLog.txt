@@ -9,7 +9,9 @@ Change Log
        (thanks Gattman, bug 2101099).
      - Removed offcolour pixels from around @ symbol in sysfont bitmap.
      - Moved @ symbol in tinyfont.bmp to correct ASCII location.
-     - SkinnedWindow class moves to front when clicked.
+     - SkinnedWindows move to front when clicked.
+     - Renamed TextBox::TextPositionXXX to TextAlignmentXXX, along with all
+       related functions and similar in MultiLineTextBox and ScrollingTextBox.
 	 
   - New Features:
      - Button has different appearance when disabled.

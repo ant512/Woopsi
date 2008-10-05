@@ -27,12 +27,12 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	addGadget(_scrollbar);
 }
 
-void ScrollingTextBox::setTextPositionHoriz(MultiLineTextBox::TextPositionHoriz position) {
-	_textbox->setTextPositionHoriz(position);
+void ScrollingTextBox::setTextAlignmentHoriz(MultiLineTextBox::TextAlignmentHoriz alignment) {
+	_textbox->setTextAlignmentHoriz(alignment);
 }
 
-void ScrollingTextBox::setTextPositionVert(MultiLineTextBox::TextPositionVert position) {
-	_textbox->setTextPositionVert(position);
+void ScrollingTextBox::setTextAlignmentVert(MultiLineTextBox::TextAlignmentVert alignment) {
+	_textbox->setTextAlignmentVert(alignment);
 }
 
 const Text* ScrollingTextBox::getText() const {

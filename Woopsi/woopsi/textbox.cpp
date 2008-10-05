@@ -6,8 +6,8 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase
 
 	_outline = OUTLINE_IN;
 
-	_hPos = TEXT_POSITION_HORIZ_CENTRE;
-	_vPos = TEXT_POSITION_VERT_CENTRE;
+	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
+	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_padding = 2;
 
 	setText(text);
@@ -19,8 +19,8 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBas
 
 	_outline = OUTLINE_IN;
 
-	_hPos = TEXT_POSITION_HORIZ_CENTRE;
-	_vPos = TEXT_POSITION_VERT_CENTRE;
+	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
+	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_padding = 2;
 
 	char text[2];
@@ -49,41 +49,41 @@ void TextBox::draw(Rect clipRect) {
 void TextBox::calculateTextPosition() {
 
 	// Calculate vertical position
-	switch (_vPos) {
-		case TEXT_POSITION_VERT_CENTRE:
+	switch (_vAlignment) {
+		case TEXT_ALIGNMENT_VERT_CENTRE:
 			_textY = (_height - _font->getHeight()) >> 1;
 			break;
-		case TEXT_POSITION_VERT_TOP:
+		case TEXT_ALIGNMENT_VERT_TOP:
 			_textY = _padding;
 			break;
-		case TEXT_POSITION_VERT_BOTTOM:
+		case TEXT_ALIGNMENT_VERT_BOTTOM:
 			_textY = _height - _font->getHeight() - _padding;
 			break;
 	}
 
 	// Calculate horizontal position
-	switch (_hPos) {
-		case TEXT_POSITION_HORIZ_CENTRE:
+	switch (_hAlignment) {
+		case TEXT_ALIGNMENT_HORIZ_CENTRE:
 			_textX = (_width - _font->getStringWidth(_text)) >> 1;
 			break;
-		case TEXT_POSITION_HORIZ_LEFT:
+		case TEXT_ALIGNMENT_HORIZ_LEFT:
 			_textX = _padding;
 			break;
-		case TEXT_POSITION_HORIZ_RIGHT:
+		case TEXT_ALIGNMENT_HORIZ_RIGHT:
 			_textX = _width - _font->getStringWidth(_text) - _padding;
 			break;
 	}
 }
 
-void TextBox::setTextPositionHoriz(TextPositionHoriz position) {
-	_hPos = position;
+void TextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
+	_hAlignment = alignment;
 	calculateTextPosition();
 
 	draw();
 }
 
-void TextBox::setTextPositionVert(TextPositionVert position) {
-	_vPos = position;
+void TextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
+	_vAlignment = alignment;
 	calculateTextPosition();
 
 	draw();

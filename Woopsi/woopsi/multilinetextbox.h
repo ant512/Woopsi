@@ -21,19 +21,19 @@ public:
 	/**
 	 * Enum of horizontal alignment options.
 	 */
-	enum TextPositionHoriz {
-		TEXT_POSITION_HORIZ_CENTRE = 0,		/**< Centre the text */
-		TEXT_POSITION_HORIZ_LEFT = 1,		/**< Align left */
-		TEXT_POSITION_HORIZ_RIGHT = 2		/**< Align right */
+	enum TextAlignmentHoriz {
+		TEXT_ALIGNMENT_HORIZ_CENTRE = 0,		/**< Centre the text */
+		TEXT_ALIGNMENT_HORIZ_LEFT = 1,			/**< Align left */
+		TEXT_ALIGNMENT_HORIZ_RIGHT = 2			/**< Align right */
 	};
 
 	/**
 	 * Enum of vertical alignment options.
 	 */
-	enum TextPositionVert {
-		TEXT_POSITION_VERT_CENTRE = 0,		/**< Align to centre of textbox */
-		TEXT_POSITION_VERT_TOP = 1,			/**< Align to top of textbox */
-		TEXT_POSITION_VERT_BOTTOM = 2		/**< Align to bottom of textbox */
+	enum TextAlignmentVert {
+		TEXT_ALIGNMENT_VERT_CENTRE = 0,			/**< Align to centre of textbox */
+		TEXT_ALIGNMENT_VERT_TOP = 1,			/**< Align to top of textbox */
+		TEXT_ALIGNMENT_VERT_BOTTOM = 2			/**< Align to bottom of textbox */
 	};
 
 	/**
@@ -67,15 +67,15 @@ public:
 
 	/**
 	 * Set the horizontal alignment of text within the textbox.
-	 * @param position The horizontal position of the text.
+	 * @param alignment The horizontal position of the text.
 	 */
-	virtual void setTextPositionHoriz(TextPositionHoriz position);
+	virtual void setTextAlignmentHoriz(TextAlignmentHoriz alignment);
 
 	/**
 	 * Set the vertical alignment of text within the textbox.
-	 * @param position The vertical position of the text.
+	 * @param alignment The vertical position of the text.
 	 */
-	virtual void setTextPositionVert(TextPositionVert position);
+	virtual void setTextAlignmentVert(TextAlignmentVert alignment);
 
 	/**
 	 * Returns the number of "pages" that the text spans.  A page
@@ -146,8 +146,8 @@ protected:
 	s16 _maxRows;						/**< Maximum number of rows that the textbox should buffer */
 	u32 _topRow;						/**< Index of the top row of text currently displayed */
 	u8 _padding;						/**< Padding around the text in pixels */
-	TextPositionHoriz _hPos;			/**< Horizontal alignment of the text */
-	TextPositionVert _vPos;				/**< Vertical alignment of the text */
+	TextAlignmentHoriz _hAlignment;		/**< Horizontal alignment of the text */
+	TextAlignmentVert _vAlignment;		/**< Vertical alignment of the text */
 
 	/**
 	 * Gets the x position of a row of text based on the width of the row and the
