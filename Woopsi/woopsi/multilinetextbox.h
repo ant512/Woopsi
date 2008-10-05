@@ -108,6 +108,12 @@ public:
 	virtual void setText(const char* text);
 
 	/**
+	 * Set the text displayed in the textbox.
+	 * @param text Character to display.
+	 */
+	virtual void setText(const char text);
+
+	/**
 	 * Append new text to the end of the current text
 	 * displayed in the textbox.
 	 * @param text String to append.

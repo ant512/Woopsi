@@ -200,6 +200,15 @@ void MultiLineTextBox::setText(const char* text) {
 	raiseValueChangeEvent();
 }
 
+void MultiLineTextBox::setText(const char text) {
+
+	char* newText = new char[2];
+	newText[0] = text;
+	newText[1] = '\0';
+
+	setText(newText);
+}
+
 void MultiLineTextBox::addText(const char* text) {
 
 	_text->appendText(text);

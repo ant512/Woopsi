@@ -5,7 +5,7 @@ Change Log
   
   - Fixes:
      - Renamed "Textbox" to "TextBox".
-     - Correct case of "PackedFontBase.h" include in "packedfontbase.cpp"
+     - Corrected case of "PackedFontBase.h" include in "packedfontbase.cpp"
        (thanks Gattman, bug 2101099).
      - Removed offcolour pixels from around @ symbol in sysfont bitmap.
      - Moved @ symbol in tinyfont.bmp to correct ASCII location.
@@ -21,7 +21,9 @@ Change Log
      - Added all missing 7-bit ASCII glyphs to sysfont.
      - Added keyboard example.
      - Added TextBox::addText(char).
+     - Added TextBox::setText(char).
      - Added MultiLineTextBox::addText(char).
+     - Added MultiLineTextBox::setText(char).
      - Added WoopsiTimer gadget.
      - Woopsi::registerForVBL() and Woopsi::unregisterFromVBL() now only work
        with timers; all VBL code now is handled with timer gadgets.
@@ -29,6 +31,7 @@ Change Log
      - Removed Gadget::vbl().
      - AnimButton automatically animates as it has as built-in timer gadget.
      - Added missing glyphs to tinyfont.bmp.
+     - Added timer example.
 
 
   V0.34 (20080702)

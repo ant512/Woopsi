@@ -110,6 +110,15 @@ void TextBox::setText(const char* text) {
 	raiseValueChangeEvent();
 }
 
+void TextBox::setText(const char text) {
+
+	char* newText = new char[2];
+	newText[0] = text;
+	newText[1] = '\0';
+
+	setText(newText);
+}
+
 void TextBox::addText(const char* text) {
 
 	if (_text != NULL) {
