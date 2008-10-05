@@ -39,10 +39,10 @@ void Debug::output(const char* text) {
 			createDebug();
 
 			_debug->_textBox->disableDrawing();
-			_debug->_textBox->addText(">");
-			_debug->_textBox->addText(text);
+			_debug->_textBox->appendText(">");
+			_debug->_textBox->appendText(text);
 			_debug->_textBox->enableDrawing();
-			_debug->_textBox->addText("\n");
+			_debug->_textBox->appendText("\n");
 		}
 	}
 }
@@ -101,11 +101,11 @@ void Debug::createGUI() {
 		_window->addGadget(_textBox);
 		_textBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
 		_textBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
-		_textBox->addText("Woopsi Version ");
-		_textBox->addText(WOOPSI_VERSION);
-		_textBox->addText("\n");
-		_textBox->addText(WOOPSI_COPYRIGHT);
+		_textBox->appendText("Woopsi Version ");
+		_textBox->appendText(WOOPSI_VERSION);
+		_textBox->appendText("\n");
+		_textBox->appendText(WOOPSI_COPYRIGHT);
 		_textBox->enableDrawing();
-		_textBox->addText("\n");
+		_textBox->appendText("\n");
 	}
 }

@@ -44,8 +44,18 @@ void ScrollingTextBox::setText(const char* text) {
 	_scrollbar->draw();
 }
 
-void ScrollingTextBox::addText(const char* text) {
-	_textbox->addText(text);
+void ScrollingTextBox::setText(const char text) {
+	_textbox->setText(text);
+	_scrollbar->draw();
+}
+
+void ScrollingTextBox::appendText(const char* text) {
+	_textbox->appendText(text);
+	_scrollbar->draw();
+}
+
+void ScrollingTextBox::appendText(const char text) {
+	_textbox->appendText(text);
 	_scrollbar->draw();
 }
 

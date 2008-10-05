@@ -14,9 +14,9 @@ Change Log
        related functions and similar in MultiLineTextBox and ScrollingTextBox.
      - TextBox::addText() was allocating one byte too many when concatenating
        strings.
-     - Renamed TextBox::addText() to appendText() for consistency with other
-       classes.
-	 
+     - Renamed addText() to appendText() in TextBox, MultiLineTextBox and
+       ScrollingTextBox classes.
+
   - New Features:
      - Button has different appearance when disabled.
      - CheckBox has different appearance when disabled.
@@ -26,10 +26,12 @@ Change Log
      - Added WoopsiKeyboard gadget.
      - Added all missing 7-bit ASCII glyphs to sysfont.
      - Added keyboard example.
-     - Added TextBox::addText(char).
+     - Added TextBox::appendText(char).
      - Added TextBox::setText(char).
-     - Added MultiLineTextBox::addText(char).
+     - Added MultiLineTextBox::appendText(char).
      - Added MultiLineTextBox::setText(char).
+     - Added ScrollingTextBox::addText(char).
+     - Added ScrollingTextBox::setText(char).
      - Added WoopsiTimer gadget.
      - Woopsi::registerForVBL() and Woopsi::unregisterFromVBL() now only work
        with timers; all VBL code now is handled with timer gadgets.
@@ -39,6 +41,7 @@ Change Log
      - Added missing glyphs to tinyfont.bmp.
      - Added timer example.
      - Added cursor functionality to TextBox.
+
 
   V0.34 (20080702)
   

@@ -59,7 +59,7 @@ bool KeyTest::handleEvent(const EventArgs& e) {
 				
 				// Append key value to output box if the last key was not a modifier
 				if (key->getValue() != '\0') {
-					_output->addText(key->getValue());
+					_output->appendText(key->getValue());
 				}
 			}
 		}

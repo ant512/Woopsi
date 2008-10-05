@@ -211,7 +211,7 @@ void MultiLineTextBox::setText(const char text) {
 	delete[] newText;
 }
 
-void MultiLineTextBox::addText(const char* text) {
+void MultiLineTextBox::appendText(const char* text) {
 
 	_text->appendText(text);
 
@@ -235,13 +235,13 @@ void MultiLineTextBox::addText(const char* text) {
 	raiseValueChangeEvent();
 }
 
-void MultiLineTextBox::addText(const char text) {
+void MultiLineTextBox::appendText(const char text) {
 
 	char* newText = new char[2];
 	newText[0] = text;
 	newText[1] = '\0';
 
-	addText(newText);
+	appendText(newText);
 
 	delete[] newText;
 }
