@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "woopsi.h"
 
 using namespace std;
 
@@ -66,7 +67,7 @@ public:
 	 * Run any code that should execute every VBL.
 	 * @return True if the function ran succesfully.
 	 */
-	virtual bool vbl();
+	virtual bool run();
 
 protected:
 	u32 _frameCount;
@@ -77,7 +78,13 @@ protected:
 	/**
 	 * Destructor.
 	 */
-	virtual inline ~WoopsiTimer() {	};
+	virtual inline ~WoopsiTimer() {
+		if (woopsiApplication != NULL) {
+
+			// Prevent gadget from receiving VBLs
+			woopsiApplication->unregisterFromVBL(this);
+		}
+	};
 
 	/**
 	 * Copy constructor is protected to prevent usage.

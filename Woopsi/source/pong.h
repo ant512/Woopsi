@@ -6,6 +6,7 @@
 
 class AmigaScreen;
 class AmigaWindow;
+class WoopsiTimer;
 
 class Pong : EventHandler {
 
@@ -18,13 +19,13 @@ public:
 	void moveObjects();
 
 	bool handleEvent(const EventArgs& e);
-	void handleVBL(const EventArgs& e);
 	void handleKeyPress(const EventArgs& e);
 	void handleKeyRelease(const EventArgs& e);
 
 private:
 	AmigaScreen* _screen;
 	AmigaWindow* _window;
+	WoopsiTimer* _timer;
 	u8 _p1x;
 	u8 _p1y;
 	u8 _p2x;

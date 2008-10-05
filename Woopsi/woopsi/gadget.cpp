@@ -88,10 +88,6 @@ Gadget::~Gadget() {
 
 		if (woopsiApplication != NULL) {
 
-			// Prevent gadget from receiving VBLs
-			woopsiApplication->unregisterFromVBL(this);
-			unregisterChildrenFromVBL();
-
 			// Close the context menu if we're closing the gadget that opened it
 			if (woopsiApplication->getContextMenu()->getOpener() == this) {
 				woopsiApplication->shelveContextMenu();
@@ -385,22 +381,6 @@ void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
 		e.eventY = y;
 		e.eventVX = vX;
 		e.eventVY = vY;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
-	}
-}
-
-void Gadget::raiseVBLEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
-
-		EventArgs e;
-		e.type = EVENT_VBL;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
 		e.keyCode = KEY_CODE_NONE;
 		e.gadget = this;
 
@@ -1336,8 +1316,6 @@ void Gadget::closeChild(Gadget* gadget) {
 
 		// Ensure that gadget is no longer receiving VBL events
 		if (woopsiApplication != NULL) {
-			woopsiApplication->unregisterFromVBL(gadget);
-			gadget->unregisterChildrenFromVBL();
 
 			// Close the context menu if we're closing the gadget that opened it
 			if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
@@ -1716,17 +1694,6 @@ bool Gadget::release(s16 x, s16 y) {
 bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	if ((isEnabled()) && (_flags.dragging)) {
 		raiseDragEvent(x, y, vX, vY);
-
-		return true;
-	}
-
-	return false;
-}
-
-bool Gadget::vbl() {
-	if (isEnabled()) {
-
-		raiseVBLEvent();
 
 		return true;
 	}
@@ -2183,29 +2150,6 @@ FontBase* Gadget::getFont() const {
 
 void Gadget::setFont(FontBase* font) {
 	_font = font;
-}
-
-void Gadget::unregisterChildrenFromVBL() {
-
-	// Unregister children
-	for (u8 i = 0; i < _gadgets.size(); i++) {
-
-		// Unregister the gadget
-		Woopsi::unregisterFromVBL(_gadgets[i]);
-
-		// Unregister its children
-		_gadgets[i]->unregisterChildrenFromVBL();
-	}
-
-	// Unregister shelved children
-	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
-
-		// Unregister the gadget
-		Woopsi::unregisterFromVBL(_shelvedGadgets[i]);
-
-		// Unregister its children
-		_shelvedGadgets[i]->unregisterChildrenFromVBL();
-	}
 }
 
 bool Gadget::remove() {

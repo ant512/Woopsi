@@ -6,6 +6,7 @@
 #include "sysfont.h"
 #include "contextmenu.h"
 #include "defaultstyle.h"
+#include "woopsitimer.h"
 
 // Instantiate singleton
 Woopsi* Woopsi::singleton = NULL;
@@ -14,7 +15,7 @@ Woopsi* Woopsi::singleton = NULL;
 FontBase* Woopsi::_systemFont = NULL;
 
 // Initialise static VBL listener vector
-DynamicArray<Gadget*> Woopsi::_vblListeners;
+DynamicArray<WoopsiTimer*> Woopsi::_vblListeners;
 
 // Initialise static deletion queue
 DynamicArray<Gadget*> Woopsi::_deleteQueue;
@@ -102,7 +103,7 @@ void Woopsi::handleVBL() {
 	// VBL
 	s32 i = 0;
 	while (i < _vblListeners.size()) {
-		_vblListeners[i]->vbl();
+		_vblListeners[i]->run();
 		i++;
 	}
 }
@@ -499,25 +500,25 @@ void Woopsi::deleteSystemFont() {
 	}
 }
 
-// Add a gadget to the list of gadgets that receive VBL events
-void Woopsi::registerForVBL(Gadget* gadget) {
+// Add a timer to the list of timers that receive VBL events
+void Woopsi::registerForVBL(WoopsiTimer* timer) {
 
 	// Ensure gadget is not already in the list
 	for (s32 i = 0; i < _vblListeners.size(); i++) {
-		if (_vblListeners[i] == gadget) {
+		if (_vblListeners[i] == timer) {
 			return;
 		}
 	}
 
-	_vblListeners.push_back(gadget);
+	_vblListeners.push_back(timer);
 }
 
-// Remove a gadget from the VBL list
-void Woopsi::unregisterFromVBL(Gadget* gadget) {
+// Remove a timer from the VBL list
+void Woopsi::unregisterFromVBL(WoopsiTimer* timer) {
 	
 	// Locate gadget in the list
 	for (s32 i = 0; i < _vblListeners.size(); i++) {
-		if (_vblListeners[i] == gadget) {
+		if (_vblListeners[i] == timer) {
 			_vblListeners.erase(_vblListeners.begin() + i);
 			return;
 		}

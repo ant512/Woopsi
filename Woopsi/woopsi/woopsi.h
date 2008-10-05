@@ -9,6 +9,7 @@ using namespace std;
 
 class Screen;
 class ContextMenu;
+class WoopsiTimer;
 
 /**
  * Class providing a top-level gadget and an interface to the Woopsi gadget hierarchy.
@@ -149,18 +150,20 @@ public:
 	static FontBase* getSystemFont();
 
 	/**
-	 * Add the supplied gadget to the list of gadgets that receive VBL notifications.
-	 * Gadgets not in this list will not be able to update automatically when the screen refreshes.
-	 * @param gadget A pointer to the gadget to add to the VBL list.
+	 * Add the supplied timer to the list of timers that receive VBL notifications.
+	 * This is handled automatically by the WoopsiTimer constructor and should not be
+	 * used in user code.
+	 * @param timer A pointer to the timer to add to the VBL list.
 	 */
-	static void registerForVBL(Gadget* gadget);
+	static void registerForVBL(WoopsiTimer* timer);
 
 	/**
-	 * Remove the supplied gadget from the list of gadgets that receive VBL notifications.
-	 * Gadgets removed from the list will no longer be able to update automatically when the screen refreshes.
-	 * @param gadget A pointer to the gadget to remove from the VBL list.
+	 * Remove the supplied timer from the list of timers that receive VBL notifications.
+	 * This is handled automatically by the WoopsiTimer destructor and should not be
+	 * used in user code.
+	 * @param gadget A pointer to the timer to remove from the VBL list.
 	 */
-	static void unregisterFromVBL(Gadget* gadget);
+	static void unregisterFromVBL(WoopsiTimer* timer);
 
 	/**
 	 * Add a gadget to the list of gadgets to be deleted.
@@ -232,7 +235,7 @@ public:
 protected:
 	bool _lidClosed;									/**< Remembers the current state of the lid */
 	
-	static DynamicArray<Gadget*> _vblListeners;			/**< Array of gadgets that receive VBL events */
+	static DynamicArray<WoopsiTimer*> _vblListeners;	/**< Array of timers that receive VBL events */
 	static DynamicArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion */
 	static FontBase* _systemFont;						/**< Pointer to the default font */
 	static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */

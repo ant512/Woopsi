@@ -10,7 +10,7 @@
 void Demo::startup() {
 
 	Woopsi::startup();
-/*
+
 	// Create screen skin
 	ScreenSkin* screenSkin = new ScreenSkin;
 	screenSkin->screen.colours.back = woopsiRGB(8, 8, 8);
@@ -190,8 +190,7 @@ void Demo::startup() {
 	butt->getClickedAnimation()->setSpeed(4);
 	butt->setBorderless(true);
 	ikWindow->addGadget(butt);
-	Woopsi::registerForVBL(butt);
-*/
+
 
 	// Create screens
 	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.32", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
@@ -199,7 +198,7 @@ void Demo::startup() {
 	newScreen->setPermeable(true);
 
 	newScreen->addGadget(new WoopsiKeyboard(0, 0, 256, 192, "Keyboard"));
-/*
+
 	AmigaScreen* newScreen2 = new AmigaScreen("Another screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen2);
 
@@ -393,7 +392,7 @@ void Demo::startup() {
 	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
 	newScreen2->addGadget(_alert);
 
-*/
+
 
 	enableDrawing();	// Ensure Woopsi can now draw itself
 	draw();				// Draw initial state

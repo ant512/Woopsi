@@ -21,6 +21,11 @@ Change Log
      - Added TextBox::addText(char).
      - Added MultiLineTextBox::addText(char).
      - Added WoopsiTimer gadget.
+     - Woopsi::registerForVBL() and Woopsi::unregisterFromVBL() now only work
+       with timers; all VBL code now is handled with timer gadgets.
+     - Removed EVENT_VBL event.
+     - Removed Gadget::vbl().
+     - AnimButton automatically animates as it has as built-in timer gadget.
 
   V0.34 (20080702)
   

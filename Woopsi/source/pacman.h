@@ -9,6 +9,7 @@ class SuperBitmap;
 class AmigaScreen;
 class AmigaWindow;
 class Button;
+class WoopsiTimer;
 
 class PacMap;
 class PacGhost;
@@ -47,7 +48,6 @@ public:
 	void endGame();
 
 	bool handleEvent(const EventArgs& e);
-	void handleVBL(const EventArgs& e);
 	void handleKeyPress(const EventArgs& e);
 	void handleRelease(const EventArgs& e);
 
@@ -56,6 +56,7 @@ private:
 	AmigaWindow* _window;
 	SuperBitmap* _superBitmap;
 	Button* _resetButton;
+	WoopsiTimer* _timer;
 
 	u16 _width;
 	u16 _height;

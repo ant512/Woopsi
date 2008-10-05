@@ -3,6 +3,7 @@
 #include "button.h"
 #include "amigawindow.h"
 #include "amigascreen.h"
+#include "woopsitimer.h"
 #include "debug.h"
 #include "pacsprite.h"
 #include "pacmap.h"
@@ -70,10 +71,16 @@ void PacMan::endGame() {
 }
 
 bool PacMan::handleEvent(const EventArgs& e) {
+
+	// Check for VBL
+	if (e.gadget == _timer) {
+		if (!_gameOver) {
+			run();
+		}
+		return true;
+	}
+
 	switch (e.type) {
-		case EVENT_VBL:
-			handleVBL(e);
-			return true;
 		case EVENT_KEY_PRESS:
 			handleKeyPress(e);
 			return true;
@@ -95,12 +102,6 @@ bool PacMan::handleEvent(const EventArgs& e) {
 
 		default:
 			return false;
-	}
-}
-
-void PacMan::handleVBL(const EventArgs& e) {
-	if (!_gameOver) {
-		run();
 	}
 }
 
@@ -151,8 +152,10 @@ void PacMan::initGUI() {
 	_resetButton->setEventHandler(this);
 	_resetButton->setRefcon(3);
 	
-	// Register window for VBL events
-	Woopsi::registerForVBL(_window);
+	_timer = new WoopsiTimer(1, true);
+	_window->addGadget(_timer);
+	_timer->setEventHandler(this);
+	_timer->start();
 }
 
 void PacMan::handleRelease(const EventArgs& e) {

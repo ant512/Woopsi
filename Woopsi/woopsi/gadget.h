@@ -580,12 +580,6 @@ public:
 	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 	/**
-	 * Run any code that should execute every VBL.
-	 * @return True if the function ran succesfully.
-	 */
-	virtual bool vbl();
-
-	/**
 	 * Send a keypress to the gadget.
 	 * @param keyCode The keycode to send to the gadget.
 	 * @return True if the keypress was processed.
@@ -1114,11 +1108,6 @@ protected:
 	 * @param vY The vertical distance dragged.
 	 */
 	void raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY);
-
-	/**
-	 * Raise a VBL event to the event handler.
-	 */
-	void raiseVBLEvent();
 
 	/**
 	 * Raise a move forward event to the event handler.

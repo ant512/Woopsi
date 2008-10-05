@@ -1,6 +1,7 @@
 #include "animbutton.h"
 #include "graphicsport.h"
 #include "woopsi.h"
+#include "woopsitimer.h"
 
 AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, 0, NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
@@ -12,6 +13,11 @@ AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY
 	_animNormal = new Animation(0, Animation::ANIMATION_LOOPTYPE_LOOP, 0);
 
 	_initialised = false;
+
+	_timer = new WoopsiTimer(1, true);
+	addGadget(_timer);
+	_timer->setEventHandler(this);
+	_timer->start();
 }
 
 AnimButton::~AnimButton() {
@@ -47,26 +53,30 @@ Animation* const AnimButton::getClickedAnimation() {
 	return _animClicked;
 }
 
-bool AnimButton::vbl() {
+bool AnimButton::handleEvent(const EventArgs& e) {
 
-	if (Gadget::vbl()) {
+	if (e.gadget != NULL) {
+		if (e.gadget == _timer) {
+			if (e.type == EVENT_ACTION) {
 
-		// Ensure the animations are running
-		if (!_initialised) {
-			_animNormal->play();
-			_initialised = true;
+				// Ensure the animations are running
+				if (!_initialised) {
+					_animNormal->play();
+					_initialised = true;
+				}
+
+				// Run the animations
+				if (_flags.clicked) {
+					_animClicked->run();
+				} else {
+					_animNormal->run();
+				}
+
+				Gadget::draw();
+
+				return true;
+			}
 		}
-
-		// Run the animations
-		if (_flags.clicked) {
-			_animClicked->run();
-		} else {
-			_animNormal->run();
-		}
-
-		Gadget::draw();
-
-		return true;
 	}
 
 	return false;

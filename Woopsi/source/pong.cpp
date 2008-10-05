@@ -3,6 +3,7 @@
 #include "amigawindow.h"
 #include "font.h"
 #include "woopsifuncs.h"
+#include "woopsitimer.h"
 
 Pong::Pong(AmigaScreen* screen) {
 	_screen = screen;
@@ -39,8 +40,11 @@ void Pong::initGUI() {
 	_screen->addGadget(_window);
 	_window->setEventHandler(this);
 	
-	// Register window for VBL events
-	Woopsi::registerForVBL(_window);
+	// Create timer
+	_timer = new WoopsiTimer(1, true);
+	_window->addGadget(_timer);
+	_timer->setEventHandler(this);
+	_timer->start();
 }
 
 void Pong::play() {
@@ -128,10 +132,14 @@ void Pong::draw() {
 }
 
 bool Pong::handleEvent(const EventArgs& e) {
+
+	if (e.gadget == _timer) {
+		if (e.type == EVENT_ACTION) {
+			play();
+		}
+	}
+
 	switch (e.type) {
-		case EVENT_VBL:
-			handleVBL(e);
-			return true;
 		case EVENT_KEY_PRESS:
 			handleKeyPress(e);
 			return true;
@@ -141,10 +149,6 @@ bool Pong::handleEvent(const EventArgs& e) {
 		default:
 			return false;
 	}
-}
-
-void Pong::handleVBL(const EventArgs& e) {
-	play();
 }
 
 void Pong::handleKeyPress(const EventArgs& e) {

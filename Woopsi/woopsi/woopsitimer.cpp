@@ -1,5 +1,4 @@
 #include "woopsitimer.h"
-#include "woopsi.h"
 
 WoopsiTimer::WoopsiTimer(u32 timeout, bool repeat) : Gadget(0, 0, 0, 0, 0) {
 	_timeout = timeout;
@@ -11,10 +10,12 @@ WoopsiTimer::WoopsiTimer(u32 timeout, bool repeat) : Gadget(0, 0, 0, 0, 0) {
 	hide();
 
 	// Ensure that this gadget receives VBL notifications
-	woopsiApplication->registerForVBL(this);
+	if (woopsiApplication != NULL) {
+		woopsiApplication->registerForVBL(this);
+	}
 }
 
-bool WoopsiTimer::vbl() {
+bool WoopsiTimer::run() {
 	if (_isRunning) {
 		_frameCount++;
 

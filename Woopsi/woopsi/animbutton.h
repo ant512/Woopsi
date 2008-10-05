@@ -4,14 +4,17 @@
 #include <nds.h>
 #include "gadget.h"
 #include "animation.h"
+#include "eventhandler.h"
 
 using namespace std;
+
+class WoopsiTimer;
 
 /**
  * Button class that has an animation running in its clickable area.  Note that the
  * bitmaps used in the animation should all be the same size.
  */
-class AnimButton : public Gadget {
+class AnimButton : public Gadget, public EventHandler {
 
 public:
 
@@ -50,12 +53,6 @@ public:
 	virtual Animation* const getClickedAnimation();
 	
 	/**
-	 * Handle a VBL.
-	 * @return True if the VBL was processed correctly.
-	 */
-	bool vbl();
-	
-	/**
 	 * Click the button at the specified co-ordinates.
 	 * @param x The x co-ordinate of the click.
 	 * @param y The y co-ordinate of the click.
@@ -77,6 +74,7 @@ protected:
 	u16 _animX;							/**< X co-ordinate of the animations */
 	u16 _animY;							/**< Y co-ordinate of the animations */
 	bool _initialised;					/**< Tracks if the animation has started or not */
+	WoopsiTimer* _timer;				/**< Controls animation timing and playback */
 
 	/**
 	 * Destructor.
@@ -87,6 +85,12 @@ protected:
 	 * Copy constructor is protected to prevent usage.
 	 */
 	inline AnimButton(const AnimButton& animButton) : Gadget(animButton) { };
+
+	/**
+	 * Handle any child events.
+	 * @return True if the event was processed correctly.
+	 */
+	bool handleEvent(const EventArgs& e);
 };
 
 #endif

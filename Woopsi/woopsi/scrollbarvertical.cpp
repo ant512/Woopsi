@@ -2,6 +2,7 @@
 #include "button.h"
 #include "slidervertical.h"
 #include "woopsi.h"
+#include "woopsitimer.h"
 
 ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 
@@ -18,12 +19,16 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBa
 	_downButton = new Button(0, height - _buttonHeight, width, _buttonHeight, GLYPH_ARROW_DOWN, _font);
 	_downButton->setEventHandler(this);
 
-	_lastScrollTime = 0;
+	// Create timer
 	_scrollTimeout = 10;
+
+	_timer = new WoopsiTimer(_scrollTimeout, true);
+	_timer->setEventHandler(this);
 
 	addGadget(_slider);
 	addGadget(_upButton);
 	addGadget(_downButton);
+	addGadget(_timer);
 }
 
 const s16 ScrollbarVertical::getMinimumValue() const {
@@ -68,7 +73,23 @@ void ScrollbarVertical::draw(Rect clipRect) {
 bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 
 	// Check which gadget fired the event
-	if (e.gadget == _slider) {
+	if (e.gadget == _timer) {
+		if (e.type == EVENT_ACTION) {
+
+			// Which gadget is clicked?
+			if (_upButton->isClicked()) {
+
+				// Move the grip up
+				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+			} else if (_downButton->isClicked()) {
+
+				// Move the grip down
+				_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+			}
+		}
+
+		return true;
+	} else if (e.gadget == _slider) {
 	
 		// Raise slider events to event handler, replacing
 		// the gadget pointer with a pointer to this
@@ -89,11 +110,8 @@ bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 			
 			case EVENT_CLICK:
 				
-				// Register the list for VBL events
-				woopsiApplication->registerForVBL(this);
-
-				// Reset timer
-				_lastScrollTime = woopsiApplication->getVBLCount();
+				// Start the timer
+				_timer->start();
 
 				// Move the grip up
 				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
@@ -102,8 +120,8 @@ bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 			case EVENT_RELEASE:
 			case EVENT_RELEASE_OUTSIDE:
 
-				// Unregister the list from the VBL system
-				woopsiApplication->unregisterFromVBL(this);
+				// Stop the timer
+				_timer->stop();
 				break;
 
 			default:
@@ -115,11 +133,8 @@ bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 			
 			case EVENT_CLICK:
 				
-				// Register the list for VBL events
-				woopsiApplication->registerForVBL(this);
-
-				// Reset timer
-				_lastScrollTime = woopsiApplication->getVBLCount();
+				// Start the timer
+				_timer->start();
 
 			// Move the grip down
 			_slider->setValue(_slider->getValue() + _buttonScrollAmount);
@@ -128,8 +143,8 @@ bool ScrollbarVertical::handleEvent(const EventArgs& e) {
 			case EVENT_RELEASE:
 			case EVENT_RELEASE_OUTSIDE:
 
-				// Unregister the list from the VBL system
-				woopsiApplication->unregisterFromVBL(this);
+				// Stop the timer
+				_timer->stop();
 				break;
 
 			default:
@@ -188,29 +203,4 @@ bool ScrollbarVertical::resize(u16 width, u16 height) {
 	setRaisesEvents(events);
 
 	return resized;
-}
-
-bool ScrollbarVertical::vbl() {
-	if (Gadget::vbl()) {
-
-		if (woopsiApplication->getVBLCount() - _lastScrollTime == _scrollTimeout) {
-
-			// Which gadget is clicked?
-			if (_upButton->isClicked()) {
-
-				// Move the grip up
-				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
-			} else if (_downButton->isClicked()) {
-
-				// Move the grip down
-				_slider->setValue(_slider->getValue() + _buttonScrollAmount);
-			}
-
-			_lastScrollTime = woopsiApplication->getVBLCount();
-		}
-
-		return true;
-	}
-
-	return false;
 }
