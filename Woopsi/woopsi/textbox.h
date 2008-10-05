@@ -95,6 +95,16 @@ public:
 	 * @param text Character to display.
 	 */
 	virtual void setText(const char text);
+
+	/**
+	 * Shows the cursor.
+	 */
+	virtual void showCursor();
+
+	/**
+	 * Hides the cursor.
+	 */
+	virtual void hideCursor();
 	
 	/**
 	 * Append new text to the end of the current text displayed in the textbox.
@@ -144,6 +154,13 @@ public:
 	 */
 	virtual void moveCursorToPosition(const u32 position);
 
+	/**
+	 * Get the cursor position.  This is the index within the string that
+	 * the cursor is currently positioned over.
+	 * @return position The cursor position.
+	 */
+	virtual inline const u32 getCursorPosition() const { return _cursorPos; };
+
 protected:
 	char* _text;							/**< String to display in the textbox */
 	u16 _textX;								/**< X co-ordinate of the text relative to the gadget */
@@ -152,11 +169,18 @@ protected:
 	TextAlignmentHoriz _hAlignment;			/**< Horizontal alignment of the text */
 	TextAlignmentVert _vAlignment;			/**< Vertical alignment of the text */
 	u32 _cursorPos;							/**< Position of the cursor within the string */
+	bool _showCursor;						/**< Set to true to make cursor visible */
 
 	/**
 	 * Calculate the position of the string based on its length and the alignment options.
 	 */
 	virtual void calculateTextPosition();
+
+	/**
+	 * Get the x co-ordinate of the cursor in pixels.
+	 * @return The x co-ordinate of the cursor in pixels.
+	 */
+	virtual const u16 getCursorXPos() const;
 
 	/**
 	 * Destructor.

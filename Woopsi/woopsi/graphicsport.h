@@ -160,6 +160,15 @@ public:
 	void drawXORRect(s16 x, s16 y, u16 width, u16 height);
 	
 	/**
+	 * Invert the colour of an filled rectangle of pixels.
+	 * @param x The x co-ordinate of the rectangle.
+	 * @param y The y co-ordinate of the rectangle.
+	 * @param width The width of the rectangle.
+	 * @param height The height of the rectangle.
+	 */
+	void drawFilledXORRect(s16 x, s16 y, u16 width, u16 height);
+
+	/**
 	 * Draw a string to the bitmap.
 	 * @param x The x co-ordinate of the string.
 	 * @param y The y co-ordinate of the string.

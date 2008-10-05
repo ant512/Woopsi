@@ -517,6 +517,32 @@ void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shi
 	}
 }
 
+// Draw filled XORed rectangle - external function
+void GraphicsPort::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height) {
+
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+
+	if (_clipRect == NULL) {
+		// Draw all visible rectangles
+		for (u8 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
+
+			// Draw all rows of rectangle
+			for (u8 j = 0; j < height; j++) {
+				clipXORHorizLine(x, y + j, width, _gadget->getVisibleRectCache()->at(i));
+			}
+		}
+	} else {
+		// Draw single rectangle row by row
+		for (u8 j = 0; j < height; j++) {
+			clipXORHorizLine(x, y + j, width, *_clipRect);	
+		}
+	}
+}
+
 // Draw XORed rectangle - external function
 void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
 

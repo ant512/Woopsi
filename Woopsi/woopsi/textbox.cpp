@@ -11,6 +11,8 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase
 	_padding = 2;
 	_cursorPos = 0;
 
+	_showCursor = false;
+
 	setText(text);
 	calculateTextPosition();
 }
@@ -40,10 +42,27 @@ void TextBox::draw(Rect clipRect) {
 
 	port->drawText(_textX, _textY, _font, _text);
 
+	// Draw cursor
+	if (_showCursor) {
+		port->drawFilledXORRect(getCursorXPos(), _textY, _font->getCharWidth(_text[_cursorPos]), _font->getHeight());
+	}
+
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
 
 	delete port;
+}
+
+const u16 TextBox::getCursorXPos() const {
+
+	// Calculate position of cursor
+	u16 cursorX = _textX;
+
+	for (u16 i = 0; i < _cursorPos; i++) {
+		cursorX += _font->getCharWidth(_text[i]);
+	}
+
+	return cursorX;
 }
 
 // Calculate values for centralised text
@@ -251,4 +270,20 @@ void TextBox::getPreferredDimensions(Rect& rect) const {
 void TextBox::moveCursorToPosition(const u32 position) {
 	u32 len = strlen(_text);
 	_cursorPos = len >= position ? position : len;
+
+	draw();
+}
+
+void TextBox::showCursor() {
+	if (!_showCursor) {
+		_showCursor = true;
+		draw();
+	}
+}
+
+void TextBox::hideCursor() {
+	if (_showCursor) {
+		_showCursor = false;
+		draw();
+	}
 }

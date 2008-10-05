@@ -41,6 +41,7 @@ Change Log
      - Added missing glyphs to tinyfont.bmp.
      - Added timer example.
      - Added cursor functionality to TextBox.
+     - Added GraphicsPort::drawFilledXORRect().
 
 
   V0.34 (20080702)
