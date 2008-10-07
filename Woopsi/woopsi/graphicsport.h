@@ -232,7 +232,7 @@ public:
 	
 	/**
 	 * Draw a bitmap to the port's bitmap, using the supplied transparent colour
-	 * as an invisibile colour.  This is considerably slower than the standard bitmap
+	 * as an invisible colour.  This is considerably slower than the standard bitmap
 	 * drawing routine as it plots pixel-by-pixel instead of using a scanline DMA copy.
 	 * @param x The x co-ordinate to draw the bitmap to.
 	 * @param y The y co-ordinate to draw the bitmap to.
@@ -246,6 +246,16 @@ public:
 	 * @param transparentColour The transparent colour used in the bitmap.
 	 */
 	void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour);
+
+	/**
+	 * Draw a line to the port's bitmap.
+	 * @param x1 The x co-ordinate of the start point of the line.
+	 * @param y1 The y co-ordinate of the start point of the line.
+	 * @param x2 The x co-ordinate of the end point of the line.
+	 * @param y2 The y co-ordinate of the end point of the line.
+	 * @param colour The colour of the line.
+	 */
+	void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
 
 	/**
 	 * Erases the graphics port's output by redrawing its gadget.
@@ -272,6 +282,7 @@ private:
 	void clipXORPixel(s16 x, s16 y, const Gadget::Rect& clipRect);
 	void clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect& clipRect);
 	void clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect& clipRect);
+	void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Gadget::Rect& clipRect);
 
 	// Drawing functions that take pre-clipped values
 	void drawClippedPixel(s16 x, s16 y, u16 colour);
@@ -284,9 +295,11 @@ private:
 	void drawClippedXORHorizLine(s16 x, s16 y, u16 width);
 	void drawClippedXORVertLine(s16 x, s16 y, u16 height);
 	void drawClippedXORRect(s16 x, s16 y, u16 width, u16 height);
+	void drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
 
 	void convertPortToScreenSpace(s16* x, s16* y);
 	bool clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Gadget::Rect& clipRect);
+	u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);
 };
 
 #endif

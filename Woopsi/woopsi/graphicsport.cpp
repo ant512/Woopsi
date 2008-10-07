@@ -881,3 +881,160 @@ void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipR
 		drawClippedPixel(x, y, colour);
 	}
 }
+
+void GraphicsPort::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
+
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x1, &y1);
+	convertPortToScreenSpace(&x2, &y2);
+
+	if (_clipRect == NULL) {
+		// Draw all visible rects
+		for (u8 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
+			clipLine(x1, y1, x2, y2, colour, _gadget->getVisibleRectCache()->at(i));
+		}
+	} else {
+		// Draw single rectangle
+		clipLine(x1, y1, x2, y2, colour, *_clipRect);
+	}
+}
+
+u8 GraphicsPort::getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax) {
+	u8 code = 0;
+	
+	if (y > yMax) code |= 1;
+	if (y < yMin) code |= 2;
+	if (x > xMax) code |= 4;
+	if (x < xMin) code |= 8;
+	
+	return code;
+}
+
+void GraphicsPort::clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Gadget::Rect& clipRect) {
+	
+	// Extract data from cliprect
+	s16 minX = clipRect.x;
+	s16 minY = clipRect.y;
+	s16 maxX = clipRect.x + clipRect.width - 1;
+	s16 maxY = clipRect.y + clipRect.height - 1;
+
+	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
+
+		// Get outcodes for each point
+		u8 code1 = getClipLineOutCode(x1, y1, minX, minY, maxX, maxY);
+		u8 code2 = getClipLineOutCode(x2, y2, minX, minY, maxX, maxY);
+		
+		// Clip
+		while (1) {
+			// Check for trivial cases
+			if (!(code1 | code2)) {
+				
+				// Line entirely within visible region
+				// Draw the line
+				drawClippedLine(x1, y1, x2, y2, colour);
+				return;
+			} else if (code1 & code2) {
+				
+				// Both end points fall within the same off-screen region
+				return;
+			} else {
+				
+				// No trivial accept
+				s16 x = 0;
+				s16 y = 0;
+				s32 t = 0;
+				u8 codeout;
+				
+				// Choose one of the end points to manipulate (only choose
+				// the end point that is still off screen)
+				codeout = code1 ? code1 : code2;
+				
+				// Check each region
+				if (codeout & 1) {
+					
+					// Check top value
+					t = ((maxY - y1) << 8) / (y2 - y1);
+					x = x1 + ((t * (x2 - x1)) >> 8);
+					y = maxY;
+				} else if (codeout & 2) {
+					
+					// Check bottom value
+					t = ((minY - y1) << 8) / (y2 - y1);
+					x = x1 + ((t * (x2 - x1)) >> 8);
+					y = minY;
+				} else if (codeout & 4) {
+					
+					// Check right value
+					t = ((maxX - x1) << 8) / (x2 - x1);
+					y = y1 + ((t * (y2 - y1)) >> 8);
+					x = maxX;
+				} else if (codeout & 8) {
+					
+					// Check left value
+					t = ((minX - x1) << 8) / (x2 - x1);
+					y = y1 + ((t * (y2 - y1)) >> 8);
+					x = minX;
+				}
+				
+				// Check to see which endpoint we clipped
+				if (codeout == code1) {
+					// First endpoint clipped; update first point
+					x1 = x;
+					y1 = y;
+					
+					// Clip again
+					code1 = getClipLineOutCode(x1, y1, minX, minY, maxX, maxY);
+				} else {
+					// Second endpoint clipped; update second point
+					x2 = x;
+					y2 = y;
+					
+					// Clip again
+					code2 = getClipLineOutCode(x2, y2, minX, minY, maxX, maxY);
+				}
+			}
+		}
+	}
+}
+
+void GraphicsPort::drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
+	int dx, dy, inx, iny, e;
+	
+	dx = x2 - x1;
+	dy = y2 - y1;
+	inx = dx > 0 ? 1 : -1;
+	iny = dy > 0 ? 1 : -1;
+
+	if (dx < 0) dx = -dx;
+	if (dy < 0) dy = -dy;
+	
+	if (dx >= dy) {
+		dy <<= 1;
+		e = dy - dx;
+		dx <<= 1;
+		while (x1 != x2) {
+			drawClippedPixel(x1, y1,colour);
+			if (e >= 0) {
+					y1 += iny;
+					e-= dx;
+			}
+			e += dy; x1 += inx;
+		}
+	} else {
+		dx <<= 1;
+		e = dx - dy;
+		dy <<= 1;
+		while (y1 != y2) {
+			drawClippedPixel(x1, y1, colour);
+			if (e >= 0) {
+					x1 += inx;
+					e -= dy;
+			}
+			e += dx; y1 += iny;
+		}
+	}
+	drawClippedPixel(x1, y1, colour);
+}

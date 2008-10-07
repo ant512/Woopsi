@@ -108,7 +108,7 @@ public:
 	 * @param y1 The y co-ordinate of the start point of the line.
 	 * @param x2 The x co-ordinate of the end point of the line.
 	 * @param y2 The y co-ordinate of the end point of the line.
-	 * @param colour The colour of the rectangle.
+	 * @param colour The colour of the line.
 	 */
 	virtual void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
 	

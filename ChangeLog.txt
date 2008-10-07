@@ -42,6 +42,7 @@ Change Log
      - Added timer example.
      - Added cursor functionality to TextBox.
      - Added GraphicsPort::drawFilledXORRect().
+     - Added GraphicsPort::drawLine() and associated clipping functions.
 
 
   V0.34 (20080702)
