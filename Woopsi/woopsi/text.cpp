@@ -158,7 +158,7 @@ void Text::wrap() {
 		if (scanPos > pos) {
 
 			// If we didn't find a breakpoint split at the current position
-			if (breakPos == 0) breakPos = scanPos;
+			if (breakPos == 0) breakPos = scanPos - 1;
 
 			// Trim preceeding spaces from the start of the next line
 			while (_text[breakPos + 1] == ' ') {

@@ -16,6 +16,7 @@ Change Log
        strings.
      - Renamed addText() to appendText() in TextBox, MultiLineTextBox and
        ScrollingTextBox classes.
+     - Text::wrap() correctly wraps text rows with no break points.
 
   - New Features:
      - Button has different appearance when disabled.
