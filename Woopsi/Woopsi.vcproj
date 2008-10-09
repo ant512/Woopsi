@@ -126,6 +126,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\label.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\listbox.cpp"
 				>
 			</File>
@@ -318,6 +322,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\woopsistring.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\woopsitimer.cpp"
 				>
 			</File>
@@ -425,6 +433,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\graphicsport.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\label.h"
 				>
 			</File>
 			<File
@@ -625,6 +637,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\woopsikeyboard.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\woopsistring.h"
 				>
 			</File>
 			<File

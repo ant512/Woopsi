@@ -17,6 +17,7 @@ Change Log
      - Renamed addText() to appendText() in TextBox, MultiLineTextBox and
        ScrollingTextBox classes.
      - Text::wrap() correctly wraps text rows with no break points.
+     - Fixed const-correctness of some Font (and subclass) methods.
 
   - New Features:
      - Button has different appearance when disabled.
@@ -44,6 +45,9 @@ Change Log
      - Added cursor functionality to TextBox.
      - Added GraphicsPort::drawFilledXORRect().
      - Added GraphicsPort::drawLine() and associated clipping functions.
+     - Added WoopsiString class and replaced string handling code in TextBox.
+     - Added Label gadget as a base class for TextBox and Button; can be used as
+       a read-only, borderless text display gadget.
 
 
   V0.34 (20080702)

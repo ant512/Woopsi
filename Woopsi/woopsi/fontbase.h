@@ -108,7 +108,7 @@ public:
 	 * @param text The string to check.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(const char* text) = 0;
+	virtual u16 getStringWidth(const char* text) const = 0;
 
 	/**
 	 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -118,14 +118,14 @@ public:
 	 * @param length The length of the string in chars.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(const char* text, u16 length) = 0;
+	virtual u16 getStringWidth(const char* text, u16 length) const = 0;
 
 	/**
 	 * Get the width of an individual character.
 	 * @param letter The character to get the width of.
 	 * @return The width of the character in pixels.
 	 */
-	virtual u16 getCharWidth(char letter) = 0;
+	virtual u16 getCharWidth(char letter) const = 0;
 
 	/**
 	 * Gets the height of the font.

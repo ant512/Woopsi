@@ -1,7 +1,7 @@
 #ifndef _CONTEXT_MENU_ITEM_H_
 #define _CONTEXT_MENU_ITEM_H_
 
-#include "textbox.h"
+#include "label.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ using namespace std;
  * gadget's context menu item array, so these objects should
  * not be created by any other code.
  */
-class ContextMenuItem : public TextBox {
+class ContextMenuItem : public Label {
 public:
 
 	/**
@@ -82,7 +82,7 @@ private:
 	/**
 	 * Copy constructor is protected to prevent usage.
 	 */
-	inline ContextMenuItem(const ContextMenuItem& contextMenuItem) : TextBox(contextMenuItem) { };
+	inline ContextMenuItem(const ContextMenuItem& contextMenuItem) : Label(contextMenuItem) { };
 };
 
 #endif

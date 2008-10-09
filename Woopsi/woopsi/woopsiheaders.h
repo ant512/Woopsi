@@ -27,6 +27,7 @@
 #include "glyphs.h"
 #include "gradient.h"
 #include "graphicsport.h"
+#include "label.h"
 #include "listbox.h"
 #include "listdata.h"
 #include "monofont.h"
@@ -75,6 +76,7 @@
 #include "woopsifuncs.h"
 #include "woopsikeyboard.h"
 #include "woopsikey.h"
+#include "woopsistring.h"
 #include "woopsitimer.h"
 
 #endif

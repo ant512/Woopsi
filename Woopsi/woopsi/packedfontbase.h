@@ -75,7 +75,7 @@ public:
 	 * @param text The string to check.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(const char* text);
+	virtual u16 getStringWidth(const char* text) const;
 
 	/**
 	 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -85,14 +85,14 @@ public:
 	 * @param length The length of the string in chars.
 	 * @return The width of the string in pixels.
 	 */
-	virtual u16 getStringWidth(const char* text, u16 length);
+	virtual u16 getStringWidth(const char* text, u16 length) const;
 
 	/**
 	 * Get the width of an individual character.
 	 * @param letter The character to get the width of.
 	 * @return The width of the character in pixels.
 	 */
-	virtual u16 getCharWidth(char letter);
+	virtual u16 getCharWidth(char letter) const;
 
 	/**
 	 * Text uses this to decide whether a given character is blank or not

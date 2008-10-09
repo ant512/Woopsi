@@ -5,7 +5,7 @@
  * @param letter The character to get the width of.
  * @return The width of the character in pixels.
  */
-u16 PackedFontBase::getCharWidth(char letter)
+u16 PackedFontBase::getCharWidth(char letter) const
 {
 	if (_fontWidth) return _fontWidth;
 
@@ -27,7 +27,7 @@ const bool PackedFontBase::isCharBlank(const char letter) const
  * @param text The string to check.
  * @return The width of the string in pixels.
  */
-u16 PackedFontBase::getStringWidth(const char* text)
+u16 PackedFontBase::getStringWidth(const char* text) const
 {
 	u16 total = 0;
 	while (*text) {
@@ -44,7 +44,7 @@ u16 PackedFontBase::getStringWidth(const char* text)
  * @param length The length of the string in chars.
  * @return The width of the string in pixels.
  */
-u16 PackedFontBase::getStringWidth(const char* text, u16 length)
+u16 PackedFontBase::getStringWidth(const char* text, u16 length) const
 {
 	if (_fontWidth) return _fontWidth * length;
 

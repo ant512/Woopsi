@@ -3,7 +3,8 @@
 
 #include <nds.h>
 #include "textwriter.h"
-#include "gadget.h"
+#include "label.h"
+#include "woopsistring.h"
 
 using namespace std;
 
@@ -11,26 +12,8 @@ using namespace std;
  * Single-line textbox gadget.  Can align text both vertically and horizontally in
  * different ways.
  */
-class TextBox : public Gadget {
+class TextBox : public Label {
 public:
-
-	/**
-	 * Enum of horizontal alignment options.
-	 */
-	enum TextAlignmentHoriz {
-		TEXT_ALIGNMENT_HORIZ_CENTRE = 0,		/**< Centre the text */
-		TEXT_ALIGNMENT_HORIZ_LEFT = 1,		/**< Align left */
-		TEXT_ALIGNMENT_HORIZ_RIGHT = 2		/**< Align right */
-	};
-
-	/**
-	 * Enum of vertical alignment options.
-	 */
-	enum TextAlignmentVert {
-		TEXT_ALIGNMENT_VERT_CENTRE = 0,		/**< Align to centre of textbox */
-		TEXT_ALIGNMENT_VERT_TOP = 1,			/**< Align to top of textbox */
-		TEXT_ALIGNMENT_VERT_BOTTOM = 2		/**< Align to bottom of textbox */
-	};
 
 	/**
 	 * Constructor for a textbox containing a string.
@@ -67,36 +50,6 @@ public:
 	virtual inline void draw() { Gadget::draw(); };
 
 	/**
-	 * Set the horizontal alignment of text within the textbox.
-	 * @param alignment The horizontal position of the text.
-	 */
-	virtual void setTextAlignmentHoriz(TextAlignmentHoriz alignment);
-	
-	/**
-	 * Set the vertical alignment of text within the textbox.
-	 * @param alignment The vertical position of the text.
-	 */
-	virtual void setTextAlignmentVert(TextAlignmentVert alignment);
-	
-	/**
-	 * Returns a pointer to the string shown in the textbox.
-	 * @return Pointer to the string.
-	 */
-	virtual inline const char* getText() const { return _text; };
-	
-	/**
-	 * Set the text displayed in the textbox.
-	 * @param text String to display.
-	 */
-	virtual void setText(const char* text);
-
-	/**
-	 * Set the text displayed in the textbox.
-	 * @param text Character to display.
-	 */
-	virtual void setText(const char text);
-
-	/**
 	 * Shows the cursor.
 	 */
 	virtual void showCursor();
@@ -105,18 +58,6 @@ public:
 	 * Hides the cursor.
 	 */
 	virtual void hideCursor();
-	
-	/**
-	 * Append new text to the end of the current text displayed in the textbox.
-	 * @param text String to append.
-	 */
-	virtual void appendText(const char* text);
-
-	/**
-	 * Append new text to the end of the current text displayed in the textbox.
-	 * @param text Char to append.
-	 */
-	virtual void appendText(const char text);
 
 	/**
 	 * Insert text at the current cursor position.
@@ -129,22 +70,6 @@ public:
 	 * @param text Char to insert.
 	 */
 	virtual void insertTextAtCursor(const char text);
-
-	/**
-	 * Resize the gadget to the new dimensions.
-	 * @param width The new width.
-	 * @param height The new height.
-	 * @return True if the resize was successful.
-	 */
-	virtual bool resize(u16 width, u16 height);
-
-	/**
-	 * Insert the dimensions that this gadget wants to have into the rect
-	 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-	 * parent.
-	 * @param rect Reference to a rect to populate with data.
-	 */
-	virtual void getPreferredDimensions(Rect& rect) const;
 
 	/**
 	 * Move the cursor to the text position specified.  0 indicates the start
@@ -162,19 +87,8 @@ public:
 	virtual inline const u32 getCursorPosition() const { return _cursorPos; };
 
 protected:
-	char* _text;							/**< String to display in the textbox */
-	u16 _textX;								/**< X co-ordinate of the text relative to the gadget */
-	u16 _textY;								/**< Y co-ordinate of the text relative to the gadget */
-	u8 _padding;							/**< Padding around the text in pixels */
-	TextAlignmentHoriz _hAlignment;			/**< Horizontal alignment of the text */
-	TextAlignmentVert _vAlignment;			/**< Vertical alignment of the text */
 	u32 _cursorPos;							/**< Position of the cursor within the string */
 	bool _showCursor;						/**< Set to true to make cursor visible */
-
-	/**
-	 * Calculate the position of the string based on its length and the alignment options.
-	 */
-	virtual void calculateTextPosition();
 
 	/**
 	 * Get the x co-ordinate of the cursor in pixels.
@@ -183,17 +97,9 @@ protected:
 	virtual const u16 getCursorXPos() const;
 
 	/**
-	 * Destructor.
-	 */
-	virtual inline ~TextBox() {
-		delete[] _text;
-		_text = NULL;
-	};
-
-	/**
 	 * Copy constructor is protected to prevent usage.
 	 */
-	inline TextBox(const TextBox& textbox) : Gadget(textbox) { };
+	inline TextBox(const TextBox& textbox) : Label(textbox) { };
 };
 
 #endif

@@ -2,14 +2,14 @@
 #define _BUTTON_H_
 
 #include <nds.h>
-#include "textbox.h"
+#include "label.h"
 
 using namespace std;
 
 /**
  * Clickable button gadget.  Displays text within the button.
  */
-class Button : public TextBox {
+class Button : public Label {
 public:
 
 	/**
@@ -72,7 +72,7 @@ protected:
 	/**
 	 * Copy constructor is protected to prevent usage.
 	 */
-	inline Button(const Button& button) : TextBox(button) { };
+	inline Button(const Button& button) : Label(button) { };
 };
 
 #endif

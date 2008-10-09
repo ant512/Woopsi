@@ -2,12 +2,14 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 
-Button::Button(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : TextBox(x, y, width, height, text, font) {
+Button::Button(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Label(x, y, width, height, text, font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
+	setBorderless(false);
 }
 
-Button::Button(s16 x, s16 y, u16 width, u16 height, char letter, FontBase* font) : TextBox(x, y, width, height, letter, font) {
+Button::Button(s16 x, s16 y, u16 width, u16 height, char letter, FontBase* font) : Label(x, y, width, height, letter, font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
+	setBorderless(false);
 }
 
 void Button::draw(Rect clipRect) {
@@ -19,19 +21,19 @@ void Button::draw(Rect clipRect) {
 		// Draw disabled state
 		port->drawFilledRect(0, 0, _width, _height, _backColour);
 
-		port->drawText(_textX, _textY, _font, _text, _darkColour);
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _darkColour);
 	} else if (!isClicked()) {
 
 		// Draw normal state
 		port->drawFilledRect(0, 0, _width, _height, _backColour);
 
-		port->drawText(_textX, _textY, _font, _text);
+		port->drawText(_textX, _textY, _font, _text->getCharArray());
 	} else {
 
 		// Draw clicked state
 		port->drawFilledRect(0, 0, _width, _height, _darkColour);
 
-		port->drawText(_textX, _textY, _font, _text, _shineColour);
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _shineColour);
 	}
 
 	// Draw outline
