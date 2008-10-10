@@ -75,13 +75,15 @@ public:
 
 	/**
 	 * Remove all characters from the string from the start index onwards.
-	 * @param count Index to remove from.
+	 * @param startIndex Index to remove from.
 	 */
 	virtual void remove(const u32 startIndex);
 
 	/**
-	 * Remove all characters from the string from the start index onwards.
-	 * @param count Index to remove from.
+	 * Remove specified number of characters from the string from the
+	 * start index onwards.
+	 * @param startIndex Index to remove from.
+	 * @param count Number of characters to remove.
 	 */
 	virtual void remove(const u32 startIndex, const u32 count);
 

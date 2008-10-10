@@ -148,6 +148,7 @@ void WoopsiString::remove(const u32 startIndex) {
 	// Reject if requested operation makes no sense
 	if (!hasData()) return;
 	if (startIndex > _length) return;
+	if (_length == 0) return;
 
 	// Removing characters from the end of the string is trivial - simply
 	// move the terminator and decrease the length
@@ -160,6 +161,7 @@ void WoopsiString::remove(const u32 startIndex, const u32 count) {
 	// Reject if requested operation makes no sense
 	if (!hasData()) return;
 	if (startIndex > _length) return;
+	if (_length == 0) return;
 
 	// Bounds check the count
 	u32 boundsCheckedCount = count;

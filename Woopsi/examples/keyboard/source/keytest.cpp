@@ -59,7 +59,11 @@ bool KeyTest::handleEvent(const EventArgs& e) {
 				
 				// Append key value to output box if the last key was not a modifier
 				if (key->getValue() != '\0') {
+					// Not modifier; append value
 					_output->appendText(key->getValue());
+				} else if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
+					// Delete last character
+					_output->removeText(_output->getTextLength());
 				}
 			}
 		}

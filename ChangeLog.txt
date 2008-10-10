@@ -49,6 +49,7 @@ Change Log
      - Added Label gadget as a base class for TextBox and Button; can be used as
        a read-only, borderless text display gadget.
      - Text inherits from WoopsiString class.
+     - Added MultiLineTextBox::removeText() methods.
 
 
   V0.34 (20080702)

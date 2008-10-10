@@ -127,6 +127,20 @@ public:
 	virtual void appendText(const char text);
 
 	/**
+	 * Remove all characters from the string from the start index onwards.
+	 * @param startIndex Index to remove from.
+	 */
+	virtual void removeText(const u32 startIndex);
+
+	/**
+	 * Remove specified number of characters from the string from the
+	 * start index onwards.
+	 * @param startIndex Index to remove from.
+	 * @param count Number of characters to remove.
+	 */
+	virtual void removeText(const u32 startIndex, const u32 count);
+
+	/**
 	 * Set the font used in the textbox.
 	 * @param font Pointer to the new font.
 	 */
@@ -139,6 +153,12 @@ public:
 	 * @return True if the resize was successful.
 	 */
 	virtual bool resize(u16 width, u16 height);
+
+	/**
+	 * Get the length of the text string.
+	 * @return The length of the text string.
+	 */
+	virtual const u32 getTextLength() const;
 
 protected:
 	Text* _text;						/**< Text object that manipulates and wraps the raw text string */

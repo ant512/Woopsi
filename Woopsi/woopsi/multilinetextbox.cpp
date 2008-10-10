@@ -246,6 +246,39 @@ void MultiLineTextBox::appendText(const char text) {
 	delete[] newText;
 }
 
+void MultiLineTextBox::removeText(const u32 startIndex) {
+	_text->remove(startIndex);
+
+	Gadget::draw();
+
+	// Update max scroll value
+	if (_text->getLineCount() > _visibleRows) {
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+
+		// Scroll to bottom of new text
+		jump(0, -_canvasHeight - _height);
+	}
+
+	raiseValueChangeEvent();
+}
+
+void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
+	_text->remove(startIndex, count);
+
+	Gadget::draw();
+
+	// Update max scroll value
+	if (_text->getLineCount() > _visibleRows) {
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+
+		// Scroll to bottom of new text
+		jump(0, -_canvasHeight - _height);
+	}
+
+	raiseValueChangeEvent();
+}
+
+
 void MultiLineTextBox::setFont(FontBase* font) {
 	_font = font;
 	_text->setFont(font);
@@ -327,4 +360,8 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 	if (raiseEvent) raiseValueChangeEvent();
 
 	return true;
+}
+
+const u32 MultiLineTextBox::getTextLength() const {
+	return _text->getLength();
 }
