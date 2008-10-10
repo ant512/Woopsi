@@ -6,11 +6,15 @@
 using namespace std;
 
 /**
- * Yet another string class.  Where possible, the string avoids allocating memory each time the string grows or
- * shrinks.  This means that the string may consume more memory than the number of chars would seem to dictate
- * if the object previously contained a large string that has subsequently been truncated.  It also means
- * that increasing the length of such a string is a cheaper operation as memory does not need to allocated and
- * copied.
+ * Yet another string class.  Where possible, the string avoids allocating memory
+ * each time the string grows or shrinks.  This means that the string may consume
+ * more memory than the number of chars would seem to dictate if the object previously
+ * contained a large string that has subsequently been truncated.  It also means
+ * that increasing the length of such a string is a cheaper operation as memory does
+ * not need to allocated and copied.
+ *
+ * Additionally, the string increases its array size by _growAmount every time it
+ * needs to allocate extra memory, potentially reducing the number of reallocs needed.
  */
 class WoopsiString {
 public:
@@ -138,6 +142,8 @@ protected:
 private:
 	u32 _length;							/**< Cache length of string for fast access */
 	u32 _allocatedSize;						/**< Number of bytes allocated for this string */
+	u32 _growAmount;						/**< Number of chars that the string grows by
+												 whenever it needs to get larger */
 };
 
 #endif

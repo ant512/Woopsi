@@ -5,6 +5,7 @@ WoopsiString::WoopsiString(const char* text) {
 	_text = NULL;
 	_length = 0;
 	_allocatedSize = 0;
+	_growAmount = 32;
 
 	setText(text);
 }
@@ -13,6 +14,7 @@ WoopsiString::WoopsiString(const char text) {
 	_text = NULL;
 	_length = 0;
 	_allocatedSize = 0;
+	_growAmount = 32;
 
 	setText(text);
 }
@@ -89,7 +91,7 @@ void WoopsiString::insert(const char* text, u32 index) {
 		if (_length + 1 > _allocatedSize) {
 
 			// Remember new allocated size
-			_allocatedSize = _length + 1;
+			_allocatedSize = _length + 1 + _growAmount;
 
 			// Reserve memory for new string
 			char* newText = new char[_allocatedSize];
@@ -188,7 +190,7 @@ void WoopsiString::allocateMemory(u32 chars, bool preserve) {
 	if (chars > _allocatedSize) {
 
 		// Not enough space in existing memory; allocate new memory
-		char* newText = new char[chars];
+		char* newText = new char[chars + _growAmount];
 
 		// Free old memory if necessary
 		if (_text != NULL) {
@@ -203,6 +205,6 @@ void WoopsiString::allocateMemory(u32 chars, bool preserve) {
 		_text = newText;
 
 		// Remember how much memory we've allocated
-		_allocatedSize = chars;
+		_allocatedSize = chars + _growAmount;
 	}
 }
