@@ -1,6 +1,5 @@
 #include <string.h>
 #include "woopsistring.h"
-#include "fontbase.h"
 
 WoopsiString::WoopsiString(const char* text) {
 	_text = NULL;
@@ -179,10 +178,6 @@ void WoopsiString::remove(const u32 startIndex, const u32 count) {
 
 	// Append terminator to the string since we didn't copy it initially
 	_text[_length] = '\0';
-}
-
-const u8 WoopsiString::pixelWidth(const FontBase* font) const {
-	return font->getStringWidth(_text);
 }
 
 void WoopsiString::allocateMemory(u32 chars, bool preserve) {

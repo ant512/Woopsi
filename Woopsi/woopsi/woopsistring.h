@@ -5,8 +5,6 @@
 
 using namespace std;
 
-class FontBase;
-
 /**
  * Yet another string class.  Where possible, the string avoids allocating memory each time the string grows or
  * shrinks.  This means that the string may consume more memory than the number of chars would seem to dictate
@@ -88,12 +86,6 @@ public:
 	 * @return The length of the string.
 	 */
 	virtual inline const u32 length() const { return _length; };
-
-	/**
-	 * Get the width of string in pixels when displayed using the supplied font
-	 * @return The width of the string.
-	 */
-	virtual const u8 pixelWidth(const FontBase* font) const;
 
 	/**
 	 * Copy constructor.
