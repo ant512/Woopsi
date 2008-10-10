@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "fontbase.h"
 #include "dynamicarray.h"
+#include "woopsistring.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ using namespace std;
  * more advanced functionality - it can wrap text, calculate its
  * height in pixels, calculate the width of a row, etc.
  */
-class Text {
+class Text : public WoopsiString {
 
 public:
 
@@ -25,21 +26,52 @@ public:
 	Text(FontBase* font, const char* text, u16 width);
 
 	/**
-	 * Destructor.
+	 * Set the text in the string.
+	 * @param text Char array to use as the new data for this string.
 	 */
-	inline ~Text() { delete [] _text; };
+	virtual void setText(const char* text);
 
 	/**
-	 * Set the text for the object to hold.
-	 * @param text Pointer to the text.
+	 * Set the text in the string.
+	 * @param text Character to to use as the new data for this string.
 	 */
-	void setText(const char* text);
+	virtual void setText(const char text);
+	
+	/**
+	 * Append text to the end of the string.
+	 * @param text String to append.
+	 */
+	virtual void append(const char* text);
 
 	/**
-	 * Add new text to the end of the current string.
-	 * @param text Pointer to the text.
+	 * Append text to the end of the string.
+	 * @param text Char to append.
 	 */
-	void appendText(const char* text);
+	virtual void append(const char text);
+
+	/**
+	 * Insert text at the specified character index.
+	 * @param text The text to insert.
+	 */
+	virtual void insert(const char* text, const u32 index);
+
+	/**
+	 * Insert text at the specified character index.
+	 * @param text Char to insert.
+	 */
+	virtual void insert(const char text, const u32 index);
+
+	/**
+	 * Remove all characters from the string from the start index onwards.
+	 * @param count Index to remove from.
+	 */
+	virtual void remove(const u32 startIndex);
+
+	/**
+	 * Remove all characters from the string from the start index onwards.
+	 * @param count Index to remove from.
+	 */
+	virtual void remove(const u32 startIndex, const u32 count);
 	
 	/**
 	 * Set the vertical spacing between rows of text.
@@ -95,7 +127,7 @@ public:
 	 * @param lineNumber The line to get a pointer to.
 	 * @return A pointer to the line.
 	 */
-	inline char* getLinePointer(const s32 lineNumber) const { return _text + _linePositions[lineNumber]; };
+	inline const char* getLinePointer(const s32 lineNumber) const { return getCharArray() + _linePositions[lineNumber]; };
 
 	/**
 	 * Get the total height of the text in pixels.
@@ -146,14 +178,12 @@ public:
 	void wrap();
 
 private:
-
 	FontBase* _font;						/**< Font to be used for output */
 	DynamicArray<u32> _linePositions;		/**< Array containing start indexes of each wrapped line */
 	u8 _lineSpacing;						/**< Spacing between lines of text */
 	s32 _textPixelHeight;					/**< Total height of the wrapped text in pixels */
 	u8 _textPixelWidth;						/**< Total width of the wrapped text in pixels */
 	u16 _width;								/**< Width in pixels available to the text */
-	char* _text;							/**< String that the object works with */
 };
 
 #endif

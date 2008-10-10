@@ -48,6 +48,7 @@ Change Log
      - Added WoopsiString class and replaced string handling code in TextBox.
      - Added Label gadget as a base class for TextBox and Button; can be used as
        a read-only, borderless text display gadget.
+     - Text inherits from WoopsiString class.
 
 
   V0.34 (20080702)

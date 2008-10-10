@@ -59,7 +59,7 @@ void TextBox::insertTextAtCursor(const char text) {
 }
 
 void TextBox::moveCursorToPosition(const u32 position) {
-	u32 len = _text->length();
+	u32 len = _text->getLength();
 	_cursorPos = len >= position ? position : len;
 
 	draw();

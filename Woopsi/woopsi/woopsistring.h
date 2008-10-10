@@ -85,7 +85,7 @@ public:
 	 * Get the length of the string in characters.
 	 * @return The length of the string.
 	 */
-	virtual inline const u32 length() const { return _length; };
+	virtual inline const u32 getLength() const { return _length; };
 
 	/**
 	 * Copy constructor.
@@ -103,10 +103,17 @@ public:
 		_text = NULL;
 	};
 
+	/**
+	 * Overload the [] operator to allow array-style access.
+	 * @param index The index to retrieve.
+	 * @return The char at the specified index.
+	 */
+	char& operator[](const u32 index) const {
+		return _text[index];
+	};
+
 protected:
 	char* _text;							/**< Raw char array data */
-	u32 _length;							/**< Cache length of string for fast access */
-	u32 _allocatedSize;						/**< Number of bytes allocated for this string */
 
 	/**
 	 * Allocate memory for the string.
@@ -121,6 +128,16 @@ protected:
 	 * @return True if the string contains any data; false if no data has yet been supplied.
 	 */
 	virtual inline bool hasData() const { return (_text != NULL); };
+
+	/**
+	 * Get the amount of allocated memory.
+	 * @return The number of chars allocated in RAM.
+	 */
+	virtual inline u32 getAllocatedSize() { return _allocatedSize; };
+
+private:
+	u32 _length;							/**< Cache length of string for fast access */
+	u32 _allocatedSize;						/**< Number of bytes allocated for this string */
 };
 
 #endif

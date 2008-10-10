@@ -1,14 +1,9 @@
 #include "text.h"
 
-// TODO: Allow line spacing to be set in constructor only, or make const
-
-Text::Text(FontBase* font, const char* text, u16 width) {
+Text::Text(FontBase* font, const char* text, u16 width) : WoopsiString(text) {
 	_font = font;
 	_width = width;
 	_lineSpacing = 1;
-	_text = NULL;
-
-	setText(text);
 }
 
 FontBase* Text::getFont() {
@@ -21,7 +16,7 @@ u8 Text::getLineLength(s32 lineNumber) {
 		return _linePositions[lineNumber + 1] - _linePositions[lineNumber];
 	}
 
-	return strlen(_text) - _linePositions[lineNumber];
+	return getLength() - _linePositions[lineNumber];
 }
 
 // Calculate the length of an individual line sans right-hand spaces
@@ -44,44 +39,46 @@ u8 Text::getLineTrimmedPixelLength(s32 lineNumber) {
 	return _font->getStringWidth(getLinePointer(lineNumber), getLineTrimmedLength(lineNumber));
 }
 
-// Set the text
 void Text::setText(const char* text) {
-
-	// Have we already created a block of memory that we need to free?
-	if (_text != NULL) {
-		// Free the memory
-		delete [] _text;
-	}
-
-	// Create new memory for string
-	_text = new char[strlen(text) + 1];
-
-	// Copy text
-	strcpy(_text, text);
-
+	WoopsiString::setText(text);
 	wrap();
 }
 
-void Text::appendText(const char* text) {
-	// Reserve memory for concatenated string
-	char* newText = new char[strlen(_text) + strlen(text) + 1];
-
-	// Copy old text into new text
-	strcpy(newText, _text);
-
-	// Concatenate strings
-	strcat(newText, text);
-
-	// Free existing memory
-	delete [] _text;
-
-	// Update pointer
-	_text = newText;
-
+void Text::setText(const char text) {
+	WoopsiString::setText(text);
 	wrap();
 }
 
-// Set the line spacing
+void Text::append(const char* text) {
+	WoopsiString::append(text);
+	wrap();
+}
+
+void Text::append(const char text) {
+	WoopsiString::append(text);
+	wrap();
+}
+
+void Text::insert(const char* text, const u32 index) {
+	WoopsiString::insert(text, index);
+	wrap();
+}
+
+void Text::insert(const char text, const u32 index) {
+	WoopsiString::insert(text, index);
+	wrap();
+}
+
+void Text::remove(const u32 startIndex) {
+	WoopsiString::remove(startIndex);
+	wrap();
+}
+
+void Text::remove(const u32 startIndex, const u32 count) {
+	WoopsiString::remove(startIndex, count);
+	wrap();
+}
+
 void Text::setLineSpacing(u8 lineSpacing) {
 	_lineSpacing = lineSpacing;
 	wrap();
@@ -196,18 +193,8 @@ void Text::stripTopLines(const s32 lines) {
 		textStart += getLineLength(i);
 	}
 
-	// Reserve memory for shortened string
-	u16 newLength = strlen(_text) - textStart;
-	char* newText = new char[newLength + 1];
-
-	// Copy old text into new text
-	strcpy(newText, (_text + textStart));
-
-	// Free existing memory
-	delete [] _text;
-
-	// Update pointer
-	_text = newText;
+	// Remove the characters from the start of the string to the found location
+	remove(0, textStart - 1);
 
 	// Rewrap the text
 	wrap();

@@ -213,7 +213,7 @@ void MultiLineTextBox::setText(const char text) {
 
 void MultiLineTextBox::appendText(const char* text) {
 
-	_text->appendText(text);
+	_text->append(text);
 
 	// Ensure that we have the correct number of rows
 	if (_text->getLineCount() > _maxRows) {
