@@ -63,7 +63,7 @@ bool KeyTest::handleEvent(const EventArgs& e) {
 					_output->appendText(key->getValue());
 				} else if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
 					// Delete last character
-					_output->removeText(_output->getTextLength());
+					_output->removeText(_output->getTextLength() - 1);
 				}
 			}
 		}

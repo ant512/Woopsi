@@ -152,7 +152,7 @@ void WoopsiString::remove(const u32 startIndex) {
 
 	// Removing characters from the end of the string is trivial - simply
 	// move the terminator and decrease the length
-	_length = startIndex - 1;
+	_length = startIndex;
 	_text[startIndex] = '\0';
 }
 
