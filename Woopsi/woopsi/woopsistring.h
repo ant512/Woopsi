@@ -69,12 +69,14 @@ public:
 	/**
 	 * Insert text at the specified character index.
 	 * @param text The text to insert.
+	 * @param index The index at which to insert the text.
 	 */
 	virtual void insert(const char* text, const u32 index);
 
 	/**
 	 * Insert text at the specified character index.
-	 * @param text Char to insert.
+	 * @param text Char to insert
+	 * @param index The index at which to insert the char.
 	 */
 	virtual void insert(const char text, const u32 index);
 

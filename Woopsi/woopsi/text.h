@@ -52,24 +52,27 @@ public:
 	/**
 	 * Insert text at the specified character index.
 	 * @param text The text to insert.
+	 * @param index The char index to insert at.
 	 */
 	virtual void insert(const char* text, const u32 index);
 
 	/**
 	 * Insert text at the specified character index.
 	 * @param text Char to insert.
+	 * @param index The char index to insert at.
 	 */
 	virtual void insert(const char text, const u32 index);
 
 	/**
 	 * Remove all characters from the string from the start index onwards.
-	 * @param count Index to remove from.
+	 * @param startIndex The char index to start removing from.
 	 */
 	virtual void remove(const u32 startIndex);
 
 	/**
 	 * Remove all characters from the string from the start index onwards.
-	 * @param count Index to remove from.
+	 * @param startIndex The char index to start removing from.
+	 * @param count The number of chars to remove.
 	 */
 	virtual void remove(const u32 startIndex, const u32 count);
 	

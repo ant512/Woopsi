@@ -107,7 +107,8 @@ public:
 
 	/**
 	 * Get the value represented by this key.  This is the text that should (for example)
-	 * be printed to the screen when the key is clicked.  Modifier keys return '\0'.
+	 * be printed to the screen when the key is clicked.  Modifier keys return the
+	 * string terminator character.
 	 * @return The value of the key
 	 */
 	const char getValue() const;

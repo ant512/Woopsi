@@ -161,7 +161,7 @@ public:
 	 * Remove the supplied timer from the list of timers that receive VBL notifications.
 	 * This is handled automatically by the WoopsiTimer destructor and should not be
 	 * used in user code.
-	 * @param gadget A pointer to the timer to remove from the VBL list.
+	 * @param timer A pointer to the timer to remove from the VBL list.
 	 */
 	static void unregisterFromVBL(WoopsiTimer* timer);
 
