@@ -1,7 +1,14 @@
 Change Log
 ----------
 
-  V0.35
+  V0.36
+  
+  - Fixes:
+     - s32 used as iterator when working with visible rect cache to prevent
+       permanent loops when large numbers of rects were visible.
+     - s32 used as child gadget iterator.
+
+  V0.35 (20081012)
   
   - Fixes:
      - Renamed "Textbox" to "TextBox".

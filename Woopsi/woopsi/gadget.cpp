@@ -110,12 +110,12 @@ Gadget::~Gadget() {
 	}
 
 	// Delete children
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->destroy();
 	}
 
 	// Delete shelved children
-	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+	for (s32 i = 0; i < _shelvedGadgets.size(); i++) {
 		_shelvedGadgets[i]->destroy();
 	}
 
@@ -709,7 +709,7 @@ void Gadget::raiseContextMenuSelectionEvent() {
 }
 
 void Gadget::drawChildren() {
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->draw();
 	}
 }
@@ -727,12 +727,12 @@ void Gadget::draw() {
 		DynamicArray<Rect>* visibleRects = new DynamicArray<Rect>();
 
 		// Copy all visible regions into the new vector
-		for (u16 i = 0; i < _visibleRegionCache.size(); i++) {
+		for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
 			visibleRects->push_back(_visibleRegionCache[i]);
 		}
 
 		// Remove all child rects from the visible vector
-		for (u8 i = 0; i < _gadgets.size(); i++) {
+		for (s32 i = 0; i < _gadgets.size(); i++) {
 			if (visibleRects->size() > 0) {
 				_gadgets[i]->splitRectangles(visibleRects, invisibleRects, this);
 			} else {
@@ -744,7 +744,7 @@ void Gadget::draw() {
 		delete invisibleRects;
 
 		// Draw all visible rectangles
-		for (u8 i = 0; i < visibleRects->size(); i++) {
+		for (s32 i = 0; i < visibleRects->size(); i++) {
 			draw(visibleRects->at(i));
 		}
 
@@ -784,13 +784,13 @@ void Gadget::redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 		splitRectangles(overlappingRects, rectsToDraw, sender);
 		
 		// Draw the dirty rects
-		for (u8 i = 0; i < rectsToDraw->size(); i++) {
+		for (s32 i = 0; i < rectsToDraw->size(); i++) {
 			draw(rectsToDraw->at(i));
 		}
 		
 		// Copy all of the overlapping rects we didn't draw back to the main
 		// array of rects that need to be drawn by another gadget
-		for (u8 i = 0; i < overlappingRects->size(); i++) {
+		for (s32 i = 0; i < overlappingRects->size(); i++) {
 			invalidRects->push_back(overlappingRects->at(i));
 		}
 
@@ -802,7 +802,7 @@ void Gadget::redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 
 void Gadget::redrawDirtyChildren(DynamicArray<Rect>* invalidRects, Gadget* sender) {
 
-	for (s16 i = _gadgets.size() - 1; i > -1 ; i--) {
+	for (s32 i = _gadgets.size() - 1; i > -1 ; i--) {
 		if (invalidRects->size() > 0) {
 			if (_gadgets.at(i) != sender) {
 				_gadgets[i]->redrawDirty(invalidRects, sender);
@@ -821,13 +821,13 @@ void Gadget::removeOverlappedRects(DynamicArray<Rect>* visibleRects, DynamicArra
 
 	// Locate gadget in the list; we add one to the index to
 	// ensure that we deal with the next gadget up in the z-order
-	s16 gadgetIndex = getGadgetIndex(gadget) + 1;
+	s32 gadgetIndex = getGadgetIndex(gadget) + 1;
 
 	// Gadget should never be the bottom item on the screen
 	if (gadgetIndex > 0) {
 
 		// Remove any overlapped rectangles
-		for (u8 i = gadgetIndex; i < _gadgets.size(); i++) {
+		for (s32 i = gadgetIndex; i < _gadgets.size(); i++) {
 			if (visibleRects->size() > 0) {
 				_gadgets[i]->splitRectangles(visibleRects, invisibleRects, gadget);
 			} else {
@@ -849,7 +849,7 @@ void Gadget::removeOverlappedRects(DynamicArray<Rect>* visibleRects, DynamicArra
 void Gadget::splitRectangles(DynamicArray<Rect>* invalidRects, DynamicArray<Rect>* validRects, Gadget* sender) {
 
 	// Check for collisions with any rectangles in the vector
-	for (u16 i = 0; i < invalidRects->size(); i++) {
+	for (s32 i = 0; i < invalidRects->size(); i++) {
 
 		// Get rectangle to check
 		Rect checkRect = invalidRects->at(i);
@@ -1074,11 +1074,11 @@ void Gadget::erase() {
 void Gadget::eraseGadget(Gadget* gadget) {
 
 	// Locate the gadget
-	s16 gadgetIndex = getGadgetIndex(gadget);
+	s32 gadgetIndex = getGadgetIndex(gadget);
 
 	// Order all lower gadgets to redraw themselves based on the erased gadget's
 	// visible rect cache
-	for (s16 i = gadgetIndex - 1; i > -1; i--) {
+	for (s32 i = gadgetIndex - 1; i > -1; i--) {
 		_gadgets[i]->redrawDirty(gadget->getVisibleRectCache(), gadget);
 	}
 
@@ -1163,7 +1163,7 @@ bool Gadget::unshelve() {
 // Add a gadget to the deletion queue ready for later processing
 void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
 	// Locate gadget in main vector
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
 
 			// Add gadget to Woopsi's delete vector
@@ -1181,7 +1181,7 @@ void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
 bool Gadget::moveChildToShelvedList(Gadget* gadget) {
 
 	// Locate gadget in main vector
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
 
 			// Add gadget to shelved vector
@@ -1201,7 +1201,7 @@ bool Gadget::moveChildToShelvedList(Gadget* gadget) {
 bool Gadget::moveShelvedToChildList(Gadget* gadget) {
 
 	// Locate gadget in shelved vector
-	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+	for (s32 i = 0; i < _shelvedGadgets.size(); i++) {
 		if (_shelvedGadgets[i] == gadget) {
 
 			// Process decorations and gadgets differently
@@ -1247,7 +1247,7 @@ void Gadget::shelveChild(Gadget* gadget) {
 			_focusedGadget = NULL;
 
 			// Try to choose highest gadget
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 				if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
 					_focusedGadget = _gadgets[i];
 				}
@@ -1293,7 +1293,7 @@ void Gadget::closeChild(Gadget* gadget) {
 			_focusedGadget = NULL;
 
 			// Try to choose highest gadget
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 				if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
 					_focusedGadget = _gadgets[i];
 				}
@@ -1332,14 +1332,14 @@ bool Gadget::swapGadgetDepth(Gadget* gadget) {
 	// Can we swap?
 	if ((_gadgets.size() > 1) && (!gadget->isDecoration())) {
 
-		u8 gadgetSource = 0;
-		u8 gadgetDest = 0;
+		s32 gadgetSource = 0;
+		s32 gadgetDest = 0;
 
 		// Locate the gadget in the vector
 		gadgetSource = getGadgetIndex(gadget);
 
 		// Attempt to raise up
-		s16 i = getHigherVisibleGadget(gadgetSource);
+		s32 i = getHigherVisibleGadget(gadgetSource);
 
 		if (i > -1) {
 			// Raise
@@ -1549,7 +1549,7 @@ bool Gadget::click(s16 x, s16 y) {
 		if (checkCollision(x, y)) {
 
 			// Work out which child was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
 					return true;
 				}
@@ -1597,7 +1597,7 @@ bool Gadget::doubleClick(s16 x, s16 y) {
 			// child to determine if it has been double-clicked or not
 			// in case the second click has fallen on a different
 			// child to the first.
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
 					return true;
 				}
@@ -1642,7 +1642,7 @@ bool Gadget::shiftClick(s16 x, s16 y) {
 
 			// Work out which child was clicked
 			if (_flags.shiftClickChildren) {
-				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 					if (_gadgets[i]->shiftClick(x, y)) {
 						return true;
 					}
@@ -1739,7 +1739,7 @@ void Gadget::lidClose() {
 	raiseLidCloseEvent();
 
 	// Run lid closed on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->lidClose();
 	}
 }
@@ -1748,7 +1748,7 @@ void Gadget::lidOpen() {
 	raiseLidOpenEvent();
 
 	// Run lid opened on all gadgets
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->lidOpen();
 	}
 }
@@ -1757,7 +1757,7 @@ bool Gadget::focus() {
 	if (isEnabled()) {
 
 		// Remember if the gadget has focus
-		u8 hadFocus = _flags.hasFocus;
+		bool hadFocus = _flags.hasFocus;
 
 		_flags.hasFocus = true;
 
@@ -1820,8 +1820,8 @@ bool Gadget::lowerToBottom() {
 	return false;
 }
 
-const s16 Gadget::getGadgetIndex(const Gadget* gadget) const {
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+const s32 Gadget::getGadgetIndex(const Gadget* gadget) const {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
 			return i;
 		}
@@ -1833,16 +1833,16 @@ const s16 Gadget::getGadgetIndex(const Gadget* gadget) const {
 bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 
 	// Locate gadget in the stack
-	s16 index = getGadgetIndex(gadget);
+	s32 index = getGadgetIndex(gadget);
 
-	if ((index > -1) && (index < (s16)_gadgets.size() - 1)) {
+	if ((index > -1) && (index < (s32)_gadgets.size() - 1)) {
 		_gadgets.erase(_gadgets.begin() + index);
 		_gadgets.push_back(gadget);
 
 		gadget->invalidateVisibleRectCache();
 
 		// Invalidate all gadgets that collide with the depth-swapped gadget
-		for (u8 i = 0; i < _gadgets.size(); i++) {
+		for (s32 i = 0; i < _gadgets.size(); i++) {
 			if (_gadgets[i]->checkCollision(gadget)) {
 				_gadgets[i]->invalidateVisibleRectCache();
 			}
@@ -1859,7 +1859,7 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 
 	// Locate gadget in the stack
-	s16 index = getGadgetIndex(gadget);
+	s32 index = getGadgetIndex(gadget);
 
 	if (index > _decorationCount) {
 		gadget->erase();
@@ -1934,10 +1934,10 @@ void Gadget::insertGadget(Gadget* gadget) {
 void Gadget::invalidateLowerGadgetsVisibleRectCache(Gadget* gadget) {
 
 	// Find the gadget
-	u8 gadgetIndex = getGadgetIndex(gadget);	
+	s32 gadgetIndex = getGadgetIndex(gadget);	
 
 	// Invalidate lower gadgets
-	for (s16 i = gadgetIndex - 1; i > -1; i--) {
+	for (s32 i = gadgetIndex - 1; i > -1; i--) {
 		if (_gadgets[i]->checkCollision(gadget)) {
 			_gadgets[i]->invalidateVisibleRectCache();
 		}
@@ -2018,7 +2018,7 @@ void Gadget::invalidateVisibleRectCache() {
 	_flags.visibleRegionCacheInvalid = true;
 
 	// Invalidate child cache
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->invalidateVisibleRectCache();
 	}
 }
@@ -2193,7 +2193,7 @@ bool Gadget::removeChild(Gadget* gadget) {
 	gadget->disableDrawing();
 
 	// Locate gadget in main vector
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
 
 			// Remove gadget from main vector
@@ -2204,7 +2204,7 @@ bool Gadget::removeChild(Gadget* gadget) {
 	}
 
 	// Try to locate in shelved vector
-	for (u8 i = 0; i < _shelvedGadgets.size(); i++) {
+	for (s32 i = 0; i < _shelvedGadgets.size(); i++) {
 		if (_shelvedGadgets[i] == gadget) {
 
 			// Divorce child from parent
@@ -2243,7 +2243,7 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 			woopsiApplication->getContextMenu()->moveTo(x, y);
 			woopsiApplication->getContextMenu()->setOpener(this);
 
-			for (u8 i = 0; i < _contextMenuItems.size(); i++) {
+			for (s32 i = 0; i < _contextMenuItems.size(); i++) {
 				woopsiApplication->getContextMenu()->newMenuItem(_contextMenuItems[i].name, _contextMenuItems[i].value);
 			}
 			
@@ -2285,8 +2285,8 @@ bool Gadget::hide() {
 	return false;
 }
 
-const s16 Gadget::getHigherVisibleGadget(const u8 startIndex) const {
-	for (u8 i = startIndex; i < _gadgets.size(); i++) {
+const s32 Gadget::getHigherVisibleGadget(const s32 startIndex) const {
+	for (s32 i = startIndex; i < _gadgets.size(); i++) {
 		if (!_gadgets[i]->isHidden()) {
 			return i;
 		}
@@ -2295,8 +2295,8 @@ const s16 Gadget::getHigherVisibleGadget(const u8 startIndex) const {
 	return -1;
 }
 
-const s16 Gadget::getLowerVisibleGadget(const u8 startIndex) const {
-	for (s16 i = (s16)startIndex; i > -1; i--) {
+const s32 Gadget::getLowerVisibleGadget(const s32 startIndex) const {
+	for (s32 i = startIndex; i > -1; i--) {
 		if (!_gadgets[i]->isHidden()) {
 			return i;
 		}

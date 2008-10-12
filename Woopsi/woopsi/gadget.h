@@ -1021,7 +1021,7 @@ protected:
 	 * @param gadget The gadget to get the index of.
 	 * @return The index of the gadget.  -1 if the gadget is not found.
 	 */
-	const s16 getGadgetIndex(const Gadget* gadget) const;
+	const s32 getGadgetIndex(const Gadget* gadget) const;
 
 	/**
 	 * Erase and remove the supplied child gadget from this gadget and
@@ -1235,14 +1235,14 @@ protected:
 	 * @param startIndex The starting index.
 	 * @return The index of the next highest visible gadget.
 	 */
-	const s16 getHigherVisibleGadget(const u8 startIndex) const;
+	const s32 getHigherVisibleGadget(const s32 startIndex) const;
 
 	/**
 	 * Get the index of the next visible gadget lower down the z-order.
 	 * @param startIndex The starting index.
 	 * @return The index of the next lowest visible gadget.
 	 */
-	const s16 getLowerVisibleGadget(const u8 startIndex) const;
+	const s32 getLowerVisibleGadget(const s32 startIndex) const;
 
 	/**
 	 * Copy constructor is protected to prevent usage.
