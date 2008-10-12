@@ -23,9 +23,11 @@ public:
 	 * @param width The width of the window.
 	 * @param height The height of the window.
 	 * @param title The title of the window.
+	 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the Amiga borders.
+	 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
 	 * @param font Optional font to use for text output.
 	 */
-	WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, FontBase* font = NULL);
+	WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font = NULL);
 
 	/**
 	 * Handles events raised by its sub-gadgets.

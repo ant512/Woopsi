@@ -4,7 +4,7 @@
 #include "woopsi.h"
 #include "woopsitimer.h"
 
-WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
+WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font) : AmigaWindow(x, y, width, height, title, flags, windowFlags, font) {
 
 	// Get available window region
 	Rect rect;
