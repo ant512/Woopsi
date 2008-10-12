@@ -132,6 +132,14 @@ public:
 	 */
 	virtual void getClientRect(Rect& rect) const;
 
+	/**
+	 * Click this gadget at the supplied co-ordinates.
+	 * @param x X co-ordinate of the click.
+	 * @param y Y co-ordinate of the click.
+	 * @return True if the click was successful.
+	 */
+	virtual bool click(s16 x, s16 y);
+
 protected:
 	u32 _cursorPos;							/**< Position of the cursor within the string */
 	bool _showCursor;						/**< Set to true to make cursor visible */
