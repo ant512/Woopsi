@@ -1,6 +1,13 @@
 #include <string.h>
 #include "woopsistring.h"
 
+WoopsiString::WoopsiString() {
+	_text = NULL;
+	_length = 0;
+	_allocatedSize = 0;
+	_growAmount = 32;
+}
+
 WoopsiString::WoopsiString(const char* text) {
 	_text = NULL;
 	_length = 0;

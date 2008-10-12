@@ -25,7 +25,8 @@ public:
 	enum OutlineType {
 		OUTLINE_CLICK_DEPENDENT = 0,		/**< Border depends on current click status */
 		OUTLINE_OUT = 1,					/**< Border is bevelled "out" */
-		OUTLINE_IN = 2						/**< Border is bevelled *in* */
+		OUTLINE_IN = 2,						/**< Border is bevelled *in* */
+		OUTLINE_OUT_IN = 3					/**< Border is bevelled out and then in */
 	};
 
 	/**

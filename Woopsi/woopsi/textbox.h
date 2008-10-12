@@ -60,6 +60,44 @@ public:
 	virtual void hideCursor();
 
 	/**
+	 * Set the text displayed in the label.
+	 * @param text String to display.
+	 */
+	virtual void setText(const char* text);
+
+	/**
+	 * Set the text displayed in the label.
+	 * @param text Character to display.
+	 */
+	virtual void setText(const char text);
+	
+	/**
+	 * Append new text to the end of the current text displayed in the label.
+	 * @param text String to append.
+	 */
+	virtual void appendText(const char* text);
+
+	/**
+	 * Append new text to the end of the current text displayed in the label.
+	 * @param text Char to append.
+	 */
+	virtual void appendText(const char text);
+
+	/**
+	 * Insert text at the specified index.
+	 * @param text The text to insert.
+	 * @param index Index at which to insert the text.
+	 */
+	virtual void insertText(const char* text, const u32 index);
+
+	/**
+	 * Insert text at the specified index.
+	 * @param text Char to insert.
+	 * @param index Index at which to insert the char.
+	 */
+	virtual void insertText(const char text, const u32 index);
+
+	/**
 	 * Insert text at the current cursor position.
 	 * @param text The text to insert.
 	 */
@@ -85,6 +123,14 @@ public:
 	 * @return position The cursor position.
 	 */
 	virtual inline const u32 getCursorPosition() const { return _cursorPos; };
+
+	/**
+	 * Insert the properties of the space within this gadget that is available
+	 * for children into the rect passed in as a parameter.
+	 * All co-ordinates are relative to this gadget.
+	 * @param rect Reference to a rect to populate with data.
+	 */
+	virtual void getClientRect(Rect& rect) const;
 
 protected:
 	u32 _cursorPos;							/**< Position of the cursor within the string */

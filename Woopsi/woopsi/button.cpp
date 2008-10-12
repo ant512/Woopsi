@@ -4,12 +4,10 @@
 
 Button::Button(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Label(x, y, width, height, text, font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
-	setBorderless(false);
 }
 
 Button::Button(s16 x, s16 y, u16 width, u16 height, char letter, FontBase* font) : Label(x, y, width, height, letter, font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
-	setBorderless(false);
 }
 
 void Button::draw(Rect clipRect) {

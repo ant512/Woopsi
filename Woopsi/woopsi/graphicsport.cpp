@@ -489,6 +489,11 @@ void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height) {
 	}
 
 	drawBevelledRect(x, y, width, height, col1, col2);
+
+	// Draw the secondary border if the gadget is bevelled out and in
+	if (_gadget->getOutlineType() == Gadget::OUTLINE_OUT_IN) {
+		drawBevelledRect(x + 1, y + 1, width - 2, height - 2, col2, col1);
+	}
 }
 
 // Draw bevelled rectangle - external function

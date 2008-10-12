@@ -1,26 +1,28 @@
 #include "label.h"
 #include "graphicsport.h"
 
-Label::Label(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS, font) {
+Label::Label(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_outline = OUTLINE_IN;
 
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_padding = 2;
 
-	_text = new WoopsiString(text);
+	_text = new WoopsiString();
+	setText(text);
 
 	calculateTextPosition();
 }
 
-Label::Label(s16 x, s16 y, u16 width, u16 height, const char letter, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS, font) {
+Label::Label(s16 x, s16 y, u16 width, u16 height, const char letter, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_outline = OUTLINE_IN;
 
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_padding = 2;
 
-	_text = new WoopsiString(letter);
+	_text = new WoopsiString();
+	setText(letter);
 
 	calculateTextPosition();
 }

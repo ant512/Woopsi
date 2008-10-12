@@ -20,6 +20,11 @@ class WoopsiString {
 public:
 
 	/**
+	 * Constructor to create a blank object.
+	 */
+	WoopsiString();
+
+	/**
 	 * Constructor to create a string from a char array.
 	 * @param text Pointer to a char array to use as the basis of the string.
 	 */

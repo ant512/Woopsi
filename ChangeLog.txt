@@ -50,6 +50,7 @@ Change Log
        a read-only, borderless text display gadget.
      - Text inherits from WoopsiString class.
      - Added MultiLineTextBox::removeText() methods.
+     - TextBox border bevelled both out and in.
 
 
   V0.34 (20080702)
