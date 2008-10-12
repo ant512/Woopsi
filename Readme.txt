@@ -57,8 +57,9 @@ Features
     - Animated buttons;
     - Radio buttons and radio button groups;
     - Check boxes;
-    - Single-line textboxes;
-    - Multi-line text boxes;
+    - Labels;
+    - Single-line textboxes with cursor support;
+    - Multi-line textboxes;
     - Screens;
     - Windows;
     - Gradient backgrounds;
@@ -73,7 +74,8 @@ Features
     - Progress bars;
     - Requesters;
     - File requesters;
-    - Cycle buttons.
+    - Cycle buttons;
+    - Keyboard.
   - Skinnable screens and windows;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
@@ -112,7 +114,7 @@ Features
     - With/without PALib support;
     - SDL layer to facilitate native compilation on non-DS platforms and
       aid porting;
-    - libwoopsi.a library build.
+    - libwoopsi.a library.
 
 
 Requirements
