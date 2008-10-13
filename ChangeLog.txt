@@ -7,6 +7,11 @@ Change Log
      - s32 used as iterator when working with visible rect cache to prevent
        permanent loops when large numbers of rects were visible.
      - s32 used as child gadget iterator.
+     - MultiLineTextBox::resize() correctly recalculates the number of visible rows.
+     - Tidied up MultiLineTextBox::getRowX() and getRowY().
+     - MultiLineTextBox::getCurrentPage() no longer divides by 0 if there are no visible rows.
+     - MultiLineTextBox::draw() tidied up; correctly draws when partial line of text is visible.
+
 
   V0.35 (20081012)
   

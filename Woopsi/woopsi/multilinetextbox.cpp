@@ -19,12 +19,10 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	_text = new Text(_font, "", rect.width - (_padding << 1));
 
 	_flags.draggable = true;
-
 	_canvasWidth = rect.width;
-
 	_maxRows = maxRows;
 
-	calculateTotalVisibleRows();
+	calculateVisibleRows();
 
 	// Set maximum rows if value not set
 	if (_maxRows == 0) {
@@ -41,6 +39,7 @@ MultiLineTextBox::~MultiLineTextBox() {
 
 void MultiLineTextBox::draw(Rect clipRect) {
 
+	// Create a graphics port to draw the border
  	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear
@@ -51,52 +50,51 @@ void MultiLineTextBox::draw(Rect clipRect) {
 
 	delete port;
 
+	// Create a graphics port to draw the text - we use a non-internal port
+	// to ensure that we clip within the border we've just drawn
 	port = newGraphicsPort(clipRect);
 
-	// Calculate the top line of text in this region
-	s32 topRowRegion = ((-_canvasY + (clipRect.y - getY())) / _text->getLineHeight()) - 1;
+	// Calculate various values needed to output text for this cliprect
+	u8 lineHeight = _text->getLineHeight();
+	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
+	s32 regionY = -_canvasY + offsetY;					// Y co-ord of the visible region of this canvas
 
-	// Calculcate the bottom line of text in this region
-	s32 bottomRowRegion = (((-_canvasY + (clipRect.y + clipRect.height - getY())) / _text->getLineHeight())) + 1;
+	s32 topRow = (regionY / lineHeight) - 1;			// Calculate the top line of text in this region
+	s32 bottomRow = ((regionY + clipRect.height) / lineHeight);	// Calculate bottom line of text
 
-	// Calculate the number of rows in this region
-	u8 rowCountRegion = (bottomRowRegion - topRowRegion);
+	// Ensure bottom row does not exceed the total number of rows
+	if (bottomRow > _text->getLineCount()) bottomRow = _text->getLineCount();
 
 	// Draw lines of text
 	s16 textX;
 	s16 textY;
-	s32 currentTextRow = topRowRegion;
-	u8 rowPixelWidth = 0;
+	s32 currentRow = topRow;
 	u8 rowLength = 0;
-	u8 i = 0;
 
-	while ((i < rowCountRegion) && (i < _text->getLineCount() - topRowRegion) && (currentTextRow < _text->getLineCount() - 1)) {
+	// Draw all rows in this region
+	while (currentRow <= bottomRow) {
 
-		currentTextRow = i + topRowRegion;
+		rowLength = _text->getLineTrimmedLength(currentRow);
 
-		if (currentTextRow > -1) {
+		textX = getRowX(currentRow) + _canvasX;
+		textY = getRowY(currentRow) + _canvasY;
 
-			// Precalculate lengths in characters and pixels
-			rowLength = _text->getLineTrimmedLength(currentTextRow);
-			rowPixelWidth = _text->getFont()->getStringWidth(_text->getLinePointer(currentTextRow), rowLength);
+		port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow));
 
-			textX = getRowX(rowPixelWidth) + _canvasX;
-			textY = getRowY(currentTextRow) + _canvasY;
-
-			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentTextRow));
-		}
-
-		i++;
+		currentRow++;
 	}
 
 	delete port;
 }
 
 // Calculate values for centralised text
-u8 MultiLineTextBox::getRowX(u8 rowPixelWidth) {
+u8 MultiLineTextBox::getRowX(s32 row) {
 
 	Rect rect;
 	getClientRect(rect);
+
+	u8 rowLength = _text->getLineTrimmedLength(row);
+	u8 rowPixelWidth = _text->getFont()->getStringWidth(_text->getLinePointer(row), rowLength);
 
 	// Calculate horizontal position
 	switch (_hAlignment) {
@@ -112,7 +110,7 @@ u8 MultiLineTextBox::getRowX(u8 rowPixelWidth) {
 	return 0;
 }
 
-s16 MultiLineTextBox::getRowY(u8 screenRow) {
+s16 MultiLineTextBox::getRowY(s32 row) {
 
 	s16 textY = 0;
 	s16 startPos = 0;
@@ -129,6 +127,7 @@ s16 MultiLineTextBox::getRowY(u8 screenRow) {
 
 			// Calculate the maximum number of rows
             canvasRows = _canvasHeight / _text->getLineHeight();
+			textY = row * _text->getLineHeight();
 
             // Get the number of rows of text
             textRows = _text->getLineCount();
@@ -137,24 +136,24 @@ s16 MultiLineTextBox::getRowY(u8 screenRow) {
             startPos = ((canvasRows - textRows) >> 1) * _text->getLineHeight();
 
             // Calculate the row Y co-ordinate
-			textY = startPos + (screenRow * _text->getLineHeight());
+			textY = startPos + textY;
 			break;
 		case TEXT_ALIGNMENT_VERT_TOP:
-			textY = _padding + (screenRow * _text->getLineHeight());
+			textY = _padding + (row * _text->getLineHeight());
 			break;
 		case TEXT_ALIGNMENT_VERT_BOTTOM:
 
 			// Calculate the maximum number of rows
-            s32 screenRows = rect.height / _text->getLineHeight();
+            s32 maxRows = rect.height / _text->getLineHeight();
 
-			textY = (rect.height - (_text->getLineHeight() * (screenRows - screenRow))) - _padding;
+			textY = (rect.height - (_text->getLineHeight() * (maxRows - row))) - _padding;
 			break;
 	}
 
 	return textY;
 }
 
-void MultiLineTextBox::calculateTotalVisibleRows() {
+void MultiLineTextBox::calculateVisibleRows() {
 
 	Rect rect;
 	getClientRect(rect);
@@ -290,12 +289,9 @@ const u16 MultiLineTextBox::getPageCount() const {
 	Rect clientRect;
 	getClientRect(clientRect);
 
-	// Calculate the maximum number of visible rows
-	u8 rowCount = (clientRect.height - (_padding << 1)) / _text->getLineHeight();
-
 	// Return number of screens of text
-	if (rowCount > 0) {
-		u16 pages = _text->getLineCount() / rowCount;
+	if (_visibleRows > 0) {
+		u16 pages = _text->getLineCount() / _visibleRows;
 
 		return pages + 1;
 	} else {
@@ -312,14 +308,17 @@ const u16 MultiLineTextBox::getCurrentPage() const {
 	// Calculate the top line of text
 	s32 topRow = (-_canvasY / _text->getLineHeight());
 
-	// Calculate the maximum number of visible rows
-	u8 rowCount = (clientRect.height - (_padding << 1)) / _text->getLineHeight();
-
 	// Return the page on which the top row falls
-	return topRow / rowCount;
+	if (_visibleRows > 0) {
+		return topRow / _visibleRows;
+	} else {
+		return 1;
+	}
 }
 
 bool MultiLineTextBox::resize(u16 width, u16 height) {
+
+	// Ensure drawing is disabled before we start
 	bool drawing = _flags.drawingEnabled;
 	_flags.drawingEnabled = false;
 
@@ -333,6 +332,9 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 	getClientRect(rect);
 	_canvasWidth = rect.width;
 
+	calculateVisibleRows();
+
+	// Restore the gadget's drawing flag to its original state
 	_flags.drawingEnabled = drawing;
 
 	// Re-wrap the text

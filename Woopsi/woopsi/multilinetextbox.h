@@ -175,20 +175,20 @@ protected:
 	 * @param rowPixelWidth The width of the row.
 	 * @return The x co-ordinate of the row.
 	 */
-	u8 getRowX(u8 rowPixelWidth);
+	u8 getRowX(s32 row);
 
 	/**
 	 * Gets the y position of the specified row of text based on the type of
 	 * vertical alignment currently set.
-	 * @param screenRow The row number to find the y co-ordinate of.
+	 * @param row The row number to find the y co-ordinate of.
 	 * @return The y co-ordinate of the specified row of text.
 	 */
-	s16 getRowY(u8 screenRow);
+	s16 getRowY(s32 row);
 
 	/**
 	 * Works out the number of visible rows within the textbox.
 	 */
-	void calculateTotalVisibleRows();
+	void calculateVisibleRows();
 
 	/**
 	 * Destructor.
