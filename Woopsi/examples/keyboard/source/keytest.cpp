@@ -27,7 +27,6 @@ void KeyTest::startup() {
 	// Add textbox
 	_output = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0, 0);
 	window->addGadget(_output);
-	_output->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_BOTTOM);
 	
 	/* Code below creates input screen and associated gadgets */
 	// Create screen
