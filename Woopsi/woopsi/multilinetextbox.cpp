@@ -4,6 +4,7 @@
 #include "fontbase.h"
 #include "text.h"
 #include "graphicsport.h"
+#include "woopsifuncs.h"
 
 MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
 
@@ -62,8 +63,13 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	s32 topRow = (regionY / lineHeight) - 1;			// Calculate the top line of text in this region
 	s32 bottomRow = ((regionY + clipRect.height) / lineHeight);	// Calculate bottom line of text
 
-	// Ensure bottom row does not exceed the total number of rows
-	if (bottomRow > _text->getLineCount()) bottomRow = _text->getLineCount();
+	// Early exit checks
+	if ((topRow < 0) && (bottomRow < 0)) return;
+	if ((bottomRow >= _text->getLineCount()) && (topRow >= _text->getLineCount())) return;
+
+	// Prevent overflows
+	if (topRow < 0) topRow = 0;
+	if (bottomRow >= _text->getLineCount()) bottomRow = _text->getLineCount() - 1;
 
 	// Draw lines of text
 	s16 textX;

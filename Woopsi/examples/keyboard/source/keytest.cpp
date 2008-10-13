@@ -10,14 +10,14 @@ void KeyTest::startup() {
 	
 	/* Code below creates the output screen and associated gadgets */
 	// Create screen
-	AmigaScreen* outScreen = new AmigaScreen("Ouput Screen", 0, 0);
+	AmigaScreen* outScreen = new AmigaScreen("Ouput Screen", Gadget::GADGET_PERMEABLE, AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(outScreen);
 	
 	// Move output screen to top display
 	outScreen->flipToTopScreen();
 
 	// Add output window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", 0, 0);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", Gadget::GADGET_DRAGGABLE, 0);
 	outScreen->addGadget(window);
 
 	// Get available area within window
@@ -25,16 +25,17 @@ void KeyTest::startup() {
 	window->getClientRect(rect);
 	
 	// Add textbox
-	_output = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0, 10);
+	_output = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0, 0);
 	window->addGadget(_output);
+	//_output->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 	
 	/* Code below creates input screen and associated gadgets */
 	// Create screen
-	AmigaScreen* inScreen = new AmigaScreen("Input Screen", 0, 0);
+	AmigaScreen* inScreen = new AmigaScreen("Input Screen", Gadget::GADGET_PERMEABLE, AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(inScreen);
 
 	// Create keyboard
-	_keyboard = new WoopsiKeyboard(0, 0, 256, 192, "Keyboard", 0, 0);
+	_keyboard = new WoopsiKeyboard(0, 0, 256, 192, "Keyboard", Gadget::GADGET_DRAGGABLE, 0);
 	_keyboard->setEventHandler(this);
 	inScreen->addGadget(_keyboard);
 	
