@@ -11,6 +11,8 @@ Change Log
      - Tidied up MultiLineTextBox::getRowX() and getRowY().
      - MultiLineTextBox::getCurrentPage() no longer divides by 0 if there are no visible rows.
      - MultiLineTextBox::draw() tidied up; correctly draws when partial line of text is visible.
+     - MultiLineTextBox vertical alignment options all work correctly.
+     - MultiLineTextBox scrolls correctly when text is added.
      - Text::stripTopLines() was not removing all characters.
 
 

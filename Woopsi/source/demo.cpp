@@ -197,7 +197,7 @@ void Demo::startup() {
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
-	newScreen->addGadget(new WoopsiKeyboard(0, 0, 256, 192, "Keyboard", 0, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH));
+	newScreen->addGadget(new WoopsiKeyboard(0, 0, 256, 192, "Keyboard", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH));
 
 	AmigaScreen* newScreen2 = new AmigaScreen("Another screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen2);

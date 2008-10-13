@@ -20,7 +20,6 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	_text = new Text(_font, "", rect.width - (_padding << 1));
 
 	_flags.draggable = true;
-	_canvasWidth = rect.width;
 	_maxRows = maxRows;
 
 	calculateVisibleRows();
@@ -54,6 +53,24 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	// Create a graphics port to draw the text - we use a non-internal port
 	// to ensure that we clip within the border we've just drawn
 	port = newGraphicsPort(clipRect);
+
+
+/*
+	s16 textX;
+	s16 textY;
+	u8 rowLength;
+
+	for (s32 i = 0; i < _text->getLineCount(); ++i) {
+
+		rowLength = _text->getLineTrimmedLength(i);
+
+		textX = getRowX(i) + _canvasX;
+		textY = getRowY(i) + _canvasY;
+
+		port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(i));
+	}
+
+	*/
 
 	// Calculate various values needed to output text for this cliprect
 	u8 lineHeight = _text->getLineHeight();
@@ -192,15 +209,15 @@ void MultiLineTextBox::setText(const char* text) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 	}
 
-	Gadget::draw();
-
-	// Update canvas height
+	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 
 		// Scroll to bottom of new text
-		scroll(0, _canvasHeight - _height);
+		jump(0, -(_canvasHeight - _height));
 	}
+
+	Gadget::draw();
 
 	raiseValueChangeEvent();
 }
@@ -227,15 +244,15 @@ void MultiLineTextBox::appendText(const char* text) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 	}
 
-	Gadget::draw();
-
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 
 		// Scroll to bottom of new text
-		jump(0, -_canvasHeight - _height);
+		jump(0, -(_canvasHeight - _height));
 	}
+
+	Gadget::draw();
 
 	raiseValueChangeEvent();
 }
@@ -254,15 +271,15 @@ void MultiLineTextBox::appendText(const char text) {
 void MultiLineTextBox::removeText(const u32 startIndex) {
 	_text->remove(startIndex);
 
-	Gadget::draw();
-
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 
 		// Scroll to bottom of new text
-		jump(0, -_canvasHeight - _height);
+		jump(0, -(_canvasHeight - _height));
 	}
+
+	Gadget::draw();
 
 	raiseValueChangeEvent();
 }
@@ -270,15 +287,15 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 	_text->remove(startIndex, count);
 
-	Gadget::draw();
-
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 
 		// Scroll to bottom of new text
-		jump(0, -_canvasHeight - _height);
+		jump(0, -(_canvasHeight - _height));
 	}
+
+	Gadget::draw();
 
 	raiseValueChangeEvent();
 }
@@ -355,15 +372,15 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 		raiseEvent = true;
 	}
 
-	Gadget::draw();
-
 	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
 
-		// Scroll to bottom of new text
-		scroll(0, _canvasHeight - _height);
+		// Jump to bottom of new text
+		jump(0, -(_canvasHeight - _height));
 	}
+
+	Gadget::draw();
 
 	if (raiseEvent) raiseValueChangeEvent();
 
