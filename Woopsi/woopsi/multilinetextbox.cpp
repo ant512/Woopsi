@@ -54,24 +54,6 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	// to ensure that we clip within the border we've just drawn
 	port = newGraphicsPort(clipRect);
 
-
-/*
-	s16 textX;
-	s16 textY;
-	u8 rowLength;
-
-	for (s32 i = 0; i < _text->getLineCount(); ++i) {
-
-		rowLength = _text->getLineTrimmedLength(i);
-
-		textX = getRowX(i) + _canvasX;
-		textY = getRowY(i) + _canvasY;
-
-		port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(i));
-	}
-
-	*/
-
 	// Calculate various values needed to output text for this cliprect
 	u8 lineHeight = _text->getLineHeight();
 	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
