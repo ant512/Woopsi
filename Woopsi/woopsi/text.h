@@ -176,7 +176,7 @@ public:
 	void stripTopLines(const s32 lines);
 	
 	/**
-	 * Wrap the text.
+	 * Wrap all of the text.
 	 */
 	void wrap();
 
