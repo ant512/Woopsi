@@ -97,7 +97,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	addGadget(_timer);
 
 	// Set event handlers
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->setEventHandler(this);
 	}
 
@@ -274,7 +274,7 @@ void WoopsiKeyboard::showCorrectKeys() {
 }
 
 void WoopsiKeyboard::showNormalKeys() {
-	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
+	for (s32 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i] != _timer) {
 			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_NORMAL);
 		}
@@ -282,7 +282,7 @@ void WoopsiKeyboard::showNormalKeys() {
 }
 
 void WoopsiKeyboard::showShiftKeys() {
-	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
+	for (s32 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i] != _timer) {
 			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_SHIFT);
 		}
@@ -290,7 +290,7 @@ void WoopsiKeyboard::showShiftKeys() {
 }
 
 void WoopsiKeyboard::showControlKeys() {
-	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
+	for (s32 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i] != _timer) {
 			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CONTROL);
 		}
@@ -298,7 +298,7 @@ void WoopsiKeyboard::showControlKeys() {
 }
 
 void WoopsiKeyboard::showShiftControlKeys() {
-	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
+	for (s32 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i] != _timer) {
 			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_SHIFT_CONTROL);
 		}
@@ -306,7 +306,7 @@ void WoopsiKeyboard::showShiftControlKeys() {
 }
 
 void WoopsiKeyboard::showCapsLockKeys() {
-	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
+	for (s32 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i] != _timer) {
 			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CAPS_LOCK);
 		}
@@ -314,7 +314,7 @@ void WoopsiKeyboard::showCapsLockKeys() {
 }
 
 void WoopsiKeyboard::showControlCapsLockKeys() {
-	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
+	for (s32 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i] != _timer) {
 			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CONTROL_CAPS_LOCK);
 		}

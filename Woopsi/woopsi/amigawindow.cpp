@@ -66,14 +66,14 @@ void AmigaWindow::setBorderless(bool isBorderless) {
 			_flags.borderless = true;
 
 			// Move all children to compensate
-			for (u8 i = 0; i < _gadgets.size(); i++) {
+			for (s32 i = 0; i < _gadgets.size(); i++) {
 				_gadgets[i]->moveTo(_gadgets[i]->getX() - getX() - WINDOW_BORDER_SIZE, _gadgets[i]->getY() - getY() - WINDOW_TITLE_HEIGHT);
 			}
 		} else {
 			// Add borders
 
 			// Move all children to compensate
-			for (u8 i = 0; i < _gadgets.size(); i++) {
+			for (s32 i = 0; i < _gadgets.size(); i++) {
 				_gadgets[i]->moveTo(_gadgets[i]->getX() - getX() + WINDOW_BORDER_SIZE, _gadgets[i]->getY() - getY() + WINDOW_TITLE_HEIGHT);
 			}
 
@@ -139,7 +139,7 @@ bool AmigaWindow::click(s16 x, s16 y) {
 			raiseToTop();
 
 			// Try to click a child gadget
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
 					return true;
 				}

@@ -122,7 +122,7 @@ bool ContextMenu::resize(u16 width, u16 height) {
 			_gadgets[0]->getPreferredDimensions(preferredRect);
 
 			// Resize all children
-			for (u8 i = 0; i < _gadgets.size(); i++) {
+			for (s32 i = 0; i < _gadgets.size(); i++) {
 				_gadgets[i]->resize((u16)clientRect.width, (u16)preferredRect.height);
 			}
 		}
@@ -143,7 +143,7 @@ bool ContextMenu::resize(u16 width, u16 height) {
 void ContextMenu::reset() {
 
 	// Delete children
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->destroy();
 	}
 

@@ -48,7 +48,7 @@ public:
 	 * Gets the index of the selected gadget.
 	 * @return The index of the selected gadget.
 	 */
-	virtual const s16 getSelectedIndex() const;
+	virtual const s32 getSelectedIndex() const;
 
 	/**
 	 * Sets the selected radio button to the supplied gadget.
@@ -60,7 +60,7 @@ public:
 	 * Selects the gadget at the specified index.
 	 * @param index The index of the gadget to select.
 	 */
-	virtual void setSelectedIndex(u8 index);
+	virtual void setSelectedIndex(s32 index);
 
 	/**
 	 * Resize the gadget to the new dimensions.

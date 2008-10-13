@@ -1835,7 +1835,7 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 	// Locate gadget in the stack
 	s32 index = getGadgetIndex(gadget);
 
-	if ((index > -1) && (index < (s32)_gadgets.size() - 1)) {
+	if ((index > -1) && (index < _gadgets.size() - 1)) {
 		_gadgets.erase(_gadgets.begin() + index);
 		_gadgets.push_back(gadget);
 

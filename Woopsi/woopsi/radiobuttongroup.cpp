@@ -31,8 +31,8 @@ const RadioButton* RadioButtonGroup::getSelectedGadget() const {
 	return (RadioButton*)_selectedGadget;
 }
 
-const s16 RadioButtonGroup::getSelectedIndex() const {
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+const s32 RadioButtonGroup::getSelectedIndex() const {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		if (((RadioButton*)_gadgets[i]) == _selectedGadget) {
 			return i;
 		}
@@ -58,7 +58,7 @@ void RadioButtonGroup::setSelectedGadget(RadioButton* gadget) {
 	}
 }
 
-void RadioButtonGroup::setSelectedIndex(u8 index) {
+void RadioButtonGroup::setSelectedIndex(s32 index) {
 	if (index < _gadgets.size()) {
 		setSelectedGadget((RadioButton*)_gadgets[index]);
 

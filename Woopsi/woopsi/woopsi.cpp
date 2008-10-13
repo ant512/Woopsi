@@ -154,7 +154,7 @@ bool Woopsi::click(s16 x, s16 y) {
 	_flags.clicked = true;
 
 	// Work out which gadget was clicked
-	for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+	for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 		if (_gadgets[i]->click(x, y)) {
 
 			// Do we need to close the context menu?
@@ -195,7 +195,7 @@ bool Woopsi::shiftClick(s16 x, s16 y) {
 	shelveContextMenu();
 
 	// Work out which gadget was clicked
-	for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+	for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 		if (_gadgets[i]->shiftClick(x, y)) {
 			return true;
 		}
@@ -358,8 +358,8 @@ bool Woopsi::swapGadgetDepth(Gadget* gadget) {
 	// Do we have more than one screen?
 	if (_gadgets.size() > 1) {
 
-		u8 gadgetSource = getGadgetIndex(gadget);
-		u8 gadgetDest = 0;
+		s32 gadgetSource = getGadgetIndex(gadget);
+		s32 gadgetDest = 0;
 
 		// Raise or lower?
 		if (gadgetSource < _gadgets.size() - 1) {
@@ -398,7 +398,7 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 		// Locate the top gadget
 		Gadget* topGadget = NULL;
 
-		for (u8 i = 0; i < _gadgets.size(); i++) {
+		for (s32 i = 0; i < _gadgets.size(); i++) {
 			if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted())) {
 				if (_gadgets[i]->getPhysicalScreenNumber() == 1) {
 					topGadget = _gadgets[i];
@@ -414,7 +414,7 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 			if (gadget == topGadget) {
 				// Get a pointer to the highest gadget in the bottom screen
 				// that isn't the top gadget
-				for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+				for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 					if (gadget != _gadgets[i]) {
 						gadget = _gadgets[i];
 						break;
@@ -454,7 +454,7 @@ void Woopsi::eraseRect(Rect rect) {
 		invalidRectangles->push_back(rect);
 
 		// Refresh children
-		for (s16 i = _gadgets.size() - 1; i > -1 ; i--) {
+		for (s32 i = _gadgets.size() - 1; i > -1 ; i--) {
 			if (invalidRectangles->size() > 0) {
 				_gadgets[i]->redrawDirty(invalidRectangles, NULL);
 			} else {

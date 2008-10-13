@@ -100,7 +100,7 @@ void ScrollingPanel::scrollLeft(s32 dx) {
 	u16* rowBuffer;
 
 	// Loop through visible regions
-	for (u8 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
@@ -171,7 +171,7 @@ void ScrollingPanel::scrollRight(s32 dx) {
 	u16* rowBuffer;
 
 	// Loop through visible regions
-	for (u8 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
@@ -245,7 +245,7 @@ void ScrollingPanel::scrollUp(s32 dy) {
 	u16 width;
 
 	// Loop through visible regions
-	for (u8 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
@@ -305,7 +305,7 @@ void ScrollingPanel::scrollDown(s32 dy) {
 	u16 width;
 
 	// Loop through visible regions
-	for (u8 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
@@ -353,7 +353,7 @@ void ScrollingPanel::scrollDown(s32 dy) {
 void ScrollingPanel::scrollChildren(s32 dx, s32 dy) {
 	s16 gadgetX = 0;
 	s16 gadgetY = 0;
-	for (u8 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = 0; i < _gadgets.size(); i++) {
 		gadgetX = (_gadgets[i]->getX() - getX()) + dx;
 		gadgetY = (_gadgets[i]->getY() - getY()) + dy;
 

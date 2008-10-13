@@ -60,7 +60,7 @@ bool Screen::click(s16 x, s16 y) {
 		if (checkCollision(x, y)) {
 
 			// Work out which child was clicked
-			for (s16 i = _gadgets.size() - 1; i > -1; i--) {
+			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
 				if (_gadgets[i]->click(x, y)) {
 					return true;
 				}
@@ -273,15 +273,15 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 	// Do we have more than one gadget?
 	if (_gadgets.size() - _decorationCount > 1) {
 
-		u8 lowestGadget = _decorationCount;
-		u8 gadgetSource = getGadgetIndex(gadget);
-		u8 gadgetDest = _decorationCount;
-		u8 highestCollisionDepth = 0;
-		u8 lowestCollisionDepth = 0;
+		s32 lowestGadget = _decorationCount;
+		s32 gadgetSource = getGadgetIndex(gadget);
+		s32 gadgetDest = _decorationCount;
+		s32 highestCollisionDepth = 0;
+		s32 lowestCollisionDepth = 0;
 
 		// Calculate the positions of the highest and lowest gadgets
 		// that the window collides with
-		for (s16 i = _gadgets.size() - 1; i >= lowestGadget; i--) {
+		for (s32 i = _gadgets.size() - 1; i >= lowestGadget; i--) {
 			if (_gadgets[i]->checkCollision(gadget)) {
 				if (gadget != _gadgets[i]) {
 					// Set highest gadget depth
@@ -315,7 +315,7 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 			_gadgets.insert(_gadgets.begin() + gadgetDest, gadget);
 
 			// Invalidate all gadgets that collide with the shifted gadget
-			for (u8 i = 0; i < _gadgets.size(); i++) {
+			for (s32 i = 0; i < _gadgets.size(); i++) {
 				if (_gadgets[i]->checkCollision(gadget)) {
 					_gadgets[i]->invalidateVisibleRectCache();
 				}
