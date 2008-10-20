@@ -1,5 +1,3 @@
-// TODO: Padding of 12px and above goes crazy
-
 #include "multilinetextbox.h"
 #include "fontbase.h"
 #include "text.h"
@@ -35,66 +33,6 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 MultiLineTextBox::~MultiLineTextBox() {
 	delete _text;
 	_text = NULL;
-}
-
-void MultiLineTextBox::drawTextCentre(Rect clipRect) {
-
-	// Early exit if there is no text to display
-	if (_text->getLineCount() == 0) return;
-
-	// Calculate various values needed to output text for this cliprect
-	u8 lineHeight = _text->getLineHeight();
-	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
-	s32 regionY = -_canvasY + offsetY;					// Y co-ord of the visible region of this canvas
-
-	// Get the y co-ord of the top row - this gives us the offset of the block
-	// of text from the top of the box
-	s16 rowY = getRowY(0);
-
-	// Remove the offset of the row from the region - this gives us the y co-ord
-	// of the region relative to the top row of text
-	regionY -= rowY;
-
-	// Divide the region offset by the height of an individual row - this gives
-	// us the number of rows that are above the region (ie. the number of the
-	// top row within this region)
-	s32 topRow = regionY / lineHeight;
-
-	// Bottom row can be found by dividing the height of the region by the
-	// height of a row
-	s32 bottomRow = topRow + (clipRect.height / lineHeight);
-	
-	// Draw lines of text
-	drawText(clipRect, topRow, bottomRow);	
-}
-
-void MultiLineTextBox::drawTextBottom(Rect clipRect) {
-
-	// Early exit if there is no text to display
-	if (_text->getLineCount() == 0) return;
-
-	// Calculate various values needed to output text for this cliprect
-	u8 lineHeight = _text->getLineHeight();
-	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
-	s32 regionY = -_canvasY + offsetY;					// Y co-ord of the visible region of this canvas
-
-	// Get the index of the bottom row by:
-	//  - Dividing the distance between bottom of rect and bottom of textbox by
-	//    height of a row (gives number of rows below clip rect)
-	//  - Subtracting the result from the total number of rows
-	// 
-	s32 bottomRow = (_canvasHeight - (regionY + clipRect.height)) / lineHeight;
-	bottomRow = _text->getLineCount() - bottomRow;
-
-	// Top row can be found by:
-	//   - Dividing the rect height by the height of a row (gives number of
-	//     rows in region)
-	//   - Subtracting that number from bottom row index
-	// 
-	s32 topRow = bottomRow - (clipRect.height / _text->getLineHeight());
-
-	// Draw lines of text
-	drawText(clipRect, topRow, bottomRow);	
 }
 
 void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
@@ -133,7 +71,6 @@ void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 	delete port;
 }
 
-
 void MultiLineTextBox::drawTextTop(Rect clipRect) {
 
 	// Early exit if there is no text to display
@@ -169,19 +106,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	if (_visibleRows <= _text->getLineCount()) {
 		drawTextTop(clipRect);
 	} else {
-
-		// Choose text output method based on vertical alignment
-		switch (_vAlignment) {
-			case TEXT_ALIGNMENT_VERT_CENTRE:
-				drawTextCentre(clipRect);
-				break;
-			case TEXT_ALIGNMENT_VERT_TOP:
-				drawTextTop(clipRect);
-				break;
-			case TEXT_ALIGNMENT_VERT_BOTTOM:
-				drawTextBottom(clipRect);
-				break;
-		}
+		drawText(clipRect, 0, _text->getLineCount());
 	}
 }
 

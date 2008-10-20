@@ -199,18 +199,6 @@ protected:
 	void drawTextTop(Rect clipRect);
 
 	/**
-	 * Clips text output for vertical centre-aligned text and calls drawText().
-	 * @param clipRect The rect to draw to.
-	 */
-	void drawTextCentre(Rect clipRect);
-
-	/**
-	 * Clips text output for bottom-aligned text and calls drawText().
-	 * @param clipRect The rect to draw to.
-	 */
-	void drawTextBottom(Rect clipRect);
-
-	/**
 	 * Draws text previously clipped by one of the drawTextXXX functions.
 	 * @param clipRect The rect to draw to.
 	 * @param topRow The index of top row of text to draw.
