@@ -168,6 +168,8 @@ protected:
 	u8 _padding;						/**< Padding around the text in pixels */
 	TextAlignmentHoriz _hAlignment;		/**< Horizontal alignment of the text */
 	TextAlignmentVert _vAlignment;		/**< Vertical alignment of the text */
+	u32 _cursorPos;							/**< Position of the cursor within the string */
+	bool _showCursor;						/**< Set to true to make cursor visible */
 
 	/**
 	 * Gets the x position of a row of text based on the width of the row and the
@@ -189,6 +191,32 @@ protected:
 	 * Works out the number of visible rows within the textbox.
 	 */
 	void calculateVisibleRows();
+
+	/**
+	 * Clips text output for vertical top-aligned text and calls drawText().
+	 * @param clipRect The rect to draw to.
+	 */
+	void drawTextTop(Rect clipRect);
+
+	/**
+	 * Clips text output for vertical centre-aligned text and calls drawText().
+	 * @param clipRect The rect to draw to.
+	 */
+	void drawTextCentre(Rect clipRect);
+
+	/**
+	 * Clips text output for bottom-aligned text and calls drawText().
+	 * @param clipRect The rect to draw to.
+	 */
+	void drawTextBottom(Rect clipRect);
+
+	/**
+	 * Draws text previously clipped by one of the drawTextXXX functions.
+	 * @param clipRect The rect to draw to.
+	 * @param topRow The index of top row of text to draw.
+	 * @param bottmRow The index of the bottom row of text to draw.
+	 */
+	void drawText(Rect clipRect, s32 topRow, s32 bottomRow);
 
 	/**
 	 * Destructor.

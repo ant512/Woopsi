@@ -37,30 +37,67 @@ MultiLineTextBox::~MultiLineTextBox() {
 	_text = NULL;
 }
 
-void MultiLineTextBox::draw(Rect clipRect) {
+void MultiLineTextBox::drawTextCentre(Rect clipRect) {
 
-	// Create a graphics port to draw the border
- 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	// Clear
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
-
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
-
-	delete port;
-
-	// Create a graphics port to draw the text - we use a non-internal port
-	// to ensure that we clip within the border we've just drawn
-	port = newGraphicsPort(clipRect);
+	// Early exit if there is no text to display
+	if (_text->getLineCount() == 0) return;
 
 	// Calculate various values needed to output text for this cliprect
 	u8 lineHeight = _text->getLineHeight();
 	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
 	s32 regionY = -_canvasY + offsetY;					// Y co-ord of the visible region of this canvas
 
-	s32 topRow = (regionY / lineHeight) - 1;			// Calculate the top line of text in this region
-	s32 bottomRow = ((regionY + clipRect.height) / lineHeight);	// Calculate bottom line of text
+	// Get the y co-ord of the top row - this gives us the offset of the block
+	// of text from the top of the box
+	s16 rowY = getRowY(0);
+
+	// Remove the offset of the row from the region - this gives us the y co-ord
+	// of the region relative to the top row of text
+	regionY -= rowY;
+
+	// Divide the region offset by the height of an individual row - this gives
+	// us the number of rows that are above the region (ie. the number of the
+	// top row within this region)
+	s32 topRow = regionY / lineHeight;
+
+	// Bottom row can be found by dividing the height of the region by the
+	// height of a row
+	s32 bottomRow = topRow + (clipRect.height / lineHeight);
+	
+	// Draw lines of text
+	drawText(clipRect, topRow, bottomRow);	
+}
+
+void MultiLineTextBox::drawTextBottom(Rect clipRect) {
+
+	// Early exit if there is no text to display
+	if (_text->getLineCount() == 0) return;
+
+	// Calculate various values needed to output text for this cliprect
+	u8 lineHeight = _text->getLineHeight();
+	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
+	s32 regionY = -_canvasY + offsetY;					// Y co-ord of the visible region of this canvas
+
+	// Get the index of the bottom row by:
+	//  - Dividing the distance between bottom of rect and bottom of textbox by
+	//    height of a row (gives number of rows below clip rect)
+	//  - Subtracting the result from the total number of rows
+	// 
+	s32 bottomRow = (_canvasHeight - (regionY + clipRect.height)) / lineHeight;
+	bottomRow = _text->getLineCount() - bottomRow;
+
+	// Top row can be found by:
+	//   - Dividing the rect height by the height of a row (gives number of
+	//     rows in region)
+	//   - Subtracting that number from bottom row index
+	// 
+	s32 topRow = bottomRow - (clipRect.height / _text->getLineHeight());
+
+	// Draw lines of text
+	drawText(clipRect, topRow, bottomRow);	
+}
+
+void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 
 	// Early exit checks
 	if ((topRow < 0) && (bottomRow < 0)) return;
@@ -69,6 +106,10 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	// Prevent overflows
 	if (topRow < 0) topRow = 0;
 	if (bottomRow >= _text->getLineCount()) bottomRow = _text->getLineCount() - 1;
+
+	// Create a graphics port to draw the text - we use a non-internal port
+	// to ensure that we clip within the border we've just drawn
+	GraphicsPort* port = newGraphicsPort(clipRect);
 
 	// Draw lines of text
 	s16 textX;
@@ -90,6 +131,58 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	}
 
 	delete port;
+}
+
+
+void MultiLineTextBox::drawTextTop(Rect clipRect) {
+
+	// Early exit if there is no text to display
+	if (_text->getLineCount() == 0) return;
+
+	// Calculate various values needed to output text for this cliprect
+	u8 lineHeight = _text->getLineHeight();
+	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
+	s32 regionY = -_canvasY + offsetY;					// Y co-ord of the visible region of this canvas
+
+	s32 topRow = (regionY / lineHeight) - 1;			// Calculate the top line of text in this region
+	s32 bottomRow = ((regionY + clipRect.height) / lineHeight);	// Calculate bottom line of text
+
+	// Draw lines of text
+	drawText(clipRect, topRow, bottomRow);	
+}
+
+void MultiLineTextBox::draw(Rect clipRect) {
+
+	// Create a graphics port to draw the border
+ 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+
+	// Clear
+	port->drawFilledRect(0, 0, _width, _height, _backColour);
+
+	// Draw outline
+	port->drawBevelledRect(0, 0, _width, _height);
+
+	delete port;
+
+	// Always use top alignment if the number of rows of text exceeds or is
+	// equal to the number of visible rows
+	if (_visibleRows <= _text->getLineCount()) {
+		drawTextTop(clipRect);
+	} else {
+
+		// Choose text output method based on vertical alignment
+		switch (_vAlignment) {
+			case TEXT_ALIGNMENT_VERT_CENTRE:
+				drawTextCentre(clipRect);
+				break;
+			case TEXT_ALIGNMENT_VERT_TOP:
+				drawTextTop(clipRect);
+				break;
+			case TEXT_ALIGNMENT_VERT_BOTTOM:
+				drawTextBottom(clipRect);
+				break;
+		}
+	}
 }
 
 // Calculate values for centralised text
