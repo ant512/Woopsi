@@ -389,8 +389,8 @@ void Demo::startup() {
 
 
 	// Add Welcome notice
-	//_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
-	//newScreen2->addGadget(_alert);
+	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
+	newScreen2->addGadget(_alert);
 
 
 

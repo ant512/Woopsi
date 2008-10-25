@@ -2,6 +2,7 @@
 #define _DEMO_H_
 
 #include "woopsi.h"
+#include "alert.h"
 
 using namespace WoopsiUI;
 
@@ -18,7 +19,7 @@ private:
 	PacMan* _pacMan;
 	Calculator* _calculator;
 	Pong* _pong;
-	//Alert* _alert;
+	Alert* _alert;
 };
 
 #endif
