@@ -3,10 +3,9 @@
 
 #include "woopsi.h"
 #include "eventhandler.h"
+#include "dimmedscreen.h"
 
-using namespace std;
-
-class DimmedScreen;
+using namespace WoopsiUI;
 
 class DimmedScreenTest : public Woopsi, public EventHandler {
 public:

@@ -3,10 +3,9 @@
 
 #include "woopsi.h"
 #include "eventhandler.h"
+#include "textbox.h"
 
-using namespace std;
-
-class TextBox;
+using namespace WoopsiUI;
 
 class FileReqDemo : public Woopsi, public EventHandler {
 public:

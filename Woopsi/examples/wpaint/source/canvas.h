@@ -5,7 +5,7 @@
 #include "eventhandler.h"
 #include "superbitmap.h"
 
-using namespace std;
+using namespace WoopsiUI;
 
 class Canvas : public Window, public EventHandler {
 public:

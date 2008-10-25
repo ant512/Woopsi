@@ -6,7 +6,7 @@
 #include "woopsikeyboard.h"
 #include "multilinetextbox.h"
 
-using namespace std;
+using namespace WoopsiUI;
 
 class KeyTest : public Woopsi, public EventHandler {
 public:

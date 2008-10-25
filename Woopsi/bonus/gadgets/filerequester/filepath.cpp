@@ -1,6 +1,8 @@
 #include <string.h>
 #include "filepath.h"
 
+using namespace WoopsiUI;
+
 FilePath::FilePath(const char* path) {
 	_path = NULL;
 	setPath(path);

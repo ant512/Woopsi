@@ -3,6 +3,8 @@
 #include "woopsiheaders.h"
 #include "filerequester.h"
 
+using namespace WoopsiUI;
+
 void FileReqDemo::startup() {
 
 	// Call base startup method

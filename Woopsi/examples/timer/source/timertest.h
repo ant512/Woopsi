@@ -6,7 +6,7 @@
 #include "woopsitimer.h"
 #include "textbox.h"
 
-using namespace std;
+using namespace WoopsiUI;
 
 class TimerTest : public Woopsi, public EventHandler {
 public:

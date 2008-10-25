@@ -5,6 +5,8 @@
 #include "button.h"
 #include "filepath.h"
 
+using namespace WoopsiUI;
+
 FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, u32 flags, FontBase* font) : AmigaWindow(x, y, width, height, title, flags, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	_flags.shiftClickChildren = false;

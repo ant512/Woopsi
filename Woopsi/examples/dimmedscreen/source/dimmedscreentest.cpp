@@ -1,7 +1,6 @@
 // Includes
 #include "dimmedscreentest.h"
 #include "woopsiheaders.h"
-#include "dimmedscreen.h"
 
 void DimmedScreenTest::startup() {
 

@@ -1,6 +1,8 @@
 // Includes
 #include "woopsiheaders.h"
 
+using namespace WoopsiUI;
+
 int main(int argc, char* argv[]) {
 
 	// Create Woopsi instance

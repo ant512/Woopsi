@@ -3,7 +3,7 @@
 
 #include "woopsi.h"
 
-using namespace std;
+using namespace WoopsiUI;
 
 class HelloWorld : public Woopsi {
 public:

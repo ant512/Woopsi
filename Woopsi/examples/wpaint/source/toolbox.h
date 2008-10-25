@@ -6,7 +6,7 @@
 #include "button.h"
 #include "canvas.h"
 
-using namespace std;
+using namespace WoopsiUI;
 
 class Toolbox : public Window, public EventHandler {
 public:
