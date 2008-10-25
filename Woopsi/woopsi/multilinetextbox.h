@@ -160,6 +160,57 @@ namespace WoopsiUI {
 		 */
 		virtual const u32 getTextLength() const;
 
+		/**
+		 * Shows the cursor.
+		 */
+		virtual void showCursor();
+
+		/**
+		 * Hides the cursor.
+		 */
+		virtual void hideCursor();
+
+		/**
+		 * Move the cursor to the text position specified.  0 indicates the start
+		 * of the string.  If position is greater than the length of the string,
+		 * the cursor is moved to the end of the string.
+		 * @param position The new cursor position.
+		 */
+		virtual void moveCursorToPosition(const s32 position);
+
+		/**
+		 * Get the cursor position.  This is the index within the string that
+		 * the cursor is currently positioned over.
+		 * @return position The cursor position.
+		 */
+		virtual inline const s32 getCursorPosition() const { return _cursorPos; };
+
+		/**
+		 * Insert text at the specified index.
+		 * @param text The text to insert.
+		 * @param index Index at which to insert the text.
+		 */
+		virtual void insertText(const char* text, const u32 index);
+
+		/**
+		 * Insert text at the specified index.
+		 * @param text Char to insert.
+		 * @param index Index at which to insert the char.
+		 */
+		virtual void insertText(const char text, const u32 index);
+
+		/**
+		 * Insert text at the current cursor position.
+		 * @param text The text to insert.
+		 */
+		virtual void insertTextAtCursor(const char* text);
+
+		/**
+		 * Insert text at the current cursor position.
+		 * @param text Char to insert.
+		 */
+		virtual void insertTextAtCursor(const char text);
+
 	protected:
 		Text* _text;						/**< Text object that manipulates and wraps the raw text string */
 		u8 _visibleRows;					/**< Total number of rows that the textbox can display at once */
@@ -168,8 +219,8 @@ namespace WoopsiUI {
 		u8 _padding;						/**< Padding around the text in pixels */
 		TextAlignmentHoriz _hAlignment;		/**< Horizontal alignment of the text */
 		TextAlignmentVert _vAlignment;		/**< Vertical alignment of the text */
-		u32 _cursorPos;							/**< Position of the cursor within the string */
-		bool _showCursor;						/**< Set to true to make cursor visible */
+		s32 _cursorPos;						/**< Position of the cursor within the string */
+		bool _showCursor;					/**< Set to true to make cursor visible */
 
 		/**
 		 * Gets the x position of a row of text based on the width of the row and the
@@ -205,6 +256,12 @@ namespace WoopsiUI {
 		 * @param bottmRow The index of the bottom row of text to draw.
 		 */
 		void drawText(Rect clipRect, s32 topRow, s32 bottomRow);
+
+		/**
+		 * Draws the cursor.
+		 * @param clipRect The rect to draw to.
+		 */
+		void drawCursor(Rect clipRect);
 
 		/**
 		 * Destructor.

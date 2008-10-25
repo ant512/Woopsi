@@ -29,6 +29,9 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 		_maxRows = _visibleRows + 1;
 	}
 
+	_cursorPos = 0;
+	_showCursor = true;
+
 	setText(text);
 }
 
@@ -110,6 +113,61 @@ void MultiLineTextBox::draw(Rect clipRect) {
 	} else {
 		drawText(clipRect, 0, _text->getLineCount());
 	}
+
+	// Draw the cursor
+	drawCursor(clipRect);
+}
+
+void MultiLineTextBox::drawCursor(Rect clipRect) {
+
+	GraphicsPort* port = newGraphicsPort(clipRect);
+
+	// Get the cursor co-ords
+	if (_showCursor) {
+		u32 cursorRow = 0;
+		s32 currentCursorPos = 0;
+
+		s16 textX;
+		s16 textY;
+		u16 cursorX = 0;
+		u16 cursorY = 0;
+
+		// Only calculate the cursor position if the cursor isn't at the start of the text
+		if (_cursorPos > 0) {
+
+			// Calculate the row in which the cursor appears
+			while (currentCursorPos < _cursorPos) {
+				currentCursorPos += _text->getLineLength(cursorRow);
+				cursorRow++;
+			}
+
+			// Adjust for row overshoot in loop
+			if (currentCursorPos > 0) cursorRow--;
+
+			// Calculate y co-ord of cursor
+			cursorY = cursorRow * _text->getLineHeight();
+
+			// Adjust for column overshoot in loop
+			currentCursorPos -= _text->getLineLength(cursorRow);
+
+			// Calculate the x co-ord of the cursor
+			cursorX = 0;
+
+			// Sum the width of each char in the row to find the x co-ord
+			for (s32 i = currentCursorPos; i < _cursorPos; i++) {
+				cursorX += _font->getCharWidth(_text->getCharArray()[i]);
+			}
+		}
+
+		// Get the position of the text for the row in which the cursor appears
+		textX = getRowX(cursorRow) + _canvasX;
+		textY = getRowY(cursorRow) + _canvasY;
+
+		// Draw cursor
+		port->drawFilledXORRect(cursorX + textX, cursorY + textY, _font->getCharWidth(_text->getCharArray()[_cursorPos]), _font->getHeight());
+	}
+
+	delete port;
 }
 
 // Calculate values for centralised text
@@ -387,4 +445,84 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 
 const u32 MultiLineTextBox::getTextLength() const {
 	return _text->getLength();
+}
+
+void MultiLineTextBox::showCursor() {
+	if (!_showCursor) {
+		_showCursor = true;
+		draw();
+	}
+}
+
+void MultiLineTextBox::hideCursor() {
+	if (_showCursor) {
+		_showCursor = false;
+		draw();
+	}
+}
+
+void MultiLineTextBox::insertTextAtCursor(const char* text) {
+	insertText(text, getCursorPosition());
+}
+
+void MultiLineTextBox::insertTextAtCursor(const char text) {
+	insertText(text, getCursorPosition());
+}
+
+void MultiLineTextBox::moveCursorToPosition(const s32 position) {
+
+	// Force position to within confines of string
+	if (position < 0) {
+		_cursorPos = 0;
+	} else {
+		s32 len = (s32)_text->getLength();
+		_cursorPos = len > position ? position : len;
+	}
+
+	draw();
+}
+
+void MultiLineTextBox::insertText(const char* text, const u32 index) {
+	// Get current text length - use this later to quickly get the length
+	// of the inserted string to shift the cursor around
+	u32 oldLen = _text->getLength();
+
+	_text->insert(text, index);
+	
+	// Get the new string length and use it to calculate the length
+	// of the inserted string
+	u32 insertLen = _text->getLength() - oldLen;
+
+	moveCursorToPosition(index + insertLen);
+
+	// Update max scroll value
+	if (_text->getLineCount() > _visibleRows) {
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+
+		// Scroll to bottom of new text
+		jump(0, -(_canvasHeight - _height));
+	}
+
+	Gadget::draw();
+
+	raiseValueChangeEvent();
+}
+
+void MultiLineTextBox::insertText(const char text, const u32 index) {
+	_text->insert(text, index);
+
+	// Cursor position just increases by one as we're inserting a single char
+	moveCursorToPosition(getCursorPosition() + 1);
+
+	// Update max scroll value
+	if (_text->getLineCount() > _visibleRows) {
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+
+		// Scroll to bottom of new text
+		jump(0, -(_canvasHeight - _height));
+	}
+
+	Gadget::draw();
+
+	raiseValueChangeEvent();
 }
