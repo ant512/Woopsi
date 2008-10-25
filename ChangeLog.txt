@@ -7,15 +7,18 @@ Change Log
      - s32 used as iterator when working with visible rect cache to prevent
        permanent loops when large numbers of rects were visible.
      - s32 used as child gadget iterator.
-     - MultiLineTextBox::resize() correctly recalculates the number of visible rows.
+     - MultiLineTextBox::resize() correctly recalculates the number of visible
+       rows.
      - Tidied up MultiLineTextBox::getRowX() and getRowY().
-     - MultiLineTextBox::getCurrentPage() no longer divides by 0 if there are no visible rows.
-     - MultiLineTextBox::draw() tidied up; correctly draws when partial line of text is visible.
+     - MultiLineTextBox::getCurrentPage() no longer divides by 0 if there are no
+       visible rows.
+     - MultiLineTextBox::draw() tidied up; correctly draws when partial line of
+       text is visible.
      - MultiLineTextBox vertical alignment options all work correctly.
      - MultiLineTextBox scrolls correctly when text is added.
      - Text::stripTopLines() was not removing all characters.
      - Deleted empty fontbase.cpp file.
-	 
+
   - New Features:
      - Moved all classes into WoopsiUI namespace.
 
@@ -275,8 +278,8 @@ Change Log
         - Added Gadget::enableDrawing().
         - Added Gadget::disableDrawing().
         - Added Gadget::drawingEnabled().
-        - Gadget::isDrawingEnabled() only returns true if the gadget is not hidden
-          or deleted.
+        - Gadget::isDrawingEnabled() only returns true if the gadget is not
+          hidden or deleted.
         - GraphicsPort drawing methods do not check Gadget::isDeleted() as it
           is checked in isDrawingEnabled().
      - MultiLineTextBox restores correct drawing state when resizing.
