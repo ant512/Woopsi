@@ -148,9 +148,9 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 				// Adjust for column overshoot in loop
 				currentCursorPos -= _text->getLineLength(cursorRow);
 			} else if (currentCursorPos == (s32)_text->getLength()) {
-				if (_text->getCharAt(_cursorPos - 1) == '\n') {
-				} else {
-					// Cursor is at the end of the text, so keep it on the same row
+				if (_text->getCharAt(_cursorPos - 1) != '\n') {
+					// Cursor is at the end of the text, so keep it on the same row as
+					// long as cursor not supposed to be on a new line
 					cursorRow--;
 					
 					// Adjust for column overshoot in loop
