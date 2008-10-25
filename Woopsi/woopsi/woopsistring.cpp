@@ -128,7 +128,7 @@ void WoopsiString::insert(const char* text, u32 index) {
 			// so no data is overwritten before it is copied
 			char* dest = _text + _length + 1;
 			char* src = _text + oldLen + 1;
-			for (u32 i = 0; i < insertLen; ++i) {
+			for (u32 i = _length; i >= index; i--) {
 				 *dest-- = *src--;
 			}
 

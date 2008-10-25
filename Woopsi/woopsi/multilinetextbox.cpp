@@ -509,6 +509,7 @@ void MultiLineTextBox::insertText(const char* text, const u32 index) {
 }
 
 void MultiLineTextBox::insertText(const char text, const u32 index) {
+
 	_text->insert(text, index);
 
 	// Cursor position just increases by one as we're inserting a single char
