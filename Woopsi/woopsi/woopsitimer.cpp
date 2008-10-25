@@ -1,5 +1,7 @@
 #include "woopsitimer.h"
 
+using namespace WoopsiUI;
+
 WoopsiTimer::WoopsiTimer(u32 timeout, bool repeat) : Gadget(0, 0, 0, 0, 0) {
 	_timeout = timeout;
 	_isRepeater = repeat;

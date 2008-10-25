@@ -1,6 +1,7 @@
 #include "windowborderbutton.h"
 #include "graphicsport.h"
-#include "woopsi.h"
+
+using namespace WoopsiUI;
 
 WindowBorderButton::WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font) : DecorationGlyphButton(x, y, width, height, normalGlyph, clickedGlyph, font) {
 }

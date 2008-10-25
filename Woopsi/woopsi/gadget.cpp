@@ -7,6 +7,8 @@
 #include "contextmenu.h"
 #include "defaultstyle.h"
 
+using namespace WoopsiUI;
+
 Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 
 	// Set properties from parameters

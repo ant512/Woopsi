@@ -1,6 +1,8 @@
 #include "contextmenuitem.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 ContextMenuItem::ContextMenuItem(s16 x, s16 y, u16 width, u16 height, const char* text, u32 value, FontBase* font) : Label(x, y, width, height, text, font) {
 	setBorderless(true);
 	setTextAlignmentVert(TEXT_ALIGNMENT_VERT_CENTRE);

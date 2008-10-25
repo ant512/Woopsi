@@ -1,6 +1,8 @@
 #include "requester.h"
 #include "button.h"
 
+using namespace WoopsiUI;
+
 Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	_flags.shiftClickChildren = false;

@@ -4,12 +4,13 @@
 #include "woopsi.h"
 #include "sysfont.h"
 #include "dynamicarray.h"
+#include "superbitmap.h"
+#include "amigascreen.h"
+#include "amigawindow.h"
+#include "button.h"
+#include "woopsitimer.h"
 
-class SuperBitmap;
-class AmigaScreen;
-class AmigaWindow;
-class Button;
-class WoopsiTimer;
+using namespace WoopsiUI;
 
 class PacMap;
 class PacGhost;

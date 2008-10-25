@@ -1,5 +1,7 @@
 #include "packedfont1.h"
 
+using namespace WoopsiUI;
+
 void PackedFont1::renderChar(
 		const u16* pixelData, u16 pixelsPerRow,
 		u16* bitmap, u16 bitmapWidth,

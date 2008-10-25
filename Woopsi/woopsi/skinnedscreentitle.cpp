@@ -1,6 +1,8 @@
 #include "skinnedscreentitle.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 SkinnedScreenTitle::SkinnedScreenTitle(const char* text, const ScreenSkin* skin) : ScreenTitle(0, text, NULL) {
 	_flags.decoration = true;
 	_skin = skin;

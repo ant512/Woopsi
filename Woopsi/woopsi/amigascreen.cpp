@@ -2,6 +2,8 @@
 #include "decorationglyphbutton.h"
 #include "screentitle.h"
 
+using namespace WoopsiUI;
+
 AmigaScreen::AmigaScreen(const char* title, u32 flags, u32 screenFlags, FontBase* font) : Screen(title, flags, font) {
 
 	_titleHeight = SCREEN_TITLE_HEIGHT;

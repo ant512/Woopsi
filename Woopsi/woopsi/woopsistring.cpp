@@ -1,6 +1,8 @@
 #include <string.h>
 #include "woopsistring.h"
 
+using namespace WoopsiUI;
+
 WoopsiString::WoopsiString() {
 	_text = NULL;
 	_length = 0;

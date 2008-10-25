@@ -1,5 +1,7 @@
 #include "animation.h"
 
+using namespace WoopsiUI;
+
 // Constructor
 // loops = 0 means the animation loops infinitely
 Animation::Animation(const u8 speed, const LoopType loopType, const u16 loops) {

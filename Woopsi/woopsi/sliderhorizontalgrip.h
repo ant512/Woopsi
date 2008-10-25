@@ -4,74 +4,75 @@
 #include <nds.h>
 #include "gadget.h"
 
-using namespace std;
-
-/**
- * Class representing the grip, or draggable button, with a horizontal
- * slider.
- */
-class SliderHorizontalGrip : public Gadget {
-
-public:
-	
-	/**
-	 * Constructor.
-	 * @param x The x co-ordinate of the grip, relative to its parent.
-	 * @param y The y co-ordinate of the grip, relative to its parent.
-	 * @param width The width of the grip.
-	 * @param height The height of the grip.
-	 */
-	SliderHorizontalGrip(s16 x, s16 y, u16 width, u16 height);
+namespace WoopsiUI {
 
 	/**
-	 * Override the Gadget::draw() method.
+	 * Class representing the grip, or draggable button, with a horizontal
+	 * slider.
 	 */
-	virtual inline void draw() { Gadget::draw(); };
+	class SliderHorizontalGrip : public Gadget {
 
-	/**
-	 * Draw the region of the slider that falls within the
-	 * clipping rect.  Use draw() instead in most circumstances.
-	 * @param clipRect The clipping region.
-	 */
-	virtual void draw(Rect clipRect);
+	public:
+		
+		/**
+		 * Constructor.
+		 * @param x The x co-ordinate of the grip, relative to its parent.
+		 * @param y The y co-ordinate of the grip, relative to its parent.
+		 * @param width The width of the grip.
+		 * @param height The height of the grip.
+		 */
+		SliderHorizontalGrip(s16 x, s16 y, u16 width, u16 height);
 
-	/**
-	 * Click the grip at the specified co-ordinates.
-	 * @param x The x co-ordinate of the click.
-	 * @param y The y co-ordinate of the click.
-	 * @return True if the click was processed by the slider.
-	 */
-	virtual bool click(s16 x, s16 y);
+		/**
+		 * Override the Gadget::draw() method.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-	/**
-	 * Release this gadget at the supplied co-ordinates
-	 * @param x X co-ordinate of the release.
-	 * @param y Y co-ordinate of the release.
-	 * @return True if the release was successful.
-	 */
-	virtual bool release(s16 x, s16 y);
+		/**
+		 * Draw the region of the slider that falls within the
+		 * clipping rect.  Use draw() instead in most circumstances.
+		 * @param clipRect The clipping region.
+		 */
+		virtual void draw(Rect clipRect);
 
-	/**
-	 * Drag the gadget to the supplied co-ordinates.
-	 * @param x The x co-ordinate of the stylus.
-	 * @param y The y co-ordinate of the stylus.
-	 * @param vX The horizontal distance that the stylus was dragged.
-	 * @param vY The vertical distance that the stylus was dragged.
-	 * @return True if the drag was successful.
-	 */
-	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
+		/**
+		 * Click the grip at the specified co-ordinates.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 * @return True if the click was processed by the slider.
+		 */
+		virtual bool click(s16 x, s16 y);
 
-protected:
+		/**
+		 * Release this gadget at the supplied co-ordinates
+		 * @param x X co-ordinate of the release.
+		 * @param y Y co-ordinate of the release.
+		 * @return True if the release was successful.
+		 */
+		virtual bool release(s16 x, s16 y);
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~SliderHorizontalGrip() { };
+		/**
+		 * Drag the gadget to the supplied co-ordinates.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 * @param vX The horizontal distance that the stylus was dragged.
+		 * @param vY The vertical distance that the stylus was dragged.
+		 * @return True if the drag was successful.
+		 */
+		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline SliderHorizontalGrip(const SliderHorizontalGrip& sliderHorizontalGrip) : Gadget(sliderHorizontalGrip) { };
-};
+	protected:
+
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~SliderHorizontalGrip() { };
+
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline SliderHorizontalGrip(const SliderHorizontalGrip& sliderHorizontalGrip) : Gadget(sliderHorizontalGrip) { };
+	};
+}
 
 #endif

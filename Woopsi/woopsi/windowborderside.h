@@ -4,59 +4,60 @@
 #include <nds.h>
 #include "gadget.h"
 
-using namespace std;
-
-/**
- * Class providing a gadget that mimics the appearance of the AmigaOS 3.x
- * window side border.  Forms part of the AmigaWindow gadget.
- */
-class WindowBorderSide : public Gadget {
-public:
+namespace WoopsiUI {
 
 	/**
-	 * Constructor.
-	 * @param x The x co-ordinate of the gadget.
-	 * @param y The y co-ordinate of the gadget.
-	 * @param width The width of the gadget.
-	 * @param height The height of the gadget.
+	 * Class providing a gadget that mimics the appearance of the AmigaOS 3.x
+	 * window side border.  Forms part of the AmigaWindow gadget.
 	 */
-	WindowBorderSide(s16 x, s16 y, u16 width, u16 height);
+	class WindowBorderSide : public Gadget {
+	public:
 
-	/**
-	 * Draws the gadget.
-	 */
-	virtual inline void draw() { Gadget::draw(); };
+		/**
+		 * Constructor.
+		 * @param x The x co-ordinate of the gadget.
+		 * @param y The y co-ordinate of the gadget.
+		 * @param width The width of the gadget.
+		 * @param height The height of the gadget.
+		 */
+		WindowBorderSide(s16 x, s16 y, u16 width, u16 height);
 
-	/**
-	 * Draw the area of this gadget that falls within the clipping region.
-	 * Called by the draw() function to draw all visible regions.
-	 * @param clipRect The clipping region to draw.
-	 * @see draw()
-	 */
-	virtual void draw(Rect clipRect);
+		/**
+		 * Draws the gadget.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-	/**
-	 * Give the gadget focus.
-	 * @return True if the gadget received focus correctly.
-	 */
-	virtual bool focus();
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the draw() function to draw all visible regions.
+		 * @param clipRect The clipping region to draw.
+		 * @see draw()
+		 */
+		virtual void draw(Rect clipRect);
 
-	/**
-	 * Remove focus from the gadget.
-	 * @return True if the gadget lost focus correctly.
-	 */
-	virtual bool blur();
+		/**
+		 * Give the gadget focus.
+		 * @return True if the gadget received focus correctly.
+		 */
+		virtual bool focus();
 
-protected:
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~WindowBorderSide() { };
-	
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline WindowBorderSide(const WindowBorderSide& windowBorderSide) : Gadget(windowBorderSide) { };
-};
+		/**
+		 * Remove focus from the gadget.
+		 * @return True if the gadget lost focus correctly.
+		 */
+		virtual bool blur();
+
+	protected:
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~WindowBorderSide() { };
+		
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline WindowBorderSide(const WindowBorderSide& windowBorderSide) : Gadget(windowBorderSide) { };
+	};
+}
 
 #endif

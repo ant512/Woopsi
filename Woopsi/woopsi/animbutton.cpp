@@ -3,6 +3,8 @@
 #include "woopsi.h"
 #include "woopsitimer.h"
 
+using namespace WoopsiUI;
+
 AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, 0, NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 

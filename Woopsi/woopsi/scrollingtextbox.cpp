@@ -1,6 +1,8 @@
 #include "scrollingtextbox.h"
 #include "scrollbarvertical.h"
 
+using namespace WoopsiUI;
+
 ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, FontBase* font) : Gadget(x, y, width, height, flags, font) {
 	_scrollbarWidth = 9;
 

@@ -5,6 +5,8 @@
 #include "windowborderbutton.h"
 #include "woopsi.h"
 
+using namespace WoopsiUI;
+
 AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font) : Window(x, y, width, height, title, flags, font) {
 
 	_windowBorderTop = NULL;

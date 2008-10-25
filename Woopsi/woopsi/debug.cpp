@@ -10,6 +10,8 @@
 #include "scrollingtextbox.h"
 #include "monofont.h"
 
+using namespace WoopsiUI;
+
 Debug* Debug::_debug = NULL;
 
 Debug::Debug() {

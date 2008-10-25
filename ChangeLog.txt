@@ -14,6 +14,9 @@ Change Log
      - MultiLineTextBox vertical alignment options all work correctly.
      - MultiLineTextBox scrolls correctly when text is added.
      - Text::stripTopLines() was not removing all characters.
+	 
+  - New Features:
+     - Moved all classes into WoopsiUI namespace.
 
 
   V0.35 (20081012)

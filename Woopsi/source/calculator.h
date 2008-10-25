@@ -3,10 +3,11 @@
 
 #include "woopsi.h"
 #include "eventhandler.h"
+#include "amigascreen.h"
+#include "amigawindow.h"
+#include "textbox.h"
 
-class AmigaScreen;
-class AmigaWindow;
-class TextBox;
+using namespace WoopsiUI;
 
 class Calculator : EventHandler {
 

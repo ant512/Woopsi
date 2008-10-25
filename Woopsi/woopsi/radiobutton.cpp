@@ -2,6 +2,8 @@
 #include "radiobuttongroup.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 RadioButton::RadioButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, GLYPH_SCREEN_DEPTH_UP, font) {
 	_font = font;
 

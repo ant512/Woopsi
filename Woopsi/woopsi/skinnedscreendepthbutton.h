@@ -5,32 +5,33 @@
 #include "decorationglyphbutton.h"
 #include "skin.h"
 
-using namespace std;
+namespace WoopsiUI {
 
-class SkinnedScreenDepthButton : public DecorationGlyphButton {
+	class SkinnedScreenDepthButton : public DecorationGlyphButton {
 
-public:
-	SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSkin* skin);
+	public:
+		SkinnedScreenDepthButton(s16 x, s16 y, const ScreenSkin* skin);
 
-	/**
-	 * Override the Gadget::draw() method.
-	 */
-	virtual inline void draw() { Gadget::draw(); };
+		/**
+		 * Override the Gadget::draw() method.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-	virtual void draw(Rect clipRect);
+		virtual void draw(Rect clipRect);
 
-protected:
-	const ScreenSkin* _skin;
+	protected:
+		const ScreenSkin* _skin;
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~SkinnedScreenDepthButton() { };
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~SkinnedScreenDepthButton() { };
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline SkinnedScreenDepthButton(const SkinnedScreenDepthButton& skinnedScreenDepthButton) : DecorationGlyphButton(skinnedScreenDepthButton) { };
-};
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline SkinnedScreenDepthButton(const SkinnedScreenDepthButton& skinnedScreenDepthButton) : DecorationGlyphButton(skinnedScreenDepthButton) { };
+	};
+}
 
 #endif

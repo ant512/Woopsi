@@ -2,6 +2,8 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 
+using namespace WoopsiUI;
+
 CycleButton::CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, "", font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 	_selectedIndex = 0;

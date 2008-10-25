@@ -1,6 +1,8 @@
 #include "defaultstyle.h"
 #include "defines.h"
 
+using namespace WoopsiUI;
+
 u16 DefaultStyle::backColour = woopsiRGB(20, 20, 20);
 u16 DefaultStyle::shineColour = woopsiRGB(31, 31, 31);
 u16 DefaultStyle::highlightColour = woopsiRGB(12, 17, 23);

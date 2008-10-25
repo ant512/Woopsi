@@ -4,106 +4,107 @@
 #include "gadget.h"
 #include "eventhandler.h"
 
-using namespace std;
+namespace WoopsiUI {
 
-class ContextMenuItem;
-
-/**
- * The context menu is implemented as a member of the Woopsi class.
- * It should not be instantiated elsewhere.  It offers a simple
- * context-aware menu that opens when the user holds down a modifier
- * key when tapping a gadget.
- */
-class ContextMenu : public Gadget, public EventHandler {
-public:
+	class ContextMenuItem;
 
 	/**
-	 * Constructor.
-	 * @param font The font to use with the context menu.
+	 * The context menu is implemented as a member of the Woopsi class.
+	 * It should not be instantiated elsewhere.  It offers a simple
+	 * context-aware menu that opens when the user holds down a modifier
+	 * key when tapping a gadget.
 	 */
-	ContextMenu(FontBase* font = NULL);
+	class ContextMenu : public Gadget, public EventHandler {
+	public:
 
-	/**
-	 * Handles events raised by the gadget's sub-gadgets.
-	 * @param e The event arguments.
-	 */
-	virtual bool handleEvent(const EventArgs& e);
+		/**
+		 * Constructor.
+		 * @param font The font to use with the context menu.
+		 */
+		ContextMenu(FontBase* font = NULL);
 
-	/**
-	 * Add a new menu item to the gadget.
-	 * @param text Text to show in the item.
-	 * @param value The value of the item.
-	 */
-	virtual ContextMenuItem* newMenuItem(const char* text, u32 value);
+		/**
+		 * Handles events raised by the gadget's sub-gadgets.
+		 * @param e The event arguments.
+		 */
+		virtual bool handleEvent(const EventArgs& e);
 
-	/**
-	 * Draw the region of the menu within the clipping rect.
-	 * @param clipRect The clipping rect to limit drawing to.
-	 */
-	virtual void draw(Rect clipRect);
+		/**
+		 * Add a new menu item to the gadget.
+		 * @param text Text to show in the item.
+		 * @param value The value of the item.
+		 */
+		virtual ContextMenuItem* newMenuItem(const char* text, u32 value);
 
-	/**
-	 * Draw all visible regions of the menu.
-	 */
-	virtual inline void draw() { Gadget::draw(); };
+		/**
+		 * Draw the region of the menu within the clipping rect.
+		 * @param clipRect The clipping rect to limit drawing to.
+		 */
+		virtual void draw(Rect clipRect);
 
-	/**
-	 * Resize the gadget to the new dimensions.
-	 * @param width The new width.
-	 * @param height The new height.
-	 * @return True if the resize was successful.
-	 */
-	virtual bool resize(u16 width, u16 height);
+		/**
+		 * Draw all visible regions of the menu.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-	/**
-	 * Clear all items from the menu and reset it.
-	 */
-	virtual void reset();
+		/**
+		 * Resize the gadget to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 * @return True if the resize was successful.
+		 */
+		virtual bool resize(u16 width, u16 height);
 
-	/**
-	 * Set the gadget that opened the menu.
-	 * @param gadget Pointer to the gadget that opened the menu.
-	 */
-	inline void setOpener(Gadget* gadget) { _opener = gadget; };
+		/**
+		 * Clear all items from the menu and reset it.
+		 */
+		virtual void reset();
 
-	/**
-	 * Get the gadget that opened the menu.
-	 * @return Pointer to the gadget that opened the menu.
-	 */
-	inline Gadget* getOpener() { return _opener; };
+		/**
+		 * Set the gadget that opened the menu.
+		 * @param gadget Pointer to the gadget that opened the menu.
+		 */
+		inline void setOpener(Gadget* gadget) { _opener = gadget; };
 
-	/**
-	 * Get the value of the context menu.  This will be
-	 * the value of the last chosen item.
-	 * @return The value of the last chosen menu item.
-	 */
-	inline const u32 getValue() const { return _value; };
+		/**
+		 * Get the gadget that opened the menu.
+		 * @return Pointer to the gadget that opened the menu.
+		 */
+		inline Gadget* getOpener() { return _opener; };
 
-	/**
-	 * Give the gadget focus.
-	 * @return True if the gadget received focus correctly.
-	 */
-	virtual inline bool focus() { return false; };
+		/**
+		 * Get the value of the context menu.  This will be
+		 * the value of the last chosen item.
+		 * @return The value of the last chosen menu item.
+		 */
+		inline const u32 getValue() const { return _value; };
 
-	/**
-	 * Remove focus from the gadget.
-	 * @return True if the gadget lost focus correctly.
-	 */
-	virtual inline bool blur() { return false; };
+		/**
+		 * Give the gadget focus.
+		 * @return True if the gadget received focus correctly.
+		 */
+		virtual inline bool focus() { return false; };
 
-private:
-	Gadget* _opener;				/**< Pointer to the gadget that opened the menu */
-	u32 _value;						/**< The value of the last selected menu item */
+		/**
+		 * Remove focus from the gadget.
+		 * @return True if the gadget lost focus correctly.
+		 */
+		virtual inline bool blur() { return false; };
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~ContextMenu() { };
+	private:
+		Gadget* _opener;				/**< Pointer to the gadget that opened the menu */
+		u32 _value;						/**< The value of the last selected menu item */
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline ContextMenu(const ContextMenu& contextMenu) : Gadget(contextMenu) { };
-};
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~ContextMenu() { };
+
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline ContextMenu(const ContextMenu& contextMenu) : Gadget(contextMenu) { };
+	};
+}
 
 #endif

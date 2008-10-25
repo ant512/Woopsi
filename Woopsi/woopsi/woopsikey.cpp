@@ -1,5 +1,7 @@
 #include "woopsikey.h"
 
+using namespace WoopsiUI;
+
 WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* text, const KeyType keyType, FontBase* font) : Button(x, y, width, height, text, font) {
 	_keyType = keyType;
 	_keyMode = KEY_MODE_NORMAL;

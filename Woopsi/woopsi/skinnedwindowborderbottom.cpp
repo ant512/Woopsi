@@ -1,6 +1,8 @@
 #include "skinnedwindowborderbottom.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 SkinnedWindowBorderBottom::SkinnedWindowBorderBottom(s16 x, s16 y, u16 width, const WindowSkin* skin) : WindowBorderBottom(x, y, width, 0, 0) {
 
 	_skin = skin;

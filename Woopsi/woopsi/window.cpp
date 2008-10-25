@@ -1,5 +1,7 @@
 #include "window.h"	
 
+using namespace WoopsiUI;
+
 Window::Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
 	_title = NULL;
 	setTitle(title);

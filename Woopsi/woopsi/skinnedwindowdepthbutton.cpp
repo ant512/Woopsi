@@ -1,6 +1,8 @@
 #include "skinnedwindowdepthbutton.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 SkinnedWindowDepthButton::SkinnedWindowDepthButton(s16 x, s16 y, const WindowSkin* skin) : DecorationGlyphButton(x, y, 0, 0, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, NULL) {
 
 	_skin = skin;

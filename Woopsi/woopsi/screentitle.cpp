@@ -2,6 +2,8 @@
 #include "graphicsport.h"
 #include <string.h>
 
+using namespace WoopsiUI;
+
 ScreenTitle::ScreenTitle(u16 height, const char* text, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, height, GADGET_BORDERLESS, font) {
 	_flags.decoration = true;
 	_flags.draggable = true;

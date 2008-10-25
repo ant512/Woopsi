@@ -1,5 +1,7 @@
 #include "packedfont16.h"
 
+using namespace WoopsiUI;
+
 //
 // pixeldata is an array of u16 values, each of which represents
 // a single pixel.

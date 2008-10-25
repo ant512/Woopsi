@@ -1,6 +1,8 @@
 #include "progressbar.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 ProgressBar::ProgressBar(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, 0) {
 	_outline = OUTLINE_IN;
 	_minimumValue = 0;

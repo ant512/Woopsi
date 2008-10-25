@@ -2,6 +2,8 @@
 #include "scrollbarvertical.h"
 #include "debug.h"
 
+using namespace WoopsiUI;
+
 ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_scrollbarWidth = 9;
 

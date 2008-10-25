@@ -8,6 +8,8 @@
 #include "defaultstyle.h"
 #include "woopsitimer.h"
 
+using namespace WoopsiUI;
+
 // Instantiate singleton
 Woopsi* Woopsi::singleton = NULL;
 

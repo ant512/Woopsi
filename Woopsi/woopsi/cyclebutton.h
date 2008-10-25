@@ -4,84 +4,85 @@
 #include <nds.h>
 #include "button.h"
 
-using namespace std;
-
-/**
- * Cycle button gadget.  Displays text within the button.  Clicking it cycles
- * through its available options.
- */
-class CycleButton : public Button {
-public:
+namespace WoopsiUI {
 
 	/**
-	 * Struct defining a single cycle button option.
+	 * Cycle button gadget.  Displays text within the button.  Clicking it cycles
+	 * through its available options.
 	 */
-	typedef struct {
-		char* text;							/**< Text to display for option. */
-		u32 value;							/**< Option value. */
-	} CycleButtonOption;
+	class CycleButton : public Button {
+	public:
 
-	/**
-	 * Constructor for cycle buttons.
-	 * @param x The x co-ordinate of the button, relative to its parent.
-	 * @param y The y co-ordinate of the button, relative to its parent.
-	 * @param width The width of the button.
-	 * @param height The height of the button.
-	 * @param font The font that the button should use.
-	 */
-	CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
+		/**
+		 * Struct defining a single cycle button option.
+		 */
+		typedef struct {
+			char* text;							/**< Text to display for option. */
+			u32 value;							/**< Option value. */
+		} CycleButtonOption;
 
-	/**
-	 * Draw the region of the textbox within the clipping rect. Should not be called
-	 * directly.
-	 * @param clipRect The clipping rect to limit drawing to.
-	 */
-	virtual void draw(Rect clipRect);
-	
-	/**
-	 * Draw all visible regions of the textbox.
-	 */
-	virtual inline void draw() { Gadget::draw(); };
+		/**
+		 * Constructor for cycle buttons.
+		 * @param x The x co-ordinate of the button, relative to its parent.
+		 * @param y The y co-ordinate of the button, relative to its parent.
+		 * @param width The width of the button.
+		 * @param height The height of the button.
+		 * @param font The font that the button should use.
+		 */
+		CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
 
-	/**
-	 * Add a new option to the gadget.
-	 * @param text The text of the option.
-	 * @param value The value of the option.
-	 */
-	void addOption(const char* text, const u32 value);
+		/**
+		 * Draw the region of the textbox within the clipping rect. Should not be called
+		 * directly.
+		 * @param clipRect The clipping rect to limit drawing to.
+		 */
+		virtual void draw(Rect clipRect);
+		
+		/**
+		 * Draw all visible regions of the textbox.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-	/**
-	 * Get the value of the current option.
-	 * @return Value of the current option.
-	 */
-	inline const u32 getValue() const { return _options[_selectedIndex]->value; };
+		/**
+		 * Add a new option to the gadget.
+		 * @param text The text of the option.
+		 * @param value The value of the option.
+		 */
+		void addOption(const char* text, const u32 value);
 
-	/**
-	 * Release this gadget at the supplied co-ordinates.
-	 * @param x X co-ordinate of the release.
-	 * @param y Y co-ordinate of the release.
-	 * @return True if the release was successful.
-	 */
-	virtual bool release(s16 x, s16 y);
+		/**
+		 * Get the value of the current option.
+		 * @return Value of the current option.
+		 */
+		inline const u32 getValue() const { return _options[_selectedIndex]->value; };
 
-protected:
-	DynamicArray<CycleButtonOption*> _options;		/**< Array of options. */
-	s16 _selectedIndex;								/**< Index of the currently selected option. */
+		/**
+		 * Release this gadget at the supplied co-ordinates.
+		 * @param x X co-ordinate of the release.
+		 * @param y Y co-ordinate of the release.
+		 * @return True if the release was successful.
+		 */
+		virtual bool release(s16 x, s16 y);
 
-	/**
-	 * Prevent recalculation of text positions.
-	 */
-	virtual inline void calculateTextPosition() { };
+	protected:
+		DynamicArray<CycleButtonOption*> _options;		/**< Array of options. */
+		s16 _selectedIndex;								/**< Index of the currently selected option. */
 
-	/**
-	 * Destructor.
-	 */
-	virtual ~CycleButton();
+		/**
+		 * Prevent recalculation of text positions.
+		 */
+		virtual inline void calculateTextPosition() { };
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline CycleButton(const CycleButton& cycleButton) : Button(cycleButton) { };
-};
+		/**
+		 * Destructor.
+		 */
+		virtual ~CycleButton();
+
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline CycleButton(const CycleButton& cycleButton) : Button(cycleButton) { };
+	};
+}
 
 #endif

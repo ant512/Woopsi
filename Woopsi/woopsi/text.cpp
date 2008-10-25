@@ -1,5 +1,7 @@
 #include "text.h"
 
+using namespace WoopsiUI;
+
 Text::Text(FontBase* font, const char* text, u16 width) : WoopsiString(text) {
 	_font = font;
 	_width = width;

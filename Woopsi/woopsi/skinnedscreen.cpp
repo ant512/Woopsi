@@ -3,6 +3,8 @@
 #include "skinnedscreentitle.h"
 #include "skinnedscreen.h"
 
+using namespace WoopsiUI;
+
 SkinnedScreen::SkinnedScreen(const char* title, u32 flags, u32 screenFlags, const ScreenSkin* skin) : Screen(title, flags, NULL) {
 
 	_screenTitle = NULL;

@@ -3,12 +3,13 @@
 
 #include <nds.h>
 
-using namespace std;
+namespace WoopsiUI {
 
-typedef struct {
-	const u16* bitmap;
-	u16 width;
-	u16 height;
-} Bitmap;
+	typedef struct {
+		const u16* bitmap;
+		u16 width;
+		u16 height;
+	} Bitmap;
+}
 
 #endif

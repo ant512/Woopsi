@@ -6,6 +6,8 @@
 #include "gradient.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 // Constructor
 Gradient::Gradient(s16 x, s16 y, u16 width, u16 height, u16 fromColour, u16 toColour)
   :	Gadget(x, y, width, height, GADGET_BORDERLESS),

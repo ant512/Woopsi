@@ -3,6 +3,8 @@
 #include "graphicsport.h"
 #include "woopsifuncs.h"
 
+using namespace WoopsiUI;
+
 // Constructor - allocates mem for bitmap
 SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS, font) {
 	_bitmapWidth = bitmapWidth;

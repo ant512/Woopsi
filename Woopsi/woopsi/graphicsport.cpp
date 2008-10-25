@@ -4,6 +4,8 @@
 #include "textwriter.h"
 #include "woopsifuncs.h"
 
+using namespace WoopsiUI;
+
 GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const Gadget::Rect* clipRect) {
 	_gadget = gadget;
 	_rect.x = x;

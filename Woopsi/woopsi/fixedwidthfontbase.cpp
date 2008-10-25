@@ -1,5 +1,7 @@
 #include "fixedwidthfontbase.h"
 
+using namespace WoopsiUI;
+
 FixedWidthFontBase::FixedWidthFontBase(const u16 bitmapWidth, const u16 bitmapHeight, const u8 width, const u8 height, const u16 transparentColour) : 
 	FontBase(height, transparentColour) {
 	_bitmapWidth = bitmapWidth;

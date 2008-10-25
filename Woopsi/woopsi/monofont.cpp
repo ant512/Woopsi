@@ -1,5 +1,7 @@
 #include "monofont.h"
 
+using namespace WoopsiUI;
+
 MonoFont::MonoFont(const u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, u8 width, u8 height, u16 drawColour) : FixedWidthFontBase(bitmapWidth, bitmapHeight, width, height) {
 	_bitmap = bitmap;
 

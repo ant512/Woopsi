@@ -2,6 +2,8 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 
+using namespace WoopsiUI;
+
 Button::Button(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Label(x, y, width, height, text, font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 }

@@ -3,10 +3,11 @@
 
 #include "woopsi.h"
 #include "sysfont.h"
+#include "amigascreen.h"
+#include "amigawindow.h"
+#include "woopsitimer.h"
 
-class AmigaScreen;
-class AmigaWindow;
-class WoopsiTimer;
+using namespace WoopsiUI;
 
 class Pong : EventHandler {
 

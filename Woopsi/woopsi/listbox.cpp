@@ -3,6 +3,8 @@
 #include "fontbase.h"
 #include "woopsi.h"
 
+using namespace WoopsiUI;
+
 ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : ScrollingPanel(x, y, width, height, 0, font) {
 	_outline = OUTLINE_IN;
 	_flags.draggable = true;

@@ -11,87 +11,88 @@
 #define WINDOW_CLOSE_BUTTON_WIDTH 14
 #define WINDOW_DEPTH_BUTTON_WIDTH 14
 
-using namespace std;
-
-/**
- * Class representing a basic, empty window.  Intended to be subclassed, but can be used
- * as-is if necessary.
- */
-class Window : public Gadget {
-
-public:
-	/**
-	 * Constructor.
-	 * @param x The x co-ordinate of the window.
-	 * @param y The y co-ordinate of the window.
-	 * @param width The width of the window.
-	 * @param height The height of the window.
-	 * @param title The title of the window.
-	 * @param flags Standard gadget flags bitmask.
-	 * @param font Font to use with this window.
-	 */
-	Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, FontBase* font = NULL);
+namespace WoopsiUI {
 
 	/**
-	 * Draws the gadget.
+	 * Class representing a basic, empty window.  Intended to be subclassed, but can be used
+	 * as-is if necessary.
 	 */
-	virtual inline void draw() { Gadget::draw(); };
+	class Window : public Gadget {
 
-	/**
-	 * Draw the area of this gadget that falls within the clipping region.
-	 * Called by the draw() function to draw all visible regions.
-	 * @param clipRect The clipping region to draw.
-	 * @see draw()
-	 */
-	virtual void draw(Rect clipRect);
+	public:
+		/**
+		 * Constructor.
+		 * @param x The x co-ordinate of the window.
+		 * @param y The y co-ordinate of the window.
+		 * @param width The width of the window.
+		 * @param height The height of the window.
+		 * @param title The title of the window.
+		 * @param flags Standard gadget flags bitmask.
+		 * @param font Font to use with this window.
+		 */
+		Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, FontBase* font = NULL);
 
-	/**
-	 * Release this gadget at the supplied co-ordinates
-	 * @param x X co-ordinate of the release.
-	 * @param y Y co-ordinate of the release.
-	 * @return True if the release was successful.
-	 */
-	virtual bool release(s16 x, s16 y);
+		/**
+		 * Draws the gadget.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-	/**
-	 * Drag the gadget to the supplied co-ordinates.
-	 * @param x The x co-ordinate of the stylus.
-	 * @param y The y co-ordinate of the stylus.
-	 * @param vX The horizontal distance that the stylus was dragged.
-	 * @param vY The vertical distance that the stylus was dragged.
-	 * @return True if the drag was successful.
-	 */
-	virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the draw() function to draw all visible regions.
+		 * @param clipRect The clipping region to draw.
+		 * @see draw()
+		 */
+		virtual void draw(Rect clipRect);
 
-	/**
-	 * Set the title of the window.
-	 * @param title The new title.
-	 */
-	void setTitle(const char* title);
+		/**
+		 * Release this gadget at the supplied co-ordinates
+		 * @param x X co-ordinate of the release.
+		 * @param y Y co-ordinate of the release.
+		 * @return True if the release was successful.
+		 */
+		virtual bool release(s16 x, s16 y);
 
-	/**
-	 * Notify this gadget that it is being dragged, and set its drag point.
-	 * @param x The x co-ordinate of the drag position relative to this gadget.
-	 * @param y The y co-ordinate of the drag position relative to this gadget.
-	 */
-	virtual void setDragging(u16 x, u16 y);
+		/**
+		 * Drag the gadget to the supplied co-ordinates.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 * @param vX The horizontal distance that the stylus was dragged.
+		 * @param vY The vertical distance that the stylus was dragged.
+		 * @return True if the drag was successful.
+		 */
+		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
-protected:
-	char* _title;							/**< Title of the window */
+		/**
+		 * Set the title of the window.
+		 * @param title The new title.
+		 */
+		void setTitle(const char* title);
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~Window() {
-		if (_title != NULL) {
-			delete [] _title;
-		}
+		/**
+		 * Notify this gadget that it is being dragged, and set its drag point.
+		 * @param x The x co-ordinate of the drag position relative to this gadget.
+		 * @param y The y co-ordinate of the drag position relative to this gadget.
+		 */
+		virtual void setDragging(u16 x, u16 y);
+
+	protected:
+		char* _title;							/**< Title of the window */
+
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~Window() {
+			if (_title != NULL) {
+				delete [] _title;
+			}
+		};
+
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline Window(const Window& window) : Gadget(window) { };
 	};
-
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline Window(const Window& window) : Gadget(window) { };
-};
+}
 
 #endif

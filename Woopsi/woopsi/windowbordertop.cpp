@@ -1,7 +1,8 @@
 #include <string.h>
 #include "windowbordertop.h"
 #include "graphicsport.h"
-#include "woopsi.h"
+
+using namespace WoopsiUI;
 
 WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, 0, width, height, GADGET_BORDERLESS, font) {
 	_flags.decoration = true;

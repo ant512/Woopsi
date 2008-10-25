@@ -1,6 +1,8 @@
 #include <string.h>
 #include "listdata.h"
 
+using namespace WoopsiUI;
+
 ListData::ListData() {
 	_allowMultipleSelections = true;
 	_sortInsertedItems = false;

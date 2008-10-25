@@ -1,6 +1,8 @@
 #include "label.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 Label::Label(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, y, width, height, 0, font) {
 	_outline = OUTLINE_IN;
 

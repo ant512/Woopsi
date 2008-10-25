@@ -5,28 +5,29 @@
 #include "windowbordertop.h"
 #include "skin.h"
 
-using namespace std;
+namespace WoopsiUI {
 
-class SkinnedWindowBorderTop : public WindowBorderTop {
+	class SkinnedWindowBorderTop : public WindowBorderTop {
 
-public:
-	SkinnedWindowBorderTop(s16 x, u16 width, const char* text, const WindowSkin* skin);
+	public:
+		SkinnedWindowBorderTop(s16 x, u16 width, const char* text, const WindowSkin* skin);
 
-	virtual void draw(Rect clipRect);
-	virtual void draw();
+		virtual void draw(Rect clipRect);
+		virtual void draw();
 
-protected:
-	const WindowSkin* _skin;
+	protected:
+		const WindowSkin* _skin;
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~SkinnedWindowBorderTop() { };
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~SkinnedWindowBorderTop() { };
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline SkinnedWindowBorderTop(const SkinnedWindowBorderTop& skinnedWindowBorderTop) : WindowBorderTop(skinnedWindowBorderTop) { };
-};
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline SkinnedWindowBorderTop(const SkinnedWindowBorderTop& skinnedWindowBorderTop) : WindowBorderTop(skinnedWindowBorderTop) { };
+	};
+}
 
 #endif

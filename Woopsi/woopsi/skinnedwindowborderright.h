@@ -5,31 +5,32 @@
 #include "windowborderside.h"
 #include "skin.h"
 
-using namespace std;
+namespace WoopsiUI {
 
-class SkinnedWindowBorderRight : public WindowBorderSide {
-public:
-	SkinnedWindowBorderRight(s16 x, s16 y, u16 height, const WindowSkin* skin);
+	class SkinnedWindowBorderRight : public WindowBorderSide {
+	public:
+		SkinnedWindowBorderRight(s16 x, s16 y, u16 height, const WindowSkin* skin);
 
-	/**
-	 * Override the Gadget::draw() method.
-	 */
-	virtual inline void draw() { Gadget::draw(); };
+		/**
+		 * Override the Gadget::draw() method.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-	virtual void draw(Rect clipRect);
+		virtual void draw(Rect clipRect);
 
-protected:
-	const WindowSkin* _skin;
+	protected:
+		const WindowSkin* _skin;
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~SkinnedWindowBorderRight() { };
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~SkinnedWindowBorderRight() { };
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline SkinnedWindowBorderRight(const SkinnedWindowBorderRight& skinnedWindowBorderRight) : WindowBorderSide(skinnedWindowBorderRight) { };
-};
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline SkinnedWindowBorderRight(const SkinnedWindowBorderRight& skinnedWindowBorderRight) : WindowBorderSide(skinnedWindowBorderRight) { };
+	};
+}
 
 #endif

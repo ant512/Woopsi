@@ -2,6 +2,8 @@
 #include "graphicsport.h"
 #include "contextmenuitem.h"
 
+using namespace WoopsiUI;
+
 ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 	setBorderless(false);
 	_opener = NULL;

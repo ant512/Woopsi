@@ -3,6 +3,8 @@
 #include "multilinetextbox.h"
 #include "text.h"
 
+using namespace WoopsiUI;
+
 Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
 
 	// Define OK button text

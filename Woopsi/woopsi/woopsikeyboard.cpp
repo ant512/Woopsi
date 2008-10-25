@@ -4,6 +4,8 @@
 #include "woopsi.h"
 #include "woopsitimer.h"
 
+using namespace WoopsiUI;
+
 WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font) : AmigaWindow(x, y, width, height, title, flags, windowFlags, font) {
 
 	// Get available window region

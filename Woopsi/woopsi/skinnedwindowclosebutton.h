@@ -5,28 +5,29 @@
 #include "decorationglyphbutton.h"
 #include "skin.h"
 
-using namespace std;
+namespace WoopsiUI {
 
-class SkinnedWindowCloseButton : public DecorationGlyphButton {
+	class SkinnedWindowCloseButton : public DecorationGlyphButton {
 
-public:
-	SkinnedWindowCloseButton(s16 x, s16 y, const WindowSkin* skin);
+	public:
+		SkinnedWindowCloseButton(s16 x, s16 y, const WindowSkin* skin);
 
-	virtual void draw(Rect clipRect);
-	virtual void draw();
+		virtual void draw(Rect clipRect);
+		virtual void draw();
 
-protected:
-	const WindowSkin* _skin;
+	protected:
+		const WindowSkin* _skin;
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~SkinnedWindowCloseButton() { };
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~SkinnedWindowCloseButton() { };
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline SkinnedWindowCloseButton(const SkinnedWindowCloseButton& skinnedWindowCloseButton) : DecorationGlyphButton(skinnedWindowCloseButton) { };
-};
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline SkinnedWindowCloseButton(const SkinnedWindowCloseButton& skinnedWindowCloseButton) : DecorationGlyphButton(skinnedWindowCloseButton) { };
+	};
+}
 
 #endif

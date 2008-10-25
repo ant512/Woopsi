@@ -1,6 +1,8 @@
 #include "textbox.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Label(x, y, width, height, text, font) {
 	_cursorPos = 0;
 	_showCursor = true;

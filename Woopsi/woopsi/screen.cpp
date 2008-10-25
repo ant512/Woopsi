@@ -3,6 +3,8 @@
 #include "woopsi.h"
 #include "woopsifuncs.h"
 
+using namespace WoopsiUI;
+
 Screen::Screen(const char* title, u32 flags, FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, flags, font) {
 	_titleHeight = 0;
 	

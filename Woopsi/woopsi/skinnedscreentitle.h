@@ -5,32 +5,35 @@
 #include "screentitle.h"
 #include "skin.h"
 
-using namespace std;
+using namespace WoopsiUI;
 
-class SkinnedScreenTitle : public ScreenTitle {
+namespace WoopsiUI {
 
-public:
-	SkinnedScreenTitle(const char* text, const ScreenSkin* skin);
+	class SkinnedScreenTitle : public ScreenTitle {
 
-	/**
-	 * Override the Gadget::draw() method.
-	 */
-	virtual inline void draw() { Gadget::draw(); };
+	public:
+		SkinnedScreenTitle(const char* text, const ScreenSkin* skin);
 
-	virtual void draw(Rect clipRect);
+		/**
+		 * Override the Gadget::draw() method.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-protected:
-	const ScreenSkin* _skin;
+		virtual void draw(Rect clipRect);
 
-	/**
-	 * Destructor.
-	 */
-	virtual inline ~SkinnedScreenTitle() { };
+	protected:
+		const ScreenSkin* _skin;
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline SkinnedScreenTitle(const SkinnedScreenTitle& skinnedScreenTitle) : ScreenTitle(skinnedScreenTitle) { };
-};
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~SkinnedScreenTitle() { };
+
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline SkinnedScreenTitle(const SkinnedScreenTitle& skinnedScreenTitle) : ScreenTitle(skinnedScreenTitle) { };
+	};
+}
 
 #endif

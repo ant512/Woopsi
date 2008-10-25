@@ -6,91 +6,92 @@
 #include "animation.h"
 #include "eventhandler.h"
 
-using namespace std;
+namespace WoopsiUI {
 
-class WoopsiTimer;
-
-/**
- * Button class that has an animation running in its clickable area.  Note that the
- * bitmaps used in the animation should all be the same size.
- */
-class AnimButton : public Gadget, public EventHandler {
-
-public:
+	class WoopsiTimer;
 
 	/**
-	 * Constructor.
-	 * @param x The x co-ordinate of the button.
-	 * @param y The y co-ordinate of the button.
-	 * @param width The width of the button.
-	 * @param height The height of the button.
-	 * @param animX The x co-ordinate at which the animation's bitmaps will be drawn.
-	 * @param animY The y co-ordinate at which the animation's bitmaps will be drawn.
+	 * Button class that has an animation running in its clickable area.  Note that the
+	 * bitmaps used in the animation should all be the same size.
 	 */
-	AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY);
+	class AnimButton : public Gadget, public EventHandler {
 
-	/**
-	 * Override the Gadget::draw() method.
-	 */
-	virtual inline void draw() { Gadget::draw(); };
+	public:
 
-	/**
-	 * Draw the region of the button that falls within the clipRect.
-	 * @param clipRect The clipping region to draw within.
-	 */
-	virtual void draw(Rect clipRect);
+		/**
+		 * Constructor.
+		 * @param x The x co-ordinate of the button.
+		 * @param y The y co-ordinate of the button.
+		 * @param width The width of the button.
+		 * @param height The height of the button.
+		 * @param animX The x co-ordinate at which the animation's bitmaps will be drawn.
+		 * @param animY The y co-ordinate at which the animation's bitmaps will be drawn.
+		 */
+		AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY);
 
-	/**
-	 * Get a pointer to the animation that plays when the button is not clicked.
-	 * @return Pointer to the normal animation.
-	 */
-	virtual Animation* const getNormalAnimation();
-	
-	/**
-	 * Get a pointer to the animation that plays when the button is clicked.
-	 * @return Pointer to the clicked animation.
-	 */
-	virtual Animation* const getClickedAnimation();
-	
-	/**
-	 * Click the button at the specified co-ordinates.
-	 * @param x The x co-ordinate of the click.
-	 * @param y The y co-ordinate of the click.
-	 * @return True if the click was successful.
-	 */
-	bool click(s16 x, s16 y);
-	
-	/**
-	 * Click the button at the specified co-ordinates.
-	 * @param x The x co-ordinate of the click.
-	 * @param y The y co-ordinate of the click.
-	 * @return True if the click was successful.
-	 */
-	bool release(s16 x, s16 y);
+		/**
+		 * Override the Gadget::draw() method.
+		 */
+		virtual inline void draw() { Gadget::draw(); };
 
-protected:
-	Animation* _animNormal;				/**< Animation played when button is not clicked */
-	Animation* _animClicked;			/**< Animation played when button is clicked */
-	u16 _animX;							/**< X co-ordinate of the animations */
-	u16 _animY;							/**< Y co-ordinate of the animations */
-	bool _initialised;					/**< Tracks if the animation has started or not */
-	WoopsiTimer* _timer;				/**< Controls animation timing and playback */
+		/**
+		 * Draw the region of the button that falls within the clipRect.
+		 * @param clipRect The clipping region to draw within.
+		 */
+		virtual void draw(Rect clipRect);
 
-	/**
-	 * Destructor.
-	 */
-	virtual ~AnimButton();
+		/**
+		 * Get a pointer to the animation that plays when the button is not clicked.
+		 * @return Pointer to the normal animation.
+		 */
+		virtual Animation* const getNormalAnimation();
+		
+		/**
+		 * Get a pointer to the animation that plays when the button is clicked.
+		 * @return Pointer to the clicked animation.
+		 */
+		virtual Animation* const getClickedAnimation();
+		
+		/**
+		 * Click the button at the specified co-ordinates.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 * @return True if the click was successful.
+		 */
+		bool click(s16 x, s16 y);
+		
+		/**
+		 * Click the button at the specified co-ordinates.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 * @return True if the click was successful.
+		 */
+		bool release(s16 x, s16 y);
 
-	/**
-	 * Copy constructor is protected to prevent usage.
-	 */
-	inline AnimButton(const AnimButton& animButton) : Gadget(animButton) { };
+	protected:
+		Animation* _animNormal;				/**< Animation played when button is not clicked */
+		Animation* _animClicked;			/**< Animation played when button is clicked */
+		u16 _animX;							/**< X co-ordinate of the animations */
+		u16 _animY;							/**< Y co-ordinate of the animations */
+		bool _initialised;					/**< Tracks if the animation has started or not */
+		WoopsiTimer* _timer;				/**< Controls animation timing and playback */
 
-	/**
-	 * Handle any child events.
-	 * @return True if the event was processed correctly.
-	 */
-	bool handleEvent(const EventArgs& e);
-};
+		/**
+		 * Destructor.
+		 */
+		virtual ~AnimButton();
+
+		/**
+		 * Copy constructor is protected to prevent usage.
+		 */
+		inline AnimButton(const AnimButton& animButton) : Gadget(animButton) { };
+
+		/**
+		 * Handle any child events.
+		 * @return True if the event was processed correctly.
+		 */
+		bool handleEvent(const EventArgs& e);
+	};
+}
 
 #endif

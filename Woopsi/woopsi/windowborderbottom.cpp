@@ -1,6 +1,7 @@
 #include "windowborderbottom.h"
 #include "graphicsport.h"
-#include "woopsi.h"
+
+using namespace WoopsiUI;
 
 WindowBorderBottom::WindowBorderBottom(s16 x, s16 y, u16 width, u16 height, u8 sideBorderSize) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 

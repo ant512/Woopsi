@@ -3,12 +3,11 @@
 
 #include "woopsi.h"
 
-using namespace std;
+using namespace WoopsiUI;
 
 class PacMan;
 class Calculator;
 class Pong;
-class Alert;
 
 class Demo : public Woopsi {
 public:
@@ -19,7 +18,7 @@ private:
 	PacMan* _pacMan;
 	Calculator* _calculator;
 	Pong* _pong;
-	Alert* _alert;
+	//Alert* _alert;
 };
 
 #endif

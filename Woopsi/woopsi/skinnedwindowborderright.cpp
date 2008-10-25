@@ -1,6 +1,8 @@
 #include "skinnedwindowborderright.h"
 #include "graphicsport.h"
 
+using namespace WoopsiUI;
+
 SkinnedWindowBorderRight::SkinnedWindowBorderRight(s16 x, s16 y, u16 height, const WindowSkin* skin) : WindowBorderSide(x, y, 0, height) {
 
 	_skin = skin;

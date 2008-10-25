@@ -1,5 +1,7 @@
 #include "packedfontbase.h"
 
+using namespace WoopsiUI;
+
 /**
  * Get the width of an individual character.
  * @param letter The character to get the width of.

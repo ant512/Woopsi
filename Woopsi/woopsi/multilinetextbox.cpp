@@ -4,6 +4,8 @@
 #include "graphicsport.h"
 #include "woopsifuncs.h"
 
+using namespace WoopsiUI;
+
 MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
 
 	_outline = OUTLINE_IN;
