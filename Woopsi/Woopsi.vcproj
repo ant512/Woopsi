@@ -110,10 +110,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\fontbase.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\gadget.cpp"
 				>
 			</File>
