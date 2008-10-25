@@ -351,6 +351,8 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 	_text->remove(startIndex, count);
 
+	moveCursorToPosition(startIndex);
+
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
