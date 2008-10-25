@@ -130,7 +130,6 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 		s16 textX;
 		s16 textY;
 		u16 cursorX = 0;
-		u16 cursorY = 0;
 
 		// Only calculate the cursor position if the cursor isn't at the start of the text
 		if (_cursorPos > 0) {
@@ -143,9 +142,6 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 
 			// Adjust for row overshoot in loop
 			if (currentCursorPos > 0) cursorRow--;
-
-			// Calculate y co-ord of cursor
-			cursorY = cursorRow * _text->getLineHeight();
 
 			// Adjust for column overshoot in loop
 			currentCursorPos -= _text->getLineLength(cursorRow);
@@ -164,7 +160,7 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 		textY = getRowY(cursorRow) + _canvasY;
 
 		// Draw cursor
-		port->drawFilledXORRect(cursorX + textX, cursorY + textY, _font->getCharWidth(_text->getCharArray()[_cursorPos]), _font->getHeight());
+		port->drawFilledXORRect(cursorX + textX, textY, _font->getCharWidth(_text->getCharArray()[_cursorPos]), _font->getHeight());
 	}
 
 	delete port;
@@ -509,7 +505,6 @@ void MultiLineTextBox::insertText(const char* text, const u32 index) {
 }
 
 void MultiLineTextBox::insertText(const char text, const u32 index) {
-
 	_text->insert(text, index);
 
 	// Cursor position just increases by one as we're inserting a single char
