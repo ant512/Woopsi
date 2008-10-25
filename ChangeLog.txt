@@ -16,6 +16,7 @@ Change Log
        text is visible.
      - MultiLineTextBox vertical alignment options all work correctly.
      - MultiLineTextBox scrolls correctly when text is added.
+     - MultiLineTextBox has cursor support.
      - Text::stripTopLines() was not removing all characters.
      - Deleted empty fontbase.cpp file.
 

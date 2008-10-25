@@ -124,6 +124,13 @@ namespace WoopsiUI {
 		char& operator[](const u32 index) const {
 			return _text[index];
 		};
+		
+		/**
+		 * Get the character at the specified index.
+		 * @param index The index of the character to retrieve.
+		 * @return The character at the specified index.
+		 */
+		virtual inline const char getCharAt(u32 index) { return _text[index]; }; 
 
 	protected:
 		char* _text;							/**< Raw char array data */

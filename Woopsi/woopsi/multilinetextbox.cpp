@@ -141,10 +141,22 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 			}
 
 			// Adjust for row overshoot in loop
-			if (currentCursorPos > 0) cursorRow--;
+			if (currentCursorPos > _cursorPos) {
+				// Cursor shot past end of text, so move back to correct row
+				cursorRow--;
 
-			// Adjust for column overshoot in loop
-			currentCursorPos -= _text->getLineLength(cursorRow);
+				// Adjust for column overshoot in loop
+				currentCursorPos -= _text->getLineLength(cursorRow);
+			} else if (currentCursorPos == (s32)_text->getLength()) {
+				if (_text->getCharAt(_cursorPos - 1) == '\n') {
+				} else {
+					// Cursor is at the end of the text, so keep it on the same row
+					cursorRow--;
+					
+					// Adjust for column overshoot in loop
+					currentCursorPos -= _text->getLineLength(cursorRow);
+				}
+			}
 
 			// Calculate the x co-ord of the cursor
 			cursorX = 0;
