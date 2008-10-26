@@ -123,13 +123,16 @@ void WoopsiString::insert(const char* text, u32 index) {
 
 			// Allocated memory is sufficiently large enough to store
 			// existing and new text
+
+			if (_length > 0) {
 			
-			// Copy end section of string to new location in reverse,
-			// so no data is overwritten before it is copied
-			char* dest = _text + _length + 1;
-			char* src = _text + oldLen + 1;
-			for (u32 i = _length; i >= index; i--) {
-				 *dest-- = *src--;
+				// Copy end section of string to new location in reverse,
+				// so no data is overwritten before it is copied
+				char* dest = _text + _length + 1;
+				char* src = _text + oldLen + 1;
+				for (s32 i = _length; i >= (s32)index; i--) {
+					 *dest-- = *src--;
+				}
 			}
 
 			// Copy insert into string
