@@ -224,7 +224,7 @@ s16 MultiLineTextBox::getRowY(s32 row) {
             textRows = _text->getLineCount();
 
             // Calculate the start position of the block of text
-            startPos = ((canvasRows - textRows) >> 1) * _text->getLineHeight();
+            startPos = ((canvasRows - textRows) * _text->getLineHeight()) >> 1;
 
             // Calculate the row Y co-ordinate
 			textY = startPos + textY;
