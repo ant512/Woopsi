@@ -26,6 +26,7 @@ Change Log
      - Added Calendar gadget.
      - Added Calendar example.
      - Added Date example.
+     - Added ProgressBar example.
 
 
   V0.35 (20081012)
