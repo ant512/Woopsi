@@ -1,5 +1,5 @@
 Calendar Test
-------------------
+-------------
 
   This example shows how the Calendar class should be used.
   
