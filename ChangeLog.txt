@@ -24,6 +24,7 @@ Change Log
      - Moved all classes into WoopsiUI namespace.
      - Added Date class.
      - Added Calendar gadget.
+     - Added Calendar example.
 
 
   V0.35 (20081012)

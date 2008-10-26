@@ -15,7 +15,8 @@ namespace WoopsiUI {
 	class Date;
 
 	/**
-	 * Class providing a calendar/date picker.
+	 * Class providing a calendar/date picker.  Raises an EVENT_ACTION event
+	 * when a new date is clicked.
 	 */
 	class Calendar : public Gadget, public EventHandler {
 	public:

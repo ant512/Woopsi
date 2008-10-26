@@ -1,3 +1,6 @@
+// TODO: resize()
+// TODO: Still seems to be a rounding error in vertical 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "calendar.h"
@@ -74,6 +77,9 @@ bool Calendar::handleEvent(const EventArgs& e) {
 				// Update the date
 				u8 day = atoi(_selectedDayButton->getText());
 				_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
+
+				// Raise an action event
+				raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
 				return true;
 			}
 		}
@@ -208,13 +214,10 @@ void Calendar::buildGUI() {
 	getClientRect(rect);
 
 	// Define basic button properties
-	u16 gridY = rect.y + ((rect.height / (CALENDAR_ROWS + 2)) * 2);
 	u8 buttonWidth = rect.width / CALENDAR_COLS;
-	u8 buttonHeight = (rect.height - gridY) / CALENDAR_ROWS;
+	u8 buttonHeight = rect.height / (CALENDAR_ROWS + 2);
+	u16 gridY = (rect.height - (buttonHeight * CALENDAR_ROWS)) + 1;
 	Button* button;
-
-	// Cater for rounding error in gridY calculation
-	gridY += (rect.height % (CALENDAR_ROWS + 2));
 
 	// Add arrows and month label
 	_leftArrow = new Button(rect.x, rect.y, buttonWidth, buttonHeight, GLYPH_ARROW_LEFT);
