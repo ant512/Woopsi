@@ -1,5 +1,4 @@
 // TODO: resize()
-// TODO: Still seems to be a rounding error in vertical 
 
 #include <stdio.h>
 #include <stdlib.h>
