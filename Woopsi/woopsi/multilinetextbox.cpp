@@ -30,7 +30,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	}
 
 	_cursorPos = 0;
-	_showCursor = true;
+	_showCursor = false;
 
 	setText(text);
 }

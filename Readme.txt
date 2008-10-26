@@ -59,7 +59,7 @@ Features
     - Check boxes;
     - Labels;
     - Single-line textboxes with cursor support;
-    - Multi-line textboxes;
+    - Multi-line textboxes with cursor support.
     - Screens;
     - Windows;
     - Gradient backgrounds;
@@ -75,7 +75,8 @@ Features
     - Requesters;
     - File requesters;
     - Cycle buttons;
-    - Keyboard.
+    - Keyboard;
+    - Calendar.
   - Skinnable screens and windows;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
@@ -106,6 +107,7 @@ Features
       - Flood fill.
     - Linked list, dynamic array and hashmap template container classes and
       iterator classes.
+    - Date class.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
   - Simplistic "multitasking" - each window runs simultaneously;
