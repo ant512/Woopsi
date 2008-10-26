@@ -6,6 +6,7 @@
 #include "pacman.h"
 #include "bitmap/all_gfx.c"
 #include "bitmap/all_gfx.h"
+#include "calendar.h"
 
 void Demo::startup() {
 
@@ -392,6 +393,9 @@ void Demo::startup() {
 	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
 	newScreen2->addGadget(_alert);
 
+
+	Calendar* cal = new Calendar(10, 10, 149, 140, 26, 10, 2008, 0);
+	newScreen2->addGadget(cal);
 
 
 	enableDrawing();	// Ensure Woopsi can now draw itself

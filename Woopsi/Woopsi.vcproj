@@ -74,6 +74,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\calendar.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\checkbox.cpp"
 				>
 			</File>
@@ -87,6 +91,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\cyclebutton.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\date.cpp"
 				>
 			</File>
 			<File
@@ -364,6 +372,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\calendar.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\checkbox.h"
 				>
 			</File>
@@ -377,6 +389,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\cyclebutton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\date.h"
 				>
 			</File>
 			<File
