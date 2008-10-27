@@ -148,54 +148,14 @@ void Date::setYear(u16 year) {
 
 void Date::calculateWeekDay() {
 
-	u8 centuryOffset = 0;
-	u8 yearOffset = 0;
-	u8 monthOffset = 0;
-	u8 dayOffset = 0;
+	u8 aa = (14 - _month) / 12;
+	u16 yy = _year - aa;
+	u16 mm = (_month + (12 * aa)) - 2;
 
-	centuryOffset = ((39 - (_year / 100)) % 4) << 1;
-	yearOffset = ((_year % 100) + (((_year % 100) / 4) - getLeapCompensationValue())) % 7;
+	u8 dayOfWeek = (_day + yy + (yy / 4) - (yy / 100) + (yy / 400) + ((31 * mm) / 12)) % 7;
 
-	// Calculate month offset
-	switch (_month) {
-		case 1:
-		case 10:
-			// Jan, Oct
-			monthOffset = 0;
-			break;
-		case 2:
-		case 3:
-		case 11:
-			// Feb, Mar, Nov
-			monthOffset = 3;
-			break;
-		case 4:
-		case 7:
-			// Apr, Jul
-			monthOffset = 6;
-			break;
-		case 5:
-			// May
-			monthOffset = 1;
-			break;
-		case 6:
-			// Jun
-			monthOffset = 4;
-			break;
-		case 8:
-			// Aug
-			monthOffset = 2;
-			break;
-		case 9:
-		case 12:
-			// Sept, Dec
-			monthOffset = 5;
-			break;
-	}
-
-	dayOffset = _day % 7;
-
-	_weekDay = (centuryOffset + yearOffset + monthOffset + dayOffset) % 7;
+	// Get day of week in ISO format
+	_weekDay = ((dayOfWeek + 6) % 7) + 1;
 }
 
 const int Date::getLeapCompensationValue() const {
