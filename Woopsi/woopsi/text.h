@@ -180,13 +180,39 @@ namespace WoopsiUI {
 		 */
 		void wrap();
 
+		/**
+		 * Wrap the text from the line containing the specified char index onwards.
+		 * @param charIndex The index of the char to start wrapping from; note
+		 * that the wrapping function will re-wrap that entire line of text.
+		 */
+		void wrap(u32 charIndex);
+
+		/**
+		 * Get the index of the line of text that contains the specified index
+		 * within the raw char array.
+		 * @param index The index to locate within the wrapped lines of text.
+		 * @return The number of the line of wrapped text that contains the
+		 * specified index.
+		 */
+		u32 getLineContainingCharIndex(u32 index);
+
 	private:
-		FontBase* _font;						/**< Font to be used for output */
-		DynamicArray<u32> _linePositions;		/**< Array containing start indexes of each wrapped line */
-		u8 _lineSpacing;						/**< Spacing between lines of text */
-		s32 _textPixelHeight;					/**< Total height of the wrapped text in pixels */
-		u8 _textPixelWidth;						/**< Total width of the wrapped text in pixels */
-		u16 _width;								/**< Width in pixels available to the text */
+		/**
+		 * Struct defining the position and length of a longest line within the _linePositions
+		 * array.
+		 */
+		typedef struct {
+			u32 index;
+			u8 width;
+		} LongestLine;
+		
+		FontBase* _font;							/**< Font to be used for output */
+		DynamicArray<u32> _linePositions;			/**< Array containing start indexes of each wrapped line */
+		DynamicArray<LongestLine> _longestLines;	/**< Array containing data describing successively longer wrapped lines */
+		u8 _lineSpacing;							/**< Spacing between lines of text */
+		s32 _textPixelHeight;						/**<Total height of the wrapped text in pixels */
+		u8 _textPixelWidth;							/**< Total width of the wrapped text in pixels */
+		u16 _width;									/**< Width in pixels available to the text */
 	};
 }
 

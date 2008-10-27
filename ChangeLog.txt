@@ -27,6 +27,8 @@ Change Log
      - Added Calendar example.
      - Added Date example.
      - Added ProgressBar example.
+     - Text::wrap() only wraps lines impacted by insert/delete/append
+       operations.
 
 
   V0.35 (20081012)
