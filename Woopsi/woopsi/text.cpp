@@ -103,6 +103,8 @@ void Text::wrap(u32 charIndex) {
 	u32 lineWidth;
 	u32 breakPos;
 	bool endReached = false;
+	
+	if (_linePositions.size() == 0) charIndex = 0;
 
 	// If we're wrapping from an offset in the text, ensure that any existing data
 	// after the offset gets removed
@@ -258,6 +260,10 @@ void Text::stripTopLines(const s32 lines) {
 }
 
 u32 Text::getLineContainingCharIndex(u32 index) {
+	
+	// Early exit if the index is past the end of the current line position data
+	if (_linePositions.size() == 0) return 0;
+	if (index > _linePositions[_linePositions.size() - 1]) return 0;
 
 	// Binary search the line vector for the line containing the supplied index
 	u32 bottom = 0;
