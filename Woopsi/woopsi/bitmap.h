@@ -13,15 +13,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
-		 * @param x The x co-ordinate of the gadget.
-		 * @param y The y co-ordinate of the gadget.
-		 * @param width The width of the gadget.
-		 * @param height The height of the gadget.
-		 * @param bitmapWidth The desired width of the gadget's bitmap.
-		 * @param bitmapHeight The desired height of the gadget's bitmap.
-		 * @param isDecoration Specify if the gadget is a decoration or not.  If set to true
-		 * the gadget will function as a background image.
-		 * @param font The font to use for text output.
+		 * @param width The width of the bitmap.
+		 * @param height The height of the bitmap.
 		 */
 		Bitmap(u16 width, u16 height);
 		
