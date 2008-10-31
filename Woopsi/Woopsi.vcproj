@@ -66,6 +66,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\bitmap.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\bitmapbutton.cpp"
 				>
 			</File>

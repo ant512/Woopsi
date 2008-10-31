@@ -19,6 +19,7 @@ Change Log
      - MultiLineTextBox has cursor support.
      - Text::stripTopLines() was not removing all characters.
      - Deleted empty fontbase.cpp file.
+     - Removed unused "bitmap.h" include from "skin.h".
 
   - New Features:
      - Moved all classes into WoopsiUI namespace.
@@ -29,6 +30,7 @@ Change Log
      - Added ProgressBar example.
      - Text::wrap() only wraps lines impacted by insert/delete/append
        operations.
+     - Replaced unused Bitmap struct with a Bitmap class with drawing routines.
 
 
   V0.35 (20081012)

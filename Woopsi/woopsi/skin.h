@@ -3,7 +3,6 @@
 
 #include <nds.h>
 #include "fontbase.h"
-#include "bitmap.h"
 
 namespace WoopsiUI {
 
