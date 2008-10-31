@@ -196,6 +196,14 @@ namespace WoopsiUI {
 		 */
 		u32 getLineContainingCharIndex(u32 index);
 
+		/**
+		 * Gets the index within the char array that represents the start of the line of
+		 * text indicated by the line parameter.
+		 * @param line The line number to locate within the char array.
+		 * @return The index within the char array of the start of the supplied line.
+		 */
+		u32 getLineStartIndex(u32 line) { return _linePositions[line]; };
+
 	private:
 		/**
 		 * Struct defining the position and length of a longest line within the _linePositions

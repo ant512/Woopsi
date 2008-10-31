@@ -270,7 +270,7 @@ u32 Text::getLineContainingCharIndex(u32 index) {
 	u32 top = _linePositions.size() - 1;
 	u32 mid;
 
-	while (bottom < top) {
+	while (bottom <= top) {
 
 		// Standard binary search
 		mid = (bottom + top) >> 1;

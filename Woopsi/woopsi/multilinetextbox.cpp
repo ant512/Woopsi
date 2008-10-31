@@ -125,54 +125,38 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 	// Get the cursor co-ords
 	if (_showCursor) {
 		u32 cursorRow = 0;
-		s32 currentCursorPos = 0;
 
-		s16 textX;
-		s16 textY;
 		u16 cursorX = 0;
+		s16 cursorY = 0;
 
 		// Only calculate the cursor position if the cursor isn't at the start of the text
 		if (_cursorPos > 0) {
 
 			// Calculate the row in which the cursor appears
-			while (currentCursorPos < _cursorPos) {
-				currentCursorPos += _text->getLineLength(cursorRow);
-				cursorRow++;
-			}
+			cursorRow = _text->getLineContainingCharIndex(_cursorPos);
 
-			// Adjust for row overshoot in loop
-			if (currentCursorPos > _cursorPos) {
-				// Cursor shot past end of text, so move back to correct row
-				cursorRow--;
-
-				// Adjust for column overshoot in loop
-				currentCursorPos -= _text->getLineLength(cursorRow);
-			} else if (currentCursorPos == (s32)_text->getLength()) {
-				if (_text->getCharAt(_cursorPos - 1) != '\n') {
-					// Cursor is at the end of the text, so keep it on the same row as
-					// long as cursor not supposed to be on a new line
-					cursorRow--;
-					
-					// Adjust for column overshoot in loop
-					currentCursorPos -= _text->getLineLength(cursorRow);
-				}
-			}
-
-			// Calculate the x co-ord of the cursor
-			cursorX = 0;
-
-			// Sum the width of each char in the row to find the x co-ord
-			for (s32 i = currentCursorPos; i < _cursorPos; i++) {
-				cursorX += _font->getCharWidth(_text->getCharArray()[i]);
+			// Cursor line offset gives us the distance of the cursor from the start of the line
+			u8 cursorLineOffset = _cursorPos - _text->getLineStartIndex(cursorRow);
+			
+			// Grab a pointer to the start of the current line of text for ease of
+			// processing later
+			const char* lineData = _text->getLinePointer(cursorRow);
+			
+			// Sum the width of each char in the row to find the x co-ord 
+			for (s32 i = 0; i < cursorLineOffset; i++) {
+				cursorX += _font->getCharWidth(lineData[i]);
 			}
 		}
 
-		// Get the position of the text for the row in which the cursor appears
-		textX = getRowX(cursorRow) + _canvasX;
-		textY = getRowY(cursorRow) + _canvasY;
+		// Add offset of row (taking into account canvas co-ord and text alignment)
+		// to calculated value
+		cursorX += getRowX(cursorRow) + _canvasX;
+
+		// Calculate y co-ord of the cursor
+		cursorY = getRowY(cursorRow) + _canvasY;
 
 		// Draw cursor
-		port->drawFilledXORRect(cursorX + textX, textY, _font->getCharWidth(_text->getCharArray()[_cursorPos]), _font->getHeight());
+		port->drawFilledXORRect(cursorX, cursorY, _font->getCharWidth(_text->getCharArray()[_cursorPos]), _font->getHeight());
 	}
 
 	delete port;
