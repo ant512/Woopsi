@@ -17,6 +17,13 @@ namespace WoopsiUI {
 		 * @param height The height of the bitmap.
 		 */
 		Bitmap(u16 width, u16 height);
+
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~Bitmap() {
+			delete[] _bitmap;
+		};
 		
 		/**
 		 * Get the colour of the pixel at the specified co-ordinates
@@ -31,6 +38,18 @@ namespace WoopsiUI {
 		 * @return Pointer to the internal bitmap.
 		 */
 		inline const u16* getBitmap() const { return _bitmap; };
+
+		/**
+		 * Get the bitmap's width.
+		 * @return The bitmap's width.
+		 */
+		inline const u16 getWidth() const { return _width; };
+
+		/**
+		 * Get the bitmap's height.
+		 * @return The bitmap's height.
+		 */
+		inline const u16 getHeight() const { return _height; };
 
 		/**
 		 * Draw a pixel to the internal bitmap.
@@ -197,13 +216,6 @@ namespace WoopsiUI {
 		 * @param height The height of the rectangle to clip (modified by the function).
 		 */
 		bool clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height);
-
-		/**
-		 * Destructor.
-		 */
-		virtual inline ~Bitmap() {
-			delete[] _bitmap;
-		};
 
 		/**
 		 * Copy constructor is protected to prevent usage.

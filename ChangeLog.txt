@@ -31,6 +31,7 @@ Change Log
      - Text::wrap() only wraps lines impacted by insert/delete/append
        operations.
      - Replaced unused Bitmap struct with a Bitmap class with drawing routines.
+     - Replaced SuperBitmap drawing operations with a Bitmap object.
 
 
   V0.35 (20081012)

@@ -6,7 +6,7 @@
 
 namespace WoopsiUI {
 
-	class TextWriter;
+	class Bitmap;
 
 	/**
 	 * The SuperBitmap class provides a set of 2D drawing tools and a bitmap in RAM to draw on.
@@ -42,7 +42,7 @@ namespace WoopsiUI {
 		 * Get a pointer to the internal bitmap.
 		 * @return Pointer to the internal bitmap.
 		 */
-		inline const u16* getBitmap() const { return _bitmap; };
+		const u16* getBitmap() const;
 
 		/**
 		 * Draws the gadget to the frawebuffer.
@@ -208,47 +208,12 @@ namespace WoopsiUI {
 	protected:
 		s32 _bitmapX;									/**< X co-ordinate of the bitmap relative to the gadget */
 		s32 _bitmapY;									/**< Y co-ordinate of the bitmap relative to the gadget */
-		u16 _bitmapWidth;								/**< Width of the bitmap */
-		u16 _bitmapHeight;								/**< Height of the bitmap */
-		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
-		
-		/**
-		 * Allocate the bitmap memory and clear it.
-		 */
-		virtual void initBitmap();
-
-		/**
-		 * Remove the last item from the flood fill stack and insert its properties into the
-		 * supplied x and y variables.
-		 * @param x The x co-ordinate of the pixel from the stack (output by the function).
-		 * @param y The y co-ordinate of the pixel from the stack (output by the function).
-		 * @param stack Pointer to the stack to pop from.
-		 */
-		bool popStack(s16* x, s16* y, DynamicArray<s32>* stack);
-		
-		/**
-		 * Push new co-ordinates onto the stack.
-		 * @param x The x co-ordinate of the pixel to add to the stack.
-		 * @param y The y co-ordinate of the pixel to add to the stack.
-		 * @param stack The stack to add a new value to.
-		 */
-		void pushStack(s16 x, s16 y, DynamicArray<s32>* stack) ;
-		
-		/**
-		 * Clip the supplied rectangular dimensions to the size of the internal bitmap.
-		 * @param x The x co-ordinate of the rectangle to clip (modified by the function).
-		 * @param y The y co-ordinate of the rectangle to clip (modified by the function).
-		 * @param width The width of the rectangle to clip (modified by the function).
-		 * @param height The height of the rectangle to clip (modified by the function).
-		 */
-		bool clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height);
+		Bitmap* _bitmap;								/**< Bitmap */
 
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~SuperBitmap() {
-			delete[] _bitmap;
-		};
+		virtual ~SuperBitmap();
 
 		/**
 		 * Copy constructor is protected to prevent usage.
