@@ -165,3 +165,11 @@ const int Date::getLeapCompensationValue() const {
 		return 0;
 	}
 }
+
+bool Date::operator==(const Date& date) const {
+	return ((date.getDay() == _day) && (date.getMonth() == _month) && (date.getYear() == _year));
+}
+
+bool Date::operator!=(const Date& date) const {
+	return ((date.getDay() != _day) || (date.getMonth() != _month) || (date.getYear() != _year));
+}

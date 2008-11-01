@@ -112,6 +112,10 @@ namespace WoopsiUI {
 		 */
 		void setDate(u8 day, u8 month, u16 year);
 
+		bool operator==(const Date& date) const;
+
+		bool operator!=(const Date& date) const;
+
 	private:
 		u8 _day;
 		u8 _month;

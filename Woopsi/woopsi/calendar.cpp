@@ -61,25 +61,34 @@ bool Calendar::handleEvent(const EventArgs& e) {
 			// Handle day button release
 			if (e.gadget->getRefcon() > 0) {
 
-				// Catch clicks on the already-selected button
-				if (_selectedDayButton == e.gadget) return true;
+				bool output = false;
 
-				// Select the new gadget and deselect the old
-				e.gadget->setOutlineType(OUTLINE_IN);
-				if (_selectedDayButton != NULL) {
-					_selectedDayButton->setOutlineType(OUTLINE_CLICK_DEPENDENT);
-					_selectedDayButton->draw();
+				// Calculate the new date
+				u8 day = atoi(((Button*)e.gadget)->getText());
+				Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
+
+				// Prevent changes if new date is same as old
+				if (_date->getDay() != newDate->getDay()) {
+
+					_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
+
+					// Select the new gadget and deselect the old
+					e.gadget->setOutlineType(OUTLINE_IN);
+					if (_selectedDayButton != NULL) {
+						_selectedDayButton->setOutlineType(OUTLINE_CLICK_DEPENDENT);
+						_selectedDayButton->draw();
+					}
+
+					_selectedDayButton = (Button*)e.gadget;
+
+					// Raise an action event
+					raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
+
+					output = true;
 				}
 
-				_selectedDayButton = (Button*)e.gadget;
-
-				// Update the date
-				u8 day = atoi(_selectedDayButton->getText());
-				_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
-
-				// Raise an action event
-				raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
-				return true;
+				delete newDate;
+				return output;
 			}
 		}
 	}
