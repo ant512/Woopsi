@@ -134,14 +134,14 @@ void Calendar::populateGUI() {
 	u8 maxDays = CALENDAR_ROWS * CALENDAR_COLS;
 	u8 startDay = 1;
 
-	if (thisMonth->getWeekDay() != 0) {
+	if (thisMonth->getWeekDay() != 1) {
 
 		// Get start date of previous month
 		Date* previousMonth = new Date(1, _visibleDate->getMonth(), _visibleDate->getYear());
 		previousMonth->addMonths(-1);
 
 		// Calculate calendar start date
-		startDay = (previousMonth->getMonthDays() - thisMonth->getWeekDay()) + 1;
+		startDay = (previousMonth->getMonthDays() - thisMonth->getWeekDay()) + 2;
 
 		// Set buttons
 		while (startDay <= previousMonth->getMonthDays()) {
@@ -235,27 +235,27 @@ void Calendar::buildGUI() {
 	// Add day labels
 	Label* label;
 	
-	label = new Label(rect.x, rect.y + buttonHeight, buttonWidth, buttonHeight, "S");
+	label = new Label(rect.x, rect.y + buttonHeight, buttonWidth, buttonHeight, "M");
 	label->setBorderless(true);
 	addGadget(label);
 
-	label = new Label(rect.x + buttonWidth, rect.y + buttonHeight, buttonWidth, buttonHeight, "M");
+	label = new Label(rect.x + buttonWidth, rect.y + buttonHeight, buttonWidth, buttonHeight, "T");
 	label->setBorderless(true);
 	addGadget(label);
 
-	label = new Label(rect.x + (buttonWidth * 2), rect.y + buttonHeight, buttonWidth, buttonHeight, "T");
+	label = new Label(rect.x + (buttonWidth * 2), rect.y + buttonHeight, buttonWidth, buttonHeight, "W");
 	label->setBorderless(true);
 	addGadget(label);
 
-	label = new Label(rect.x + (buttonWidth * 3), rect.y + buttonHeight, buttonWidth, buttonHeight, "W");
+	label = new Label(rect.x + (buttonWidth * 3), rect.y + buttonHeight, buttonWidth, buttonHeight, "T");
 	label->setBorderless(true);
 	addGadget(label);
 
-	label = new Label(rect.x + (buttonWidth * 4), rect.y + buttonHeight, buttonWidth, buttonHeight, "T");
+	label = new Label(rect.x + (buttonWidth * 4), rect.y + buttonHeight, buttonWidth, buttonHeight, "F");
 	label->setBorderless(true);
 	addGadget(label);
 
-	label = new Label(rect.x + (buttonWidth * 5), rect.y + buttonHeight, buttonWidth, buttonHeight, "F");
+	label = new Label(rect.x + (buttonWidth * 5), rect.y + buttonHeight, buttonWidth, buttonHeight, "S");
 	label->setBorderless(true);
 	addGadget(label);
 
