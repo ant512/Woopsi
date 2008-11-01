@@ -94,6 +94,7 @@ Features
     - Text manipulation, including wrapping functions and width calculation;
     - Animation class with support for variable framerates and standard/pingpong
       looping;
+    - Bitmap class for 16-bit bitmap image manipulation;
     - GraphicsPort class providing depth-sorted, clipped, hardware-accelerated
       drawing functions:
       - Pixel plotting;
