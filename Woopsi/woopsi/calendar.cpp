@@ -1,5 +1,3 @@
-// TODO: resize()
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "calendar.h"
@@ -292,3 +290,90 @@ const u8 Calendar::getDay() const { return _date->getDay(); }
 const u8 Calendar::getMonth() const { return _date->getMonth(); }
 
 const u16 Calendar::getYear() const { return _date->getYear(); }
+
+bool Calendar::resize(u16 width, u16 height) {
+
+	// Enforce gadget to stay within parent confines if necessary
+	if (_parent != NULL) {
+		if (!_parent->isPermeable()) {
+
+			Rect parentRect;
+			_parent->getClientRect(parentRect);
+
+			// Check width
+			if (_x + width > parentRect.width) {
+				width = parentRect.width - _x;
+			}
+
+			// Check height
+			if (_y + height > parentRect.height) {
+				height = parentRect.height - _y;
+			}
+		}
+	}
+
+	if ((_width != width) || (_height != height)) {
+	
+		// Remember if the gadget is permeable
+		bool wasPermeable = _flags.permeable;
+
+		_flags.permeable = true;
+
+		erase();
+
+		_width = width;
+		_height = height;
+
+		// Resize children
+
+		// Get a rect describing the gadget
+		Rect rect;
+		getClientRect(rect);
+
+		// Define basic button properties
+		u8 buttonWidth = rect.width / CALENDAR_COLS;
+		u8 buttonHeight = rect.height / (CALENDAR_ROWS + 2);
+		u16 gridY = (rect.height - (buttonHeight * CALENDAR_ROWS)) + 1;
+
+		// Resize arrows
+		_leftArrow->changeDimensions(rect.x, rect.y, buttonWidth, buttonHeight);
+		_rightArrow->changeDimensions((rect.width - buttonWidth) + 1, rect.y, buttonWidth, buttonHeight);
+
+		// Resize month name
+		_monthLabel->changeDimensions(rect.x + buttonWidth, rect.y, rect.width - (buttonWidth << 1), buttonHeight);
+
+		// Resize day labels
+
+		// Locate first day label - work on the assumption that this will always
+		// be the first gadget after the month label
+		s32 gadgetIndex = getGadgetIndex(_monthLabel) + 1;
+	
+		for (u8 i = 0; i < 7; ++i) {
+			_gadgets[gadgetIndex]->changeDimensions(rect.x + (buttonWidth * i), rect.y + buttonHeight, buttonWidth, buttonHeight);
+			gadgetIndex++;
+		}
+
+		// Resize day buttons
+		u8 allocatedDays = 0;
+		u8 maxDays = CALENDAR_ROWS * CALENDAR_COLS;
+
+		// Create all boxes for this month
+		while (allocatedDays < maxDays) {
+			_gadgets[gadgetIndex]->changeDimensions(rect.x + ((allocatedDays % CALENDAR_COLS) * buttonWidth), gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidth, buttonHeight);
+
+			allocatedDays++;
+			gadgetIndex++;
+		}
+
+		// Reset the permeable value
+		_flags.permeable = wasPermeable;
+
+		draw();
+
+		raiseResizeEvent(width, height);
+
+		return true;
+	}
+
+	return false;
+}

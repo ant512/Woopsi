@@ -54,7 +54,7 @@ namespace WoopsiUI {
 		 * @param month The new month.
 		 * @param year The new year.
 		 */
-		void setDate(u8 day, u8 month, u16 year);
+		virtual void setDate(u8 day, u8 month, u16 year);
 
 		/**
 		 * Get the day displayed in the calendar.
@@ -74,6 +74,14 @@ namespace WoopsiUI {
 		 */
 		const u16 getYear() const;
 
+		/**
+		 * Resize the calendar to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 * @return True if the resize was successful.
+		 */
+		bool resize(u16 width, u16 height);
+
 	protected:
 		Date* _date;
 		Date* _visibleDate;
@@ -90,13 +98,13 @@ namespace WoopsiUI {
 		/**
 		 * Creates all gadgets but leaves them textless.
 		 */
-		void buildGUI();
+		virtual void buildGUI();
 
 		/**
 		 * Populates the previously-created gadget layout with correct text
 		 * based on current date objects.
 		 */
-		void populateGUI();
+		virtual void populateGUI();
 
 		/**
 		 * Copy constructor is protected to prevent usage.
