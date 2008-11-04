@@ -193,7 +193,7 @@ void Demo::startup() {
 
 
 	// Create screens
-	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.32", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.36", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
