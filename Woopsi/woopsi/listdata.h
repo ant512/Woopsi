@@ -78,7 +78,7 @@ namespace WoopsiUI {
 		/**
 		 * Sets the selected index.  Specify -1 to select nothing.  Resets any
 		 * other selected items to deselected.
-		 * @param The selected index.
+		 * @param index The selected index.
 		 */
 		virtual void setSelectedIndex(const s32 index);
 
@@ -157,8 +157,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Swap the locations of two items in the array.
- 		 * @param start The index of the first item to swap.
-		 * @param end The index of the second item to swap.
+ 		 * @param index1 The index of the first item to swap.
+		 * @param index2 The index of the second item to swap.
 		 */
 		virtual void swapItems(const s32 index1, const s32 index2);
 

@@ -225,7 +225,7 @@ namespace WoopsiUI {
 		/**
 		 * Gets the x position of a row of text based on the width of the row and the
 		 * type of horizontal alignment currently set.
-		 * @param rowPixelWidth The width of the row.
+		 * @param row The index of the row.
 		 * @return The x co-ordinate of the row.
 		 */
 		u8 getRowX(s32 row);
@@ -253,7 +253,7 @@ namespace WoopsiUI {
 		 * Draws text previously clipped by one of the drawTextXXX functions.
 		 * @param clipRect The rect to draw to.
 		 * @param topRow The index of top row of text to draw.
-		 * @param bottmRow The index of the bottom row of text to draw.
+		 * @param bottomRow The index of the bottom row of text to draw.
 		 */
 		void drawText(Rect clipRect, s32 topRow, s32 bottomRow);
 

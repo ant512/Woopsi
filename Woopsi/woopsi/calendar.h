@@ -25,6 +25,11 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param x The x co-ordinate of the calendar.
 		 * @param y The y co-ordinate of the calendar.
+		 * @param width The width of the calendar.
+		 * @param height The height of the calendar.
+		 * @param day The default day to display.
+		 * @param month The default month to display.
+		 * @param year The default year to display.
 		 * @param flags Standard flags.
 		 * @param font Optional font to use for text output.
 		 */
