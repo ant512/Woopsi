@@ -135,7 +135,7 @@ namespace WoopsiUI {
 		 * Does not redraw the gadget.
 		 * @param allowMultipleSelections True to allow multiple selections.
 		 */
-		virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) { _allowMultipleSelections = allowMultipleSelections; };
+		virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) { _options.setAllowMultipleSelections(allowMultipleSelections); };
 
 		/**
 		 * Sets whether multiple selections are possible or not.
@@ -182,7 +182,6 @@ namespace WoopsiUI {
 	protected:
 		ListData _options;								/**< Option storage. */
 		u8 _optionPadding;								/**< Padding between options. */
-		bool _allowMultipleSelections;					/**< If true, multiple options can be selected. */
 
 		/**
 		 * Destructor.

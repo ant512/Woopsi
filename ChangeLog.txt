@@ -1,6 +1,11 @@
 Change Log
 ----------
 
+  V0.37
+  
+  - Fixes:
+     - ListBox::setAllowMultipleSelections() works correctly.
+
   V0.36
   
   - Fixes:
@@ -32,7 +37,6 @@ Change Log
        operations.
      - Replaced unused Bitmap struct with a Bitmap class with drawing routines.
      - Replaced SuperBitmap drawing operations with a Bitmap object.
-
 
   V0.35 (20081012)
   
@@ -85,7 +89,6 @@ Change Log
      - Added MultiLineTextBox::removeText() methods.
      - TextBox border bevelled both out and in.
 
-
   V0.34 (20080702)
   
   - Fixes:
@@ -121,7 +124,6 @@ Change Log
      - Added WPaint to examples directory.
      - Gadgets get drawn automatically when added to their parents.
      - Added EVENT_MOVE_FORWARD and EVENT_MOVE_BACKWARD events.
-
 
   V0.33b (20080522)
   
