@@ -5,6 +5,7 @@ Change Log
   
   - Fixes:
      - ListBox::setAllowMultipleSelections() works correctly.
+     - Replaced byte and short iterator variables with ints.
 
   V0.36
   

@@ -465,7 +465,7 @@ void Woopsi::eraseRect(Rect rect) {
 		}
 
 		// Refresh screen
-		for (u8 i = 0; i < invalidRectangles->size(); i++) {
+		for (s32 i = 0; i < invalidRectangles->size(); i++) {
 			if (invalidRectangles->size() > 0) {
 				clear(invalidRectangles->at(i));
 			} else {

@@ -857,10 +857,10 @@ void Gadget::splitRectangles(DynamicArray<Rect>* invalidRects, DynamicArray<Rect
 		Rect checkRect = invalidRects->at(i);
 		s16 splitX[4];
 		s16 splitY[4];
-		u8 rectXCount = 0;
-		u8 rectYCount = 0;
-		u8 overlapXRect = 0;
-		u8 overlapYRect = 0;
+		u32 rectXCount = 0;
+		u32 rectYCount = 0;
+		u32 overlapXRect = 0;
+		u32 overlapYRect = 0;
 
 		if (checkCollision(checkRect.x, checkRect.y, checkRect.width, checkRect.height)) {
 			// Got a collision.  We need to split this rectangle
@@ -985,8 +985,8 @@ void Gadget::splitRectangles(DynamicArray<Rect>* invalidRects, DynamicArray<Rect
 			i--;
 
 			// Add the new rectangles (not the overlap; that's the one we need to draw)
-			for (u8 xRects = 0; xRects < rectXCount; xRects++) {
-				for (u8 yRects = 0; yRects < rectYCount; yRects++) {
+			for (u32 xRects = 0; xRects < rectXCount; xRects++) {
+				for (u32 yRects = 0; yRects < rectYCount; yRects++) {
 
 					// Is this the overlap?
 					if ((overlapXRect == xRects) && (overlapYRect == yRects)) {
