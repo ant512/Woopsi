@@ -19,7 +19,7 @@
 #include "debug.h"
 #include "decorationglyphbutton.h"
 #include "defaultstyle.h"
-#include "dynamicarray.h"
+#include "woopsiarray.h"
 #include "defines.h"
 #include "eventhandler.h"
 #include "fixedwidthfontbase.h"

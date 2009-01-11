@@ -65,7 +65,7 @@ namespace WoopsiUI {
 		virtual bool release(s16 x, s16 y);
 
 	protected:
-		DynamicArray<CycleButtonOption*> _options;		/**< Array of options. */
+		WoopsiArray<CycleButtonOption*> _options;		/**< Array of options. */
 		s16 _selectedIndex;								/**< Index of the currently selected option. */
 
 		/**

@@ -3,7 +3,7 @@
 
 #include "woopsi.h"
 #include "sysfont.h"
-#include "dynamicarray.h"
+#include "woopsiarray.h"
 #include "superbitmap.h"
 #include "amigascreen.h"
 #include "amigawindow.h"

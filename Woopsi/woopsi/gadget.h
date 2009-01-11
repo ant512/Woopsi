@@ -4,7 +4,7 @@
 #include <nds.h>
 #include "defines.h"
 #include "eventhandler.h"
-#include "dynamicarray.h"
+#include "woopsiarray.h"
 #include "glyphs.h"
 
 namespace WoopsiUI {
@@ -316,7 +316,7 @@ namespace WoopsiUI {
 		 * Gets a pointer to the vector of all of the visible regions of this gadget.
 		 * @return A pointer to a vector of all visible regions.
 		 */
-		DynamicArray<Rect>* getVisibleRectCache();
+		WoopsiArray<Rect>* getVisibleRectCache();
 
 		/**
 		 * Gets a pointer to the gadget's font.
@@ -812,7 +812,7 @@ namespace WoopsiUI {
 		 * @param invalidRects A list of corrupt regions.
 		 * @param sender A pointer to the gadget that corrupted the regions.
 		 */
-		virtual void redrawDirty(DynamicArray<Rect>* invalidRects, Gadget* sender);
+		virtual void redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender);
 
 		/**
 		 * Move any rectangles from the visibleRects list that overlap this gadget
@@ -822,7 +822,7 @@ namespace WoopsiUI {
 		 * @param gadget The gadget that requested the lists.
 		 * @see splitRectangles()
 		 */
-		virtual void removeOverlappedRects(DynamicArray<Rect>* visibleRects, DynamicArray<Rect>* invisibleRects, Gadget* gadget);
+		virtual void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, Gadget* gadget);
 
 		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
@@ -836,7 +836,7 @@ namespace WoopsiUI {
 		 * display that do not need to be redrawn.
 		 * @param sender Pointer to the gadget that initiated the split.
 		 */
-		virtual void splitRectangles(DynamicArray<Rect>* invalidRectangles, DynamicArray<Rect>* validRects, Gadget* sender);
+		virtual void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects, Gadget* sender);
 
 		/**
 		 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
@@ -950,14 +950,14 @@ namespace WoopsiUI {
 		// Hierarchy control
 		Gadget* _parent;						/**< Pointer to the gadget's parent */
 		Gadget* _focusedGadget;					/**< Pointer to the child gadget that has focus */
-		DynamicArray<Gadget*> _gadgets;			/**< List of child gadgets */
-		DynamicArray<Gadget*> _shelvedGadgets;	/**< List of shelved child gadgets */
+		WoopsiArray<Gadget*> _gadgets;			/**< List of child gadgets */
+		WoopsiArray<Gadget*> _shelvedGadgets;	/**< List of shelved child gadgets */
 
 		// Decorations
 		u8 _decorationCount;					/**< Total number of decoration child gadgets */
 
 		// Visible regions
-		DynamicArray<Rect> _visibleRegionCache;	/**< List of the gadget's visible regions */
+		WoopsiArray<Rect> _visibleRegionCache;	/**< List of the gadget's visible regions */
 
 		OutlineType _outline;					/**< Type of outline the gadget uses */
 		CloseType _closeType;					/**< Type of close method that should be called for the gadget */
@@ -965,7 +965,7 @@ namespace WoopsiUI {
 		FontBase* _font;
 
 		// Context menu item definitions
-		DynamicArray<NameValuePair> _contextMenuItems;	/**< List of all context menu name/value pairs */
+		WoopsiArray<NameValuePair> _contextMenuItems;	/**< List of all context menu name/value pairs */
 
 		/**
 		 * Destructor.
@@ -1045,7 +1045,7 @@ namespace WoopsiUI {
 		 * @param invalidRects List of invalid regions that need to be redrawn.
 		 * @param sender Pointer to the gadget that initiated the redraw.
 		 */
-		virtual void redrawDirtyChildren(DynamicArray<Rect>* invalidRects, Gadget* sender);
+		virtual void redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender);
 
 		/**
 		 * Get a graphics port that can draw within this gadget's region.

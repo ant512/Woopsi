@@ -1,12 +1,12 @@
 # Woopsi Makefile
-# PALib version
+# libnds version
 
 # This Makefile is optimized for PALib AppWizard for Visual Studio 2005
 # By Rodrigo Sieiro
 
 OFILES   +=
 PATH 		:= $(DEVKITARM)/bin:$(PATH)
-ARM7BIN		:= -7 $(PAPATH)/lib/arm7/arm7.bin
+#ARM7BIN		:= -7 $(PAPATH)/lib/arm7/arm7.bin
 
 TEXT1 		:= PALib Project
 TEXT2 		:= Using PALib
@@ -43,10 +43,11 @@ CFLAGS	:=	-g -Wall -O2\
 		-ffast-math \
 		$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM9 -I$(DEVKITPRO)/PAlib/include/nds -DUSING_PALIB
+CFLAGS	+=	$(INCLUDE) -DARM9 -I$(DEVKITPRO)/PAlib/include/nds
 
 ASFLAGS	:=	-g $(ARCH)
-LDFLAGS	:=	-g $(ARCH) -mno-fpu -L$(DEVKITPRO)/PAlib/lib
+#LDFLAGS	:=	-g $(ARCH) -mno-fpu -L$(DEVKITPRO)/PAlib/lib
+LDFLAGS	:=	-g $(ARCH) -mno-fpu
 
 #-------------------------------------------------------------------------------
 # the prefix on the compiler executables
@@ -59,7 +60,7 @@ PREFIX			:=	arm-eabi-
 #-------------------------------------------------------------------------------
 
 LIBS	:= -lnds9
-LIBSPA	:= -lpa9
+#LIBSPA	:= -lpa9
  
 #-------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level 
@@ -67,7 +68,7 @@ LIBSPA	:= -lpa9
 #-------------------------------------------------------------------------------
 
 LIBDIRS	:=	$(DEVKITPRO)/libnds
-LIBDIRPA	:=	$(PAPATH)
+#LIBDIRPA	:=	$(PAPATH)
 
 #-------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add 
@@ -114,7 +115,7 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 					-I$(CURDIR)/$(BUILD)
  
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
-export LIBPATHPA	:=	$(foreach dir,$(LIBDIRPA),-L$(dir)/lib)
+#export LIBPATHPA	:=	$(foreach dir,$(LIBDIRPA),-L$(dir)/lib)
  
 .PHONY: $(BUILD) clean rebuild
  

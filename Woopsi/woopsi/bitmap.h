@@ -2,7 +2,7 @@
 #define _BITMAP_H_
 
 #include <nds.h>
-#include "dynamicarray.h"
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 
@@ -198,7 +198,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the pixel from the stack (output by the function).
 		 * @param stack Pointer to the stack to pop from.
 		 */
-		bool popStack(s16* x, s16* y, DynamicArray<s32>* stack);
+		bool popStack(s16* x, s16* y, WoopsiArray<s32>* stack);
 		
 		/**
 		 * Push new co-ordinates onto the stack.
@@ -206,7 +206,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the pixel to add to the stack.
 		 * @param stack The stack to add a new value to.
 		 */
-		void pushStack(s16 x, s16 y, DynamicArray<s32>* stack) ;
+		void pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) ;
 		
 		/**
 		 * Clip the supplied rectangular dimensions to the size of the internal bitmap.

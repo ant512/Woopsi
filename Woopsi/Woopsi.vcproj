@@ -416,10 +416,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\dynamicarray.h"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\eventhandler.h"
 				>
 			</File>
@@ -637,6 +633,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\woopsi.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\woopsiarray.h"
 				>
 			</File>
 			<File

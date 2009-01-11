@@ -1,7 +1,7 @@
 #ifndef _LIST_DATA_H_
 #define _LIST_DATA_H_
 
-#include "dynamicarray.h"
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 
@@ -144,7 +144,7 @@ namespace WoopsiUI {
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _sortInsertedItems = sortInsertedItems; };
 
 	protected:
-		DynamicArray<ListDataItem*> _items;			/**< Collection of list data items. */
+		WoopsiArray<ListDataItem*> _items;			/**< Collection of list data items. */
 		bool _allowMultipleSelections;				/**< If true, multiple options can be selected. */
 		bool _sortInsertedItems;					/**< Automatically sorts items on insertion if true. */
 

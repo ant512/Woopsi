@@ -2,7 +2,7 @@
 #define _ANIMATION_H_
 
 #include <nds.h>
-#include "dynamicarray.h"
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 
@@ -146,7 +146,7 @@ namespace WoopsiUI {
 		void goToFrame(u16 frame);
 
 	private:
-		DynamicArray<AnimFrame> _frames;			/**< Array of animation frames */
+		WoopsiArray<AnimFrame> _frames;			/**< Array of animation frames */
 		u8 _speed;									/**< Speed of the animation (smaller = faster) */
 		u16 _frameTimer;							/**< Time that the current frame has been on screen */
 		u16 _currentFrame;							/**< Index of currently displayed frame */

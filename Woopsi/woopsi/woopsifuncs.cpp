@@ -387,13 +387,13 @@ void woopsiUpdateInput() {
 	Pad.Released.AllKeys = keysUp();
 
 	// Deal with the Stylus.
-	touch = touchReadXY(); 
+	touchRead(&touch);
 
 	Stylus.Newpress = Pad.Newpress.Touch;
 	Stylus.Held     = Pad.Held.Touch;
 	Stylus.Released = Pad.Released.Touch;
 
-	Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime+Stylus.Uptime < 45);
+	Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime + Stylus.Uptime < 45);
 	Stylus.Downtime *= !Stylus.Newpress; // = 0 if newpress
 	Stylus.Downtime += Stylus.Held;
 
@@ -422,35 +422,23 @@ void woopsiVblFunc() {
 }
 
 void initWoopsiGfxMode() {
-	powerON(POWER_ALL_2D);
+	powerOn(POWER_ALL_2D);
 
-	irqInit();
 	irqSet(IRQ_VBLANK, woopsiVblFunc);
-	irqEnable(IRQ_VBLANK);
 
 	videoSetMode( MODE_5_2D | DISPLAY_BG3_ACTIVE );
-	videoSetModeSub( MODE_5_2D | DISPLAY_BG3_ACTIVE );	//sub bg 0 will be used to print text
+	videoSetModeSub( MODE_5_2D | DISPLAY_BG3_ACTIVE );
 
 	vramSetBankA( VRAM_A_MAIN_BG );
 	vramSetBankC( VRAM_C_SUB_BG );
 
-	BG3_CR = BG_BMP16_256x256 | BG_BMP_BASE(0);
-	
-	BG3_XDY = 0;
-	BG3_XDX = 1 << 8;
-	BG3_YDX = 0;
-	BG3_YDY = 1 << 8;
-
-	SUB_BG3_CR = BG_BMP16_256x256 | BG_BMP_BASE(0);
-	
-	SUB_BG3_XDY = 0;
-	SUB_BG3_XDX = 1 << 8;
-	SUB_BG3_YDX = 0;
-	SUB_BG3_YDY = 1 << 8;
+	// Initialise backgrounds
+	bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0, 0);
+	bgInitSub(3, BgType_Bmp16, BgSize_B16_256x256, 0, 0);
 
 	DrawBg[1] = (u16*)BG_BMP_RAM(0);
 	DrawBg[0] = (u16*)BG_BMP_RAM_SUB(0);
-
+	
 	memset( &Stylus, 0, sizeof(_stylus) );
 }
 

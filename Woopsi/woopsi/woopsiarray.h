@@ -19,18 +19,18 @@
  * very inexpensive.
  */
 template <class T>
-class DynamicArray {
+class WoopsiArray {
 public:
 
 	/**
 	 * Constructor.
 	 */
-	inline DynamicArray();
+	inline WoopsiArray();
 
 	/**
 	 * Destructor.
 	 */
-	inline ~DynamicArray();
+	inline ~WoopsiArray();
 
 	/**
 	 * Get the size of the array.
@@ -106,24 +106,24 @@ private:
 };
 
 template <class T>
-DynamicArray<T>::DynamicArray() {
+WoopsiArray<T>::WoopsiArray() {
 	_size = 0;
 	_reservedSize = DYNAMIC_ARRAY_SIZE;
 	_data = new T[_reservedSize];
 }
 
 template <class T>
-DynamicArray<T>::~DynamicArray() {
+WoopsiArray<T>::~WoopsiArray() {
 	delete [] _data;
 }
 
 template <class T>
-const s32 DynamicArray<T>::size() const {
+const s32 WoopsiArray<T>::size() const {
 	return _size;
 }
 
 template <class T>
-void DynamicArray<T>::push_back(const T &value) {
+void WoopsiArray<T>::push_back(const T &value) {
 
 	// Ensure the array is large enough to contain this data
 	resize();
@@ -136,7 +136,7 @@ void DynamicArray<T>::push_back(const T &value) {
 }
 
 template <class T>
-void DynamicArray<T>::pop_back() {
+void WoopsiArray<T>::pop_back() {
 	if (_size >= 1) {
 		// We can just reduce the used size of the array, as the value
 		// will get overwritten automatically
@@ -145,7 +145,7 @@ void DynamicArray<T>::pop_back() {
 }
 
 template <class T>
-void DynamicArray<T>::insert(const s32 index, const T &value) {
+void WoopsiArray<T>::insert(const s32 index, const T &value) {
 
 	// Bounds check
 	if ((index >= _size) || (_size == 0)) {
@@ -169,7 +169,7 @@ void DynamicArray<T>::insert(const s32 index, const T &value) {
 }
 
 template <class T>
-void DynamicArray<T>::erase(const s32 index) {
+void WoopsiArray<T>::erase(const s32 index) {
 
 	// Bounds check
 	if (index >= _size) return;
@@ -184,7 +184,7 @@ void DynamicArray<T>::erase(const s32 index) {
 }
 
 template <class T>
-void DynamicArray<T>::resize() {
+void WoopsiArray<T>::resize() {
 	// Do we need to redim the array?
 	if (_reservedSize == _size) {
 		
@@ -211,28 +211,28 @@ void DynamicArray<T>::resize() {
 }
 
 template <class T>
-T& DynamicArray<T>::at(const s32 index) const {
+T& WoopsiArray<T>::at(const s32 index) const {
 	return _data[index];
 }
 
 template <class T>
-bool DynamicArray<T>::empty() const {
+bool WoopsiArray<T>::empty() const {
 	return (_size == 0);
 }
 
 template <class T>
-T& DynamicArray<T>::operator[](const s32 index) const {
+T& WoopsiArray<T>::operator[](const s32 index) const {
 	return _data[index];
 }
 
 template <class T>
-void DynamicArray<T>::clear() {
+void WoopsiArray<T>::clear() {
 	// All we need to do is reset the size value
 	_size = 0;
 }
 
 template <class T>
-u32 DynamicArray<T>::begin() const {
+u32 WoopsiArray<T>::begin() const {
 	return 0;
 }
 

@@ -2,7 +2,7 @@
 #define _PAC_GHOSTS_H_
 
 #include "woopsifuncs.h"
-#include "dynamicarray.h"
+#include "woopsiarray.h"
 #include "pacsprite.h"
 
 class PacMan;
@@ -12,7 +12,7 @@ class PacGhosts {
 
 private:
 	PacMan* _game;
-	DynamicArray<PacGhost*> _ghosts;
+	WoopsiArray<PacGhost*> _ghosts;
 	u8 _ghostCount;
 	u8 _ghostsInHome;
 	

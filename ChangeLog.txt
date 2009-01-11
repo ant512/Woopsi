@@ -6,8 +6,11 @@ Change Log
   - Fixes:
      - ListBox::setAllowMultipleSelections() works correctly.
      - Replaced byte and short iterator variables with ints.
+     - Compatible with devKitPro v24 and libnds 1.3.1.
+     - Renamed "DynamicArray" to "WoopsiArray" for compatibility with dkp24.
+     - Made libnds makefile the default instead of PALib.
 
-  V0.36
+  V0.36 (20081104)
   
   - Fixes:
      - s32 used as iterator when working with visible rect cache to prevent

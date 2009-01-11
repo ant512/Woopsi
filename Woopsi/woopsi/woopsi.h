@@ -235,8 +235,8 @@ namespace WoopsiUI {
 	protected:
 		bool _lidClosed;									/**< Remembers the current state of the lid */
 		
-		static DynamicArray<WoopsiTimer*> _vblListeners;	/**< Array of timers that receive VBL events */
-		static DynamicArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion */
+		static WoopsiArray<WoopsiTimer*> _vblListeners;		/**< Array of timers that receive VBL events */
+		static WoopsiArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion */
 		static FontBase* _systemFont;						/**< Pointer to the default font */
 		static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */
 		ContextMenu* _contextMenu;							/**< Pointer to the context menu */

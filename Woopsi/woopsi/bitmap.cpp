@@ -251,7 +251,7 @@ void Bitmap::floodFill(s16 x, s16 y, u16 newColour) {
 	if (oldColour == newColour) return;
 
 	// Initalise stack
-	DynamicArray<s32>* stack = new DynamicArray<s32>();
+	WoopsiArray<s32>* stack = new WoopsiArray<s32>();
 
 	s16 x1; 
 	u8 spanUp, spanDown;
@@ -314,7 +314,7 @@ void Bitmap::floodFill(s16 x, s16 y, u16 newColour) {
 }
 
 // Floodfill stack functions
-bool Bitmap::popStack(s16* x, s16* y, DynamicArray<s32>* stack) { 
+bool Bitmap::popStack(s16* x, s16* y, WoopsiArray<s32>* stack) { 
 	if (stack->size() > 0) { 
 		s32 val = stack->at(stack->size() - 1);
 		*y = val / _width;
@@ -326,7 +326,7 @@ bool Bitmap::popStack(s16* x, s16* y, DynamicArray<s32>* stack) {
 	return false;  
 }
 
-void Bitmap::pushStack(s16 x, s16 y, DynamicArray<s32>* stack) {
+void Bitmap::pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) {
 	stack->push_back(x + (y * _width));
 }     
 
