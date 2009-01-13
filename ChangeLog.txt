@@ -1,7 +1,11 @@
 Change Log
 ----------
 
-  V0.37
+  V0.38
+  
+  
+
+  V0.37 (20090112)
   
   - Fixes:
      - ListBox::setAllowMultipleSelections() works correctly.

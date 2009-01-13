@@ -144,7 +144,8 @@ Requirements
    - Type "make -f Makefile.lib", sans quotes.
    
   Woopsi has been developed using devkitPro r20, VC++ 2005 Express, and the last
-  official version of PALib (070323).  It has been tested with devkitPro r23.
+  official version of PALib (070323).  It is compatible with devKitPro versions
+  r20 to r23 when used with PALib, or r24 when used without.
   
 
 SDL Compatibility

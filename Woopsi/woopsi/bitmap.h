@@ -8,6 +8,9 @@ namespace WoopsiUI {
 
 	class FontBase;
 
+	/**
+	 * Class providing bitmap manipulation (drawing, etc) functions.
+	 */
 	class Bitmap {
 	public:
 
