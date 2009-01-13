@@ -2,6 +2,7 @@
 #include "filereqdemo.h"
 #include "woopsiheaders.h"
 #include "filerequester.h"
+#include <fat.h>
 
 using namespace WoopsiUI;
 

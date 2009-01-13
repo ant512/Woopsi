@@ -3,7 +3,8 @@ Change Log
 
   V0.38
   
-  
+  - Fixes:
+     - Removed PALib dependency from filerequester example.
 
   V0.37 (20090112)
   

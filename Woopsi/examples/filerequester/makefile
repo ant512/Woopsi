@@ -33,7 +33,7 @@ DEFINES		:=
 #-------------------------------------------------------------------------------
 #USE_WOOPSI	= 1
 USE_FAT		= 1
-USE_PALIB	= 1
+#USE_PALIB	= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our
 # resultant .nds from working on some loaders.  By default, ndstool puts boot
