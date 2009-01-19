@@ -1,6 +1,6 @@
 #include <nds.h>
 #include <fat.h>
-#include <sys/dir.h>
+#include <dirent.h>
 #include "filerequester.h"
 #include "button.h"
 #include "filepath.h"
@@ -126,15 +126,14 @@ void FileRequester::readDirectory() {
 	_listbox->removeAllOptions();
 
 	struct stat st;
-	char fileName[256];
 	s32 fileNumber = 0;
 
-	DIR_ITER* dir = diropen(_path->getPath());
+	DIR* dir = opendir(_path->getPath());
 
 	// Did we get the dir successfully?
 	if (dir == NULL) return;
 
-	// Create lists to store file and directory data
+	// Create lists to temporarily store file and directory data
 	ListData files;
 	ListData directories;
 
@@ -143,11 +142,23 @@ void FileRequester::readDirectory() {
 	directories.setSortInsertedItems(true);
 
 	// Read data into options list
-	while (dirnext(dir, fileName, &st) == 0) 
-	{
+	struct dirent* ent;
+
+	while ((ent = readdir(dir)) != 0) {
+
+		char* newPath = new char[strlen(ent->d_name) + strlen(_path->getPath()) + 1];
+		strcpy(newPath, _path->getPath());
+		strcat(newPath, "/");
+		strcat(newPath, ent->d_name);
+		int result = stat(newPath, &st);
+		delete [] newPath;
+		if (result) {
+			continue;
+		}
+
 		// Create memory to store the filename in the array
-		char* storedFilename = new char[strlen(fileName) + 1];
-		strcpy(storedFilename, fileName);
+		char* storedFilename = new char[strlen(ent->d_name) + 1];
+		strcpy(storedFilename, ent->d_name);
 
 		// st.st_mode & S_IFDIR indicates a directory
 		if (st.st_mode & S_IFDIR) {
@@ -161,7 +172,7 @@ void FileRequester::readDirectory() {
 		}
 	}
 
-	// Push all directories and files into options list and delete all stored filenames
+	// Push all directories and files into options list
 	for (s32 i = 0; i < directories.getItemCount(); i++) {
 
 		// Add directory
@@ -192,7 +203,7 @@ void FileRequester::readDirectory() {
 	}
 
 	// Close the directory
-	dirclose(dir);
+	closedir(dir);
 
 	// Redraw the list
 	_listbox->draw();

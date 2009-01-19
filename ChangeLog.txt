@@ -5,6 +5,7 @@ Change Log
   
   - Fixes:
      - Removed PALib dependency from filerequester example.
+     - FileRequester gadget fixed for devKitARM r24 (thanks Quirky).
 
   V0.37 (20090112)
   
