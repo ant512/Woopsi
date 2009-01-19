@@ -167,6 +167,7 @@ bool ListBox::click(s16 x, s16 y) {
 					draw();
 				} else {
 					_options.setSelectedIndex(newSelectedIndex);
+					draw();
 				}
 			}
 
