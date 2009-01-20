@@ -7,10 +7,12 @@
 
 namespace WoopsiUI {
 
+	class Window;
+
 	class SkinnedWindowBorderTop : public WindowBorderTop {
 
 	public:
-		SkinnedWindowBorderTop(s16 x, u16 width, const char* text, const WindowSkin* skin);
+		SkinnedWindowBorderTop(s16 x, u16 width, Window* window, const WindowSkin* skin);
 
 		virtual void draw(Rect clipRect);
 		virtual void draw();

@@ -70,6 +70,12 @@ namespace WoopsiUI {
 		void setTitle(const char* title);
 
 		/**
+		 * Get the title of the window.
+		 * @return The title of the window.
+		 */
+		const char* getTitle() { return _title; };
+
+		/**
 		 * Notify this gadget that it is being dragged, and set its drag point.
 		 * @param x The x co-ordinate of the drag position relative to this gadget.
 		 * @param y The y co-ordinate of the drag position relative to this gadget.

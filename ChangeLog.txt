@@ -17,6 +17,8 @@ Change Log
      - FileRequester fixed for SDL (Quirky).
      - SDL path fixes (Quirky).
 	 - Escape key to quit in SDL mode (Quirky).
+     - WindowBorderTop and SkinnedWindowBorderTop no longer have pointers to
+       freed memory if window title changes (Quirky).
 
   V0.37 (20090112)
   

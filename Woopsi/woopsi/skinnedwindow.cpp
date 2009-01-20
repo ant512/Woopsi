@@ -123,7 +123,7 @@ void SkinnedWindow::createBorder() {
 		insertGadget(_depthButton);
 	}
 
-	_windowBorderTop = new SkinnedWindowBorderTop(0, _width, _title, _skin);
+	_windowBorderTop = new SkinnedWindowBorderTop(0, _width, this, _skin);
 	_windowBorderLeft = new SkinnedWindowBorderLeft(0, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
 	_windowBorderRight = new SkinnedWindowBorderRight(_width - _skin->rightBorder.bitmap.width, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
 	_windowBorderBottom = new SkinnedWindowBorderBottom(0, _height - _skin->bottomCentreBorder.bitmap.height, _width, _skin);

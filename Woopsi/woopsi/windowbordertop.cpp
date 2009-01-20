@@ -1,16 +1,14 @@
 #include <string.h>
 #include "windowbordertop.h"
 #include "graphicsport.h"
+#include "window.h"
 
 using namespace WoopsiUI;
 
-WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, const char* text, FontBase* font) : Gadget(x, 0, width, height, GADGET_BORDERLESS, font) {
+WindowBorderTop::WindowBorderTop(s16 x, u16 width, u16 height, Window* window, FontBase* font) : Gadget(x, 0, width, height, GADGET_BORDERLESS, font) {
 	_flags.decoration = true;
 	_flags.draggable = true;
-
-	// Don't create a copy of the text, since we want to point at the title stored in 
-	// the parent window
-	_text = text;
+	_window = window;
 }
 
 void WindowBorderTop::draw(Rect clipRect) {
@@ -28,7 +26,7 @@ void WindowBorderTop::draw(Rect clipRect) {
 	port->drawHorizLine(1, _height - 1, _width - 1, _shadowColour);	// Bottom
 	port->drawVertLine(0, 0, _height, _shineColour);				// Left
 	port->drawVertLine(_width - 1, 1, _height - 1, _shadowColour);	// Right
-	port->drawText(2, 1, _font, _text);								// Title text
+	port->drawText(2, 1, _font, _window->getTitle());				// Title text
 	delete port;
 }
 

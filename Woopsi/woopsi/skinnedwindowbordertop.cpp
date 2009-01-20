@@ -1,10 +1,11 @@
 #include "skinnedwindowbordertop.h"
 #include "graphicsport.h"
 #include "skinnedwindow.h"
+#include "window.h"
 
 using namespace WoopsiUI;
 
-SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, const char* text, const WindowSkin* skin) : WindowBorderTop(x, width, 0, text) {
+SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, Window* window, const WindowSkin* skin) : WindowBorderTop(x, width, 0, window) {
 
 	_skin = skin;
 
@@ -92,9 +93,9 @@ void SkinnedWindowBorderTop::draw(Rect clipRect) {
 	}
 
 	if (_skin->window.font.monochrome) {
-		port->drawText(textX, textY, _font, _text, _skin->window.font.colour);	
+		port->drawText(textX, textY, _font, _window->getTitle(), _skin->window.font.colour);	
 	} else {
-		port->drawText(textX, textY, _font, _text);
+		port->drawText(textX, textY, _font, _window->getTitle());
 	}
 
 	delete port;
