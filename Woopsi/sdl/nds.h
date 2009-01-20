@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "SDL.h"
+#include <SDL/SDL.h>
 
 #define USING_SDL
 
