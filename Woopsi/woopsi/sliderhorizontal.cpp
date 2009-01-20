@@ -62,7 +62,7 @@ void SliderHorizontal::setValue(const s16 value) {
 	if (newValue < _minimumValue) newValue = _minimumValue;
 	
 	// Can the grip move?
-	if (rect.width > _grip->getWidth()) {
+	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
 	
 		// Calculate ratio (max fractional value of 255)
 		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);

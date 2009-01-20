@@ -266,7 +266,6 @@ void woopsiVblFunc() {
 	}
 	
 	// Update other stylus properties
-	Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime+Stylus.Uptime < 45);
 	Stylus.Downtime *= !Stylus.Newpress; // = 0 if newpress
 	Stylus.Downtime += Stylus.Held;
 
@@ -274,6 +273,9 @@ void woopsiVblFunc() {
 	Stylus.Uptime += !Stylus.Held;
 
 	if (Stylus.Held) {
+
+		Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime + Stylus.Uptime < 45);
+
 		if (Stylus.Newpress) {
 			Stylus.Vx = Stylus.oldVx = 0;
 			Stylus.Vy = Stylus.oldVy = 0;

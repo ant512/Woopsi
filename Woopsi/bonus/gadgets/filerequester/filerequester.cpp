@@ -146,7 +146,7 @@ void FileRequester::readDirectory() {
 
 	while ((ent = readdir(dir)) != 0) {
 
-		char* newPath = new char[strlen(ent->d_name) + strlen(_path->getPath()) + 1];
+		char* newPath = new char[strlen(ent->d_name) + strlen(_path->getPath()) + 2];
 		strcpy(newPath, _path->getPath());
 		strcat(newPath, "/");
 		strcat(newPath, ent->d_name);

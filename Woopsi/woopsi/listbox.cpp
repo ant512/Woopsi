@@ -2,6 +2,7 @@
 #include "graphicsport.h"
 #include "fontbase.h"
 #include "woopsi.h"
+#include "woopsifuncs.h"
 
 using namespace WoopsiUI;
 
@@ -133,7 +134,7 @@ bool ListBox::click(s16 x, s16 y) {
 
 		// Within the allowed time?
 		if (woopsiApplication != NULL) {
-			if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
+			if (Stylus.DblClick) {
 
 				// Within the allowed region?
 				if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
@@ -158,19 +159,17 @@ bool ListBox::click(s16 x, s16 y) {
 				
 				// Deselecting
 				_options.getItem(newSelectedIndex)->selected = false;
-				draw();
 			} else {
 			
 				// Selecting
 				if (_options.allowsMultipleSelections()) {
 					_options.getItem(newSelectedIndex)->selected = true;
-					draw();
 				} else {
 					_options.setSelectedIndex(newSelectedIndex);
-					draw();
 				}
 			}
 
+			draw();
 
 			// Standard click code follows, sans sub-gadget stuff
 			_flags.clicked = true;

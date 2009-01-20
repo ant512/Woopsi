@@ -1533,7 +1533,7 @@ bool Gadget::click(s16 x, s16 y) {
 
 		// Within the allowed time?
 		if (woopsiApplication != NULL) {
-			if (woopsiApplication->getVBLCount() - _lastClickTime < 10) {
+			if (Stylus.DblClick) {
 
 				// Within the allowed region?
 				if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {

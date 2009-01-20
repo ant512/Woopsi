@@ -5,9 +5,15 @@ Change Log
   
   - Fixes:
      - Removed PALib dependency from filerequester example.
-     - FileRequester gadget fixed for devKitARM r24 (thanks Quirky).
+     - FileRequester gadget fixed for devKitARM r24 (Quirky).
      - ListBox redraws correctly when an option is selected in single selection
        mode.
+     - Fixed crash in SliderVertical when trying to set value if max and min
+       values are the same (Quirky).
+     - Fixed crash in SliderHorizontal when trying to set value if max and min
+       values are the same.
+     - Fixed FileRequester crash when path has trailing slash (Quirky).
+     - Fixed double-click in SDL (Quirky).
 
   V0.37 (20090112)
   
