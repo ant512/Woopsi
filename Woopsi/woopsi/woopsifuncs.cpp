@@ -264,6 +264,9 @@ void woopsiVblFunc() {
 		Pad.Held.Select = false;
 		Pad.Newpress.Select = false;
 	}
+
+	// Exit (assigned as Esc on keyboard)
+	if (keyState[SDLK_ESCAPE]) exit(0);
 	
 	// Update other stylus properties
 	Stylus.Downtime *= !Stylus.Newpress; // = 0 if newpress
