@@ -1,5 +1,5 @@
 #include <nds.h>
-#include <fat.h>
+#include <fcntl.h>
 #include <dirent.h>
 #include "filerequester.h"
 #include "button.h"

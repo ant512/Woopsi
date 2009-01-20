@@ -5,6 +5,12 @@
 #include "scrollinglistbox.h"
 #include "listdata.h"
 
+#ifdef ARM9
+#include <fat.h>
+#else
+int fatInitDefault() { return 1; }
+#endif
+
 namespace WoopsiUI {
 
 	class Button;

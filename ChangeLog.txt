@@ -14,6 +14,7 @@ Change Log
        values are the same.
      - Fixed FileRequester crash when path has trailing slash (Quirky).
      - Fixed double-click in SDL (Quirky).
+     - FileRequester fixed for SDL (Quirky).
 
   V0.37 (20090112)
   
