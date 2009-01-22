@@ -1,9 +1,10 @@
 #include "skinnedscreentitle.h"
 #include "graphicsport.h"
+#include "screen.h"
 
 using namespace WoopsiUI;
 
-SkinnedScreenTitle::SkinnedScreenTitle(const char* text, const ScreenSkin* skin) : ScreenTitle(0, text, NULL) {
+SkinnedScreenTitle::SkinnedScreenTitle(Screen* screen, const ScreenSkin* skin) : ScreenTitle(0, screen, NULL) {
 	_flags.decoration = true;
 	_skin = skin;
 
@@ -39,9 +40,9 @@ void SkinnedScreenTitle::draw(Rect clipRect) {
 	}
 
 	if (_skin->screen.font.monochrome) {
-		port->drawText(2, 1, _font, _text, _skin->screen.font.colour);
+		port->drawText(2, 1, _font, _screen->getTitle(), _skin->screen.font.colour);
 	} else {
-		port->drawText(2, 1, _font, _text);
+		port->drawText(2, 1, _font, _screen->getTitle());
 	}
 	
 	delete port;

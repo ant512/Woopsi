@@ -55,7 +55,7 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 				flipX -= _skin->depthButton.bitmap.width;
 			}
 
-			_screenTitle = new SkinnedScreenTitle(_title, _skin);
+			_screenTitle = new SkinnedScreenTitle(this, _skin);
 			_screenTitle->setEventHandler(this);
 			insertGadget(_screenTitle);
 

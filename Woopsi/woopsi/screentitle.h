@@ -6,6 +6,8 @@
 
 namespace WoopsiUI {
 
+	class Screen;
+
 	/**
 	 * Title bar for the AmigaScreen class.  Mimics the appearance of
 	 * the title bar from Amiga Workbench 3.x.  Shows the screen's name
@@ -19,10 +21,10 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 * @param height The height of the title bar.
-		 * @param text The text to display in the title bar.
+		 * @param screen Pointer to the screen that contains this gadget.
 		 * @param font The font to use for the title bar.
 		 */
-		ScreenTitle(u16 height, const char* text, FontBase* font = NULL);
+		ScreenTitle(u16 height, Screen* screen, FontBase* font = NULL);
 
 		/**
 		 * Override the Gadget::draw() method.
@@ -50,7 +52,7 @@ namespace WoopsiUI {
 		virtual bool blur();
 
 	protected:
-		const char* _text;							/**< Text to display in the title bar */
+		Screen* _screen;							/**< Pointer to the containing screen */
 
 		/**
 		 * Destructor.

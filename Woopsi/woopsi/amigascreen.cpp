@@ -37,7 +37,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 			_flags.borderless = true;
 		} else {
 			// Add borders
-			_screenTitle = new ScreenTitle(_titleHeight, _title, _font);
+			_screenTitle = new ScreenTitle(_titleHeight, this, _font);
 			_screenTitle->setEventHandler(this);
 			insertGadget(_screenTitle);
 

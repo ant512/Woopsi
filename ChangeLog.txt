@@ -19,6 +19,8 @@ Change Log
 	 - Escape key to quit in SDL mode (Quirky).
      - WindowBorderTop and SkinnedWindowBorderTop no longer have pointers to
        freed memory if window title changes (Quirky).
+     - ScreenTitle and SkinnedScreenTitle no longer have pointers to freed
+       memory if screen title changes (Quirky).
 
   V0.37 (20090112)
   

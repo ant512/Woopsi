@@ -51,7 +51,7 @@ namespace WoopsiUI {
 		virtual bool blur();
 
 	protected:
-		Window* _window;
+		Window* _window;							/**< Pointer to the containing window */
 
 		/**
 		 * Destructor.

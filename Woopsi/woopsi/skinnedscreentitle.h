@@ -9,10 +9,12 @@ using namespace WoopsiUI;
 
 namespace WoopsiUI {
 
+	class Screen;
+
 	class SkinnedScreenTitle : public ScreenTitle {
 
 	public:
-		SkinnedScreenTitle(const char* text, const ScreenSkin* skin);
+		SkinnedScreenTitle(Screen* screen, const ScreenSkin* skin);
 
 		/**
 		 * Override the Gadget::draw() method.
