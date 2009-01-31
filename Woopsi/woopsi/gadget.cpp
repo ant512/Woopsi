@@ -1078,6 +1078,9 @@ void Gadget::eraseGadget(Gadget* gadget) {
 	// Locate the gadget
 	s32 gadgetIndex = getGadgetIndex(gadget);
 
+	// Ensure rect cache is up to date
+	gadget->cacheVisibleRects();
+
 	// Order all lower gadgets to redraw themselves based on the erased gadget's
 	// visible rect cache
 	for (s32 i = gadgetIndex - 1; i > -1; i--) {

@@ -21,6 +21,8 @@ Change Log
        freed memory if window title changes (Quirky).
      - ScreenTitle and SkinnedScreenTitle no longer have pointers to freed
        memory if screen title changes (Quirky).
+     - Flipping window depth with depth gadget no longer results in corrupted
+       window contents.
 
   V0.37 (20090112)
   

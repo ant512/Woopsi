@@ -310,6 +310,7 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 		if (gadgetDest != 0) {
 			
 			// Erase the gadget from the screen
+			//gadget->cacheVisibleRects();
 			eraseGadget(gadget);
 
 			// Swap
