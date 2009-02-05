@@ -1835,6 +1835,11 @@ const s32 Gadget::getGadgetIndex(const Gadget* gadget) const {
 	return -1;
 }
 
+const Gadget* Gadget::getChild(const u32 index) const {
+	if (index < (u32)_gadgets.size()) return _gadgets[index];
+	return NULL;
+}
+
 bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 
 	// Locate gadget in the stack

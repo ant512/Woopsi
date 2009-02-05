@@ -913,6 +913,26 @@ namespace WoopsiUI {
 		 */
 		inline void stopModal() { _flags.modal = false; };
 
+		/**
+		 * Get the index of the specified child gadget.
+		 * @param gadget The gadget to get the index of.
+		 * @return The index of the gadget.  -1 if the gadget is not found.
+		 */
+		const s32 getGadgetIndex(const Gadget* gadget) const;
+
+		/**
+		 * Get the child gadget at the specified index.
+		 * @param u32 index Index of the child to retrieve.
+		 * @return Pointer to the child at the specified index.
+		 */
+		const Gadget* getChild(u32 index) const;
+
+		/**
+		 * Get the quantity of child gadgets.
+		 * @return The number of child gadgets belonging to this gadget.
+		 */
+		const u32 getChildCount() const { return _gadgets.size(); };
+
 	protected:
 		s16 _x;									/**< X co-ordinate of the gadget, relative to parent */
 		s16 _y;									/**< Y co-ordinate of the gadget, relative to parent */
@@ -1015,13 +1035,6 @@ namespace WoopsiUI {
 		 * Draw all visible regions of this gadget's children.
 		 */
 		void drawChildren();
-
-		/**
-		 * Get the index of the specified child gadget.
-		 * @param gadget The gadget to get the index of.
-		 * @return The index of the gadget.  -1 if the gadget is not found.
-		 */
-		const s32 getGadgetIndex(const Gadget* gadget) const;
 
 		/**
 		 * Erase and remove the supplied child gadget from this gadget and

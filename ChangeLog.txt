@@ -23,6 +23,10 @@ Change Log
        memory if screen title changes (Quirky).
      - Flipping window depth with depth gadget no longer results in corrupted
        window contents.
+     - Fixed const-correctness of various Text class methods.
+
+  - New Features:
+     - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).
 
   V0.37 (20090112)
   

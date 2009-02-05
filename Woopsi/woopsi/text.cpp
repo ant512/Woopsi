@@ -8,12 +8,12 @@ Text::Text(FontBase* font, const char* text, u16 width) : WoopsiString(text) {
 	_lineSpacing = 1;
 }
 
-FontBase* Text::getFont() {
+FontBase* Text::getFont() const {
 	return _font;
 }
 
 // Calculate the length of an individual line
-u8 Text::getLineLength(s32 lineNumber) {
+const u8 Text::getLineLength(const s32 lineNumber) const {
 	if (lineNumber < getLineCount() - 1) {
 		return _linePositions[lineNumber + 1] - _linePositions[lineNumber];
 	}
@@ -22,7 +22,7 @@ u8 Text::getLineLength(s32 lineNumber) {
 }
 
 // Calculate the length of an individual line sans right-hand spaces
-u8 Text::getLineTrimmedLength(s32 lineNumber) {
+const u8 Text::getLineTrimmedLength(const s32 lineNumber) const {
 	s16 length = getLineLength(lineNumber);
 
 	// Strip any trailing spaces, etc
@@ -33,11 +33,11 @@ u8 Text::getLineTrimmedLength(s32 lineNumber) {
 	return length;
 }
 
-u8 Text::getLinePixelLength(s32 lineNumber) {
+const u8 Text::getLinePixelLength(const s32 lineNumber) const {
 	return _font->getStringWidth(getLinePointer(lineNumber), getLineLength(lineNumber));
 }
 
-u8 Text::getLineTrimmedPixelLength(s32 lineNumber) {
+const u8 Text::getLineTrimmedPixelLength(const s32 lineNumber) const {
 	return _font->getStringWidth(getLinePointer(lineNumber), getLineTrimmedLength(lineNumber));
 }
 
@@ -259,7 +259,7 @@ void Text::stripTopLines(const s32 lines) {
 	wrap();
 }
 
-u32 Text::getLineContainingCharIndex(u32 index) {
+const u32 Text::getLineContainingCharIndex(const u32 index) const {
 	
 	// Early exit if the index is past the end of the current line position data
 	if (_linePositions.size() == 0) return 0;

@@ -100,7 +100,7 @@ namespace WoopsiUI {
 		 * @param lineNumber The line number to check.
 		 * @return The number of characters in the line.
 		 */
-		u8 getLineLength(s32 lineNumber);
+		const u8 getLineLength(const s32 lineNumber) const;
 
 		/**
 		 * Get the number of characters in the specified line number,
@@ -108,14 +108,14 @@ namespace WoopsiUI {
 		 * @param lineNumber The line number to check.
 		 * @return The number of characters in the line.
 		 */
-		u8 getLineTrimmedLength(s32 lineNumber);
+		const u8 getLineTrimmedLength(const s32 lineNumber) const;
 
 		/**
 		 * Get the width in pixels of the specified line number.
 		 * @param lineNumber The line number to check.
 		 * @return The pixel width of the line.
 		 */
-		u8 getLinePixelLength(s32 lineNumber);
+		const u8 getLinePixelLength(const s32 lineNumber) const;
 
 		/**
 		 * Get the width in pixels of the specified line number,
@@ -123,7 +123,7 @@ namespace WoopsiUI {
 		 * @param lineNumber The line number to check.
 		 * @return The pixel width of the line.
 		 */
-		u8 getLineTrimmedPixelLength(s32 lineNumber);
+		const u8 getLineTrimmedPixelLength(const s32 lineNumber) const;
 
 		/**
 		 * Get a pointer to the specified line.
@@ -167,7 +167,7 @@ namespace WoopsiUI {
 		 * Get a pointer to the Text object's font.
 		 * @return Pointer to the font.
 		 */
-		FontBase* getFont();
+		FontBase* getFont() const;
 
 		/**
 		 * Removes lines of text from the start of the text buffer.
@@ -194,7 +194,7 @@ namespace WoopsiUI {
 		 * @return The number of the line of wrapped text that contains the
 		 * specified index.
 		 */
-		u32 getLineContainingCharIndex(u32 index);
+		const u32 getLineContainingCharIndex(const u32 index) const;
 
 		/**
 		 * Gets the index within the char array that represents the start of the line of
@@ -202,7 +202,7 @@ namespace WoopsiUI {
 		 * @param line The line number to locate within the char array.
 		 * @return The index within the char array of the start of the supplied line.
 		 */
-		u32 getLineStartIndex(u32 line) { return _linePositions[line]; };
+		const u32 getLineStartIndex(const u32 line) const { return _linePositions[line]; };
 
 	private:
 		/**
