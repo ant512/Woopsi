@@ -2,6 +2,7 @@
 #define _LIST_DATA_H_
 
 #include "woopsiarray.h"
+#include "listdataeventhandler.h"
 
 namespace WoopsiUI {
 
@@ -143,10 +144,25 @@ namespace WoopsiUI {
 		 */
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _sortInsertedItems = sortInsertedItems; };
 
+		/**
+		 * Add an event handler.
+		 * @param eventHandler The event handler to add.
+		 */
+		inline void addEventHandler(ListDataEventHandler* eventHandler) {
+			_handlers.push_back(eventHandler);
+		}
+
+		/**
+		 * Remove an event handler.
+		 * @param eventHandler The event handler to remove.
+		 */
+		void removeEventHandler(ListDataEventHandler* eventHandler);
+
 	protected:
-		WoopsiArray<ListDataItem*> _items;			/**< Collection of list data items. */
-		bool _allowMultipleSelections;				/**< If true, multiple options can be selected. */
-		bool _sortInsertedItems;					/**< Automatically sorts items on insertion if true. */
+		WoopsiArray<ListDataItem*> _items;				/**< Collection of list data items. */
+		WoopsiArray<ListDataEventHandler*> _handlers;	/**< Collection of event handlers. */
+		bool _allowMultipleSelections;					/**< If true, multiple options can be selected. */
+		bool _sortInsertedItems;						/**< Automatically sorts items on insertion if true. */
 
 		/**
 		 * Quick sort the items alphabetically by the text of the items.
@@ -169,6 +185,16 @@ namespace WoopsiUI {
 		 * @return The index that the item should be imserted into at.
 		 */
 		const s32 getInsertionIndex(const char* text) const;
+
+		/**
+		 * Raise a data changed event.
+		 */
+		void raiseDataChangedEvent();
+
+		/**
+		 * Raise a selection changed event.
+		 */
+		void raiseSelectionChangedEvent();
 	};
 }
 

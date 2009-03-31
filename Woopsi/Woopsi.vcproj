@@ -460,6 +460,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\listdataeventhandler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\monofont.h"
 				>
 			</File>

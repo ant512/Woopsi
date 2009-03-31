@@ -40,6 +40,8 @@ void ListData::addItem(const char* text, const u32 value, const u16 normalTextCo
 		// Append
 		_items.push_back(newItem);
 	}
+
+	raiseDataChangedEvent();
 }
 
 void ListData::removeItem(const s32 index) {
@@ -53,6 +55,8 @@ void ListData::removeItem(const s32 index) {
 
 		// Erase the option from the list
 		_items.erase(index);
+
+		raiseDataChangedEvent();
 	}
 }
 
@@ -103,12 +107,16 @@ void ListData::setItemSelected(const s32 index, bool selected) {
 	if ((index > -1) && (index < _items.size())) {
 		_items[index]->selected = selected;
 	}
+
+	raiseSelectionChangedEvent();
 }
 
 void ListData::deselectAllItems() {
 	for (s32 i = 0; i < _items.size(); i++) {
 		_items[i]->selected = false;
 	}
+
+	raiseSelectionChangedEvent();
 }
 
 void ListData::selectAllItems() {
@@ -116,6 +124,8 @@ void ListData::selectAllItems() {
 		for (s32 i = 0; i < _items.size(); i++) {
 			_items[i]->selected = true;
 		}
+
+		raiseSelectionChangedEvent();
 	}
 }
 
@@ -151,6 +161,8 @@ void ListData::swapItems(const s32 index1, const s32 index2) {
 	ListDataItem* tmp = _items[index1];
 	_items[index1] = _items[index2];
 	_items[index2] = tmp;
+
+	raiseDataChangedEvent();
 }
 
 void ListData::removeAllItems() {
@@ -162,6 +174,8 @@ void ListData::removeAllItems() {
 	}
 	
 	_items.clear();
+
+	raiseDataChangedEvent();
 }
 
 const s32 ListData::getInsertionIndex(const char* text) const {
@@ -174,4 +188,25 @@ const s32 ListData::getInsertionIndex(const char* text) const {
 	}
 
 	return i;
+}
+
+void ListData::removeEventHandler(ListDataEventHandler* eventHandler) {
+	for (int i = 0; i < _handlers.size(); ++i) {
+		if (_handlers.at(i) == eventHandler) {
+			_handlers.erase(i);
+			return;
+		}
+	}
+}
+
+void ListData::raiseDataChangedEvent() {
+	for (int i = 0; i < _handlers.size(); ++i) {
+		_handlers.at(i)->handleDataChangedEvent(this);
+	}
+}
+
+void ListData::raiseSelectionChangedEvent() {
+	for (int i = 0; i < _handlers.size(); ++i) {
+		_handlers.at(i)->handleSelectionChangedEvent(this);
+	}
 }
