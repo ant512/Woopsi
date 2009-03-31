@@ -24,6 +24,7 @@ Change Log
      - Flipping window depth with depth gadget no longer results in corrupted
        window contents.
      - Fixed const-correctness of various Text class methods.
+     - SDL framebuffers initialised to black.
 
   - New Features:
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).

@@ -40,7 +40,7 @@ void initWoopsiGfxMode() {
 		exit(1);
 	}
 
-	/* Set 320x480 video mode */
+	// Set video mode
 	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT * 2, video_bpp, videoflags);
 	if (screen == NULL) {
 		fprintf(stderr, "Couldn't set %dx%dx%d video mode: %s\n", SCREEN_WIDTH, SCREEN_HEIGHT, video_bpp, SDL_GetError());
@@ -48,8 +48,15 @@ void initWoopsiGfxMode() {
 		exit(2);
 	}
 
+	// Create framebuffer simulator arrays
 	DrawBg[0] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
 	DrawBg[1] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
+
+	// Initialise both arrays
+	for (u32 i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
+		DrawBg[0][i] = 0;
+		DrawBg[1][i] = 0;
+	}
 }
 
 void woopsiVblFunc() {
