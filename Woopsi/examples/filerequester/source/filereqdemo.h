@@ -2,7 +2,7 @@
 #define _FILE_REQ_DEMO_H_
 
 #include "woopsi.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "textbox.h"
 
 using namespace WoopsiUI;

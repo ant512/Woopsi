@@ -2,7 +2,7 @@
 #define _CALENDAR_TEST_H_
 
 #include "woopsi.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "calendar.h"
 
 using namespace WoopsiUI;

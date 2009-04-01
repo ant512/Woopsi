@@ -2,7 +2,7 @@
 #define _KEY_TEST_H_
 
 #include "woopsi.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "woopsikeyboard.h"
 #include "multilinetextbox.h"
 

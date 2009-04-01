@@ -2,7 +2,7 @@
 #define _DIMMED_SCREEN_TEST_H_
 
 #include "woopsi.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "dimmedscreen.h"
 
 using namespace WoopsiUI;

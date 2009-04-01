@@ -2,7 +2,7 @@
 #define _TOOLBOX_H_
 
 #include "window.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "button.h"
 #include "canvas.h"
 

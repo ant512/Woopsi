@@ -4,7 +4,7 @@
 #include <nds.h>
 #include "window.h"
 #include "skin.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 
 namespace WoopsiUI {
 

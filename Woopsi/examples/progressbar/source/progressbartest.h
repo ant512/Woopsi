@@ -2,7 +2,7 @@
 #define _PROGRESS_BAR_TEST_H_
 
 #include "woopsi.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "progressbar.h"
 
 using namespace WoopsiUI;

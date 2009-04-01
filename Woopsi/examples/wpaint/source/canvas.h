@@ -2,7 +2,7 @@
 #define _CANVAS_H_
 
 #include "window.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "superbitmap.h"
 
 using namespace WoopsiUI;
