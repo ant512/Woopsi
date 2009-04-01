@@ -111,7 +111,7 @@ void SkinnedWindow::createBorder() {
 	if (_windowFlags.showCloseButton) {
 		u16 closeY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->closeButton.bitmap.height / 2);
 		_closeButton = new SkinnedWindowCloseButton(_skin->closeButton.offsetX, closeY, _skin);
-		_closeButton->setEventHandler(this);
+		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
 	}
 
@@ -119,7 +119,7 @@ void SkinnedWindow::createBorder() {
 	if (_windowFlags.showDepthButton) {
 		u16 depthY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->depthButton.bitmap.height / 2);
 		_depthButton = new SkinnedWindowDepthButton(_width - _skin->depthButton.bitmap.width - _skin->depthButton.offsetX, depthY, _skin);
-		_depthButton->setEventHandler(this);
+		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 	}
 
@@ -128,10 +128,10 @@ void SkinnedWindow::createBorder() {
 	_windowBorderRight = new SkinnedWindowBorderRight(_width - _skin->rightBorder.bitmap.width, _skin->topCentreBorder.bitmap.height, _height - _skin->topCentreBorder.bitmap.height - _skin->bottomCentreBorder.bitmap.height, _skin);
 	_windowBorderBottom = new SkinnedWindowBorderBottom(0, _height - _skin->bottomCentreBorder.bitmap.height, _width, _skin);
 
-	_windowBorderTop->setEventHandler(this);
-	_windowBorderLeft->setEventHandler(this);
-	_windowBorderRight->setEventHandler(this);
-	_windowBorderBottom->setEventHandler(this);
+	_windowBorderTop->addGadgetEventHandler(this);
+	_windowBorderLeft->addGadgetEventHandler(this);
+	_windowBorderRight->addGadgetEventHandler(this);
+	_windowBorderBottom->addGadgetEventHandler(this);
 
 	insertGadget(_windowBorderBottom);
 	insertGadget(_windowBorderRight);
@@ -286,87 +286,75 @@ void SkinnedWindow::getClientRect(Rect& rect) const {
 	}
 }
 
-bool SkinnedWindow::handleEvent(const EventArgs& e) {
+void SkinnedWindow::handleReleaseEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget != NULL) {
-		switch (e.type) {
-			case EVENT_RELEASE:
+	if (e.getSource() != NULL) {
 
-				if (e.gadget == _depthButton) {
+		if (e.getSource() == _depthButton) {
 
-					// Swap depths
-					swapDepth();
-					return true;
-				} else if (e.gadget == _closeButton) {
+			// Swap depths
+			swapDepth();
+		} else if (e.getSource() == _closeButton) {
 
-					// Work out which close type to use
-					switch (getCloseType()) {
-						case CLOSE_TYPE_CLOSE:
-							// Close the window
-							close();
-							break;
-						case CLOSE_TYPE_SHELVE:
-							// Shelve the window
-							shelve();
-							break;
-						case CLOSE_TYPE_HIDE:
-							// Hide the window
-							hide();
-							break;
-					}
+			// Work out which close type to use
+			switch (getCloseType()) {
+				case CLOSE_TYPE_CLOSE:
+					// Close the window
+					close();
+					break;
+				case CLOSE_TYPE_SHELVE:
+					// Shelve the window
+					shelve();
+					break;
+				case CLOSE_TYPE_HIDE:
+					// Hide the window
+					hide();
+					break;
+			}
+		} else if (e.getSource() == _windowBorderTop) {
 
-					return true;
-				} else if (e.gadget == _windowBorderTop) {
-
-					// Release the window
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			case EVENT_CLICK:
-
-				if (e.gadget == _windowBorderTop) {
-		
-					// Top border - focus and drag
-					focus();
-					setDragging(e.eventX, e.eventY);
-					return true;
-
-				} else if ((e.gadget == _windowBorderBottom) ||
-					(e.gadget == _windowBorderLeft) ||
-					(e.gadget == _windowBorderRight) ||
-					(e.gadget == _depthButton) ||
-					(e.gadget == _closeButton)) {
-
-					// Other borders - focus only
-					focus();
-					return true;
-				}
-				break;
-
-			case EVENT_DRAG:
-
-				if (e.gadget == _windowBorderTop) {
-					drag(e.eventX, e.eventY, e.eventVX, e.eventVY);
-					return true;
-				}
-				break;
-
-			case EVENT_RELEASE_OUTSIDE:
-
-				if (e.gadget == _windowBorderTop) {
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			default:
-				break;
+			// Release the window
+			release(e.getX(), e.getY());
 		}
 	}
+}
 
-	return false;
+void SkinnedWindow::handleClickEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() != NULL) {
+
+		if (e.getSource() == _windowBorderTop) {
+
+			// Top border - focus and drag
+			focus();
+			setDragging(e.getX(), e.getY());
+
+		} else if ((e.getSource() == _windowBorderBottom) ||
+			(e.getSource() == _windowBorderLeft) ||
+			(e.getSource() == _windowBorderRight) ||
+			(e.getSource() == _depthButton) ||
+			(e.getSource() == _closeButton)) {
+
+			// Other borders - focus only
+			focus();
+		}
+	}
+}
+
+void SkinnedWindow::handleDragEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _windowBorderTop) {
+			drag(e.getX(), e.getY(), e.getVX(), e.getVY());
+		}
+	}
+}
+
+void SkinnedWindow::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _windowBorderTop) {
+			release(e.getX(), e.getY());
+		}
+	}
 }
 
 void SkinnedWindow::showCloseButton() {
@@ -376,7 +364,7 @@ void SkinnedWindow::showCloseButton() {
 		// Recreate close button
 		u16 closeY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->closeButton.bitmap.height / 2);
 		_closeButton = new SkinnedWindowCloseButton(_skin->closeButton.offsetX, closeY, _skin);
-		_closeButton->setEventHandler(this);
+		_closeButton->addGadgetEventHandler(this);
 		addGadget(_closeButton);
 
 		_windowBorderTop->draw();
@@ -391,7 +379,7 @@ void SkinnedWindow::showDepthButton() {
 		// Recreate depth button
 		u16 depthY = (_skin->topCentreBorder.bitmap.height / 2) - (_skin->depthButton.bitmap.height / 2);
 		_depthButton = new SkinnedWindowDepthButton(_width - _skin->depthButton.bitmap.width - _skin->depthButton.offsetX, depthY, _skin);
-		_depthButton->setEventHandler(this);
+		_depthButton->addGadgetEventHandler(this);
 		addGadget(_depthButton);
 
 		_depthButton->draw();

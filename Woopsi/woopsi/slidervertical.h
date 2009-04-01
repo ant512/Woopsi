@@ -3,7 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 
 namespace WoopsiUI {
 
@@ -14,7 +14,7 @@ namespace WoopsiUI {
 	 * down the "gutter".  Essentially a scrollbar, but more
 	 * generic.
 	 */
-	class SliderVertical : public Gadget, public EventHandler {
+	class SliderVertical : public Gadget, public GadgetEventHandler {
 
 	public:
 
@@ -114,9 +114,14 @@ namespace WoopsiUI {
 		/**
 		 * Process events fired by the grip.
 		 * @param e The event details.
-		 * @return True if the event was processed.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleDragEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Process events fired by the grip.
+		 * @param e The event details.
+		 */
+		virtual void handleMoveEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Resize the slider to the new dimensions.

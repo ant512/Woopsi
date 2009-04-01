@@ -42,7 +42,7 @@ void FileReqDemo::startup() {
 		// Create file requester at the root of the file system
 		FileRequester* req = new FileRequester(10, 10, 150, 150, "Files", "/", GADGET_DRAGGABLE | GADGET_DOUBLE_CLICKABLE);
 		req->setRefcon(1);
-		req->setEventHandler(this);
+		req->addGadgetEventHandler(this);
 		screen->addGadget(req);
 		req->draw();
 	} else {
@@ -58,24 +58,16 @@ void FileReqDemo::shutdown() {
 	Woopsi::shutdown();
 }
 
-bool FileReqDemo::handleEvent(const EventArgs& e) {
+void FileReqDemo::handleValueChangeEvent(const GadgetEventArgs& e) {
 
 	// Did a gadget fire this event?
-	if (e.gadget != NULL) {
+	if (e.getSource() != NULL) {
 	
 		// Is the gadget the file requester?
-		if (e.gadget->getRefcon() == 1) {
+		if (e.getSource()->getRefcon() == 1) {
 		
-			// Did an option get chosen?
-			if (e.type == EVENT_VALUE_CHANGE) {
-				
-				// Update the textbox with the name of the requested file
-				_textbox->setText(((FileRequester*)e.gadget)->getSelectedOption()->text);
-				
-				return true;
-			}
+			// Update the textbox with the name of the requested file
+			_textbox->setText(((FileRequester*)e.getSource())->getSelectedOption()->text);
 		}
 	}
-	
-	return false;
 }

@@ -22,7 +22,7 @@ void CalendarTest::startup() {
 	
 	// Add calendar
 	_calendar = new Calendar(rect.x, rect.y, rect.width, rect.height, 26, 10, 2008, 0);
-	_calendar->setEventHandler(this);
+	_calendar->addGadgetEventHandler(this);
 	window->addGadget(_calendar);
 
 	// Ensure Woopsi can draw itself
@@ -38,17 +38,9 @@ void CalendarTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-bool CalendarTest::handleEvent(const EventArgs& e) {
+void CalendarTest::handleActionEvent(const GadgetEventArgs& e) {
 
-	// Short version of the event handler - since we know that only one gadget can
-	// possibly call this, we can just check for the action event without bothering with the
-	// other checks.
-	if (e.type == EVENT_ACTION) {
-	
-		Debug::printf("%d/%d/%d", _calendar->getDay(), _calendar->getMonth(), _calendar->getYear());
-		
-		return true;
-	}
-	
-	return false;
+	// Short version of the event handler since we know that only one gadget can
+	// possibly call this
+	Debug::printf("%d/%d/%d", _calendar->getDay(), _calendar->getMonth(), _calendar->getYear());
 }

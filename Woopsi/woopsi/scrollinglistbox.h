@@ -3,7 +3,7 @@
 
 #include "gadget.h"
 #include "listbox.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "listdata.h"
 
 namespace WoopsiUI {
@@ -15,7 +15,7 @@ namespace WoopsiUI {
 	 * methods are more or less identical to the methods exposed by the ListBox
 	 * to ensure that the two are interchangeable.
 	 */
-	class ScrollingListBox : public Gadget, public EventHandler {
+	class ScrollingListBox : public Gadget, public GadgetEventHandler {
 	public:
 
 		/**
@@ -179,8 +179,21 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
+		 */
+		virtual void handleScrollEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
+		 */
+		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Resize the textbox to the new dimensions.

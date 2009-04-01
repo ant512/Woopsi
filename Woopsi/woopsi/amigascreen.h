@@ -2,7 +2,7 @@
 #define _AMIGA_SCREEN_H_
 
 #include <nds.h>
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "screen.h"
 
 namespace WoopsiUI {
@@ -20,7 +20,7 @@ namespace WoopsiUI {
 	 * All gadgets should be a child/grandchild/etc of a screen except for other screens
 	 * and the Woopsi instance.
 	 */
-	class AmigaScreen : public Screen, public EventHandler {
+	class AmigaScreen : public Screen, public GadgetEventHandler {
 
 	public:
 
@@ -54,9 +54,26 @@ namespace WoopsiUI {
 		/**
 		 * Handle events fired by decoration gadgets.
 		 * @param e Event arguments to process.
-		 * @return True if the event was processed.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle events fired by decoration gadgets.
+		 * @param e Event arguments to process.
+		 */
+		virtual void handleDragEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle events fired by decoration gadgets.
+		 * @param e Event arguments to process.
+		 */
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle events fired by decoration gadgets.
+		 * @param e Event arguments to process.
+		 */
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Shows the flip button if it is hidden.  Has no effect

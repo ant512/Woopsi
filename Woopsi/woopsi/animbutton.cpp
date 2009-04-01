@@ -18,7 +18,7 @@ AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY
 
 	_timer = new WoopsiTimer(1, true);
 	addGadget(_timer);
-	_timer->setEventHandler(this);
+	_timer->addGadgetEventHandler(this);
 	_timer->start();
 }
 
@@ -55,33 +55,27 @@ Animation* const AnimButton::getClickedAnimation() {
 	return _animClicked;
 }
 
-bool AnimButton::handleEvent(const EventArgs& e) {
+void AnimButton::handleActionEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget != NULL) {
-		if (e.gadget == _timer) {
-			if (e.type == EVENT_ACTION) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _timer) {
 
-				// Ensure the animations are running
-				if (!_initialised) {
-					_animNormal->play();
-					_initialised = true;
-				}
-
-				// Run the animations
-				if (_flags.clicked) {
-					_animClicked->run();
-				} else {
-					_animNormal->run();
-				}
-
-				Gadget::draw();
-
-				return true;
+			// Ensure the animations are running
+			if (!_initialised) {
+				_animNormal->play();
+				_initialised = true;
 			}
+
+			// Run the animations
+			if (_flags.clicked) {
+				_animClicked->run();
+			} else {
+				_animNormal->run();
+			}
+
+			Gadget::draw();
 		}
 	}
-
-	return false;
 }
 
 bool AnimButton::click(s16 x, s16 y) {

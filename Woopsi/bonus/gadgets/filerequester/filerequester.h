@@ -50,8 +50,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+	
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
+		 */
+		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Add a new option to the gadget using default colours.  Does not redraw the gadget.

@@ -2,7 +2,7 @@
 #define _CONTEXT_MENU_H_
 
 #include "gadget.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 
 namespace WoopsiUI {
 
@@ -14,7 +14,7 @@ namespace WoopsiUI {
 	 * context-aware menu that opens when the user holds down a modifier
 	 * key when tapping a gadget.
 	 */
-	class ContextMenu : public Gadget, public EventHandler {
+	class ContextMenu : public Gadget, public GadgetEventHandler {
 	public:
 
 		/**
@@ -27,7 +27,7 @@ namespace WoopsiUI {
 		 * Handles events raised by the gadget's sub-gadgets.
 		 * @param e The event arguments.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Add a new menu item to the gadget.

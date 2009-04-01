@@ -148,21 +148,21 @@ namespace WoopsiUI {
 		 * Add an event handler.
 		 * @param eventHandler The event handler to add.
 		 */
-		inline void addEventHandler(ListDataEventHandler* eventHandler) {
-			_handlers.push_back(eventHandler);
+		inline void addListDataEventHandler(ListDataEventHandler* eventHandler) {
+			_listDataEventhandlers.push_back(eventHandler);
 		}
 
 		/**
 		 * Remove an event handler.
 		 * @param eventHandler The event handler to remove.
 		 */
-		void removeEventHandler(ListDataEventHandler* eventHandler);
+		void removeListDataEventHandler(ListDataEventHandler* eventHandler);
 
 	protected:
-		WoopsiArray<ListDataItem*> _items;				/**< Collection of list data items. */
-		WoopsiArray<ListDataEventHandler*> _handlers;	/**< Collection of event handlers. */
-		bool _allowMultipleSelections;					/**< If true, multiple options can be selected. */
-		bool _sortInsertedItems;						/**< Automatically sorts items on insertion if true. */
+		WoopsiArray<ListDataItem*> _items;							/**< Collection of list data items. */
+		WoopsiArray<ListDataEventHandler*> _listDataEventhandlers;	/**< Collection of event handlers. */
+		bool _allowMultipleSelections;								/**< If true, multiple options can be selected. */
+		bool _sortInsertedItems;									/**< Automatically sorts items on insertion if true. */
 
 		/**
 		 * Quick sort the items alphabetically by the text of the items.

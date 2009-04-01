@@ -37,61 +37,51 @@ void Calendar::draw(Rect clipRect) {
 	delete port;
 }
 
-bool Calendar::handleEvent(const EventArgs& e) {
+void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget != NULL) {
-		if (e.type == EVENT_RELEASE) {
+	if (e.getSource() != NULL) {
+
+		if (e.getSource() == _leftArrow) {
 
 			// Handle left arrow release
-			if (e.gadget == _leftArrow) {
-				_visibleDate->addMonths(-1);
-				populateGUI();
-				return true;
-			}
+			_visibleDate->addMonths(-1);
+			populateGUI();
+
+		} else if (e.getSource() == _rightArrow) {
 
 			// Handle right arrow release
-			if (e.gadget == _rightArrow) {
-				_visibleDate->addMonths(1);
-				populateGUI();
-				return true;
-			}
+			_visibleDate->addMonths(1);
+			populateGUI();
+
+		} else if (e.getSource()->getRefcon() > 0) {
 
 			// Handle day button release
-			if (e.gadget->getRefcon() > 0) {
 
-				bool output = false;
+			// Calculate the new date
+			u8 day = atoi(((Button*)e.getSource())->getText());
+			Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
-				// Calculate the new date
-				u8 day = atoi(((Button*)e.gadget)->getText());
-				Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
+			// Prevent changes if new date is same as old
+			if (_date->getDay() != newDate->getDay()) {
 
-				// Prevent changes if new date is same as old
-				if (_date->getDay() != newDate->getDay()) {
+				_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
-					_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
-
-					// Select the new gadget and deselect the old
-					e.gadget->setOutlineType(OUTLINE_IN);
-					if (_selectedDayButton != NULL) {
-						_selectedDayButton->setOutlineType(OUTLINE_CLICK_DEPENDENT);
-						_selectedDayButton->draw();
-					}
-
-					_selectedDayButton = (Button*)e.gadget;
-
-					// Raise an action event
-					raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
-
-					output = true;
+				// Select the new gadget and deselect the old
+				e.getSource()->setOutlineType(OUTLINE_IN);
+				if (_selectedDayButton != NULL) {
+					_selectedDayButton->setOutlineType(OUTLINE_CLICK_DEPENDENT);
+					_selectedDayButton->draw();
 				}
 
-				delete newDate;
-				return output;
+				_selectedDayButton = (Button*)e.getSource();
+
+				// Raise an action event
+				raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
 			}
+
+			delete newDate;
 		}
 	}
-
-	return false;
 }
 
 void Calendar::setDate(u8 day, u8 month, u16 year) {
@@ -227,11 +217,11 @@ void Calendar::buildGUI() {
 
 	// Add arrows and month label
 	_leftArrow = new Button(rect.x, rect.y, buttonWidth, buttonHeight, GLYPH_ARROW_LEFT);
-	_leftArrow->setEventHandler(this);
+	_leftArrow->addGadgetEventHandler(this);
 	addGadget(_leftArrow);
 
 	_rightArrow = new Button((rect.width - buttonWidth) + 1, rect.y, buttonWidth, buttonHeight, GLYPH_ARROW_RIGHT);
-	_rightArrow->setEventHandler(this);
+	_rightArrow->addGadgetEventHandler(this);
 	addGadget(_rightArrow);
 
 	// Month name
@@ -277,7 +267,7 @@ void Calendar::buildGUI() {
 	// Create all boxes for this month
 	while (allocatedDays < maxDays) {
 		button = new Button(rect.x + ((allocatedDays % CALENDAR_COLS) * buttonWidth), gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidth, buttonHeight, "");
-		button->setEventHandler(this);
+		button->addGadgetEventHandler(this);
 		button->setRefcon(allocatedDays + 1);
 
 		addGadget(button);

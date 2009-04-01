@@ -100,7 +100,7 @@ void AmigaWindow::createBorder() {
 	// Add close button
 	if (_windowFlags.showCloseButton) {
 		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _font);
-		_closeButton->setEventHandler(this);
+		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
 
 		topBorderWidth -= WINDOW_CLOSE_BUTTON_WIDTH;
@@ -110,7 +110,7 @@ void AmigaWindow::createBorder() {
 	// Add depth button
 	if (_windowFlags.showDepthButton) {
 		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _font);
-		_depthButton->setEventHandler(this);
+		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 
 		topBorderWidth -= WINDOW_DEPTH_BUTTON_WIDTH;
@@ -122,10 +122,10 @@ void AmigaWindow::createBorder() {
 	_windowBorderRight = new WindowBorderSide(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderBottom = new WindowBorderBottom(0, _height - WINDOW_BORDER_SIZE, _width, WINDOW_BORDER_SIZE, WINDOW_BORDER_SIZE);
 
-	_windowBorderTop->setEventHandler(this);
-	_windowBorderLeft->setEventHandler(this);
-	_windowBorderRight->setEventHandler(this);
-	_windowBorderBottom->setEventHandler(this);
+	_windowBorderTop->addGadgetEventHandler(this);
+	_windowBorderLeft->addGadgetEventHandler(this);
+	_windowBorderRight->addGadgetEventHandler(this);
+	_windowBorderBottom->addGadgetEventHandler(this);
 
 	insertGadget(_windowBorderBottom);
 	insertGadget(_windowBorderRight);
@@ -291,87 +291,75 @@ void AmigaWindow::getClientRect(Rect& rect) const {
 	}
 }
 
-bool AmigaWindow::handleEvent(const EventArgs& e) {
+void AmigaWindow::handleReleaseEvent(const GadgetEventArgs& e) {
 	
-	if (e.gadget != NULL) {
-		switch (e.type) {
-			case EVENT_RELEASE:
+	if (e.getSource() != NULL) {
 
-				if (e.gadget == _depthButton) {
+		if (e.getSource() == _depthButton) {
 
-					// Swap depths
-					swapDepth();
-					return true;
-				} else if (e.gadget == _closeButton) {
+			// Swap depths
+			swapDepth();
+		} else if (e.getSource() == _closeButton) {
 
-					// Work out which close type to use
-					switch (getCloseType()) {
-						case CLOSE_TYPE_CLOSE:
-							// Close the window
-							close();
-							break;
-						case CLOSE_TYPE_SHELVE:
-							// Shelve the window
-							shelve();
-							break;
-						case CLOSE_TYPE_HIDE:
-							// Hide the window
-							hide();
-							break;
-					}
+			// Work out which close type to use
+			switch (getCloseType()) {
+				case CLOSE_TYPE_CLOSE:
+					// Close the window
+					close();
+					break;
+				case CLOSE_TYPE_SHELVE:
+					// Shelve the window
+					shelve();
+					break;
+				case CLOSE_TYPE_HIDE:
+					// Hide the window
+					hide();
+					break;
+			}
+		} else if (e.getSource() == _windowBorderTop) {
 
-					return true;
-				} else if (e.gadget == _windowBorderTop) {
-
-					// Release the window
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			case EVENT_CLICK:
-
-				if (e.gadget == _windowBorderTop) {
-		
-					// Top border - focus and drag
-					focus();
-					setDragging(e.eventX, e.eventY);
-					return true;
-
-				} else if ((e.gadget == _windowBorderBottom) ||
-					(e.gadget == _windowBorderLeft) ||
-					(e.gadget == _windowBorderRight) ||
-					(e.gadget == _depthButton) ||
-					(e.gadget == _closeButton)) {
-
-					// Other borders - focus only
-					focus();
-					return true;
-				}
-				break;
-
-			case EVENT_DRAG:
-
-				if (e.gadget == _windowBorderTop) {
-					drag(e.eventX, e.eventY, e.eventVX, e.eventVY);
-					return true;
-				}
-				break;
-
-			case EVENT_RELEASE_OUTSIDE:
-
-				if (e.gadget == _windowBorderTop) {
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			default:
-				break;
+			// Release the window
+			release(e.getX(), e.getY());
 		}
 	}
+}
 
-	return false;
+void AmigaWindow::handleClickEvent(const GadgetEventArgs& e) {
+	
+	if (e.getSource() != NULL) {
+
+		if (e.getSource() == _windowBorderTop) {
+
+			// Top border - focus and drag
+			focus();
+			setDragging(e.getX(), e.getY());
+
+		} else if ((e.getSource() == _windowBorderBottom) ||
+			(e.getSource() == _windowBorderLeft) ||
+			(e.getSource() == _windowBorderRight) ||
+			(e.getSource() == _depthButton) ||
+			(e.getSource() == _closeButton)) {
+
+			// Other borders - focus only
+			focus();
+		}
+	}
+}
+
+void AmigaWindow::handleDragEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _windowBorderTop) {
+			drag(e.getX(), e.getY(), e.getVX(), e.getVY());
+		}
+	}
+}
+
+void AmigaWindow::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _windowBorderTop) {
+			release(e.getX(), e.getY());
+		}
+	}
 }
 
 void AmigaWindow::showCloseButton() {
@@ -380,7 +368,7 @@ void AmigaWindow::showCloseButton() {
 		
 		// Recreate close button
 		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _font);
-		_closeButton->setEventHandler(this);
+		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
 
 		// Resize and move the title bar
@@ -401,7 +389,7 @@ void AmigaWindow::showDepthButton() {
 		
 		// Recreate depth button
 		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _font);
-		_depthButton->setEventHandler(this);
+		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 
 		// Resize the title bar

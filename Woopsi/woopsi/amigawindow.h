@@ -3,7 +3,7 @@
 
 #include <nds.h>
 #include "window.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 
 namespace WoopsiUI {
 
@@ -17,7 +17,7 @@ namespace WoopsiUI {
 	 * Amiga Workbench 3.x.  It has a title bar and borders around the edge of
 	 * the window, along with a depth button and (optional) close button.
 	 */
-	class AmigaWindow : public Window, public EventHandler {
+	class AmigaWindow : public Window, public GadgetEventHandler {
 
 	public:
 
@@ -107,9 +107,26 @@ namespace WoopsiUI {
 		/**
 		 * Handle events fired by decoration gadgets.
 		 * @param e Event arguments to process.
-		 * @return True if the event was processed.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle events fired by decoration gadgets.
+		 * @param e Event arguments to process.
+		 */
+		virtual void handleDragEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle events fired by decoration gadgets.
+		 * @param e Event arguments to process.
+		 */
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle events fired by decoration gadgets.
+		 * @param e Event arguments to process.
+		 */
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Shows the close button if it is hidden.  Has no effect

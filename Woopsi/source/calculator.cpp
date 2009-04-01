@@ -51,7 +51,7 @@ void Calculator::initGUI() {
 
 	// Wire up events
 	for (u8 i = 0; i < buttons.size(); i++) {
-		buttons[i]->setEventHandler(this);
+		buttons[i]->addGadgetEventHandler(this);
 		_window->addGadget(buttons[i]);
 	}
 }
@@ -231,8 +231,8 @@ void Calculator::itoa(s32 n, char s[])
     reverse(s);
 }
 
-bool Calculator::handleEvent(const EventArgs& e) {
-	switch (e.type) {
+bool Calculator::handleEvent(const GadgetEventArgs& e) {
+	switch (e.getType()) {
 		case EVENT_CLICK:
 			handleClick(e);
 			return true;
@@ -241,11 +241,13 @@ bool Calculator::handleEvent(const EventArgs& e) {
 	}
 }
 
-void Calculator::handleClick(const EventArgs& e) {
-	if (strcmp(((Button*)e.gadget)->getText(), "=") == 0) {
+void Calculator::handleClick(const GadgetEventArgs& e) {
+	Button* button = (Button*)e.getSource();
+
+	if (strcmp(button->getText(), "=") == 0) {
 		doEquals();
 		_wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "C") == 0) {
+	} else if (strcmp(button->getText(), "C") == 0) {
 
 		_output->setText("0");
 		_val1 = 0;
@@ -253,19 +255,19 @@ void Calculator::handleClick(const EventArgs& e) {
 		_opCode = 0;
 		_output->draw();
 
-	} else if (strcmp(((Button*)e.gadget)->getText(), "+") == 0) {
+	} else if (strcmp(button->getText(), "+") == 0) {
 		doAdd();
 		_wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "-") == 0) {
+	} else if (strcmp(button->getText(), "-") == 0) {
 		doSubtract();
 		_wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "*") == 0) {
+	} else if (strcmp(button->getText(), "*") == 0) {
 		doMultiply();
 		_wipeNeeded = true;
-	} else if (strcmp(((Button*)e.gadget)->getText(), "/") == 0) {
+	} else if (strcmp(button->getText(), "/") == 0) {
 		doDivide();
 		_wipeNeeded = true;
 	} else {
-		appendText(((Button*)e.gadget)->getText());
+		appendText(button->getText());
 	}
 }

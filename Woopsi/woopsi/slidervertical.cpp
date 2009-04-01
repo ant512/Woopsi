@@ -19,7 +19,7 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	getClientRect(rect);
 
 	_grip = new SliderVerticalGrip(rect.x, rect.y, rect.width, rect.height);
-	_grip->setEventHandler(this);
+	_grip->addGadgetEventHandler(this);
 	addGadget(_grip);
 }
 
@@ -125,20 +125,24 @@ bool SliderVertical::click(s16 x, s16 y) {
 	return false;
 }
 
-bool SliderVertical::handleEvent(const EventArgs& e) {
+void SliderVertical::handleDragEvent(const GadgetEventArgs& e) {
 
 	// Handle grip events
-	if ((e.gadget == _grip) && (e.gadget != NULL)) {
-		if ((e.type == EVENT_DRAG) || (e.type == EVENT_MOVE)) {
+	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
 
-			// Grip has moved
-			raiseValueChangeEvent();
-
-			return true;
-		}
+		// Grip has moved
+		raiseValueChangeEvent();
 	}
+}
 
-	return false;
+void SliderVertical::handleMoveEvent(const GadgetEventArgs& e) {
+
+	// Handle grip events
+	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
+
+		// Grip has moved
+		raiseValueChangeEvent();
+	}
 }
 
 void SliderVertical::resizeGrip() {

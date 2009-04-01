@@ -13,19 +13,19 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBa
 
 	// Create the children
 	_slider = new SliderVertical(0, 0, width, height - (_buttonHeight << 1));
-	_slider->setEventHandler(this);
+	_slider->addGadgetEventHandler(this);
 
 	_upButton = new Button(0, height - (_buttonHeight << 1), width, _buttonHeight, GLYPH_ARROW_UP, _font);
-	_upButton->setEventHandler(this);
+	_upButton->addGadgetEventHandler(this);
 
 	_downButton = new Button(0, height - _buttonHeight, width, _buttonHeight, GLYPH_ARROW_DOWN, _font);
-	_downButton->setEventHandler(this);
+	_downButton->addGadgetEventHandler(this);
 
 	// Create timer
 	_scrollTimeout = 10;
 
 	_timer = new WoopsiTimer(_scrollTimeout, true);
-	_timer->setEventHandler(this);
+	_timer->addGadgetEventHandler(this);
 
 	addGadget(_slider);
 	addGadget(_upButton);
@@ -72,89 +72,72 @@ void ScrollbarVertical::draw() {
 void ScrollbarVertical::draw(Rect clipRect) {
 }
 
-bool ScrollbarVertical::handleEvent(const EventArgs& e) {
+void ScrollbarVertical::handleActionEvent(const GadgetEventArgs& e) {
 
 	// Check which gadget fired the event
-	if (e.gadget == _timer) {
-		if (e.type == EVENT_ACTION) {
+	if (e.getSource() == _timer) {
 
-			// Which gadget is clicked?
-			if (_upButton->isClicked()) {
+		// Which gadget is clicked?
+		if (_upButton->isClicked()) {
 
-				// Move the grip up
-				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
-			} else if (_downButton->isClicked()) {
-
-				// Move the grip down
-				_slider->setValue(_slider->getValue() + _buttonScrollAmount);
-			}
-		}
-
-		return true;
-	} else if (e.gadget == _slider) {
-	
-		// Raise slider events to event handler, replacing
-		// the gadget pointer with a pointer to this
-		if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-
-			EventArgs newEvent;
-			newEvent.eventX = e.eventX;
-			newEvent.eventY = e.eventY;
-			newEvent.gadget = this;
-			newEvent.keyCode = e.keyCode;
-			newEvent.type = e.type;
-
-			_eventHandler->handleEvent(newEvent);
-		}
-	} else if (e.gadget == _upButton) {
-
-		switch(e.type) {
-			
-			case EVENT_CLICK:
-				
-				// Start the timer
-				_timer->start();
-
-				// Move the grip up
-				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
-				break;
-
-			case EVENT_RELEASE:
-			case EVENT_RELEASE_OUTSIDE:
-
-				// Stop the timer
-				_timer->stop();
-				break;
-
-			default:
-				break;
-		}
-	} else if (e.gadget == _downButton) {
-
-		switch(e.type) {
-			
-			case EVENT_CLICK:
-				
-				// Start the timer
-				_timer->start();
+			// Move the grip up
+			_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+		} else if (_downButton->isClicked()) {
 
 			// Move the grip down
 			_slider->setValue(_slider->getValue() + _buttonScrollAmount);
-				break;
-
-			case EVENT_RELEASE:
-			case EVENT_RELEASE_OUTSIDE:
-
-				// Stop the timer
-				_timer->stop();
-				break;
-
-			default:
-				break;
 		}
-	}
 
-	return false;
+		raiseValueChangeEvent();
+	}
+}
+
+void ScrollbarVertical::handleValueChangeEvent(const GadgetEventArgs& e) {
+	if (e.getSource() == _slider) {
+		raiseValueChangeEvent();
+	}
+}
+
+void ScrollbarVertical::handleClickEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() == _upButton) {
+
+		// Start the timer
+		_timer->start();
+
+		// Move the grip up
+		_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+
+		raiseValueChangeEvent();
+
+	} else if (e.getSource() == _downButton) {
+
+		// Start the timer
+		_timer->start();
+
+		// Move the grip down
+		_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+
+		raiseValueChangeEvent();
+	}
+}
+
+void ScrollbarVertical::handleReleaseEvent(const GadgetEventArgs& e) {
+
+	if ((e.getSource() == _upButton) || (e.getSource() == _downButton)) {
+
+		// Stop the timer
+		_timer->stop();
+	}
+}
+
+void ScrollbarVertical::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+
+	if ((e.getSource() == _upButton) || (e.getSource() == _downButton)) {
+
+		// Stop the timer
+		_timer->stop();
+	}
 }
 
 void ScrollbarVertical::resizeGrip() {

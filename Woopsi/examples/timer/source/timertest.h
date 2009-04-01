@@ -8,11 +8,11 @@
 
 using namespace WoopsiUI;
 
-class TimerTest : public Woopsi, public EventHandler {
+class TimerTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
-	bool handleEvent(const EventArgs& e);
+	void handleActionEvent(const GadgetEventArgs& e);
 	
 private:
 	TextBox* _output;

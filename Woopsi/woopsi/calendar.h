@@ -3,7 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 
 #define CALENDAR_ROWS 6
 #define CALENDAR_COLS 7
@@ -18,7 +18,7 @@ namespace WoopsiUI {
 	 * Class providing a calendar/date picker.  Raises an EVENT_ACTION event
 	 * when a new date is clicked.
 	 */
-	class Calendar : public Gadget, public EventHandler {
+	class Calendar : public Gadget, public GadgetEventHandler {
 	public:
 
 		/**
@@ -39,7 +39,7 @@ namespace WoopsiUI {
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event data to process.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Draw the region of the calendar within the clipping rect. Should not be called

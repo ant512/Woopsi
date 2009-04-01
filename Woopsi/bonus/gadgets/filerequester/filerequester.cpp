@@ -29,7 +29,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 
 	// Create list box
 	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, font);
-	_listbox->setEventHandler(this);
+	_listbox->addGadgetEventHandler(this);
 	_listbox->setOutlineType(OUTLINE_OUT);
 	_listbox->setAllowMultipleSelections(false);
 	addGadget(_listbox);
@@ -43,7 +43,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 
 	// Create OK button
 	_okButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "OK");
-	_okButton->setEventHandler(this);
+	_okButton->addGadgetEventHandler(this);
 	addGadget(_okButton);
 
 	// Calculate cancel button dimensions
@@ -52,7 +52,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 
 	// Create cancel button
 	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
-	_cancelButton->setEventHandler(this);
+	_cancelButton->addGadgetEventHandler(this);
 	addGadget(_cancelButton);
 
 	setPath(path);
@@ -66,58 +66,57 @@ bool FileRequester::resize(u16 width, u16 height) {
 	return false;
 }
 
-bool FileRequester::handleEvent(const EventArgs& e) {
-	if (e.gadget != NULL) {
-		switch (e.type) {
-			case EVENT_RELEASE:
-				if (e.gadget == _cancelButton) {
+void FileRequester::handleReleaseEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _cancelButton) {
 
-					// Close the window
-					close();
-					return true;
-				} else if (e.gadget == _okButton) {
+			// Close the window
+			close();
+			return;
+		} else if (e.getSource() == _okButton) {
 
-					// Raise value changed event to event handler
+			// Raise value changed event to event handler
+			raiseValueChangeEvent();
+
+			// Close the window
+			close();
+			return;
+		}
+	}
+	
+	AmigaWindow::handleReleaseEvent(e);
+}
+
+void FileRequester::handleDoubleClickEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _listbox) {
+
+			// Work out which option was clicked - if it was a directory, we move to the new path
+			const ListData::ListDataItem* selected = getSelectedOption();
+
+			if (selected != NULL) {
+
+				// Detect type by examining text colour
+				if (selected->normalTextColour == _shineColour) {
+
+					// Got a directory
+					appendPath(selected->text);
+				} else {
+
+					// File selected; raise event
 					raiseValueChangeEvent();
 
 					// Close the window
 					close();
-					return true;
 				}
-				break;
-			case EVENT_DOUBLE_CLICK:
-				if (e.gadget == _listbox) {
-
-					// Work out which option was clicked - if it was a directory, we move to the new path
-					const ListData::ListDataItem* selected = getSelectedOption();
-
-					if (selected != NULL) {
-
-						// Detect type by examining text colour
-						if (selected->normalTextColour == _shineColour) {
-
-							// Got a directory
-							appendPath(selected->text);
-						} else {
-
-							// File selected; raise event
-							raiseValueChangeEvent();
-
-							// Close the window
-							close();
-							return true;
-						}
-					}
-				}
-				break;
-			default:
-				// Ignore other events
-				break;
+			}
+			
+			return;
 		}
 	}
 
 	// Handle other window events
-	return AmigaWindow::handleEvent(e);
+	AmigaWindow::handleDoubleClickEvent(e);
 }
 
 void FileRequester::readDirectory() {

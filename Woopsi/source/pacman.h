@@ -20,7 +20,7 @@ class PacPlayer;
 /**
  * PacMan game class.
  */
-class PacMan : EventHandler {
+class PacMan : GadgetEventHandler {
 	
 public:
 	/**
@@ -48,9 +48,9 @@ public:
 	void run();
 	void endGame();
 
-	bool handleEvent(const EventArgs& e);
-	void handleKeyPress(const EventArgs& e);
-	void handleRelease(const EventArgs& e);
+	bool handleEvent(const GadgetEventArgs& e);
+	void handleKeyPress(const GadgetEventArgs& e);
+	void handleRelease(const GadgetEventArgs& e);
 
 private:
 	AmigaScreen* _screen;

@@ -11,7 +11,7 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	_flags.shiftClickChildren = false;
 
 	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, font);
-	_textbox->setEventHandler(this);
+	_textbox->addGadgetEventHandler(this);
 	
 	// Create scrollbar
 	Rect rect;
@@ -21,7 +21,7 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
 	_scrollbar->setPageSize(rect.height);
 	_scrollbar->setButtonScrollAmount(10);
-	_scrollbar->setEventHandler(this);
+	_scrollbar->addGadgetEventHandler(this);
 	_scrollbar->resizeGrip();
 
 	// Add children to child array
@@ -75,57 +75,34 @@ const u16 ScrollingTextBox::getCurrentPage() const {
 	return _textbox->getCurrentPage();
 }
 
-bool ScrollingTextBox::handleEvent(const EventArgs& e) {
+void ScrollingTextBox::handleValueChangeEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget != NULL) {
-		if (e.gadget == _scrollbar) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _scrollbar) {
 
-			// Slider events
-			switch (e.type) {
-				case EVENT_VALUE_CHANGE:
-					if (_textbox != NULL) {
-						_textbox->setRaisesEvents(false);
-						_textbox->jump(0, 0 - _scrollbar->getValue());
-						_textbox->setRaisesEvents(true);
-						return true;
-					}
-					break;
-				default:
-					break;
+			if (_textbox != NULL) {
+				_textbox->setRaisesEvents(false);
+				_textbox->jump(0, 0 - _scrollbar->getValue());
+				_textbox->setRaisesEvents(true);
 			}
-		} else if (e.gadget == _textbox) {
-
-			// Textbox events
-			switch (e.type) {
-				case EVENT_SCROLL:
-					if (_scrollbar != NULL) {
-						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
-						_scrollbar->resizeGrip();
-						_scrollbar->setValue(0 - _textbox->getCanvasY());
-						_scrollbar->setRaisesEvents(true);
-						return true;
-					}
-					break;
-				default:
-					break;
-			}
-		}
-
-		// Raise events to event handler
-		if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-			EventArgs newEvent;
-			newEvent.eventX = e.eventX;
-			newEvent.eventY = e.eventY;
-			newEvent.gadget = this;
-			newEvent.keyCode = e.keyCode;
-			newEvent.type = e.type;
-
-			_eventHandler->handleEvent(newEvent);
 		}
 	}
+}
 
-	return false;
+void ScrollingTextBox::handleScrollEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _textbox) {
+
+			if (_scrollbar != NULL) {
+				_scrollbar->setRaisesEvents(false);
+				_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
+				_scrollbar->resizeGrip();
+				_scrollbar->setValue(0 - _textbox->getCanvasY());
+				_scrollbar->setRaisesEvents(true);
+			}
+		}
+	}
 }
 
 void ScrollingTextBox::draw(Rect clipRect) {

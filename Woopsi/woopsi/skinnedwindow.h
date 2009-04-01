@@ -15,7 +15,7 @@ namespace WoopsiUI {
 	class SkinnedWindowBorderRight;
 	class SkinnedWindowBorderTop;
 
-	class SkinnedWindow : public Window, public EventHandler  {
+	class SkinnedWindow : public Window, public GadgetEventHandler  {
 
 	public:
 
@@ -49,7 +49,10 @@ namespace WoopsiUI {
 		virtual bool blur();
 
 		virtual bool resize(u16 width, u16 height);
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+		virtual void handleDragEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Shows the close button if it is hidden.  Has no effect

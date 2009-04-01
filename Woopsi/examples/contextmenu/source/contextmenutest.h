@@ -7,11 +7,11 @@
 
 using namespace WoopsiUI;
 
-class ContextMenuTest : public Woopsi, public EventHandler {
+class ContextMenuTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
-	bool handleEvent(const EventArgs& e);
+	void handleContextMenuSelectionEvent(const GadgetEventArgs& e);
 	
 private:
 	MultiLineTextBox* _output;

@@ -4,7 +4,7 @@
 #include <nds.h>
 #include "gadget.h"
 #include "animation.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 
 namespace WoopsiUI {
 
@@ -14,7 +14,7 @@ namespace WoopsiUI {
 	 * Button class that has an animation running in its clickable area.  Note that the
 	 * bitmaps used in the animation should all be the same size.
 	 */
-	class AnimButton : public Gadget, public EventHandler {
+	class AnimButton : public Gadget, public GadgetEventHandler {
 
 	public:
 
@@ -88,9 +88,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Handle any child events.
-		 * @return True if the event was processed correctly.
+		 * @param e Event arguments.
 		 */
-		bool handleEvent(const EventArgs& e);
+		void handleActionEvent(const GadgetEventArgs& e);
 	};
 }
 

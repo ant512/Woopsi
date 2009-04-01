@@ -100,7 +100,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 
 	// Set event handlers
 	for (s32 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->setEventHandler(this);
+		_gadgets[i]->addGadgetEventHandler(this);
 	}
 
 	// Set initial modifier state
@@ -109,154 +109,191 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	_isControlDown = false;
 }
 
-bool WoopsiKeyboard::handleEvent(const EventArgs& e) {
+void WoopsiKeyboard::handleActionEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget != NULL) {
+	if (e.getSource() != NULL) {
 
-		// Do not want to process decorations
-		if (!e.gadget->isDecoration()) {
+		// Check if the event was fired by the timer (key repeat)
+		if (e.getSource() == _timer) {
+			if (_lastKeyClicked != NULL) {
+				if (_lastKeyClicked->isClicked()) {
 
-			// Check if the event was fired by the timer (key repeat)
-			if (e.gadget == _timer) {
-				if (e.type == EVENT_ACTION) {
-					if (_lastKeyClicked != NULL) {
-						if (_lastKeyClicked->isClicked()) {
+					// Event is a key repeat, so fire another action event
+					raiseActionEvent(e.getX(), e.getY(), e.getVX(), e.getVY(), e.getKeyCode());
 
-							// Event is a key repeat, so fire another action event
-							raiseActionEvent(e.eventX, e.eventY, e.eventVX, e.eventVY, e.keyCode);
+					// Ensure that subsequent repeats are faster
+					_timer->setTimeout(_secondaryRepeatTime);
 
-							// Ensure that subsequent repeats are faster
-							_timer->setTimeout(_secondaryRepeatTime);
-
-							return true;
-						}
-					}
-				}
-
-				// Abort processing now that we know the timer fired the event
-				return false;
-			}
-
-			// Gadget not a decoration and not a timer, so must be a key
-			WoopsiKey* key = (WoopsiKey*)e.gadget;
-
-			if ((e.type == EVENT_RELEASE) || (e.type == EVENT_RELEASE_OUTSIDE)) {
-				// When a key is released, we need to restore the shift and
-				// control keys back to their released state if they are
-				// currently held.  Can't do this as part of the click event
-				// because key repeats won't work in that situation.
-
-				switch (key->getKeyType()) {
-					case WoopsiKey::KEY_ALPHA_NUMERIC_SYMBOL:
-					case WoopsiKey::KEY_BACKSPACE:
-					case WoopsiKey::KEY_RETURN:
-					case WoopsiKey::KEY_NONE:
-					case WoopsiKey::KEY_SPACE:
-
-						// Swap key modes
-						if (_isShiftDown || _isControlDown) {
-							// Reset shift key
-							if (_isShiftDown) {
-								_isShiftDown = false;
-								_shiftKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
-								_shiftKey->draw();
-							}
-
-							// Reset control key
-							if (_isControlDown) {
-								_isControlDown = false;
-								_controlKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
-								_controlKey->draw();
-							}
-
-							// Update the keyboard
-							showCorrectKeys();
-						}
-						break;
-					default:
-						// Do nothing if other keys are released
-						break;
-				}
-
-				// Stop the timer
-				_timer->stop();
-
-			} else if (e.type == EVENT_CLICK) {
-		
-				// Need to check for buttons being clicked so that we can 
-				// handle key repeats correctly
-
-				_lastKeyClicked = key;
-
-				// Inform the keyboard's event handler that something has happened
-				raiseActionEvent(e.eventX, e.eventY, e.eventVX, e.eventVY, e.keyCode);
-
-				// Process the key after the handler has dealt with it and update
-				// the keyboard accordingly.  We do this after the handler because
-				// we want to ensure that the keyboard state (ie. text on the buttons)
-				// doesn't change before the handler has used this info.
-				switch (key->getKeyType()) {
-					case WoopsiKey::KEY_CAPS_LOCK:
-
-						// Set the outline type so the key is obviously stuck down,
-						// or reset it if the key is being clicked for the second time
-						if (_isCapsLockDown) {
-							_capsLockKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
-						} else {
-							_capsLockKey->setOutlineType(Gadget::OUTLINE_IN);
-						}
-
-						// Remember the key's state
-						_isCapsLockDown = !_isCapsLockDown;
-
-						// Update the keyboard
-						showCorrectKeys();
-						break;
-					case WoopsiKey::KEY_CONTROL:
-
-						// Set the outline type so the key is obviously stuck down,
-						// or reset it if the key is being clicked for the second time
-						if (_isControlDown) {
-							_controlKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
-						} else {
-							_controlKey->setOutlineType(Gadget::OUTLINE_IN);
-						}
-
-						// Remember the key's state
-						_isControlDown = !_isControlDown;
-
-						// Update the keyboard
-						showCorrectKeys();
-						break;
-					case WoopsiKey::KEY_SHIFT:
-
-						// Set the outline type so the key is obviously stuck down,
-						// or reset it if the key is being clicked for the second time
-						if (_isShiftDown) {
-							_shiftKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
-						} else {
-							_shiftKey->setOutlineType(Gadget::OUTLINE_IN);
-						}
-
-						// Remember the key's state
-						_isShiftDown = !_isShiftDown;
-
-						// Update the keyboard
-						showCorrectKeys();
-						break;
-					default:
-
-						// Start the timer
-						_timer->setTimeout(_initialRepeatTime);
-						_timer->start();
-						break;
+					return;
 				}
 			}
 		}
 	}
 
-	// Handle other window events
-	return AmigaWindow::handleEvent(e);
+	AmigaWindow::handleActionEvent(e);
+}
+
+void WoopsiKeyboard::processKeyRelease(WoopsiKey* key) {
+
+	// When a key is released, we need to restore the shift and
+	// control keys back to their released state if they are
+	// currently held.  Can't do this as part of the click event
+	// because key repeats won't work in that situation.
+
+	switch (key->getKeyType()) {
+		case WoopsiKey::KEY_ALPHA_NUMERIC_SYMBOL:
+		case WoopsiKey::KEY_BACKSPACE:
+		case WoopsiKey::KEY_RETURN:
+		case WoopsiKey::KEY_NONE:
+		case WoopsiKey::KEY_SPACE:
+
+			// Swap key modes
+			if (_isShiftDown || _isControlDown) {
+				// Reset shift key
+				if (_isShiftDown) {
+					_isShiftDown = false;
+					_shiftKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+					_shiftKey->draw();
+				}
+
+				// Reset control key
+				if (_isControlDown) {
+					_isControlDown = false;
+					_controlKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+					_controlKey->draw();
+				}
+
+				// Update the keyboard
+				showCorrectKeys();
+			}
+			break;
+		default:
+			// Do nothing if other keys are released
+			break;
+	}
+}
+
+void WoopsiKeyboard::handleReleaseEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() != NULL) {
+		if (!e.getSource()->isDecoration()) {
+
+			// Gadget not a decoration and not a timer, so must be a key
+			WoopsiKey* key = (WoopsiKey*)e.getSource();
+
+			processKeyRelease(key);
+
+			// Stop the timer
+			_timer->stop();
+
+			return;
+		}
+	}
+
+	AmigaWindow::handleReleaseEvent(e);
+}
+
+void WoopsiKeyboard::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() != NULL) {
+		if (!e.getSource()->isDecoration()) {
+
+			// Gadget not a decoration and not a timer, so must be a key
+			WoopsiKey* key = (WoopsiKey*)e.getSource();
+
+			processKeyRelease(key);
+
+			// Stop the timer
+			_timer->stop();
+
+			return;
+		}
+	}
+
+	AmigaWindow::handleReleaseOutsideEvent(e);
+}
+
+void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
+		
+	if (e.getSource() != NULL) {
+		if (!e.getSource()->isDecoration()) {
+
+			// Gadget not a decoration and not a timer, so must be a key
+			WoopsiKey* key = (WoopsiKey*)e.getSource();
+
+			// Need to check for buttons being clicked so that we can 
+			// handle key repeats correctly
+			_lastKeyClicked = key;
+
+			// Inform the keyboard's event handler that something has happened
+			raiseActionEvent(e.getX(), e.getY(), e.getVX(), e.getVY(), e.getKeyCode());
+
+			// Process the key after the handler has dealt with it and update
+			// the keyboard accordingly.  We do this after the handler because
+			// we want to ensure that the keyboard state (ie. text on the buttons)
+			// doesn't change before the handler has used this info.
+			switch (key->getKeyType()) {
+				case WoopsiKey::KEY_CAPS_LOCK:
+
+					// Set the outline type so the key is obviously stuck down,
+					// or reset it if the key is being clicked for the second time
+					if (_isCapsLockDown) {
+						_capsLockKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+					} else {
+						_capsLockKey->setOutlineType(Gadget::OUTLINE_IN);
+					}
+
+					// Remember the key's state
+					_isCapsLockDown = !_isCapsLockDown;
+
+					// Update the keyboard
+					showCorrectKeys();
+					break;
+				case WoopsiKey::KEY_CONTROL:
+
+					// Set the outline type so the key is obviously stuck down,
+					// or reset it if the key is being clicked for the second time
+					if (_isControlDown) {
+						_controlKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+					} else {
+						_controlKey->setOutlineType(Gadget::OUTLINE_IN);
+					}
+
+					// Remember the key's state
+					_isControlDown = !_isControlDown;
+
+					// Update the keyboard
+					showCorrectKeys();
+					break;
+				case WoopsiKey::KEY_SHIFT:
+
+					// Set the outline type so the key is obviously stuck down,
+					// or reset it if the key is being clicked for the second time
+					if (_isShiftDown) {
+						_shiftKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+					} else {
+						_shiftKey->setOutlineType(Gadget::OUTLINE_IN);
+					}
+
+					// Remember the key's state
+					_isShiftDown = !_isShiftDown;
+
+					// Update the keyboard
+					showCorrectKeys();
+					break;
+				default:
+
+					// Start the timer
+					_timer->setTimeout(_initialRepeatTime);
+					_timer->start();
+					break;
+			}
+
+			return;
+		}
+	}
+
+	AmigaWindow::handleClickEvent(e);
 }
 
 void WoopsiKeyboard::showCorrectKeys() {

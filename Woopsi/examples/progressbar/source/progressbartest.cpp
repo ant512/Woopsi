@@ -28,7 +28,7 @@ void ProgressBarTest::startup() {
 	
 	// Add timer
 	_timer = new WoopsiTimer(10, true);
-	_timer->setEventHandler(this);
+	_timer->addGadgetEventHandler(this);
 	addGadget(_timer);
 
 	// Ensure Woopsi can draw itself
@@ -47,16 +47,9 @@ void ProgressBarTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-bool ProgressBarTest::handleEvent(const EventArgs& e) {
+void ProgressBarTest::handleActionEvent(const GadgetEventArgs& e) {
 
-	// Short version of the event handler - since we know that only one gadget can
-	// possibly call this, we can just check for the action event without bothering with the
-	// other checks.
-	if (e.type == EVENT_ACTION) {
-		_progressBar->setValue(_progressBar->getValue() + (rand() % 10));
-		
-		return true;
-	}
-	
-	return false;
+	// Short version of the event handler since we know that only one gadget can
+	// possibly call this
+	_progressBar->setValue(_progressBar->getValue() + (rand() % 10));
 }

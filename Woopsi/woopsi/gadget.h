@@ -3,7 +3,7 @@
 
 #include <nds.h>
 #include "defines.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "woopsiarray.h"
 #include "glyphs.h"
 
@@ -404,11 +404,17 @@ namespace WoopsiUI {
 		inline void setOutlineType(const OutlineType outline) { _outline = outline; };
 
 		/**
-		 * Sets the gadget's event handler.  The event handler will receive
+		 * Adds a gadget event handler.  The event handler will receive
 		 * all events raised by this gadget.
 		 * @param eventHandler A pointer to the event handler.
 		 */
-		inline void setEventHandler(EventHandler* eventHandler) { _eventHandler = eventHandler; };
+		inline void addGadgetEventHandler(GadgetEventHandler* eventHandler) { _gadgetEventHandlers.push_back(eventHandler); };
+
+		/**
+		 * Remove a gadget event handler.
+		 * @param eventHandler A pointer to the event handler to remove.
+		 */
+		void removeGadgetEventHandler(GadgetEventHandler* eventHandler);
 
 		/**
 		 * Enables or disables event firing for this gadget.
@@ -958,7 +964,7 @@ namespace WoopsiUI {
 		Flags _flags;							/**< Flags struct */
 
 		// Event handling
-		EventHandler* _eventHandler;			/**< Pointer to the gadget's event handler */
+		WoopsiArray<GadgetEventHandler*> _gadgetEventHandlers;		/**< Pointer to list of event handlers */
 
 		// Double-clicking
 		u32 _lastClickTime;						/**< VBL count when last clicked */

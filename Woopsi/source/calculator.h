@@ -2,21 +2,22 @@
 #define _CALCULATOR_H_
 
 #include "woopsi.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "textbox.h"
+#include "gadgeteventargs.h"
 
 using namespace WoopsiUI;
 
-class Calculator : EventHandler {
+class Calculator : GadgetEventHandler {
 
 public:
 	Calculator(AmigaScreen* screen);
 	void buttonClicked(Gadget* gadget);
 
-	bool handleEvent(const EventArgs& e);
-	void handleClick(const EventArgs& e);
+	bool handleEvent(const GadgetEventArgs& e);
+	void handleClick(const GadgetEventArgs& e);
 
 private:
 	AmigaScreen* _screen;

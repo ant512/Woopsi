@@ -7,11 +7,11 @@
 
 using namespace WoopsiUI;
 
-class DimmedScreenTest : public Woopsi, public EventHandler {
+class DimmedScreenTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
-	bool handleEvent(const EventArgs& e);
+	void handleCloseEvent(const GadgetEventArgs& e);
 private:
 	DimmedScreen* _dimmedScreen;
 };

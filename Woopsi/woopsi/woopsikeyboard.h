@@ -33,7 +33,31 @@ namespace WoopsiUI {
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event data to process.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event data to process.
+		 */
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event data to process.
+		 */
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event data to process.
+		 */
+		virtual void handleActionEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Process key releases and tidy up the keyboard state.
+		 * @param key Key that was released.
+		 */
+		virtual void processKeyRelease(WoopsiKey* key);
 
 		/**
 		 * Get a pointer to the last key that was clicked.

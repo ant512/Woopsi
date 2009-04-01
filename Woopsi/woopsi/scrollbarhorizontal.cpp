@@ -13,19 +13,19 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Fo
 
 	// Create the children
 	_slider = new SliderHorizontal(0, 0, width - (_buttonWidth << 1), height);
-	_slider->setEventHandler(this);
+	_slider->addGadgetEventHandler(this);
 
 	_leftButton = new Button(width - (_buttonWidth << 1), 0, _buttonWidth, height, GLYPH_ARROW_LEFT, _font);
-	_leftButton->setEventHandler(this);
+	_leftButton->addGadgetEventHandler(this);
 
 	_rightButton = new Button(width - _buttonWidth, 0, _buttonWidth, height, GLYPH_ARROW_RIGHT, _font);
-	_rightButton->setEventHandler(this);
+	_rightButton->addGadgetEventHandler(this);
 
 	// Create timer
 	_scrollTimeout = 10;
 
 	_timer = new WoopsiTimer(_scrollTimeout, true);
-	_timer->setEventHandler(this);
+	_timer->addGadgetEventHandler(this);
 
 	addGadget(_slider);
 	addGadget(_leftButton);
@@ -68,89 +68,66 @@ void ScrollbarHorizontal::setPageSize(s16 pageSize) {
 void ScrollbarHorizontal::draw(Rect clipRect) {
 }
 
-bool ScrollbarHorizontal::handleEvent(const EventArgs& e) {
+void ScrollbarHorizontal::handleActionEvent(const GadgetEventArgs& e) {
 
 	// Check which gadget fired the event
-	if (e.gadget == _timer) {
-		if (e.type == EVENT_ACTION) {
+	if (e.getSource() == _timer) {
 
-			// Which gadget is clicked?
-			if (_leftButton->isClicked()) {
+		// Which gadget is clicked?
+		if (_leftButton->isClicked()) {
 
-				// Move the grip left
-				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
-			} else if (_rightButton->isClicked()) {
+			// Move the grip left
+			_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+		} else if (_rightButton->isClicked()) {
 
-				// Move the grip right
-				_slider->setValue(_slider->getValue() + _buttonScrollAmount);
-			}
-		}
-
-		return true;
-	} else if (e.gadget == _slider) {
-	
-		// Raise slider events to event handler, replacing
-		// the gadget pointer with a pointer to this
-		if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-
-			EventArgs newEvent;
-			newEvent.eventX = e.eventX;
-			newEvent.eventY = e.eventY;
-			newEvent.gadget = this;
-			newEvent.keyCode = e.keyCode;
-			newEvent.type = e.type;
-
-			_eventHandler->handleEvent(newEvent);
-		}
-	} else if (e.gadget == _leftButton) {
-
-		switch(e.type) {
-			
-			case EVENT_CLICK:
-				
-				// Start the timer
-				_timer->start();
-
-				// Move the grip left
-				_slider->setValue(_slider->getValue() - _buttonScrollAmount);
-				break;
-
-			case EVENT_RELEASE:
-			case EVENT_RELEASE_OUTSIDE:
-
-				// Stop the timer
-				_timer->stop();
-				break;
-
-			default:
-				break;
-		}
-	} else if (e.gadget == _rightButton) {
-
-		switch(e.type) {
-			
-			case EVENT_CLICK:
-				
-				// Start the timer
-				_timer->start();
-
-				// Move the grip right
-				_slider->setValue(_slider->getValue() + _buttonScrollAmount);
-				break;
-
-			case EVENT_RELEASE:
-			case EVENT_RELEASE_OUTSIDE:
-
-				// Stop the timer
-				_timer->stop();
-				break;
-
-			default:
-				break;
+			// Move the grip right
+			_slider->setValue(_slider->getValue() + _buttonScrollAmount);
 		}
 	}
+}
 
-	return false;
+void ScrollbarHorizontal::handleValueChangeEvent(const GadgetEventArgs& e) {
+	if (e.getSource() == _slider) {
+		raiseValueChangeEvent();
+	}
+}
+
+void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() == _leftButton) {
+
+		// Start the timer
+		_timer->start();
+
+		// Move the grip left
+		_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+
+	} else if (e.getSource() == _rightButton) {
+
+		// Start the timer
+		_timer->start();
+
+		// Move the grip right
+		_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+	}
+}
+
+void ScrollbarHorizontal::handleReleaseEvent(const GadgetEventArgs& e) {
+
+	if ((e.getSource() == _leftButton) || (e.getSource() == _rightButton)) {
+
+		// Stop the timer
+		_timer->stop();
+	}
+}
+
+void ScrollbarHorizontal::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+
+	if ((e.getSource() == _leftButton) || (e.getSource() == _rightButton)) {
+
+		// Stop the timer
+		_timer->stop();
+	}
 }
 
 void ScrollbarHorizontal::resizeGrip() {

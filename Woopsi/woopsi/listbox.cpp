@@ -11,7 +11,7 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Scrollin
 	_flags.draggable = true;
 	_flags.doubleClickable = true;
 	_optionPadding = 2;
-	_options.addEventHandler(this);
+	_options.addListDataEventHandler(this);
 }
 
 ListBox::~ListBox() { }

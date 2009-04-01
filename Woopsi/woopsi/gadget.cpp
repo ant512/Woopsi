@@ -2,10 +2,11 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 #include "fontbase.h"
 #include "contextmenu.h"
 #include "defaultstyle.h"
+#include "gadgeteventargs.h"
 
 using namespace WoopsiUI;
 
@@ -64,7 +65,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	// Set hierarchy pointers
 	_parent = NULL;
 	_focusedGadget = NULL;
-	_eventHandler = NULL;
 
 	// Double-click
 	_lastClickTime = 0;
@@ -295,418 +295,262 @@ bool Gadget::checkCollision(Gadget* gadget) {
 }
 
 void Gadget::raiseClickEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_CLICK, x, y, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_CLICK;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleClickEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_DOUBLE_CLICK, x, y, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_DOUBLE_CLICK;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleDoubleClickEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_SHIFT_CLICK, x, y, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_SHIFT_CLICK;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleShiftClickEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseReleaseEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_RELEASE, x, y, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_RELEASE;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleReleaseEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseReleaseOutsideEvent(s16 x, s16 y) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_RELEASE_OUTSIDE, x, y, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_RELEASE_OUTSIDE;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleReleaseOutsideEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_DRAG, x, y, vX, vY, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_DRAG;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = vX;
-		e.eventVY = vY;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleDragEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseMoveForwardEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_MOVE_FORWARD, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_MOVE_FORWARD;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleMoveForwardEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseMoveBackwardEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_MOVE_FORWARD, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_MOVE_BACKWARD;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleMoveBackwardEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_KEY_PRESS, 0, 0, 0, 0, keyCode);
 
-		EventArgs e;
-		e.type = EVENT_KEY_PRESS;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = keyCode;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleKeyPressEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_KEY_RELEASE, 0, 0, 0, 0, keyCode);
 
-		EventArgs e;
-		e.type = EVENT_KEY_RELEASE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = keyCode;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleKeyReleaseEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseLidCloseEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_LID_CLOSE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_LID_CLOSE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleLidCloseEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseLidOpenEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_LID_OPEN, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_LID_OPEN;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleLidOpenEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseFocusEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_FOCUS, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_FOCUS;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleFocusEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseBlurEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_BLUR, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_BLUR;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleBlurEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseCloseEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_CLOSE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_CLOSE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleCloseEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseHideEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_HIDE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_HIDE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleHideEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseShowEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_SHOW, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_SHOW;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleShowEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseShelveEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_SHELVE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_SHELVE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleShelveEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseUnshelveEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_UNSHELVE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_UNSHELVE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleUnshelveEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseEnableEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_ENABLE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_ENABLE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleEnableEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseDisableEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_DISABLE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_DISABLE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleDisableEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseValueChangeEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_VALUE_CHANGE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_VALUE_CHANGE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleValueChangeEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseResizeEvent(u16 width, u16 height) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_RESIZE, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_RESIZE;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleResizeEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_MOVE, x, y, vX, vY, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_MOVE;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = vX;
-		e.eventVY = vY;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleMoveEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_ACTION, x, y, vX, vY, keyCode);
 
-		EventArgs e;
-		e.type = EVENT_ACTION;
-		e.eventX = x;
-		e.eventY = y;
-		e.eventVX = vX;
-		e.eventVY = vY;
-		e.keyCode = keyCode;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleActionEvent(e);
+		}
 	}
 }
 
 void Gadget::raiseContextMenuSelectionEvent() {
-	if ((_eventHandler != NULL) && (raisesEvents())) {
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_CONTEXT_MENU_SELECTION, 0, 0, 0, 0, KEY_CODE_NONE);
 
-		EventArgs e;
-		e.type = EVENT_CONTEXT_MENU_SELECTION;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.eventVX = 0;
-		e.eventVY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleContextMenuSelectionEvent(e);
+		}
 	}
 }
 
@@ -2326,5 +2170,14 @@ void Gadget::goModal() {
 	// Loop until no longer modal
 	while (isModal() && (woopsiApplication != NULL)) {
 		woopsiApplication->processOneVBL(this);
+	}
+}
+
+void Gadget::removeGadgetEventHandler(GadgetEventHandler* eventHandler) {
+	for (s32 i = 0; i < _gadgetEventHandlers.size(); ++i) {
+		if (_gadgetEventHandlers.at(i) == eventHandler) {
+			_gadgetEventHandlers.erase(i);
+			return;
+		}
 	}
 }

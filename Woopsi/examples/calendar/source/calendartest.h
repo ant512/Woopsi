@@ -7,11 +7,11 @@
 
 using namespace WoopsiUI;
 
-class CalendarTest : public Woopsi, public EventHandler {
+class CalendarTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
-	bool handleEvent(const EventArgs& e);
+	void handleActionEvent(const GadgetEventArgs& e);
 private:
 	Calendar* _calendar;
 };

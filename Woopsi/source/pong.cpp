@@ -38,12 +38,12 @@ void Pong::initGUI() {
 	// Create window
 	_window = new AmigaWindow(0, 13, 120, 60, "Pong", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	_screen->addGadget(_window);
-	_window->setEventHandler(this);
+	_window->addGadgetEventHandler(this);
 	
 	// Create timer
 	_timer = new WoopsiTimer(1, true);
 	_window->addGadget(_timer);
-	_timer->setEventHandler(this);
+	_timer->addGadgetEventHandler(this);
 	_timer->start();
 }
 
@@ -131,15 +131,15 @@ void Pong::draw() {
 	}
 }
 
-bool Pong::handleEvent(const EventArgs& e) {
+bool Pong::handleEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget == _timer) {
-		if (e.type == EVENT_ACTION) {
+	if (e.getSource() == _timer) {
+		if (e.getType() == EVENT_ACTION) {
 			play();
 		}
 	}
 
-	switch (e.type) {
+	switch (e.getType()) {
 		case EVENT_KEY_PRESS:
 			handleKeyPress(e);
 			return true;
@@ -151,9 +151,9 @@ bool Pong::handleEvent(const EventArgs& e) {
 	}
 }
 
-void Pong::handleKeyPress(const EventArgs& e) {
+void Pong::handleKeyPress(const GadgetEventArgs& e) {
 	if (_window->hasFocus()) {
-		switch (e.keyCode) {
+		switch (e.getKeyCode()) {
 			case KEY_CODE_UP:
 				_upHeld = true;
 				break;
@@ -166,9 +166,9 @@ void Pong::handleKeyPress(const EventArgs& e) {
 	}
 }
 
-void Pong::handleKeyRelease(const EventArgs& e) {
+void Pong::handleKeyRelease(const GadgetEventArgs& e) {
 	if (_window->hasFocus()) {
-		switch (e.keyCode) {
+		switch (e.getKeyCode()) {
 			case KEY_CODE_UP:
 				_upHeld = false;
 				break;

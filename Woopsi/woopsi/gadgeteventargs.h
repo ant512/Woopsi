@@ -1,7 +1,7 @@
-#ifndef _EVENTHANDLER_H_
-#define _EVENTHANDLER_H_
+#include "eventargs.h"
 
-#include <nds.h>
+#ifndef _GADGETEVENTARGS_H_
+#define _GADGETEVENTARGS_H_
 
 namespace WoopsiUI {
 
@@ -61,40 +61,43 @@ namespace WoopsiUI {
 	};
 
 	/**
-	 * EventArgs struct.  Passed as the argument for every event.
+	 * Event arguments passed to listeners when a Gadget object raises an event.
 	 */
-	typedef struct {
-		EventType type;					/**< The type of event */
-		Gadget* gadget;					/**< Pointer to the gadget that raised the event */
-		s16 eventX;						/**< X co-ordinate of the event */
-		s16 eventY;						/**< Y co-ordinate of the event */
-		s16 eventVX;					/**< X distance moved during event, for dragging */
-		s16 eventVY;					/**< Y distance moved during event, for dragging */
-		KeyCode keyCode;				/**< The key code that raised the event */
-	} EventArgs;
-
-	/**
-	 * Base EventHandler class, intended to be subclassed.  Any class that needs to listen for
-	 * gadget events should inherit from this class.
-	 */
-	class EventHandler {
+	class GadgetEventArgs : public EventArgs<Gadget*> {
 	public:
+
 		/**
 		 * Constructor.
+		 * @param source Pointer to the Gadget object that raised the event.
 		 */
-		inline EventHandler() { }
-		
-		/**
-		 * Destructor.
-		 */
-		virtual inline ~EventHandler() { }
-		
-		/**
-		 * Event handler function.  Each gadget that this class is the event handler for will
-		 * call this function and pass it details of the event in the EventArgs parameter.
-		 * @param e The event's argument data.
-		 */
-		virtual bool handleEvent(const EventArgs& e) = 0;
+		GadgetEventArgs(Gadget* source, const EventType type, const s16 x, const s16 y, const s16 vX, const s16 vY, const KeyCode keyCode) : EventArgs<Gadget*>(source) {
+			_type = type;
+			_x = x;
+			_y = y;
+			_vX = vX;
+			_vY = vY;
+			_keyCode = keyCode;
+		}
+
+		inline const s16 getX() const { return _x; }
+
+		inline const s16 getY() const { return _y; }
+
+		inline const s16 getVX() const { return _vX; }
+
+		inline const s16 getVY() const { return _vY; }
+
+		inline const KeyCode getKeyCode() const { return _keyCode; }
+
+		inline const EventType getType() const { return _type; }
+
+	private:
+		EventType _type;				/**< The type of event */
+		s16 _x;							/**< X co-ordinate of the event */
+		s16 _y;							/**< Y co-ordinate of the event */
+		s16 _vX;						/**< X distance moved during event, for dragging */
+		s16 _vY;						/**< Y distance moved during event, for dragging */
+		KeyCode _keyCode;				/**< The key code that raised the event */
 	};
 }
 

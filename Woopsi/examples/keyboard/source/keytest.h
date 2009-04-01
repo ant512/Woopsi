@@ -8,11 +8,11 @@
 
 using namespace WoopsiUI;
 
-class KeyTest : public Woopsi, public EventHandler {
+class KeyTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
-	bool handleEvent(const EventArgs& e);
+	void handleActionEvent(const GadgetEventArgs& e);
 	
 private:
 	WoopsiKeyboard* _keyboard;

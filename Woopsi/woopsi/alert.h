@@ -32,9 +32,9 @@ namespace WoopsiUI {
 		Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, FontBase* font = NULL);
 
 		/**
-		 * Handles events raised by its sub-gadgets.
+		 * Handles release events raised by its sub-gadgets.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
 
 	protected:
 		Button* _button;					/**< Pointer to the OK button */

@@ -56,20 +56,20 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 			}
 
 			_screenTitle = new SkinnedScreenTitle(this, _skin);
-			_screenTitle->setEventHandler(this);
+			_screenTitle->addGadgetEventHandler(this);
 			insertGadget(_screenTitle);
 
 			// Create depth button
 			if (_screenFlags.showDepthButton) {
 				_depthButton = new SkinnedScreenDepthButton(depthX, 0, _skin);
-				_depthButton->setEventHandler(this);
+				_depthButton->addGadgetEventHandler(this);
 				addGadget(_depthButton);
 			}
 
 			// Create flip button
 			if (_screenFlags.showFlipButton) {
 				_flipButton = new SkinnedScreenFlipButton(flipX, 0, _skin);
-				_flipButton->setEventHandler(this);
+				_flipButton->addGadgetEventHandler(this);
 				addGadget(_flipButton);
 			}
 
@@ -82,59 +82,48 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 	}
 }
 
-bool SkinnedScreen::handleEvent(const EventArgs& e) {
-	if (e.gadget != NULL) {
-		switch (e.type) {
-			case EVENT_RELEASE:
+void SkinnedScreen::handleReleaseEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
 
-				// Process decoration gadgets only
-				if (e.gadget == _flipButton) {
+		// Process decoration gadgets only
+		if (e.getSource() == _flipButton) {
 
-					// Flip screens
-					flipScreens();
-					return true;
-				} else if (e.gadget == _depthButton) {
+			// Flip screens
+			flipScreens();
+		} else if (e.getSource() == _depthButton) {
 
-					// Depth swap to bottom of stack
-					lowerToBottom();
-					blur();
-					return true;
-				} else if (e.gadget == _screenTitle) {
+			// Depth swap to bottom of stack
+			lowerToBottom();
+			blur();
+		} else if (e.getSource() == _screenTitle) {
 
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			case EVENT_CLICK:
-
-				if (e.gadget == _screenTitle) {
-					setDragging(e.eventX, e.eventY);
-				}
-				break;
-
-			case EVENT_DRAG:
-
-				if (e.gadget == _screenTitle) {
-					drag(e.eventX, e.eventY, e.eventVX, e.eventVY);
-					return true;
-				}
-				break;
-
-			case EVENT_RELEASE_OUTSIDE:
-
-				if (e.gadget == _screenTitle) {
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			default:
-				break;
+			release(e.getX(), e.getY());
 		}
 	}
+}
 
-	return false;
+void SkinnedScreen::handleClickEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _screenTitle) {
+			setDragging(e.getX(), e.getY());
+		}
+	}
+}
+
+void SkinnedScreen::handleDragEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _screenTitle) {
+			drag(e.getX(), e.getY(), e.getVX(), e.getVY());
+		}
+	}
+}
+
+void SkinnedScreen::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _screenTitle) {
+			release(e.getX(), e.getY());
+		}
+	}
 }
 
 void SkinnedScreen::showFlipButton() {
@@ -146,7 +135,7 @@ void SkinnedScreen::showFlipButton() {
 
 		// Recreate flip button
 		_flipButton = new SkinnedScreenFlipButton(flipX, 0, _skin);
-		_flipButton->setEventHandler(this);
+		_flipButton->addGadgetEventHandler(this);
 		addGadget(_flipButton);
 
 		_flipButton->draw();
@@ -162,7 +151,7 @@ void SkinnedScreen::showDepthButton() {
 		
 		// Recreate depth button
 		_depthButton = new SkinnedScreenDepthButton(depthX, 0, _skin);
-		_depthButton->setEventHandler(this);
+		_depthButton->addGadgetEventHandler(this);
 		addGadget(_depthButton);
 
 		_depthButton->draw();

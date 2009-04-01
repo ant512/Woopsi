@@ -1,7 +1,7 @@
-#include "eventdata.h"
+#include "eventargs.h"
 
-#ifndef _LISTDATA_H_
-#define _LISTDATA_H_
+#ifndef _LISTDATAEVENTARGS_H_
+#define _LISTDATAEVENTARGS_H_
 
 namespace WoopsiUI {
 
@@ -10,14 +10,14 @@ namespace WoopsiUI {
 	/**
 	 * Event arguments passed to listeners when a ListData object raises an event.
 	 */
-	class ListDataEventArgs : public EventData<const ListData*> {
+	class ListDataEventArgs : public EventArgs<ListData*> {
 	public:
 
 		/**
 		 * Constructor.
 		 * @param source Pointer to the ListData object that raised the event.
 		 */
-		inline ListDataEventArgs(const ListData* source) : EventData<const ListData*>(source) { }
+		inline ListDataEventArgs(ListData* source) : EventArgs<ListData*>(source) { }
 	};
 }
 

@@ -3,7 +3,7 @@
 
 #include <nds.h>
 #include "multilinetextbox.h"
-#include "eventhandler.h"
+#include "gadgeteventhandler.h"
 
 namespace WoopsiUI {
 
@@ -14,7 +14,7 @@ namespace WoopsiUI {
 	 * methods are more or less identical to the methods exposed by the MultiLineTextBox
 	 * to ensure that the two are interchangeable.
 	 */
-	class ScrollingTextBox : public Gadget, public EventHandler {
+	class ScrollingTextBox : public Gadget, public GadgetEventHandler {
 	public:
 
 		/**
@@ -111,8 +111,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
 		 */
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
+		 */
+		virtual void handleScrollEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Draw the region of the textbox within the clipping rect.

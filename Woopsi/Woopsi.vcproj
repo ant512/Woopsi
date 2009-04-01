@@ -440,6 +440,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\gadgeteventargs.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\glyphs.h"
 				>
 			</File>

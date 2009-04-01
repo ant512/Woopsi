@@ -24,7 +24,7 @@ void ContextMenuTest::startup() {
 	// Add textbox
 	_output = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0);
 	window->addGadget(_output);
-	_output->setEventHandler(this);
+	_output->addGadgetEventHandler(this);
 	
 	// Create context menu items for the textbox
 	_output->addContextMenuItem("Context Menu", 0);
@@ -45,30 +45,21 @@ void ContextMenuTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-bool ContextMenuTest::handleEvent(const EventArgs& e) {
+void ContextMenuTest::handleContextMenuSelectionEvent(const GadgetEventArgs& e) {
 
 	// Check that a valid gadget fired the event
-	if (e.gadget != NULL) {
+	if (e.getSource() != NULL) {
 	
 		// Check which gadget fired the event - we're only interested in the textbox
-		if (e.gadget == _output) {
+		if (e.getSource() == _output) {
 		
-			// Check which event we've got to process; we're only interested in the
-			// context menu event
-			if (e.type == EVENT_CONTEXT_MENU_SELECTION) {
+			// Append value of context menu item to output textbox
+			char buffer[10];
 
-				// Append value of context menu item to output textbox
-				char buffer[10];
-
-				sprintf(buffer, "%d", woopsiApplication->getContextMenu()->getValue());
-				_output->appendText("Menu item selected: ");
-				_output->appendText(buffer);
-				_output->appendText('\n');
-				
-				return true;
-			}
+			sprintf(buffer, "%d", woopsiApplication->getContextMenu()->getValue());
+			_output->appendText("Menu item selected: ");
+			_output->appendText(buffer);
+			_output->appendText('\n');
 		}
 	}
-	
-	return false;
 }

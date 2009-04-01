@@ -22,7 +22,7 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, Fon
 
 	// Create list box
 	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, font);
-	_listbox->setEventHandler(this);
+	_listbox->addGadgetEventHandler(this);
 	_listbox->setOutlineType(OUTLINE_OUT);
 	addGadget(_listbox);
 
@@ -35,7 +35,7 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, Fon
 
 	// Create OK button
 	_okButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "OK");
-	_okButton->setEventHandler(this);
+	_okButton->addGadgetEventHandler(this);
 	addGadget(_okButton);
 
 	// Calculate cancel button dimensions
@@ -44,7 +44,7 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, Fon
 
 	// Create cancel button
 	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
-	_cancelButton->setEventHandler(this);
+	_cancelButton->addGadgetEventHandler(this);
 	addGadget(_cancelButton);
 }
 
@@ -52,42 +52,33 @@ bool Requester::resize(u16 width, u16 height) {
 	return false;
 }
 
-bool Requester::handleEvent(const EventArgs& e) {
-	if (e.gadget != NULL) {
-		switch (e.type) {
-			case EVENT_RELEASE:
-				if (e.gadget == _cancelButton) {
+void Requester::handleReleaseEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
 
-					// Close the window
-					close();
-					return true;
-				} else if (e.gadget == _okButton) {
+		if (e.getSource() == _cancelButton) {
 
-					// Raise value changed event to event handler
-					raiseValueChangeEvent();
+			// Close the window
+			close();
+		} else if (e.getSource() == _okButton) {
 
-					// Close the window
-					close();
-					return true;
-				}
-				break;
-			case EVENT_DOUBLE_CLICK:
-				if (e.gadget == _listbox) {
+			// Raise value changed event to event handler
+			raiseValueChangeEvent();
 
-					// Raise value changed event to event handler
-					raiseValueChangeEvent();
-
-					// Close the window
-					close();
-					return true;
-				}
-				break;
-			default:
-				// Ignore other events
-				break;
+			// Close the window
+			close();
 		}
 	}
+}
 
-	// Handle other window events
-	return AmigaWindow::handleEvent(e);
+void Requester::handleDoubleClickEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _listbox) {
+
+			// Raise value changed event to event handler
+			raiseValueChangeEvent();
+
+			// Close the window
+			close();
+		}
+	}
 }

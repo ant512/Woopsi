@@ -11,7 +11,7 @@
 #include "pacghost.h"
 #include "pacghosts.h"
 
-PacMan::PacMan(AmigaScreen* screen) : EventHandler() {
+PacMan::PacMan(AmigaScreen* screen) : GadgetEventHandler() {
 	_screen = screen;
 	_width = 95;
 	_height = 110;
@@ -70,17 +70,17 @@ void PacMan::endGame() {
 	_superBitmap->drawText(10, 40, _superBitmap->getFont(), "Game Over");
 }
 
-bool PacMan::handleEvent(const EventArgs& e) {
+bool PacMan::handleEvent(const GadgetEventArgs& e) {
 
 	// Check for VBL
-	if (e.gadget == _timer) {
+	if (e.getSource() == _timer) {
 		if (!_gameOver) {
 			run();
 		}
 		return true;
 	}
 
-	switch (e.type) {
+	switch (e.getType()) {
 		case EVENT_KEY_PRESS:
 			handleKeyPress(e);
 			return true;
@@ -105,10 +105,10 @@ bool PacMan::handleEvent(const EventArgs& e) {
 	}
 }
 
-void PacMan::handleKeyPress(const EventArgs& e) {
+void PacMan::handleKeyPress(const GadgetEventArgs& e) {
 	if (_window->hasFocus()) {
-		if (e.gadget->getRefcon() == 1) {
-			switch (e.keyCode) {
+		if (e.getSource()->getRefcon() == 1) {
+			switch (e.getKeyCode()) {
 				case KEY_CODE_UP:
 					_player->setBufferedDirection(1);
 					break;
@@ -136,7 +136,7 @@ void PacMan::initGUI() {
 	_window->addContextMenuItem("Reset", 1);
 	_window->addContextMenuItem("Quit", 2);
 
-	_window->setEventHandler(this);
+	_window->addGadgetEventHandler(this);
 	_window->setRefcon(1);
 
 	Gadget::Rect rect;
@@ -149,17 +149,17 @@ void PacMan::initGUI() {
 
 	_resetButton = new Button(rect.x + 18, rect.y + 114, 60, 14, "Reset");
 	_window->addGadget(_resetButton);
-	_resetButton->setEventHandler(this);
+	_resetButton->addGadgetEventHandler(this);
 	_resetButton->setRefcon(3);
 	
 	_timer = new WoopsiTimer(1, true);
 	_window->addGadget(_timer);
-	_timer->setEventHandler(this);
+	_timer->addGadgetEventHandler(this);
 	_timer->start();
 }
 
-void PacMan::handleRelease(const EventArgs& e) {
-	if (e.gadget->getRefcon() == 3) {
+void PacMan::handleRelease(const GadgetEventArgs& e) {
+	if (e.getSource()->getRefcon() == 3) {
 		_player->resetLives();
 		_gameOver = false;
 		reset();

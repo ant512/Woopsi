@@ -13,7 +13,7 @@ ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 ContextMenuItem* ContextMenu::newMenuItem(const char* text, u32 value) {
 	// Create menu item
 	ContextMenuItem* item = new ContextMenuItem(0, 0, 0, 0, text, value, _font);
-	item->setEventHandler(this);
+	item->addGadgetEventHandler(this);
 	addGadget(item);
 
 	// Get client area
@@ -69,25 +69,20 @@ ContextMenuItem* ContextMenu::newMenuItem(const char* text, u32 value) {
 	return item;
 }
 
-bool ContextMenu::handleEvent(const EventArgs& e) {
-	// Only handle release events
-	if (e.type == EVENT_RELEASE) {
-		if (e.gadget != NULL) {
+void ContextMenu::handleReleaseEvent(const GadgetEventArgs& e) {
 
-			// Remember the value of the gadget
-			_value = ((ContextMenuItem*)e.gadget)->getValue();
+	if (e.getSource() != NULL) {
 
-			// Notify the opener that a selection has been made
-			if (_opener != NULL) {
-				_opener->handleContextMenuSelection(((ContextMenuItem*)e.gadget)->getValue());
-			}
-	
-			shelve();
-			return true;
+		// Remember the value of the gadget
+		_value = ((ContextMenuItem*)e.getSource())->getValue();
+
+		// Notify the opener that a selection has been made
+		if (_opener != NULL) {
+			_opener->handleContextMenuSelection(((ContextMenuItem*)e.getSource())->getValue());
 		}
-	}
 
-	return false;
+		shelve();
+	}
 }
 
 void ContextMenu::draw(Rect clipRect) {

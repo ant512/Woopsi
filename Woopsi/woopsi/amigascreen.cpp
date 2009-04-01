@@ -38,7 +38,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 		} else {
 			// Add borders
 			_screenTitle = new ScreenTitle(_titleHeight, this, _font);
-			_screenTitle->setEventHandler(this);
+			_screenTitle->addGadgetEventHandler(this);
 			insertGadget(_screenTitle);
 
 			s16 buttonX = _width;
@@ -46,7 +46,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 			// Create depth button
 			if (_screenFlags.showDepthButton) {
 				_depthButton = new DecorationGlyphButton(buttonX - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, _font);
-				_depthButton->setEventHandler(this);
+				_depthButton->addGadgetEventHandler(this);
 				addGadget(_depthButton);
 
 				buttonX -= SCREEN_DEPTH_BUTTON_WIDTH;
@@ -55,7 +55,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 			// Create flip button
 			if (_screenFlags.showFlipButton) {
 				_flipButton = new DecorationGlyphButton(buttonX - SCREEN_FLIP_BUTTON_WIDTH, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, _font);
-				_flipButton->setEventHandler(this);
+				_flipButton->addGadgetEventHandler(this);
 				addGadget(_flipButton);
 			}
 
@@ -68,60 +68,49 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 	}
 }
 
-bool AmigaScreen::handleEvent(const EventArgs& e) {
+void AmigaScreen::handleReleaseEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget != NULL) {
-		switch (e.type) {
-			case EVENT_RELEASE:
+	if (e.getSource() != NULL) {
 
-				// Process decoration gadgets only
-				if (e.gadget == _flipButton) {
+		// Process decoration gadgets only
+		if (e.getSource() == _flipButton) {
 
-					// Flip screens
-					flipScreens();
-					return true;
-				} else if (e.gadget == _depthButton) {
+			// Flip screens
+			flipScreens();
+		} else if (e.getSource() == _depthButton) {
 
-					// Depth swap to bottom of stack
-					lowerToBottom();
-					blur();
-					return true;
-				} else if (e.gadget == _screenTitle) {
+			// Depth swap to bottom of stack
+			lowerToBottom();
+			blur();
+		} else if (e.getSource() == _screenTitle) {
 
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			case EVENT_CLICK:
-
-				if (e.gadget == _screenTitle) {
-					setDragging(e.eventX, e.eventY);
-				}
-				break;
-
-			case EVENT_DRAG:
-
-				if (e.gadget == _screenTitle) {
-					drag(e.eventX, e.eventY, e.eventVX, e.eventVY);
-					return true;
-				}
-				break;
-
-			case EVENT_RELEASE_OUTSIDE:
-
-				if (e.gadget == _screenTitle) {
-					release(e.eventX, e.eventY);
-					return true;
-				}
-				break;
-
-			default:
-				break;
+			release(e.getX(), e.getY());
 		}
 	}
+}
 
-	return false;
+void AmigaScreen::handleClickEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _screenTitle) {
+			setDragging(e.getX(), e.getY());
+		}
+	}
+}
+
+void AmigaScreen::handleDragEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _screenTitle) {
+			drag(e.getX(), e.getY(), e.getVX(), e.getVY());
+		}
+	}
+}
+
+void AmigaScreen::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _screenTitle) {
+			release(e.getX(), e.getY());
+		}
+	}
 }
 
 void AmigaScreen::showFlipButton() {
@@ -134,7 +123,7 @@ void AmigaScreen::showFlipButton() {
 		
 		// Recreate flip button
 		_flipButton = new DecorationGlyphButton(buttonX, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, _font);
-		_flipButton->setEventHandler(this);
+		_flipButton->addGadgetEventHandler(this);
 		addGadget(_flipButton);
 
 		_flipButton->draw();
@@ -147,7 +136,7 @@ void AmigaScreen::showDepthButton() {
 		
 		// Recreate depth button
 		_depthButton = new DecorationGlyphButton(_width - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, _font);
-		_depthButton->setEventHandler(this);
+		_depthButton->addGadgetEventHandler(this);
 		addGadget(_depthButton);
 
 		// Move the flip button if necessary

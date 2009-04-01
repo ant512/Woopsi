@@ -443,15 +443,11 @@ bool ScrollingPanel::clipToClientRect(Rect& clipRect) {
 }
 
 void ScrollingPanel::raiseScrollEvent() {
-	if ((_eventHandler != NULL) && (_flags.raisesEvents)) {
-
-		EventArgs e;
-		e.type = EVENT_SCROLL;
-		e.eventX = 0;
-		e.eventY = 0;
-		e.keyCode = KEY_CODE_NONE;
-		e.gadget = this;
-
-		_eventHandler->handleEvent(e);
+	if (raisesEvents()) {
+		GadgetEventArgs e(this, EVENT_SCROLL, 0, 0, 0, 0, KEY_CODE_NONE);
+	
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleScrollEvent(e);
+		}
 	}
 }

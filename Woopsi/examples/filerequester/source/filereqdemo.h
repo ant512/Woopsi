@@ -7,11 +7,11 @@
 
 using namespace WoopsiUI;
 
-class FileReqDemo : public Woopsi, public EventHandler {
+class FileReqDemo : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
-	bool handleEvent(const EventArgs& e);
+	void handleValueChangeEvent(const GadgetEventArgs& e);
 	
 private:
 	TextBox* _textbox;

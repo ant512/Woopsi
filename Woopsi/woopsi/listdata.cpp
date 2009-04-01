@@ -190,10 +190,10 @@ const s32 ListData::getInsertionIndex(const char* text) const {
 	return i;
 }
 
-void ListData::removeEventHandler(ListDataEventHandler* eventHandler) {
-	for (int i = 0; i < _handlers.size(); ++i) {
-		if (_handlers.at(i) == eventHandler) {
-			_handlers.erase(i);
+void ListData::removeListDataEventHandler(ListDataEventHandler* eventHandler) {
+	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
+		if (_listDataEventhandlers.at(i) == eventHandler) {
+			_listDataEventhandlers.erase(i);
 			return;
 		}
 	}
@@ -203,8 +203,8 @@ void ListData::raiseDataChangedEvent() {
 
 	ListDataEventArgs eventArgs(this);
 
-	for (int i = 0; i < _handlers.size(); ++i) {
-		_handlers.at(i)->handleListDataChangedEvent(&eventArgs);
+	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
+		_listDataEventhandlers.at(i)->handleListDataChangedEvent(&eventArgs);
 	}
 }
 
@@ -212,7 +212,7 @@ void ListData::raiseSelectionChangedEvent() {
 
 	ListDataEventArgs eventArgs(this);
 
-	for (int i = 0; i < _handlers.size(); ++i) {
-		_handlers.at(i)->handleListDataSelectionChangedEvent(&eventArgs);
+	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
+		_listDataEventhandlers.at(i)->handleListDataSelectionChangedEvent(&eventArgs);
 	}
 }

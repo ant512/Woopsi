@@ -25,7 +25,7 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char*
 
 	// Create OK button
 	_button = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, buttonText);
-	_button->setEventHandler(this);
+	_button->addGadgetEventHandler(this);
 	addGadget(_button);
 
 	// Create textbox
@@ -33,17 +33,8 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char*
 	addGadget(_textBox);
 }
 
-bool Alert::handleEvent(const EventArgs& e) {
-	// Only handle release events
-	if (e.type == EVENT_RELEASE) {
-		if (e.gadget != NULL) {
-			if (e.gadget == _button) {
-				close();
-				return true;
-			}
-		}
+void Alert::handleReleaseEvent(const GadgetEventArgs& e) {
+	if (e.getSource() == _button) {
+		close();
 	}
-
-	// Handle other window events
-	return AmigaWindow::handleEvent(e);
 }

@@ -29,7 +29,7 @@ void DimmedScreenTest::startup() {
 	
 	// Add alert window to dimmed screen
 	Alert* alert = new Alert(30, 30, 100, 100, "Test", "Test");
-	alert->setEventHandler(this);
+	alert->addGadgetEventHandler(this);
 	_dimmedScreen->addGadget(alert);
 
 	// Ensure Woopsi can draw itself
@@ -48,19 +48,9 @@ void DimmedScreenTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-bool DimmedScreenTest::handleEvent(const EventArgs& e) {
+void DimmedScreenTest::handleCloseEvent(const GadgetEventArgs& e) {
 
-	// Short version of the event handler - since we know that only one gadget can
-	// possibly call this, we can just check for the close event without bothering with the
-	// other checks.
-	if (e.type == EVENT_CLOSE) {
-	
-		// Alert window has closed, so close the dimmed screen
-		_dimmedScreen->close();
-		_dimmedScreen = NULL;
-		
-		return true;
-	}
-	
-	return false;
+	// Alert window has closed, so close the dimmed screen
+	_dimmedScreen->close();
+	_dimmedScreen = NULL;
 }

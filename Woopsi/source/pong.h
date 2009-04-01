@@ -9,7 +9,7 @@
 
 using namespace WoopsiUI;
 
-class Pong : EventHandler {
+class Pong : GadgetEventHandler {
 
 public:
 	Pong(AmigaScreen* screen);
@@ -19,9 +19,9 @@ public:
 	void play();
 	void moveObjects();
 
-	bool handleEvent(const EventArgs& e);
-	void handleKeyPress(const EventArgs& e);
-	void handleKeyRelease(const EventArgs& e);
+	bool handleEvent(const GadgetEventArgs& e);
+	void handleKeyPress(const GadgetEventArgs& e);
+	void handleKeyRelease(const GadgetEventArgs& e);
 
 private:
 	AmigaScreen* _screen;

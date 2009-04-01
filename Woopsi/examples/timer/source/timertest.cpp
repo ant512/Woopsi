@@ -26,7 +26,7 @@ void TimerTest::startup() {
 	
 	// Create timer
 	_timer = new WoopsiTimer(10, true);
-	_timer->setEventHandler(this);
+	_timer->addGadgetEventHandler(this);
 	window->addGadget(_timer);
 	_timer->start();
 	
@@ -46,31 +46,22 @@ void TimerTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-bool TimerTest::handleEvent(const EventArgs& e) {
+void TimerTest::handleActionEvent(const GadgetEventArgs& e) {
 
 	// Check that a valid gadget fired the event
-	if (e.gadget != NULL) {
+	if (e.getSource() != NULL) {
 	
 		// Check which gadget fired the event - we're only interested in the timer
-		if (e.gadget == _timer) {
+		if (e.getSource() == _timer) {
 		
-			// Check which event we've got to process; we're only interested in the
-			// action event
-			if (e.type == EVENT_ACTION) {
-
-				// Append key value to output box if the last key was not a modifier
-				_output->setText(_text);
-				
-				// Move to next character
-				_text++;
-				
-				// Wrap character around if necessary;
-				if (_text > 'z') _text = 'a';
-				
-				return true;
-			}
+			// Append key value to output box if the last key was not a modifier
+			_output->setText(_text);
+			
+			// Move to next character
+			_text++;
+			
+			// Wrap character around if necessary;
+			if (_text > 'z') _text = 'a';
 		}
 	}
-	
-	return false;
 }

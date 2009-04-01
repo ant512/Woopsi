@@ -32,6 +32,11 @@ Change Log
      - ListData class raises events to ListDataEventHandler objects.
      - ListBox listens for ListData events.
      - Added base template class for event args passing.
+     - Refactored gadget event system:
+       - Replaced EventArgs struct with GadgetEventArgs class.
+       - Renamed EventHandler to GadgetEventHandler.
+       - Gadgets can now have multiple event handlers.
+       - Replaced handleEvent() method with multiple methods.
 
   V0.37 (20090112)
   

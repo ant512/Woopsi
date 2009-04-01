@@ -11,7 +11,7 @@ namespace WoopsiUI {
 	class SkinnedScreenFlipButton;
 	class SkinnedScreenTitle;
 
-	class SkinnedScreen : public Screen, public EventHandler {
+	class SkinnedScreen : public Screen, public GadgetEventHandler {
 
 	public:
 
@@ -34,7 +34,10 @@ namespace WoopsiUI {
 		SkinnedScreen(const char* title, u32 flags, u32 screenFlags, const ScreenSkin* skin);
 
 		virtual void setBorderless(bool isBorderless);
-		virtual bool handleEvent(const EventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+		virtual void handleDragEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Shows the flip button if it is hidden.  Has no effect

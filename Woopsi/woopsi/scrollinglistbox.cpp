@@ -12,7 +12,7 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase
 	_flags.shiftClickChildren = false;
 
 	_listbox = new ListBox(0, 0, width - _scrollbarWidth, height, font);
-	_listbox->setEventHandler(this);
+	_listbox->addGadgetEventHandler(this);
 
 	// Create scrollbar
 	Rect rect;
@@ -21,7 +21,7 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase
 	_scrollbar->setMinimumValue(0);
 	_scrollbar->setMaximumValue(0);
 	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
-	_scrollbar->setEventHandler(this);
+	_scrollbar->addGadgetEventHandler(this);
 	_scrollbar->resizeGrip();
 
 	// Add children to child array
@@ -33,49 +33,43 @@ void ScrollingListBox::draw(Rect clipRect) {
 	clear(clipRect);
 }
 
-bool ScrollingListBox::handleEvent(const EventArgs& e) {
+void ScrollingListBox::handleValueChangeEvent(const GadgetEventArgs& e) {
 
-	if (e.gadget != NULL) {
-		if (e.gadget == _scrollbar) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _scrollbar) {
 
-			// Slider events
-			switch (e.type) {
-				case EVENT_VALUE_CHANGE:
-					if (_listbox != NULL) {
-						_listbox->setRaisesEvents(false);
-						_listbox->jump(0, 0 - (_scrollbar->getValue() * _listbox->getOptionHeight()));
-						_listbox->setRaisesEvents(true);
-						return true;
-					}
-					break;
-				default:
-					break;
-			}
-		} else if (e.gadget == _listbox) {
-
-			// Listbox events
-			switch (e.type) {
-				case EVENT_SCROLL:
-					if (_scrollbar != NULL) {
-						_scrollbar->setRaisesEvents(false);
-						_scrollbar->setValue((0 - _listbox->getCanvasY()) / _listbox->getOptionHeight());
-						_scrollbar->setRaisesEvents(true);
-						return true;
-					}
-					break;
-
-				case EVENT_DOUBLE_CLICK:
-
-					// Raise double-click events from list box to event handler
-					raiseDoubleClickEvent(e.eventX, e.eventY);
-					break;
-				default:
-					break;
+			if (_listbox != NULL) {
+				_listbox->setRaisesEvents(false);
+				_listbox->jump(0, 0 - (_scrollbar->getValue() * _listbox->getOptionHeight()));
+				_listbox->setRaisesEvents(true);
 			}
 		}
 	}
+}
 
-	return false;
+void ScrollingListBox::handleScrollEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _listbox) {
+
+			if (_scrollbar != NULL) {
+				_scrollbar->setRaisesEvents(false);
+				_scrollbar->setValue((0 - _listbox->getCanvasY()) / _listbox->getOptionHeight());
+				_scrollbar->setRaisesEvents(true);
+			}
+		}
+	}
+}
+
+void ScrollingListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _listbox) {
+
+			// Raise double-click events from list box to event handler
+			raiseDoubleClickEvent(e.getX(), e.getY());
+		}
+	}
 }
 
 bool ScrollingListBox::resize(u16 width, u16 height) {
