@@ -201,12 +201,12 @@ void ListData::removeEventHandler(ListDataEventHandler* eventHandler) {
 
 void ListData::raiseDataChangedEvent() {
 	for (int i = 0; i < _handlers.size(); ++i) {
-		_handlers.at(i)->handleDataChangedEvent(this);
+		_handlers.at(i)->handleListDataChangedEvent(this);
 	}
 }
 
 void ListData::raiseSelectionChangedEvent() {
 	for (int i = 0; i < _handlers.size(); ++i) {
-		_handlers.at(i)->handleSelectionChangedEvent(this);
+		_handlers.at(i)->handleListDataSelectionChangedEvent(this);
 	}
 }

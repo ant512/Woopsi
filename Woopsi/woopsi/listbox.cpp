@@ -11,15 +11,13 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Scrollin
 	_flags.draggable = true;
 	_flags.doubleClickable = true;
 	_optionPadding = 2;
+	_options.addEventHandler(this);
 }
 
 ListBox::~ListBox() { }
 
 void ListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 	_options.addItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
-
-	// Grow the canvas
-	resizeCanvas();
 }
 
 void ListBox::addOption(const char* text, const u32 value) {
@@ -28,9 +26,6 @@ void ListBox::addOption(const char* text, const u32 value) {
 
 void ListBox::removeOption(const s32 index) {
 	_options.removeItem(index);
-
-	// Shrink the canvas
-	resizeCanvas();
 }
 
 void ListBox::draw(Rect clipRect) {
@@ -103,28 +98,15 @@ void ListBox::deselectOption(const s32 index) {
 }
 
 void ListBox::setOptionSelected(const s32 index, bool selected) {
-
 	_options.setItemSelected(index, selected);
-	
-	draw();
-	
-	raiseValueChangeEvent();
 }
 
 void ListBox::deselectAllOptions() {
 	_options.deselectAllItems();
-
-	draw();
-	
-	raiseValueChangeEvent();
 }
 
 void ListBox::selectAllOptions() {
 	_options.selectAllItems();
-
-	draw();
-
-	raiseValueChangeEvent();
 }
 
 bool ListBox::click(s16 x, s16 y) {
@@ -273,4 +255,13 @@ void ListBox::sort() {
 
 void ListBox::removeAllOptions() {
 	_options.removeAllItems();
+}
+
+void ListBox::handleListDataChangedEvent(const ListData* listDataSource) {
+	resizeCanvas();
+}
+
+void ListBox::handleListDataSelectionChangedEvent(const ListData* listDataSource) {
+	draw();
+	raiseValueChangeEvent();
 }

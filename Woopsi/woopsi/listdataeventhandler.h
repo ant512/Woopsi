@@ -26,12 +26,12 @@ namespace WoopsiUI {
 		/**
 		 * Handle data changes.
 		 */
-		virtual bool handleDataChangedEvent(const ListData* listDataSource) = 0;
+		virtual void handleListDataChangedEvent(const ListData* listDataSource) = 0;
 
 		/**
 		 * Handle data changes.
 		 */
-		virtual bool handleSelectionChangedEvent(const ListData* listDataSource) = 0;
+		virtual void handleListDataSelectionChangedEvent(const ListData* listDataSource) = 0;
 	};
 }
 

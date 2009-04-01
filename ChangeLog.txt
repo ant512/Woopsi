@@ -30,6 +30,7 @@ Change Log
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).
      - Added context menu example (for leonelhs).
      - ListData class raises events to ListDataEventHandler objects.
+     - ListBox listens for ListData events.
 
   V0.37 (20090112)
   

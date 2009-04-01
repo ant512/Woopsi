@@ -2,6 +2,7 @@
 #define _LISTBOX_H_
 
 #include "scrollingpanel.h"
+#include "listdataeventhandler.h"
 #include "listdata.h"
 
 namespace WoopsiUI {
@@ -14,7 +15,7 @@ namespace WoopsiUI {
 	 * The options themselves have user-definable text and background colours for their selected
 	 * and unselected states.
 	 */
-	class ListBox : public ScrollingPanel {
+	class ListBox : public ScrollingPanel, public ListDataEventHandler {
 	public:
 		
 		/**
@@ -178,6 +179,16 @@ namespace WoopsiUI {
 		 * @param sortInsertedItems True to enable sort on insertion.
 		 */
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _options.setSortInsertedItems(sortInsertedItems); };
+
+		/**
+		 * Handles list data changed events.
+		 */
+		virtual void handleListDataChangedEvent(const ListData* listDataSource);
+
+		/**
+		 * Handles list selection changed events.
+		 */
+		virtual void handleListDataSelectionChangedEvent(const ListData* listDataSource);
 
 	protected:
 		ListData _options;								/**< Option storage. */
