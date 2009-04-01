@@ -31,6 +31,7 @@ Change Log
      - Added context menu example (for leonelhs).
      - ListData class raises events to ListDataEventHandler objects.
      - ListBox listens for ListData events.
+     - Added base template class for event args passing.
 
   V0.37 (20090112)
   

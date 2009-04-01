@@ -416,6 +416,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\eventdata.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\eventhandler.h"
 				>
 			</File>
@@ -457,6 +461,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\listdata.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\listdataeventargs.h"
 				>
 			</File>
 			<File
