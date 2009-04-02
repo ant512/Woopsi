@@ -190,8 +190,8 @@ namespace WoopsiUI {
 		virtual void drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
 
 	protected:
-		u16 _width;
-		u16 _height;
+		u16 _width;										/**< Width of the bitmap */
+		u16 _height;									/**< Height of the bitmap */
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
 		
 		/**

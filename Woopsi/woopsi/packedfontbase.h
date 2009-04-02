@@ -121,7 +121,8 @@ namespace WoopsiUI {
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 
 	protected:
-		u8 _first, _last;
+		u8 _first;
+		u8 _last;
 		const u16 *_glyphData;	
 		const u16 *_glyphOffset;
 		const u8 *_glyphWidth;

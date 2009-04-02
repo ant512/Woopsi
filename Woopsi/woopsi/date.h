@@ -112,17 +112,23 @@ namespace WoopsiUI {
 		 */
 		void setDate(u8 day, u8 month, u16 year);
 
+		/**
+		 * Overload the equals operator.
+		 */
 		bool operator==(const Date& date) const;
 
+		/**
+		 * Overload the inequality operator.
+		 */
 		bool operator!=(const Date& date) const;
 
 	private:
-		u8 _day;
-		u8 _month;
-		u16 _year;
-		u8 _weekDay;
-		static const char* _dayNames[7];
-		static const char* _monthNames[12];
+		u8 _day;								/**< The day */
+		u8 _month;								/**< The month */
+		u16 _year;								/**< The year */
+		u8 _weekDay;							/**< The week day */
+		static const char* _dayNames[7];		/**< Array of day names */
+		static const char* _monthNames[12];		/**< Array of month names */
 
 		/**
 		 * Returns 1 if the date falls before the 29th of Feb and the year is a leap year.

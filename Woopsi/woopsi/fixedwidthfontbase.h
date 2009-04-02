@@ -123,7 +123,7 @@ namespace WoopsiUI {
 		 */
 		void initGlyphMap();
 
-		u8 _glyphMap[GLYPH_MAP_SIZE];
+		u8 _glyphMap[GLYPH_MAP_SIZE];		/**< Map of which characters have glyphs in the current font */
 
 	private:
 		u8 _width;							/**< The width of a single glyph */

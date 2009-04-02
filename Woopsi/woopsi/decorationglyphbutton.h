@@ -44,8 +44,8 @@ namespace WoopsiUI {
 		virtual bool focus();
 
 	protected:
-		char _normalGlyph;						/** Character to display when unclicked */
-		char _clickedGlyph;						/** Character to display when clicked */
+		char _normalGlyph;						/**< Character to display when unclicked */
+		char _clickedGlyph;						/**< Character to display when clicked */
 
 		/**
 		 * Destructor.

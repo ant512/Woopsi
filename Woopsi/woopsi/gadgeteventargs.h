@@ -44,14 +44,34 @@ namespace WoopsiUI {
 			_keyCode = keyCode;
 		}
 
+		/**
+		 * Get the x co-ord of the event.
+		 * @return The x co-ord of the event.
+		 */
 		inline const s16 getX() const { return _x; }
 
+		/**
+		 * Get the y co-ord of the event.
+		 * @return The y co-ord of the event.
+		 */
 		inline const s16 getY() const { return _y; }
 
+		/**
+		 * Get the x-axis stylus move distance of the event.
+		 * @return The x-axis stylus move distance of the event.
+		 */
 		inline const s16 getVX() const { return _vX; }
 
+		/**
+		 * Get the y-axis stylus move distance of the event.
+		 * @return The y-axis stylus move distance of the event.
+		 */
 		inline const s16 getVY() const { return _vY; }
 
+		/**
+		 * Get the keycode of the event.
+		 * @return The keycode of the event.
+		 */
 		inline const KeyCode getKeyCode() const { return _keyCode; }
 
 	private:

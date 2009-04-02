@@ -70,10 +70,10 @@ namespace WoopsiUI {
 		virtual bool run();
 
 	protected:
-		u32 _frameCount;
-		u32 _timeout;
-		bool _isRunning;
-		bool _isRepeater;
+		u32 _frameCount;			/**< Number of frames run so far */
+		u32 _timeout;				/**< Number of frames to run before firing an event */
+		bool _isRunning;			/**< Indicates whether or not the timer is running */
+		bool _isRepeater;			/**< Indicates whether or not the timer repeats */
 
 		/**
 		 * Destructor.

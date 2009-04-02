@@ -25,6 +25,7 @@ Change Log
        window contents.
      - Fixed const-correctness of various Text class methods.
      - SDL framebuffers initialised to black.
+     - More doxygen fixes.
 
   - New Features:
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).

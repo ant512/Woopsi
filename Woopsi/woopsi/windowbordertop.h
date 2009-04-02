@@ -20,7 +20,7 @@ namespace WoopsiUI {
 		 * @param x The x co-ordinate of the gadget.
 		 * @param width The width of the gadget.
 		 * @param height The height of the gadget.
-		 * @para window Pointer to the window that contains this border.
+		 * @param window Pointer to the window that contains this border.
 		 * @param font The font to display the text with.
 		 */
 		WindowBorderTop(s16 x, u16 width, u16 height, Window* window, FontBase* font = NULL);

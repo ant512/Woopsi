@@ -115,13 +115,13 @@ namespace WoopsiUI {
 
 	protected:
 		KeyType _keyType;					/**< Type of key represented by this object */
-		char* _normalText;
-		char* _shiftText;
-		char* _controlText;
-		char* _shiftControlText;
-		char* _capsLockText;
-		char* _controlCapsLockText;
-		KeyMode _keyMode;
+		char* _normalText;					/**< Text displayed when in normal mode */
+		char* _shiftText;					/**< Text displayed when in shift mode */
+		char* _controlText;					/**< Text displayed when in control mode */
+		char* _shiftControlText;			/**< Text displayed when in shift/control mode */
+		char* _capsLockText;				/**< Text displayed when in caps lock mode */
+		char* _controlCapsLockText;			/**< Text displayed when in control/caps lock mode */
+		KeyMode _keyMode;					/**< Current mode */
 
 		/**
 		 * Destructor.

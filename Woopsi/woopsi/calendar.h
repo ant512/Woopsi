@@ -88,12 +88,12 @@ namespace WoopsiUI {
 		bool resize(u16 width, u16 height);
 
 	protected:
-		Date* _date;
-		Date* _visibleDate;
-		Button* _selectedDayButton;
-		Button* _leftArrow;
-		Button* _rightArrow;
-		Label* _monthLabel;
+		Date* _date;						/**< Calendar working date */
+		Date* _visibleDate;					/**< Date displayed in the UI */
+		Button* _selectedDayButton;			/**< Pointer to the selected day button */
+		Button* _leftArrow;					/**< Pointer to the left arrow */
+		Button* _rightArrow;				/**< Pointer to the right arrow */
+		Label* _monthLabel;					/**< Pointer to the month label */
 
 		/**
 		 * Destructor.
