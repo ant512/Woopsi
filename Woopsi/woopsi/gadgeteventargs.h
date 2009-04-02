@@ -35,6 +35,11 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 * @param source Pointer to the Gadget object that raised the event.
+		 * @param x The x co-ord of the event.
+		 * @param y The y co-ord of the event.
+		 * @param vX The x distance of the event.
+		 * @param vY The y distance of the event.
+		 * @param keyCode The keycode of the event.
 		 */
 		GadgetEventArgs(Gadget* source, const s16 x, const s16 y, const s16 vX, const s16 vY, const KeyCode keyCode) : EventArgs<Gadget*>(source) {
 			_x = x;

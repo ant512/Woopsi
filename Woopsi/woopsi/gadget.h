@@ -89,8 +89,8 @@ namespace WoopsiUI {
 		 * Struct describing a name/value pair.
 		 */
 		typedef struct {
-			u32 value;
-			char* name;
+			u32 value;							/**< Value associated with the name */
+			char* name;							/**< Name associated with the value */
 		} NameValuePair;
 
 		/**
@@ -928,7 +928,7 @@ namespace WoopsiUI {
 
 		/**
 		 * Get the child gadget at the specified index.
-		 * @param u32 index Index of the child to retrieve.
+		 * @param index Index of the child to retrieve.
 		 * @return Pointer to the child at the specified index.
 		 */
 		const Gadget* getChild(u32 index) const;
@@ -988,7 +988,7 @@ namespace WoopsiUI {
 		OutlineType _outline;					/**< Type of outline the gadget uses */
 		CloseType _closeType;					/**< Type of close method that should be called for the gadget */
 
-		FontBase* _font;
+		FontBase* _font;						/**< Font that the gadget will use for drawing text/glyphs */
 
 		// Context menu item definitions
 		WoopsiArray<NameValuePair> _contextMenuItems;	/**< List of all context menu name/value pairs */
