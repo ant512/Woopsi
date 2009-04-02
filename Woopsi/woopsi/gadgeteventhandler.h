@@ -24,13 +24,6 @@ namespace WoopsiUI {
 		 */
 		virtual inline ~GadgetEventHandler() { }
 		
-		/**
-		 * Event handler function.  Each gadget that this class is the event handler for will
-		 * call this function and pass it details of the event in the EventArgs parameter.
-		 * @param e The event's argument data.
-		 */
-		virtual bool handleEvent(const GadgetEventArgs& e) { return true; };
-
 		virtual void handleClickEvent(const GadgetEventArgs& e) { };
 
 		virtual void handleDragEvent(const GadgetEventArgs& e) { };

@@ -37,6 +37,7 @@ Change Log
        - Renamed EventHandler to GadgetEventHandler.
        - Gadgets can now have multiple event handlers.
        - Replaced handleEvent() method with multiple methods.
+       - Removed EventType enum from GadgetEventHandler.
 
   V0.37 (20090112)
   

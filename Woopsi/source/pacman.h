@@ -48,9 +48,10 @@ public:
 	void run();
 	void endGame();
 
-	bool handleEvent(const GadgetEventArgs& e);
-	void handleKeyPress(const GadgetEventArgs& e);
-	void handleRelease(const GadgetEventArgs& e);
+	void handleActionEvent(const GadgetEventArgs& e);
+	void handleKeyPressEvent(const GadgetEventArgs& e);
+	void handleReleaseEvent(const GadgetEventArgs& e);
+	void handleContextMenuSelectionEvent(const GadgetEventArgs& e);
 
 private:
 	AmigaScreen* _screen;

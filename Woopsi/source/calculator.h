@@ -16,8 +16,7 @@ public:
 	Calculator(AmigaScreen* screen);
 	void buttonClicked(Gadget* gadget);
 
-	bool handleEvent(const GadgetEventArgs& e);
-	void handleClick(const GadgetEventArgs& e);
+	void handleClickEvent(const GadgetEventArgs& e);
 
 private:
 	AmigaScreen* _screen;

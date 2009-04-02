@@ -70,42 +70,31 @@ void PacMan::endGame() {
 	_superBitmap->drawText(10, 40, _superBitmap->getFont(), "Game Over");
 }
 
-bool PacMan::handleEvent(const GadgetEventArgs& e) {
+void PacMan::handleActionEvent(const GadgetEventArgs& e) {
 
 	// Check for VBL
 	if (e.getSource() == _timer) {
 		if (!_gameOver) {
 			run();
 		}
-		return true;
-	}
-
-	switch (e.getType()) {
-		case EVENT_KEY_PRESS:
-			handleKeyPress(e);
-			return true;
-		case EVENT_RELEASE:
-			handleRelease(e);
-			return true;
-		case EVENT_CONTEXT_MENU_SELECTION:
-			switch (woopsiApplication->getContextMenuValue()) {
-				case 1:
-					_player->resetLives();
-					_gameOver = false;
-					reset();
-					break;
-				case 2:
-					_window->close();
-					break;
-			}
-			return true;
-
-		default:
-			return false;
 	}
 }
 
-void PacMan::handleKeyPress(const GadgetEventArgs& e) {
+void PacMan::handleContextMenuSelectionEvent(const GadgetEventArgs& e) {
+
+	switch (woopsiApplication->getContextMenuValue()) {
+		case 1:
+			_player->resetLives();
+			_gameOver = false;
+			reset();
+			break;
+		case 2:
+			_window->close();
+			break;
+	}
+}
+
+void PacMan::handleKeyPressEvent(const GadgetEventArgs& e) {
 	if (_window->hasFocus()) {
 		if (e.getSource()->getRefcon() == 1) {
 			switch (e.getKeyCode()) {
@@ -158,7 +147,7 @@ void PacMan::initGUI() {
 	_timer->start();
 }
 
-void PacMan::handleRelease(const GadgetEventArgs& e) {
+void PacMan::handleReleaseEvent(const GadgetEventArgs& e) {
 	if (e.getSource()->getRefcon() == 3) {
 		_player->resetLives();
 		_gameOver = false;

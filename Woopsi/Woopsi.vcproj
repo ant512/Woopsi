@@ -420,10 +420,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\eventhandler.h"
-				>
-			</File>
-			<File
 				RelativePath=".\woopsi\fixedwidthfontbase.h"
 				>
 			</File>
@@ -441,6 +437,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\gadgeteventargs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\gadgeteventhandler.h"
 				>
 			</File>
 			<File

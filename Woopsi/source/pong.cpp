@@ -131,27 +131,13 @@ void Pong::draw() {
 	}
 }
 
-bool Pong::handleEvent(const GadgetEventArgs& e) {
-
+void Pong::handleActionEvent(const GadgetEventArgs& e) {
 	if (e.getSource() == _timer) {
-		if (e.getType() == EVENT_ACTION) {
-			play();
-		}
-	}
-
-	switch (e.getType()) {
-		case EVENT_KEY_PRESS:
-			handleKeyPress(e);
-			return true;
-		case EVENT_KEY_RELEASE:
-			handleKeyRelease(e);
-			return true;
-		default:
-			return false;
+		play();
 	}
 }
 
-void Pong::handleKeyPress(const GadgetEventArgs& e) {
+void Pong::handleKeyPressEvent(const GadgetEventArgs& e) {
 	if (_window->hasFocus()) {
 		switch (e.getKeyCode()) {
 			case KEY_CODE_UP:
@@ -166,7 +152,7 @@ void Pong::handleKeyPress(const GadgetEventArgs& e) {
 	}
 }
 
-void Pong::handleKeyRelease(const GadgetEventArgs& e) {
+void Pong::handleKeyReleaseEvent(const GadgetEventArgs& e) {
 	if (_window->hasFocus()) {
 		switch (e.getKeyCode()) {
 			case KEY_CODE_UP:

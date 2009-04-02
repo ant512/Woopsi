@@ -296,7 +296,7 @@ bool Gadget::checkCollision(Gadget* gadget) {
 
 void Gadget::raiseClickEvent(s16 x, s16 y) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_CLICK, x, y, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleClickEvent(e);
@@ -306,7 +306,7 @@ void Gadget::raiseClickEvent(s16 x, s16 y) {
 
 void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_DOUBLE_CLICK, x, y, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleDoubleClickEvent(e);
@@ -316,7 +316,7 @@ void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
 
 void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_SHIFT_CLICK, x, y, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleShiftClickEvent(e);
@@ -326,7 +326,7 @@ void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
 
 void Gadget::raiseReleaseEvent(s16 x, s16 y) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_RELEASE, x, y, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleReleaseEvent(e);
@@ -336,7 +336,7 @@ void Gadget::raiseReleaseEvent(s16 x, s16 y) {
 
 void Gadget::raiseReleaseOutsideEvent(s16 x, s16 y) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_RELEASE_OUTSIDE, x, y, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleReleaseOutsideEvent(e);
@@ -346,7 +346,7 @@ void Gadget::raiseReleaseOutsideEvent(s16 x, s16 y) {
 
 void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_DRAG, x, y, vX, vY, KEY_CODE_NONE);
+		GadgetEventArgs e(this, x, y, vX, vY, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleDragEvent(e);
@@ -356,7 +356,7 @@ void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
 
 void Gadget::raiseMoveForwardEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_MOVE_FORWARD, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleMoveForwardEvent(e);
@@ -366,7 +366,7 @@ void Gadget::raiseMoveForwardEvent() {
 
 void Gadget::raiseMoveBackwardEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_MOVE_FORWARD, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleMoveBackwardEvent(e);
@@ -376,7 +376,7 @@ void Gadget::raiseMoveBackwardEvent() {
 
 void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_KEY_PRESS, 0, 0, 0, 0, keyCode);
+		GadgetEventArgs e(this, 0, 0, 0, 0, keyCode);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleKeyPressEvent(e);
@@ -386,7 +386,7 @@ void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
 
 void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_KEY_RELEASE, 0, 0, 0, 0, keyCode);
+		GadgetEventArgs e(this, 0, 0, 0, 0, keyCode);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleKeyReleaseEvent(e);
@@ -396,7 +396,7 @@ void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
 
 void Gadget::raiseLidCloseEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_LID_CLOSE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleLidCloseEvent(e);
@@ -406,7 +406,7 @@ void Gadget::raiseLidCloseEvent() {
 
 void Gadget::raiseLidOpenEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_LID_OPEN, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleLidOpenEvent(e);
@@ -416,7 +416,7 @@ void Gadget::raiseLidOpenEvent() {
 
 void Gadget::raiseFocusEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_FOCUS, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleFocusEvent(e);
@@ -426,7 +426,7 @@ void Gadget::raiseFocusEvent() {
 
 void Gadget::raiseBlurEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_BLUR, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleBlurEvent(e);
@@ -436,7 +436,7 @@ void Gadget::raiseBlurEvent() {
 
 void Gadget::raiseCloseEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_CLOSE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleCloseEvent(e);
@@ -446,7 +446,7 @@ void Gadget::raiseCloseEvent() {
 
 void Gadget::raiseHideEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_HIDE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleHideEvent(e);
@@ -456,7 +456,7 @@ void Gadget::raiseHideEvent() {
 
 void Gadget::raiseShowEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_SHOW, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleShowEvent(e);
@@ -466,7 +466,7 @@ void Gadget::raiseShowEvent() {
 
 void Gadget::raiseShelveEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_SHELVE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleShelveEvent(e);
@@ -476,7 +476,7 @@ void Gadget::raiseShelveEvent() {
 
 void Gadget::raiseUnshelveEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_UNSHELVE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleUnshelveEvent(e);
@@ -486,7 +486,7 @@ void Gadget::raiseUnshelveEvent() {
 
 void Gadget::raiseEnableEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_ENABLE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleEnableEvent(e);
@@ -496,7 +496,7 @@ void Gadget::raiseEnableEvent() {
 
 void Gadget::raiseDisableEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_DISABLE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleDisableEvent(e);
@@ -506,7 +506,7 @@ void Gadget::raiseDisableEvent() {
 
 void Gadget::raiseValueChangeEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_VALUE_CHANGE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleValueChangeEvent(e);
@@ -516,7 +516,7 @@ void Gadget::raiseValueChangeEvent() {
 
 void Gadget::raiseResizeEvent(u16 width, u16 height) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_RESIZE, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleResizeEvent(e);
@@ -526,7 +526,7 @@ void Gadget::raiseResizeEvent(u16 width, u16 height) {
 
 void Gadget::raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_MOVE, x, y, vX, vY, KEY_CODE_NONE);
+		GadgetEventArgs e(this, x, y, vX, vY, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleMoveEvent(e);
@@ -536,7 +536,7 @@ void Gadget::raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY) {
 
 void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_ACTION, x, y, vX, vY, keyCode);
+		GadgetEventArgs e(this, x, y, vX, vY, keyCode);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleActionEvent(e);
@@ -546,7 +546,7 @@ void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
 
 void Gadget::raiseContextMenuSelectionEvent() {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, EVENT_CONTEXT_MENU_SELECTION, 0, 0, 0, 0, KEY_CODE_NONE);
+		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleContextMenuSelectionEvent(e);

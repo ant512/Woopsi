@@ -231,17 +231,7 @@ void Calculator::itoa(s32 n, char s[])
     reverse(s);
 }
 
-bool Calculator::handleEvent(const GadgetEventArgs& e) {
-	switch (e.getType()) {
-		case EVENT_CLICK:
-			handleClick(e);
-			return true;
-		default:
-			return false;
-	}
-}
-
-void Calculator::handleClick(const GadgetEventArgs& e) {
+void Calculator::handleClickEvent(const GadgetEventArgs& e) {
 	Button* button = (Button*)e.getSource();
 
 	if (strcmp(button->getText(), "=") == 0) {
