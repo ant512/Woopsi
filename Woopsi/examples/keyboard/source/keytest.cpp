@@ -34,7 +34,7 @@ void KeyTest::startup() {
 
 	// Create keyboard
 	_keyboard = new WoopsiKeyboard(0, 0, 256, 192, "Keyboard", Gadget::GADGET_DRAGGABLE, 0);
-	_keyboard->addGadgetEventHandler(this);
+	_keyboard->addKeyboardEventHandler(this);
 	inScreen->addGadget(_keyboard);
 	
 	// Ensure Woopsi can draw itself
@@ -50,19 +50,21 @@ void KeyTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-void KeyTest::handleActionEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _keyboard) {
-			const WoopsiKey* key = _keyboard->getLastKeyClicked();
-			
-			// Append key value to output box if the last key was not a modifier
-			if (key->getValue() != '\0') {
-				// Not modifier; append value
-				_output->appendText(key->getValue());
-			} else if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
-				// Delete last character
-				_output->removeText(_output->getTextLength() - 1);
-			}
-		}
+void KeyTest::handleKeyboardPressEvent(const KeyboardEventArgs& e) {
+	processKey(e.getKey());
+}
+
+void KeyTest::handleKeyboardRepeatEvent(const KeyboardEventArgs& e) {
+	processKey(e.getKey());
+}
+
+void KeyTest::processKey(const WoopsiKey* key) {
+	// Append key value to output box if the last key was not a modifier
+	if (key->getValue() != '\0') {
+		// Not modifier; append value
+		_output->appendText(key->getValue());
+	} else if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
+		// Delete last character
+		_output->removeText(_output->getTextLength() - 1);
 	}
 }

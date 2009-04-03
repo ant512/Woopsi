@@ -204,7 +204,7 @@ void ListData::raiseDataChangedEvent() {
 	ListDataEventArgs eventArgs(this);
 
 	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
-		_listDataEventhandlers.at(i)->handleListDataChangedEvent(&eventArgs);
+		_listDataEventhandlers.at(i)->handleListDataChangedEvent(eventArgs);
 	}
 }
 
@@ -213,6 +213,6 @@ void ListData::raiseSelectionChangedEvent() {
 	ListDataEventArgs eventArgs(this);
 
 	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
-		_listDataEventhandlers.at(i)->handleListDataSelectionChangedEvent(&eventArgs);
+		_listDataEventhandlers.at(i)->handleListDataSelectionChangedEvent(eventArgs);
 	}
 }

@@ -3,6 +3,8 @@
 #include "woopsikey.h"
 #include "woopsi.h"
 #include "woopsitimer.h"
+#include "keyboardeventhandler.h"
+#include "keyboardeventargs.h"
 
 using namespace WoopsiUI;
 
@@ -115,18 +117,14 @@ void WoopsiKeyboard::handleActionEvent(const GadgetEventArgs& e) {
 
 		// Check if the event was fired by the timer (key repeat)
 		if (e.getSource() == _timer) {
-			if (_lastKeyClicked != NULL) {
-				if (_lastKeyClicked->isClicked()) {
 
-					// Event is a key repeat, so fire another action event
-					raiseActionEvent(e.getX(), e.getY(), e.getVX(), e.getVY(), e.getKeyCode());
+			// Event is a key repeat, so raise repeat event
+			raiseKeyboardRepeatEvent((WoopsiKey*)getFocusedGadget());
 
-					// Ensure that subsequent repeats are faster
-					_timer->setTimeout(_secondaryRepeatTime);
+			// Ensure that subsequent repeats are faster
+			_timer->setTimeout(_secondaryRepeatTime);
 
-					return;
-				}
-			}
+			return;
 		}
 	}
 
@@ -181,6 +179,8 @@ void WoopsiKeyboard::handleReleaseEvent(const GadgetEventArgs& e) {
 			// Gadget not a decoration and not a timer, so must be a key
 			WoopsiKey* key = (WoopsiKey*)e.getSource();
 
+			raiseKeyboardReleaseEvent(key);
+
 			processKeyRelease(key);
 
 			// Stop the timer
@@ -200,6 +200,8 @@ void WoopsiKeyboard::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 
 			// Gadget not a decoration and not a timer, so must be a key
 			WoopsiKey* key = (WoopsiKey*)e.getSource();
+
+			raiseKeyboardReleaseEvent(key);
 
 			processKeyRelease(key);
 
@@ -221,12 +223,8 @@ void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
 			// Gadget not a decoration and not a timer, so must be a key
 			WoopsiKey* key = (WoopsiKey*)e.getSource();
 
-			// Need to check for buttons being clicked so that we can 
-			// handle key repeats correctly
-			_lastKeyClicked = key;
-
-			// Inform the keyboard's event handler that something has happened
-			raiseActionEvent(e.getX(), e.getY(), e.getVX(), e.getVY(), e.getKeyCode());
+			// Inform the keyboard's keyboard event handlers that a key has been pressed
+			raiseKeyboardPressEvent(key);
 
 			// Process the key after the handler has dealt with it and update
 			// the keyboard accordingly.  We do this after the handler because
@@ -356,6 +354,45 @@ void WoopsiKeyboard::showControlCapsLockKeys() {
 	for (s32 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i] != _timer) {
 			((WoopsiKey*)_gadgets[i])->setKeyMode(WoopsiKey::KEY_MODE_CONTROL_CAPS_LOCK);
+		}
+	}
+}
+
+void WoopsiKeyboard::removeKeyboardEventHandler(KeyboardEventHandler* eventHandler) {
+	for (s32 i = 0; i < _keyboardEventHandlers.size(); ++i) {
+		if (_keyboardEventHandlers.at(i) == eventHandler) {
+			_keyboardEventHandlers.erase(i);
+			return;
+		}
+	}
+}
+
+void WoopsiKeyboard::raiseKeyboardPressEvent(WoopsiKey* key) {
+	if (raisesEvents()) {
+		KeyboardEventArgs e(this, key);
+
+		for (int i = 0; i < _keyboardEventHandlers.size(); ++i) {
+			_keyboardEventHandlers.at(i)->handleKeyboardPressEvent(e);
+		}
+	}
+}
+
+void WoopsiKeyboard::raiseKeyboardRepeatEvent(WoopsiKey* key) {
+	if (raisesEvents()) {
+		KeyboardEventArgs e(this, key);
+
+		for (int i = 0; i < _keyboardEventHandlers.size(); ++i) {
+			_keyboardEventHandlers.at(i)->handleKeyboardRepeatEvent(e);
+		}
+	}
+}
+
+void WoopsiKeyboard::raiseKeyboardReleaseEvent(WoopsiKey* key) {
+	if (raisesEvents()) {
+		KeyboardEventArgs e(this, key);
+
+		for (int i = 0; i < _keyboardEventHandlers.size(); ++i) {
+			_keyboardEventHandlers.at(i)->handleKeyboardReleaseEvent(e);
 		}
 	}
 }

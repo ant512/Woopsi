@@ -182,13 +182,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles list data changed events.
+		 * @param e Event arguments.
 		 */
-		virtual void handleListDataChangedEvent(const ListDataEventArgs* e);
+		virtual void handleListDataChangedEvent(const ListDataEventArgs& e);
 
 		/**
 		 * Handles list selection changed events.
+		 * @param e Event arguments.
 		 */
-		virtual void handleListDataSelectionChangedEvent(const ListDataEventArgs* e);
+		virtual void handleListDataSelectionChangedEvent(const ListDataEventArgs& e);
 
 	protected:
 		ListData _options;								/**< Option storage. */

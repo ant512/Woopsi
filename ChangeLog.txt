@@ -39,6 +39,15 @@ Change Log
        - Gadgets can now have multiple event handlers.
        - Replaced handleEvent() method with multiple methods.
        - Removed EventType enum from GadgetEventHandler.
+     - ListData events passed by references instead of pointers.
+     - WoopsiKeyboard includes a set of new events:
+       - Press
+       - Release
+       - Repeat
+     - WoopsiKeyboard no longer stores the last key clicked.
+     - WoopsiKeyboard has set of event-related classes:
+       - KeyboardEventHandler
+       - KeyboardEventArgs
 
   V0.37 (20090112)
   

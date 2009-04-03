@@ -2,7 +2,7 @@
 #define _GADGETEVENTHANDLER_H_
 
 #include <nds.h>
-#include "GadgetEventArgs.h"
+#include "gadgeteventargs.h"
 
 namespace WoopsiUI {
 

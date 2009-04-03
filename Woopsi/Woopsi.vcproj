@@ -456,6 +456,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\keyboardeventargs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\keyboardeventhandler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\label.h"
 				>
 			</File>

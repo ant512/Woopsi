@@ -3,11 +3,13 @@
 
 #include <nds.h>
 #include "amigawindow.h"
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 
 	class WoopsiKey;
 	class WoopsiTimer;
+	class KeyboardEventHandler;
 
 	/**
 	 * Class providing a window containing a multitude of buttons arranged like a keyboard.
@@ -60,12 +62,6 @@ namespace WoopsiUI {
 		virtual void processKeyRelease(WoopsiKey* key);
 
 		/**
-		 * Get a pointer to the last key that was clicked.
-		 * @return Pointer to the last key that was clicked.
-		 */
-		inline const WoopsiKey* getLastKeyClicked() const { return _lastKeyClicked; };
-
-		/**
 		 * Check if the shift key is held down.
 		 * @return True if shift is down.
 		 */
@@ -83,8 +79,20 @@ namespace WoopsiUI {
 		 */
 		inline const bool isCapsLockDown() const { return _isCapsLockDown; };
 
+		/**
+		 * Adds a keyboard event handler.  The event handler will receive
+		 * all keyboard events raised by this gadget.
+		 * @param eventHandler A pointer to the event handler.
+		 */
+		inline void addKeyboardEventHandler(KeyboardEventHandler* eventHandler) { _keyboardEventHandlers.push_back(eventHandler); };
+
+		/**
+		 * Remove a keyboard event handler.
+		 * @param eventHandler A pointer to the event handler to remove.
+		 */
+		void removeKeyboardEventHandler(KeyboardEventHandler* eventHandler);
+
 	protected:
-		WoopsiKey* _lastKeyClicked;		/**< Pointer to the last key clicked */
 		WoopsiKey* _shiftKey;			/**< Pointer to the shift key */
 		WoopsiKey* _controlKey;			/**< Pointer to the control key */
 		WoopsiKey* _capsLockKey;		/**< Pointer to the caps lock key */
@@ -94,6 +102,7 @@ namespace WoopsiUI {
 		WoopsiTimer* _timer;			/**< Timer for handling key repeats */
 		u32 _initialRepeatTime;			/**< Time until held key starts to repeat */
 		u32 _secondaryRepeatTime;		/**< Time until a key already repeating repeats again */
+		WoopsiArray<KeyboardEventHandler*> _keyboardEventHandlers;	/**< List of keyboard event handlers */
 
 		/**
 		 * Swap the keyboard layout to the correct display based on current modifier keys.
@@ -139,6 +148,24 @@ namespace WoopsiUI {
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline WoopsiKeyboard(const WoopsiKeyboard& keyboard) : AmigaWindow(keyboard) { };
+
+		/**
+		 * Raise a press event.  Raised when a key is pressed.
+		 * @param key The key that was pressed.
+		 */
+		void raiseKeyboardPressEvent(WoopsiKey* key);
+
+		/**
+		 * Raise a repeat event.  Raised when a key is held and repeats.
+		 * @param key The key that was pressed.
+		 */
+		void raiseKeyboardRepeatEvent(WoopsiKey* key);
+
+		/**
+		 * Raise a release event.  Raised when a key is released.
+		 * @param key The key that was released.
+		 */
+		void raiseKeyboardReleaseEvent(WoopsiKey* key);
 	};
 }
 

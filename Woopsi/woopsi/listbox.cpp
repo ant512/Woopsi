@@ -257,11 +257,11 @@ void ListBox::removeAllOptions() {
 	_options.removeAllItems();
 }
 
-void ListBox::handleListDataChangedEvent(const ListDataEventArgs* e) {
+void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
 	resizeCanvas();
 }
 
-void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs* e) {
+void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
 	draw();
 	raiseValueChangeEvent();
 }

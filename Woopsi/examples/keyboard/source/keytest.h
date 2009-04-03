@@ -2,22 +2,27 @@
 #define _KEY_TEST_H_
 
 #include "woopsi.h"
-#include "gadgeteventhandler.h"
+#include "keyboardeventhandler.h"
+#include "keyboardeventargs.h"
 #include "woopsikeyboard.h"
 #include "multilinetextbox.h"
+#include "woopsikey.h"
 
 using namespace WoopsiUI;
 
-class KeyTest : public Woopsi, public GadgetEventHandler {
+class KeyTest : public Woopsi, public KeyboardEventHandler {
 public:
 	void startup();
 	void shutdown();
-	void handleActionEvent(const GadgetEventArgs& e);
+	void handleKeyboardPressEvent(const KeyboardEventArgs& e);
+	void handleKeyboardRepeatEvent(const KeyboardEventArgs& e);
 	
 private:
 	WoopsiKeyboard* _keyboard;
 	MultiLineTextBox* _output;
 	WoopsiTimer* _timer;
+	
+	void processKey(const WoopsiKey* key);
 };
 
 #endif
