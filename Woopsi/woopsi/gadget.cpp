@@ -826,7 +826,7 @@ void Gadget::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>*
 			}
 
 			// Remove the original rectangle
-			invalidRects->erase(invalidRects->begin() + i);
+			invalidRects->erase(i);
 
 			// Force the loop to re-examine the new rectangle at this index
 			i--;
@@ -890,7 +890,7 @@ void Gadget::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>*
 							// Insert the new rectangle at the start so we don't
 							// test it again
 							if ((newRect.height > 0) && (newRect.width > 0)) {
-								invalidRects->insert(invalidRects->begin(), newRect);
+								invalidRects->insert(0, newRect);
 							}
 
 							// Increase iterator to compensate for insertion
@@ -1022,7 +1022,7 @@ void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
 			Woopsi::addToDeleteQueue(gadget);
 
 			// Remove gadget from main vector
-			_gadgets.erase(_gadgets.begin() + i);
+			_gadgets.erase(i);
 
 			break;
 		}
@@ -1040,7 +1040,7 @@ bool Gadget::moveChildToShelvedList(Gadget* gadget) {
 			_shelvedGadgets.push_back(gadget);
 
 			// Remove gadget from main vector
-			_gadgets.erase(_gadgets.begin() + i);
+			_gadgets.erase(i);
 
 			return true;
 		}
@@ -1060,7 +1060,7 @@ bool Gadget::moveShelvedToChildList(Gadget* gadget) {
 			if (gadget->isDecoration()) {
 
 				// Add gadget to end of decoration list
-				_gadgets.insert(_gadgets.begin() + _decorationCount, gadget);
+				_gadgets.insert(_decorationCount, gadget);
 				_decorationCount++;
 			} else {
 
@@ -1069,7 +1069,7 @@ bool Gadget::moveShelvedToChildList(Gadget* gadget) {
 			}
 
 			// Remove gadget from shelved vector
-			_shelvedGadgets.erase(_shelvedGadgets.begin() + i);
+			_shelvedGadgets.erase(i);
 
 			return true;
 		}
@@ -1693,7 +1693,7 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 	s32 index = getGadgetIndex(gadget);
 
 	if ((index > -1) && (index < _gadgets.size() - 1)) {
-		_gadgets.erase(_gadgets.begin() + index);
+		_gadgets.erase(index);
 		_gadgets.push_back(gadget);
 
 		gadget->invalidateVisibleRectCache();
@@ -1725,8 +1725,8 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 		gadget->invalidateVisibleRectCache();
 		invalidateLowerGadgetsVisibleRectCache(gadget);
 
-		_gadgets.erase(_gadgets.begin() + index);
-		_gadgets.insert(_gadgets.begin() + _decorationCount, gadget);
+		_gadgets.erase(index);
+		_gadgets.insert(_decorationCount, gadget);
 
 		gadget->draw();
 
@@ -1743,7 +1743,7 @@ void Gadget::addGadget(Gadget* gadget) {
 
 		// Process decorations and standard gadgets differently
 		if (gadget->isDecoration()) {
-			_gadgets.insert(_gadgets.begin() + _decorationCount, gadget);
+			_gadgets.insert(_decorationCount, gadget);
 
 			// Increase the decoration count
 			_decorationCount++;
@@ -1771,12 +1771,12 @@ void Gadget::insertGadget(Gadget* gadget) {
 
 		// Process decorations and standard gadgets differently
 		if (gadget->isDecoration()) {
-			_gadgets.insert(_gadgets.begin(), gadget);
+			_gadgets.insert(0, gadget);
 
 			// Increate the decoration count
 			_decorationCount++;
 		} else {
-			_gadgets.insert(_gadgets.begin() + _decorationCount, gadget);
+			_gadgets.insert(_decorationCount, gadget);
 		}
 
 		gadget->enableDrawing();
@@ -2054,7 +2054,7 @@ bool Gadget::removeChild(Gadget* gadget) {
 		if (_gadgets[i] == gadget) {
 
 			// Remove gadget from main vector
-			_gadgets.erase(_gadgets.begin() + i);
+			_gadgets.erase(i);
 
 			return true;
 		}
@@ -2068,7 +2068,7 @@ bool Gadget::removeChild(Gadget* gadget) {
 			_shelvedGadgets[i]->setParent(NULL);
 
 			// Remove gadget from shelved vector
-			_shelvedGadgets.erase(_shelvedGadgets.begin() + i);
+			_shelvedGadgets.erase(i);
 
 			gadget->disableDrawing();
 

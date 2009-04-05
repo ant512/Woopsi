@@ -314,8 +314,8 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 			eraseGadget(gadget);
 
 			// Swap
-			_gadgets.erase(_gadgets.begin() + gadgetSource);
-			_gadgets.insert(_gadgets.begin() + gadgetDest, gadget);
+			_gadgets.erase(gadgetSource);
+			_gadgets.insert(gadgetDest, gadget);
 
 			// Invalidate all gadgets that collide with the shifted gadget
 			for (s32 i = 0; i < _gadgets.size(); i++) {

@@ -86,14 +86,6 @@ public:
 	 */
 	T& operator[](const s32 index) const;
 
-	/**
-	 * Return the starting index.  Beginning element is always 0.
-	 * Only included to allow painless swapping between vector and
-	 * this class.
-	 * @return Always returns 0.
-	 */
-	u32 begin() const;
-
 private:
 	T* _data;								/**< Internal array of data items */
 	s32 _size;								/**< Number of items in the array */
@@ -229,11 +221,6 @@ template <class T>
 void WoopsiArray<T>::clear() {
 	// All we need to do is reset the size value
 	_size = 0;
-}
-
-template <class T>
-u32 WoopsiArray<T>::begin() const {
-	return 0;
 }
 
 #endif

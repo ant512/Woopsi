@@ -95,14 +95,6 @@ public:
 	T& operator[](const s32 index);
 
 	/**
-	 * Return the starting index.  Beginning element is always 0.
-	 * Only included to allow painless swapping between vector and
-	 * this class.
-	 * @return Always returns 0.
-	 */
-	u32 begin();
-
-	/**
 	 * Get an iterator for this list.
 	 * @return An iterator for the list.
 	 */
@@ -326,11 +318,6 @@ void LinkedList<T>::clear() {
 	_foot = NULL;
 
 	_size = 0;
-}
-
-template <class T>
-u32 LinkedList<T>::begin() {
-	return 0;
 }
 
 template <class T>

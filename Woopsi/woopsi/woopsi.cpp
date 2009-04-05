@@ -521,7 +521,7 @@ void Woopsi::unregisterFromVBL(WoopsiTimer* timer) {
 	// Locate gadget in the list
 	for (s32 i = 0; i < _vblListeners.size(); i++) {
 		if (_vblListeners[i] == timer) {
-			_vblListeners.erase(_vblListeners.begin() + i);
+			_vblListeners.erase(i);
 			return;
 		}
 	}
