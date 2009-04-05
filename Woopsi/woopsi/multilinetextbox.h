@@ -54,11 +54,6 @@ namespace WoopsiUI {
 		MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
 
 		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Draw the region of the textbox within the clipping rect.
 		 * Should not be called directly.
 		 * @param clipRect The clipping rect to limit drawing to.

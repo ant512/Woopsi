@@ -85,7 +85,7 @@ public:
 				break;
 		}
 
-		_superBitmap->draw();
+		_superBitmap->redraw();
 		_oldStylusX = e.getX();
 		_oldStylusY = e.getY();
 	};
@@ -104,7 +104,7 @@ public:
 				break;
 		}
 		
-		_superBitmap->draw();
+		_superBitmap->redraw();
 		_oldStylusX = e.getX();
 		_oldStylusY = e.getY();
 	};
@@ -123,7 +123,7 @@ public:
 				break;
 		}
 
-		_superBitmap->draw();
+		_superBitmap->redraw();
 		_oldStylusX = x;
 		_oldStylusY = y;
 		

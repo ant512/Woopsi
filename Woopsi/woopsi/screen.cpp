@@ -325,7 +325,7 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 			}
 
 			// Redraw the gadget
-			gadget->draw();
+			gadget->redraw();
 
 			// Give focus to the highest gadget in the stack
 			_gadgets[_gadgets.size() - 1]->focus();
@@ -359,5 +359,5 @@ void Screen::setTitle(const char* title) {
 	// Copy text
 	strcpy(_title, title);
 
-	draw();
+	redraw();
 }

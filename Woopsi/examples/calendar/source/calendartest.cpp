@@ -29,7 +29,7 @@ void CalendarTest::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 }
 
 void CalendarTest::shutdown() {

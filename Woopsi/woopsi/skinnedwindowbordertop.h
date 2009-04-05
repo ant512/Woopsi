@@ -15,7 +15,6 @@ namespace WoopsiUI {
 		SkinnedWindowBorderTop(s16 x, u16 width, Window* window, const WindowSkin* skin);
 
 		virtual void draw(Rect clipRect);
-		virtual void draw();
 
 	protected:
 		const WindowSkin* _skin;

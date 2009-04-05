@@ -27,7 +27,7 @@ void HelloWorld::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 }
 
 void HelloWorld::shutdown() {

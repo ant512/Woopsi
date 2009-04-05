@@ -87,7 +87,7 @@ void AmigaWindow::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		draw();
+		redraw();
 	}
 }
 
@@ -172,13 +172,13 @@ bool AmigaWindow::focus() {
 
 		// Run focus on borders
 		if (_windowBorderTop != NULL) {
-			_windowBorderBottom->draw();
-			_windowBorderTop->draw();
-			_windowBorderLeft->draw();
-			_windowBorderRight->draw();
+			_windowBorderBottom->redraw();
+			_windowBorderTop->redraw();
+			_windowBorderLeft->redraw();
+			_windowBorderRight->redraw();
 
-			if (_depthButton != NULL) _depthButton->draw();
-			if (_closeButton != NULL) _closeButton->draw();
+			if (_depthButton != NULL) _depthButton->redraw();
+			if (_closeButton != NULL) _closeButton->redraw();
 		}
 
 		return true;
@@ -193,13 +193,13 @@ bool AmigaWindow::blur() {
 
 		// Run blur on borders
 		if (_windowBorderTop != NULL) {
-			_windowBorderBottom->draw();
-			_windowBorderTop->draw();
-			_windowBorderLeft->draw();
-			_windowBorderRight->draw();
+			_windowBorderBottom->redraw();
+			_windowBorderTop->redraw();
+			_windowBorderLeft->redraw();
+			_windowBorderRight->redraw();
 			
-			if (_depthButton != NULL) _depthButton->draw();
-			if (_closeButton != NULL) _closeButton->draw();
+			if (_depthButton != NULL) _depthButton->redraw();
+			if (_closeButton != NULL) _closeButton->redraw();
 		}
 
 		// Take focus away from child gadgets
@@ -266,7 +266,7 @@ bool AmigaWindow::resize(u16 width, u16 height) {
 		// Reset the permeable value
 		_flags.permeable = wasPermeable;
 
-		draw();
+		redraw();
 
 		raiseResizeEvent(width, height);
 
@@ -379,7 +379,7 @@ void AmigaWindow::showCloseButton() {
 
 		setPermeable(wasPermeable);
 
-		_closeButton->draw();
+		_closeButton->redraw();
 	}
 }
 
@@ -400,7 +400,7 @@ void AmigaWindow::showDepthButton() {
 
 		setPermeable(wasPermeable);
 
-		_depthButton->draw();
+		_depthButton->redraw();
 	}
 }
 

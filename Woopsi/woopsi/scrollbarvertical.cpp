@@ -65,10 +65,6 @@ void ScrollbarVertical::setPageSize(s16 pageSize) {
 	_slider->setPageSize(pageSize);
 }
 
-void ScrollbarVertical::draw() {
-	Gadget::draw();
-}
-
 void ScrollbarVertical::draw(Rect clipRect) {
 }
 
@@ -182,7 +178,7 @@ bool ScrollbarVertical::resize(u16 width, u16 height) {
 
 	// Show and reset drawing
 	_flags.drawingEnabled = drawing;
-	draw();
+	redraw();
 
 	// Reset event raising
 	setRaisesEvents(events);

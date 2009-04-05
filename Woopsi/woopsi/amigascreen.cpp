@@ -64,7 +64,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		Gadget::draw();
+		redraw();
 	}
 }
 
@@ -126,7 +126,7 @@ void AmigaScreen::showFlipButton() {
 		_flipButton->addGadgetEventHandler(this);
 		addGadget(_flipButton);
 
-		_flipButton->draw();
+		_flipButton->redraw();
 	}
 }
 
@@ -144,7 +144,7 @@ void AmigaScreen::showDepthButton() {
 			_flipButton->moveTo(_width - SCREEN_DEPTH_BUTTON_WIDTH - SCREEN_FLIP_BUTTON_WIDTH, 0);
 		}
 		
-		_depthButton->draw();
+		_depthButton->redraw();
 	}
 }
 

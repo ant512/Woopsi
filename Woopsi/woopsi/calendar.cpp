@@ -70,7 +70,7 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 				e.getSource()->setOutlineType(OUTLINE_IN);
 				if (_selectedDayButton != NULL) {
 					_selectedDayButton->setOutlineType(OUTLINE_CLICK_DEPENDENT);
-					_selectedDayButton->draw();
+					_selectedDayButton->redraw();
 				}
 
 				_selectedDayButton = (Button*)e.getSource();
@@ -358,7 +358,7 @@ bool Calendar::resize(u16 width, u16 height) {
 		// Reset the permeable value
 		_flags.permeable = wasPermeable;
 
-		draw();
+		redraw();
 
 		raiseResizeEvent(width, height);
 

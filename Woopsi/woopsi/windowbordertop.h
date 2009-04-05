@@ -26,11 +26,6 @@ namespace WoopsiUI {
 		WindowBorderTop(s16 x, u16 width, u16 height, Window* window, FontBase* font = NULL);
 
 		/**
-		 * Draws the gadget.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Draw the area of this gadget that falls within the clipping region.
 		 * Called by the draw() function to draw all visible regions.
 		 * @param clipRect The clipping region to draw.

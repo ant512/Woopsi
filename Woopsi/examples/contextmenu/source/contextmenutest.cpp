@@ -36,7 +36,7 @@ void ContextMenuTest::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 }
 
 void ContextMenuTest::shutdown() {

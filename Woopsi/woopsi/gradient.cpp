@@ -114,7 +114,7 @@ bool Gradient::resize(u16 width, u16 height) {
 			calculate();
 		}
 
-		Gadget::draw();
+		redraw();
 
 		raiseResizeEvent(width, height);
 

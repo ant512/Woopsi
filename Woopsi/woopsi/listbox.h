@@ -90,11 +90,6 @@ namespace WoopsiUI {
 		virtual void draw(Rect clipRect);
 
 		/**
-		 * Draw all visible regions of the gadget.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
 		 * option is selected, the index of the first selected option is returned.
 		 * @return The selected index.

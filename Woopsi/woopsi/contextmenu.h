@@ -43,11 +43,6 @@ namespace WoopsiUI {
 		virtual void draw(Rect clipRect);
 
 		/**
-		 * Draw all visible regions of the menu.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Resize the gadget to the new dimensions.
 		 * @param width The new width.
 		 * @param height The new height.

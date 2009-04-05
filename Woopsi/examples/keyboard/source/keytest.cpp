@@ -41,7 +41,7 @@ void KeyTest::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 }
 
 void KeyTest::shutdown() {

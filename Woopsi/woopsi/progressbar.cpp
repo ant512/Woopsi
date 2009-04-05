@@ -20,7 +20,7 @@ void ProgressBar::setValue(const s16 value) {
 	if (_value > _maximumValue) _value = _maximumValue;
 	if (_value < _minimumValue) _value = _minimumValue;
 
-	draw();
+	redraw();
 }
 
 void ProgressBar::draw(Rect clipRect) {

@@ -393,7 +393,7 @@ void Demo::startup() {
 	newScreen2->addGadget(_alert);
 
 	enableDrawing();	// Ensure Woopsi can now draw itself
-	draw();				// Draw initial state
+	redraw();			// Draw initial state
 
 	// Make welcome notice modal
 	//_alert->goModal();

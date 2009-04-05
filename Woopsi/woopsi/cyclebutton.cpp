@@ -134,7 +134,7 @@ bool CycleButton::release(s16 x, s16 y) {
 			raiseReleaseOutsideEvent(x, y);
 		}
 
-		draw();
+		redraw();
 
 		return true;
 	}

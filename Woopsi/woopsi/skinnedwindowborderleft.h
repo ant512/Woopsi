@@ -11,11 +11,6 @@ namespace WoopsiUI {
 	public:
 		SkinnedWindowBorderLeft(s16 x, s16 y, u16 height, const WindowSkin* skin);
 
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
 		virtual void draw(Rect clipRect);
 
 	protected:

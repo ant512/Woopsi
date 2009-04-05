@@ -27,11 +27,6 @@ namespace WoopsiUI {
 		 * @param toColour The end colour for the gradient (bottom colour).
 		 */
 		Gradient(s16 x, s16 y, u16 width, u16 height, u16 fromColour, u16 toColour);
-		
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
 
 		/**
 		 * Draw the region of the gadget that falls within the clipping rectangle.  Should not

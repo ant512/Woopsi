@@ -128,11 +128,6 @@ namespace WoopsiUI {
 		 */
 		virtual void draw(Rect clipRect);
 
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
 	protected:
 		MultiLineTextBox* _textbox;						/**< Pointer to the textbox */
 		ScrollbarVertical* _scrollbar;					/**< Pointer to the scrollbar */

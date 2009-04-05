@@ -44,7 +44,7 @@ void Button::draw(Rect clipRect) {
 
 bool Button::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
-		draw();
+		redraw();
 		return true;
 	}
 
@@ -73,7 +73,7 @@ bool Button::release(s16 x, s16 y) {
 			raiseReleaseOutsideEvent(x, y);
 		}
 
-		draw();
+		redraw();
 
 		return true;
 	}

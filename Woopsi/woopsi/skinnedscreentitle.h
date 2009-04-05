@@ -16,11 +16,6 @@ namespace WoopsiUI {
 	public:
 		SkinnedScreenTitle(Screen* screen, const ScreenSkin* skin);
 
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
 		virtual void draw(Rect clipRect);
 
 	protected:

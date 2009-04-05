@@ -24,11 +24,6 @@ namespace WoopsiUI {
 		SliderHorizontalGrip(s16 x, s16 y, u16 width, u16 height);
 
 		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Draw the region of the slider that falls within the
 		 * clipping rect.  Use draw() instead in most circumstances.
 		 * @param clipRect The clipping region.

@@ -43,22 +43,22 @@ const Text* ScrollingTextBox::getText() const {
 
 void ScrollingTextBox::setText(const char* text) {
 	_textbox->setText(text);
-	_scrollbar->draw();
+	_scrollbar->redraw();
 }
 
 void ScrollingTextBox::setText(const char text) {
 	_textbox->setText(text);
-	_scrollbar->draw();
+	_scrollbar->redraw();
 }
 
 void ScrollingTextBox::appendText(const char* text) {
 	_textbox->appendText(text);
-	_scrollbar->draw();
+	_scrollbar->redraw();
 }
 
 void ScrollingTextBox::appendText(const char text) {
 	_textbox->appendText(text);
-	_scrollbar->draw();
+	_scrollbar->redraw();
 }
 
 void ScrollingTextBox::setFont(FontBase* font) {
@@ -134,7 +134,7 @@ bool ScrollingTextBox::resize(u16 width, u16 height) {
 	// Reset drawing
 	_flags.drawingEnabled = drawing;
 
-	draw();
+	redraw();
 
 	return true;
 }

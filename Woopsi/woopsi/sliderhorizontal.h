@@ -92,11 +92,6 @@ namespace WoopsiUI {
 		void jumpGrip(u8 direction);
 
 		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Draw the region of the slider that falls within the
 		 * clipping rect.  Use draw() instead in most circumstances.
 		 * @param clipRect The clipping region.

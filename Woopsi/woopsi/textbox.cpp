@@ -52,7 +52,7 @@ void TextBox::setText(const char* text) {
 	_text->setText(text);
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
@@ -60,7 +60,7 @@ void TextBox::setText(const char text) {
 	_text->setText(text);
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
@@ -68,7 +68,7 @@ void TextBox::appendText(const char* text) {
 	_text->append(text);
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
@@ -76,7 +76,7 @@ void TextBox::appendText(const char text) {
 	_text->append(text);
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
@@ -93,7 +93,7 @@ void TextBox::insertText(const char* text, const u32 index) {
 
 	moveCursorToPosition(index + insertLen);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
@@ -103,7 +103,7 @@ void TextBox::insertText(const char text, const u32 index) {
 	// Cursor position just increases by one as we're inserting a single char
 	moveCursorToPosition(getCursorPosition() + 1);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
@@ -119,20 +119,20 @@ void TextBox::moveCursorToPosition(const u32 position) {
 	u32 len = _text->getLength();
 	_cursorPos = len >= position ? position : len;
 
-	draw();
+	redraw();
 }
 
 void TextBox::showCursor() {
 	if (!_showCursor) {
 		_showCursor = true;
-		draw();
+		redraw();
 	}
 }
 
 void TextBox::hideCursor() {
 	if (_showCursor) {
 		_showCursor = false;
-		draw();
+		redraw();
 	}
 }
 

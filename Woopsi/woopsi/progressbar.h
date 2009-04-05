@@ -59,11 +59,6 @@ namespace WoopsiUI {
 		void setValue(const s16 value);
 
 		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Draw the region of the progress bar that falls within the
 		 * clipping rect.  Use draw() instead in most circumstances.
 		 * @param clipRect The clipping region.

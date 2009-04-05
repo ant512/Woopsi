@@ -73,7 +73,7 @@ void AnimButton::handleActionEvent(const GadgetEventArgs& e) {
 				_animNormal->run();
 			}
 
-			Gadget::draw();
+			redraw();
 		}
 	}
 }

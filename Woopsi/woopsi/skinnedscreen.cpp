@@ -78,7 +78,7 @@ void SkinnedScreen::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		draw();
+		redraw();
 	}
 }
 
@@ -138,7 +138,7 @@ void SkinnedScreen::showFlipButton() {
 		_flipButton->addGadgetEventHandler(this);
 		addGadget(_flipButton);
 
-		_flipButton->draw();
+		_flipButton->redraw();
 	}
 }
 
@@ -154,7 +154,7 @@ void SkinnedScreen::showDepthButton() {
 		_depthButton->addGadgetEventHandler(this);
 		addGadget(_depthButton);
 
-		_depthButton->draw();
+		_depthButton->redraw();
 	}
 }
 

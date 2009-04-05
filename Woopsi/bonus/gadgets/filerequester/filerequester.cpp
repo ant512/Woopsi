@@ -205,7 +205,7 @@ void FileRequester::readDirectory() {
 	closedir(dir);
 
 	// Redraw the list
-	_listbox->draw();
+	_listbox->redraw();
 }
 
 void FileRequester::setPath(const char* path) {

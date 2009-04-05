@@ -66,7 +66,7 @@ void Calculator::appendText(const char* text) {
 		}
 	}
 
-	_output->draw();
+	_output->redraw();
 }
 
 void Calculator::doAdd() {
@@ -164,7 +164,7 @@ void Calculator::updateDisplay() {
 	itoa(_val1, _text);
 	
 	_output->setText(_text);
-	_output->draw();
+	_output->redraw();
 }
 
 void Calculator::doFunction() {
@@ -243,7 +243,7 @@ void Calculator::handleClickEvent(const GadgetEventArgs& e) {
 		_val1 = 0;
 		_val2 = 0;
 		_opCode = 0;
-		_output->draw();
+		_output->redraw();
 
 	} else if (strcmp(button->getText(), "+") == 0) {
 		doAdd();

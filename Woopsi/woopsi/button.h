@@ -40,11 +40,6 @@ namespace WoopsiUI {
 		 * @param clipRect The clipping rect to limit drawing to.
 		 */
 		virtual void draw(Rect clipRect);
-		
-		/**
-		 * Draw all visible regions of the textbox.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
 
 		/**
 		 * Click this gadget at the supplied co-ordinates.

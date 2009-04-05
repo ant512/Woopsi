@@ -37,7 +37,7 @@ void TimerTest::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 }
 
 void TimerTest::shutdown() {

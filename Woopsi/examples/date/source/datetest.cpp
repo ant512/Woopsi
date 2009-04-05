@@ -18,7 +18,7 @@ void DateTest::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 }
 
 void DateTest::shutdown() {

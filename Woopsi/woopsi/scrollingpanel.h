@@ -26,11 +26,6 @@ namespace WoopsiUI {
 		 * @param font Pointer to a font object to use for text output.
 		 */
 		ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
-
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
 		
 		/**
 		 * Draw a single region of the gadget.  Should not be called.

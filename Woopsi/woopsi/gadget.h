@@ -484,7 +484,7 @@ namespace WoopsiUI {
 		/**
 		 * Draws the visible regions of the gadget and the gadget's child gadgets.
 		 */
-		virtual void draw();
+		virtual void redraw();
 
 		/**
 		 * Erases the visible regions of the gadget by redrawing the gadgets

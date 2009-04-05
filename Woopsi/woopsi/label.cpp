@@ -77,55 +77,55 @@ void Label::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
 	_hAlignment = alignment;
 	calculateTextPosition();
 
-	draw();
+	redraw();
 }
 
 void Label::setTextAlignmentVert(TextAlignmentVert alignment) {
 	_vAlignment = alignment;
 	calculateTextPosition();
 
-	draw();
+	redraw();
 }
 
 void Label::setText(const char* text) {
 	_text->setText(text);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
 void Label::setText(const char text) {
 	_text->setText(text);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
 void Label::appendText(const char* text) {
 	_text->append(text);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
 void Label::appendText(const char text) {
 	_text->append(text);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
 void Label::insertText(const char* text, const u32 index) {
 	_text->insert(text, index);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
 void Label::insertText(const char text, const u32 index) {
 	_text->insert(text, index);
 	calculateTextPosition();
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }
 
@@ -148,7 +148,7 @@ bool Label::resize(u16 width, u16 height) {
 
 	// Show and reset drawing
 	_flags.drawingEnabled = drawing;
-	draw();
+	redraw();
 	
 	return resized;
 }

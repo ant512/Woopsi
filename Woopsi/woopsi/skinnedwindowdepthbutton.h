@@ -12,11 +12,6 @@ namespace WoopsiUI {
 	public:
 		SkinnedWindowDepthButton(s16 x, s16 y, const WindowSkin* skin);
 
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
 		virtual void draw(Rect clipRect);
 
 	protected:

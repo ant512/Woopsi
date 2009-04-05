@@ -104,11 +104,6 @@ namespace WoopsiUI {
 		void jumpGrip(u8 direction);
 
 		/**
-		 * Draw the slider.
-		 */
-		virtual void draw();
-
-		/**
 		 * Draw the region of the slider that falls within the
 		 * clipping rect.  Use draw() instead in most circumstances.
 		 * @param clipRect The clipping region.

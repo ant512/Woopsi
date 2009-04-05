@@ -27,7 +27,7 @@ bool SliderVerticalGrip::click(s16 x, s16 y) {
 
 		setDragging(x, y);
 
-		draw();
+		redraw();
 		return true;
 	}
 
@@ -39,7 +39,7 @@ bool SliderVerticalGrip::release(s16 x, s16 y) {
 
 		_flags.dragging = false;
 
-		draw();
+		redraw();
 		return true;
 	}
 

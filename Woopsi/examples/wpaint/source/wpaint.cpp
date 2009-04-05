@@ -25,7 +25,7 @@ void WPaint::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 }
 
 void WPaint::shutdown() {

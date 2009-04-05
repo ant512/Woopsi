@@ -78,14 +78,14 @@ void Debug::createGUI() {
 	if (_screen == NULL) {
 		_screen = new AmigaScreen("Debug", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 		woopsiApplication->addGadget(_screen);
-		_screen->draw();
+		_screen->redraw();
 	}
 
 	// Add debug window
 	if (_window == NULL) {
 		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE, 0);
 		_screen->addGadget(_window);
-		_window->draw();
+		_window->redraw();
 	}
 
 	// Create font

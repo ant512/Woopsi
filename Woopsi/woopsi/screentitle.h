@@ -27,11 +27,6 @@ namespace WoopsiUI {
 		ScreenTitle(u16 height, Screen* screen, FontBase* font = NULL);
 
 		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Draw the area of this gadget that falls within the clipping region.
 		 * Called by the draw() function to draw all visible regions.
 		 * @param clipRect The clipping region to draw.

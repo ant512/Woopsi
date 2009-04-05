@@ -34,7 +34,7 @@ bool DecorationGlyphButton::focus() {
 	if (!_flags.hasFocus) {
 		_flags.hasFocus = true;
 
-		Gadget::draw();
+		redraw();
 
 		return true;
 	}

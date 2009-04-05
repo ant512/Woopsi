@@ -792,7 +792,7 @@ void GraphicsPort::clear() {
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
 
-	_gadget->draw();
+	_gadget->redraw();
 }
 
 // Adjust co-ords from port-space to screen-space

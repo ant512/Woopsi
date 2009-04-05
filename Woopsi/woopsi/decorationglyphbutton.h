@@ -25,11 +25,6 @@ namespace WoopsiUI {
 		 * @param font Font to use.
 		 */
 		DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font = NULL);
-		
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
 
 		/**
 		 * Draw the region of the button that falls within the clipRect.

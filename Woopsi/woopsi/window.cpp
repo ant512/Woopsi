@@ -107,7 +107,7 @@ void Window::setTitle(const char* title) {
 	// Copy text
 	strcpy(_title, title);
 
-	draw();
+	redraw();
 }
 
 // Set the drag point and tell that gadget that it is being dragged

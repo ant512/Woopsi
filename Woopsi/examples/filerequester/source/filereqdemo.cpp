@@ -31,7 +31,7 @@ void FileReqDemo::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 	
 	// Attempt to initialise the FAT system
 	if (fatInitDefault()) {
@@ -44,7 +44,7 @@ void FileReqDemo::startup() {
 		req->setRefcon(1);
 		req->addGadgetEventHandler(this);
 		screen->addGadget(req);
-		req->draw();
+		req->redraw();
 	} else {
 	
 		// FAT initialisation failed!  Update textbox to tell user that we're stuck

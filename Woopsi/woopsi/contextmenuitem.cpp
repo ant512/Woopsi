@@ -33,7 +33,7 @@ void ContextMenuItem::draw(Rect clipRect) {
 
 bool ContextMenuItem::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
-		draw();
+		redraw();
 		return true;
 	}
 
@@ -42,7 +42,7 @@ bool ContextMenuItem::click(s16 x, s16 y) {
 
 bool ContextMenuItem::release(s16 x, s16 y) {
 	if (Gadget::release(x, y)) {
-		draw();
+		redraw();
 		return true;
 	}
 

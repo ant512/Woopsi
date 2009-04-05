@@ -100,7 +100,7 @@ void SkinnedWindow::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		draw();
+		redraw();
 	}
 }
 
@@ -182,13 +182,13 @@ bool SkinnedWindow::focus() {
 
 			// Run focus on borders
 			if (_windowBorderTop != NULL) {
-				_windowBorderBottom->draw();
-				_windowBorderTop->draw();
-				_windowBorderLeft->draw();
-				_windowBorderRight->draw();
+				_windowBorderBottom->redraw();
+				_windowBorderTop->redraw();
+				_windowBorderLeft->redraw();
+				_windowBorderRight->redraw();
 
-				if (_closeButton != NULL) _closeButton->draw();
-				if (_depthButton != NULL) _depthButton->draw();
+				if (_closeButton != NULL) _closeButton->redraw();
+				if (_depthButton != NULL) _depthButton->redraw();
 			}
 
 			return true;
@@ -203,13 +203,13 @@ bool SkinnedWindow::blur() {
 
 		// Run blur on borders
 		if (_windowBorderTop != NULL) {
-			_windowBorderBottom->draw();
-			_windowBorderTop->draw();
-			_windowBorderLeft->draw();
-			_windowBorderRight->draw();
+			_windowBorderBottom->redraw();
+			_windowBorderTop->redraw();
+			_windowBorderLeft->redraw();
+			_windowBorderRight->redraw();
 
-			if (_closeButton != NULL) _closeButton->draw();
-			if (_depthButton != NULL) _depthButton->draw();
+			if (_closeButton != NULL) _closeButton->redraw();
+			if (_depthButton != NULL) _depthButton->redraw();
 		}
 
 		// Take focus away from child gadgets
@@ -261,7 +261,7 @@ bool SkinnedWindow::resize(u16 width, u16 height) {
 		// Depth button
 		if (_windowFlags.showDepthButton) _depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
 
-		draw();
+		redraw();
 
 		raiseResizeEvent(width, height);
 
@@ -367,8 +367,8 @@ void SkinnedWindow::showCloseButton() {
 		_closeButton->addGadgetEventHandler(this);
 		addGadget(_closeButton);
 
-		_windowBorderTop->draw();
-		_closeButton->draw();
+		_windowBorderTop->redraw();
+		_closeButton->redraw();
 	}
 }
 
@@ -382,7 +382,7 @@ void SkinnedWindow::showDepthButton() {
 		_depthButton->addGadgetEventHandler(this);
 		addGadget(_depthButton);
 
-		_depthButton->draw();
+		_depthButton->redraw();
 	}
 }
 
@@ -394,7 +394,7 @@ void SkinnedWindow::hideCloseButton() {
 		_closeButton->close();
 		_closeButton = NULL;
 
-		_windowBorderTop->draw();
+		_windowBorderTop->redraw();
 	}
 }
 

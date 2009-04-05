@@ -234,12 +234,12 @@ void MultiLineTextBox::calculateVisibleRows() {
 
 void MultiLineTextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
 	_hAlignment = alignment;
-	Gadget::draw();
+	redraw();
 }
 
 void MultiLineTextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
 	_vAlignment = alignment;
-	Gadget::draw();
+	redraw();
 }
 
 const Text* MultiLineTextBox::getText() const {
@@ -265,7 +265,7 @@ void MultiLineTextBox::setText(const char* text) {
 		jump(0, -(_canvasHeight - _height));
 	}
 
-	Gadget::draw();
+	redraw();
 
 	raiseValueChangeEvent();
 }
@@ -300,7 +300,7 @@ void MultiLineTextBox::appendText(const char* text) {
 		jump(0, -(_canvasHeight - _height));
 	}
 
-	Gadget::draw();
+	redraw();
 
 	raiseValueChangeEvent();
 }
@@ -327,7 +327,7 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 		jump(0, -(_canvasHeight - _height));
 	}
 
-	Gadget::draw();
+	redraw();
 
 	raiseValueChangeEvent();
 }
@@ -345,7 +345,7 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 		jump(0, -(_canvasHeight - _height));
 	}
 
-	Gadget::draw();
+	redraw();
 
 	raiseValueChangeEvent();
 }
@@ -430,7 +430,7 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 		jump(0, -(_canvasHeight - _height));
 	}
 
-	Gadget::draw();
+	redraw();
 
 	if (raiseEvent) raiseValueChangeEvent();
 
@@ -444,14 +444,14 @@ const u32 MultiLineTextBox::getTextLength() const {
 void MultiLineTextBox::showCursor() {
 	if (!_showCursor) {
 		_showCursor = true;
-		draw();
+		redraw();
 	}
 }
 
 void MultiLineTextBox::hideCursor() {
 	if (_showCursor) {
 		_showCursor = false;
-		draw();
+		redraw();
 	}
 }
 
@@ -473,7 +473,7 @@ void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 		_cursorPos = len > position ? position : len;
 	}
 
-	draw();
+	redraw();
 }
 
 void MultiLineTextBox::insertText(const char* text, const u32 index) {
@@ -497,7 +497,7 @@ void MultiLineTextBox::insertText(const char* text, const u32 index) {
 		jump(0, -(_canvasHeight - _height));
 	}
 
-	Gadget::draw();
+	redraw();
 
 	raiseValueChangeEvent();
 }
@@ -516,7 +516,7 @@ void MultiLineTextBox::insertText(const char text, const u32 index) {
 		jump(0, -(_canvasHeight - _height));
 	}
 
-	Gadget::draw();
+	redraw();
 
 	raiseValueChangeEvent();
 }

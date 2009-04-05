@@ -14,11 +14,6 @@ namespace WoopsiUI {
 
 		virtual void draw(Rect clipRect);
 
-		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
 	protected:
 		const WindowSkin* _skin;
 

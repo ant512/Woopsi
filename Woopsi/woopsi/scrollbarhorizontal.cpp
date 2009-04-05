@@ -172,7 +172,7 @@ bool ScrollbarHorizontal::resize(u16 width, u16 height) {
 
 	// Show and reset drawing
 	_flags.drawingEnabled = drawing;
-	draw();
+	redraw();
 
 	// Reset event raising
 	setRaisesEvents(events);

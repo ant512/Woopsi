@@ -21,7 +21,7 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 
 		raiseValueChangeEvent();
 
-		Gadget::draw();
+		redraw();
 	}
 }
 

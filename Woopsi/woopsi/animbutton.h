@@ -30,11 +30,6 @@ namespace WoopsiUI {
 		AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY);
 
 		/**
-		 * Override the Gadget::draw() method.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Draw the region of the button that falls within the clipRect.
 		 * @param clipRect The clipping region to draw within.
 		 */

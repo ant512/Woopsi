@@ -559,11 +559,11 @@ void Gadget::raiseContextMenuSelectionEvent(const ContextMenu* contextMenu, cons
 
 void Gadget::drawChildren() {
 	for (s32 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->draw();
+		_gadgets[i]->redraw();
 	}
 }
 
-void Gadget::draw() {
+void Gadget::redraw() {
 	if (isDrawingEnabled()) {
 		cacheVisibleRects();
 
@@ -1005,7 +1005,7 @@ bool Gadget::unshelve() {
 			_parent->invalidateVisibleRectCache();	
 		}
 
-		draw();
+		redraw();
 
 		return true;
 	}
@@ -1221,7 +1221,7 @@ bool Gadget::swapGadgetDepth(Gadget* gadget) {
 		}
 		
 		// Redraw the gadget
-		gadget->draw();
+		gadget->redraw();
 
 		return true;
 	}
@@ -1316,7 +1316,7 @@ bool Gadget::moveTo(s16 x, s16 y) {
 		_x = x;
 		_y = y;
 
-		draw();
+		redraw();
 
 		raiseMoveEvent(x, y, x - oldX, y - oldY);
 
@@ -1358,7 +1358,7 @@ bool Gadget::resize(u16 width, u16 height) {
 			_parent->invalidateLowerGadgetsVisibleRectCache(this);
 		}
 
-		draw();
+		redraw();
 
 		raiseResizeEvent(width, height);
 
@@ -1705,7 +1705,7 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 			}
 		}
 
-		gadget->draw();
+		gadget->redraw();
 
 		return true;
 	}
@@ -1728,7 +1728,7 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 		_gadgets.erase(index);
 		_gadgets.insert(_decorationCount, gadget);
 
-		gadget->draw();
+		gadget->redraw();
 
 		return true;
 	}
@@ -1760,7 +1760,7 @@ void Gadget::addGadget(Gadget* gadget) {
 
 		invalidateVisibleRectCache();
 
-		gadget->draw();
+		gadget->redraw();
 	}
 }
 
@@ -1783,7 +1783,7 @@ void Gadget::insertGadget(Gadget* gadget) {
 
 		invalidateVisibleRectCache();
 
-		gadget->draw();
+		gadget->redraw();
 	}
 }
 
@@ -2120,7 +2120,7 @@ bool Gadget::show() {
 		_flags.hidden = false;
 
 		raiseShowEvent();
-		draw();
+		redraw();
 		return true;
 	}
 

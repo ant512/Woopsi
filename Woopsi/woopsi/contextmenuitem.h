@@ -33,11 +33,6 @@ namespace WoopsiUI {
 		virtual void draw(Rect clipRect);
 
 		/**
-		 * Draw all visible regions of the menu.
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-
-		/**
 		 * Get the menu item's value.
 		 * @return The menu item's value.
 		 */

@@ -15,7 +15,7 @@ void CheckBox::setState(CheckBox::CheckBoxState state) {
 
 		raiseValueChangeEvent();
 
-		Gadget::draw();
+		redraw();
 	}
 }
 

@@ -151,7 +151,7 @@ bool ListBox::click(s16 x, s16 y) {
 				}
 			}
 
-			draw();
+			redraw();
 
 			// Standard click code follows, sans sub-gadget stuff
 			_flags.clicked = true;
@@ -250,7 +250,7 @@ void ListBox::resizeCanvas() {
 
 void ListBox::sort() {
 	_options.sort();
-	draw();
+	redraw();
 }
 
 void ListBox::removeAllOptions() {
@@ -262,6 +262,6 @@ void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
 }
 
 void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
-	draw();
+	redraw();
 	raiseValueChangeEvent();
 }

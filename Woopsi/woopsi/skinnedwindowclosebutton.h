@@ -13,7 +13,6 @@ namespace WoopsiUI {
 		SkinnedWindowCloseButton(s16 x, s16 y, const WindowSkin* skin);
 
 		virtual void draw(Rect clipRect);
-		virtual void draw();
 
 	protected:
 		const WindowSkin* _skin;

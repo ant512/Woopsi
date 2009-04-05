@@ -19,10 +19,6 @@ SkinnedWindowBorderTop::SkinnedWindowBorderTop(s16 x, u16 width, Window* window,
 	_fillColour = _skin->window.colours.fill;
 }
 
-void SkinnedWindowBorderTop::draw() {
-	Gadget::draw();
-}
-
 void SkinnedWindowBorderTop::draw(Rect clipRect) {
 
 	// Get a new graphics port

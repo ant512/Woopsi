@@ -102,7 +102,7 @@ bool ScrollingListBox::resize(u16 width, u16 height) {
 	// Reset drawing
 	_flags.drawingEnabled = drawing;
 
-	draw();
+	redraw();
 
 	return true;
 }

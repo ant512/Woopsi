@@ -35,7 +35,7 @@ void ProgressBarTest::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 	
 	// Start the timer
 	_timer->start();

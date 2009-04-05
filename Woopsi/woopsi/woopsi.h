@@ -73,13 +73,6 @@ namespace WoopsiUI {
 		virtual void processOneVBL(Gadget* gadget = NULL);
 		
 		/**
-		 * Draw the entire Woopsi GUI to the display.
-		 * Should be called once in the startup() method.
-		 * @see startup()
-		 */
-		virtual inline void draw() { Gadget::draw(); };
-		
-		/**
 		 * Draw a specific rectangle of the GUI.
 		 * The supplied region will be drawn with no further clipping checks.
 		 * For use only within Woopsi gadgets.

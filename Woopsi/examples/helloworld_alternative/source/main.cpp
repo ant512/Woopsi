@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 	woopsiApplication->enableDrawing();
 	
 	// Draw GUI
-	woopsiApplication->draw();
+	woopsiApplication->redraw();
 	
 	// Run Woopsi
 	woopsiApplication->goModal();

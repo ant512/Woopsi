@@ -36,7 +36,7 @@ void DimmedScreenTest::startup() {
 	enableDrawing();
 	
 	// Draw GUI
-	draw();
+	redraw();
 	
 	// Make alert window modal
 	alert->goModal();

@@ -384,7 +384,7 @@ bool Woopsi::swapGadgetDepth(Gadget* gadget) {
 			_gadgets[_gadgets.size() - 1]->invalidateVisibleRectCache();
 			invalidateLowerGadgetsVisibleRectCache(_gadgets[_gadgets.size() - 1]);
 
-			gadget->draw();
+			gadget->redraw();
 
 			return true;
 		}

@@ -151,14 +151,14 @@ void WoopsiKeyboard::processKeyRelease(WoopsiKey* key) {
 				if (_isShiftDown) {
 					_isShiftDown = false;
 					_shiftKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
-					_shiftKey->draw();
+					_shiftKey->redraw();
 				}
 
 				// Reset control key
 				if (_isControlDown) {
 					_isControlDown = false;
 					_controlKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
-					_controlKey->draw();
+					_controlKey->redraw();
 				}
 
 				// Update the keyboard

@@ -125,7 +125,7 @@ bool ContextMenu::resize(u16 width, u16 height) {
 		setPermeable(false);
 
 		enableDrawing();
-		draw();
+		redraw();
 
 		raiseResizeEvent(width, height);
 
