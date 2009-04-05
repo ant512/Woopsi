@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadgeteventargs.h"
+#include "contextmenueventargs.h"
 
 namespace WoopsiUI {
 
@@ -150,7 +151,7 @@ namespace WoopsiUI {
 		 * Handle a gadget context menu selection event.
 		 * @param e The event data.
 		 */
-		virtual void handleContextMenuSelectionEvent(const GadgetEventArgs& e) { };
+		virtual void handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) { };
 
 		/**
 		 * Handle a gadget double-click event.

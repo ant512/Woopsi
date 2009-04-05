@@ -51,7 +51,7 @@ public:
 	void handleActionEvent(const GadgetEventArgs& e);
 	void handleKeyPressEvent(const GadgetEventArgs& e);
 	void handleReleaseEvent(const GadgetEventArgs& e);
-	void handleContextMenuSelectionEvent(const GadgetEventArgs& e);
+	void handleContextMenuSelectionEvent(const ContextMenuEventArgs& e);
 
 private:
 	AmigaScreen* _screen;

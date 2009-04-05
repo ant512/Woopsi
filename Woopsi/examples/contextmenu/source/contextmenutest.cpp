@@ -45,21 +45,13 @@ void ContextMenuTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-void ContextMenuTest::handleContextMenuSelectionEvent(const GadgetEventArgs& e) {
-
-	// Check that a valid gadget fired the event
-	if (e.getSource() != NULL) {
-	
-		// Check which gadget fired the event - we're only interested in the textbox
-		if (e.getSource() == _output) {
+void ContextMenuTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
 		
-			// Append value of context menu item to output textbox
-			char buffer[10];
+	// Append value of context menu item to output textbox
+	char buffer[10];
 
-			sprintf(buffer, "%d", woopsiApplication->getContextMenu()->getValue());
-			_output->appendText("Menu item selected: ");
-			_output->appendText(buffer);
-			_output->appendText('\n');
-		}
-	}
+	sprintf(buffer, "%d", e.getItem()->getValue());
+	_output->appendText("Menu item selected: ");
+	_output->appendText(buffer);
+	_output->appendText('\n');
 }

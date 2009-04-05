@@ -41,7 +41,7 @@ namespace WoopsiUI {
 		 * Get the menu item's value.
 		 * @return The menu item's value.
 		 */
-		inline u32 getValue() { return _value; };
+		inline u32 getValue() const { return _value; };
 
 		/**
 		 * Click this gadget at the supplied co-ordinates.

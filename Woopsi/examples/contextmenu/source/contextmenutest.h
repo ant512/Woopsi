@@ -11,7 +11,7 @@ class ContextMenuTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
-	void handleContextMenuSelectionEvent(const GadgetEventArgs& e);
+	void handleContextMenuSelectionEvent(const ContextMenuEventArgs& e);
 	
 private:
 	MultiLineTextBox* _output;

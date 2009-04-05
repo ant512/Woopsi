@@ -600,10 +600,6 @@ void Woopsi::shelveChild(Gadget* gadget) {
 	}
 }
 
-const u32 Woopsi::getContextMenuValue() const {
-	return _contextMenu->getValue();
-}
-
 void Woopsi::shelveContextMenu() {
 	if (!_contextMenu->isShelved()) {
 		_contextMenu->shelve();

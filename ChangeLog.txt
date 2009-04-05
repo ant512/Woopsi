@@ -48,6 +48,12 @@ Change Log
      - WoopsiKeyboard has set of event-related classes:
        - KeyboardEventHandler
        - KeyboardEventArgs
+     - Refactored context menu event system:
+       - Added ContextMenuEventArgs class;
+       - Removed "_value" from ContextMenu;
+       - Removed "getContextMenuValue()" from Woopsi;
+       - Selected context menu item now accessible via
+         ContextMenuEventArgs::getItem().
 
   V0.37 (20090112)
   

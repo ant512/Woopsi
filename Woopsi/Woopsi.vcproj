@@ -388,6 +388,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\contextmenueventargs.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\contextmenuitem.h"
 				>
 			</File>
@@ -416,7 +420,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\eventdata.h"
+				RelativePath=".\woopsi\eventargs.h"
 				>
 			</File>
 			<File

@@ -9,7 +9,7 @@ namespace WoopsiUI {
 	class Gadget;
 
 	/**
-	 * Base keyboard event handler, intended to be subclasses.  The WoopsiKeyboard class
+	 * Base keyboard event handler, intended to be subclassed.  The WoopsiKeyboard class
 	 * raises events to instances of this class for processing.
 	 */
 	class KeyboardEventHandler {
@@ -17,12 +17,12 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 */
-		inline KeyboardEventHandler() { }
+		inline KeyboardEventHandler() { };
 		
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~KeyboardEventHandler() { }
+		virtual inline ~KeyboardEventHandler() { };
 		
 		/**
 		 * Handle a keyboard press event.

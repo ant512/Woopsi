@@ -16,17 +16,17 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param source The object that raised the event.
 		 */
-		inline EventArgs(const T& source) { _source = source; }
+		inline EventArgs(const T& source) { _source = source; };
 
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~EventArgs() { }
+		virtual inline ~EventArgs() { };
 		
 		/**
 		 * Get the source object that raised the event.
 		 */
-		inline const T& getSource() const { return _source; }
+		inline const T& getSource() const { return _source; };
 
 	private:
 		T _source;					/**< The object that raised the event */

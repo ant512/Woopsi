@@ -7,6 +7,9 @@
 #include "contextmenu.h"
 #include "defaultstyle.h"
 #include "gadgeteventargs.h"
+#include "contextmenu.h"
+#include "contextmenuitem.h"
+#include "contextmenueventargs.h"
 
 using namespace WoopsiUI;
 
@@ -544,9 +547,9 @@ void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
 	}
 }
 
-void Gadget::raiseContextMenuSelectionEvent() {
+void Gadget::raiseContextMenuSelectionEvent(const ContextMenu* contextMenu, const ContextMenuItem* contextMenuItem) {
 	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
+		ContextMenuEventArgs e(contextMenu, contextMenuItem);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleContextMenuSelectionEvent(e);
@@ -2106,8 +2109,8 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 	}
 }
 
-bool Gadget::handleContextMenuSelection(u32 value) {
-	raiseContextMenuSelectionEvent();
+bool Gadget::handleContextMenuSelection(const ContextMenuEventArgs& e) {
+	raiseContextMenuSelectionEvent(e.getSource(), e.getItem());
 
 	return true;
 }

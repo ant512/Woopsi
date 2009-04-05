@@ -10,6 +10,7 @@
 #include "pacplayer.h"
 #include "pacghost.h"
 #include "pacghosts.h"
+#include "contextmenuitem.h"
 
 PacMan::PacMan(AmigaScreen* screen) : GadgetEventHandler() {
 	_screen = screen;
@@ -80,9 +81,9 @@ void PacMan::handleActionEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void PacMan::handleContextMenuSelectionEvent(const GadgetEventArgs& e) {
+void PacMan::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
 
-	switch (woopsiApplication->getContextMenuValue()) {
+	switch (e.getItem()->getValue()) {
 		case 1:
 			_player->resetLives();
 			_gameOver = false;

@@ -1,7 +1,7 @@
-#include "eventargs.h"
-
 #ifndef _GADGETEVENTARGS_H_
 #define _GADGETEVENTARGS_H_
+
+#include "eventargs.h"
 
 namespace WoopsiUI {
 

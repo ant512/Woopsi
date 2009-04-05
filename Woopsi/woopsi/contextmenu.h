@@ -73,13 +73,6 @@ namespace WoopsiUI {
 		inline Gadget* getOpener() { return _opener; };
 
 		/**
-		 * Get the value of the context menu.  This will be
-		 * the value of the last chosen item.
-		 * @return The value of the last chosen menu item.
-		 */
-		inline const u32 getValue() const { return _value; };
-
-		/**
 		 * Give the gadget focus.
 		 * @return True if the gadget received focus correctly.
 		 */
@@ -93,7 +86,6 @@ namespace WoopsiUI {
 
 	private:
 		Gadget* _opener;				/**< Pointer to the gadget that opened the menu */
-		u32 _value;						/**< The value of the last selected menu item */
 
 		/**
 		 * Destructor.

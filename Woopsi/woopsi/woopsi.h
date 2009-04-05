@@ -186,14 +186,8 @@ namespace WoopsiUI {
 		inline ContextMenu* getContextMenu() { return _contextMenu; };
 
 		/**
-		 * Get the current value of the context menu, as determined
-		 * by the last selection.
-		 * @return The context menu value.
-		 */
-		const u32 getContextMenuValue() const;
-
-		/**
-		 * Shelve the context menu.
+		 * Shelve the context menu.  Hides it without destroying the object and without it
+		 * remaining an active, but hidden, gadget.
 		 */
 		void shelveContextMenu();
 

@@ -1,13 +1,13 @@
 #include "contextmenu.h"
 #include "graphicsport.h"
 #include "contextmenuitem.h"
+#include "contextmenueventargs.h"
 
 using namespace WoopsiUI;
 
 ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 	setBorderless(false);
 	_opener = NULL;
-	_value = 0;
 }
 
 ContextMenuItem* ContextMenu::newMenuItem(const char* text, u32 value) {
@@ -73,13 +73,11 @@ void ContextMenu::handleReleaseEvent(const GadgetEventArgs& e) {
 
 	if (e.getSource() != NULL) {
 
-		// Remember the value of the gadget
-		_value = ((ContextMenuItem*)e.getSource())->getValue();
+		// Notify the gadget that opened this menu that an event has
+		// occurred, and send the item as part of the event data.
+		ContextMenuEventArgs e(this, (ContextMenuItem*)e.getSource());
 
-		// Notify the opener that a selection has been made
-		if (_opener != NULL) {
-			_opener->handleContextMenuSelection(((ContextMenuItem*)e.getSource())->getValue());
-		}
+		_opener->handleContextMenuSelection(e);
 
 		shelve();
 	}
@@ -146,7 +144,6 @@ void ContextMenu::reset() {
 
 	_gadgets.clear();
 	_opener = NULL;
-	_value = 0;
 
 	// Reset dimensions
 	_x = 0;

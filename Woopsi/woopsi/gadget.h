@@ -904,10 +904,10 @@ namespace WoopsiUI {
 		virtual void showContextMenu(s16 x, s16 y);
 
 		/**
-		 * Handle an action triggered by context menu selection.
-		 * @param value The value selected.
+		 * Handle a context menu selection.  Just raises the event to its own handlers.
+		 * @param e The event data selected.
 		 */
-		virtual bool handleContextMenuSelection(u32 value);
+		virtual bool handleContextMenuSelection(const ContextMenuEventArgs& e);
 
 		/**
 		 * Run the gadget modally.
@@ -1230,7 +1230,7 @@ namespace WoopsiUI {
 		/**
 		 * Raise a context menu selection event to the event handler.
 		 */
-		void raiseContextMenuSelectionEvent();
+		void raiseContextMenuSelectionEvent(const ContextMenu* contextMenu, const ContextMenuItem* contextMenuItem);
 
 		/**
 		 * Raise an action event to the event handler.  This should be called when
