@@ -905,9 +905,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Handle a context menu selection.  Just raises the event to its own handlers.
-		 * @param e The event data selected.
+		 * @param item The selected menu item.
 		 */
-		virtual bool handleContextMenuSelection(const ContextMenuEventArgs& e);
+		virtual bool handleContextMenuSelection(const ContextMenuItem* item);
 
 		/**
 		 * Run the gadget modally.
@@ -1229,8 +1229,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Raise a context menu selection event to the event handler.
+		 * @param contextMenuItem Pointer to the menu item selected.
 		 */
-		void raiseContextMenuSelectionEvent(const ContextMenu* contextMenu, const ContextMenuItem* contextMenuItem);
+		void raiseContextMenuSelectionEvent(const ContextMenuItem* contextMenuItem);
 
 		/**
 		 * Raise an action event to the event handler.  This should be called when

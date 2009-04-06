@@ -547,9 +547,9 @@ void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
 	}
 }
 
-void Gadget::raiseContextMenuSelectionEvent(const ContextMenu* contextMenu, const ContextMenuItem* contextMenuItem) {
+void Gadget::raiseContextMenuSelectionEvent(const ContextMenuItem* contextMenuItem) {
 	if (raisesEvents()) {
-		ContextMenuEventArgs e(contextMenu, contextMenuItem);
+		ContextMenuEventArgs e(this, contextMenuItem);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleContextMenuSelectionEvent(e);
@@ -2109,8 +2109,8 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 	}
 }
 
-bool Gadget::handleContextMenuSelection(const ContextMenuEventArgs& e) {
-	raiseContextMenuSelectionEvent(e.getSource(), e.getItem());
+bool Gadget::handleContextMenuSelection(const ContextMenuItem* item) {
+	raiseContextMenuSelectionEvent(item);
 
 	return true;
 }

@@ -5,21 +5,21 @@
 
 namespace WoopsiUI {
 
-	class ContextMenu;
+	class Gadget;
 	class ContextMenuItem;
 	class ContextMenuEventArgs;
 
 	/**
 	 * Event arguments passed to listeners when a WoopsiKeyboard object raises an event.
 	 */
-	class ContextMenuEventArgs : public EventArgs<const ContextMenu*> {
+	class ContextMenuEventArgs : public EventArgs<const Gadget*> {
 	public:
 
 		/**
 		 * Constructor.
 		 * @param source Pointer to the ContextMenu object that raised the event.
 		 */
-		ContextMenuEventArgs(const ContextMenu* source, const ContextMenuItem* item) : EventArgs<const ContextMenu*>(source) {
+		ContextMenuEventArgs(const Gadget* source, const ContextMenuItem* item) : EventArgs<const Gadget*>(source) {
 			_item = item;
 		};
 
