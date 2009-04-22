@@ -254,7 +254,7 @@ void Gadget::clear() {
 }
 
 // Check for single-point collisions
-bool Gadget::checkCollision(s16 x, s16 y) {
+bool Gadget::checkCollision(s16 x, s16 y) const {
 
 	if (!isHidden()) {
 
@@ -271,7 +271,7 @@ bool Gadget::checkCollision(s16 x, s16 y) {
 }
 
 // Check for collisions with another rectangle
-bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) {
+bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) const {
 
 	if (!isHidden()) {
 
@@ -288,7 +288,7 @@ bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) {
 }
 
 // Check for collisions with another gadget
-bool Gadget::checkCollision(Gadget* gadget) {
+bool Gadget::checkCollision(Gadget* gadget) const {
 
 	// Get the clipped rect
 	Rect rect;
@@ -1937,7 +1937,7 @@ WoopsiArray<Gadget::Rect>* Gadget::getVisibleRectCache() {
 }
 
 // Recursively move up hierarchy, clipping rect to each ancestor
-void Gadget::clipRectToHierarchy(Rect& rect, Gadget* sender) {
+void Gadget::clipRectToHierarchy(Rect& rect, const Gadget* sender) const {
 
 	Rect thisRect;
 
@@ -1988,7 +1988,7 @@ void Gadget::clipRectToHierarchy(Rect& rect, Gadget* sender) {
 }
 
 // Get the gadget's rect clipped to the dimensions of the parent
-void Gadget::getRectClippedToHierarchy(Rect& rect) {
+void Gadget::getRectClippedToHierarchy(Rect& rect) const {
 
 	// Copy the gadget's properties into the rect
 	rect.x = getX();

@@ -247,7 +247,7 @@ namespace WoopsiUI {
 		 * Get a pointer to this gadget's parent.
 		 * @return This gadget's parent.
 		 */
-		inline Gadget* getParent() { return _parent; };
+		inline Gadget* getParent() const { return _parent; };
 
 		/**
 		 * Get a pointer to this gadget's focused child.
@@ -288,7 +288,7 @@ namespace WoopsiUI {
 		 * this gadget's parents.
 		 * @param rect Reference to a rect to populate with data.
 		 */
-		void getRectClippedToHierarchy(Rect& rect);
+		void getRectClippedToHierarchy(Rect& rect) const;
 
 		/**
 		 * Gets a pointer to a new instance of the GraphicsPort class to allow
@@ -723,7 +723,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate to check.
 		 * @return True if a collision occurred.
 		 */
-		bool checkCollision(s16 x, s16 y);
+		bool checkCollision(s16 x, s16 y) const;
 
 		/**
 		 * Checks if the supplied rectangle definition collides with this gadget.
@@ -733,14 +733,14 @@ namespace WoopsiUI {
 		 * @param height The height of the rectangle to check.
 		 * @return True if a collision occurred.
 		 */
-		bool checkCollision(s16 x, s16 y, u16 width, u16 height);
+		bool checkCollision(s16 x, s16 y, u16 width, u16 height) const;
 
 		/**
 		 * Checks if the supplied gadget collides with this gadget.
 		 * @param gadget A pointer to another gadget to check for collisions with.
 		 * @return True if a collision occurred.
 		 */
-		bool checkCollision(Gadget* gadget);
+		bool checkCollision(Gadget* gadget) const;
 
 		/**
 		 * Invalidate the visible region cache for all gadgets below the supplied
@@ -849,7 +849,7 @@ namespace WoopsiUI {
 		 * @param rect The region that needs to be clipped.
 		 * @param sender A pointer to the gadget that called this function.
 		 */
-		void clipRectToHierarchy(Rect& rect, Gadget* sender);
+		void clipRectToHierarchy(Rect& rect, const Gadget* sender) const;
 
 		/**
 		 * Swaps the depth of the supplied child gadget.
@@ -937,7 +937,7 @@ namespace WoopsiUI {
 		 * Get the quantity of child gadgets.
 		 * @return The number of child gadgets belonging to this gadget.
 		 */
-		const u32 getChildCount() const { return _gadgets.size(); };
+		const s32 getChildCount() const { return _gadgets.size(); };
 
 	protected:
 		s16 _x;									/**< X co-ordinate of the gadget, relative to parent */

@@ -30,6 +30,7 @@ Change Log
      - Removed LinkedList::begin().
      - Renamed Gadget::draw() to Gadget::redraw() and removed unnecessary
        overloads from all classes.
+     - Const correctness fixes in Gadget class.
 
   - New Features:
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).
