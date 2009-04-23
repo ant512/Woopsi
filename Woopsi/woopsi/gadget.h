@@ -823,16 +823,6 @@ namespace WoopsiUI {
 		virtual void redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender);
 
 		/**
-		 * Move any rectangles from the visibleRects list that overlap this gadget
-		 * into the invisibleRects list.  Used during visible region calculations.
-		 * @param visibleRects A vector of regions that are not overlapped.
-		 * @param invisibleRects A vector of regions that are overlapped.
-		 * @param gadget The gadget that requested the lists.
-		 * @see splitRectangles()
-		 */
-		virtual void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const;
-
-		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
 		 * gadget, then cuts the rectangles into smaller pieces.  The overlapping
 		 * pieces are pushed into validRects, and the non-overlapping pieces are
@@ -946,6 +936,8 @@ namespace WoopsiUI {
 		 * @return The number of decoration gadgets belonging to this gadget.
 		 */
 		const inline s32 getDecorationCount() const { return _decorationCount; };
+
+		inline RectCache* getRectCache() { return _rectCache; };
 
 	protected:
 		s16 _x;									/**< X co-ordinate of the gadget, relative to parent */

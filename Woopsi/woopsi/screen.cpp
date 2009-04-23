@@ -2,6 +2,7 @@
 #include "screen.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
+#include "rectcache.h"
 
 using namespace WoopsiUI;
 
@@ -166,7 +167,7 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 					// Are we at the top level?
 					if (_parent != NULL) {
 						// Request refresh
-						_parent->removeOverlappedRects(visibleRects, invisibleRects, this);
+						_parent->getRectCache()->removeOverlappedRects(visibleRects, invisibleRects, this);
 					}
 
 					if (visibleRects->size() > 0) {

@@ -639,14 +639,6 @@ void Gadget::redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender
 	}
 }
 
-
-// Remove any rectangles that this gadget overlaps from the visible vector
-// and add them to the invisible vector
-// Called when drawing a gadget to check that no higher gadgets get overwritten
-void Gadget::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const {
-	_rectCache->removeOverlappedRects(visibleRects, invisibleRects, gadget);
-}
-
 // Split rectangles into valid and invalid sub-rectangles
 // Used when calculating which portions of a gadget to draw
 void Gadget::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, const Gadget* sender) const {

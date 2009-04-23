@@ -31,7 +31,7 @@ void RectCache::cache() {
 			
 			// Request refresh
 			if (_gadget->getParent() != NULL) {
-				_gadget->getParent()->removeOverlappedRects(&_topRegions, invisibleRects, _gadget);
+				_gadget->getParent()->getRectCache()->removeOverlappedRects(&_topRegions, invisibleRects, _gadget);
 			}
 		}
 
