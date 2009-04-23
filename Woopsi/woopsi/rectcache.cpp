@@ -48,7 +48,7 @@ void RectCache::cache() {
 		// Remove all child rects from the visible vector
 		for (s32 i = 0; i < _gadget->getChildCount(); i++) {
 			if (_endRegions.size() > 0) {
-				_gadget->getChild(i)->splitRectangles(&_endRegions, invisibleRects, _gadget);
+				_gadget->getChild(i)->getRectCache()->splitRectangles(&_endRegions, invisibleRects, _gadget);
 			} else {
 				break;
 			}
@@ -290,7 +290,7 @@ void RectCache::removeOverlappedRects(WoopsiArray<Gadget::Rect>* visibleRects, W
 			// Remove any overlapped rectanglesg
 			for (s32 i = gadgetIndex; i < parent->getChildCount(); i++) {
 				if (visibleRects->size() > 0) {
-					parent->getChild(i)->splitRectangles(visibleRects, invisibleRects, gadget);
+					parent->getChild(i)->getRectCache()->splitRectangles(visibleRects, invisibleRects, gadget);
 				} else {
 					break;
 				}

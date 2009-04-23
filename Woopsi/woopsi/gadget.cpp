@@ -639,12 +639,6 @@ void Gadget::redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender
 	}
 }
 
-// Split rectangles into valid and invalid sub-rectangles
-// Used when calculating which portions of a gadget to draw
-void Gadget::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, const Gadget* sender) const {
-	_rectCache->splitRectangles(invalidRects, validRects, sender);
-}
-
 // Erase this gadget from the screen
 void Gadget::erase() {
 

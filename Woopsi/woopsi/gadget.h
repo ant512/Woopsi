@@ -823,20 +823,6 @@ namespace WoopsiUI {
 		virtual void redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender);
 
 		/**
-		 * Works out which rectangles in the invalidRectangles list overlap this
-		 * gadget, then cuts the rectangles into smaller pieces.  The overlapping
-		 * pieces are pushed into validRects, and the non-overlapping pieces are
-		 * pushed back into the invalidRects vector.
-		 * @param invalidRectangles A vector of regions that need to be tested
-		 * for collisions against this gadget; they represent regions that need
-		 * to be redrawn.
-		 * @param validRects A vector of regions that represents areas of the
-		 * display that do not need to be redrawn.
-		 * @param sender Pointer to the gadget that initiated the split.
-		 */
-		virtual void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects, const Gadget* sender) const;
-
-		/**
 		 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
 		 * @param rect The region that needs to be clipped.
 		 * @param sender A pointer to the gadget that called this function.
@@ -937,7 +923,7 @@ namespace WoopsiUI {
 		 */
 		const inline s32 getDecorationCount() const { return _decorationCount; };
 
-		inline RectCache* getRectCache() { return _rectCache; };
+		inline RectCache* getRectCache() const { return _rectCache; };
 
 	protected:
 		s16 _x;									/**< X co-ordinate of the gadget, relative to parent */
