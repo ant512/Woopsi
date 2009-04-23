@@ -69,6 +69,7 @@ Change Log
      - End point rects now cached (sans child rects) for extra speed.
      - Gadget rect caching moved into separate RectCache class.
      - RectCache::removeOverlappedRects made non-recursive.
+     - Gadget::clipRectToHierarchy made non-recursive.
 
   V0.37 (20090112)
   

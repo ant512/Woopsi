@@ -1643,54 +1643,58 @@ WoopsiArray<Gadget::Rect>* Gadget::getForegroundRegions() {
 	return _rectCache->getForegroundRegions();
 }
 
-// Recursively move up hierarchy, clipping rect to each ancestor
-void Gadget::clipRectToHierarchy(Rect& rect, const Gadget* sender) const {
+// Move up hierarchy, clipping rect to each ancestor
+void Gadget::clipRectToHierarchy(Rect& rect) const {
 
+	const Gadget* parent = _parent;
+	const Gadget* gadget = this;
 	Rect thisRect;
 
-	// Copy this gadget's properties into the rect
-	if (sender->isDecoration()) {
+	while (parent != NULL) {
 
-		// Decorations can draw over entire gadget
-		thisRect.x = getX();
-		thisRect.y = getY();
-		thisRect.width = getWidth();
-		thisRect.height = getHeight();
-	} else {
+		// Copy parent's properties into the rect
+		if (gadget->isDecoration()) {
 
-		// Standard gadgets can draw into client space
-		getClientRect(thisRect);
+			// Decorations can draw over entire gadget
+			thisRect.x = parent->getX();
+			thisRect.y = parent->getY();
+			thisRect.width = parent->getWidth();
+			thisRect.height = parent->getHeight();
+		} else {
 
-		// Adjust rect to screen space
-		thisRect.x += getX();
-		thisRect.y += getY();
-	}
+			// Standard gadgets can draw into client space
+			parent->getClientRect(thisRect);
 
-	// Clip horizontal position
-	if (rect.x < thisRect.x) {
-		rect.width -= (thisRect.x - rect.x);
-		rect.x = thisRect.x;
-	}
+			// Adjust rect to screen space
+			thisRect.x += parent->getX();
+			thisRect.y += parent->getY();
+		}
 
-	// Clip vertical position
-	if (rect.y < thisRect.y) {
-		rect.height -= (thisRect.y - rect.y);
-		rect.y = thisRect.y;
-	}
+		// Clip horizontal position
+		if (rect.x < thisRect.x) {
+			rect.width -= (thisRect.x - rect.x);
+			rect.x = thisRect.x;
+		}
 
-	// Clip width
-	if (rect.x + rect.width > thisRect.x + thisRect.width) {
-		rect.width = (thisRect.x + thisRect.width) - rect.x;
-	}
+		// Clip vertical position
+		if (rect.y < thisRect.y) {
+			rect.height -= (thisRect.y - rect.y);
+			rect.y = thisRect.y;
+		}
 
-	// Clip height
-	if (rect.y + rect.height > thisRect.y + thisRect.height) {
-		rect.height = (thisRect.y + thisRect.height) - rect.y;
-	}
+		// Clip width
+		if (rect.x + rect.width > thisRect.x + thisRect.width) {
+			rect.width = (thisRect.x + thisRect.width) - rect.x;
+		}
 
-	// Send up to parent
-	if (_parent != NULL) {
-		_parent->clipRectToHierarchy(rect, this);
+		// Clip height
+		if (rect.y + rect.height > thisRect.y + thisRect.height) {
+			rect.height = (thisRect.y + thisRect.height) - rect.y;
+		}
+
+		// Send up to parent
+		gadget = parent;
+		parent = parent->getParent();
 	}
 }
 
@@ -1704,7 +1708,7 @@ void Gadget::getRectClippedToHierarchy(Rect& rect) const {
 	rect.height = getHeight();
 
 	if (_parent != NULL) {
-		_parent->clipRectToHierarchy(rect, this);
+		_parent->clipRectToHierarchy(rect);
 	}
 }
 

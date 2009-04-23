@@ -825,9 +825,8 @@ namespace WoopsiUI {
 		/**
 		 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
 		 * @param rect The region that needs to be clipped.
-		 * @param sender A pointer to the gadget that called this function.
 		 */
-		void clipRectToHierarchy(Rect& rect, const Gadget* sender) const;
+		void clipRectToHierarchy(Rect& rect) const;
 
 		/**
 		 * Swaps the depth of the supplied child gadget.
