@@ -277,12 +277,13 @@ void RectCache::splitRectangles(WoopsiArray<Gadget::Rect>* invalidRects, WoopsiA
 void RectCache::removeOverlappedRects(WoopsiArray<Gadget::Rect>* visibleRects, WoopsiArray<Gadget::Rect>* invisibleRects, const Gadget* gadget) const {
 
 	const Gadget* parent = _gadget;
+	s32 gadgetIndex = -1;
 
-	while (gadget != NULL) {
+	while ((gadget != NULL) && (parent != NULL)) {
 
 		// Locate gadget in the list; we add one to the index to
 		// ensure that we deal with the next gadget up in the z-order
-		s32 gadgetIndex = parent->getGadgetIndex(gadget) + 1;
+		gadgetIndex = parent->getGadgetIndex(gadget) + 1;
 
 		// Gadget should never be the bottom item on the screen
 		if (gadgetIndex > 0) {
