@@ -22,7 +22,6 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase
 	_scrollbar->setMaximumValue(0);
 	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
 	_scrollbar->addGadgetEventHandler(this);
-	_scrollbar->resizeGrip();
 
 	// Add children to child array
 	addGadget(_listbox);
@@ -116,19 +115,16 @@ void ScrollingListBox::setFont(FontBase* font) {
 void ScrollingListBox::addOption(const char* text, const u32 value) {
 	_listbox->addOption(text, value);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
-	_scrollbar->resizeGrip();
 }
 
 void ScrollingListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 	_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
-	_scrollbar->resizeGrip();
 }
 
 void ScrollingListBox::removeOption(const s32 index) {
 	_listbox->removeOption(index);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
-	_scrollbar->resizeGrip();
 
 	// Reposition grip if necessary
 	if (_scrollbar->getValue() > _listbox->getOptionCount()) _scrollbar->setValue(0);

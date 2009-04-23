@@ -93,11 +93,6 @@ namespace WoopsiUI {
 		void setButtonScrollAmount(const u16 buttonScrollAmount);
 
 		/**
-		 * Resize and redraw the grip.
-		 */
-		void resizeGrip();
-
-		/**
 		 * Make the grip jump up or down the gutter.
 		 * @param direction 0 to jump left, 1 to jump right.
 		 */

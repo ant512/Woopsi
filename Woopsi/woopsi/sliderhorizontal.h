@@ -58,13 +58,19 @@ namespace WoopsiUI {
 		 * Set the smallest value that the slider can represent.
 		 * @param value The smallest value.
 		 */
-		inline void setMinimumValue(const s16 value) { _minimumValue = value; };
+		inline void setMinimumValue(const s16 value) {
+			_minimumValue = value;
+			resizeGrip();
+		};
 
 		/**
 		 * Set the largest value that the slider can represent.
 		 * @param value The largest value.
 		 */
-		inline void setMaximumValue(const s16 value) { _maximumValue = value; };
+		inline void setMaximumValue(const s16 value) {
+			_maximumValue = value;
+			resizeGrip();
+		};
 
 		/**
 		 * Set the value that of the slider.  This will reposition
@@ -78,12 +84,10 @@ namespace WoopsiUI {
 		 * @param pageSize The page size.
 		 * @see getPageSize().
 		 */
-		inline void setPageSize(const s16 pageSize) { _pageSize = pageSize; };
-
-		/**
-		 * Resize and redraw the grip.
-		 */
-		void resizeGrip();
+		inline void setPageSize(const s16 pageSize) {
+			_pageSize = pageSize;
+			resizeGrip();
+		};
 
 		/**
 		 * Make the grip jump left or right along the gutter.
@@ -142,6 +146,11 @@ namespace WoopsiUI {
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline SliderHorizontal(const SliderHorizontal& sliderHorizontal) : Gadget(sliderHorizontal) { };
+
+		/**
+		 * Resize and redraw the grip.
+		 */
+		void resizeGrip();
 	};
 }
 
