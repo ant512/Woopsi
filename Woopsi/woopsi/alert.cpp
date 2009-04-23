@@ -36,5 +36,7 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char*
 void Alert::handleReleaseEvent(const GadgetEventArgs& e) {
 	if (e.getSource() == _button) {
 		close();
+	} else {
+		AmigaWindow::handleReleaseEvent(e);
 	}
 }

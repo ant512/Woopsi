@@ -33,6 +33,7 @@ Change Log
      - Const correctness fixes in Gadget class.
      - ScrollingTextbox adjusts scrollbar grip position correctly when first
        initialised.
+     - Alert box draws XOR correctly when released.
 
   - New Features:
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).
@@ -61,6 +62,7 @@ Change Log
        - Removed "getContextMenuValue()" from Woopsi;
        - Selected context menu item now accessible via
          ContextMenuEventArgs::getItem().
+     - Slider grip automatically resizes; no need to call resizeGrip().
 
   V0.37 (20090112)
   
