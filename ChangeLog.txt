@@ -68,6 +68,7 @@ Change Log
      - Slider grip automatically resizes; no need to call resizeGrip().
      - End point rects now cached (sans child rects) for extra speed.
      - Gadget rect caching moved into separate RectCache class.
+     - RectCache::removeOverlappedRects made non-recursive.
 
   V0.37 (20090112)
   
