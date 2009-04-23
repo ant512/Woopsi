@@ -20,9 +20,10 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	_scrollbar->setMinimumValue(0);
 	_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
 	_scrollbar->setPageSize(rect.height);
+	_scrollbar->resizeGrip();
+	_scrollbar->setValue(0 - _textbox->getCanvasY());
 	_scrollbar->setButtonScrollAmount(10);
 	_scrollbar->addGadgetEventHandler(this);
-	_scrollbar->resizeGrip();
 
 	// Add children to child array
 	addGadget(_textbox);
@@ -85,6 +86,15 @@ void ScrollingTextBox::handleValueChangeEvent(const GadgetEventArgs& e) {
 				_textbox->jump(0, 0 - _scrollbar->getValue());
 				_textbox->setRaisesEvents(true);
 			}
+		} else if (e.getSource() == _textbox) {
+			
+			if (_scrollbar != NULL) {
+				_scrollbar->setRaisesEvents(false);
+				_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
+				_scrollbar->resizeGrip();
+				_scrollbar->setValue(0 - _textbox->getCanvasY());
+				_scrollbar->setRaisesEvents(true);
+			}
 		}
 	}
 }
@@ -96,8 +106,6 @@ void ScrollingTextBox::handleScrollEvent(const GadgetEventArgs& e) {
 
 			if (_scrollbar != NULL) {
 				_scrollbar->setRaisesEvents(false);
-				_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
-				_scrollbar->resizeGrip();
 				_scrollbar->setValue(0 - _textbox->getCanvasY());
 				_scrollbar->setRaisesEvents(true);
 			}

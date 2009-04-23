@@ -31,6 +31,8 @@ Change Log
      - Renamed Gadget::draw() to Gadget::redraw() and removed unnecessary
        overloads from all classes.
      - Const correctness fixes in Gadget class.
+     - ScrollingTextbox adjusts scrollbar grip position correctly when first
+       initialised.
 
   - New Features:
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).
