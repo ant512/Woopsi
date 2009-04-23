@@ -34,6 +34,7 @@ Change Log
      - ScrollingTextbox adjusts scrollbar grip position correctly when first
        initialised.
      - Alert box draws XOR correctly when released.
+     - Requester draws XOR correctly when released.
 
   - New Features:
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).

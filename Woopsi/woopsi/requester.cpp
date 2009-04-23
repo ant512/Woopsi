@@ -68,6 +68,8 @@ void Requester::handleReleaseEvent(const GadgetEventArgs& e) {
 			close();
 		}
 	}
+
+	AmigaWindow::handleReleaseEvent(e);
 }
 
 void Requester::handleDoubleClickEvent(const GadgetEventArgs& e) {
@@ -81,4 +83,6 @@ void Requester::handleDoubleClickEvent(const GadgetEventArgs& e) {
 			close();
 		}
 	}
+	
+	AmigaWindow::handleDoubleClickEvent(e);
 }
