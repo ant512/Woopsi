@@ -573,8 +573,8 @@ void Gadget::redraw() {
 		cacheVisibleRects();
 
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _rectCache->getEndRegions()->size(); i++) {
-			draw(_rectCache->getEndRegions()->at(i));
+		for (s32 i = 0; i < _rectCache->getBackgroundRegions()->size(); i++) {
+			draw(_rectCache->getBackgroundRegions()->at(i));
 		}
 
 		// Remember that the gadget is no longer erased
@@ -668,12 +668,12 @@ void Gadget::eraseGadget(Gadget* gadget) {
 	// Order all lower gadgets to redraw themselves based on the erased gadget's
 	// visible rect cache
 	for (s32 i = gadgetIndex - 1; i > -1; i--) {
-		_gadgets[i]->redrawDirty(gadget->getTopRegions(), gadget);
+		_gadgets[i]->redrawDirty(gadget->getForegroundRegions(), gadget);
 	}
 
 	// Order this gadget to redraw itself based on any remaining rectangles
 	// in the erased gadget's rect cache
-	redrawDirty(gadget->getTopRegions(), gadget);
+	redrawDirty(gadget->getForegroundRegions(), gadget);
 
 	invalidateVisibleRectCache();
 }
@@ -1639,8 +1639,8 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 }
 
 // Return vector of visible rects, including any covered by children
-WoopsiArray<Gadget::Rect>* Gadget::getTopRegions() {
-	return _rectCache->getTopRegions();
+WoopsiArray<Gadget::Rect>* Gadget::getForegroundRegions() {
+	return _rectCache->getForegroundRegions();
 }
 
 // Recursively move up hierarchy, clipping rect to each ancestor

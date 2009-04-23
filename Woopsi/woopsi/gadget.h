@@ -318,7 +318,7 @@ namespace WoopsiUI {
 		 * including any covered by children.
 		 * @return A pointer to a vector of all visible regions.
 		 */
-		WoopsiArray<Rect>* getTopRegions();
+		WoopsiArray<Rect>* getForegroundRegions();
 
 		/**
 		 * Gets a pointer to the gadget's font.

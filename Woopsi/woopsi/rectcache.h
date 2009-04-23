@@ -12,9 +12,17 @@ namespace WoopsiUI {
 		inline ~RectCache() { };
 
 		void cache();
-		inline void invalidate() { _invalid = true; };
-		inline WoopsiArray<Gadget::Rect>* getEndRegions() { return &_endRegions; };
-		inline WoopsiArray<Gadget::Rect>* getTopRegions() { return &_topRegions; };
+
+		inline void invalidate() {
+			_foregroundInvalid = true;
+			_backgroundInvalid = true;
+		};
+
+		inline WoopsiArray<Gadget::Rect>* getBackgroundRegions() { return &_backgroundRegions; };
+		inline WoopsiArray<Gadget::Rect>* getForegroundRegions() { return &_foregroundRegions; };
+
+		void cacheForegroundRegions();
+		void cacheBackgroundRegions();
 
 		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
@@ -41,10 +49,11 @@ namespace WoopsiUI {
 		void removeOverlappedRects(WoopsiArray<Gadget::Rect>* visibleRects, WoopsiArray<Gadget::Rect>* invisibleRects, const Gadget* gadget) const;
 
 	private:
-		WoopsiArray<Gadget::Rect> _topRegions;		/**< List of the gadget's visible regions */
-		WoopsiArray<Gadget::Rect> _endRegions;		/**< List of the gadget's visible regions with child rects removed */
-		const Gadget* _gadget;						/**< Owning gadget */
-		bool _invalid;								/**< True if the cache needs refreshing */
+		WoopsiArray<Gadget::Rect> _foregroundRegions;		/**< List of the gadget's visible regions */
+		WoopsiArray<Gadget::Rect> _backgroundRegions;		/**< List of the gadget's visible regions with child rects removed */
+		const Gadget* _gadget;								/**< Owning gadget */
+		bool _foregroundInvalid;							/**< True if the foreground cache needs refreshing */
+		bool _backgroundInvalid;							/**< True if the background cache needs refreshing */
 	};
 }
 

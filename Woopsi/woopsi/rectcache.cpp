@@ -4,16 +4,20 @@ using namespace WoopsiUI;
 
 RectCache::RectCache(const Gadget* gadget) {
 	_gadget = gadget;
-	_invalid = true;
-
+	_foregroundInvalid = true;
+	_backgroundInvalid = true;
 }
 
 void RectCache::cache() {
+	cacheBackgroundRegions();
+}
 
-	if (_invalid) {
+void RectCache::cacheForegroundRegions() {
+
+	if (_foregroundInvalid) {
 		// Use internal region cache to store the non-overlapped rectangles
 		// We will use this to clip the gadget
-		_topRegions.clear();
+		_foregroundRegions.clear();
 
 		// Create pointer to a vector to store the overlapped rectangles
 		// We can discard this later as we don't need it
@@ -27,28 +31,44 @@ void RectCache::cache() {
 		if ((rect.height > 0) && (rect.width > 0)) {
 
 			// Add rect to list
-			_topRegions.push_back(rect);
+			_foregroundRegions.push_back(rect);
 			
 			// Request refresh
 			if (_gadget->getParent() != NULL) {
-				_gadget->getParent()->getRectCache()->removeOverlappedRects(&_topRegions, invisibleRects, _gadget);
+				_gadget->getParent()->getRectCache()->removeOverlappedRects(&_foregroundRegions, invisibleRects, _gadget);
 			}
 		}
 
-		invisibleRects->clear();
+		// Tidy up
+		delete invisibleRects;
+
+		_foregroundInvalid = false;
+	}
+}
+
+void RectCache::cacheBackgroundRegions() {
+
+	// Ensure that foreground is up to date
+	cacheForegroundRegions();
+
+	if (_backgroundInvalid) {
 
 		// Cache visible regions not overlapped by children
-		_endRegions.clear();
+		_backgroundRegions.clear();
 
-		// Copy all visible regions into the new vector
-		for (s32 i = 0; i < _topRegions.size(); i++) {
-			_endRegions.push_back(_topRegions[i]);
+		// Create pointer to a vector to store the overlapped rectangles
+		// We can discard this later as we don't need it
+		WoopsiArray<Gadget::Rect>* invisibleRects = new WoopsiArray<Gadget::Rect>();
+
+		// Copy all foreground regions into the new vector
+		for (s32 i = 0; i < _foregroundRegions.size(); i++) {
+			_backgroundRegions.push_back(_foregroundRegions[i]);
 		}
 
 		// Remove all child rects from the visible vector
 		for (s32 i = 0; i < _gadget->getChildCount(); i++) {
-			if (_endRegions.size() > 0) {
-				_gadget->getChild(i)->getRectCache()->splitRectangles(&_endRegions, invisibleRects, _gadget);
+			if (_backgroundRegions.size() > 0) {
+				_gadget->getChild(i)->getRectCache()->splitRectangles(&_backgroundRegions, invisibleRects, _gadget);
 			} else {
 				break;
 			}
@@ -57,7 +77,7 @@ void RectCache::cache() {
 		// Tidy up
 		delete invisibleRects;
 
-		_invalid = false;
+		_backgroundInvalid = false;
 	}
 }
 
