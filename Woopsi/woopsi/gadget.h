@@ -11,6 +11,7 @@ namespace WoopsiUI {
 
 	class GraphicsPort;
 	class FontBase;
+	class RectCache;
 
 	/**
 	 * Class proving all the basic functionality of a Woopsi gadget.
@@ -313,10 +314,11 @@ namespace WoopsiUI {
 		virtual GraphicsPort* newGraphicsPort(Rect clipRect);
 
 		/**
-		 * Gets a pointer to the vector of all of the visible regions of this gadget.
+		 * Gets a pointer to the vector of all of the visible regions of this gadget,
+		 * including any covered by children.
 		 * @return A pointer to a vector of all visible regions.
 		 */
-		WoopsiArray<Rect>* getVisibleRectCache();
+		WoopsiArray<Rect>* getTopRegions();
 
 		/**
 		 * Gets a pointer to the gadget's font.
@@ -828,7 +830,7 @@ namespace WoopsiUI {
 		 * @param gadget The gadget that requested the lists.
 		 * @see splitRectangles()
 		 */
-		virtual void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, Gadget* gadget);
+		virtual void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const;
 
 		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
@@ -842,7 +844,7 @@ namespace WoopsiUI {
 		 * display that do not need to be redrawn.
 		 * @param sender Pointer to the gadget that initiated the split.
 		 */
-		virtual void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects, Gadget* sender);
+		virtual void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects, const Gadget* sender) const;
 
 		/**
 		 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
@@ -989,8 +991,7 @@ namespace WoopsiUI {
 		u8 _decorationCount;					/**< Total number of decoration child gadgets */
 
 		// Visible regions
-		WoopsiArray<Rect> _visibleRegionCache;	/**< List of the gadget's visible regions */
-		WoopsiArray<Rect> _endRegionCache;		/**< List of the gadget's visible regions */
+		RectCache* _rectCache;					/**< List of the gadget's visible regions */
 
 		OutlineType _outline;					/**< Type of outline the gadget uses */
 		CloseType _closeType;					/**< Type of close method that should be called for the gadget */

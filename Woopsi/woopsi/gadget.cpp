@@ -10,6 +10,7 @@
 #include "contextmenu.h"
 #include "contextmenuitem.h"
 #include "contextmenueventargs.h"
+#include "rectcache.h"
 
 using namespace WoopsiUI;
 
@@ -82,6 +83,8 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	
 	_outline = OUTLINE_CLICK_DEPENDENT;
 	_closeType = CLOSE_TYPE_CLOSE;
+
+	_rectCache = new RectCache(this);
 }
 
 Gadget::~Gadget() {
@@ -126,6 +129,8 @@ Gadget::~Gadget() {
 
 	_gadgets.clear();
 	_shelvedGadgets.clear();
+
+	delete _rectCache;
 }
 
 const s16 Gadget::getX() const {
@@ -568,8 +573,8 @@ void Gadget::redraw() {
 		cacheVisibleRects();
 
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _endRegionCache.size(); i++) {
-			draw(_endRegionCache.at(i));
+		for (s32 i = 0; i < _rectCache->getEndRegions()->size(); i++) {
+			draw(_rectCache->getEndRegions()->at(i));
 		}
 
 		// Remember that the gadget is no longer erased
@@ -638,7 +643,7 @@ void Gadget::redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender
 // Remove any rectangles that this gadget overlaps from the visible vector
 // and add them to the invisible vector
 // Called when drawing a gadget to check that no higher gadgets get overwritten
-void Gadget::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, Gadget* gadget) {
+void Gadget::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const {
 
 	// Locate gadget in the list; we add one to the index to
 	// ensure that we deal with the next gadget up in the z-order
@@ -667,7 +672,7 @@ void Gadget::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<
 
 // Split rectangles into valid and invalid sub-rectangles
 // Used when calculating which portions of a gadget to draw
-void Gadget::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, Gadget* sender) {
+void Gadget::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, const Gadget* sender) const {
 
 	// Check for collisions with any rectangles in the vector
 	for (s32 i = 0; i < invalidRects->size(); i++) {
@@ -904,12 +909,12 @@ void Gadget::eraseGadget(Gadget* gadget) {
 	// Order all lower gadgets to redraw themselves based on the erased gadget's
 	// visible rect cache
 	for (s32 i = gadgetIndex - 1; i > -1; i--) {
-		_gadgets[i]->redrawDirty(gadget->getVisibleRectCache(), gadget);
+		_gadgets[i]->redrawDirty(gadget->getTopRegions(), gadget);
 	}
 
 	// Order this gadget to redraw itself based on any remaining rectangles
 	// in the erased gadget's rect cache
-	redrawDirty(gadget->getVisibleRectCache(), gadget);
+	redrawDirty(gadget->getTopRegions(), gadget);
 
 	invalidateVisibleRectCache();
 }
@@ -1811,60 +1816,11 @@ void Gadget::setDragging(u16 x, u16 y) {
 }
 
 void Gadget::cacheVisibleRects() {
-
-	if (_flags.visibleRegionCacheInvalid) {
-		// Use internal region cache to store the non-overlapped rectangles
-		// We will use this to clip the gadget
-		_visibleRegionCache.clear();
-
-		// Create pointer to a vector to store the overlapped rectangles
-		// We can discard this later as we don't need it
-		WoopsiArray<Rect>* invisibleRects = new WoopsiArray<Rect>();
-
-		// Copy the clipped gadget dimensions into a rect
-		Rect rect;
-		getRectClippedToHierarchy(rect);
-
-		// Do we have a visible region left?
-		if ((rect.height > 0) && (rect.width > 0)) {
-
-			// Add rect to list
-			_visibleRegionCache.push_back(rect);
-			
-			// Request refresh
-			if (_parent != NULL) {
-				_parent->removeOverlappedRects(&_visibleRegionCache, invisibleRects, this);
-			}
-		}
-
-		invisibleRects->clear();
-
-		// Cache visible regions not overlapped by children
-		_endRegionCache.clear();
-
-		// Copy all visible regions into the new vector
-		for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
-			_endRegionCache.push_back(_visibleRegionCache[i]);
-		}
-
-		// Remove all child rects from the visible vector
-		for (s32 i = 0; i < _gadgets.size(); i++) {
-			if (_endRegionCache.size() > 0) {
-				_gadgets[i]->splitRectangles(&_endRegionCache, invisibleRects, this);
-			} else {
-				break;
-			}
-		}
-
-		// Tidy up
-		delete invisibleRects;
-
-		_flags.visibleRegionCacheInvalid = false;
-	}
+	_rectCache->cache();
 }
 
 void Gadget::invalidateVisibleRectCache() {
-	_flags.visibleRegionCacheInvalid = true;
+	_rectCache->invalidate();
 
 	// Invalidate child cache
 	for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1923,9 +1879,9 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 	return new GraphicsPort(this, 0, 0, _width, _height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, &clipRect);
 }
 
-// Return vector of visible rects
-WoopsiArray<Gadget::Rect>* Gadget::getVisibleRectCache() {
-	return &_visibleRegionCache;
+// Return vector of visible rects, including any covered by children
+WoopsiArray<Gadget::Rect>* Gadget::getTopRegions() {
+	return _rectCache->getTopRegions();
 }
 
 // Recursively move up hierarchy, clipping rect to each ancestor

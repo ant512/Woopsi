@@ -161,8 +161,8 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char
 
 	if (_clipRect == NULL) {
 		// Draw all visible rects
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipText(x, y, font, length, string, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipText(x, y, font, length, string, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -344,8 +344,8 @@ void GraphicsPort::drawHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 	if (_clipRect == NULL) {
 
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipHorizLine(x, y, width, colour, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipHorizLine(x, y, width, colour, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -364,8 +364,8 @@ void GraphicsPort::drawVertLine(s16 x, s16 y, s16 height, u16 colour) {
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipVertLine(x, y, height, colour, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipVertLine(x, y, height, colour, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -384,8 +384,8 @@ void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipFilledRect(x, y, width, height, colour, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipFilledRect(x, y, width, height, colour, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -403,8 +403,8 @@ void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipFilledCircle(x0, y0, radius, colour, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipFilledCircle(x0, y0, radius, colour, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -451,11 +451,11 @@ void GraphicsPort::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipHorizLine(x, y, width, colour, _gadget->getVisibleRectCache()->at(i));						// Top
-			clipHorizLine(x, y + height - 1, width, colour, _gadget->getVisibleRectCache()->at(i));			// Bottom
-			clipVertLine(x, y + 1, height - 2, colour, _gadget->getVisibleRectCache()->at(i));				// Left
-			clipVertLine(x + width - 1, y + 1, height - 2, colour, _gadget->getVisibleRectCache()->at(i));	// Right
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipHorizLine(x, y, width, colour, _gadget->getTopRegions()->at(i));						// Top
+			clipHorizLine(x, y + height - 1, width, colour, _gadget->getTopRegions()->at(i));			// Bottom
+			clipVertLine(x, y + 1, height - 2, colour, _gadget->getTopRegions()->at(i));				// Left
+			clipVertLine(x + width - 1, y + 1, height - 2, colour, _gadget->getTopRegions()->at(i));	// Right
 		}
 	} else {
 		// Draw single rectangle
@@ -509,11 +509,11 @@ void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shi
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipHorizLine(x, y, width, shineColour, _gadget->getVisibleRectCache()->at(i));							// Top
-			clipHorizLine(x, y + height - 1, width, shadowColour, _gadget->getVisibleRectCache()->at(i));			// Bottom
-			clipVertLine(x, y + 1, height - 2, shineColour, _gadget->getVisibleRectCache()->at(i));					// Left
-			clipVertLine(x + width - 1, y + 1, height - 2, shadowColour, _gadget->getVisibleRectCache()->at(i));	// Right
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipHorizLine(x, y, width, shineColour, _gadget->getTopRegions()->at(i));							// Top
+			clipHorizLine(x, y + height - 1, width, shadowColour, _gadget->getTopRegions()->at(i));				// Bottom
+			clipVertLine(x, y + 1, height - 2, shineColour, _gadget->getTopRegions()->at(i));					// Left
+			clipVertLine(x + width - 1, y + 1, height - 2, shadowColour, _gadget->getTopRegions()->at(i));		// Right
 		}
 	} else {
 		// Draw single rectangle
@@ -535,11 +535,11 @@ void GraphicsPort::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height) {
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
 
 			// Draw all rows of rectangle
 			for (s32 j = 0; j < height; j++) {
-				clipXORHorizLine(x, y + j, width, _gadget->getVisibleRectCache()->at(i));
+				clipXORHorizLine(x, y + j, width, _gadget->getTopRegions()->at(i));
 			}
 		}
 	} else {
@@ -561,11 +561,11 @@ void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipXORHorizLine(x, y, width, _gadget->getVisibleRectCache()->at(i));						// Top
-			clipXORHorizLine(x, y + height - 1, width, _gadget->getVisibleRectCache()->at(i));			// Bottom
-			clipXORVertLine(x, y + 1, height - 2, _gadget->getVisibleRectCache()->at(i));				// Left
-			clipXORVertLine(x + width - 1, y + 1, height - 2, _gadget->getVisibleRectCache()->at(i));	// Right
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipXORHorizLine(x, y, width, _gadget->getTopRegions()->at(i));						// Top
+			clipXORHorizLine(x, y + height - 1, width, _gadget->getTopRegions()->at(i));		// Bottom
+			clipXORVertLine(x, y + 1, height - 2, _gadget->getTopRegions()->at(i));				// Left
+			clipXORVertLine(x + width - 1, y + 1, height - 2, _gadget->getTopRegions()->at(i));	// Right
 		}
 	} else {
 		// Draw single rectangle
@@ -596,8 +596,8 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -625,8 +625,8 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -646,8 +646,8 @@ void GraphicsPort::drawXORHorizLine(s16 x, s16 y, s16 width) {
 	if (_clipRect == NULL) {
 
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipXORHorizLine(x, y, width, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipXORHorizLine(x, y, width, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 
@@ -668,8 +668,8 @@ void GraphicsPort::drawXORVertLine(s16 x, s16 y, s16 height) {
 	if (_clipRect == NULL) {
 
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipXORVertLine(x, y, height, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipXORVertLine(x, y, height, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 
@@ -862,8 +862,8 @@ void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
 
 	if (_clipRect == NULL) {
 		// Draw all visible rects
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipPixel(x, y, colour, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipPixel(x, y, colour, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -900,8 +900,8 @@ void GraphicsPort::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 
 	if (_clipRect == NULL) {
 		// Draw all visible rects
-		for (s32 i = 0; i < _gadget->getVisibleRectCache()->size(); i++) {
-			clipLine(x1, y1, x2, y2, colour, _gadget->getVisibleRectCache()->at(i));
+		for (s32 i = 0; i < _gadget->getTopRegions()->size(); i++) {
+			clipLine(x1, y1, x2, y2, colour, _gadget->getTopRegions()->at(i));
 		}
 	} else {
 		// Draw single rectangle

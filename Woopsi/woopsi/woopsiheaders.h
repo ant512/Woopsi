@@ -44,6 +44,7 @@
 #include "progressbar.h"
 #include "radiobutton.h"
 #include "radiobuttongroup.h"
+#include "rectcache.h"
 #include "requester.h"
 #include "screen.h"
 #include "screentitle.h"

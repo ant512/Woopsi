@@ -102,14 +102,14 @@ void ScrollingPanel::scrollLeft(s32 dx) {
 	u16* rowBuffer;
 
 	// Loop through visible regions
-	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < getTopRegions()->size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
-		innerRect.x = _visibleRegionCache[i].x;
-		innerRect.y = _visibleRegionCache[i].y;
-		innerRect.width = _visibleRegionCache[i].width;
-		innerRect.height = _visibleRegionCache[i].height;
+		innerRect.x = getTopRegions()->at(i).x;
+		innerRect.y = getTopRegions()->at(i).y;
+		innerRect.width = getTopRegions()->at(i).width;
+		innerRect.height = getTopRegions()->at(i).height;
 
 		// Clip rect to client region
 		if (clipToClientRect(innerRect)) {
@@ -173,14 +173,14 @@ void ScrollingPanel::scrollRight(s32 dx) {
 	u16* rowBuffer;
 
 	// Loop through visible regions
-	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < getTopRegions()->size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
-		innerRect.x = _visibleRegionCache[i].x;
-		innerRect.y = _visibleRegionCache[i].y;
-		innerRect.width = _visibleRegionCache[i].width;
-		innerRect.height = _visibleRegionCache[i].height;
+		innerRect.x = getTopRegions()->at(i).x;
+		innerRect.y = getTopRegions()->at(i).y;
+		innerRect.width = getTopRegions()->at(i).width;
+		innerRect.height = getTopRegions()->at(i).height;
 
 		// Clip rect to client region
 		if (clipToClientRect(innerRect)) {
@@ -247,14 +247,14 @@ void ScrollingPanel::scrollUp(s32 dy) {
 	u16 width;
 
 	// Loop through visible regions
-	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < getTopRegions()->size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
-		innerRect.x = _visibleRegionCache[i].x;
-		innerRect.y = _visibleRegionCache[i].y;
-		innerRect.width = _visibleRegionCache[i].width;
-		innerRect.height = _visibleRegionCache[i].height;
+		innerRect.x = getTopRegions()->at(i).x;
+		innerRect.y = getTopRegions()->at(i).y;
+		innerRect.width = getTopRegions()->at(i).width;
+		innerRect.height = getTopRegions()->at(i).height;
 
 		// Clip rect to client region
 		if (clipToClientRect(innerRect)) {
@@ -307,14 +307,14 @@ void ScrollingPanel::scrollDown(s32 dy) {
 	u16 width;
 
 	// Loop through visible regions
-	for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
+	for (s32 i = 0; i < getTopRegions()->size(); i++) {
 
 		// Create clone of rect
 		Rect innerRect;
-		innerRect.x = _visibleRegionCache[i].x;
-		innerRect.y = _visibleRegionCache[i].y;
-		innerRect.width = _visibleRegionCache[i].width;
-		innerRect.height = _visibleRegionCache[i].height;
+		innerRect.x = getTopRegions()->at(i).x;
+		innerRect.y = getTopRegions()->at(i).y;
+		innerRect.width = getTopRegions()->at(i).width;
+		innerRect.height = getTopRegions()->at(i).height;
 
 		// Clip rect to client region
 		if (clipToClientRect(innerRect)) {
