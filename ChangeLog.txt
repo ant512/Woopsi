@@ -70,6 +70,7 @@ Change Log
      - Gadget rect caching moved into separate RectCache class.
      - RectCache::removeOverlappedRects made non-recursive.
      - Gadget::clipRectToHierarchy made non-recursive.
+     - Added GraphicsPort::copy() to copy regions of the framebuffer around.
 
   V0.37 (20090112)
   

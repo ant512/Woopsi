@@ -1045,3 +1045,69 @@ void GraphicsPort::drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 	}
 	drawClippedPixel(x1, y1, colour);
 }
+
+void GraphicsPort::copy(s16 sourceX, s16 sourceY, u16 width, u16 height, s16 destX, s16 destY) {
+
+	// Do nothing if no copying involved
+	if ((sourceX == destX) && (sourceY == destY)) return;
+
+	// If there is no vertical movement and the source and destination overlap,
+	// we need to use an offscreen buffer to copy
+	if (sourceY == destY) {
+		if ((destX >= sourceX) && (destX <= sourceX + width)) {
+			u16* buffer = new u16[width];
+			u16* copySource = _bitmap + sourceX + (sourceY * _bitmapWidth);
+			u16* copyDest = _bitmap + destX + (destY * _bitmapWidth);
+
+			for (u16 y = 0; y < height; y++) {
+
+				// Copy row to buffer
+				while(DMA_Active());
+				DMA_Copy(copySource, buffer, width, DMA_16NOW);
+
+				// Copy row back to screen
+				while(DMA_Active());
+				DMA_Copy(buffer, copyDest, width, DMA_16NOW);
+
+				copySource += _bitmapWidth;
+				copyDest += _bitmapWidth;
+			}
+
+			delete buffer;
+
+			return;
+		}
+	}
+
+	// Vertical movement or non overlap means we do not need to use an intermediate buffer
+	// Copy from top to bottom if moving up; from bottom to top if moving down.
+	// Ensures that rows to be copied are not overwritten
+	s16 delta;
+	u16* copySource;
+	u16* copyDest;
+
+	if (sourceY > destY) {
+
+		// Copy up
+		delta = _bitmapWidth;
+		copySource = _bitmap + sourceX + (sourceY * _bitmapWidth);
+		copyDest = _bitmap + destX + (destY * _bitmapWidth);
+	} else {
+
+		// Copy down
+		delta = -_bitmapWidth;
+		copySource = _bitmap + sourceX + ((sourceY + height) * _bitmapWidth);
+		copyDest = _bitmap + destX + ((destY + height) * _bitmapWidth);
+	}
+
+	// Perform copy	
+	for (u16 i = 0; i < height; ++i) {
+
+		// Copy row
+		while(DMA_Active());
+		DMA_Copy(copySource, copyDest, width, DMA_16NOW);
+
+		copySource += delta;
+		copyDest += delta;
+	}
+}

@@ -191,7 +191,6 @@ void Demo::startup() {
 	butt->setBorderless(true);
 	ikWindow->addGadget(butt);
 
-
 	// Create screens
 	AmigaScreen* newScreen = new AmigaScreen("Woopsi Demo V0.36", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen);
@@ -386,7 +385,6 @@ void Demo::startup() {
 	req->addOption("Req Test 8", 8);
 	req->addOption("Req Test 9", 9);
 	newScreen2->addGadget(req);
-
 
 	// Add Welcome notice
 	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");

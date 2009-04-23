@@ -262,6 +262,8 @@ namespace WoopsiUI {
 		 */
 		void clear();
 
+		void copy(s16 sourceX, s16 sourceY, u16 width, u16 height, s16 destX, s16 destY);
+
 	private:
 		Gadget* _gadget;							/**< Pointer to the gadget that the port will draw to */
 		Gadget::Rect* _clipRect;					/**< Clipping rect that the port must draw within */
