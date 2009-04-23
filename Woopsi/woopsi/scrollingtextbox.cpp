@@ -11,10 +11,6 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	_flags.shiftClickChildren = false;
 
 	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, font);
-	_textbox->appendText(text);
-	_textbox->appendText(text);
-	_textbox->appendText(text);
-	_textbox->appendText(text);
 	_textbox->addGadgetEventHandler(this);
 	
 	// Create scrollbar
