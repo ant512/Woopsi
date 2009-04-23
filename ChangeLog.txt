@@ -33,8 +33,10 @@ Change Log
      - Const correctness fixes in Gadget class.
      - ScrollingTextbox adjusts scrollbar grip position correctly when first
        initialised.
-     - Alert box draws XOR correctly when released.
-     - Requester draws XOR correctly when released.
+     - Alert box draws XOR rect correctly when released.
+     - Requester draws XOR rect correctly when released.
+     - WoopsiKeyboard no longer adds itself as the decoration event handler
+       twice; fixes XOR rect drawing when clicked/released.
 
   - New Features:
      - Added Gadget::getChild() and Gadget::getChildCount() (for leonelhs).

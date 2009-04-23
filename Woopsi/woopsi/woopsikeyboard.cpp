@@ -101,7 +101,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	addGadget(_timer);
 
 	// Set event handlers
-	for (s32 i = 0; i < _gadgets.size(); i++) {
+	for (s32 i = getDecorationCount(); i < _gadgets.size(); i++) {
 		_gadgets[i]->addGadgetEventHandler(this);
 	}
 

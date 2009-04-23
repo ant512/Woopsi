@@ -939,6 +939,12 @@ namespace WoopsiUI {
 		 */
 		const s32 getChildCount() const { return _gadgets.size(); };
 
+		/**
+		 * Get the quantity of decoration gadgets.
+		 * @return The number of decoration gadgets belonging to this gadget.
+		 */
+		const inline s32 getDecorationCount() const { return _decorationCount; };
+
 	protected:
 		s16 _x;									/**< X co-ordinate of the gadget, relative to parent */
 		s16 _y;									/**< Y co-ordinate of the gadget, relative to parent */
