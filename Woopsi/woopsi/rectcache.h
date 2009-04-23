@@ -28,7 +28,17 @@ namespace WoopsiUI {
 		 * display that do not need to be redrawn.
 		 * @param sender Pointer to the gadget that initiated the split.
 		 */
-		virtual void splitRectangles(WoopsiArray<Gadget::Rect>* invalidRectangles, WoopsiArray<Gadget::Rect>* validRects, const Gadget* sender) const;
+		void splitRectangles(WoopsiArray<Gadget::Rect>* invalidRectangles, WoopsiArray<Gadget::Rect>* validRects, const Gadget* sender) const;
+
+		/**
+		 * Move any rectangles from the visibleRects list that overlap this gadget
+		 * into the invisibleRects list.  Used during visible region calculations.
+		 * @param visibleRects A vector of regions that are not overlapped.
+		 * @param invisibleRects A vector of regions that are overlapped.
+		 * @param gadget The gadget that requested the lists.
+		 * @see splitRectangles()
+		 */
+		void removeOverlappedRects(WoopsiArray<Gadget::Rect>* visibleRects, WoopsiArray<Gadget::Rect>* invisibleRects, const Gadget* gadget) const;
 
 	private:
 		WoopsiArray<Gadget::Rect> _topRegions;		/**< List of the gadget's visible regions */

@@ -270,3 +270,33 @@ void RectCache::splitRectangles(WoopsiArray<Gadget::Rect>* invalidRects, WoopsiA
 		}
 	}
 }
+
+// Remove any rectangles that this gadget overlaps from the visible vector
+// and add them to the invisible vector
+// Called when drawing a gadget to check that no higher gadgets get overwritten
+void RectCache::removeOverlappedRects(WoopsiArray<Gadget::Rect>* visibleRects, WoopsiArray<Gadget::Rect>* invisibleRects, const Gadget* gadget) const {
+
+	// Locate gadget in the list; we add one to the index to
+	// ensure that we deal with the next gadget up in the z-order
+	s32 gadgetIndex = _gadget->getGadgetIndex(gadget) + 1;
+
+	// Gadget should never be the bottom item on the screen
+	if (gadgetIndex > 0) {
+
+		// Remove any overlapped rectangles
+		for (s32 i = gadgetIndex; i < _gadget->getChildCount(); i++) {
+			if (visibleRects->size() > 0) {
+				_gadget->getChild(i)->splitRectangles(visibleRects, invisibleRects, gadget);
+			} else {
+				break;
+			}
+		}
+	}
+
+	// Send vectors to parent
+	if (_gadget->getParent() != NULL) {
+		if (visibleRects->size() > 0) {
+			_gadget->getParent()->removeOverlappedRects(visibleRects, invisibleRects, _gadget);
+		}
+	}
+}
