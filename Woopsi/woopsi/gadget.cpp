@@ -567,38 +567,10 @@ void Gadget::redraw() {
 	if (isDrawingEnabled()) {
 		cacheVisibleRects();
 
-		// Create pointer to a vector to store the overlapped rectangles
-		// We can discard this later as we don't need it
-		WoopsiArray<Rect>* invisibleRects = new WoopsiArray<Rect>();
-
-		// Create a pointer to store rects that are not overlapped by
-		// children
-		WoopsiArray<Rect>* visibleRects = new WoopsiArray<Rect>();
-
-		// Copy all visible regions into the new vector
-		for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
-			visibleRects->push_back(_visibleRegionCache[i]);
-		}
-
-		// Remove all child rects from the visible vector
-		for (s32 i = 0; i < _gadgets.size(); i++) {
-			if (visibleRects->size() > 0) {
-				_gadgets[i]->splitRectangles(visibleRects, invisibleRects, this);
-			} else {
-				break;
-			}
-		}
-
-		// Tidy up
-		delete invisibleRects;
-
 		// Draw all visible rectangles
-		for (s32 i = 0; i < visibleRects->size(); i++) {
-			draw(visibleRects->at(i));
+		for (s32 i = 0; i < _endRegionCache.size(); i++) {
+			draw(_endRegionCache.at(i));
 		}
-
-		// Tidy up
-		delete visibleRects;
 
 		// Remember that the gadget is no longer erased
 		_flags.erased = false;
@@ -907,7 +879,6 @@ void Gadget::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>*
 void Gadget::erase() {
 
 	if (!_flags.erased) {
-		invalidateVisibleRectCache();
 		cacheVisibleRects();
 
 		if (_parent != NULL) {
@@ -916,6 +887,8 @@ void Gadget::erase() {
 
 		// Remember that the gadget has been erased
 		_flags.erased = true;
+
+		invalidateVisibleRectCache();
 	}
 }
 
@@ -1861,6 +1834,25 @@ void Gadget::cacheVisibleRects() {
 			// Request refresh
 			if (_parent != NULL) {
 				_parent->removeOverlappedRects(&_visibleRegionCache, invisibleRects, this);
+			}
+		}
+
+		invisibleRects->clear();
+
+		// Cache visible regions not overlapped by children
+		_endRegionCache.clear();
+
+		// Copy all visible regions into the new vector
+		for (s32 i = 0; i < _visibleRegionCache.size(); i++) {
+			_endRegionCache.push_back(_visibleRegionCache[i]);
+		}
+
+		// Remove all child rects from the visible vector
+		for (s32 i = 0; i < _gadgets.size(); i++) {
+			if (_endRegionCache.size() > 0) {
+				_gadgets[i]->splitRectangles(&_endRegionCache, invisibleRects, this);
+			} else {
+				break;
 			}
 		}
 

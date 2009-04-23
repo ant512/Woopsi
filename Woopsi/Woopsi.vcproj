@@ -178,6 +178,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\rectcache.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\requester.cpp"
 				>
 			</File>
@@ -517,6 +521,10 @@
 			</File>
 			<File
 				RelativePath=".\woopsi\radiobuttongroup.h"
+				>
+			</File>
+			<File
+				RelativePath=".\woopsi\rectcache.h"
 				>
 			</File>
 			<File

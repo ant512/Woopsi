@@ -66,6 +66,7 @@ Change Log
        - Selected context menu item now accessible via
          ContextMenuEventArgs::getItem().
      - Slider grip automatically resizes; no need to call resizeGrip().
+     - End point rects now cached (sans child rects) for extra speed.
 
   V0.37 (20090112)
   

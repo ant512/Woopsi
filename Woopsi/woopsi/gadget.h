@@ -990,6 +990,7 @@ namespace WoopsiUI {
 
 		// Visible regions
 		WoopsiArray<Rect> _visibleRegionCache;	/**< List of the gadget's visible regions */
+		WoopsiArray<Rect> _endRegionCache;		/**< List of the gadget's visible regions */
 
 		OutlineType _outline;					/**< Type of outline the gadget uses */
 		CloseType _closeType;					/**< Type of close method that should be called for the gadget */
