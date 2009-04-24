@@ -1046,7 +1046,7 @@ void GraphicsPort::drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 	drawClippedPixel(x1, y1, colour);
 }
 
-void GraphicsPort::copy(s16 sourceX, s16 sourceY, u16 width, u16 height, s16 destX, s16 destY) {
+void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height) {
 
 	// Do nothing if no copying involved
 	if ((sourceX == destX) && (sourceY == destY)) return;

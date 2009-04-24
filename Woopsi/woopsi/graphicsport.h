@@ -262,7 +262,21 @@ namespace WoopsiUI {
 		 */
 		void clear();
 
-		void copy(s16 sourceX, s16 sourceY, u16 width, u16 height, s16 destX, s16 destY);
+		/**
+		 * Copy a rectangular region from the source co-ordinates to the
+		 * destination co-ordinates.  Uses the DMA for speed.  Worst-case
+		 * scenario uses an off-screen buffer for situations wherein there
+		 * is no vertical movement and the source and destination overlap,
+		 * in which case two copies are performed for each row (source to
+		 * buffer and buffer to destination).  Does not clip.
+		 * @param sourceX Source x co-ord.
+		 * @param sourceY Source y co-ord.
+		 * @param destX Destination x co-ord.
+		 * @param destY Destination y co-ord.
+		 * @param width Width of the rectangle to copy.
+		 * @param height Height of the rectangle to copy.
+		 */
+		void copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height);
 
 	private:
 		Gadget* _gadget;							/**< Pointer to the gadget that the port will draw to */

@@ -6,19 +6,51 @@
 
 namespace WoopsiUI {
 
+	/**
+	 * Maintains a list of foreground (ie. above children) and background (with
+	 * child overlapped-rects removed) rectangles representing the visible portions
+	 * of a gadget.
+	 */
 	class RectCache {
 	public:
+
+		/**
+		 * Constructor.
+		 * @param gadget Gadget that contains the rect cache.
+		 */
 		RectCache(const Gadget* gadget);
+
+		/**
+		 * Destructor.
+		 */
 		inline ~RectCache() { };
 
+		/**
+		 * Rebuild the cache if it is invalid.
+		 */
 		void cache();
 
+		/**
+		 * Invalidates the cache.
+		 */
 		inline void invalidate() {
 			_foregroundInvalid = true;
 			_backgroundInvalid = true;
 		};
 
+		/**
+		 * Return the list of background regions.  These are regions that are not overlapped by
+		 * child gadgets.
+		 * @return The list of background regions.
+		 */
 		inline WoopsiArray<Gadget::Rect>* getBackgroundRegions() { return &_backgroundRegions; };
+
+		/**
+		 * Return the list of foreground regions.  These are regions that represent the entire
+		 * visible surface of the gadget, including any regions that are actually overlapped by
+		 * child gadgets.
+		 * @return The list of foreground regions.
+		 */
 		inline WoopsiArray<Gadget::Rect>* getForegroundRegions() { return &_foregroundRegions; };
 
 		void cacheForegroundRegions();
