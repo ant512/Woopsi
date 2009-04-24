@@ -1096,8 +1096,8 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, u16 width, u16 height, s16 des
 
 		// Copy down
 		delta = -_bitmapWidth;
-		copySource = _bitmap + sourceX + ((sourceY + height) * _bitmapWidth);
-		copyDest = _bitmap + destX + ((destY + height) * _bitmapWidth);
+		copySource = _bitmap + sourceX + ((sourceY + height - 1) * _bitmapWidth);
+		copyDest = _bitmap + destX + ((destY + height - 1) * _bitmapWidth);
 	}
 
 	// Perform copy	

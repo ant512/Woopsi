@@ -71,6 +71,7 @@ Change Log
      - RectCache::removeOverlappedRects made non-recursive.
      - Gadget::clipRectToHierarchy made non-recursive.
      - Added GraphicsPort::copy() to copy regions of the framebuffer around.
+     - Screen dragging code improved; uses new GraphicsPort::copy() method.
 
   V0.37 (20090112)
   
