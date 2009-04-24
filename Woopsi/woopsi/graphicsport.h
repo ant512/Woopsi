@@ -278,6 +278,18 @@ namespace WoopsiUI {
 		 */
 		void copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height);
 
+		/**
+		 * Scroll a region by a specified distance in two dimensions.  Performs
+		 * a clipped copy to achieve scroll effect.
+		 * @param x X co-ord of the area to scroll.
+		 * @param y Y co-ord of the area to scroll.
+		 * @param xDistance Horizontal distance to scroll.
+		 * @param yDistance Vertical distance to scroll.
+		 * @param width Width of the area to scroll.
+		 * @param height Height of the area to scroll.
+		 */
+		void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height);
+
 	private:
 		Gadget* _gadget;							/**< Pointer to the gadget that the port will draw to */
 		Gadget::Rect* _clipRect;					/**< Clipping rect that the port must draw within */
@@ -299,6 +311,7 @@ namespace WoopsiUI {
 		void clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect& clipRect);
 		void clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect& clipRect);
 		void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Gadget::Rect& clipRect);
+		void clipScroll(s16 sourceX1, s16 sourceY1, s16 sourceX2, s16 sourceY2, s16 destX1, s16 destY1, s16 destX2, s16 destY2, const Gadget::Rect& clipRect);
 
 		// Drawing functions that take pre-clipped values
 		void drawClippedPixel(s16 x, s16 y, u16 colour);

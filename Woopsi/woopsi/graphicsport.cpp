@@ -1048,6 +1048,9 @@ void GraphicsPort::drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 
 void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height) {
 
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+
 	// Do nothing if no copying involved
 	if ((sourceX == destX) && (sourceY == destY)) return;
 
@@ -1109,5 +1112,58 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 widt
 
 		copySource += delta;
 		copyDest += delta;
+	}
+}
+
+void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height) {
+
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+
+	// Clip co-ordinates
+	s16 sourceX1 = x;
+	s16 sourceY1 = y;
+	s16 sourceX2 = x + width - 1;
+	s16 sourceY2 = y + height - 1;
+
+	// Adjust source to compensate for the fact that we are scrolling, not copying - 
+	// we are overwriting part of the source with itself
+	if (xDistance < 0) sourceX1 -= xDistance;
+	if (xDistance > 0) sourceX2 -= xDistance;
+	if (yDistance < 0) sourceY1 -= yDistance;
+	if (yDistance > 0) sourceY2 -= yDistance;
+
+	s16 destX1 = sourceX1 + xDistance;
+	s16 destY1 = sourceY1 + yDistance;
+	s16 destX2 = sourceX2 + xDistance;
+	s16 destY2 = sourceY2 + yDistance;
+
+	if (_clipRect == NULL) {
+		// Scroll all visible rects
+		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
+			clipScroll(sourceX1, sourceY1, sourceX2, sourceY2, destX1, destY1, destX2, destY2, _gadget->getForegroundRegions()->at(i));
+		}
+	} else {
+		// Scroll single rectangle
+		clipScroll(sourceX1, sourceY1, sourceX2, sourceY2, destX1, destY1, destX2, destY2, *_clipRect);
+	}
+}
+
+void GraphicsPort::clipScroll(s16 sourceX1, s16 sourceY1, s16 sourceX2, s16 sourceY2, s16 destX1, s16 destY1, s16 destX2, s16 destY2, const Gadget::Rect& clipRect) {
+	if (clipCoordinates(&sourceX1, &sourceY1, &sourceX2, &sourceY2, clipRect)) {
+
+		s16 widthSource = (sourceX2 - sourceX1) + 1;
+		s16 widthDest = (destX2 - destX1) + 1;
+		s16 heightSource = (sourceY2 - sourceY1) + 1;
+		s16 heightDest = (destY2 - destY1) + 1;
+
+		// Get smallest dimensions - cannot copy into a space too small to accommodate it
+		s16 width = widthSource > widthDest ? widthDest : widthSource;
+		s16 height = heightSource > heightDest ? heightDest : heightSource;
+
+		copy(sourceX1, sourceY1, destX1, destY1, width, height);
 	}
 }
