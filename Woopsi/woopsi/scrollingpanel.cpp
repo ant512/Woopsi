@@ -63,6 +63,7 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 
 		// Adjust the scroll values
 		_canvasY += dy;
+		_canvasX += dx;
 
 		// Draw revealed sections
 		for (s32 i = 0; i < revealedRects.size(); ++i) {

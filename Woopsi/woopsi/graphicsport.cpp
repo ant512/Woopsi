@@ -1195,21 +1195,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 			// Check if the post-clipping regions still overlap
 			if ((sourceX1 + minWidth <= destX1) || (sourceX1 >= destX1 + minWidth) || (sourceY1 + minHeight <= destY1) || (sourceY1 >= destY1 + minHeight)) {
 				
-				// Post-clipping regions do not overlap.  In this situation, panic
-				
-				// Problem - we redraw the source, but if the dest does not overlap the source, we need to draw the region
-				// separating the source
-				
-				// No overlap
-				/*
-				 Gadget::Rect rect;
-				 rect.x = sourceX1;
-				 rect.y = sourceY1;
-				 rect.width = width;
-				 rect.height = height;
-				 revealedRects->push_back(rect);
-				 */
-				
+				// Post-clipping regions do not overlap - redraw the clipped source region
 				s16 newX1 = x;
 				s16 newY1 = y;
 				s16 newX2 = x + width - 1;
