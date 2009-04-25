@@ -73,6 +73,8 @@ Change Log
      - Added GraphicsPort::copy() to copy regions of the framebuffer around.
      - Screen dragging code improved; uses new GraphicsPort::copy() method.
      - Added GraphicsPort::scroll() to scroll regions of gadgets.
+     - Removed scrolling code from ScrollingPanel and rely on new scroll()
+       method instead.
 
   V0.37 (20090112)
   
