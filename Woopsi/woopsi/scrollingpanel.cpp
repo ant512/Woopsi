@@ -58,7 +58,7 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 		Rect rect;
 		getClientRect(rect);
 		GraphicsPort* port = newGraphicsPort();
-		port->scroll(0, 0, 0, dy, rect.width, rect.height, &revealedRects);
+		port->scroll(0, 0, dx, dy, rect.width, rect.height, &revealedRects);
 		delete port;
 
 		// Adjust the scroll values
