@@ -60,30 +60,6 @@ namespace WoopsiUI {
 	protected:
 
 		/**
-		 * Scroll the panel left by the specified amount.
-		 * @param dx The amount to scroll.
-		 */
-		void scrollLeft(s32 dx);
-		
-		/**
-		 * Scroll the panel right by the specified amount.
-		 * @param dx The amount to scroll.
-		 */
-		void scrollRight(s32 dx);
-		
-		/**
-		 * Scroll the panel up by the specified amount.
-		 * @param dy The amount to scroll.
-		 */
-		void scrollUp(s32 dy);
-		
-		/**
-		 * Scroll the panel dpwn by the specified amount.
-		 * @param dy The amount to scroll.
-		 */
-		void scrollDown(s32 dy);
-
-		/**
 		 * Scroll all child gadgets by the specified amounts.  Actually uses the gadget's
 		 * moveTo() function to reposition them.
 		 * @param dx The horizontal distance to scroll.

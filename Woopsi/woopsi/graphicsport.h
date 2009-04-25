@@ -5,9 +5,9 @@
 #include "gadget.h"
 
 namespace WoopsiUI {
-
+	
 	class FontBase;
-
+	
 	/**
 	 * GraphicsPort is the interface between a gadget and the framebuffer.  It provides
 	 * drawing tools that are clipped to the visible regions of a gadget.  This class can only
@@ -38,7 +38,7 @@ namespace WoopsiUI {
 		inline ~GraphicsPort() {
 			delete _clipRect;
 		};
-
+		
 		/**
 		 * Return the x co-ordinate of the graphics port.
 		 * @return The x co-ordinate of the graphics port.
@@ -50,7 +50,7 @@ namespace WoopsiUI {
 		 * @return The y co-ordinate of the graphics port.
 		 */
 		const s16 getY() const { return _rect.y + _gadget->getY(); };
-
+		
 		/**
 		 * Draw a pixel to the bitmap.
 		 * @param x The x co-ordinate of the pixel.
@@ -167,7 +167,7 @@ namespace WoopsiUI {
 		 * @param height The height of the rectangle.
 		 */
 		void drawFilledXORRect(s16 x, s16 y, u16 width, u16 height);
-
+		
 		/**
 		 * Draw a string to the bitmap.
 		 * @param x The x co-ordinate of the string.
@@ -246,7 +246,7 @@ namespace WoopsiUI {
 		 * @param transparentColour The transparent colour used in the bitmap.
 		 */
 		void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour);
-
+		
 		/**
 		 * Draw a line to the port's bitmap.
 		 * @param x1 The x co-ordinate of the start point of the line.
@@ -256,12 +256,12 @@ namespace WoopsiUI {
 		 * @param colour The colour of the line.
 		 */
 		void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
-
+		
 		/**
 		 * Erases the graphics port's output by redrawing its gadget.
 		 */
 		void clear();
-
+		
 		/**
 		 * Copy a rectangular region from the source co-ordinates to the
 		 * destination co-ordinates.  Uses the DMA for speed.  Worst-case
@@ -277,7 +277,7 @@ namespace WoopsiUI {
 		 * @param height Height of the rectangle to copy.
 		 */
 		void copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height);
-
+		
 		/**
 		 * Scroll a region by a specified distance in two dimensions.  Performs
 		 * a clipped copy to achieve scroll effect.
@@ -287,9 +287,12 @@ namespace WoopsiUI {
 		 * @param yDistance Vertical distance to scroll.
 		 * @param width Width of the area to scroll.
 		 * @param height Height of the area to scroll.
+		 * @param revealedRects Populated with rects representing the region
+		 * uncovered by the scroll method.  This should be empty when passed,
+		 * and the regions should be drawn to once the scroll has finished.
 		 */
-		void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height);
-
+		void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Gadget::Rect>* revealedRects);
+		
 	private:
 		Gadget* _gadget;							/**< Pointer to the gadget that the port will draw to */
 		Gadget::Rect* _clipRect;					/**< Clipping rect that the port must draw within */
@@ -297,7 +300,7 @@ namespace WoopsiUI {
 		u16* _bitmap;								/**< Bitmap that the port will draw to (should be in VRAM) */
 		u16 _bitmapWidth;							/**< Width of the bitmap that the port will draw to */
 		u16 _bitmapHeight;							/**< Height of the bitmap that the port will draw to */
-
+		
 		// Internal clipping routines
 		void clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipRect);
 		void clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Gadget::Rect& clipRect);
@@ -311,8 +314,8 @@ namespace WoopsiUI {
 		void clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect& clipRect);
 		void clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect& clipRect);
 		void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Gadget::Rect& clipRect);
-		void clipScroll(s16 sourceX1, s16 sourceY1, s16 sourceX2, s16 sourceY2, s16 destX1, s16 destY1, s16 destX2, s16 destY2, const Gadget::Rect& clipRect);
-
+		void clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Gadget::Rect& clipRect, WoopsiArray<Gadget::Rect>* revealedRects);
+		
 		// Drawing functions that take pre-clipped values
 		void drawClippedPixel(s16 x, s16 y, u16 colour);
 		void drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
