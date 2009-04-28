@@ -1,4 +1,4 @@
-* Copyright (c) 2007-2008, Antony Dzeryn
+* Copyright (c) 2007-2009, Antony Dzeryn
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -105,7 +105,10 @@ Features
       - Bitmap blitting;
       - Bitmap blitting with transparent colour key;
       - XOR horizontal/vertical lines and pixel plotting;
-      - Flood fill.
+      - Flood fill;
+      - Region scrolling;
+      - Region copying;
+      - Region dimming.
     - Linked list, dynamic array and hashmap template container classes and
       iterator classes.
     - Date class.
