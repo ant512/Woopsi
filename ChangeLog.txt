@@ -77,6 +77,8 @@ Change Log
        method instead.
      - Added GraphicsPort::dim() function to add DimmedScreen functionality to
        all gadgets.
+     - Added ability to specify foreground or background clipping when creating
+       a new GraphicsPort instance.
 
   V0.37 (20090112)
   
