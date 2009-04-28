@@ -1,5 +1,4 @@
 #include "window.h"	
-#include "woopsifuncs.h"
 
 using namespace WoopsiUI;
 
