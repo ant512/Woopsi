@@ -6,7 +6,7 @@
 
 using namespace WoopsiUI;
 
-GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const Gadget::Rect* clipRect) {
+GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect) {
 	_gadget = gadget;
 	_rect.x = x;
 	_rect.y = y;
@@ -25,6 +25,13 @@ GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const
 		_clipRect->y = clipRect->y;
 	} else {
 		_clipRect = NULL;
+
+		// Set up clip rect list
+		if (clipRectList != NULL) {
+			_clipRectList = clipRectList;
+		} else {
+			_clipRectList = NULL;
+		}
 	}
 }
 
@@ -161,8 +168,8 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rects
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipText(x, y, font, length, string, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipText(x, y, font, length, string, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -344,8 +351,8 @@ void GraphicsPort::drawHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 	if (_clipRect == NULL) {
 		
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipHorizLine(x, y, width, colour, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipHorizLine(x, y, width, colour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -364,8 +371,8 @@ void GraphicsPort::drawVertLine(s16 x, s16 y, s16 height, u16 colour) {
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipVertLine(x, y, height, colour, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipVertLine(x, y, height, colour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -384,8 +391,8 @@ void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipFilledRect(x, y, width, height, colour, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipFilledRect(x, y, width, height, colour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -403,8 +410,8 @@ void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipFilledCircle(x0, y0, radius, colour, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipFilledCircle(x0, y0, radius, colour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -451,11 +458,11 @@ void GraphicsPort::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipHorizLine(x, y, width, colour, _gadget->getForegroundRegions()->at(i));						// Top
-			clipHorizLine(x, y + height - 1, width, colour, _gadget->getForegroundRegions()->at(i));			// Bottom
-			clipVertLine(x, y + 1, height - 2, colour, _gadget->getForegroundRegions()->at(i));				// Left
-			clipVertLine(x + width - 1, y + 1, height - 2, colour, _gadget->getForegroundRegions()->at(i));	// Right
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipHorizLine(x, y, width, colour, _clipRectList->at(i));						// Top
+			clipHorizLine(x, y + height - 1, width, colour, _clipRectList->at(i));			// Bottom
+			clipVertLine(x, y + 1, height - 2, colour, _clipRectList->at(i));				// Left
+			clipVertLine(x + width - 1, y + 1, height - 2, colour, _clipRectList->at(i));	// Right
 		}
 	} else {
 		// Draw single rectangle
@@ -509,11 +516,11 @@ void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shi
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipHorizLine(x, y, width, shineColour, _gadget->getForegroundRegions()->at(i));							// Top
-			clipHorizLine(x, y + height - 1, width, shadowColour, _gadget->getForegroundRegions()->at(i));				// Bottom
-			clipVertLine(x, y + 1, height - 2, shineColour, _gadget->getForegroundRegions()->at(i));					// Left
-			clipVertLine(x + width - 1, y + 1, height - 2, shadowColour, _gadget->getForegroundRegions()->at(i));		// Right
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipHorizLine(x, y, width, shineColour, _clipRectList->at(i));							// Top
+			clipHorizLine(x, y + height - 1, width, shadowColour, _clipRectList->at(i));			// Bottom
+			clipVertLine(x, y + 1, height - 2, shineColour, _clipRectList->at(i));					// Left
+			clipVertLine(x + width - 1, y + 1, height - 2, shadowColour, _clipRectList->at(i));		// Right
 		}
 	} else {
 		// Draw single rectangle
@@ -535,11 +542,11 @@ void GraphicsPort::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height) {
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
 			
 			// Draw all rows of rectangle
 			for (s32 j = 0; j < height; j++) {
-				clipXORHorizLine(x, y + j, width, _gadget->getForegroundRegions()->at(i));
+				clipXORHorizLine(x, y + j, width, _clipRectList->at(i));
 			}
 		}
 	} else {
@@ -561,11 +568,11 @@ void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipXORHorizLine(x, y, width, _gadget->getForegroundRegions()->at(i));						// Top
-			clipXORHorizLine(x, y + height - 1, width, _gadget->getForegroundRegions()->at(i));		// Bottom
-			clipXORVertLine(x, y + 1, height - 2, _gadget->getForegroundRegions()->at(i));				// Left
-			clipXORVertLine(x + width - 1, y + 1, height - 2, _gadget->getForegroundRegions()->at(i));	// Right
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipXORHorizLine(x, y, width, _clipRectList->at(i));						// Top
+			clipXORHorizLine(x, y + height - 1, width, _clipRectList->at(i));			// Bottom
+			clipXORVertLine(x, y + 1, height - 2, _clipRectList->at(i));				// Left
+			clipXORVertLine(x + width - 1, y + 1, height - 2, _clipRectList->at(i));	// Right
 		}
 	} else {
 		// Draw single rectangle
@@ -596,8 +603,8 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -625,8 +632,8 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -646,8 +653,8 @@ void GraphicsPort::drawXORHorizLine(s16 x, s16 y, s16 width) {
 	if (_clipRect == NULL) {
 		
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipXORHorizLine(x, y, width, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipXORHorizLine(x, y, width, _clipRectList->at(i));
 		}
 	} else {
 		
@@ -668,8 +675,8 @@ void GraphicsPort::drawXORVertLine(s16 x, s16 y, s16 height) {
 	if (_clipRect == NULL) {
 		
 		// Draw all visible rectangles
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipXORVertLine(x, y, height, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipXORVertLine(x, y, height, _clipRectList->at(i));
 		}
 	} else {
 		
@@ -862,8 +869,8 @@ void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rects
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipPixel(x, y, colour, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipPixel(x, y, colour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -900,8 +907,8 @@ void GraphicsPort::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rects
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipLine(x1, y1, x2, y2, colour, _gadget->getForegroundRegions()->at(i));
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipLine(x1, y1, x2, y2, colour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
@@ -1127,8 +1134,8 @@ void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width,
 	if (_clipRect == NULL) {
 			
 		// Scroll all visible rects
-		for (s32 i = 0; i < _gadget->getForegroundRegions()->size(); i++) {
-			clipScroll(x, y, xDistance, yDistance, width, height, _gadget->getForegroundRegions()->at(i), revealedRects);
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipScroll(x, y, xDistance, yDistance, width, height, _clipRectList->at(i), revealedRects);
 		}
 	} else {
 
@@ -1302,3 +1309,64 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 		}
 	}
 }
+
+void GraphicsPort::dim(s16 x, s16 y, u16 width, u16 height) {
+
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+	
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+	
+	// Dim the region
+	if (_clipRect == NULL) {
+			
+		// Dim all visible rects
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipDim(x, y, width, height, _clipRectList->at(i));
+		}
+	} else {
+
+		// Dim single rectangle
+		clipDim(x, y, width, height, *_clipRect);
+	}
+}
+
+void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Gadget::Rect& clipRect) {
+	
+	s16 x2 = x + width - 1;
+	s16 y2 = y + height - 1;
+
+	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
+
+		u16* rowStart = _bitmap + (y * _bitmapWidth);
+		u16 colStart = x;
+		u16 colPos;
+
+		// Loop through all pixels within the region
+		for (s16 i = y; i <= y2; i++) {
+
+			// Reset to start pixel row
+			colPos = colStart;
+
+			for (s16 j = x; j <= x2; j++) {
+		
+				// Get pixel data directly from the framebuffer
+				u16 colour = *(rowStart + colPos);
+			
+				// Halve the intensity of the colour (cheers Jeff)
+				colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
+
+				// Write back to framebuffer
+				*(rowStart + colPos) = 0x8000 | colour;
+
+				// Move to next pixel column
+				colPos++;
+			}
+
+			// Move to next pixel row
+			rowStart += _bitmapWidth;
+		}
+	}
+}
+		

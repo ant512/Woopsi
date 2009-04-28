@@ -96,7 +96,7 @@ void Pong::moveObjects() {
 
 void Pong::draw() {
 	// Get graphics port
-	GraphicsPort* port = _window->newGraphicsPort();
+	GraphicsPort* port = _window->newGraphicsPort(false);
 
 	// Background
 	port->drawFilledRect(0, 0, 112, 43, woopsiRGB(0, 0, 0));

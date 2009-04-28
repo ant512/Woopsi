@@ -295,9 +295,12 @@ namespace WoopsiUI {
 		 * Gets a pointer to a new instance of the GraphicsPort class to allow
 		 * drawing within this gadget's client space.
 		 * The GraphicsPort object must be deleted when it is no longer required.
+ 		 * @param isForeground True to use the foreground clipping list (draw
+		 * over all space, including that overlapped by children) or background
+		 * clipping list (not including that overlapped by children).
 		 * @return A pointer to a new GraphicsPort object.
 		 */
-		virtual GraphicsPort* newGraphicsPort();
+		virtual GraphicsPort* newGraphicsPort(bool isForeground);
 
 		/**
 		 * Gets a pointer to a new instance of the GraphicsPort class to allow
@@ -319,6 +322,13 @@ namespace WoopsiUI {
 		 * @return A pointer to a vector of all visible regions.
 		 */
 		WoopsiArray<Rect>* getForegroundRegions();
+
+		/**
+		 * Gets a pointer to the vector of all of the visible regions of this gadget,
+		 * not including any covered by children.
+		 * @return A pointer to a vector of all visible regions not covered by children.
+		 */
+		WoopsiArray<Rect>* getBackgroundRegions();
 
 		/**
 		 * Gets a pointer to the gadget's font.
@@ -1057,9 +1067,12 @@ namespace WoopsiUI {
 		 * visible areas of this gadget.  Allows drawing over all regions of
 		 * the gadget, including the border.  The port must be deleted when
 		 * it is no longer required.
+		 * @param isForeground True to use the foreground clipping list (draw
+		 * over all space, including that overlapped by children) or background
+		 * clipping list (not including that overlapped by children).
 		 * @return A new graphics port object.
 		 */
-		virtual GraphicsPort* newInternalGraphicsPort();
+		virtual GraphicsPort* newInternalGraphicsPort(bool isForeground);
 
 		/**
 		 * Get a graphics port that can draw within the region of the supplied

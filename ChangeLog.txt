@@ -75,6 +75,8 @@ Change Log
      - Added GraphicsPort::scroll() to scroll regions of gadgets.
      - Removed scrolling code from ScrollingPanel and rely on new scroll()
        method instead.
+     - Added GraphicsPort::dim() function to add DimmedScreen functionality to
+       all gadgets.
 
   V0.37 (20090112)
   

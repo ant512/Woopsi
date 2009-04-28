@@ -1,4 +1,5 @@
 #include "window.h"	
+#include "woopsifuncs.h"
 
 using namespace WoopsiUI;
 
@@ -12,7 +13,7 @@ bool Window::release(s16 x, s16 y) {
 	if (_flags.dragging) {
 
 		// Get a graphics port from the parent screen
-		GraphicsPort* port = _parent->newGraphicsPort();
+		GraphicsPort* port = _parent->newGraphicsPort(true);
 
 		// Erase the old rect
 		port->drawXORRect(_newX, _newY, _width, _height);
@@ -65,7 +66,7 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 				}
 
 				// Get a graphics port from the parent screen
-				GraphicsPort* port = _parent->newGraphicsPort();
+				GraphicsPort* port = _parent->newGraphicsPort(true);
 
 				// Erase the old rect
 				port->drawXORRect(_newX, _newY, _width, _height);
@@ -123,7 +124,7 @@ void Window::setDragging(u16 x, u16 y) {
 		// Draw XOR rect
 
 		// Get a graphics port from the parent screen
-		GraphicsPort* port = _parent->newGraphicsPort();
+		GraphicsPort* port = _parent->newGraphicsPort(true);
 
 		// Draw rect
 		port->drawXORRect(_newX, _newY, _width, _height);

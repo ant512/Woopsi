@@ -159,7 +159,7 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 						// Calculate height to copy - this is reduced if screen dragged down
 						if (_newY > _y) rect.height -= _newY - _y;
 						
-						GraphicsPort* port = newGraphicsPort();
+						GraphicsPort* port = newGraphicsPort(true);
 						port->copy(rect.x, rect.y, rect.x, rect.y + vY, rect.width, rect.height);
 						
 						delete port;

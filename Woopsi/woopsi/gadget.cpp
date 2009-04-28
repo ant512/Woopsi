@@ -253,7 +253,7 @@ void Gadget::clear(Rect clipRect) {
 }
 
 void Gadget::clear() {
-	GraphicsPort* port = newInternalGraphicsPort();
+	GraphicsPort* port = newInternalGraphicsPort(true);
 	port->drawFilledRect(0, 0, _width, _height, _backColour);
 	delete port;
 }
@@ -1588,7 +1588,7 @@ void Gadget::invalidateVisibleRectCache() {
 }
 
 // Return the client graphics port
-GraphicsPort* Gadget::newGraphicsPort() {
+GraphicsPort* Gadget::newGraphicsPort(bool isForeground) {
 
 	Rect rect;
 	getClientRect(rect);
@@ -1598,7 +1598,10 @@ GraphicsPort* Gadget::newGraphicsPort() {
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
 
-	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT);
+	// Choose the rect cache to use as the clipping rect list
+	WoopsiArray<Rect>* clipList = isForeground ? _rectCache->getForegroundRegions() : _rectCache->getBackgroundRegions();
+
+	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, clipList, NULL);
 }
 
 // Return the client graphics port for a specific clipping rect
@@ -1612,18 +1615,21 @@ GraphicsPort* Gadget::newGraphicsPort(Rect clipRect) {
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
 
-	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, &clipRect);
+	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, NULL, &clipRect);
 }
 
 // Return the internal graphics port - allows drawing over entire gadget space
-GraphicsPort* Gadget::newInternalGraphicsPort() {
+GraphicsPort* Gadget::newInternalGraphicsPort(bool isForeground) {
 
 	u16* bitmap = DrawBg[getPhysicalScreenNumber()];
 
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
 
-	return new GraphicsPort(this, 0, 0, _width, _height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT);
+	// Choose the rect cache to use as the clipping rect list
+	WoopsiArray<Rect>* clipList = isForeground ? _rectCache->getForegroundRegions() : _rectCache->getBackgroundRegions();
+	
+	return new GraphicsPort(this, 0, 0, _width, _height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, clipList, NULL);
 }
 
 // Return the internal graphics port for a specific clipping rect
@@ -1635,12 +1641,17 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 	// Remaining code OK
 	u16* bitmap = DrawBg[getPhysicalScreenNumber()];
 
-	return new GraphicsPort(this, 0, 0, _width, _height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, &clipRect);
+	return new GraphicsPort(this, 0, 0, _width, _height, bitmap, SCREEN_WIDTH, SCREEN_HEIGHT, NULL, &clipRect);
 }
 
 // Return vector of visible rects, including any covered by children
 WoopsiArray<Gadget::Rect>* Gadget::getForegroundRegions() {
 	return _rectCache->getForegroundRegions();
+}
+
+// Return vector of visible rects, not including any covered by children
+WoopsiArray<Gadget::Rect>* Gadget::getBackgroundRegions() {
+	return _rectCache->getBackgroundRegions();
 }
 
 // Move up hierarchy, clipping rect to each ancestor

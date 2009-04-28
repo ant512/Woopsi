@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 	
@@ -30,7 +31,7 @@ namespace WoopsiUI {
 		 * @param bitmapHeight The height of the bitmap being drawn to.
 		 * @param clipRect The clipping region within which the class must draw.
 		 */
-		GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const Gadget::Rect* clipRect = NULL);
+		GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect);
 		
 		/**
 		 * Destructor.
@@ -292,15 +293,25 @@ namespace WoopsiUI {
 		 * and the regions should be drawn to once the scroll has finished.
 		 */
 		void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Gadget::Rect>* revealedRects);
+
+		/**
+		 * Halve the brightness of a specified region.
+		 * @param x X co-ord of the region to dim.
+		 * @param y Y co-ord of the region to dim.
+		 * @param width Width of the region to dim.
+		 * @param height Height of the region to dim.
+		 */
+		void dim(s16 x, s16 y, u16 width, u16 height);
 		
 	private:
-		Gadget* _gadget;							/**< Pointer to the gadget that the port will draw to */
-		Gadget::Rect* _clipRect;					/**< Clipping rect that the port must draw within */
-		Gadget::Rect _rect;							/**< Total area that the port can draw within */
-		u16* _bitmap;								/**< Bitmap that the port will draw to (should be in VRAM) */
-		u16 _bitmapWidth;							/**< Width of the bitmap that the port will draw to */
-		u16 _bitmapHeight;							/**< Height of the bitmap that the port will draw to */
-		
+		Gadget* _gadget;								/**< Pointer to the gadget that the port will draw to */
+		Gadget::Rect* _clipRect;						/**< Clipping rect that the port must draw within */
+		const WoopsiArray<Gadget::Rect>* _clipRectList;	/**< List of rects that the port must draw within */
+		Gadget::Rect _rect;								/**< Total area that the port can draw within */
+		u16* _bitmap;									/**< Bitmap that the port will draw to (should be in VRAM) */
+		u16 _bitmapWidth;								/**< Width of the bitmap that the port will draw to */
+		u16 _bitmapHeight;								/**< Height of the bitmap that the port will draw to */
+
 		// Internal clipping routines
 		void clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipRect);
 		void clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Gadget::Rect& clipRect);
@@ -315,6 +326,7 @@ namespace WoopsiUI {
 		void clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect& clipRect);
 		void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Gadget::Rect& clipRect);
 		void clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Gadget::Rect& clipRect, WoopsiArray<Gadget::Rect>* revealedRects);
+		void clipDim(s16 x, s16 y, u16 width, u16 height, const Gadget::Rect& clipRect);
 		
 		// Drawing functions that take pre-clipped values
 		void drawClippedPixel(s16 x, s16 y, u16 colour);
