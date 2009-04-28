@@ -17,6 +17,7 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 * @param source Pointer to the WoopsiKeyboard object that raised the event.
+		 * @param key Pointer to the key that caused the event.
 		 */
 		KeyboardEventArgs(WoopsiKeyboard* source, WoopsiKey* key) : EventArgs<WoopsiKeyboard*>(source) {
 			_key = key;
@@ -29,7 +30,7 @@ namespace WoopsiUI {
 		inline const WoopsiKey* getKey() const { return _key; };
 
 	private:
-		WoopsiKey* _key;
+		WoopsiKey* _key;					/**< Pointer to the key that caused the event */
 	};
 }
 

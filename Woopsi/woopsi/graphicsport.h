@@ -29,7 +29,8 @@ namespace WoopsiUI {
 		 * @param bitmap The bitmap that the port will draw to. 
 		 * @param bitmapWidth The width of the bitmap being drawn to.
 		 * @param bitmapHeight The height of the bitmap being drawn to.
-		 * @param clipRect The clipping region within which the class must draw.
+		 * @param clipRectList An array of clipping regions within which the class must draw.  If set, clipRect must be NULL.
+		 * @param clipRect The clipping region within which the class must draw.  If set, clipRectList must be NULL.
 		 */
 		GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect);
 		

@@ -53,9 +53,6 @@ namespace WoopsiUI {
 		 */
 		inline WoopsiArray<Gadget::Rect>* getForegroundRegions() { return &_foregroundRegions; };
 
-		void cacheForegroundRegions();
-		void cacheBackgroundRegions();
-
 		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
 		 * gadget, then cuts the rectangles into smaller pieces.  The overlapping
@@ -86,6 +83,17 @@ namespace WoopsiUI {
 		const Gadget* _gadget;								/**< Owning gadget */
 		bool _foregroundInvalid;							/**< True if the foreground cache needs refreshing */
 		bool _backgroundInvalid;							/**< True if the background cache needs refreshing */
+
+		/**
+		 * Cache the foreground regions.
+		 */
+		void cacheForegroundRegions();
+
+		/**
+		 * Cache the background regions.
+		 */
+		void cacheBackgroundRegions();
+
 	};
 }
 

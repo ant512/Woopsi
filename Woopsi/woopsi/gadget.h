@@ -932,6 +932,10 @@ namespace WoopsiUI {
 		 */
 		const inline s32 getDecorationCount() const { return _decorationCount; };
 
+		/**
+		 * Get a pointer to the cache of visible rects.
+		 * @return A pointer to the cache of visible rects.
+		 */
 		inline RectCache* getRectCache() const { return _rectCache; };
 
 	protected:

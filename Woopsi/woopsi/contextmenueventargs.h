@@ -18,6 +18,7 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 * @param source Pointer to the ContextMenu object that raised the event.
+		 * @param item Pointer to the ContextMenuItem that caused the event.
 		 */
 		ContextMenuEventArgs(const Gadget* source, const ContextMenuItem* item) : EventArgs<const Gadget*>(source) {
 			_item = item;
@@ -30,7 +31,7 @@ namespace WoopsiUI {
 		inline const ContextMenuItem* getItem() const { return _item; };
 
 	private:
-		const ContextMenuItem* _item;
+		const ContextMenuItem* _item;			/**< Pointer to the item that caused the event */
 	};
 }
 
