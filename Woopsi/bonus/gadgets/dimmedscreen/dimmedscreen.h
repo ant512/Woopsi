@@ -3,6 +3,7 @@
 
 #include "screen.h"
 #include "woopsifuncs.h"
+#include "graphicsport.h"
 
 namespace WoopsiUI {
 
@@ -41,40 +42,12 @@ namespace WoopsiUI {
 			disableDrawing();
 			woopsiApplication->eraseRect(clipRect);
 			enableDrawing();
-
-			// Get the current physical screen number
-			u8 screen = getPhysicalScreenNumber();
-
-			u16* rowStart = DrawBg[screen] + (clipRect.y * SCREEN_WIDTH);
-			u16 colStart = clipRect.x;
-			u16 colPos;
-			
-			// Loop through all pixels within the clip rect
-			for (s16 y = 0; y < clipRect.height; y++) {
-
-				// Reset to start pixel row
-				colPos = colStart;
-
-				for (s16 x = 0; x < clipRect.width; x++) {
-				
-					// Get pixel data directly from the framebuffer
-					u16 colour = *(rowStart + colPos);
-					
-					// Halve the intensity of the colour (cheers Jeff)
-					colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
-
-					// Write back to framebuffer
-					*(rowStart + colPos) = 0x8000 | colour;
-
-					// Move to next pixel column
-					colPos++;
-				}
-
-				// Move to next pixel row
-				rowStart += SCREEN_WIDTH;
-			}
-
 			_flags.erased = false;
+			
+			// Dim the screen
+			GraphicsPort* port = newInternalGraphicsPort(clipRect);
+			port->dim(clipRect.x, clipRect.y, clipRect.width, clipRect.height);
+			delete port;
 		};
 		
 		/**

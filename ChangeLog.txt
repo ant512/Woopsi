@@ -1,6 +1,15 @@
 Change Log
 ----------
 
+  V0.39
+  
+  - Fixes:
+    - Removed framebuffer-hitting code from DimmedScreen gadget and replaced
+	  with call to GraphicsPort::dim().
+  
+  - New Features:
+  
+
   V0.38
   
   - Fixes:
