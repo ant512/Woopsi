@@ -9,6 +9,7 @@ Change Log
     - ListBox removes itself from its ListData object when deleted.
     - Keyboard example shows cursor.
     - Moved DimmedScreen into woopsi folder as an official gadget.
+    - CycleButton::getPreferredDimensions() populates rect with correct values.
   
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are

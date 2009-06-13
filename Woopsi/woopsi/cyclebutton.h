@@ -59,6 +59,15 @@ namespace WoopsiUI {
 		 */
 		virtual bool release(s16 x, s16 y);
 
+		/**
+		 * Insert the dimensions that this gadget wants to have into the rect
+		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+		 * parent.  Value is based on the length of the largest string in the
+		 * set of options.
+		 * @param rect Reference to a rect to populate with data.
+		 */
+		virtual void getPreferredDimensions(Rect& rect) const;
+
 	protected:
 		WoopsiArray<CycleButtonOption*> _options;		/**< Array of options. */
 		s16 _selectedIndex;								/**< Index of the currently selected option. */

@@ -141,3 +141,24 @@ bool CycleButton::release(s16 x, s16 y) {
 
 	return false;
 }
+
+// Get the preferred dimensions of the gadget
+void CycleButton::getPreferredDimensions(Rect& rect) const {
+	rect.x = _x;
+	rect.y = _y;
+
+	s16 maxWidth = 0;
+	s16 optionWidth = 0;
+
+	// Locate longest string in options
+	for (s32 i = 0; i < _options.size(); ++i) {
+		optionWidth = _font->getStringWidth(_options.at(i)->text);
+
+		if (optionWidth > maxWidth) {
+			maxWidth = optionWidth;
+		}
+	}
+
+	rect.width = ((!_flags.borderless + _padding) << 1) + _textX + maxWidth;
+	rect.height = ((!_flags.borderless + _padding) << 1) + _textY + _font->getHeight();
+}
