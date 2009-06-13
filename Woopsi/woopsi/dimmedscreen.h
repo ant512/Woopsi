@@ -2,7 +2,6 @@
 #define _DIMMED_SCREEN_H_
 
 #include "screen.h"
-#include "woopsifuncs.h"
 #include "graphicsport.h"
 
 namespace WoopsiUI {

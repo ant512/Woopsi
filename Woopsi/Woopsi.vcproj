@@ -424,6 +424,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\woopsi\dimmedscreen.h"
+				>
+			</File>
+			<File
 				RelativePath=".\woopsi\eventargs.h"
 				>
 			</File>
