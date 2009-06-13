@@ -14,6 +14,7 @@ Change Log
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are
       pressed and gadget has focus.
+    - Added tests folder and CycleButton test.
   
 
   V0.38 (20090428)
