@@ -25,6 +25,7 @@ void KeyTest::startup() {
 	
 	// Add textbox
 	_output = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0, 0);
+	_output->showCursor();
 	window->addGadget(_output);
 	
 	/* Code below creates input screen and associated gadgets */
@@ -62,7 +63,7 @@ void KeyTest::processKey(const WoopsiKey* key) {
 	// Append key value to output box if the last key was not a modifier
 	if (key->getValue() != '\0') {
 		// Not modifier; append value
-		_output->appendText(key->getValue());
+		_output->insertTextAtCursor(key->getValue());
 	} else if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
 		// Delete last character
 		_output->removeText(_output->getTextLength() - 1);

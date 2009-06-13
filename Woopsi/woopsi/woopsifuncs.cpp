@@ -456,13 +456,13 @@ void initWoopsiGfxMode() {
 
 void woopsiWaitVBL() {
 	if (keysHeld() & KEY_LID) {
-
 		u16 power_cr = REG_POWERCNT; // backup the power...
 		REG_POWERCNT = 0; // Shutdown everything :p
-		
+
 		// Wait for the lid to be opened again...
-		while (keysHeld() & KEY_LID)
+		while (keysHeld() & KEY_LID) {
 			swiWaitForVBlank();
+		}
 		
 		// Return the power !
 		REG_POWERCNT = power_cr;

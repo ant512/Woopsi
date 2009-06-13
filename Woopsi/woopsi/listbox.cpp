@@ -14,7 +14,9 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Scrollin
 	_options.addListDataEventHandler(this);
 }
 
-ListBox::~ListBox() { }
+ListBox::~ListBox() {
+	_options.removeListDataEventHandler(this);
+}
 
 void ListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 	_options.addItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);

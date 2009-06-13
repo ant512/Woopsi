@@ -6,6 +6,8 @@ Change Log
   - Fixes:
     - Removed framebuffer-hitting code from DimmedScreen gadget and replaced
 	  with call to GraphicsPort::dim().
+    - ListBox removes itself from its ListData object when deleted.
+    - Keyboard example shows cursor.
   
   - New Features:
   
