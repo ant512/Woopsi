@@ -173,3 +173,19 @@ bool TextBox::click(s16 x, s16 y) {
 
 	return false;
 }
+
+bool TextBox::keyPress(KeyCode keyCode) {
+	if (Gadget::keyPress(keyCode)) {
+		if (keyCode == KEY_CODE_LEFT) {
+			if (_cursorPos > 0) {
+				moveCursorToPosition(_cursorPos - 1);
+			}
+		} else if (keyCode == KEY_CODE_RIGHT) {
+			moveCursorToPosition(_cursorPos + 1);
+		}
+
+		return true;
+	}
+
+	return false;
+}

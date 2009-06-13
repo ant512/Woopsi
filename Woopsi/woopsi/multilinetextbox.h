@@ -206,6 +206,21 @@ namespace WoopsiUI {
 		 */
 		virtual void insertTextAtCursor(const char text);
 
+		/**
+		 * Click this gadget at the supplied co-ordinates.
+		 * @param x X co-ordinate of the click.
+		 * @param y Y co-ordinate of the click.
+		 * @return True if the click was successful.
+		 */
+		virtual bool click(s16 x, s16 y);
+
+		/**
+		 * Send a keypress to the gadget.
+		 * @param keyCode The keycode to send to the gadget.
+		 * @return True if the keypress was processed.
+		 */
+		virtual bool keyPress(KeyCode keyCode);
+
 	protected:
 		Text* _text;						/**< Text object that manipulates and wraps the raw text string */
 		u8 _visibleRows;					/**< Total number of rows that the textbox can display at once */

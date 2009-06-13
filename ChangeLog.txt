@@ -11,6 +11,8 @@ Change Log
     - Moved DimmedScreen into woopsi folder as an official gadget.
   
   - New Features:
+    - TextBox and MultiLineTextBox cursor moves when d-pad left/right are
+      pressed and gadget has focus.
   
 
   V0.38 (20090428)

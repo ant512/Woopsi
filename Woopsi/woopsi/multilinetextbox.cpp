@@ -520,3 +520,28 @@ void MultiLineTextBox::insertText(const char text, const u32 index) {
 
 	raiseValueChangeEvent();
 }
+
+bool MultiLineTextBox::click(s16 x, s16 y) {
+	if (Gadget::click(x, y)) {
+		redraw();
+		return true;
+	}
+
+	return false;
+}
+
+bool MultiLineTextBox::keyPress(KeyCode keyCode) {
+	if (Gadget::keyPress(keyCode)) {
+		if (keyCode == KEY_CODE_LEFT) {
+			if (_cursorPos > 0) {
+				moveCursorToPosition(_cursorPos - 1);
+			}
+		} else if (keyCode == KEY_CODE_RIGHT) {
+			moveCursorToPosition(_cursorPos + 1);
+		}
+
+		return true;
+	}
+
+	return false;
+}

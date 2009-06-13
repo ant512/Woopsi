@@ -135,6 +135,13 @@ namespace WoopsiUI {
 		 */
 		virtual bool click(s16 x, s16 y);
 
+		/**
+		 * Send a keypress to the gadget.
+		 * @param keyCode The keycode to send to the gadget.
+		 * @return True if the keypress was processed.
+		 */
+		virtual bool keyPress(KeyCode keyCode);
+
 	protected:
 		u32 _cursorPos;							/**< Position of the cursor within the string */
 		bool _showCursor;						/**< Set to true to make cursor visible */

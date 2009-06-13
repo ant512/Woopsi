@@ -1,6 +1,8 @@
 // Includes
 #include "helloworld.h"
-#include "woopsiheaders.h"
+#include "amigascreen.h"
+#include "amigawindow.h"
+#include "textbox.h"
 
 void HelloWorld::startup() {
 
