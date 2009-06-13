@@ -8,7 +8,7 @@
 namespace WoopsiUI {
 
 	/**
-	 * Hacky class that, rather than drawing to the screen, dims it to half of its intensity.
+	 * Screen class that, rather than drawing to the screen, dims it to half of its intensity.
 	 * Can be used as a screen for modal windows giving an Ubuntu-style faded background.  All
 	 * child gadgets of the screen are not dimmed.
 	 * Note that any activity that takes place behind the screen won't actually get drawn.  If,

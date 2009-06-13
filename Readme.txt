@@ -114,7 +114,7 @@ Features
     - Date class.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
-  - Simplistic "multitasking" - each window runs simultaneously;
+  - Non pre-emptive, FIFO multitasking - each gadget runs simultaneously;
   - Uses 16-bit framebuffer display mode;
   - Multiple build options:
     - With/without PALib support;
