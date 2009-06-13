@@ -8,6 +8,7 @@ Change Log
 	  with call to GraphicsPort::dim().
     - ListBox removes itself from its ListData object when deleted.
     - Keyboard example shows cursor.
+    - Moved DimmedScreen into woopsi folder as an official gadget.
   
   - New Features:
   
