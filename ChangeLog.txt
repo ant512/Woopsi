@@ -10,6 +10,7 @@ Change Log
     - Keyboard example shows cursor.
     - Moved DimmedScreen into woopsi folder as an official gadget.
     - CycleButton::getPreferredDimensions() populates rect with correct values.
+    - Const fixed Gadget::getRefcon().
   
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are

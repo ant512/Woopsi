@@ -123,7 +123,7 @@ namespace WoopsiUI {
 		 * Get the reference constant for this gadget.
 		 * @return The reference constant.
 		 */
-		inline const u32 getRefcon() { return _refcon; };
+		inline const u32 getRefcon() const { return _refcon; };
 
 		/**
 		 * Get the type of close routine that should be called by other gadgets
