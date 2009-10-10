@@ -49,6 +49,10 @@ private:
 	Button* _show;
 	Button* _move;
 	Button* _resize;
+	Button* _autosize;
+	Button* _enable;
+	Button* _disable;
+	Button* _dimensions;
 	CycleButton* _cycleButton;
 };
 

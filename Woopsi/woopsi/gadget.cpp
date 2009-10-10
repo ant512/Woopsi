@@ -978,6 +978,8 @@ bool Gadget::enable() {
 	if (!_flags.enabled) {
 		_flags.enabled = true;
 
+		redraw();
+
 		raiseEnableEvent();
 
 		return true;
@@ -989,6 +991,8 @@ bool Gadget::enable() {
 bool Gadget::disable() {
 	if (_flags.enabled) {
 		_flags.enabled = false;
+
+		redraw();
 
 		raiseDisableEvent();
 
@@ -1718,9 +1722,7 @@ void Gadget::getRectClippedToHierarchy(Rect& rect) const {
 	rect.width = getWidth();
 	rect.height = getHeight();
 
-	if (_parent != NULL) {
-		_parent->clipRectToHierarchy(rect);
-	}
+	clipRectToHierarchy(rect);
 }
 
 FontBase* Gadget::getFont() const {

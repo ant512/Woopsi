@@ -11,6 +11,9 @@ Change Log
     - Moved DimmedScreen into woopsi folder as an official gadget.
     - CycleButton::getPreferredDimensions() populates rect with correct values.
     - Const fixed Gadget::getRefcon().
+	- Gadget::disable() and Gadget::enable() redraw the gadget by default.
+	- Fixed clipRectToHierarchy() bug introduced in switch to non-recursive
+	  function in last release.
   
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are
