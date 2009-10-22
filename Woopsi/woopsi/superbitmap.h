@@ -156,7 +156,19 @@ namespace WoopsiUI {
 		 * @param bitmapWidth The width of the supplied bitmap.
 		 * @param bitmapHeight The height of the supplied bitmap.
 		 */
-		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight);
+		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16 bitmapY, u16 bitmapWidth, u16 bitmapHeight);
+		
+		/**
+		 * Draw an external bitmap to the internal bitmap.
+		 * @param x The x co-ordinate to draw the bitmap to.
+		 * @param y The y co-ordinate to draw the bitmap to.
+		 * @param width The width of the bitmap to draw.
+		 * @param height The height of the bitmap to draw.
+		 * @param bitmap Pointer to the bitmap to draw.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 */
+		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bitmap* bitmap, s16 bitmapX, s16 bitmapY);
 		
 		/**
 		 * Fill a region of the internal bitmap with the specified colour.

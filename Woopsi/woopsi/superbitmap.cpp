@@ -141,6 +141,10 @@ void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bit
 	_bitmap->drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight);
 }
 
+void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bitmap* bitmap, s16 bitmapX, s16 bitmapY) {
+	_bitmap->drawBitmap(x, y, width, height, bitmap->getBitmap(), bitmapX, bitmapY, bitmap->getWidth(), bitmap->getHeight());
+}
+
 void SuperBitmap::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
 	_bitmap->drawEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
 }

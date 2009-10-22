@@ -16,6 +16,7 @@ Change Log
       function in last release.
     - RadioButtonGroup redraws when resized.
     - RadioButtonGroup returns correct dimensions from getPreferredDimensions().
+    - Updated copyright notice in defines.h.
   
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are
@@ -23,6 +24,10 @@ Change Log
     - Added tests folder:
       - CycleButton test;
       - RadioButtonGroup test.
+    - Added BinaryFile class to bonus folder.
+    - Added BitmapIO class to bonus folder.
+    - Added BitmapLoader example.
+    - Added SuperBitmap::drawBitmap() overload to handle Bitmap objects.
   
 
   V0.38 (20090428)
