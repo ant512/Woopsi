@@ -35,7 +35,8 @@ const u16 Bitmap::getPixel(s16 x, s16 y) const {
 	if ((x < 0) || (y < 0)) return 0;
 	if ((x >= _width) || (y >= _height)) return 0;
 
-	u16 pos = x + (y * _width);
+	// Get the pixel
+	u32 pos = (y * _width) + x;
 	return _bitmap[pos];
 }
 

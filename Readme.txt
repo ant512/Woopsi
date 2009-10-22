@@ -95,6 +95,7 @@ Features
     - Animation class with support for variable framerates and standard/pingpong
       looping;
     - Bitmap class for 16-bit bitmap image manipulation;
+    - Loading and saving of 24-bit BMP images;
     - GraphicsPort class providing depth-sorted, clipped, hardware-accelerated
       drawing functions:
       - Pixel plotting;

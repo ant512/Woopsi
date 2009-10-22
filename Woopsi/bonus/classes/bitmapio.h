@@ -14,8 +14,8 @@ int fatInitDefault() { return 1; }
 namespace WoopsiUI {
 
 	/**
-	 * Provides static methods for saving BMP files.  The class has a number of (intentional)
-	 * limitations:
+	 * Provides static methods for loading and saving BMP files.  The class has a number of
+	 * (intentional) limitations:
 	 * - Compression is not supported.
 	 * - Only DIB V3 headers are supported (this is the most common type).
 	 */

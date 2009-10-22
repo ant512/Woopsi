@@ -52,8 +52,24 @@ void BinaryFile::writeU8(u8 value) {
 	writeData(value, 1);
 }
 
+void BinaryFile::writeS8(s8 value) {
+	writeData(value, 1);
+}
+
+void BinaryFile::writeU16(u16 value) {
+	writeData(value, 2);
+}
+
 void BinaryFile::writeS16(s16 value) {
 	writeData(value, 2);
+}
+
+void BinaryFile::writeU32(u32 value) {
+	writeData(value, 4);
+}
+
+void BinaryFile::writeS32(s32 value) {
+	writeData(value, 4);
 }
 
 void BinaryFile::writeData(u32 data, u8 numBytes) {

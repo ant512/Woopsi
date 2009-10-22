@@ -1,5 +1,5 @@
-#ifndef _WOOPSI_FILE_H_
-#define _WOOPSI_FILE_H_
+#ifndef _BINARY_FILE_H_
+#define _BINARY_FILE_H_
 
 #include <stdio.h>
 #include <nds.h>

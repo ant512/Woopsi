@@ -17,6 +17,7 @@ Change Log
     - RadioButtonGroup redraws when resized.
     - RadioButtonGroup returns correct dimensions from getPreferredDimensions().
     - Updated copyright notice in defines.h.
+    - Bitmap::getPixel() works correctly for large bitmaps.
   
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are
@@ -25,7 +26,7 @@ Change Log
       - CycleButton test;
       - RadioButtonGroup test.
     - Added BinaryFile class to bonus folder.
-    - Added BitmapIO class to bonus folder.
+    - Added BitmapIO class to bonus folder - load/save BMP files using libfat.
     - Added BitmapLoader example.
     - Added SuperBitmap::drawBitmap() overload to handle Bitmap objects.
   
