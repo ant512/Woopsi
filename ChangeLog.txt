@@ -19,6 +19,8 @@ Change Log
     - Updated copyright notice in defines.h.
     - Bitmap::getPixel() works correctly for large bitmaps.
     - Bitmap::drawBitmap() flushes mem correctly for DMA copy.
+    - Gadget::show() clears rect cache of sibling gadgets with a lower z-index
+      to ensure that they do not draw over the top of the newly-shown gadget.
   
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are

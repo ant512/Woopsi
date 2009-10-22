@@ -1843,6 +1843,10 @@ bool Gadget::show() {
 	if (_flags.hidden) {
 		_flags.hidden = false;
 
+		// Ensure that gadgets behind this do not draw over the
+		// top of the newly-visible gadget
+		_parent->invalidateLowerGadgetsVisibleRectCache(this);
+
 		raiseShowEvent();
 		redraw();
 		return true;
