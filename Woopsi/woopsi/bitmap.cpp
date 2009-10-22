@@ -334,6 +334,9 @@ void Bitmap::pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) {
 //Draw bitmap to the internal bitmap
 void Bitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight) {
 	
+	// Flush out the bitmap mem cache to ensure DMA can see correct data
+	DC_FlushRange(bitmap, bitmapWidth * bitmapHeight * sizeof(u16));
+
 	// Ensure bitmap co-ordinates make sense
 	if (bitmapX < 0) {
 		bitmapX = 0;

@@ -3,7 +3,7 @@
 
 #define BITMAPINFOHEADER 40
 #define BITMAP_HEADER_SIZE 14
-#define BITMAP_RESOLUTION 2835
+#define BITMAP_RESOLUTION 0
 #define COLOUR_PLANES 1
 
 using namespace WoopsiUI;
@@ -39,19 +39,21 @@ void BitmapIO::saveBMP(const char* filename, Bitmap* bitmap) {
 	// All images saved as 24-bit
 	u32 imageSize = bitmap->getWidth() * bitmap->getHeight() * 3;	// *FIX* cater for padding?
 	u32 offset = BITMAPINFOHEADER + BITMAP_HEADER_SIZE;
-	u32 size = imageSize + offset;
 
-	// Bitmap must be aligned to 4-byte boundaries, so add any extra to the size
-	u8 sizeMod = size % 4;
-	u8 sizePaddingBytes = 0;
-	if (sizeMod != 0) {
-		sizePaddingBytes = 4 - sizeMod;
+	// Pixel rows must be aligned to 4-byte boundaries, so calculate total size
+	// of padding bytes
+	u8 mod = (bitmap->getWidth() * 3) % 4;
+	u8 paddingBytes = 0;
+	
+	if (mod != 0) {
+		paddingBytes = 4 - mod;
+		imageSize += paddingBytes * bitmap->getHeight();
 	}
 
 	// Write the BMP header
 	file->writeU8('B');						// Identifier
 	file->writeU8('M');
-	file->writeU32(size + sizePaddingBytes);// Size
+	file->writeU32(imageSize + offset);		// Size
 	file->writeU32(0);						// Two reserved shorts
 	file->writeU32(offset);					// Offset
 	
@@ -62,15 +64,11 @@ void BitmapIO::saveBMP(const char* filename, Bitmap* bitmap) {
 	file->writeU16(COLOUR_PLANES);			// Colour planes
 	file->writeU16(24);						// Bits per pixel
 	file->writeU32(0);						// Compression method
-	file->writeU32(imageSize + sizePaddingBytes);	// Image size *FIX* cater for padding?
+	file->writeU32(imageSize);				// Image size *FIX* cater for padding?
 	file->writeU32(BITMAP_RESOLUTION);		// Horizontal resolution
 	file->writeU32(BITMAP_RESOLUTION);		// Vertical resolution
 	file->writeU32(0);						// Colours in palette
 	file->writeU32(0);						// Important colours used
-	
-	// Calculate the number of padding bytes per row
-	u8 mod = bitmap->getWidth() % 4;
-	u8 paddingBytes = 4 - mod;
 	
 	// Write the pixel data
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
@@ -96,16 +94,7 @@ void BitmapIO::saveBMP(const char* filename, Bitmap* bitmap) {
 		
 		// Reached end of row of pixels - BMP data is aligned to 4-byte boundary, so write
 		// padding bytes
-		if (mod != 0) {
-			for (u8 i = 0; i < paddingBytes; ++i) {
-				file->writeU8(0);
-			}
-		}
-	}
-
-	// Write any padding at the end of the file
-	if (sizeMod != 0) {
-		for (u8 i = 0; i < sizePaddingBytes; ++i) {
+		for (u8 i = 0; i < paddingBytes; ++i) {
 			file->writeU8(0);
 		}
 	}
@@ -163,9 +152,14 @@ void BitmapIO::parsePixelData(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Heade
 
 void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* bitmap) {
 	
-	// Calculate the number of padding bytes per row
-	u8 mod = bitmap->getWidth() % 4;
-	u8 paddingBytes = 4 - mod;
+	// Pixel rows must be aligned to 4-byte boundaries, so calculate total size
+	// of padding bytes
+	u8 mod = (bitmap->getWidth() * 3) % 4;
+	u8 paddingBytes = 0;
+	
+	if (mod != 0) {
+		paddingBytes = 4 - mod;
+	}
 
 	// Run through rows backwards as BMP rows are stored in reverse order
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
@@ -188,10 +182,8 @@ void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* 
 		
 		// Reached end of row of pixels - BMP data is aligned to 4-byte boundary, so skip
 		// any remaining padding bytes
-		if (mod != 0) {
-			for (u8 i = 0; i < paddingBytes; ++i) {
-				file->readU8();
-			}
+		for (u8 i = 0; i < paddingBytes; ++i) {
+			file->readU8();
 		}
 	}
 }
