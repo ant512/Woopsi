@@ -178,7 +178,7 @@ Credits and Acknowlegements
  - Coding and design                                - Antony Dzeryn
  - Testing, technical advice, other contributions   - Jeff Laing
  - PALib independence                               - Steve
- - More testing and suggestions						- John Buxton
+ - More testing and suggestions                     - John Buxton
  - Simian Zombie logo                               - John Clay
  - Thanks to                                        - The devKitPro team
                                                     - The PALib team
@@ -189,7 +189,7 @@ Credits and Acknowlegements
 Links
 -----
 
- - http://ant.simianzombie.com/blog                 - Woopsi development blog
+ - http://ant.simianzombie.com                      - Woopsi development blog
  - http://ant.simianzombie.com/forum                - Woopsi forum
  - http://www.sourceforge.net/projects/woopsi       - Woopsi SourceForge page
 
