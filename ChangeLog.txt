@@ -1,7 +1,15 @@
 Change Log
 ----------
 
-  V0.39
+  V0.40
+  
+  - Fixes:
+    - PALib support removed.
+  
+  - New Features:
+ 
+
+  V0.39 (20091024)
   
   - Fixes:
     - Removed framebuffer-hitting code from DimmedScreen gadget and replaced
