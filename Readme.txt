@@ -118,7 +118,7 @@ Features
   - Non pre-emptive, FIFO multitasking - each gadget runs simultaneously;
   - Uses 16-bit framebuffer display mode;
   - Multiple build options:
-    - With/without PALib support;
+    - Standard libnds build
     - SDL layer to facilitate native compilation on non-DS platforms and
       aid porting;
     - libwoopsi.a library.
