@@ -83,6 +83,9 @@ void DC_FlushRange(const void *base, u32 size);
 
 #else
 
+#include <nds/memory.h>
+#include <nds/bios.h>
+
 /**
  * Converts separate RGB component values into a single 16-bit value for use with the
  * DS' framebuffer.  All supplied values should be 5 bits wide (ie. between 0 and 31).
@@ -133,13 +136,6 @@ void DC_FlushRange(const void *base, u32 size);
  * @return True if the channel is still active.
  */
 #define DMA_Active2() (!(!(REG_DMA2CNT & DMA_ON)))
-
-#ifdef USING_PALIB
-#include <PA9.h>
-#else
-
-#include <nds/memory.h>
-#include <nds/bios.h>
 
 #define REG_DMA3SRC *(volatile u32*)0x040000D4
 #define REG_DMA3DST *(volatile u32*)0x040000D8
@@ -269,5 +265,4 @@ void woopsiWaitVBL();
  */
 bool woopsiLidClosed();
 
-#endif
 #endif

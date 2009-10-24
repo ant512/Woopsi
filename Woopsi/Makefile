@@ -6,11 +6,10 @@
 
 OFILES   +=
 PATH 		:= $(DEVKITARM)/bin:$(PATH)
-#ARM7BIN		:= -7 $(PAPATH)/lib/arm7/arm7.bin
 
-TEXT1 		:= PALib Project
-TEXT2 		:= Using PALib
-TEXT3 		:= www.palib.info
+TEXT1 		:= Woopsi Project
+TEXT2 		:= Using Woopsi
+TEXT3 		:= ant.simianzombie.com
 
 ICON 		:= -b $(CURDIR)/../icon/logo.bmp
 #LOGO		:= -o $(CURDIR)/../data/logo_wifi.bmp
@@ -43,10 +42,9 @@ CFLAGS	:=	-g -Wall -O2\
 		-ffast-math \
 		$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM9 -I$(DEVKITPRO)/PAlib/include/nds
+CFLAGS	+=	$(INCLUDE) -DARM9
 
 ASFLAGS	:=	-g $(ARCH)
-#LDFLAGS	:=	-g $(ARCH) -mno-fpu -L$(DEVKITPRO)/PAlib/lib
 LDFLAGS	:=	-g $(ARCH) -mno-fpu
 
 #-------------------------------------------------------------------------------
@@ -60,7 +58,6 @@ PREFIX			:=	arm-eabi-
 #-------------------------------------------------------------------------------
 
 LIBS	:= -lnds9
-#LIBSPA	:= -lpa9
  
 #-------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level 
@@ -68,7 +65,6 @@ LIBS	:= -lnds9
 #-------------------------------------------------------------------------------
 
 LIBDIRS	:=	$(DEVKITPRO)/libnds
-#LIBDIRPA	:=	$(PAPATH)
 
 #-------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add 
@@ -115,7 +111,6 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 					-I$(CURDIR)/$(BUILD)
  
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
-#export LIBPATHPA	:=	$(foreach dir,$(LIBDIRPA),-L$(dir)/lib)
  
 .PHONY: $(BUILD) clean rebuild
  

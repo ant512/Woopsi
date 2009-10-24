@@ -4,11 +4,11 @@
  */
 
 #include <nds.h>
+#include <string.h>
+#include "woopsifuncs.h"
 
 #ifdef USING_SDL
 
-#include <string.h>
-#include "woopsifuncs.h"
 #include "defines.h"
 
 u16* DrawBg[2];
@@ -371,16 +371,9 @@ void DC_FlushRange(const void *base, u32 size) {
 
 #else
 
-#include <string.h>
-#include "woopsifuncs.h"
+// Using libnds
 
 u16* DrawBg[2];
-
-// Are we using PALib?
-#ifndef USING_PALIB
-
-// No PALib, so use LibNDS
-
 _pads Pad;
 _stylus Stylus;
 
@@ -470,30 +463,4 @@ void woopsiWaitVBL() {
 	swiWaitForVBlank();
 }
 
-#else
-
-// Using PALib
-
-bool woopsiLidClosed() {
-	return PA_LidClosed();
-}
-
-void initWoopsiGfxMode() {
-	PA_Init();    // Initializes PA_Lib
-	PA_InitVBL(); // Initializes a standard VBL
-
-	// Initialise the screens
-	PA_Init16bitBg(0, 0);
-	PA_Init16bitBg(1, 0);
-
-	// Set up the framebuffer pointers
-	DrawBg[1] = PA_DrawBg[1];
-	DrawBg[0] = PA_DrawBg[0];
-}
-
-void woopsiWaitVBL() {
-	PA_WaitForVBL();
-}
-
-#endif
 #endif

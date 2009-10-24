@@ -29,11 +29,9 @@ DEFINES		:=
 #-------------------------------------------------------------------------------
 # If USE_WOOPSI is defined, compile/link against Woopsi
 # If USE_FAT is defined, compile/link against libfat
-# If USE_PALIB is defined, compile/link against PALib
 #-------------------------------------------------------------------------------
 #USE_WOOPSI	= 1
 #USE_FAT		= 1
-#USE_PALIB	= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our
 # resultant .nds from working on some loaders.  By default, ndstool puts boot
@@ -87,7 +85,6 @@ ifneq ($(BUILD),$(notdir $(CURDIR)))
 # make sure selected options are visible in the recursive call...
 #export USE_WOOPSI
 #export USE_FAT
-#export USE_PALIB
 
 # directory name is used to construct the target.nds filename
 export OUTPUT	:=	$(CURDIR)/$(RELEASE)/$(TARGET)
@@ -195,14 +192,6 @@ ifneq ($(USE_FAT),)
 _DEFS		+= -DUSE_FAT 
 _INCS		+= -I$(DEVKITPRO)/libfat/include
 _LIBS		+= -L$(DEVKITPRO)/libfat/lib -lfat 
-endif
-
-# use PALIB
-ifneq ($(USE_PALIB),)
-_DEFS		+= -DUSING_PALIB
-_INCS		+= -I$(DEVKITPRO)/PAlib/include/nds
-_LIBS		+= -L$(DEVKITPRO)/PAlib/lib -lpa9
-_ARM7BIN	:= -7 $(DEVKITPRO)/PAlib/lib/arm7/arm7.bin
 endif
 
 # and of course we need libnds
@@ -347,7 +336,6 @@ endif
 #
 # Woopsi is installed in $(DEVKITPRO)/libwoopsi
 # libfat is installed in $(DEVKITPRO)/libfat (instead of $(DEVKITPRO)/libnds)
-# PAlib is installed in $(DEVKITPRO)/PAlib
 # 
 # In the future, this will support libefs, wifi, etc using similiar directory
 # structures.
