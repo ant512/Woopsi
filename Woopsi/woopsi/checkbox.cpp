@@ -57,10 +57,12 @@ void CheckBox::draw(Rect clipRect) {
 bool CheckBox::click(s16 x, s16 y) {
 	if (Button::click(x, y)) {
 
-		if (_state == CHECK_BOX_STATE_ON) {
-			setState(CHECK_BOX_STATE_OFF);
-		} else {
-			setState(CHECK_BOX_STATE_ON);
+		if (isEnabled()) {
+			if (_state == CHECK_BOX_STATE_ON) {
+				setState(CHECK_BOX_STATE_OFF);
+			} else {
+				setState(CHECK_BOX_STATE_ON);
+			}
 		}
 
 		return true;

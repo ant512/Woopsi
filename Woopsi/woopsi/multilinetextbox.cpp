@@ -523,7 +523,11 @@ void MultiLineTextBox::insertText(const char text, const u32 index) {
 
 bool MultiLineTextBox::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
-		redraw();
+
+		if (isEnabled()) {
+			redraw();
+		}
+
 		return true;
 	}
 

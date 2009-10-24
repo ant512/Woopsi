@@ -1138,15 +1138,16 @@ bool Gadget::click(s16 x, s16 y) {
 		}
 	}
 
-	if (isEnabled()) {
-		if (checkCollision(x, y)) {
+	if (checkCollision(x, y)) {
 
-			// Work out which child was clicked
-			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					return true;
-				}
+		// Work out which child was clicked
+		for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+			if (_gadgets[i]->click(x, y)) {
+				return true;
 			}
+		}
+
+		if (isEnabled()) {
 
 			// Handle clicks on this
 			_flags.clicked = true;
@@ -1173,9 +1174,9 @@ bool Gadget::click(s16 x, s16 y) {
 			setDragging(x, y);
 
 			raiseClickEvent(x, y);
-
-			return true;
 		}
+
+		return true;
 	}
 
 	return false;

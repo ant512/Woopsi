@@ -153,20 +153,23 @@ void TextBox::getClientRect(Rect& rect) const {
 
 bool TextBox::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
-		// Work out where in the string the textbox was clicked and move the cursor to that
-		// location
-		s16 clickX = x - getX();
-		s16 charX = _textX;
-		u32 charIndex = 0;
-		u8 charWidth = _font->getCharWidth(_text->getCharArray()[charIndex]);
 
-		while ((charX + charWidth < clickX) && (charIndex < _text->getLength())) {
-			charX += charWidth;
-			charWidth = _font->getCharWidth(_text->getCharArray()[charIndex]);
-			++charIndex;
+		if (isEnabled()) {
+			// Work out where in the string the textbox was clicked and move the cursor to that
+			// location
+			s16 clickX = x - getX();
+			s16 charX = _textX;
+			u32 charIndex = 0;
+			u8 charWidth = _font->getCharWidth(_text->getCharArray()[charIndex]);
+
+			while ((charX + charWidth < clickX) && (charIndex < _text->getLength())) {
+				charX += charWidth;
+				charWidth = _font->getCharWidth(_text->getCharArray()[charIndex]);
+				++charIndex;
+			}
+
+			moveCursorToPosition(charIndex);
 		}
-
-		moveCursorToPosition(charIndex);
 
 		return true;
 	}

@@ -25,9 +25,11 @@ void SliderVerticalGrip::draw(Rect clipRect) {
 bool SliderVerticalGrip::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
 
-		setDragging(x, y);
+		if (isEnabled()) {
+			setDragging(x, y);
+			redraw();
+		}
 
-		redraw();
 		return true;
 	}
 

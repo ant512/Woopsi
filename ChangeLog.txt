@@ -21,6 +21,8 @@ Change Log
     - Bitmap::drawBitmap() flushes mem correctly for DMA copy.
     - Gadget::show() clears rect cache of sibling gadgets with a lower z-index
       to ensure that they do not draw over the top of the newly-shown gadget.
+    - A disabled gadget that overlaps another now intercepts clicks correctly,
+      no longer allowing them to fall through to the gadget below.
   
   - New Features:
     - TextBox and MultiLineTextBox cursor moves when d-pad left/right are

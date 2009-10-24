@@ -44,7 +44,11 @@ void Button::draw(Rect clipRect) {
 
 bool Button::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
-		redraw();
+
+		if (isEnabled()) {
+	 		redraw();
+		}
+
 		return true;
 	}
 

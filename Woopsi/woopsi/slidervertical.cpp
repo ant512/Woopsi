@@ -104,18 +104,22 @@ void SliderVertical::draw(Rect clipRect) {
 bool SliderVertical::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
 
-		// Did we click a gadget?
-		if (_flags.clicked) {
+		if (isEnabled()) {
 
-			// Which way should the grip move?
-			if (y > _grip->getY()) {
-				// Move grip down
-				setValue(getValue() + _pageSize);
-				//jumpGrip(1);
-			} else {
-				// Move grip up
-				setValue(getValue() - _pageSize);
-				//jumpGrip(0);
+			// TODO: Why are we checking _flags.clicked here?
+			// Did we click a gadget?
+			if (_flags.clicked) {
+
+				// Which way should the grip move?
+				if (y > _grip->getY()) {
+					// Move grip down
+					setValue(getValue() + _pageSize);
+					//jumpGrip(1);
+				} else {
+					// Move grip up
+					setValue(getValue() - _pageSize);
+					//jumpGrip(0);
+				}
 			}
 		}
 

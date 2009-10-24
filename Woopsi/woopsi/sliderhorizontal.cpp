@@ -104,18 +104,22 @@ void SliderHorizontal::draw(Rect clipRect) {
 bool SliderHorizontal::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
 
-		// Did we click a gadget?
-		if (_flags.clicked) {
+		if (isEnabled()) {
 
-			// Which way should the grip move?
-			if (x > _grip->getX()) {
-				// Move grip right
-				setValue(getValue() + _pageSize);
-				//jumpGrip(1);
-			} else {
-				// Move grip left
-				setValue(getValue() - _pageSize);
-				//jumpGrip(0);
+			// TODO: Why are we checking _flags.clicked here?
+			// Did we click a gadget?
+			if (_flags.clicked) {
+
+				// Which way should the grip move?
+				if (x > _grip->getX()) {
+					// Move grip right
+					setValue(getValue() + _pageSize);
+					//jumpGrip(1);
+				} else {
+					// Move grip left
+					setValue(getValue() - _pageSize);
+					//jumpGrip(0);
+				}
 			}
 		}
 

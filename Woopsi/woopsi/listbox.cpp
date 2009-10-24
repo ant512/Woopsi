@@ -132,8 +132,8 @@ bool ListBox::click(s16 x, s16 y) {
 		}
 	}
 
-	if (isEnabled()) {
-		if (checkCollision(x, y)) {
+	if (checkCollision(x, y)) {
+		if (isEnabled()) {
 
 			// Calculate which option was clicked
 			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
@@ -180,9 +180,9 @@ bool ListBox::click(s16 x, s16 y) {
 			setDragging(x, y);
 
 			raiseClickEvent(x, y);
-
-			return true;
 		}
+
+		return true;
 	}
 
 	return false;

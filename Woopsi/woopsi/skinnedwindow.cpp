@@ -141,8 +141,8 @@ void SkinnedWindow::createBorder() {
 
 bool SkinnedWindow::click(s16 x, s16 y) {
 
-	if (isEnabled()) {
-		if (checkCollision(x, y)) {
+	if (checkCollision(x, y)) {
+		if (isEnabled()) {
 
 			raiseToTop();
 
@@ -164,9 +164,9 @@ bool SkinnedWindow::click(s16 x, s16 y) {
 			}
 
 			raiseClickEvent(x, y);
-
-			return true;
 		}
+
+		return true;
 	}
 
 	return false;
