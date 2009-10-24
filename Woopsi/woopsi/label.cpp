@@ -35,7 +35,11 @@ void Label::draw(Rect clipRect) {
 
 	port->drawFilledRect(0, 0, _width, _height, _backColour);
 
-	port->drawText(_textX, _textY, _font, _text->getCharArray());
+	if (isEnabled()) {
+		port->drawText(_textX, _textY, _font, _text->getCharArray());
+	} else {
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _darkColour);
+	}
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);

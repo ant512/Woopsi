@@ -5,6 +5,13 @@ Change Log
   
   - Fixes:
     - PALib support removed.
+    - Pointer to selected day button in calendar resets to NULL when new month
+      selected; prevents day button incorrectly popping up if same button is
+      clicked in new month.
+    - Calendar::getPreferredSize() returns valid values.
+    - Label text is greyed out when disabled.
+    - Huge speed increase in Calendar::resize().
+    - Calendar's child controls correctly fill entire available space.
   
   - New Features:
  

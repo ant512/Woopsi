@@ -115,6 +115,9 @@ void Calendar::populateGUI() {
 	u8 buttonIndex = 0;
 	Button* button;
 
+	// Reset the selected day button
+	_selectedDayButton = NULL;
+
 	// Locate the first button in the gadget array
 	for (u8 i = _decorationCount; i < _gadgets.size(); i++) {
 		if (_gadgets[i]->getRefcon() > 0) {
@@ -204,74 +207,87 @@ void Calendar::populateGUI() {
 	delete thisMonth;
 }
 
+void Calendar::calculateDayButtonWidths(s32 spaceWidth, u8* dayWidths) {
+
+	// Calculate the size of a single button, disregarding remainder
+	u8 buttonWidth = spaceWidth / CALENDAR_COLS;
+
+	// Calculate sizes of each column of day buttons - automatcally
+	// assigns any remainder in integer division of rect width 1px
+	// at a time to columns in first come, first served fashion
+	s32 remainderWidth = spaceWidth % CALENDAR_COLS;
+	for (u8 i = 0; i < CALENDAR_COLS; ++i) {
+		dayWidths[i] = buttonWidth;
+
+		if (remainderWidth > 0) {
+			dayWidths[i]++;
+			remainderWidth--;
+		}
+	}
+}
+
 void Calendar::buildGUI() {
 
 	Rect rect;
 	getClientRect(rect);
 
 	// Define basic button properties
-	u8 buttonWidth = rect.width / CALENDAR_COLS;
 	u8 buttonHeight = rect.height / (CALENDAR_ROWS + 2);
 	u16 gridY = (rect.height - (buttonHeight * CALENDAR_ROWS)) + 1;
 	Button* button;
 
+	// Get the widths of the day buttons
+	u8 buttonWidths[CALENDAR_COLS];
+	calculateDayButtonWidths(rect.width, buttonWidths);
+
 	// Add arrows and month label
-	_leftArrow = new Button(rect.x, rect.y, buttonWidth, buttonHeight, GLYPH_ARROW_LEFT);
+	_leftArrow = new Button(rect.x, rect.y, buttonWidths[0], buttonHeight, GLYPH_ARROW_LEFT);
 	_leftArrow->addGadgetEventHandler(this);
 	addGadget(_leftArrow);
 
-	_rightArrow = new Button((rect.width - buttonWidth) + 1, rect.y, buttonWidth, buttonHeight, GLYPH_ARROW_RIGHT);
+	_rightArrow = new Button((rect.width - buttonWidths[CALENDAR_COLS - 1]) + 1, rect.y, buttonWidths[CALENDAR_COLS - 1], buttonHeight, GLYPH_ARROW_RIGHT);
 	_rightArrow->addGadgetEventHandler(this);
 	addGadget(_rightArrow);
 
 	// Month name
-	_monthLabel = new Label(rect.x + buttonWidth, rect.y, rect.width - (buttonWidth << 1), buttonHeight, "");
+	_monthLabel = new Label(rect.x + buttonWidths[0], rect.y, rect.width - (buttonWidths[0] + buttonWidths[CALENDAR_COLS - 1]), buttonHeight, "");
 	_monthLabel->setBorderless(true);
 	addGadget(_monthLabel);
 
 	// Add day labels
 	Label* label;
-	
-	label = new Label(rect.x, rect.y + buttonHeight, buttonWidth, buttonHeight, "M");
-	label->setBorderless(true);
-	addGadget(label);
+	const char* dayInitials = "MTWTFSS";
+	s16 labelX = rect.x;
 
-	label = new Label(rect.x + buttonWidth, rect.y + buttonHeight, buttonWidth, buttonHeight, "T");
-	label->setBorderless(true);
-	addGadget(label);
-
-	label = new Label(rect.x + (buttonWidth * 2), rect.y + buttonHeight, buttonWidth, buttonHeight, "W");
-	label->setBorderless(true);
-	addGadget(label);
-
-	label = new Label(rect.x + (buttonWidth * 3), rect.y + buttonHeight, buttonWidth, buttonHeight, "T");
-	label->setBorderless(true);
-	addGadget(label);
-
-	label = new Label(rect.x + (buttonWidth * 4), rect.y + buttonHeight, buttonWidth, buttonHeight, "F");
-	label->setBorderless(true);
-	addGadget(label);
-
-	label = new Label(rect.x + (buttonWidth * 5), rect.y + buttonHeight, buttonWidth, buttonHeight, "S");
-	label->setBorderless(true);
-	addGadget(label);
-
-	label = new Label(rect.x + (buttonWidth * 6), rect.y + buttonHeight, buttonWidth, buttonHeight, "S");
-	label->setBorderless(true);
-	addGadget(label);
+	for (u8 i = 0; i < CALENDAR_COLS; ++i) {
+		label = new Label(labelX, rect.y + buttonHeight, buttonWidths[i], buttonHeight, dayInitials[i]);
+		label->setBorderless(true);
+		addGadget(label);
+		
+		labelX += buttonWidths[i];
+	}
 
 	// Prepare to build grid of days
 	u8 allocatedDays = 0;
 	u8 maxDays = CALENDAR_ROWS * CALENDAR_COLS;
 
 	// Create all boxes for this month
+	u16 buttonX = rect.x;
 	while (allocatedDays < maxDays) {
-		button = new Button(rect.x + ((allocatedDays % CALENDAR_COLS) * buttonWidth), gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidth, buttonHeight, "");
+		button = new Button(buttonX, gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidths[allocatedDays % CALENDAR_COLS], buttonHeight, "");
 		button->addGadgetEventHandler(this);
 		button->setRefcon(allocatedDays + 1);
 
+		// Calculate x pos of next button
+		buttonX += buttonWidths[allocatedDays % CALENDAR_COLS];
+
 		addGadget(button);
 		allocatedDays++;
+
+		// Reset x pos of next button if moving to next row
+		if (allocatedDays % CALENDAR_COLS == 0) {
+			buttonX = rect.x;
+		}
 	}
 }
 
@@ -307,9 +323,14 @@ bool Calendar::resize(u16 width, u16 height) {
 		// Remember if the gadget is permeable
 		bool wasPermeable = _flags.permeable;
 
+		// Remember if gadget was drawing
+		bool wasDrawEnabled = _flags.drawingEnabled;
+
 		_flags.permeable = true;
 
 		erase();
+
+		disableDrawing();
 
 		_width = width;
 		_height = height;
@@ -321,42 +342,61 @@ bool Calendar::resize(u16 width, u16 height) {
 		getClientRect(rect);
 
 		// Define basic button properties
-		u8 buttonWidth = rect.width / CALENDAR_COLS;
 		u8 buttonHeight = rect.height / (CALENDAR_ROWS + 2);
 		u16 gridY = (rect.height - (buttonHeight * CALENDAR_ROWS)) + 1;
 
+		// Get the widths of the day buttons
+		u8 buttonWidths[CALENDAR_COLS];
+		calculateDayButtonWidths(rect.width, buttonWidths);
+
 		// Resize arrows
-		_leftArrow->changeDimensions(rect.x, rect.y, buttonWidth, buttonHeight);
-		_rightArrow->changeDimensions((rect.width - buttonWidth) + 1, rect.y, buttonWidth, buttonHeight);
+		_leftArrow->changeDimensions(rect.x, rect.y, buttonWidths[0], buttonHeight);
+		_rightArrow->changeDimensions((rect.width - buttonWidths[CALENDAR_COLS - 1]) + 1, rect.y, buttonWidths[CALENDAR_COLS - 1], buttonHeight);
 
 		// Resize month name
-		_monthLabel->changeDimensions(rect.x + buttonWidth, rect.y, rect.width - (buttonWidth << 1), buttonHeight);
+		_monthLabel->changeDimensions(rect.x + buttonWidths[0], rect.y, rect.width - (buttonWidths[0] + buttonWidths[CALENDAR_COLS - 1]), buttonHeight);
 
 		// Resize day labels
 
 		// Locate first day label - work on the assumption that this will always
 		// be the first gadget after the month label
 		s32 gadgetIndex = getGadgetIndex(_monthLabel) + 1;
+		s16 labelX = rect.x;
 	
-		for (u8 i = 0; i < 7; ++i) {
-			_gadgets[gadgetIndex]->changeDimensions(rect.x + (buttonWidth * i), rect.y + buttonHeight, buttonWidth, buttonHeight);
+		for (u8 i = 0; i < CALENDAR_COLS; ++i) {
+			_gadgets[gadgetIndex]->changeDimensions(labelX, rect.y + buttonHeight, buttonWidths[i], buttonHeight);
 			gadgetIndex++;
+
+			labelX += buttonWidths[i];
 		}
 
 		// Resize day buttons
 		u8 allocatedDays = 0;
 		u8 maxDays = CALENDAR_ROWS * CALENDAR_COLS;
+		s16 buttonX = rect.x;
 
 		// Create all boxes for this month
 		while (allocatedDays < maxDays) {
-			_gadgets[gadgetIndex]->changeDimensions(rect.x + ((allocatedDays % CALENDAR_COLS) * buttonWidth), gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidth, buttonHeight);
+			_gadgets[gadgetIndex]->changeDimensions(buttonX, gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidths[allocatedDays % CALENDAR_COLS], buttonHeight);
+
+			// Calculate x pos of next button
+			buttonX += buttonWidths[allocatedDays % CALENDAR_COLS];
 
 			allocatedDays++;
+
+			// Reset x pos of next button if moving to next row
+			if (allocatedDays % CALENDAR_COLS == 0) {
+				buttonX = rect.x;
+			}
+
 			gadgetIndex++;
 		}
 
 		// Reset the permeable value
 		_flags.permeable = wasPermeable;
+
+		// Reset drawing value
+		_flags.drawingEnabled = wasDrawEnabled;
 
 		redraw();
 
@@ -366,4 +406,12 @@ bool Calendar::resize(u16 width, u16 height) {
 	}
 
 	return false;
+}
+
+// Get the preferred dimensions of the gadget
+void Calendar::getPreferredDimensions(Rect& rect) const {
+	rect.x = _x;
+	rect.y = _y;
+	rect.width = (!_flags.borderless << 1) + 160;
+	rect.height = (!_flags.borderless << 1) + 106;
 }

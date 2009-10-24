@@ -82,6 +82,14 @@ namespace WoopsiUI {
 		 */
 		bool resize(u16 width, u16 height);
 
+		/**
+		 * Insert the dimensions that this gadget wants to have into the rect
+		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+		 * parent.
+		 * @param rect Reference to a rect to populate with data.
+		 */
+		virtual void getPreferredDimensions(Rect& rect) const;
+
 	protected:
 		Date* _date;						/**< Calendar working date */
 		Date* _visibleDate;					/**< Date displayed in the UI */
@@ -110,6 +118,14 @@ namespace WoopsiUI {
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline Calendar(const Calendar& calendar) : Gadget(calendar) { };
+
+		/**
+		 * Calculate the widths of the day buttons.
+		 * @param spaceWidth Width of the space to fill.
+		 * @param dayWidths Array large enough to contain the widths of the days
+		 * for a single row.
+		 */
+		void calculateDayButtonWidths(s32 spaceWidth, u8* dayWidths);
 	};
 }
 
