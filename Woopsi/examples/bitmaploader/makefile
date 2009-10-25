@@ -22,8 +22,8 @@ ICON 		:= $(CURDIR)/../../../icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source data gfx ../../woopsi ../../bonus/classes
-INCLUDES	:=	include
+SOURCES		:=	source ../../libwoopsi/src data ../../bonus/classes
+INCLUDES	:=	include ../../libwoopsi/include
 DEFINES		:=
 
 #-------------------------------------------------------------------------------
