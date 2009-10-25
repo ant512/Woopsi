@@ -15,9 +15,9 @@ PATH 		:= $(DEVKITARM)/bin:$(PATH)
 
 TARGET		:=	libwoopsi
 BUILD		:=	build
-RELEASE     :=  Release
-SOURCES		:=	woopsi
-INCLUDES	:=	include woopsi build
+RELEASE     :=  lib
+SOURCES		:=	src
+INCLUDES	:=	include build
 LIBDIRS		:=	$(DEVKITPRO)/libnds
 
 #-------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 $(BUILD):
 	[ -d $(CURDIR)/$(RELEASE) ] || mkdir -p $(CURDIR)/$(RELEASE)
 	[ -d $@ ] || mkdir -p $@
-	make -C $(BUILD) -f $(CURDIR)/Makefile.lib
+	make -C $(BUILD) -f $(CURDIR)/Makefile
  
 #-------------------------------------------------------------------------------
 

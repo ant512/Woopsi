@@ -46,299 +46,299 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\woopsi\alert.cpp"
+				RelativePath=".\libwoopsi\src\alert.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\amigascreen.cpp"
+				RelativePath=".\libwoopsi\src\amigascreen.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\amigawindow.cpp"
+				RelativePath=".\libwoopsi\src\amigawindow.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\animation.cpp"
+				RelativePath=".\libwoopsi\src\animation.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\animbutton.cpp"
+				RelativePath=".\libwoopsi\src\animbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\bitmap.cpp"
+				RelativePath=".\libwoopsi\src\bitmap.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\bitmapbutton.cpp"
+				RelativePath=".\libwoopsi\src\bitmapbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\button.cpp"
+				RelativePath=".\libwoopsi\src\button.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\calendar.cpp"
+				RelativePath=".\libwoopsi\src\calendar.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\checkbox.cpp"
+				RelativePath=".\libwoopsi\src\checkbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\contextmenu.cpp"
+				RelativePath=".\libwoopsi\src\contextmenu.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\contextmenuitem.cpp"
+				RelativePath=".\libwoopsi\src\contextmenuitem.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\cyclebutton.cpp"
+				RelativePath=".\libwoopsi\src\cyclebutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\date.cpp"
+				RelativePath=".\libwoopsi\src\date.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\debug.cpp"
+				RelativePath=".\libwoopsi\src\debug.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\decorationglyphbutton.cpp"
+				RelativePath=".\libwoopsi\src\decorationglyphbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\defaultstyle.cpp"
+				RelativePath=".\libwoopsi\src\defaultstyle.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\fixedwidthfontbase.cpp"
+				RelativePath=".\libwoopsi\src\fixedwidthfontbase.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\font.cpp"
+				RelativePath=".\libwoopsi\src\font.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\gadget.cpp"
+				RelativePath=".\libwoopsi\src\gadget.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\gradient.cpp"
+				RelativePath=".\libwoopsi\src\gradient.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\graphicsport.cpp"
+				RelativePath=".\libwoopsi\src\graphicsport.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\label.cpp"
+				RelativePath=".\libwoopsi\src\label.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\listbox.cpp"
+				RelativePath=".\libwoopsi\src\listbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\listdata.cpp"
+				RelativePath=".\libwoopsi\src\listdata.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\monofont.cpp"
+				RelativePath=".\libwoopsi\src\monofont.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\multilinetextbox.cpp"
+				RelativePath=".\libwoopsi\src\multilinetextbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\packedfont1.cpp"
+				RelativePath=".\libwoopsi\src\packedfont1.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\packedfont16.cpp"
+				RelativePath=".\libwoopsi\src\packedfont16.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\packedfontbase.cpp"
+				RelativePath=".\libwoopsi\src\packedfontbase.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\progressbar.cpp"
+				RelativePath=".\libwoopsi\src\progressbar.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\radiobutton.cpp"
+				RelativePath=".\libwoopsi\src\radiobutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\radiobuttongroup.cpp"
+				RelativePath=".\libwoopsi\src\radiobuttongroup.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\rectcache.cpp"
+				RelativePath=".\libwoopsi\src\rectcache.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\requester.cpp"
+				RelativePath=".\libwoopsi\src\requester.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\screen.cpp"
+				RelativePath=".\libwoopsi\src\screen.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\screentitle.cpp"
+				RelativePath=".\libwoopsi\src\screentitle.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollbarhorizontal.cpp"
+				RelativePath=".\libwoopsi\src\scrollbarhorizontal.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollbarvertical.cpp"
+				RelativePath=".\libwoopsi\src\scrollbarvertical.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollinglistbox.cpp"
+				RelativePath=".\libwoopsi\src\scrollinglistbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollingpanel.cpp"
+				RelativePath=".\libwoopsi\src\scrollingpanel.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollingtextbox.cpp"
+				RelativePath=".\libwoopsi\src\scrollingtextbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreen.cpp"
+				RelativePath=".\libwoopsi\src\skinnedscreen.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreendepthbutton.cpp"
+				RelativePath=".\libwoopsi\src\skinnedscreendepthbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreenflipbutton.cpp"
+				RelativePath=".\libwoopsi\src\skinnedscreenflipbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreentitle.cpp"
+				RelativePath=".\libwoopsi\src\skinnedscreentitle.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindow.cpp"
+				RelativePath=".\libwoopsi\src\skinnedwindow.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowborderbottom.cpp"
+				RelativePath=".\libwoopsi\src\skinnedwindowborderbottom.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowborderleft.cpp"
+				RelativePath=".\libwoopsi\src\skinnedwindowborderleft.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowborderright.cpp"
+				RelativePath=".\libwoopsi\src\skinnedwindowborderright.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowbordertop.cpp"
+				RelativePath=".\libwoopsi\src\skinnedwindowbordertop.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowclosebutton.cpp"
+				RelativePath=".\libwoopsi\src\skinnedwindowclosebutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowdepthbutton.cpp"
+				RelativePath=".\libwoopsi\src\skinnedwindowdepthbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sliderhorizontal.cpp"
+				RelativePath=".\libwoopsi\src\sliderhorizontal.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sliderhorizontalgrip.cpp"
+				RelativePath=".\libwoopsi\src\sliderhorizontalgrip.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\slidervertical.cpp"
+				RelativePath=".\libwoopsi\src\slidervertical.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sliderverticalgrip.cpp"
+				RelativePath=".\libwoopsi\src\sliderverticalgrip.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\superbitmap.cpp"
+				RelativePath=".\libwoopsi\src\superbitmap.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sysfont.c"
+				RelativePath=".\libwoopsi\src\sysfont.c"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\text.cpp"
+				RelativePath=".\libwoopsi\src\text.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\textbox.cpp"
+				RelativePath=".\libwoopsi\src\textbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\textwriter.cpp"
+				RelativePath=".\libwoopsi\src\textwriter.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\tinyfont.c"
+				RelativePath=".\libwoopsi\src\tinyfont.c"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\window.cpp"
+				RelativePath=".\libwoopsi\src\window.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowborderbottom.cpp"
+				RelativePath=".\libwoopsi\src\windowborderbottom.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowborderbutton.cpp"
+				RelativePath=".\libwoopsi\src\windowborderbutton.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowborderside.cpp"
+				RelativePath=".\libwoopsi\src\windowborderside.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowbordertop.cpp"
+				RelativePath=".\libwoopsi\src\windowbordertop.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsi.cpp"
+				RelativePath=".\libwoopsi\src\woopsi.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsifuncs.cpp"
+				RelativePath=".\libwoopsi\src\woopsifuncs.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsikey.cpp"
+				RelativePath=".\libwoopsi\src\woopsikey.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsikeyboard.cpp"
+				RelativePath=".\libwoopsi\src\woopsikeyboard.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsistring.cpp"
+				RelativePath=".\libwoopsi\src\woopsistring.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsitimer.cpp"
+				RelativePath=".\libwoopsi\src\woopsitimer.cpp"
 				>
 			</File>
 		</Filter>
@@ -348,359 +348,359 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\woopsi\alert.h"
+				RelativePath=".\libwoopsi\include\alert.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\amigascreen.h"
+				RelativePath=".\libwoopsi\include\amigascreen.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\amigawindow.h"
+				RelativePath=".\libwoopsi\include\amigawindow.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\animation.h"
+				RelativePath=".\libwoopsi\include\animation.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\animbutton.h"
+				RelativePath=".\libwoopsi\include\animbutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\bitmap.h"
+				RelativePath=".\libwoopsi\include\bitmap.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\bitmapbutton.h"
+				RelativePath=".\libwoopsi\include\bitmapbutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\button.h"
+				RelativePath=".\libwoopsi\include\button.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\calendar.h"
+				RelativePath=".\libwoopsi\include\calendar.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\checkbox.h"
+				RelativePath=".\libwoopsi\include\checkbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\contextmenu.h"
+				RelativePath=".\libwoopsi\include\contextmenu.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\contextmenueventargs.h"
+				RelativePath=".\libwoopsi\include\contextmenueventargs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\contextmenuitem.h"
+				RelativePath=".\libwoopsi\include\contextmenuitem.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\cyclebutton.h"
+				RelativePath=".\libwoopsi\include\cyclebutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\date.h"
+				RelativePath=".\libwoopsi\include\date.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\debug.h"
+				RelativePath=".\libwoopsi\include\debug.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\decorationglyphbutton.h"
+				RelativePath=".\libwoopsi\include\decorationglyphbutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\defaultstyle.h"
+				RelativePath=".\libwoopsi\include\defaultstyle.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\defines.h"
+				RelativePath=".\libwoopsi\include\defines.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\dimmedscreen.h"
+				RelativePath=".\libwoopsi\include\dimmedscreen.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\eventargs.h"
+				RelativePath=".\libwoopsi\include\eventargs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\fixedwidthfontbase.h"
+				RelativePath=".\libwoopsi\include\fixedwidthfontbase.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\font.h"
+				RelativePath=".\libwoopsi\include\font.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\fontbase.h"
+				RelativePath=".\libwoopsi\include\fontbase.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\gadget.h"
+				RelativePath=".\libwoopsi\include\gadget.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\gadgeteventargs.h"
+				RelativePath=".\libwoopsi\include\gadgeteventargs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\gadgeteventhandler.h"
+				RelativePath=".\libwoopsi\include\gadgeteventhandler.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\glyphs.h"
+				RelativePath=".\libwoopsi\include\glyphs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\gradient.h"
+				RelativePath=".\libwoopsi\include\gradient.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\graphicsport.h"
+				RelativePath=".\libwoopsi\include\graphicsport.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\keyboardeventargs.h"
+				RelativePath=".\libwoopsi\include\keyboardeventargs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\keyboardeventhandler.h"
+				RelativePath=".\libwoopsi\include\keyboardeventhandler.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\label.h"
+				RelativePath=".\libwoopsi\include\label.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\listbox.h"
+				RelativePath=".\libwoopsi\include\listbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\listdata.h"
+				RelativePath=".\libwoopsi\include\listdata.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\listdataeventargs.h"
+				RelativePath=".\libwoopsi\include\listdataeventargs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\listdataeventhandler.h"
+				RelativePath=".\libwoopsi\include\listdataeventhandler.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\monofont.h"
+				RelativePath=".\libwoopsi\include\monofont.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\multilinetextbox.h"
+				RelativePath=".\libwoopsi\include\multilinetextbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\packedfont1.h"
+				RelativePath=".\libwoopsi\include\packedfont1.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\packedfont16.h"
+				RelativePath=".\libwoopsi\include\packedfont16.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\packedfontbase.h"
+				RelativePath=".\libwoopsi\include\packedfontbase.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\progressbar.h"
+				RelativePath=".\libwoopsi\include\progressbar.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\radiobutton.h"
+				RelativePath=".\libwoopsi\include\radiobutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\radiobuttongroup.h"
+				RelativePath=".\libwoopsi\include\radiobuttongroup.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\rectcache.h"
+				RelativePath=".\libwoopsi\include\rectcache.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\requester.h"
+				RelativePath=".\libwoopsi\include\requester.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\screen.h"
+				RelativePath=".\libwoopsi\include\screen.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\screentitle.h"
+				RelativePath=".\libwoopsi\include\screentitle.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollablebase.h"
+				RelativePath=".\libwoopsi\include\scrollablebase.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollbarhorizontal.h"
+				RelativePath=".\libwoopsi\include\scrollbarhorizontal.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollbarvertical.h"
+				RelativePath=".\libwoopsi\include\scrollbarvertical.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollinglistbox.h"
+				RelativePath=".\libwoopsi\include\scrollinglistbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollingpanel.h"
+				RelativePath=".\libwoopsi\include\scrollingpanel.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\scrollingtextbox.h"
+				RelativePath=".\libwoopsi\include\scrollingtextbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skin.h"
+				RelativePath=".\libwoopsi\include\skin.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreen.h"
+				RelativePath=".\libwoopsi\include\skinnedscreen.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreendepthbutton.h"
+				RelativePath=".\libwoopsi\include\skinnedscreendepthbutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreenflipbutton.h"
+				RelativePath=".\libwoopsi\include\skinnedscreenflipbutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedscreentitle.h"
+				RelativePath=".\libwoopsi\include\skinnedscreentitle.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindow.h"
+				RelativePath=".\libwoopsi\include\skinnedwindow.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowborderbottom.h"
+				RelativePath=".\libwoopsi\include\skinnedwindowborderbottom.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowborderleft.h"
+				RelativePath=".\libwoopsi\include\skinnedwindowborderleft.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowborderright.h"
+				RelativePath=".\libwoopsi\include\skinnedwindowborderright.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowbordertop.h"
+				RelativePath=".\libwoopsi\include\skinnedwindowbordertop.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowclosebutton.h"
+				RelativePath=".\libwoopsi\include\skinnedwindowclosebutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\skinnedwindowdepthbutton.h"
+				RelativePath=".\libwoopsi\include\skinnedwindowdepthbutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sliderhorizontal.h"
+				RelativePath=".\libwoopsi\include\sliderhorizontal.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sliderhorizontalgrip.h"
+				RelativePath=".\libwoopsi\include\sliderhorizontalgrip.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\slidervertical.h"
+				RelativePath=".\libwoopsi\include\slidervertical.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sliderverticalgrip.h"
+				RelativePath=".\libwoopsi\include\sliderverticalgrip.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\superbitmap.h"
+				RelativePath=".\libwoopsi\include\superbitmap.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\sysfont.h"
+				RelativePath=".\libwoopsi\include\sysfont.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\text.h"
+				RelativePath=".\libwoopsi\include\text.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\textbox.h"
+				RelativePath=".\libwoopsi\include\textbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\textwriter.h"
+				RelativePath=".\libwoopsi\include\textwriter.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\window.h"
+				RelativePath=".\libwoopsi\include\window.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowborderbottom.h"
+				RelativePath=".\libwoopsi\include\windowborderbottom.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowborderbutton.h"
+				RelativePath=".\libwoopsi\include\windowborderbutton.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowborderside.h"
+				RelativePath=".\libwoopsi\include\windowborderside.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\windowbordertop.h"
+				RelativePath=".\libwoopsi\include\windowbordertop.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsi.h"
+				RelativePath=".\libwoopsi\include\woopsi.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsiarray.h"
+				RelativePath=".\libwoopsi\include\woopsiarray.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsifuncs.h"
+				RelativePath=".\libwoopsi\include\woopsifuncs.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsiheaders.h"
+				RelativePath=".\libwoopsi\include\woopsiheaders.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsikey.h"
+				RelativePath=".\libwoopsi\include\woopsikey.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsikeyboard.h"
+				RelativePath=".\libwoopsi\include\woopsikeyboard.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsistring.h"
+				RelativePath=".\libwoopsi\include\woopsistring.h"
 				>
 			</File>
 			<File
-				RelativePath=".\woopsi\woopsitimer.h"
+				RelativePath=".\libwoopsi\include\woopsitimer.h"
 				>
 			</File>
 		</Filter>
