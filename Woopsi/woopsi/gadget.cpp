@@ -1287,7 +1287,9 @@ bool Gadget::release(s16 x, s16 y) {
 
 bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	if ((isEnabled()) && (_flags.dragging)) {
-		raiseDragEvent(x, y, vX, vY);
+		if ((vX != 0) || (vY != 0)) {
+			raiseDragEvent(x, y, vX, vY);
+		}
 
 		return true;
 	}

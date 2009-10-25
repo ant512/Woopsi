@@ -14,9 +14,17 @@ Change Log
     - Calendar's child controls correctly fill entire available space.
     - Calendar correctly selects date if new day is the same as old day but in
       a different month.
+    - Gadget drag event only raised if stylus is actually moved whilst dragging
+      mode active.
+    - ScrollingPanel drag and scroll events only raised if stylus is actually
+      moved whilst dragging mode active.
+    - MultiLineTextBox greys out text when disabled.
   
   - New Features:
     - Calendar test added.
+    - MultiLineTextBox test added.
+    - Added an overload to GraphicsPort to print a length of a string in a
+      specific colour.
 
 
   V0.39 (20091024)

@@ -177,6 +177,30 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char
 	}
 }
 
+// Print a string in a specific colour
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string, u16 colour) {
+	
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+	
+	// Store current font colour
+	bool isMonochrome = font->isMonochrome();
+	u16 oldColour = font->getColour();
+	
+	// Update font colour
+	font->setColour(colour);
+	
+	// Output as normal
+	drawText(x, y, font, length, string);
+	
+	// Reset colour
+	if (!isMonochrome) {
+		font->clearColour();
+	} else {
+		font->setColour(oldColour);
+	}
+}
+
 // Clip and draw text
 void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Gadget::Rect& clipRect) {
 	s16 clipX1 = clipRect.x;

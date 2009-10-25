@@ -93,17 +93,18 @@ void ScrollingPanel::scrollChildren(s32 dx, s32 dy) {
 bool ScrollingPanel::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 	if (isEnabled()) {
-
-		// Where to process the drag event?
 		if (_flags.dragging) {
-			// Run drag on this
 
-			// Perform scroll
-			scroll(vX, vY);
+			// Only run drag code if stylus has moved
+			if ((vX != 0) || (vY != 0)) {
 
-			raiseDragEvent(x, y, vX, vY);
+				// Perform scroll
+				scroll(vX, vY);
 
-			return true;
+				raiseDragEvent(x, y, vX, vY);
+
+				return true;
+			}
 		}
 	}
 

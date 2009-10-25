@@ -1,15 +1,15 @@
-#ifndef _CALENDAR_TEST_H_
-#define _CALENDAR_TEST_H_
+#ifndef _MULTI_LINE_TEXTBOX_TEST_H_
+#define _MULTI_LINE_TEXTBOX_TEST_H_
 
 #include "woopsi.h"
 #include "gadgeteventhandler.h"
 #include "gadgeteventargs.h"
 #include "button.h"
-#include "calendar.h"
+#include "multilinetextbox.h"
 
 using namespace WoopsiUI;
 
-class CalendarTest : public Woopsi, public GadgetEventHandler {
+class MultiLineTextBoxTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
@@ -53,7 +53,7 @@ private:
 	Button* _enable;
 	Button* _disable;
 	Button* _dimensions;
-	Calendar* _calendar;
+	MultiLineTextBox* _textbox;
 };
 
 #endif
