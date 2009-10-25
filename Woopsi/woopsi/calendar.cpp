@@ -62,7 +62,7 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 			Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
 			// Prevent changes if new date is same as old
-			if (_date->getDay() != newDate->getDay()) {
+			if (*_date != *newDate) {
 
 				_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
 

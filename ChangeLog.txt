@@ -12,9 +12,12 @@ Change Log
     - Label text is greyed out when disabled.
     - Huge speed increase in Calendar::resize().
     - Calendar's child controls correctly fill entire available space.
+    - Calendar correctly selects date if new day is the same as old day but in
+      a different month.
   
   - New Features:
- 
+    - Calendar test added.
+
 
   V0.39 (20091024)
   
