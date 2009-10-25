@@ -131,7 +131,7 @@ void Calendar::populateGUI() {
 
 	// Prepare to update grid of days
 	u8 updatedDays = 0;
-	u8 maxDays = CALENDAR_ROWS * CALENDAR_COLS;
+	u8 maxDays = CALENDAR_BODY_ROWS * CALENDAR_COLS;
 	u8 startDay = 1;
 
 	if (thisMonth->getWeekDay() != 1) {
@@ -207,21 +207,40 @@ void Calendar::populateGUI() {
 	delete thisMonth;
 }
 
-void Calendar::calculateDayButtonWidths(s32 spaceWidth, u8* dayWidths) {
+void Calendar::calculateColumnWidths(s32 spaceWidth, u8* columnWidths) {
 
-	// Calculate the size of a single button, disregarding remainder
-	u8 buttonWidth = spaceWidth / CALENDAR_COLS;
+	// Calculate the width of a single column, disregarding remainder
+	u8 columnWidth = spaceWidth / CALENDAR_COLS;
 
-	// Calculate sizes of each column of day buttons - automatcally
-	// assigns any remainder in integer division of rect width 1px
-	// at a time to columns in first come, first served fashion
+	// Calculate sizes of each column - automatically assigns any
+	// remainder in integer division of rect width 1px at a time to
+	// columns in first come, first served fashion
 	s32 remainderWidth = spaceWidth % CALENDAR_COLS;
 	for (u8 i = 0; i < CALENDAR_COLS; ++i) {
-		dayWidths[i] = buttonWidth;
+		columnWidths[i] = columnWidth;
 
 		if (remainderWidth > 0) {
-			dayWidths[i]++;
+			columnWidths[i]++;
 			remainderWidth--;
+		}
+	}
+}
+
+void Calendar::calculateColumnHeights(s32 spaceHeight, u8* columnHeights) {
+
+	// Calculate the height of a single column, disregarding remainder
+	u8 columnHeight = spaceHeight / CALENDAR_ROWS;
+
+	// Calculate sizes of each column - automatically assigns any
+	// remainder in integer division of rect height 1px at a time to
+	// columns in first come, first served fashion
+	s32 remainderHeight = spaceHeight % CALENDAR_ROWS;
+	for (u8 i = 0; i < CALENDAR_ROWS; ++i) {
+		columnHeights[i] = columnHeight;
+
+		if (remainderHeight > 0) {
+			columnHeights[i]++;
+			remainderHeight--;
 		}
 	}
 }
@@ -231,26 +250,23 @@ void Calendar::buildGUI() {
 	Rect rect;
 	getClientRect(rect);
 
-	// Define basic button properties
-	u8 buttonHeight = rect.height / (CALENDAR_ROWS + 2);
-	u16 gridY = (rect.height - (buttonHeight * CALENDAR_ROWS)) + 1;
-	Button* button;
-
-	// Get the widths of the day buttons
-	u8 buttonWidths[CALENDAR_COLS];
-	calculateDayButtonWidths(rect.width, buttonWidths);
+	// Get the sizes of the columns
+	u8 columnWidths[CALENDAR_COLS];
+	u8 columnHeights[CALENDAR_ROWS];
+	calculateColumnWidths(rect.width, columnWidths);
+	calculateColumnHeights(rect.height, columnHeights);
 
 	// Add arrows and month label
-	_leftArrow = new Button(rect.x, rect.y, buttonWidths[0], buttonHeight, GLYPH_ARROW_LEFT);
+	_leftArrow = new Button(rect.x, rect.y, columnWidths[0], columnHeights[0], GLYPH_ARROW_LEFT);
 	_leftArrow->addGadgetEventHandler(this);
 	addGadget(_leftArrow);
 
-	_rightArrow = new Button((rect.width - buttonWidths[CALENDAR_COLS - 1]) + 1, rect.y, buttonWidths[CALENDAR_COLS - 1], buttonHeight, GLYPH_ARROW_RIGHT);
+	_rightArrow = new Button((rect.width - columnWidths[CALENDAR_COLS - 1]) + 1, rect.y, columnWidths[CALENDAR_COLS - 1], columnHeights[0], GLYPH_ARROW_RIGHT);
 	_rightArrow->addGadgetEventHandler(this);
 	addGadget(_rightArrow);
 
 	// Month name
-	_monthLabel = new Label(rect.x + buttonWidths[0], rect.y, rect.width - (buttonWidths[0] + buttonWidths[CALENDAR_COLS - 1]), buttonHeight, "");
+	_monthLabel = new Label(rect.x + columnWidths[0], rect.y, rect.width - (columnWidths[0] + columnWidths[CALENDAR_COLS - 1]), columnHeights[0], "");
 	_monthLabel->setBorderless(true);
 	addGadget(_monthLabel);
 
@@ -260,26 +276,29 @@ void Calendar::buildGUI() {
 	s16 labelX = rect.x;
 
 	for (u8 i = 0; i < CALENDAR_COLS; ++i) {
-		label = new Label(labelX, rect.y + buttonHeight, buttonWidths[i], buttonHeight, dayInitials[i]);
+		label = new Label(labelX, rect.y + columnHeights[0], columnWidths[i], columnHeights[1], dayInitials[i]);
 		label->setBorderless(true);
 		addGadget(label);
 		
-		labelX += buttonWidths[i];
+		labelX += columnWidths[i];
 	}
 
 	// Prepare to build grid of days
 	u8 allocatedDays = 0;
-	u8 maxDays = CALENDAR_ROWS * CALENDAR_COLS;
+	u8 maxDays = CALENDAR_BODY_ROWS * CALENDAR_COLS;
 
 	// Create all boxes for this month
+	Button* button;
 	u16 buttonX = rect.x;
+	u16 buttonY = rect.y + columnHeights[0] + columnHeights[1];
+	u8 buttonRow = 2;
 	while (allocatedDays < maxDays) {
-		button = new Button(buttonX, gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidths[allocatedDays % CALENDAR_COLS], buttonHeight, "");
+		button = new Button(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow], "");
 		button->addGadgetEventHandler(this);
 		button->setRefcon(allocatedDays + 1);
 
 		// Calculate x pos of next button
-		buttonX += buttonWidths[allocatedDays % CALENDAR_COLS];
+		buttonX += columnWidths[allocatedDays % CALENDAR_COLS];
 
 		addGadget(button);
 		allocatedDays++;
@@ -287,6 +306,8 @@ void Calendar::buildGUI() {
 		// Reset x pos of next button if moving to next row
 		if (allocatedDays % CALENDAR_COLS == 0) {
 			buttonX = rect.x;
+			buttonY += columnHeights[buttonRow];
+			buttonRow++;
 		}
 	}
 }
@@ -341,20 +362,18 @@ bool Calendar::resize(u16 width, u16 height) {
 		Rect rect;
 		getClientRect(rect);
 
-		// Define basic button properties
-		u8 buttonHeight = rect.height / (CALENDAR_ROWS + 2);
-		u16 gridY = (rect.height - (buttonHeight * CALENDAR_ROWS)) + 1;
-
-		// Get the widths of the day buttons
-		u8 buttonWidths[CALENDAR_COLS];
-		calculateDayButtonWidths(rect.width, buttonWidths);
+		// Get the sizes of the columns
+		u8 columnWidths[CALENDAR_COLS];
+		u8 columnHeights[CALENDAR_ROWS];
+		calculateColumnWidths(rect.width, columnWidths);
+		calculateColumnHeights(rect.height, columnHeights);
 
 		// Resize arrows
-		_leftArrow->changeDimensions(rect.x, rect.y, buttonWidths[0], buttonHeight);
-		_rightArrow->changeDimensions((rect.width - buttonWidths[CALENDAR_COLS - 1]) + 1, rect.y, buttonWidths[CALENDAR_COLS - 1], buttonHeight);
+		_leftArrow->changeDimensions(rect.x, rect.y, columnWidths[0], columnHeights[0]);
+		_rightArrow->changeDimensions((rect.width - columnWidths[CALENDAR_COLS - 1]) + 1, rect.y, columnWidths[CALENDAR_COLS - 1], columnHeights[0]);
 
 		// Resize month name
-		_monthLabel->changeDimensions(rect.x + buttonWidths[0], rect.y, rect.width - (buttonWidths[0] + buttonWidths[CALENDAR_COLS - 1]), buttonHeight);
+		_monthLabel->changeDimensions(rect.x + columnWidths[0], rect.y, rect.width - (columnWidths[0] + columnWidths[CALENDAR_COLS - 1]), columnHeights[0]);
 
 		// Resize day labels
 
@@ -364,29 +383,33 @@ bool Calendar::resize(u16 width, u16 height) {
 		s16 labelX = rect.x;
 	
 		for (u8 i = 0; i < CALENDAR_COLS; ++i) {
-			_gadgets[gadgetIndex]->changeDimensions(labelX, rect.y + buttonHeight, buttonWidths[i], buttonHeight);
+			_gadgets[gadgetIndex]->changeDimensions(labelX, rect.y + columnHeights[0], columnWidths[i], columnHeights[1]);
 			gadgetIndex++;
 
-			labelX += buttonWidths[i];
+			labelX += columnWidths[i];
 		}
 
 		// Resize day buttons
 		u8 allocatedDays = 0;
-		u8 maxDays = CALENDAR_ROWS * CALENDAR_COLS;
-		s16 buttonX = rect.x;
+		u8 maxDays = CALENDAR_BODY_ROWS * CALENDAR_COLS;
 
-		// Create all boxes for this month
+		// Resize all boxes for this month
+		u16 buttonX = rect.x;
+		u16 buttonY = rect.y + columnHeights[0] + columnHeights[1];
+		u8 buttonRow = 2;
 		while (allocatedDays < maxDays) {
-			_gadgets[gadgetIndex]->changeDimensions(buttonX, gridY + ((allocatedDays / CALENDAR_COLS) * buttonHeight), buttonWidths[allocatedDays % CALENDAR_COLS], buttonHeight);
+			_gadgets[gadgetIndex]->changeDimensions(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow]);
 
 			// Calculate x pos of next button
-			buttonX += buttonWidths[allocatedDays % CALENDAR_COLS];
+			buttonX += columnWidths[allocatedDays % CALENDAR_COLS];
 
 			allocatedDays++;
 
 			// Reset x pos of next button if moving to next row
 			if (allocatedDays % CALENDAR_COLS == 0) {
 				buttonX = rect.x;
+				buttonY += columnHeights[buttonRow];
+				buttonRow++;
 			}
 
 			gadgetIndex++;

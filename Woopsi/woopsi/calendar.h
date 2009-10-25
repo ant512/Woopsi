@@ -5,8 +5,9 @@
 #include "gadget.h"
 #include "gadgeteventhandler.h"
 
-#define CALENDAR_ROWS 6
+#define CALENDAR_ROWS 8
 #define CALENDAR_COLS 7
+#define CALENDAR_BODY_ROWS 6
 
 namespace WoopsiUI {
 
@@ -120,12 +121,18 @@ namespace WoopsiUI {
 		inline Calendar(const Calendar& calendar) : Gadget(calendar) { };
 
 		/**
-		 * Calculate the widths of the day buttons.
+		 * Calculate the widths of the columns in the calendar.
 		 * @param spaceWidth Width of the space to fill.
-		 * @param dayWidths Array large enough to contain the widths of the days
-		 * for a single row.
+		 * @param columnWidths Array large enough to contain the widths of the columns.
 		 */
-		void calculateDayButtonWidths(s32 spaceWidth, u8* dayWidths);
+		void calculateColumnWidths(s32 spaceWidth, u8* columnWidths);
+
+		/**
+		 * Calculate the heights of the columns in the calendar.
+		 * @param spaceHeight Width of the space to fill.
+		 * @param columnHeights Array large enough to contain the heights of the columns.
+		 */
+		void calculateColumnHeights(s32 spaceHeight, u8* columnHeights);
 	};
 }
 
