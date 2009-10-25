@@ -21,6 +21,7 @@ Change Log
     - MultiLineTextBox greys out text when disabled.
     - MultiLineTextBox::removeText() correctly repositions cursor.
     - TextBox greys out text when disabled.
+    - Scrolltest compiles correctly.
   
   - New Features:
     - Calendar test added.

@@ -17,7 +17,7 @@ TestPanel::TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* f
 void TestPanel::draw(Rect clipRect) {
 
 	// Create graphics port to draw to
-	GraphicsPort* port = newInternalGraphicsPort();
+	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Draw background
 	port->drawFilledRect(0, 0, _width, _height, _backColour);
