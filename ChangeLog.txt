@@ -19,6 +19,7 @@ Change Log
     - ScrollingPanel drag and scroll events only raised if stylus is actually
       moved whilst dragging mode active.
     - MultiLineTextBox greys out text when disabled.
+    - MultiLineTextBox::removeText() correctly repositions cursor.
   
   - New Features:
     - Calendar test added.
