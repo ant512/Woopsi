@@ -20,10 +20,12 @@ Change Log
       moved whilst dragging mode active.
     - MultiLineTextBox greys out text when disabled.
     - MultiLineTextBox::removeText() correctly repositions cursor.
+    - TextBox greys out text when disabled.
   
   - New Features:
     - Calendar test added.
     - MultiLineTextBox test added.
+    - TextBox test added.
     - Added an overload to GraphicsPort to print a length of a string in a
       specific colour.
 

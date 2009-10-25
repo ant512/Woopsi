@@ -1,10 +1,10 @@
 // Includes
-#include "multilinetextboxtest.h"
+#include "textboxtest.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "debug.h"
 
-void MultiLineTextBoxTest::startup() {
+void TextBoxTest::startup() {
 
 	// Call base startup method
 	Woopsi::startup();
@@ -63,7 +63,7 @@ void MultiLineTextBoxTest::startup() {
 	_dimensions->addGadgetEventHandler(this);
 
 	// Add cycle button
-	_textbox = new MultiLineTextBox(30, 30, 160, 105, "This is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text", 0);
+	_textbox = new TextBox(30, 30, 160, 105, "This is some text");
 	window->addGadget(_textbox);
 	_textbox->addGadgetEventHandler(this);
 	_textbox->setDoubleClickable(true);
@@ -83,13 +83,13 @@ void MultiLineTextBoxTest::startup() {
 	redraw();
 }
 
-void MultiLineTextBoxTest::shutdown() {
+void TextBoxTest::shutdown() {
 
 	// Call base shutdown method
 	Woopsi::shutdown();
 }
 
-void MultiLineTextBoxTest::handleClickEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Clicked");
@@ -97,7 +97,7 @@ void MultiLineTextBoxTest::handleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleDragEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleDragEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Dragged");
@@ -105,7 +105,7 @@ void MultiLineTextBoxTest::handleDragEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleReleaseEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleReleaseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Released");
@@ -113,7 +113,7 @@ void MultiLineTextBoxTest::handleReleaseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Released outside");
@@ -121,7 +121,7 @@ void MultiLineTextBoxTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleKeyPressEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleKeyPressEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Key pressed");
@@ -129,7 +129,7 @@ void MultiLineTextBoxTest::handleKeyPressEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Key released");
@@ -137,7 +137,7 @@ void MultiLineTextBoxTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleLidOpenEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleLidOpenEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Lid opened");
@@ -145,7 +145,7 @@ void MultiLineTextBoxTest::handleLidOpenEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleLidCloseEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleLidCloseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Lid closed");
@@ -153,7 +153,7 @@ void MultiLineTextBoxTest::handleLidCloseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleFocusEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleFocusEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Focused");
@@ -161,7 +161,7 @@ void MultiLineTextBoxTest::handleFocusEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleBlurEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleBlurEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Blurred");
@@ -169,7 +169,7 @@ void MultiLineTextBoxTest::handleBlurEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleCloseEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleCloseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Closed");
@@ -177,7 +177,7 @@ void MultiLineTextBoxTest::handleCloseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleHideEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleHideEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Hidden");
@@ -185,7 +185,7 @@ void MultiLineTextBoxTest::handleHideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleShowEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleShowEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shown");
@@ -193,7 +193,7 @@ void MultiLineTextBoxTest::handleShowEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleEnableEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleEnableEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Enabled");
@@ -201,7 +201,7 @@ void MultiLineTextBoxTest::handleEnableEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleDisableEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleDisableEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Disabled");
@@ -209,7 +209,7 @@ void MultiLineTextBoxTest::handleDisableEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleValueChangeEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleValueChangeEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Value changed");
@@ -217,7 +217,7 @@ void MultiLineTextBoxTest::handleValueChangeEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleResizeEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleResizeEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Resized");
@@ -225,7 +225,7 @@ void MultiLineTextBoxTest::handleResizeEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleMoveEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleMoveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved");
@@ -233,7 +233,7 @@ void MultiLineTextBoxTest::handleMoveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleScrollEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleScrollEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Scrolled");
@@ -241,7 +241,7 @@ void MultiLineTextBoxTest::handleScrollEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleShiftClickEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleShiftClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shift clicked");
@@ -249,7 +249,7 @@ void MultiLineTextBoxTest::handleShiftClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
+void TextBoxTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Context menu selected");
@@ -257,7 +257,7 @@ void MultiLineTextBoxTest::handleContextMenuSelectionEvent(const ContextMenuEven
 	}
 }
 
-void MultiLineTextBoxTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Double clicked");
@@ -265,7 +265,7 @@ void MultiLineTextBoxTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleShelveEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleShelveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shelved");
@@ -273,7 +273,7 @@ void MultiLineTextBoxTest::handleShelveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleUnshelveEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleUnshelveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Unshelved");
@@ -281,7 +281,7 @@ void MultiLineTextBoxTest::handleUnshelveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleActionEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleActionEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Action");
@@ -337,7 +337,7 @@ void MultiLineTextBoxTest::handleActionEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved forwards");
@@ -345,7 +345,7 @@ void MultiLineTextBoxTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void MultiLineTextBoxTest::handleMoveBackwardEvent(const GadgetEventArgs& e) {
+void TextBoxTest::handleMoveBackwardEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved backwards");
