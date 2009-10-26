@@ -130,26 +130,18 @@ Requirements
   To run the project you will need either a DS emulator or a real DS and a flash
   cart.
   
-  To compile the project you need devKitPro and an IDE of some sort.  This
-  archive contains a VC++ 2005 Express project.
-  
-  To use Woopsi with PALib:
-  
-   - Replace the "Makefile" with "Makefile.palib".
+  To compile the project you need devKitPro.  This archive contains a VC++ 2008
+  Express project, but the Woopsi library and all examples and tests are built
+  from the command line.
    
-  To use Woopsi with libnds:
+  Woopsi was developed using:
   
-   - Replace the "Makefile" with "Makefile.libnds".
-   
-  To build a library version of Woopsi:
-  
-   - Open a CLI;
-   - Navigate to the Woopsi directory that contains the makefiles;
-   - Type "make -f Makefile.lib", sans quotes.
-   
-  Woopsi has been developed using devkitPro r20, VC++ 2005 Express, and the last
-  official version of PALib (070323).  It is compatible with devKitPro versions
-  r20 to r23 when used with PALib, or r24 when used without.
+  - devkitPro
+  - VC++ 2005 Express
+  - VC++ 2008 Express
+  - PALib
+  - Xcode
+  - SDL
   
 
 SDL Compatibility
@@ -160,10 +152,10 @@ SDL Compatibility
   to be compiled for any platform with an SDL port.  To create an SDL build of
   Woopsi:
   
-   - Create a new SDL project in your dev environment of choice;
-   - Copy the "woopsi" source folder into your SDL project;
-   - Copy the contents of the "sdl" folder from this archive into your copy of
-     the "woopsi" folder.
+  - Create a new SDL project in your dev environment of choice;
+  - Copy the "libwoopsi" source folder into your SDL project;
+  - Copy the contents of the "sdl" folder from this archive into your copy of
+     the "libwoopsi/src" folder.
      
   Assuming you set up the initial project correctly, you can now develop Woopsi
   applications using SDL.
@@ -175,23 +167,23 @@ SDL Compatibility
 Credits and Acknowlegements
 ---------------------------
 
- - Coding and design                                - Antony Dzeryn
- - Testing, technical advice, other contributions   - Jeff Laing
- - PALib independence                               - Steve
- - More testing and suggestions                     - John Buxton
- - Simian Zombie logo                               - John Clay
- - Thanks to                                        - The devKitPro team
-                                                    - The PALib team
-                                                    - Nintendo
-                                                    - R. J. Michal
+  - Coding and design                                - Antony Dzeryn
+  - Testing, technical advice, other contributions   - Jeff Laing
+  - PALib independence                               - Steve
+  - More testing and suggestions                     - John Buxton
+  - Simian Zombie logo                               - John Clay
+  - Thanks to                                        - The devKitPro team
+                                                     - The PALib team
+                                                     - Nintendo
+                                                     - R. J. Michal
 
 
 Links
 -----
 
- - http://ant.simianzombie.com                      - Woopsi development blog
- - http://ant.simianzombie.com/forum                - Woopsi forum
- - http://www.sourceforge.net/projects/woopsi       - Woopsi SourceForge page
+  - http://ant.simianzombie.com                      - Woopsi development blog
+  - http://ant.simianzombie.com/forum                - Woopsi forum
+  - http://www.sourceforge.net/projects/woopsi       - Woopsi SourceForge page
 
 
 Email
