@@ -1,0 +1,23 @@
+Installation
+------------
+
+  Installation of Woopsi is simple.
+  
+  1.  Download and install DevKitPro from http://www.devkitpro.org
+  
+  2.  Copy the folder "Woopsi/libwoopsi" from this directory to the root of the
+      devkitPro folder.  In Windows, assuming all of the defaults were chosen at
+      install time, this will be "C:\devkitPro"
+
+  All done!
+  
+  
+  To test the installation:
+
+  1.  Open a command prompt and CD to the "Woopsi/tests/textbox" folder
+      (relative to this document).
+
+  2.  Type "make".
+  
+  3.  Open the "Woopsi/tests/textbox/Release/textbox.nds" ROM file in a DS
+      emulator or copy it to your flash cart.
