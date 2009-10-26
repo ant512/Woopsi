@@ -29,7 +29,9 @@ Change Log
     - TextBox test added.
     - Added an overload to GraphicsPort to print a length of a string in a
       specific colour.
-    - Restructured into traditional library folder layout.
+    - Restructured directories into traditional library layout.
+    - Upgraded main project to VC++ 2008.
+    - Added libwoopsi.a to SVN.
 
 
   V0.39 (20091024)

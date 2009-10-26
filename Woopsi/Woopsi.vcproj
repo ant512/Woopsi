@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="Woopsi"
 	ProjectGUID="{B1432B13-D06B-483A-882F-E8C6DB88EFE2}"
 	RootNamespace="Woopsi"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
