@@ -22,15 +22,15 @@ ICON 		:= $(CURDIR)/../../../icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source data gfx
-INCLUDES	:=	include
+SOURCES		:=	source ../../libwoopsi/src data
+INCLUDES	:=	include ../../libwoopsi/include
 DEFINES		:=
 
 #-------------------------------------------------------------------------------
 # If USE_WOOPSI is defined, compile/link against Woopsi
 # If USE_FAT is defined, compile/link against libfat
 #-------------------------------------------------------------------------------
-USE_WOOPSI	= 1
+#USE_WOOPSI	= 1
 #USE_FAT		= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our
@@ -153,10 +153,6 @@ $(OUTPUT).nds		: 	$(OFILES)
 # ./include directory which needs to be passed with -I to the C(++) compiler
 #-------------------------------------------------------------------------------
 LIBDIRS		+= $(DEVKITPRO)/libnds
-
-ifneq ($(USE_WOOPSI),)
-LIBDIRS		+= $(DEVKITPRO)/libwoopsi
-endif
 
 # add all directories specified in INCLUDES and SOURCES
 _INCS		+= $(foreach dir,$(INCLUDES),-I$(CURDIR)/../$(dir))
