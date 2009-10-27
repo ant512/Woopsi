@@ -32,6 +32,7 @@ Change Log
     - Restructured directories into traditional library layout.
     - Upgraded main project to VC++ 2008.
     - Added libwoopsi.a to SVN.
+    - Added template example that uses libwoopsi.
 
 
   V0.39 (20091024)
