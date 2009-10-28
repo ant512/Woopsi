@@ -14,10 +14,10 @@ Installation
   
   To test the installation:
 
-  1.  Open a command prompt and CD to the "Woopsi/tests/textbox" folder
+  1.  Open a command prompt and CD to the "Woopsi/template" folder
       (relative to this document).
 
   2.  Type "make".
   
-  3.  Open the "Woopsi/tests/textbox/Release/textbox.nds" ROM file in a DS
+  3.  Open the "Woopsi/template/Release/template.nds" ROM file in a DS
       emulator or copy it to your flash cart.
