@@ -22,6 +22,7 @@ Change Log
     - MultiLineTextBox::removeText() correctly repositions cursor.
     - TextBox greys out text when disabled.
     - Scrolltest compiles correctly.
+    - SimpleScreen and SimpleWindow helper gadgets removed.
   
   - New Features:
     - Calendar test added.

@@ -5,12 +5,6 @@ Bonus Code
   library code.  To use them, drop them into your source folder or include the
   directory in your makefile.  Then, simply include them in your project.
   
-Helpers
--------
-
-  Classes in this folder abstract some of the complexities of Woopsi away to
-  make applications easier to write.
-  
 Collections
 -----------
 
