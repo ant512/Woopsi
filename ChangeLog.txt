@@ -34,6 +34,7 @@ Change Log
     - Upgraded main project to VC++ 2008.
     - Added libwoopsi.a to SVN.
     - Added template example that uses libwoopsi.
+    - Reorganised demo code into new demo directory.
 
 
   V0.39 (20091024)

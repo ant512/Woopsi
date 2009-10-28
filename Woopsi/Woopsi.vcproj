@@ -719,43 +719,43 @@
 			Name="Source Files"
 			>
 			<File
-				RelativePath=".\source\calculator.cpp"
+				RelativePath=".\demo\src\calculator.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\demo.cpp"
+				RelativePath=".\demo\src\demo.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\main.cpp"
+				RelativePath=".\demo\src\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacghost.cpp"
+				RelativePath=".\demo\src\pacghost.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacghosts.cpp"
+				RelativePath=".\demo\src\pacghosts.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacman.cpp"
+				RelativePath=".\demo\src\pacman.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacmap.cpp"
+				RelativePath=".\demo\src\pacmap.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacplayer.cpp"
+				RelativePath=".\demo\src\pacplayer.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacsprite.cpp"
+				RelativePath=".\demo\src\pacsprite.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pong.cpp"
+				RelativePath=".\demo\src\pong.cpp"
 				>
 			</File>
 		</Filter>
@@ -763,39 +763,39 @@
 			Name="Header Files"
 			>
 			<File
-				RelativePath=".\source\calculator.h"
+				RelativePath=".\demo\include\calculator.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\demo.h"
+				RelativePath=".\demo\include\demo.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacghost.h"
+				RelativePath=".\demo\include\pacghost.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacghosts.h"
+				RelativePath=".\demo\include\pacghosts.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacman.h"
+				RelativePath=".\demo\include\pacman.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacmap.h"
+				RelativePath=".\demo\include\pacmap.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacplayer.h"
+				RelativePath=".\demo\include\pacplayer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pacsprite.h"
+				RelativePath=".\demo\include\pacsprite.h"
 				>
 			</File>
 			<File
-				RelativePath=".\source\pong.h"
+				RelativePath=".\demo\include\pong.h"
 				>
 			</File>
 		</Filter>

@@ -1,10 +1,8 @@
 # Woopsi Makefile
-# libnds version
+# VC++ version
 
-# This Makefile is optimized for PALib AppWizard for Visual Studio 2005
-# By Rodrigo Sieiro
 
-OFILES   +=
+OFILES		+=
 PATH 		:= $(DEVKITARM)/bin:$(PATH)
 
 TEXT1 		:= Woopsi Project
@@ -12,7 +10,6 @@ TEXT2 		:= Using Woopsi
 TEXT3 		:= ant.simianzombie.com
 
 ICON 		:= -b $(CURDIR)/../icon/logo.bmp
-#LOGO		:= -o $(CURDIR)/../data/logo_wifi.bmp
 
 #-------------------------------------------------------------------------------
 # TARGET is the name of the output file
@@ -25,8 +22,8 @@ ICON 		:= -b $(CURDIR)/../icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source libwoopsi/src data
-INCLUDES	:=	libwoopsi/include source build data
+SOURCES		:=	demo/src libwoopsi/src data
+INCLUDES	:=	libwoopsi/include demo/include build data
 
 #-------------------------------------------------------------------------------
 # options for code generation
