@@ -8,7 +8,7 @@ TEXT2 		:= using Woopsi
 TEXT3 		:= woopsi.sourceforge.net
 
 # 4-bit-deep bitmap file to use as icon in loader menus
-ICON 		:= $(CURDIR)/../../../icon/logo.bmp 
+ICON 		:= $(CURDIR)/../../../libwoopsi/icon/logo.bmp
 
 #-------------------------------------------------------------------------------
 # TARGET is the name of the output file
