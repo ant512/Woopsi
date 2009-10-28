@@ -9,7 +9,7 @@ TEXT1 		:= Woopsi Project
 TEXT2 		:= Using Woopsi
 TEXT3 		:= ant.simianzombie.com
 
-ICON 		:= -b $(CURDIR)/../icon/logo.bmp
+ICON 		:= -b $(CURDIR)/../libwoopsi/icon/logo.bmp
 
 #-------------------------------------------------------------------------------
 # TARGET is the name of the output file
