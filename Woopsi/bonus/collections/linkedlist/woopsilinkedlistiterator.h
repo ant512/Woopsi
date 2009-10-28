@@ -2,7 +2,7 @@
 #define _LINKED_LIST_ITERATOR_H_
 
 #include <nds.h>
-#include "linkedlist.h"
+#include "woopsilinkedlist.h"
 
 /**
  * Class providing sequential access to a linked list.  Rather than force
@@ -50,19 +50,19 @@ public:
 	T& iterator();
 
 private:
-	friend class LinkedList<T>;
+	friend class WoopsiLinkedList<T>;
 
-	LinkedList<T>* _list;
-	LinkedListItem<T>* _iterator;
+	WoopsiLinkedList<T>* _list;
+	WoopsiLinkedListItem<T>* _iterator;
 
 	/**
 	 * Constructor is private to prevent creation outside of the linked list.
 	 */
-	LinkedListIterator(LinkedList<T>* list);
+	WoopsiLinkedListIterator(LinkedList<T>* list);
 };
 
 template <class T>
-LinkedListIterator<T>::LinkedListIterator(LinkedList<T>* list) {
+WoopsiLinkedListIterator<T>::WoopsiLinkedListIterator(LinkedList<T>* list) {
 	_list = list;
 
 	// Point the iterator to the top of the list
@@ -70,26 +70,26 @@ LinkedListIterator<T>::LinkedListIterator(LinkedList<T>* list) {
 }
 
 template <class T>
-LinkedListIterator<T>::~LinkedListIterator() {
+WoopsiLinkedListIterator<T>::~WoopsiLinkedListIterator() {
 }
 
 template <class T>
-void LinkedListIterator<T>::moveToFirst() {
+void WoopsiLinkedListIterator<T>::moveToFirst() {
 	_iterator = _list->getHead();
 }
 
 template <class T>
-void LinkedListIterator<T>::moveToLast() {
+void WoopsiLinkedListIterator<T>::moveToLast() {
 	_iterator = _list->getFoot();
 }
 
 template <class T>
-T& LinkedListIterator<T>::iterator() {
+T& WoopsiLinkedListIterator<T>::iterator() {
 	return _iterator->data;
 }
 
 template <class T>
-bool LinkedListIterator<T>::moveToNext() {
+bool WoopsiLinkedListIterator<T>::moveToNext() {
 	if ((_iterator != NULL) && (_iterator->next != NULL)) {
 		_iterator = _iterator->next;
 		return true;
@@ -99,7 +99,7 @@ bool LinkedListIterator<T>::moveToNext() {
 }
 
 template <class T>
-bool LinkedListIterator<T>::moveToPrevious() {
+bool WoopsiLinkedListIterator<T>::moveToPrevious() {
 	if ((_iterator != NULL) && (_iterator->previous != NULL)) {
 		_iterator = _iterator->previous;
 		return true;

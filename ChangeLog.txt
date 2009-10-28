@@ -25,6 +25,8 @@ Change Log
     - TextBox greys out text when disabled.
     - Scrolltest compiles correctly.
     - SimpleScreen and SimpleWindow helper gadgets removed.
+    - Renamed LinkedList to WoopsiLinkedList and LinkedListIterator to
+      WoopsiLinkedListIterator to avoid type clashing with LinkedList in devkit.
   
   - New Features:
     - Calendar test added.

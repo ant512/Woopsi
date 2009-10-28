@@ -1,19 +1,19 @@
-#ifndef _LINKED_LIST_H_
-#define _LINKED_LIST_H_
+#ifndef _WOOPSI_LINKED_LIST_H_
+#define _WOOPSI_LINKED_LIST_H_
 
 #include <nds.h>
 
 template <class T>
-class LinkedListIterator;
+class WoopsiLinkedListIterator;
 
 /**
  * Template linked list item.
  */
 template <class T>
-struct LinkedListItem {
+struct WoopsiLinkedListItem {
 	T data;
-	LinkedListItem* next;
-	LinkedListItem* previous;
+	WoopsiLinkedListItem* next;
+	WoopsiLinkedListItem* previous;
 };
 
 /**
@@ -27,24 +27,24 @@ struct LinkedListItem {
  * when dealing with random access of large lists.
  */
 template <class T>
-class LinkedList {
+class WoopsiLinkedList {
 public:
 
 	/**
 	 * Constructor.
 	 */
-	LinkedList();
+	inline WoopsiLinkedList();
 
 	/**
 	 * Destructor.
 	 */
-	~LinkedList();
+	inline ~WoopsiLinkedList();
 
 	/**
 	 * Get the size of the list.
 	 * @return The size of the list.
 	 */
-	s32 size() const;
+	inline s32 size() const;
 
 	/**
 	 * Add a value to the end of the list.
@@ -74,13 +74,13 @@ public:
 	 * @param index The index of the desired value.
 	 * @return The value at the specified index.
 	 */
-	T& at(const s32 index);
+	inline T& at(const s32 index) const;
 
 	/**
 	 * Check if the list has any data.
 	 * @return True if the list is empty.
 	 */
-	bool empty();
+	inline bool empty() const;
 
 	/**
 	 * Remove all data.
@@ -92,51 +92,51 @@ public:
 	 * @param index The index to retrieve.
 	 * @return The value.
 	 */
-	T& operator[](const s32 index);
+	T& operator[](const s32 index) const;
 
 	/**
 	 * Get an iterator for this list.
 	 * @return An iterator for the list.
 	 */
-	LinkedListIterator<T>* getIterator();
+	WoopsiLinkedListIterator<T>* getIterator();
 
 private:
-	friend class LinkedListIterator<T>;
+	friend class WoopsiLinkedListIterator<T>;
 
 	/**
 	 * Get a pointer to the head item.
 	 */
-	LinkedListItem<T>* getHead();
+	WoopsiLinkedListItem<T>* getHead();
 
 	/**
 	 * Get a pointer to the foot item.
 	 */
-	LinkedListItem<T>* getFoot();
+	WoopsiLinkedListItem<T>* getFoot();
 
-	LinkedListItem<T>* _head;
-	LinkedListItem<T>* _foot;
+	WoopsiLinkedListItem<T>* _head;
+	WoopsiLinkedListItem<T>* _foot;
 	u32 _size;
 };
 
 template <class T>
-LinkedList<T>::LinkedList() {
+WoopsiLinkedList<T>::WoopsiLinkedList() {
 	_size = 0;
 	_head = NULL;
 	_foot = NULL;
 }
 
 template <class T>
-LinkedList<T>::~LinkedList() {
+WoopsiLinkedList<T>::~WoopsiLinkedList() {
 	clear();
 }
 
 template <class T>
-s32 LinkedList<T>::size() const {
+s32 WoopsiLinkedList<T>::size() const {
 	return _size;
 }
 
 template <class T>
-void LinkedList<T>::push_back(const T &value) {
+void WoopsiLinkedList<T>::push_back(const T &value) {
 
 	if (_head == NULL) {
 		
@@ -150,7 +150,7 @@ void LinkedList<T>::push_back(const T &value) {
 	} else {
 
 		// Append new list item
-		LinkedListItem<T>* item = new LinkedListItem<T>;
+		WoopsiLinkedListItem<T>* item = new WoopsiLinkedListItem<T>;
 		item->data = value;
 		item->previous = _foot;
 		item->next = NULL;
@@ -167,10 +167,10 @@ void LinkedList<T>::push_back(const T &value) {
 }
 
 template <class T>
-void LinkedList<T>::pop_back() {
+void WoopsiLinkedList<T>::pop_back() {
 	if (_size >= 1) {
 		// Store a pointer to the new foot
-		LinkedListItem<T>* newFoot = _foot->previous;
+		WoopsiLinkedListItem<T>* newFoot = _foot->previous;
 
 		// Delete the existing foot
 		delete _foot;
@@ -187,7 +187,7 @@ void LinkedList<T>::pop_back() {
 }
 
 template <class T>
-void LinkedList<T>::insert(const s32 index, const T &value) {
+void WoopsiLinkedList<T>::insert(const s32 index, const T &value) {
 
 	// Quick insert if list is empty or if index exceeds bounds
 	if ((_head == NULL) || (index >= _size)) {
@@ -198,7 +198,7 @@ void LinkedList<T>::insert(const s32 index, const T &value) {
 	// by looping from back to front if the desired index is over
 	// half-way through the list.
 	s32 i = 0;
-	LinkedListItem<T>* item = _head;
+	WoopsiLinkedListItem<T>* item = _head;
 
 	while ((i < index) && (item != NULL)) {
 		item = item->next;
@@ -206,7 +206,7 @@ void LinkedList<T>::insert(const s32 index, const T &value) {
 	}
 
 	// Insert a new item
-	LinkedListItem<T>* newItem = new LinkedListItem<T>;
+	LinkedListItem<T>* newItem = new WoopsiLinkedListItem<T>;
 	newItem->data = value;
 	newItem->previous = item->previous;
 	newItem->next = item;
@@ -223,7 +223,7 @@ void LinkedList<T>::insert(const s32 index, const T &value) {
 }
 
 template <class T>
-void LinkedList<T>::erase(const s32 index) {
+void WoopsiLinkedList<T>::erase(const s32 index) {
 
 	// Abort if index exceeds bounds
 	if (index >= _size) return;
@@ -236,7 +236,7 @@ void LinkedList<T>::erase(const s32 index) {
 
 	// Shortcut if erasing first item
 	if (index == 0) {
-		LinkedListItem<T>* newHead = _head->next;
+		WoopsiLinkedListItem<T>* newHead = _head->next;
 
 		delete _head;
 
@@ -251,7 +251,7 @@ void LinkedList<T>::erase(const s32 index) {
 
 	// No shortcuts possible; locate the requested index
 	s32 i = 0;
-	LinkedListItem<T>* item = _head;
+	WoopsiLinkedListItem<T>* item = _head;
 
 	while ((i < index) && (item != NULL)) {
 		item = item->next;
@@ -275,9 +275,9 @@ void LinkedList<T>::erase(const s32 index) {
 }
 
 template <class T>
-T& LinkedList<T>::at(const s32 index) {
+T& WoopsiLinkedList<T>::at(const s32 index) const {
 	s32 i = 0;
-	LinkedListItem<T>* item = _head;
+	WoopsiLinkedListItem<T>* item = _head;
 
 	// Locate the requested index - this could be optimised
 	// by looping from back to front if the desired index is over
@@ -291,19 +291,19 @@ T& LinkedList<T>::at(const s32 index) {
 }
 
 template <class T>
-bool LinkedList<T>::empty() {
+bool WoopsiLinkedList<T>::empty() const {
 	return (_size == 0);
 }
 
 template <class T>
-T& LinkedList<T>::operator[](const s32 index) {
+T& WoopsiLinkedList<T>::operator[](const s32 index) const {
 	return at(index);
 }
 
 template <class T>
-void LinkedList<T>::clear() {
-	LinkedListItem<T>* item = _head;
-	LinkedListItem<T>* nextItem = NULL;
+void WoopsiLinkedList<T>::clear() {
+	WoopsiLinkedListItem<T>* item = _head;
+	WoopsiLinkedListItem<T>* nextItem = NULL;
 	
 	// Scan through list deleting each item
 	while (item != NULL) {
@@ -321,17 +321,17 @@ void LinkedList<T>::clear() {
 }
 
 template <class T>
-LinkedListIterator<T>* LinkedList<T>::getIterator() {
+LinkedListIterator<T>* WoopsiLinkedList<T>::getIterator() {
 	return new LinkedListIterator<T>(this);
 }
 
 template <class T>
-LinkedListItem<T>* LinkedList<T>::getHead() {
+LinkedListItem<T>* WoopsiLinkedList<T>::getHead() {
 	return _head;
 }
 
 template <class T>
-LinkedListItem<T>* LinkedList<T>::getFoot() {
+LinkedListItem<T>* WoopsiLinkedList<T>::getFoot() {
 	return _foot;
 }
 
