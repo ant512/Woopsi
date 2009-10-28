@@ -3,6 +3,8 @@ Change Log
 
   V0.40
   
+  - First alpha release.
+  
   - Fixes:
     - PALib support removed.
     - Pointer to selected day button in calendar resets to NULL when new month
