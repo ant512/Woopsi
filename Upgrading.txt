@@ -1,7 +1,7 @@
 Upgrading from a Previous Version
 ---------------------------------
 
-  Woopsi is currently in a pre-alpha state.  Its structure and API is subject to
+  Woopsi is currently in an alpha state.  Its structure and API is subject to
   change.  Until Woopsi is in at least beta, no effort is being made to ensure
   that backwards-compatibility is retained between versions.  Similarly, no
   effort is being made to track which changes are likely to break current code.
