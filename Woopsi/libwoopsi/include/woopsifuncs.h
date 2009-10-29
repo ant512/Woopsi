@@ -36,22 +36,22 @@ typedef struct PAD
 	{
 		struct
 		{
-			u16 A:1;
-			u16 B:1;
-			u16 Select:1;
-			u16 Start:1;
-			u16 Right:1;
-			u16 Left:1;
-			u16 Up:1;
-			u16 Down:1;
-			u16 R:1;
-			u16 L:1;
-			u16 X:1;
-			u16 Y:1;
-			u16 Touch:1;
-			u16 Lid:1;
+			u16 A:1;			/**< A button */
+			u16 B:1;			/**< B button */
+			u16 Select:1;		/**< Select button */
+			u16 Start:1;		/**< Start button */
+			u16 Right:1;		/**< Right d-pad */
+			u16 Left:1;			/**< Left d-pad */
+			u16 Up:1;			/**< Up d-pad */
+			u16 Down:1;			/**< Down d-pad */
+			u16 R:1;			/**< R button */
+			u16 L:1;			/**< L button */
+			u16 X:1;			/**< X button */
+			u16 Y:1;			/**< Y button */
+			u16 Touch:1;		/**< Stylus touch */
+			u16 Lid:1;			/**< Lid state */
 		};
-		u16 AllKeys;
+		u16 AllKeys;			/**< Bitmask representing entire control */
 	};
 } _pad;
 
@@ -59,28 +59,28 @@ typedef struct PAD
  * Structure holding a pad struct for each possible button state.
  */
 typedef struct PADS {
-   _pad Held;
-   _pad Released;
-   _pad Newpress;
+   _pad Held;					/**< Each value set to 1 represents a held button */
+   _pad Released;				/**< Inverse of held */
+   _pad Newpress;				/**< Each value set to 1 represents a newly pressed button */
 } _pads;
 
 /**
  * Struture holding the status of the stylus.
  */
 typedef struct STYLUS {
-	u8 Held:1;
-	u8 Released:1;
-	u8 Newpress:1;
-	u8 unused:5;
-	s16 X;
-	s16 Y;
-	s16 Vx;
-	s16 Vy;
+	u8 Held:1;					/**< Stylus is held down */
+	u8 Released:1;				/**< Inverse of held */
+	u8 Newpress:1;				/**< Stylus has been newly pressed */
+	u8 unused:5;				/**< Padding bits */
+	s16 X;						/**< X co-ord of the stylus */
+	s16 Y;						/**< Y co-ord of the stylus */
+	s16 Vx;						/**< X distance the stylus has moved in the last vblank */
+	s16 Vy;						/**< Y distance the stylus has moved in the last vblank */
 	s16 oldVx;
 	s16 oldVy;
-	s16 Downtime;
-	s16 Uptime;
-	s16 DblClick;
+	s16 Downtime;				/**< Number of vblanks stylus has been held */
+	s16 Uptime;					/**< Number of vblanks stylus has been released */
+	s16 DblClick;				/**< Indicates a double click */
 } _stylus;
 
 /**

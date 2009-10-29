@@ -394,11 +394,10 @@ void woopsiUpdateInput() {
 	Stylus.Uptime += !Stylus.Held;
 
 	if (Stylus.Held) {
-		if(Stylus.Newpress){
+		if (Stylus.Newpress) {
 			Stylus.Vx = Stylus.oldVx = 0;
 			Stylus.Vy = Stylus.oldVy = 0;
-		}
-		else{
+		} else{
 			Stylus.oldVx = Stylus.Vx;
 			Stylus.oldVy = Stylus.Vy;
 			Stylus.Vx = touch.px - Stylus.X;
