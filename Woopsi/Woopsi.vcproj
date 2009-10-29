@@ -716,7 +716,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Source Files"
+			Name="Demo Source Files"
 			>
 			<File
 				RelativePath=".\demo\src\calculator.cpp"
@@ -760,7 +760,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
+			Name="Demo Header Files"
 			>
 			<File
 				RelativePath=".\demo\include\calculator.h"
