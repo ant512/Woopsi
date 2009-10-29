@@ -317,19 +317,7 @@ void DMA_Force(u16 source, u16* dest, u32 count, u32 mode) {
 	}
 }
 
-void DMA_Copy2(u16* source, u16* dest, u32 count, u32 mode) {
-	DMA_Copy(source, dest, count, mode);
-}
-
-void DMA_Force2(u16 source, u16* dest, u32 count, u32 mode) {
-	DMA_Force(source, dest, count, mode);
-}
-
 bool DMA_Active() {
-	return false;
-}
-
-bool DMA_Active2() {
 	return false;
 }
 

@@ -8,6 +8,14 @@
 
 #include <nds.h>
 
+// DMA handling bitmasks
+#define DMA_ON 0x80000000
+#define DMA_NOW 0x00000000
+#define DMA_16 0x00000000
+#define DMA_32 0x04000000
+#define DMA_16NOW (DMA_ON | DMA_NOW | DMA_16)
+#define DMA_32NOW (DMA_ON | DMA_NOW | DMA_32)
+
 /**
  * Converts separate RGB component values into a single 16-bit value for use
  * with the DS' framebuffer.  All supplied values should be 5 bits wide (ie.
@@ -92,29 +100,11 @@ extern _stylus Stylus;
 #include <string.h>
 #include <math.h>
 
-#define DMA_ON 0x80000000
-#define DMA_NOW 0x00000000
-#define DMA_16 0x00000000
-#define DMA_32 0x04000000
-#define DMA_16NOW (DMA_ON | DMA_NOW | DMA_16)
-#define DMA_32NOW (DMA_ON | DMA_NOW | DMA_32)
-
 void DMA_Copy(u16* source, u16* dest, u32 count, u32 mode);
 void DMA_Force(u16 source, u16* dest, u32 count, u32 mode);
-void DMA_Copy2(u16* source, u16* dest, u32 count, u32 mode);
-void DMA_Force2(u16 source, u16* dest, u32 count, u32 mode);
 bool DMA_Active();
-bool DMA_Active2();
 
-void woopsiUpdateInput();
 void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
-
-// Generic functions
-extern u16* DrawBg[2];
-
-void initWoopsiGfxMode();
-void woopsiWaitVBL();
-bool woopsiLidClosed();
 
 // Simulate some features of libnds
 void DC_FlushRange(const void *base, u32 size);
@@ -124,31 +114,10 @@ void DC_FlushRange(const void *base, u32 size);
 #include <nds/memory.h>
 #include <nds/bios.h>
 
-// Extra DMA defines
-#define REG_DMA2SRC *(volatile u32*)0x040000C8
-#define REG_DMA2DST *(volatile u32*)0x040000CC
-#define REG_DMA2CNT *(volatile u32*)0x040000D0
-
-/**
- * Perform a DMA copy using the second DMA channel.  DMA copies use the DMA
- * hardware to rapidly copy a block of memory from one location to another.
- * @param source The source memory address.
- * @param dest The destination memory address.
- * @param count The number of values to copy.
- * @param mode The DMA mode to use.
- */
-#define DMA_Copy2(source, dest, count, mode) {REG_DMA2SRC = (u32)source; REG_DMA2DST = (u32)dest; REG_DMA2CNT = (count) | (mode);}
-
-/**
- * Perform a DMA force using the second DMA channel.  DMA force is similar to a
- * copy but it duplicates the same value repeatedly into the destination instead
- * of copying a range of values.
- * @param source The source memory address.
- * @param dest The destination memory address.
- * @param count The number of values to write.
- * @param mode The DMA mode to use.
- */
-#define DMA_Force2(ulVal, dest, count, mode) {REG_DMA2SRC=(u32)&ulVal; REG_DMA2DST = (u32)dest; REG_DMA2CNT = (count) | (mode) | DMA_SRC_FIX;}
+// DMA registers
+#define REG_DMA3SRC *(volatile u32*)0x040000D4
+#define REG_DMA3DST *(volatile u32*)0x040000D8
+#define REG_DMA3CNT *(volatile u32*)0x040000DC
 
 /**
  * Check if the first DMA channel is active.  DMA access is asynchronous so DMA
@@ -159,25 +128,7 @@ void DC_FlushRange(const void *base, u32 size);
 #define DMA_Active() (!(!(REG_DMA3CNT & DMA_ON)))
 
 /**
- * Check if the second DMA channel is active.
- * @see DMA_Active()
- * @return True if the channel is still active.
- */
-#define DMA_Active2() (!(!(REG_DMA2CNT & DMA_ON)))
-
-#define REG_DMA3SRC *(volatile u32*)0x040000D4
-#define REG_DMA3DST *(volatile u32*)0x040000D8
-#define REG_DMA3CNT *(volatile u32*)0x040000DC
-#define DMA_ON 0x80000000
-#define DMA_NOW 0x00000000
-#define DMA_16 0x00000000
-#define DMA_32 0x04000000
-#define DMA_16NOW (DMA_ON | DMA_NOW | DMA_16)
-#define DMA_32NOW (DMA_ON | DMA_NOW | DMA_32)
-
-/**
  * Perform a DMA copy using the first DMA channel.
- * @see DMA_Copy2()
  * @param source The source memory address.
  * @param dest The destination memory address.
  * @param count The number of values to copy.
@@ -187,20 +138,12 @@ void DC_FlushRange(const void *base, u32 size);
 
 /**
  * Perform a DMA force using the first DMA channel.
- * @see DMA_Force2()
  * @param source The source memory address.
  * @param dest The destination memory address.
  * @param count The number of values to write.
  * @param mode The DMA mode to use.
  */
 #define DMA_Force(ulVal, dest, count, mode) {REG_DMA3SRC=(u32)&ulVal; REG_DMA3DST = (u32)dest; REG_DMA3CNT = (count) | (mode) | DMA_SRC_FIX;}
-
-/**
- * Update the pad and stylus structs with the latest physical status.  Called
- * every frame by the VBL function.
- * @see woopsiWaitVBL().
- */
-void woopsiUpdateInput();
 
 #endif
 
@@ -225,5 +168,12 @@ void woopsiWaitVBL();
  * @return True if the lid is closed.
  */
 bool woopsiLidClosed();
+
+/**
+ * Update the pad and stylus structs with the latest physical status.  Called
+ * every frame by the VBL function.
+ * @see woopsiWaitVBL().
+ */
+void woopsiUpdateInput();
 
 #endif
