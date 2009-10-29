@@ -27,6 +27,7 @@ Change Log
     - SimpleScreen and SimpleWindow helper gadgets removed.
     - Renamed LinkedList to WoopsiLinkedList and LinkedListIterator to
       WoopsiLinkedListIterator to avoid type clashing with LinkedList in devkit.
+    - Tidied up woopsifuncs.h.
   
   - New Features:
     - Calendar test added.
