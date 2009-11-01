@@ -30,47 +30,29 @@ Bitmap* BitmapIO::loadBMP(const char* filename) {
 	return bitmap;
 }
 
-void BitmapIO::saveBMP(const char* filename, Bitmap* bitmap) {
-	
-	// Open the file
-	BinaryFile* file = new BinaryFile(filename, BinaryFile::FILE_MODE_WRITE, BinaryFile::ENDIAN_MODE_LITTLE_ENDIAN);
-	
-	// Image size calculated in bytes - multily by 3 as each pixel uses 3 bytes
-	// All images saved as 24-bit
-	u32 imageSize = bitmap->getWidth() * bitmap->getHeight() * 3;	// *FIX* cater for padding?
-	u32 offset = BITMAPINFOHEADER + BITMAP_HEADER_SIZE;
-
-	// Pixel rows must be aligned to 4-byte boundaries, so calculate total size
-	// of padding bytes
-	u8 mod = (bitmap->getWidth() * 3) % 4;
-	u8 paddingBytes = 0;
-	
-	if (mod != 0) {
-		paddingBytes = 4 - mod;
-		imageSize += paddingBytes * bitmap->getHeight();
-	}
-
-	// Write the BMP header
+void BitmapIO::writeBMPHeader(BinaryFile* file, u32 imageSize, u32 offset) {
 	file->writeU8('B');						// Identifier
 	file->writeU8('M');
 	file->writeU32(imageSize + offset);		// Size
 	file->writeU32(0);						// Two reserved shorts
 	file->writeU32(offset);					// Offset
-	
-	// Write the V3 DIB header
+}
+
+void BitmapIO::writeDIBV3Header(BinaryFile* file, s32 width, s32 height, u16 bitsPerPixel, u32 imageSize) {
 	file->writeU32(BITMAPINFOHEADER);		// Header size
-	file->writeS32(bitmap->getWidth());		// Width
-	file->writeS32(bitmap->getHeight());	// Height
+	file->writeS32(width);					// Width
+	file->writeS32(height);					// Height
 	file->writeU16(COLOUR_PLANES);			// Colour planes
-	file->writeU16(24);						// Bits per pixel
+	file->writeU16(bitsPerPixel);			// Bits per pixel
 	file->writeU32(0);						// Compression method
 	file->writeU32(imageSize);				// Image size *FIX* cater for padding?
 	file->writeU32(BITMAP_RESOLUTION);		// Horizontal resolution
 	file->writeU32(BITMAP_RESOLUTION);		// Vertical resolution
 	file->writeU32(0);						// Colours in palette
 	file->writeU32(0);						// Important colours used
-	
-	// Write the pixel data
+}
+
+void BitmapIO::writePixelData(BinaryFile* file, Bitmap* bitmap, u8 paddingBytes) {
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
 		for (s16 x = 0; x < bitmap->getWidth(); ++x) {
 			
@@ -98,6 +80,35 @@ void BitmapIO::saveBMP(const char* filename, Bitmap* bitmap) {
 			file->writeU8(0);
 		}
 	}
+}
+
+void BitmapIO::saveBMP(const char* filename, Bitmap* bitmap) {
+	
+	// Open the file
+	BinaryFile* file = new BinaryFile(filename, BinaryFile::FILE_MODE_WRITE, BinaryFile::ENDIAN_MODE_LITTLE_ENDIAN);
+	
+	// Image size calculated in bytes - multily by 3 as each pixel uses 3 bytes
+	u32 imageSize = bitmap->getWidth() * bitmap->getHeight() * 3;	// *FIX* cater for padding?
+	u32 offset = BITMAPINFOHEADER + BITMAP_HEADER_SIZE;
+
+	// Pixel rows must be aligned to 4-byte boundaries, so calculate total size
+	// of padding bytes
+	u8 mod = (bitmap->getWidth() * 3) % 4;
+	u8 paddingBytes = 0;
+	
+	if (mod != 0) {
+		paddingBytes = 4 - mod;
+		imageSize += paddingBytes * bitmap->getHeight();
+	}
+
+	// Write the BMP header
+	writeBMPHeader(file, imageSize, offset);
+	
+	// Write the V3 DIB header
+	writeDIBV3Header(file, bitmap->getWidth(), bitmap->getHeight(), 24, imageSize);
+	
+	// Write the pixel data
+	writePixelData(file, bitmap, paddingBytes);
 	
 	delete file;
 }
