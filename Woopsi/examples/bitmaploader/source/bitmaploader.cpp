@@ -25,14 +25,36 @@ void BitmapLoader::startup() {
 	
 	if (fatInitDefault()) {
 	
+		// Create a superbitmap that we will use to draw to
 		SuperBitmap* superBitmap = new SuperBitmap(rect.x, rect.y, rect.width, rect.height, 256, 192, false);
 		window->addGadget(superBitmap);
 		
-		Bitmap* bitmap = BitmapIO::loadBMP("/logo.bmp");
+		// Load a 16-bit BMP in 555 format with a V3 DIB header
+		Bitmap* bitmap = BitmapIO::loadBMP("/logo16_v3.bmp");
 		
-		superBitmap->drawBitmap(0, 0, 256, 192, bitmap, 0, 0);
+		// Draw the bitmap to the superbitmap
+		superBitmap->drawBitmap(0, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
 		
-		BitmapIO::saveBMP("/logo2.bmp", bitmap);
+		// Delete the bitmap now we no longer need it
+		delete bitmap;
+		
+		// Load a 16-bit BMP in 555 format with a V4 DIB header
+		bitmap = BitmapIO::loadBMP("/logo16_v4.bmp");
+		superBitmap->drawBitmap(bitmap->getWidth(), 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
+		delete bitmap;
+		
+		// Load a 24-bit BMP with a V3 DIB header
+		bitmap = BitmapIO::loadBMP("/logo24_v3.bmp");
+		superBitmap->drawBitmap(bitmap->getWidth() * 2, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
+		delete bitmap;
+		
+		// Load a 24-bit BMP with a V4 DIB header
+		bitmap = BitmapIO::loadBMP("/logo24_v4.bmp");
+		superBitmap->drawBitmap(bitmap->getWidth() * 3, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
+		delete bitmap;
+		
+		// Save the bitmap
+		BitmapIO::saveBMP("/bitmaploader.bmp", superBitmap->getBitmap());
 	}
 
 	// Ensure Woopsi can draw itself

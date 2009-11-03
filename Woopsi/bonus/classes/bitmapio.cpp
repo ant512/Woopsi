@@ -52,7 +52,7 @@ void BitmapIO::writeDIBV3Header(BinaryFile* file, s32 width, s32 height, u16 bit
 	file->writeU32(0);						// Important colours used
 }
 
-void BitmapIO::writePixelData(BinaryFile* file, Bitmap* bitmap, u8 paddingBytes) {
+void BitmapIO::writePixelData(BinaryFile* file, const Bitmap* bitmap, u8 paddingBytes) {
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
 		for (s16 x = 0; x < bitmap->getWidth(); ++x) {
 			
@@ -82,7 +82,7 @@ void BitmapIO::writePixelData(BinaryFile* file, Bitmap* bitmap, u8 paddingBytes)
 	}
 }
 
-void BitmapIO::saveBMP(const char* filename, Bitmap* bitmap) {
+void BitmapIO::saveBMP(const char* filename, const Bitmap* bitmap) {
 	
 	// Open the file
 	BinaryFile* file = new BinaryFile(filename, BinaryFile::FILE_MODE_WRITE, BinaryFile::ENDIAN_MODE_LITTLE_ENDIAN);

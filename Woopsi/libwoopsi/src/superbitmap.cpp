@@ -154,6 +154,6 @@ void SuperBitmap::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s
 	_bitmap->drawFilledEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
 }
 
-const u16* SuperBitmap::getBitmap() const {
-	return _bitmap->getBitmap();
+const Bitmap* SuperBitmap::getBitmap() const {
+	return _bitmap;
 }

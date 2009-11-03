@@ -34,7 +34,7 @@ namespace WoopsiUI {
 		 * @param filename Name of the file.
 		 * @param bitmap Bitmap to save.
 		 */
-		static void saveBMP(const char* filename, Bitmap* bitmap);
+		static void saveBMP(const char* filename, const Bitmap* bitmap);
 	private:
 
 		/**
@@ -72,7 +72,7 @@ namespace WoopsiUI {
 		
 		static void writeDIBV3Header(BinaryFile* file, s32 width, s32 height, u16 bitsPerPixel, u32 imageSize);
 
-		static void writePixelData(BinaryFile* file, Bitmap* bitmap, u8 paddingBytes);
+		static void writePixelData(BinaryFile* file, const Bitmap* bitmap, u8 paddingBytes);
 		
 		/**
 		 * Parse the BMP header from the supplied file and insert the data into

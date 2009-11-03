@@ -28,6 +28,8 @@ Change Log
     - Renamed LinkedList to WoopsiLinkedList and LinkedListIterator to
       WoopsiLinkedListIterator to avoid type clashing with LinkedList in devkit.
     - Tidied up woopsifuncs.h.
+    - SuperBitmap::getBitmap() returns a pointer to the Bitmap object instead of
+      the Bitmap object's raw pixel data.
   
   - New Features:
     - Calendar test added.
@@ -42,6 +44,7 @@ Change Log
     - Reorganised demo code into new demo directory.
     - BitmapIO class can load 16-bit BMP images with any pixel encoding.
     - BitmapIO class can load V3, V4 and V5 DIB headers.
+    - BitmapLoader example illustrates loading of most supported BMP types.
 
 
   V0.39 (20091024)

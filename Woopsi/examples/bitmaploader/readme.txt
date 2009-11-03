@@ -3,8 +3,12 @@ Bitmap Loader
 
   This program demonstrates the use of the BitmapIO bonus class to load a BMP
   file and display it via a SuperBitmap gadget.  The simplest way to test this
-  program is to copy the supplied "logo.bmp" to the root directory of your flash
-  card and run the ROM via the DS itself.
+  program is to copy the contents of the "bmps" folder (not the folder itself)
+  to the root directory of your flash card and run the ROM via the DS.
+  
+  The program loads 4 bitmaps, each in a different format.  It draws them to a
+  SuperBitmap.  The contents of the SuperBitmap is then saved to the root of the
+  file system as a 24-bit BMP with the name "bitmaploader.bmp".
   
   Using the BitmapIO class is very simple, and requires just two steps.
   
