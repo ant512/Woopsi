@@ -40,6 +40,8 @@ Change Log
     - Added libwoopsi.a to SVN.
     - Added template example that uses libwoopsi.
     - Reorganised demo code into new demo directory.
+    - BitmapIO class can load 16-bit BMP images with any pixel encoding.
+    - BitmapIO class can load V3, V4 and V5 DIB headers.
 
 
   V0.39 (20091024)

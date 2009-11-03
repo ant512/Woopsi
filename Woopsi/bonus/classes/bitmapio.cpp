@@ -18,7 +18,7 @@ Bitmap* BitmapIO::loadBMP(const char* filename) {
 	DIBV3Header dibHeader;
 
 	parseBMPHeader(file, bmpHeader);
-	parseDIBV3Header(file, dibHeader);
+	parseDIBHeader(file, dibHeader);
 
 	// Prepare a bitmap to store parsed pixel data
 	Bitmap* bitmap = new Bitmap(dibHeader.width, dibHeader.height);
@@ -121,8 +121,29 @@ void BitmapIO::parseBMPHeader(BinaryFile* file, BMPHeader& bmpHeader) {
 	bmpHeader.offset = file->readU32();
 }
 
-void BitmapIO::parseDIBV3Header(BinaryFile* file, DIBV3Header& dibHeader) {
+void BitmapIO::parseDIBHeader(BinaryFile* file, DIBV3Header& dibHeader) {
 	dibHeader.headerSize = file->readU32();
+	
+	switch (dibHeader.headerSize) {
+		case 12:
+		case 64:
+			// V1 and V2 unsupported
+			break;
+		case 40:
+			parseDIBV3Header(file, dibHeader);
+			break;
+		case 108:
+			// Treat V4 as V3
+			parseDIBV3Header(file, dibHeader);
+			break;
+		case 124:
+			// Treat V5 as V3
+			parseDIBV3Header(file, dibHeader);
+			break;
+	}
+}
+
+void BitmapIO::parseDIBV3Header(BinaryFile* file, DIBV3Header& dibHeader) {
 	dibHeader.width = file->readS32();
 	dibHeader.height = file->readS32();
 	dibHeader.colourPlanes = file->readU16();
@@ -136,6 +157,7 @@ void BitmapIO::parseDIBV3Header(BinaryFile* file, DIBV3Header& dibHeader) {
 }
 
 void BitmapIO::parsePixelData(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Header& dibHeader, Bitmap* bitmap) {
+
 	switch(dibHeader.bitsPerPixel) {
 		case 1:
 			
@@ -152,6 +174,7 @@ void BitmapIO::parsePixelData(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Heade
 		case 16:
 
 			// 16-bit bitmap
+			parsePixelData16(file, bmpHeader, dibHeader, bitmap);
 			break;
 		case 24:
 
@@ -162,7 +185,7 @@ void BitmapIO::parsePixelData(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Heade
 }
 
 void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* bitmap) {
-	
+
 	// Pixel rows must be aligned to 4-byte boundaries, so calculate total size
 	// of padding bytes
 	u8 mod = (bitmap->getWidth() * 3) % 4;
@@ -171,6 +194,9 @@ void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* 
 	if (mod != 0) {
 		paddingBytes = 4 - mod;
 	}
+
+	// Jump to the start of the pixel data
+	file->seek(bmpHeader.offset);
 
 	// Run through rows backwards as BMP rows are stored in reverse order
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
@@ -197,4 +223,91 @@ void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* 
 			file->readU8();
 		}
 	}
+}
+
+void BitmapIO::parsePixelData16(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Header& dibHeader, Bitmap* bitmap) {
+	
+	// Pixel rows must be aligned to 4-byte boundaries, so calculate total size
+	// of padding bytes
+	u8 mod = (bitmap->getWidth() * 2) % 4;
+	u8 paddingBytes = 0;
+	
+	if (mod != 0) {
+		paddingBytes = 4 - mod;
+	}
+
+	// Bitmasks for extracting components of colour from short
+	u32 bMask = 0x001f;		// 5 bits blue
+	u32 gMask = 0x03e0;		// 5 bits green
+	u32 rMask = 0x7c00;		// 5 bits red
+
+	// If compression method is set to BI_BITFIELDS, the default
+	// bitmasks can be overridden with alternative formats
+	if (dibHeader.compressionMethod == COMPRESSION_METHOD_BI_BITFIELDS) {
+		rMask = file->readU32();
+		gMask = file->readU32();
+		bMask = file->readU32();
+	}
+		
+	// Calculate the number of bits in each colour
+	u8 bBits = countSetBits(bMask);
+	u8 gBits = countSetBits(gMask);
+	u8 rBits = countSetBits(rMask);
+
+	u16 pixel = 0;
+	u8 r;
+	u8 g;
+	u8 b;
+
+	// Jump to the start of the pixel data
+	file->seek(bmpHeader.offset);
+
+	// Run through rows backwards as BMP rows are stored in reverse order
+	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
+		for (s16 x = 0; x < bitmap->getWidth(); ++x) {
+
+			// Read pixel from file
+			pixel = file->readU16();
+	
+			// Extract individual components of colours
+			b = pixel & bMask;
+			g = (pixel & gMask) >> bBits;
+			r = (pixel & rMask) >> (bBits + gBits);
+
+			// Convert to DS 5,5,5 format
+			b = convertTo5Bit(b, bBits);
+			g = convertTo5Bit(g, gBits);
+			r = convertTo5Bit(r, rBits);
+
+			// Draw the pixel to the bitmap
+			bitmap->drawPixel(x, y, woopsiRGB(r, g, b));
+		}
+		
+		// Reached end of row of pixels - BMP data is aligned to 4-byte boundary, so skip
+		// any remaining padding bytes
+		for (u8 i = 0; i < paddingBytes; ++i) {
+			file->readU8();
+		}
+	}
+}
+
+u8 BitmapIO::countSetBits(u32 value) {
+	u8 setBits = 0;
+	while (value > 0) {
+		setBits += (value & 1);
+		value >>= 1;
+	}
+	return setBits;
+}
+
+u8 BitmapIO::convertTo5Bit(u8 component, u8 bits) {
+	
+	// Nothing to do?
+	if (bits == 5) return component;
+
+	// Too many bits - shift down
+	if (bits > 5) return component >> (bits - 5);
+
+	// Too few bits - shift up
+	return component << (5 - bits);
 }
