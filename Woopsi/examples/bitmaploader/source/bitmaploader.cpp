@@ -30,7 +30,7 @@ void BitmapLoader::startup() {
 		
 		Bitmap* bitmap = BitmapIO::loadBMP("/logo.bmp");
 		
-		superBitmap->drawBitmap(0, 0, 256, 192, bitmap->getBitmap(), 0, 0, 256, 192);
+		superBitmap->drawBitmap(0, 0, 256, 192, bitmap, 0, 0);
 		
 		BitmapIO::saveBMP("/logo2.bmp", bitmap);
 	}
