@@ -247,6 +247,12 @@ void BitmapIO::parsePixelData16(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Hea
 		rMask = file->readU32();
 		gMask = file->readU32();
 		bMask = file->readU32();
+
+		// Jump to the start of the pixel data if we're not dealing with
+		// a V3 header
+		if (dibHeader.headerSize > BITMAPINFOHEADER) {
+			file->seek(bmpHeader.offset);
+		}
 	}
 		
 	// Calculate the number of bits in each colour
@@ -258,9 +264,6 @@ void BitmapIO::parsePixelData16(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Hea
 	u8 r;
 	u8 g;
 	u8 b;
-
-	// Jump to the start of the pixel data
-	file->seek(bmpHeader.offset);
 
 	// Run through rows backwards as BMP rows are stored in reverse order
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
