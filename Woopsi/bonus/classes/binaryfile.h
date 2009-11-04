@@ -118,11 +118,13 @@ namespace WoopsiUI {
 
 		/**
 		 * Get the size of the file.
+		 * @return The size of the file in bytes.
 		 */
 		u32 getSize();
 
 		/**
 		 * Seek to a new position in the file.
+		 * @param position The position to jump to, in bytes.
 		 */
 		void seek(u32 position);
 
