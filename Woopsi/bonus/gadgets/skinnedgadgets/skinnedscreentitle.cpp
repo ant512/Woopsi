@@ -27,15 +27,15 @@ void SkinnedScreenTitle::draw(Rect clipRect) {
 
 	if (_flags.clicked) {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.focusClick, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.focusClick->getBitmap(), 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.blurClick, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.blurClick->getBitmap(), 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
 		}
 	} else {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.focus, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.focus->getBitmap(), 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.blur, 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->titleBar.bitmap.blur->getBitmap(), 0, 0, _skin->titleBar.bitmap.width, _skin->titleBar.bitmap.height);
 		}
 	}
 

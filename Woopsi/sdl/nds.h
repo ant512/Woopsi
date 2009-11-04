@@ -16,4 +16,6 @@
 #define u32 Uint32
 #define s32 Sint32
 
+int fatInitDefault() { return 1; }
+
 #endif

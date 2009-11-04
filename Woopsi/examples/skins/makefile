@@ -22,8 +22,8 @@ ICON 		:= $(CURDIR)/../../../libwoopsi/icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source ../../libwoopsi/src ../../bonus/gadgets/skinnedgadgets
-INCLUDES	:=	include ../../libwoopsi/include ../../bonus/gadgets/skinnedgadgets
+SOURCES		:=	source ../../libwoopsi/src ../../bonus/gadgets/skinnedgadgets ../../bonus/classes
+INCLUDES	:=	include ../../libwoopsi/include ../../bonus/gadgets/skinnedgadgets ../../bonus/classes
 DEFINES		:=
 
 #-------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ DEFINES		:=
 # If USE_FAT is defined, compile/link against libfat
 #-------------------------------------------------------------------------------
 #USE_WOOPSI	= 1
-#USE_FAT		= 1
+USE_FAT		= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our
 # resultant .nds from working on some loaders.  By default, ndstool puts boot

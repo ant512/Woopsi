@@ -1,0 +1,21 @@
+#ifndef _SKIN_IO_H_
+#define _SKIN_IO_H_
+
+#include "skin.h"
+
+#ifdef ARM9
+#include <fat.h>
+#endif
+
+namespace WoopsiUI {
+	class SkinIO {
+	public:
+		static void loadScreenSkin(ScreenSkin& skin, const char* path);
+		static void loadWindowSkin(WindowSkin& skin, const char* path);
+	private:
+		static Bitmap* loadBMP(const char* fileName, const char* path);
+	};
+};
+
+#endif
+

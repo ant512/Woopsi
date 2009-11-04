@@ -31,6 +31,8 @@ Change Log
     - SuperBitmap::getBitmap() returns a pointer to the Bitmap object instead of
       the Bitmap object's raw pixel data.
     - Moved skinned gadgets out of main library and into bonus folder.
+    - Removed fatInitDefault() stub method for SDL out of individual .cpp files
+      and into nds.h.
   
   - New Features:
     - Calendar test added.
@@ -47,6 +49,7 @@ Change Log
     - BitmapIO class can load V3, V4 and V5 DIB headers.
     - BitmapLoader example illustrates loading of most supported BMP types.
     - Added skinned gadget example.
+    - Added SkinIO class to bonus folder - loads skins from disk.
 
 
   V0.39 (20091024)

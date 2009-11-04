@@ -7,8 +7,6 @@
 
 #ifdef ARM9
 #include <fat.h>
-#else
-int fatInitDefault() { return 1; }
 #endif
 
 namespace WoopsiUI {

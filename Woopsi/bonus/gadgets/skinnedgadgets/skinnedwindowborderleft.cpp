@@ -25,7 +25,7 @@ void SkinnedWindowBorderLeft::draw(Rect clipRect) {
 	if (_parent->hasFocus()) {
 		port->drawBitmap(0, 0, _skin->leftBorder.bitmap.width,
 							   _height,
-							   _skin->leftBorder.bitmap.focus,
+							   _skin->leftBorder.bitmap.focus->getBitmap(),
 							   0,
 							   0,
 							   _skin->leftBorder.bitmap.width,
@@ -33,7 +33,7 @@ void SkinnedWindowBorderLeft::draw(Rect clipRect) {
 	} else {
 		port->drawBitmap(0, 0, _skin->leftBorder.bitmap.width,
 							   _height,
-							   _skin->leftBorder.bitmap.blur,
+							   _skin->leftBorder.bitmap.blur->getBitmap(),
 							   0,
 							   0,
 							   _skin->leftBorder.bitmap.width,

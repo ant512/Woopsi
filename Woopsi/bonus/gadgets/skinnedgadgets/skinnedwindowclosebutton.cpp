@@ -27,15 +27,35 @@ void SkinnedWindowCloseButton::draw(Rect clipRect) {
 
 	if (_flags.clicked) {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->closeButton.bitmap.focusClick, 0, 0, _skin->closeButton.bitmap.width, _skin->closeButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height,
+								_skin->closeButton.bitmap.focusClick->getBitmap(),
+								0,
+								0,
+								_skin->closeButton.bitmap.width, 
+								_skin->closeButton.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->closeButton.bitmap.blurClick, 0, 0, _skin->closeButton.bitmap.width, _skin->closeButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height,
+								_skin->closeButton.bitmap.blurClick->getBitmap(),
+								0,
+								0,
+								_skin->closeButton.bitmap.width,
+								_skin->closeButton.bitmap.height);
 		}
 	} else {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->closeButton.bitmap.focus, 0, 0, _skin->closeButton.bitmap.width, _skin->closeButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height,
+								_skin->closeButton.bitmap.focus->getBitmap(),
+								0,
+								0,
+								_skin->closeButton.bitmap.width,
+								_skin->closeButton.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->closeButton.bitmap.blur, 0, 0, _skin->closeButton.bitmap.width, _skin->closeButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height,
+								_skin->closeButton.bitmap.blur->getBitmap(),
+								0,
+								0,
+								_skin->closeButton.bitmap.width,
+								_skin->closeButton.bitmap.height);
 		}
 	}
 
