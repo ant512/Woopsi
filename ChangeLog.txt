@@ -30,6 +30,7 @@ Change Log
     - Tidied up woopsifuncs.h.
     - SuperBitmap::getBitmap() returns a pointer to the Bitmap object instead of
       the Bitmap object's raw pixel data.
+    - Moved skinned gadgets out of main library and into bonus folder.
   
   - New Features:
     - Calendar test added.
@@ -45,6 +46,7 @@ Change Log
     - BitmapIO class can load 16-bit BMP images with any pixel encoding.
     - BitmapIO class can load V3, V4 and V5 DIB headers.
     - BitmapLoader example illustrates loading of most supported BMP types.
+    - Added skinned gadget example.
 
 
   V0.39 (20091024)
