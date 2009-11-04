@@ -215,50 +215,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\libwoopsi\src\skinnedscreen.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedscreendepthbutton.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedscreenflipbutton.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedscreentitle.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedwindow.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedwindowborderbottom.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedwindowborderleft.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedwindowborderright.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedwindowbordertop.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedwindowclosebutton.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\src\skinnedwindowdepthbutton.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\libwoopsi\src\sliderhorizontal.cpp"
 				>
 			</File>
@@ -566,54 +522,6 @@
 			</File>
 			<File
 				RelativePath=".\libwoopsi\include\scrollingtextbox.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skin.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedscreen.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedscreendepthbutton.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedscreenflipbutton.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedscreentitle.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedwindow.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedwindowborderbottom.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedwindowborderleft.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedwindowborderright.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedwindowbordertop.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedwindowclosebutton.h"
-				>
-			</File>
-			<File
-				RelativePath=".\libwoopsi\include\skinnedwindowdepthbutton.h"
 				>
 			</File>
 			<File

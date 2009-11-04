@@ -11,6 +11,8 @@ void Demo::startup() {
 
 	Woopsi::startup();
 
+	Gadget::Rect rect;
+
 	// TODO: Change this to use standard screen/window gadgets
 	/*
 	// Create skinned screen
@@ -22,7 +24,6 @@ void Demo::startup() {
 	sknScreen->addGadget(sknWindow);
 
 	// Attach bitmap
-	Gadget::Rect rect;
 	sknWindow->getClientRect(rect);
 	SuperBitmap* superBitmap = new SuperBitmap(rect.x, rect.y, rect.width, rect.height, 164, 191, false);
 	superBitmap->drawBitmap(0, 0, 164, 191, zombie_Bitmap, 0, 0, 164, 191);
