@@ -14,6 +14,12 @@ namespace WoopsiUI {
 		static void loadWindowSkin(WindowSkin& skin, const char* path);
 	private:
 		static Bitmap* loadBMP(const char* fileName, const char* path);
+		
+		/**
+		 * Resets all properties of a gadget skin to defaults.
+		 * @param skin Skin to reset.
+		 */
+		static void resetGadgetSkin(GadgetSkin& skin);
 	};
 };
 

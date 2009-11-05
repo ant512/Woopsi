@@ -7,6 +7,12 @@ using namespace WoopsiUI;
 
 void SkinIO::loadScreenSkin(ScreenSkin& skin, const char* path) {
 
+	// Ensure skin is set to default values
+	resetGadgetSkin(skin.titleBar);
+	resetGadgetSkin(skin.depthButton);
+	resetGadgetSkin(skin.flipButton);
+	resetGadgetSkin(skin.screen);
+
 	// Load bitmaps from filesystem
 	
 	// Title bar
@@ -35,6 +41,20 @@ void SkinIO::loadScreenSkin(ScreenSkin& skin, const char* path) {
 }
 
 void SkinIO::loadWindowSkin(WindowSkin& skin, const char* path) {
+
+	// Ensure skin is set to default values
+	resetGadgetSkin(skin.topLeftBorder);
+	resetGadgetSkin(skin.topCentreBorder);
+	resetGadgetSkin(skin.topRightBorder);
+	resetGadgetSkin(skin.leftBorder);
+	resetGadgetSkin(skin.rightBorder);
+	resetGadgetSkin(skin.bottomLeftBorder);
+	resetGadgetSkin(skin.bottomRightBorder);
+	resetGadgetSkin(skin.bottomCentreBorder);
+	resetGadgetSkin(skin.depthButton);
+	resetGadgetSkin(skin.closeButton);
+	resetGadgetSkin(skin.window);
+	
 
 	// Load bitmaps from filesystem
 	
@@ -137,4 +157,26 @@ Bitmap* SkinIO::loadBMP(const char* fileName, const char* path) {
 	
 	// Load the bitmap
 	return BitmapIO::loadBMP(fullName);
+}
+
+void SkinIO::resetGadgetSkin(GadgetSkin& skin) {
+	skin.font.font = NULL;
+	skin.font.colour = 0;
+	skin.font.monochrome = false;
+	skin.colours.back = 0;
+	skin.colours.shine = 0;
+	skin.colours.highlight = 0;
+	skin.colours.shadow = 0;
+	skin.colours.fill = 0;
+	skin.offsetX = 0;
+	skin.offsetY = 0;
+	skin.permeable = false;
+	skin.borderless = false;
+	skin.visible = true;
+	skin.bitmap.focus = NULL;
+	skin.bitmap.blur = NULL;
+	skin.bitmap.focusClick = NULL;
+	skin.bitmap.blurClick = NULL;
+	skin.bitmap.width = 0;
+	skin.bitmap.height = 0;
 }
