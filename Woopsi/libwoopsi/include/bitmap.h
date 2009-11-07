@@ -3,15 +3,17 @@
 
 #include <nds.h>
 #include "woopsiarray.h"
+#include "bitmapbase.h"
 
 namespace WoopsiUI {
 
 	class FontBase;
 
 	/**
-	 * Class providing bitmap manipulation (drawing, etc) functions.
+	 * Class providing bitmap manipulation (drawing, etc) functions.  Creates a new
+	 * internal bitmap data array and uses it to draw onto.
 	 */
-	class Bitmap {
+	class Bitmap : public BitmapBase {
 	public:
 
 		/**
@@ -40,19 +42,7 @@ namespace WoopsiUI {
 		 * Get a pointer to the internal bitmap.
 		 * @return Pointer to the internal bitmap.
 		 */
-		inline const u16* getBitmap() const { return _bitmap; };
-
-		/**
-		 * Get the bitmap's width.
-		 * @return The bitmap's width.
-		 */
-		inline const u16 getWidth() const { return _width; };
-
-		/**
-		 * Get the bitmap's height.
-		 * @return The bitmap's height.
-		 */
-		inline const u16 getHeight() const { return _height; };
+		inline const u16* getData() const { return _bitmap; };
 
 		/**
 		 * Draw a pixel to the internal bitmap.
@@ -190,8 +180,6 @@ namespace WoopsiUI {
 		virtual void drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
 
 	protected:
-		u16 _width;										/**< Width of the bitmap */
-		u16 _height;									/**< Height of the bitmap */
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
 		
 		/**
@@ -209,7 +197,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the pixel to add to the stack.
 		 * @param stack The stack to add a new value to.
 		 */
-		void pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) ;
+		void pushStack(s16 x, s16 y, WoopsiArray<s32>* stack);
 		
 		/**
 		 * Clip the supplied rectangular dimensions to the size of the internal bitmap.

@@ -75,6 +75,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\libwoopsi\src\bitmapwrapper.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\libwoopsi\src\button.cpp"
 				>
 			</File>
@@ -329,7 +333,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\libwoopsi\include\bitmapbase.h"
+				>
+			</File>
+			<File
 				RelativePath=".\libwoopsi\include\bitmapbutton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\libwoopsi\include\bitmapwrapper.h"
 				>
 			</File>
 			<File

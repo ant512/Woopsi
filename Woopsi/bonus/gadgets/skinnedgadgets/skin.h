@@ -3,15 +3,15 @@
 
 #include <nds.h>
 #include "fontbase.h"
-#include "bitmap.h"
+#include "bitmapbase.h"
 
 namespace WoopsiUI {
 
 	typedef struct {
-		Bitmap* focus;
-		Bitmap* blur;
-		Bitmap* focusClick;
-		Bitmap* blurClick;
+		BitmapBase* focus;
+		BitmapBase* blur;
+		BitmapBase* focusClick;
+		BitmapBase* blurClick;
 		u16 width;
 		u16 height;
 	} SkinBitmap;

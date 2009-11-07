@@ -50,6 +50,9 @@ Change Log
     - BitmapLoader example illustrates loading of most supported BMP types.
     - Added skinned gadget example.
     - Added SkinIO class to bonus folder - loads skins from disk.
+    - Added BitmapBase class to define basic interface for a bitmap.
+    - Added BitmapWrapper to enable included (not loaded) bitmap data to be used
+      as a read-only Bitmap object.
 
 
   V0.39 (20091024)

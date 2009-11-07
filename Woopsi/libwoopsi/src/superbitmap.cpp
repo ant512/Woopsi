@@ -43,9 +43,9 @@ void SuperBitmap::draw(Rect clipRect) {
 	s16 y = x;
 
 	// Flush out the bitmap mem cache to ensure DMA can see correct data
-	DC_FlushRange(_bitmap->getBitmap(), _bitmap->getWidth() * _bitmap->getHeight() * sizeof(u16));
+	DC_FlushRange(_bitmap->getData(), _bitmap->getWidth() * _bitmap->getHeight() * sizeof(u16));
 
-	port->drawBitmap(x, y, _width, _height, _bitmap->getBitmap(), _bitmapX, _bitmapY, _bitmap->getWidth(), _bitmap->getHeight());
+	port->drawBitmap(x, y, _width, _height, _bitmap->getData(), _bitmapX, _bitmapY, _bitmap->getWidth(), _bitmap->getHeight());
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
@@ -142,7 +142,7 @@ void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bit
 }
 
 void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bitmap* bitmap, s16 bitmapX, s16 bitmapY) {
-	_bitmap->drawBitmap(x, y, width, height, bitmap->getBitmap(), bitmapX, bitmapY, bitmap->getWidth(), bitmap->getHeight());
+	_bitmap->drawBitmap(x, y, width, height, bitmap->getData(), bitmapX, bitmapY, bitmap->getWidth(), bitmap->getHeight());
 }
 
 void SuperBitmap::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
