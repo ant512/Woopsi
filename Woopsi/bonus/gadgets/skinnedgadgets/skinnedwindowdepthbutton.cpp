@@ -28,14 +28,14 @@ void SkinnedWindowDepthButton::draw(Rect clipRect) {
 	if (_flags.clicked) {
 		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->depthButton.bitmap.focusClick->getBitmap(),
+								_skin->depthButton.bitmap.focusClick->getData(),
 								0,
 								0,
 								_skin->depthButton.bitmap.width,
 								_skin->depthButton.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->depthButton.bitmap.blurClick->getBitmap(),
+								_skin->depthButton.bitmap.blurClick->getData(),
 								0,
 								0,
 								_skin->depthButton.bitmap.width,
@@ -44,14 +44,14 @@ void SkinnedWindowDepthButton::draw(Rect clipRect) {
 	} else {
 		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->depthButton.bitmap.focus->getBitmap(),
+								_skin->depthButton.bitmap.focus->getData(),
 								0,
 								0,
 								_skin->depthButton.bitmap.width,
 								_skin->depthButton.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->depthButton.bitmap.blur->getBitmap(),
+								_skin->depthButton.bitmap.blur->getData(),
 								0,
 								0,
 								_skin->depthButton.bitmap.width,

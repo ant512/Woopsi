@@ -29,15 +29,15 @@ void SkinnedScreenDepthButton::draw(Rect clipRect) {
 
 	if (_flags.clicked) {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.focusClick->getBitmap(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.focusClick->getData(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.blurClick->getBitmap(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.blurClick->getData(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
 		}
 	} else {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.focus->getBitmap(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.focus->getData(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.blur->getBitmap(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->depthButton.bitmap.blur->getData(), 0, 0, _skin->depthButton.bitmap.width, _skin->depthButton.bitmap.height);
 		}
 	}
 

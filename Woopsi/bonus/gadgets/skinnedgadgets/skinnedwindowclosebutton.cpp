@@ -28,14 +28,14 @@ void SkinnedWindowCloseButton::draw(Rect clipRect) {
 	if (_flags.clicked) {
 		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->closeButton.bitmap.focusClick->getBitmap(),
+								_skin->closeButton.bitmap.focusClick->getData(),
 								0,
 								0,
 								_skin->closeButton.bitmap.width, 
 								_skin->closeButton.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->closeButton.bitmap.blurClick->getBitmap(),
+								_skin->closeButton.bitmap.blurClick->getData(),
 								0,
 								0,
 								_skin->closeButton.bitmap.width,
@@ -44,14 +44,14 @@ void SkinnedWindowCloseButton::draw(Rect clipRect) {
 	} else {
 		if (_parent->hasFocus()) {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->closeButton.bitmap.focus->getBitmap(),
+								_skin->closeButton.bitmap.focus->getData(),
 								0,
 								0,
 								_skin->closeButton.bitmap.width,
 								_skin->closeButton.bitmap.height);
 		} else {
 			port->drawBitmap(0, 0, _width, _height,
-								_skin->closeButton.bitmap.blur->getBitmap(),
+								_skin->closeButton.bitmap.blur->getData(),
 								0,
 								0,
 								_skin->closeButton.bitmap.width,

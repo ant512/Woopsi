@@ -15,7 +15,7 @@ namespace WoopsiUI {
 		 * Get a pointer to the internal bitmap data.
 		 * @return Pointer to the internal bitmap data.
 		 */
-		virtual inline const u16* getData() const = 0;
+		virtual const u16* getData() const = 0;
 
 		/**
 		 * Get the colour of the pixel at the specified co-ordinates

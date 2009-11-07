@@ -29,15 +29,15 @@ void SkinnedScreenFlipButton::draw(Rect clipRect) {
 
 	if (_flags.clicked) {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.focusClick->getBitmap(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.focusClick->getData(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.blurClick->getBitmap(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.blurClick->getData(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
 		}
 	} else {
 		if (_parent->hasFocus()) {
-			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.focus->getBitmap(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.focus->getData(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
 		} else {
-			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.blur->getBitmap(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
+			port->drawBitmap(0, 0, _width, _height, _skin->flipButton.bitmap.blur->getData(), 0, 0, _skin->flipButton.bitmap.width, _skin->flipButton.bitmap.height);
 		}
 	}
 

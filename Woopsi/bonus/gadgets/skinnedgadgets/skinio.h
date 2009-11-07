@@ -8,6 +8,9 @@
 #endif
 
 namespace WoopsiUI {
+
+	class Bitmap;
+
 	class SkinIO {
 	public:
 		static void loadScreenSkin(ScreenSkin& skin, const char* path);
