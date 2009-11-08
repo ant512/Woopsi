@@ -50,6 +50,8 @@ void initWoopsiGfxMode() {
 	}
 
 	// Create framebuffer simulator arrays
+	// TODO: This leaks memory as the arrays are not deleted when the framebuffer is destroyed.
+	// How can this be fixed?
 	frameBuffer[0] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
 	frameBuffer[1] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
 
