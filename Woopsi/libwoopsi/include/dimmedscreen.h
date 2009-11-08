@@ -3,6 +3,7 @@
 
 #include "screen.h"
 #include "graphicsport.h"
+#include "woopsi.h"
 
 namespace WoopsiUI {
 

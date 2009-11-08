@@ -1,7 +1,9 @@
 #include "superbitmap.h"
 #include "bitmap.h"
+#include "bitmapbase.h"
 #include "graphicsport.h"
 #include "woopsifuncs.h"
+#include "graphics.h"
 
 using namespace WoopsiUI;
 
@@ -9,6 +11,7 @@ using namespace WoopsiUI;
 SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS, font) {
 	
 	_bitmap = new Bitmap(bitmapWidth, bitmapHeight);
+	_graphics = _bitmap->newGraphics();
 
 	_bitmapX = 0;
 	_bitmapY = 0;
@@ -28,6 +31,7 @@ SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u
 }
 
 SuperBitmap::~SuperBitmap() {
+	delete _graphics;
 	delete _bitmap;
 }
 
@@ -55,7 +59,7 @@ void SuperBitmap::draw(Rect clipRect) {
 
 // Draw a single pixel to the bitmap
 void SuperBitmap::drawPixel(s16 x, s16 y, u16 colour) {
-	_bitmap->drawPixel(x, y, colour);
+	_graphics->drawPixel(x, y, colour);
 }
 
 // Get a single pixel from the bitmap
@@ -65,40 +69,40 @@ const u16 SuperBitmap::getPixel(s16 x, s16 y) const {
 
 // External filled rectangle function
 void SuperBitmap::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
-	_bitmap->drawFilledRect(x, y, width, height, colour);
+	_graphics->drawFilledRect(x, y, width, height, colour);
 }
 
 void SuperBitmap::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
-	_bitmap->drawHorizLine(x, y, width, colour);
+	_graphics->drawHorizLine(x, y, width, colour);
 }
 
 void SuperBitmap::drawVertLine(s16 x, s16 y, u16 height, u16 colour) {
-	_bitmap->drawVertLine(x, y, height, colour);
+	_graphics->drawVertLine(x, y, height, colour);
 }
 
 void SuperBitmap::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
-	_bitmap->drawRect(x, y, width, height, colour);
+	_graphics->drawRect(x, y, width, height, colour);
 }
 
 void SuperBitmap::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
-	_bitmap->drawLine(x1, y1, x2, y2, colour);
+	_graphics->drawLine(x1, y1, x2, y2, colour);
 }
 
 void SuperBitmap::drawCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-	_bitmap->drawCircle(x0, y0, radius, colour);
+	_graphics->drawCircle(x0, y0, radius, colour);
 }
 
 void SuperBitmap::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-	_bitmap->drawFilledCircle(x0, y0, radius, colour);
+	_graphics->drawFilledCircle(x0, y0, radius, colour);
 }
 
 void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, const char* string) {
-	_bitmap->drawText(x, y, font, string);
+	_graphics->drawText(x, y, font, string);
 }
 
 // Print a string in a specific colour
 void SuperBitmap::drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour) {
-	_bitmap->drawText(x, y, font, string, colour);
+	_graphics->drawText(x, y, font, string, colour);
 }
 
 bool SuperBitmap::drag(s16 x, s16 y, s16 vX, s16 vY) {
@@ -133,25 +137,20 @@ bool SuperBitmap::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 // Scanline floodfill algorithm
 void SuperBitmap::floodFill(s16 x, s16 y, u16 newColour) {
-	_bitmap->floodFill(x, y, newColour);
+	_graphics->floodFill(x, y, newColour);
 }
 
-//Draw bitmap to the internal bitmap
-void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight) {
-	_bitmap->drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight);
-}
-
-void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bitmap* bitmap, s16 bitmapX, s16 bitmapY) {
-	_bitmap->drawBitmap(x, y, width, height, bitmap->getData(), bitmapX, bitmapY, bitmap->getWidth(), bitmap->getHeight());
+void SuperBitmap::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
+	_graphics->drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY);
 }
 
 void SuperBitmap::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
-	_bitmap->drawEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
+	_graphics->drawEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
 }
 
 
 void SuperBitmap::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
-	_bitmap->drawFilledEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
+	_graphics->drawFilledEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
 }
 
 const Bitmap* SuperBitmap::getBitmap() const {

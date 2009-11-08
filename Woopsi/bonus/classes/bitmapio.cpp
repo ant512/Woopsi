@@ -1,5 +1,6 @@
 #include "bitmapio.h"
 #include "woopsifuncs.h"
+#include "graphics.h"
 
 #define BITMAPINFOHEADER 40
 #define BITMAP_HEADER_SIZE 14
@@ -197,6 +198,9 @@ void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* 
 
 	// Jump to the start of the pixel data
 	file->seek(bmpHeader.offset);
+	
+	// Get graphics context for bitmap
+	Graphics* graphics = bitmap->newGraphics();
 
 	// Run through rows backwards as BMP rows are stored in reverse order
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
@@ -214,7 +218,7 @@ void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* 
 			u8 r = (file->readU8() >> 3) & 31;
 			
 			// Draw the pixel to the bitmap
-			bitmap->drawPixel(x, y, woopsiRGB(r, g, b));
+			graphics->drawPixel(x, y, woopsiRGB(r, g, b));
 		}
 		
 		// Reached end of row of pixels - BMP data is aligned to 4-byte boundary, so skip
@@ -223,6 +227,9 @@ void BitmapIO::parsePixelData24(BinaryFile* file, BMPHeader& bmpHeader, Bitmap* 
 			file->readU8();
 		}
 	}
+	
+	// Clean up
+	delete graphics;
 }
 
 void BitmapIO::parsePixelData16(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Header& dibHeader, Bitmap* bitmap) {
@@ -264,6 +271,9 @@ void BitmapIO::parsePixelData16(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Hea
 	u8 r;
 	u8 g;
 	u8 b;
+	
+	// Get graphics context for bitmap
+	Graphics* graphics = bitmap->newGraphics();
 
 	// Run through rows backwards as BMP rows are stored in reverse order
 	for (s16 y = bitmap->getHeight() - 1; y >= 0; --y) {
@@ -283,7 +293,7 @@ void BitmapIO::parsePixelData16(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Hea
 			r = convertTo5Bit(r, rBits);
 
 			// Draw the pixel to the bitmap
-			bitmap->drawPixel(x, y, woopsiRGB(r, g, b));
+			graphics->drawPixel(x, y, woopsiRGB(r, g, b));
 		}
 		
 		// Reached end of row of pixels - BMP data is aligned to 4-byte boundary, so skip
@@ -292,6 +302,9 @@ void BitmapIO::parsePixelData16(BinaryFile* file, BMPHeader& bmpHeader, DIBV3Hea
 			file->readU8();
 		}
 	}
+	
+	// Clean up
+	delete graphics;
 }
 
 u8 BitmapIO::countSetBits(u32 value) {

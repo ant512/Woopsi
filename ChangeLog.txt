@@ -33,6 +33,7 @@ Change Log
     - Moved skinned gadgets out of main library and into bonus folder.
     - Removed fatInitDefault() stub method for SDL out of individual .cpp files
       and into nds.h.
+    - dimmedscreen.h includes woopsi.h.
   
   - New Features:
     - Calendar test added.
@@ -53,6 +54,7 @@ Change Log
     - Added BitmapBase class to define basic interface for a bitmap.
     - Added BitmapWrapper to enable included (not loaded) bitmap data to be used
       as a read-only Bitmap object.
+    - Moved drawing code out of Bitmap class into new Graphics class.
 
 
   V0.39 (20091024)
