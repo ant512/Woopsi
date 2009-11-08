@@ -50,15 +50,15 @@ void initWoopsiGfxMode() {
 	}
 
 	// Create framebuffer simulator arrays
-	frameBuffer[0] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
-	frameBuffer[1] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
+	frameBuffer[0] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
+	frameBuffer[1] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	// Initialise both arrays
-	Graphics* graphics = frameBuffer[0]->getGraphics();
+	WoopsiUI::Graphics* graphics = frameBuffer[0]->newGraphics();
 	graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	delete graphics;
 
-	graphics = frameBuffer[1]->getGraphics();
+	graphics = frameBuffer[1]->newGraphics();
 	graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	delete graphics;
 }
@@ -79,9 +79,9 @@ void woopsiVblFunc() {
 			for (u8 screenNum = 0; screenNum < 2; ++screenNum) {
 				r = (frameBuffer[screenNum]->getPixel(x, y) & 31) << 3;
 				g = (frameBuffer[screenNum]->getPixel(x, y) & (31 << 5)) >> 2;
-				g = (frameBuffer[screenNum]->getPixel(x, y) & (31 << 10)) >> 7;
+				b = (frameBuffer[screenNum]->getPixel(x, y) & (31 << 10)) >> 7;
 
-				putPixel(screen, x, y + ((1 - SCREEN_HEIGHT) * screenNum), SDL_MapRGB(format, r, g, b));
+				putPixel(screen, x, y + ((1 - screenNum) * SCREEN_HEIGHT), SDL_MapRGB(format, r, g, b));
 			}
 		}
 	}
