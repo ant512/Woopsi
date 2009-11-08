@@ -362,6 +362,7 @@ void DC_FlushRange(const void *base, u32 size) {
 // Using libnds
 
 u16* DrawBg[2];
+WoopsiUI::FrameBuffer* frameBuffer[2];
 _pads Pad;
 _stylus Stylus;
 
@@ -430,6 +431,9 @@ void initWoopsiGfxMode() {
 
 	DrawBg[1] = (u16*)BG_BMP_RAM(0);
 	DrawBg[0] = (u16*)BG_BMP_RAM_SUB(0);
+
+	frameBuffer[1] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM(0), SCREEN_WIDTH, SCREEN_HEIGHT);
+	frameBuffer[0] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM_SUB(0), SCREEN_WIDTH, SCREEN_HEIGHT);
 	
 	memset( &Stylus, 0, sizeof(_stylus) );
 }

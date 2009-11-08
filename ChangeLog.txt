@@ -55,6 +55,12 @@ Change Log
     - Added BitmapWrapper to enable included (not loaded) bitmap data to be used
       as a read-only Bitmap object.
     - Moved drawing code out of Bitmap class into new Graphics class.
+    - Added MutableBitmapBase class to define basic interface for an editable
+      bitmap.
+    - Added FrameBuffer class to wrap framebuffer inside a bitmap class.
+    - Added GraphicsUnclipped to perform raw unclipped bitmap drawing.
+    - GraphicsPort inherits from GraphicsUnclipped in order to reduce code
+      repetition.
 
 
   V0.39 (20091024)

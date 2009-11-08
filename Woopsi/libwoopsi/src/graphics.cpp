@@ -5,12 +5,7 @@
 using namespace WoopsiUI;
 
 // Constructor - allocates mem for bitmap
-Graphics::Graphics(Bitmap* bitmap) {
-	_bitmap = bitmap;
-	_data = bitmap->getEditableData();
-	_width = bitmap->getWidth();
-	_height = bitmap->getHeight();
-}
+Graphics::Graphics(MutableBitmapBase* bitmap) : GraphicsUnclipped(bitmap) { }
 
 // Draw a single pixel to the bitmap
 void Graphics::drawPixel(s16 x, s16 y, u16 colour) {
@@ -20,8 +15,7 @@ void Graphics::drawPixel(s16 x, s16 y, u16 colour) {
 	if ((x >= _width) || (y >= _height)) return;
 
 	// Plot the pixel
-	u32 pos = (y * _width) + x;
-	_data[pos] = colour;
+	GraphicsUnclipped::drawPixel(x, y, colour);
 }
 
 // Get a single pixel from the bitmap
@@ -32,37 +26,14 @@ const u16 Graphics::getPixel(s16 x, s16 y) const {
 	if ((x >= _width) || (y >= _height)) return 0;
 
 	// Get the pixel
-	u32 pos = (y * _width) + x;
-	return _data[pos];
+	return GraphicsUnclipped::getPixel(x, y);
 }
 
 // External filled rectangle function
 void Graphics::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
-
-		// Draw initial pixel to heap
-		u16* pos = new u16;
-		*pos = colour;
-
-		// Ensure DMA can see latest memory state
-		DC_FlushRange(pos, sizeof(u16));
-		
-		// Target location to draw to
-		u16* target = _data + (y * _width) + x;
-
-		for (u16 i = 0; i < height; i++) {
-			// Wait until DMA channel is clear
-			while (DMA_Active());
-
-			// Duplicate pixel
-			DMA_Force(*pos, target, width, DMA_16NOW);
-
-			// Move to next row
-			target += _width;
-		}
-
-		delete pos;
+		GraphicsUnclipped::drawFilledRect(x, y, width, height, colour);
 	}
 }
 
@@ -71,18 +42,7 @@ void Graphics::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 	u16 height = 1;
 
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
-		// Draw initial pixel
-		u16* pos = _data + (y * _width) + x;
-		*pos = colour;
-
-		// Ensure DMA can see latest memory state
-		DC_FlushRange(pos, sizeof(u16));
-
-		// Wait until DMA channel is clear
-		while (DMA_Active());
-
-		// Duplicate pixel
-		if (width > 1) DMA_Force(*pos, (pos + 1), width - 1, DMA_16NOW);
+		GraphicsUnclipped::drawHorizLine(x, y, width, colour);
 	}
 }
 
@@ -91,146 +51,7 @@ void Graphics::drawVertLine(s16 x, s16 y, u16 height, u16 colour) {
 	u16 width = 1;
 
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
-
-		u32 pos = x + (y * _width);
-
-		for (u16 i = 0; i < height; i++) {
-			_data[pos] = colour;
-			pos += _width;
-		}
-	}
-}
-
-void Graphics::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
-
-	drawHorizLine(x, y + height - 1, width, colour);	// Bottom
-	drawVertLine(x + width - 1, y, height, colour);		// Right
-
-	drawHorizLine(x, y, width, colour);					// Top
-	drawVertLine(x, y, height, colour);					// Left
-}
-
-void Graphics::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
-	int dx, dy, inx, iny, e;
-	
-	dx = x2 - x1;
-	dy = y2 - y1;
-	inx = dx > 0 ? 1 : -1;
-	iny = dy > 0 ? 1 : -1;
-
-	if (dx < 0) dx = -dx;
-	if (dy < 0) dy = -dy;
-	
-	if (dx >= dy) {
-		dy <<= 1;
-		e = dy - dx;
-		dx <<= 1;
-		while (x1 != x2) {
-			drawPixel(x1, y1,colour);
-			if (e >= 0) {
-					y1 += iny;
-					e-= dx;
-			}
-			e += dy; x1 += inx;
-		}
-	} else {
-		dx <<= 1;
-		e = dx - dy;
-		dy <<= 1;
-		while (y1 != y2) {
-			drawPixel(x1, y1, colour);
-			if (e >= 0) {
-					x1 += inx;
-					e -= dy;
-			}
-			e += dx; y1 += iny;
-		}
-	}
-	drawPixel(x1, y1, colour);
-}
-
-void Graphics::drawCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-	s16 f = 1 - radius;
-	s16 ddF_x = 0;
-	s16 ddF_y = -2 * radius;
-	s16 x = 0;
-	s16 y = radius;
-
-	drawPixel(x0, y0 + radius, colour);
-	drawPixel(x0, y0 - radius, colour);
-	drawPixel(x0 + radius, y0, colour);
-	drawPixel(x0 - radius, y0, colour);
-
-	while(x < y) {
-		if (f >= 0) {
-			y--;
-			ddF_y += 2;
-			f += ddF_y;
-		}
-		x++;
-		ddF_x += 2;
-		f += ddF_x + 1;    
-		drawPixel(x0 + x, y0 + y, colour);
-		drawPixel(x0 - x, y0 + y, colour);
-		drawPixel(x0 + x, y0 - y, colour);
-		drawPixel(x0 - x, y0 - y, colour);
-		drawPixel(x0 + y, y0 + x, colour);
-		drawPixel(x0 - y, y0 + x, colour);
-		drawPixel(x0 + y, y0 - x, colour);
-		drawPixel(x0 - y, y0 - x, colour);
-	}
-}
-
-void Graphics::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-	s16 f = 1 - radius;
-	s16 ddF_x = 0;
-	s16 ddF_y = -2 * radius;
-	s16 x = 0;
-	s16 y = radius;
-
-	// Draw central line
-	drawHorizLine(x0 - radius, y0, (radius << 1) + 1, colour);
-
-	while(x < y) {
-		if (f >= 0) {
-			y--;
-			ddF_y += 2;
-			f += ddF_y;
-		}
-		x++;
-		ddF_x += 2;
-		f += ddF_x + 1;
-
-		drawHorizLine(x0 - x, y0 + y, (x << 1) + 1, colour);
-		drawHorizLine(x0 - x, y0 - y, (x << 1) + 1, colour);
-
-		drawHorizLine(x0 - y, y0 + x, (y << 1) + 1, colour);
-		drawHorizLine(x0 - y, y0 - x, (y << 1) + 1, colour);
-	}
-}
-
-void Graphics::drawText(s16 x, s16 y, FontBase* font, const char* string) {
-	TextWriter::drawString(_data, _width, _height, font, string, strlen(string), x, y, 0, 0, _width - 1, _height - 1);
-}
-
-// Print a string in a specific colour
-void Graphics::drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour) {
-
-	// Store current font colour
-	bool isMonochrome = font->isMonochrome();
-	u16 oldColour = font->getColour();
-
-	// Update font colour
-	font->setColour(colour);
-
-	// Output as normal
-	drawText(x, y, font, string);
-
-	// Reset colour
-	if (!isMonochrome) {
-		font->clearColour();
-	} else {
-		font->setColour(oldColour);
+		Graphics::drawVertLine(x, y, height, colour);
 	}
 }
 
@@ -241,91 +62,8 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 	if ((x < 0) || (y < 0)) return;
 	if ((x >= _width) || (y >= _height)) return;
 
-	// Get current colour
-	u16 oldColour = getPixel(x, y);
-
-	// Exit if colours match
-	if (oldColour == newColour) return;
-
-	// Initalise stack
-	WoopsiArray<s32>* stack = new WoopsiArray<s32>();
-
-	s16 x1; 
-	u8 spanUp, spanDown;
-	s32 rowThis, rowUp, rowDown;
-	s16 rowStart;
-	u16 rowWidth;
-
-	// Push initial value onto the stack
-	pushStack(x, y, stack);
-
-	// Continue until stack is empty
-	while (popStack(&x, &y, stack)) {
-
-		x1 = x;
-		rowThis = y * _width;
-		rowUp = (y - 1) * _width;
-		rowDown = (y + 1) * _width;
-
-		// Locate leftmost column on screen in this row containing old colour
-		while ((x1 >= 0) && (_data[x1 + rowThis] == oldColour)) {
-			x1--;
-		}
-
-		// Move to first column of old colour
-		x1++;
-
-		rowStart = x1;
-		rowWidth = 0;
-
-		spanUp = spanDown = 0;
-
-		// Scan right, filling each column of old colour
-		while ((x1 < _width) && (_data[x1 + rowThis] == oldColour)) {
-
-			// Check pixel above
-			if ((!spanUp) && (y > 0) && (_data[x1 + rowUp] == oldColour)) {
-				pushStack(x1, y - 1, stack);
-				spanUp = 1;
-			} else if ((spanUp) && (y > 0) && (_data[x1 + rowUp] != oldColour)) {
-				spanUp = 0;
-			}
-
-			// Check pixel below
-			if ((!spanDown) && (y < _height - 1) && (_data[x1 + rowDown] == oldColour)) {
-				pushStack(x1, y + 1, stack);
-				spanDown = 1;
-			} else if ((spanDown) && (y < _height - 1) && (_data[x1 + rowDown] != oldColour)) {
-				spanDown = 0;
-			}
-
-			x1++;
-			rowWidth++;
-		}
-
-		// Draw line
-		drawHorizLine(rowStart, y, rowWidth, newColour);
-	}
-
-	delete stack;
+	GraphicsUnclipped::floodFill(x, y, newColour);
 }
-
-// Floodfill stack functions
-bool Graphics::popStack(s16* x, s16* y, WoopsiArray<s32>* stack) { 
-	if (stack->size() > 0) { 
-		s32 val = stack->at(stack->size() - 1);
-		*y = val / _width;
-		*x = val % _width;
-		stack->pop_back();
-		return true;
-	}
-
-	return false;  
-}
-
-void Graphics::pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) {
-	stack->push_back(x + (y * _width));
-}     
 
 //Draw bitmap to the internal bitmap
 void Graphics::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY) {
@@ -377,27 +115,7 @@ void Graphics::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase*
 	}
 
 	if ((width > 0) && (height > 0)) {
-
-		// Precalculate line values for loop
-		u16* srcLine0 = (u16*)bitmapData + bitmapX + (bitmapY * bitmapWidth);
-
-		u16* srcLinei = srcLine0;
-
-		u16* destLine0 = _data + x + (y * _width);
-		u16* destLinei = destLine0;
-
-		u16 lastLine = y + height;
-
-		for (u16 i = y; i < lastLine; i++) {
-
-			// Wait until DMA channel is clear
-			while (DMA_Active());
-
-			DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
-
-			srcLinei += bitmapWidth;
-			destLinei += _width;
-		}
+		GraphicsUnclipped::drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY);
 	}
 }
 
@@ -422,169 +140,4 @@ bool Graphics::clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height) {
 
 	// Return true as box can be drawn
 	return true;
-}
-
-// Code borrowed from http://enchantia.com/software/graphapp/doc/tech/ellipses.html
-// and partially rendered readable.  This is L. Patrick's implementation of Doug
-// McIlroy's ellipse algorithm.
-void Graphics::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
-
-	s16 x = 0;
-	s16 y = vertRadius;
-
-	// Precalculate squares of axes for speed
-	s32 horizSquare = horizRadius * horizRadius;
-	s32 vertSquare = vertRadius * vertRadius;
-
-	s32 crit1 = -((horizSquare >> 2) + (horizRadius % 2) + vertSquare);
-	s32 crit2 = -((vertSquare >> 2) + (vertRadius % 2) + horizSquare);
-	s32 crit3 = -((vertSquare >> 2) + (vertRadius % 2));
-
-	s32 t = -horizSquare * y;
-	s32 dxt = vertSquare * x << 1;
-	s32 dyt = -horizSquare * y << 1;
-	s32 d2xt = vertSquare << 1;
-	s32 d2yt = horizSquare << 1;
-
-	// Loop until the ellipse is drawn - each iteration draws a point in every
-	// quarter of the ellipse
-	while ((y >= 0) && (x <= horizRadius)) {
-
-		// Draw this point
-		drawPixel(xCentre + x, yCentre + y, colour);
-
-		// Draw the opposite point only if it will not overlap the first
-		if ((x != 0) || (y != 0)) {
-			drawPixel(xCentre - x, yCentre - y, colour);
-		}
-
-		// Draw the next two points if they will not overlap the previous
-		// two points
-		if ((x != 0) && (y != 0)) {
-			drawPixel(xCentre + x, yCentre - y, colour);
-			drawPixel(xCentre - x, yCentre + y, colour);
-		}
-
-		if ((t + (vertSquare * x) <= crit1) || (t + (horizSquare * y) <= crit3)) {
-
-			// Inc x
-			x++;
-			dxt += d2xt;
-			t += dxt;
-		} else if (t - (horizSquare * y) > crit2) {
-
-			// Inc y
-			y--;
-			dyt += d2yt;
-			t += dyt;
-		} else {
-
-			// Inc x
-			x++;
-			dxt += d2xt;
-			t += dxt;
-
-			// Inc y
-			y--;
-			dyt += d2yt;
-			t += dyt;
-		}
-	}
-}
-
-// Code borrowed from http://enchantia.com/software/graphapp/doc/tech/ellipses.html
-// This is L. Patrick's implementation of a filled ellipse algorithm that uses
-// filled rects to draw the ellipse. 
-void Graphics::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
-
-	/* e(x,y) = b^2*x^2 + a^2*y^2 - a^2*b^2 */
-	s16 x = 0;
-	s16 y = vertRadius;
-	
-	s16 rx = x;
-	s16 ry = y;
-	u16 width = 1;
-	u16 height = 1;
-	
-	s32 horizSquare = horizRadius * horizRadius;
-	s32 vertSquare = vertRadius * vertRadius;
-	
-	s32 crit1 = -((horizSquare >> 2) + (horizRadius % 2) + vertSquare);
-	s32 crit2 = -((vertSquare >> 2) + (vertRadius % 2) + horizSquare);
-	s32 crit3 = -((vertSquare >> 2) + (vertRadius % 2));
-	
-	s32 t = -horizSquare * y;
-	s32 dxt = vertSquare * x << 1;
-	s32 dyt = -horizSquare * y << 1;
-	s32 d2xt = vertSquare << 1;
-	s32 d2yt = horizSquare << 1;
-		
-	if (vertRadius == 0) {
-		drawFilledRect(xCentre - horizRadius, yCentre, (horizRadius << 1) + 1, 1, colour);
-		return;
-	}
-	
-	while ((y >= 0) && (x <= horizRadius)) {
-		
-		if ((t + (vertSquare * x) <= crit1) || (t + (horizSquare * y) <= crit3)) {
-			
-			if (height == 1) {
-				// Draw nothing
-			} else if (ry * 2 + 1 > (height - 1) * 2) {
-				drawFilledRect(xCentre - rx, yCentre - ry, width, height - 1, colour);
-				drawFilledRect(xCentre - rx, yCentre + ry + 1 - height, width, height - 1, colour);
-				ry -= height-1;
-				height = 1;
-			} else {
-				drawFilledRect(xCentre - rx, yCentre - ry, width, ry * 2 + 1, colour);
-				ry -= ry;
-				height = 1;
-			}
-				
-			// Inc x
-			x++;
-			dxt += d2xt;
-			t += dxt;
-			
-			rx++;
-			width += 2;
-		} else if (t - (horizSquare * y) > crit2) { /* e(x+1/2,y-1) > 0 */
-
-			// Inc y
-			y--;
-			dyt += d2yt;
-			t += dyt;
-			
-			height++;
-		} else {
-			if (ry*2+1 > height*2) {
-				drawFilledRect(xCentre - rx, yCentre - ry, width, height, colour);
-				drawFilledRect(xCentre - rx, yCentre + ry + 1 - height, width, height, colour);
-			} else {
-				drawFilledRect(xCentre - rx, yCentre - ry, width, ry * 2 + 1, colour);
-			}
-			
-			// Inc x
-			x++;
-			dxt += d2xt;
-			t += dxt;
-			
-			// Inc y
-			y--;
-			dyt += d2yt;
-			t += dyt;
-			
-			rx++;
-			width += 2;
-			ry -= height;
-			height = 1;
-		}
-	}
-		
-	if (ry > height) {
-		drawFilledRect(xCentre - rx, yCentre - ry, width, height, colour);
-		drawFilledRect(xCentre - rx, yCentre + ry + 1 - height, width, height, colour);
-	} else {
-		drawFilledRect(xCentre - rx, yCentre - ry, width, ry * 2 + 1, colour);
-	}
 }

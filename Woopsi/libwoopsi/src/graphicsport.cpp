@@ -3,18 +3,17 @@
 #include "fontbase.h"
 #include "textwriter.h"
 #include "woopsifuncs.h"
+#include "framebuffer.h"
 
 using namespace WoopsiUI;
 
-GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect) {
+// TODO: Change this so it receives FrameBuffer pointer
+GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect) : GraphicsUnclipped(bitmap) {
 	_gadget = gadget;
 	_rect.x = x;
 	_rect.y = y;
 	_rect.width = width;
 	_rect.height = height;
-	_bitmap = bitmap;
-	_bitmapWidth = bitmapWidth;
-	_bitmapHeight = bitmapHeight;
 	
 	// Set up clip rect
 	if (clipRect != NULL) {
@@ -63,7 +62,7 @@ void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 	
 	// Draw initial pixel
-	u16* pos = _bitmap + (y * SCREEN_WIDTH) + x;
+	u16* pos = _data + (y * _width) + x;
 	*pos = colour;
 	
 	u16* target = pos + 1;
@@ -77,7 +76,7 @@ void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u1
 	}
 	
 	// Move to next row
-	target += _bitmapWidth - 1;
+	target += _width - 1;
 	
 	for (u16 i = 1; i < height; i++) {
 		// Wait until DMA channel is clear
@@ -87,7 +86,7 @@ void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u1
 		DMA_Force(*pos, target, width, DMA_16NOW);
 		
 		// Move to next row
-		target += _bitmapWidth;
+		target += _width;
 	}
 }
 
@@ -215,21 +214,21 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char
 			y -= TOP_SCREEN_Y_OFFSET;
 		}
 		
-		TextWriter::drawString(_bitmap, _bitmapWidth, _bitmapHeight, font, string, length, x, y, clipX1, clipY1, clipX2, clipY2);
+		TextWriter::drawString(_data, _width, _height, font, string, length, x, y, clipX1, clipY1, clipX2, clipY2);
 	}
 }
 
 // Draw a single pixel to the bitmap
 void GraphicsPort::drawClippedPixel(s16 x, s16 y, u16 colour) {
-	u32 pos = (y * _bitmapWidth) + x;
-	_bitmap[pos] = colour;
+	u32 pos = (y * _width) + x;
+	_data[pos] = colour;
 }
 
 // Draw a horizontal line - internal function
 void GraphicsPort::drawClippedHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 	if (width-- > 0) {
 		// Draw initial pixel
-		u16* pos = _bitmap + (y * _bitmapWidth) + x;
+		u16* pos = _data + (y * _width) + x;
 		*pos = colour;
 		
 		if (width > 0) {
@@ -249,7 +248,7 @@ void GraphicsPort::drawClippedVertLine(s16 x, s16 y, s16 height, u16 colour) {
 
 // XOR out a pixel
 void GraphicsPort::drawClippedXORPixel(s16 x, s16 y) {
-	u16 pixel = (_bitmap[x + (y * _bitmapWidth)] ^ 0xffff) | (1 << 15);
+	u16 pixel = (_data[x + (y * _width)] ^ 0xffff) | (1 << 15);
 	drawClippedPixel(x, y, pixel);
 }
 
@@ -281,12 +280,12 @@ void GraphicsPort::drawClippedXORRect(s16 x, s16 y, u16 width, u16 height) {
 	}
 	
 	// Left
-	if ((x >= 0) && (x < SCREEN_WIDTH)) {
+	if ((x >= 0) && (x < _width)) {
 		drawClippedXORVertLine(x, y + 1, height - 2);
 	}
 	
 	// Right
-	if (x + width < SCREEN_WIDTH) {
+	if (x + width < _width) {
 		drawClippedXORVertLine(x + width - 1, y + 1, height - 2);
 	}
 }
@@ -784,7 +783,7 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 	
 	u16* srcLinei = srcLine0;
 	
-	u16* destLine0 = _bitmap + x + (y * _bitmapWidth);
+	u16* destLine0 = _data + x + (y * _width);
 	u16* destLinei = destLine0;
 	
 	u16 lastLine = y + height;
@@ -794,7 +793,7 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 		DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
 		
 		srcLinei += bitmapWidth;
-		destLinei += _bitmapWidth;
+		destLinei += _width;
 	}
 }
 
@@ -811,7 +810,7 @@ void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const 
 			
 			// Plot ignoring transparency
 			if (source != transparentColour) {
-				_bitmap[((y + j) * _bitmapWidth) + (x + i)] = source;
+				_data[((y + j) * _width) + (x + i)] = source;
 			}
 		}
 	}
@@ -1090,8 +1089,8 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 widt
 	if (sourceY == destY) {
 		if ((destX >= sourceX) && (destX <= sourceX + width)) {
 			u16* buffer = new u16[width];
-			u16* copySource = _bitmap + sourceX + (sourceY * _bitmapWidth);
-			u16* copyDest = _bitmap + destX + (destY * _bitmapWidth);
+			u16* copySource = _data + sourceX + (sourceY * _width);
+			u16* copyDest = _data + destX + (destY * _width);
 			
 			for (u16 y = 0; y < height; y++) {
 				
@@ -1103,8 +1102,8 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 widt
 				while(DMA_Active());
 				DMA_Copy(buffer, copyDest, width, DMA_16NOW);
 				
-				copySource += _bitmapWidth;
-				copyDest += _bitmapWidth;
+				copySource += _width;
+				copyDest += _width;
 			}
 			
 			delete buffer;
@@ -1123,15 +1122,15 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 widt
 	if (sourceY > destY) {
 		
 		// Copy up
-		delta = _bitmapWidth;
-		copySource = _bitmap + sourceX + (sourceY * _bitmapWidth);
-		copyDest = _bitmap + destX + (destY * _bitmapWidth);
+		delta = _width;
+		copySource = _data + sourceX + (sourceY * _width);
+		copyDest = _data + destX + (destY * _width);
 	} else {
 		
 		// Copy down
-		delta = -_bitmapWidth;
-		copySource = _bitmap + sourceX + ((sourceY + height - 1) * _bitmapWidth);
-		copyDest = _bitmap + destX + ((destY + height - 1) * _bitmapWidth);
+		delta = -_width;
+		copySource = _data + sourceX + ((sourceY + height - 1) * _width);
+		copyDest = _data + destX + ((destY + height - 1) * _width);
 	}
 	
 	// Perform copy	
@@ -1363,7 +1362,7 @@ void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Gadget::Re
 
 	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
 
-		u16* rowStart = _bitmap + (y * _bitmapWidth);
+		u16* rowStart = _data + (y * _width);
 		u16 colStart = x;
 		u16 colPos;
 
@@ -1389,7 +1388,7 @@ void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Gadget::Re
 			}
 
 			// Move to next pixel row
-			rowStart += _bitmapWidth;
+			rowStart += _width;
 		}
 	}
 }

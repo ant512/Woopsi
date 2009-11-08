@@ -4,10 +4,12 @@
 #include <nds.h>
 #include "gadget.h"
 #include "woopsiarray.h"
+#include "graphicsunclipped.h"
 
 namespace WoopsiUI {
 	
 	class FontBase;
+	class FrameBuffer;
 	
 	/**
 	 * GraphicsPort is the interface between a gadget and the framebuffer.  It provides
@@ -16,7 +18,7 @@ namespace WoopsiUI {
 	 * not call DC_FlushRange(), which will cause problems if it attempts to draw to anything
 	 * other than VRAM.
 	 */
-	class GraphicsPort {
+	class GraphicsPort : public GraphicsUnclipped {
 	public:
 		
 		/**
@@ -27,12 +29,10 @@ namespace WoopsiUI {
 		 * @param width The width of the graphics port.
 		 * @param height The height of the graphics port.
 		 * @param bitmap The bitmap that the port will draw to. 
-		 * @param bitmapWidth The width of the bitmap being drawn to.
-		 * @param bitmapHeight The height of the bitmap being drawn to.
 		 * @param clipRectList An array of clipping regions within which the class must draw.  If set, clipRect must be NULL.
 		 * @param clipRect The clipping region within which the class must draw.  If set, clipRectList must be NULL.
 		 */
-		GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, u16* const bitmap, const u16 bitmapWidth, const u16 bitmapHeight, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect);
+		GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect);
 		
 		/**
 		 * Destructor.
@@ -320,9 +320,6 @@ namespace WoopsiUI {
 		Gadget::Rect* _clipRect;						/**< Clipping rect that the port must draw within */
 		const WoopsiArray<Gadget::Rect>* _clipRectList;	/**< List of rects that the port must draw within */
 		Gadget::Rect _rect;								/**< Total area that the port can draw within */
-		u16* _bitmap;									/**< Bitmap that the port will draw to (should be in VRAM) */
-		u16 _bitmapWidth;								/**< Width of the bitmap that the port will draw to */
-		u16 _bitmapHeight;								/**< Height of the bitmap that the port will draw to */
 
 		// Internal clipping routines
 		void clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipRect);

@@ -1,8 +1,7 @@
-#ifndef _BITMAP_H_
-#define _BITMAP_H_
+#ifndef _FRAME_BUFFER_H_
+#define _FRAME_BUFFER_H_
 
 #include <nds.h>
-#include "woopsiarray.h"
 #include "mutablebitmapbase.h"
 
 namespace WoopsiUI {
@@ -10,25 +9,23 @@ namespace WoopsiUI {
 	class Graphics;
 
 	/**
-	 * Class providing bitmap manipulation (drawing, etc) functions.  Creates a new
-	 * internal bitmap data array and uses it to draw onto.
+	 * Class wrapper around the framebuffer
 	 */
-	class Bitmap : public MutableBitmapBase {
+	class FrameBuffer : public MutableBitmapBase {
 	public:
 
 		/**
 		 * Constructor.
+		 * @param data Pointer to the raw bitmap data.
 		 * @param width The width of the bitmap.
 		 * @param height The height of the bitmap.
 		 */
-		Bitmap(u16 width, u16 height);
+		FrameBuffer(u16* data, u16 width, u16 height);
 
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~Bitmap() {
-			delete[] _bitmap;
-		};
+		virtual inline ~FrameBuffer() { };
 		
 		/**
 		 * Get the colour of the pixel at the specified co-ordinates
@@ -43,12 +40,12 @@ namespace WoopsiUI {
 		 * @return Pointer to the internal bitmap.
 		 */
 		inline const u16* getData() const { return _bitmap; };
-
+		
 		/**
 		 * Get a non-const pointer to the internal bitmap.
 		 * @return Non-const pointer to the internal bitmap.
 		 */
-		inline u16* getEditableData() const { return _bitmap; };
+		inline u16* getEditableData() const { return _bitmap; }
 
 		/**
 		 * Get a new graphics object that can draw to this bitmap.
@@ -59,11 +56,11 @@ namespace WoopsiUI {
 
 	protected:
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
-		
+
 		/**
 		 * Copy constructor is protected to prevent usage.
 		 */
-		inline Bitmap(const Bitmap& bitmap) { };
+		inline FrameBuffer(const FrameBuffer& bitmap) { };
 	};
 }
 

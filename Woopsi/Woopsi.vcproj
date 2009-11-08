@@ -127,6 +127,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\libwoopsi\src\framebuffer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\libwoopsi\src\gadget.cpp"
 				>
 			</File>
@@ -140,6 +144,10 @@
 			</File>
 			<File
 				RelativePath=".\libwoopsi\src\graphicsport.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\libwoopsi\src\graphicsunclipped.cpp"
 				>
 			</File>
 			<File
@@ -417,6 +425,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\libwoopsi\include\framebuffer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\libwoopsi\include\gadget.h"
 				>
 			</File>
@@ -442,6 +454,10 @@
 			</File>
 			<File
 				RelativePath=".\libwoopsi\include\graphicsport.h"
+				>
+			</File>
+			<File
+				RelativePath=".\libwoopsi\include\graphicsunclipped.h"
 				>
 			</File>
 			<File
@@ -478,6 +494,10 @@
 			</File>
 			<File
 				RelativePath=".\libwoopsi\include\multilinetextbox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\libwoopsi\include\mutablebitmapbase.h"
 				>
 			</File>
 			<File

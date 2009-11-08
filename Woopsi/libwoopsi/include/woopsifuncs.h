@@ -7,6 +7,7 @@
 #define _WOOPSIFUNCS_H_
 
 #include <nds.h>
+#include "framebuffer.h"
 
 // DMA handling bitmasks
 #define DMA_ON 0x80000000
@@ -151,6 +152,7 @@ void DC_FlushRange(const void *base, u32 size);
  * Pointers to the DS' framebuffers.
  */
 extern u16* DrawBg[2];
+extern WoopsiUI::FrameBuffer* frameBuffer[2];
 
 /**
  * Initialise the DS' screens into framebuffer mode.  Also sets up some other subsystems
