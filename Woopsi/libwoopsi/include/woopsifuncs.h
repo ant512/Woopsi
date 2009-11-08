@@ -151,7 +151,6 @@ void DC_FlushRange(const void *base, u32 size);
 /**
  * Pointers to the DS' framebuffers.
  */
-extern u16* DrawBg[2];
 extern WoopsiUI::FrameBuffer* frameBuffer[2];
 
 /**

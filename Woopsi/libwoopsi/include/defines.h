@@ -19,13 +19,13 @@
 #define SCREEN_HEIGHT 192
 
 /**
- * The TOP_SCREEN_NUMBER gives the index of the top screen in the DrawBg[] framebuffer
+ * The TOP_SCREEN_NUMBER gives the index of the top screen in the frameBuffer[] framebuffer
  * pointer array.
  */
 #define TOP_SCREEN_NUMBER 1
 
 /**
- * The BOTTOM_SCREEN_NUMBER gives the index of the touch screen in the DrawBg[] framebuffer
+ * The BOTTOM_SCREEN_NUMBER gives the index of the touch screen in the frameBuffer[] framebuffer
  * pointer array.
  */
 #define BOTTOM_SCREEN_NUMBER 0

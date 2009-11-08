@@ -58,6 +58,7 @@ Change Log
     - Added MutableBitmapBase class to define basic interface for an editable
       bitmap.
     - Added FrameBuffer class to wrap framebuffer inside a bitmap class.
+    - All references to DrawBg array now work with frameBuffer array.
     - Added GraphicsUnclipped to perform raw unclipped bitmap drawing.
     - GraphicsPort inherits from GraphicsUnclipped in order to reduce code
       repetition.

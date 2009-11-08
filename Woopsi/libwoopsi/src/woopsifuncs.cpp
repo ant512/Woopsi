@@ -6,12 +6,13 @@
 #include <nds.h>
 #include <string.h>
 #include "woopsifuncs.h"
+#include "graphics.h"
 
 #ifdef USING_SDL
 
 #include "defines.h"
 
-u16* DrawBg[2];
+WoopsiUI::FrameBuffer* frameBuffer[2];
 
 _pads Pad;
 _stylus Stylus;
@@ -49,14 +50,17 @@ void initWoopsiGfxMode() {
 	}
 
 	// Create framebuffer simulator arrays
-	DrawBg[0] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
-	DrawBg[1] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
+	frameBuffer[0] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
+	frameBuffer[1] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
 
 	// Initialise both arrays
-	for (u32 i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
-		DrawBg[0][i] = 0;
-		DrawBg[1][i] = 0;
-	}
+	Graphics* graphics = frameBuffer[0]->getGraphics();
+	graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	delete graphics;
+
+	graphics = frameBuffer[1]->getGraphics();
+	graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	delete graphics;
 }
 
 void woopsiVblFunc() {
@@ -69,20 +73,17 @@ void woopsiVblFunc() {
 	u32 g = 0;
 	u32 b = 0;
 
-	// Draw top screen
-	for (u32 i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
-		r = (DrawBg[1][i] & 31) << 3;
-		g = (DrawBg[1][i] & (31 << 5)) >> 2;
-		b = (DrawBg[1][i] & (31 << 10)) >> 7;
-		putPixel(screen, i % SCREEN_WIDTH, (i / SCREEN_WIDTH), SDL_MapRGB(format, r, g, b));
-	}
+	// Draw both screens
+	for (u16 x = 0; x < SCREEN_WIDTH; ++x) {
+		for (u16 y = 0; y < SCREEN_HEIGHT; ++y) {
+			for (u8 screenNum = 0; screenNum < 2; ++screenNum) {
+				r = (frameBuffer[screenNum]->getPixel(x, y) & 31) << 3;
+				g = (frameBuffer[screenNum]->getPixel(x, y) & (31 << 5)) >> 2;
+				g = (frameBuffer[screenNum]->getPixel(x, y) & (31 << 10)) >> 7;
 
-	// Draw bottom screen
-	for (u32 i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++) {
-		r = (DrawBg[0][i] & 31) << 3;
-		g = (DrawBg[0][i] & (31 << 5)) >> 2;
-		b = (DrawBg[0][i] & (31 << 10)) >> 7;
-		putPixel(screen, i % SCREEN_WIDTH, (i / SCREEN_WIDTH) + SCREEN_HEIGHT, SDL_MapRGB(format, r, g, b));
+				putPixel(screen, x, y + ((1 - SCREEN_HEIGHT) * screenNum), SDL_MapRGB(format, r, g, b));
+			}
+		}
 	}
 
 	SDL_UnlockSurface(screen);
@@ -361,7 +362,6 @@ void DC_FlushRange(const void *base, u32 size) {
 
 // Using libnds
 
-u16* DrawBg[2];
 WoopsiUI::FrameBuffer* frameBuffer[2];
 _pads Pad;
 _stylus Stylus;
@@ -428,9 +428,6 @@ void initWoopsiGfxMode() {
 	// Initialise backgrounds
 	bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0, 0);
 	bgInitSub(3, BgType_Bmp16, BgSize_B16_256x256, 0, 0);
-
-	DrawBg[1] = (u16*)BG_BMP_RAM(0);
-	DrawBg[0] = (u16*)BG_BMP_RAM_SUB(0);
 
 	frameBuffer[1] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM(0), SCREEN_WIDTH, SCREEN_HEIGHT);
 	frameBuffer[0] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM_SUB(0), SCREEN_WIDTH, SCREEN_HEIGHT);
