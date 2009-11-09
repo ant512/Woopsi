@@ -2,7 +2,7 @@
 
 using namespace WoopsiUI;
 
-BitmapWrapper::BitmapWrapper(u16* data, u16 width, u16 height) {
+BitmapWrapper::BitmapWrapper(const u16* data, u16 width, u16 height) {
 	_width = width;
 	_height = height;
 	_bitmap = data;

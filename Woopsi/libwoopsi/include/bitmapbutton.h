@@ -6,6 +6,8 @@
 
 namespace WoopsiUI {
 
+	class BitmapBase;
+
 	/**
 	 * Class representing a clickable button that contains a bitmap image instead of text.
 	 * Displays two bitmaps, one when the button is clicked, and one when it isn't.  The
@@ -22,12 +24,10 @@ namespace WoopsiUI {
 		 * @param height The height of the button.
 		 * @param bitmapX The x co-ordinate at which the bitmaps will be drawn.
 		 * @param bitmapY The y co-ordinate at which the bitmaps will be drawn.
-		 * @param bitmapWidth The width of the bitmaps.
-		 * @param bitmapHeight The height of the bitmaps.
 		 * @param bitmapNormal Pointer to the unclicked bitmap.
 		 * @param bitmapClicked Pointer to the clicked bitmap.
 		 */
-		BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, const u16* bitmapNormal, const u16* bitmapClicked);
+		BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, const BitmapBase* bitmapNormal, const BitmapBase* bitmapClicked);
 
 		/**
 		 * Draw the region of the button that falls within the clipRect.
@@ -52,10 +52,8 @@ namespace WoopsiUI {
 		virtual bool release(s16 x, s16 y);
 
 	protected:
-		const u16* _bitmapNormal;			/**< Bitmap to display when button is not clicked */
-		const u16* _bitmapClicked;			/**< Bitmap to display when button is clicked */
-		u16 _bitmapWidth;					/**< Width of the bitmaps */
-		u16 _bitmapHeight;					/**< Height of the bitmaps */
+		const BitmapBase* _bitmapNormal;	/**< Bitmap to display when button is not clicked */
+		const BitmapBase* _bitmapClicked;	/**< Bitmap to display when button is clicked */
 		u16 _bitmapX;						/**< X co-ordinate of the bitmaps */
 		u16 _bitmapY;						/**< Y co-ordinate of the bitmaps */
 

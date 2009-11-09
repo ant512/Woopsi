@@ -49,7 +49,7 @@ void SuperBitmap::draw(Rect clipRect) {
 	// Flush out the bitmap mem cache to ensure DMA can see correct data
 	DC_FlushRange(_bitmap->getData(), _bitmap->getWidth() * _bitmap->getHeight() * sizeof(u16));
 
-	port->drawBitmap(x, y, _width, _height, _bitmap->getData(), _bitmapX, _bitmapY, _bitmap->getWidth(), _bitmap->getHeight());
+	port->drawBitmap(x, y, _width, _height, _bitmap, _bitmapX, _bitmapY);
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);

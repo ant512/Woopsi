@@ -10,6 +10,7 @@ namespace WoopsiUI {
 	
 	class FontBase;
 	class FrameBuffer;
+	class BitmapBase;
 	
 	/**
 	 * GraphicsPort is the interface between a gadget and the framebuffer.  It provides
@@ -130,13 +131,6 @@ namespace WoopsiUI {
 		void drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour);
 		
 		/**
-		 * Invert the colour of the pixel at the specified co-ordinates.
-		 * @param x The x co-ordinate of the pixel.
-		 * @param y The y co-ordinate of the pixel.
-		 */
-		void drawXORPixel(s16 x, s16 y);
-		
-		/**
 		 * Invert the colour of a horizontal line of pixels.
 		 * @param x The x co-ordinate of the line.
 		 * @param y The y co-ordinate of the line.
@@ -238,10 +232,8 @@ namespace WoopsiUI {
 		 * @param bitmap Pointer to the bitmap to draw.
 		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
 		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
-		 * @param bitmapWidth The width of the supplied bitmap.
-		 * @param bitmapHeight The height of the supplied bitmap.
 		 */
-		void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight);
+		void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY);
 		
 		/**
 		 * Draw a bitmap to the port's bitmap, using the supplied transparent colour
@@ -254,11 +246,9 @@ namespace WoopsiUI {
 		 * @param bitmap Pointer to the bitmap to draw.
 		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
 		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
-		 * @param bitmapWidth The width of the supplied bitmap.
-		 * @param bitmapHeight The height of the supplied bitmap.
 		 * @param transparentColour The transparent colour used in the bitmap.
 		 */
-		void drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour);
+		void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour);
 		
 		/**
 		 * Draw a line to the port's bitmap.
@@ -326,8 +316,8 @@ namespace WoopsiUI {
 		void clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Gadget::Rect& clipRect);
 		void clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Gadget::Rect& clipRect);
 		void clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadget::Rect& clipRect);
-		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, const Gadget::Rect& clipRect);
-		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour, const Gadget::Rect& clipRect);
+		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Gadget::Rect& clipRect);
+		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour, const Gadget::Rect& clipRect);
 		void clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Gadget::Rect& clipRect);
 		void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Gadget::Rect& clipRect);
 		void clipXORPixel(s16 x, s16 y, const Gadget::Rect& clipRect);
@@ -337,19 +327,6 @@ namespace WoopsiUI {
 		void clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Gadget::Rect& clipRect, WoopsiArray<Gadget::Rect>* revealedRects);
 		void clipDim(s16 x, s16 y, u16 width, u16 height, const Gadget::Rect& clipRect);
 		
-		// Drawing functions that take pre-clipped values
-		void drawClippedPixel(s16 x, s16 y, u16 colour);
-		void drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
-		void drawClippedHorizLine(s16 x, s16 y, s16 width, u16 colour);
-		void drawClippedVertLine(s16 x, s16 y, s16 height, u16 colour);
-		void drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight);
-		void drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour);
-		void drawClippedXORPixel(s16 x, s16 y);
-		void drawClippedXORHorizLine(s16 x, s16 y, u16 width);
-		void drawClippedXORVertLine(s16 x, s16 y, u16 height);
-		void drawClippedXORRect(s16 x, s16 y, u16 width, u16 height);
-		void drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
-
 		void convertPortToScreenSpace(s16* x, s16* y);
 		bool clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Gadget::Rect& clipRect);
 		u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);

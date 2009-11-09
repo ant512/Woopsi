@@ -6,6 +6,8 @@
 
 namespace WoopsiUI {
 
+	class BitmapBase;
+
 	/**
 	 * Class for creating sequences of bitmaps.
 	 */
@@ -34,10 +36,8 @@ namespace WoopsiUI {
 		 * Struct defining a single animation frame.
 		 */
 		typedef struct {
-			const u16* bitmap;			/**< Pointer to the bitmap image */
-			u16 width;					/**< Width of the bitmap image */
-			u16 height;					/**< Height of the bitmap image */
-			u8 delay;					/**< Additional number of VBLs that this frame should be displayed for */
+			const BitmapBase* bitmap;		/**< Pointer to the bitmap image */
+			u8 delay;						/**< Additional number of VBLs that this frame should be displayed for */
 		} AnimFrame;
 
 		/**
@@ -63,7 +63,7 @@ namespace WoopsiUI {
 		 * Get the bitmap from the current animation frame.
 		 * @return The current frame's bitmap.
 		 */
-		inline const u16* getCurrentBitmap() const { return _frames[_currentFrame].bitmap; };
+		inline const BitmapBase* getCurrentBitmap() const { return _frames[_currentFrame].bitmap; };
 		
 		/**
 		 * Get the current status of the animation - stopped, playing or paused.
@@ -116,7 +116,7 @@ namespace WoopsiUI {
 		 * @param delay A frame-specific delay to make this frame appear longer than other
 		 * frames (measured in VBLs).
 		 */
-		void addFrame(const u16* bitmap, const u16 width, const u16 height, const u8 delay);
+		void addFrame(const BitmapBase* bitmap, const u8 delay);
 
 		/**
 		 * Run the animation.  Should be called every frame.

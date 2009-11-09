@@ -20,7 +20,7 @@ namespace WoopsiUI {
 		 * @param width The width of the bitmap.
 		 * @param height The height of the bitmap.
 		 */
-		BitmapWrapper(u16* data, u16 width, u16 height);
+		BitmapWrapper(const u16* data, u16 width, u16 height);
 
 		/**
 		 * Destructor.
@@ -42,7 +42,7 @@ namespace WoopsiUI {
 		inline const u16* getData() const { return _bitmap; };
 
 	protected:
-		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
+		const u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
 
 		/**
 		 * Copy constructor is protected to prevent usage.

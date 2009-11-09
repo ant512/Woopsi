@@ -4,6 +4,7 @@
 #include "textwriter.h"
 #include "woopsifuncs.h"
 #include "framebuffer.h"
+#include "bitmapbase.h"
 
 using namespace WoopsiUI;
 
@@ -54,39 +55,7 @@ void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 		}
 		
 		// Draw the rectangle
-		drawClippedFilledRect(x, y, width, height, colour);
-	}
-}
-
-// Draw pre-clipped rectangles
-void GraphicsPort::drawClippedFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
-	
-	// Draw initial pixel
-	u16* pos = _data + (y * _width) + x;
-	*pos = colour;
-	
-	u16* target = pos + 1;
-	
-	// Draw first line
-	if (width > 1) {
-		// Wait until DMA channel is clear
-		while (DMA_Active());
-		
-		DMA_Force(*pos, target, width - 1, DMA_16NOW);
-	}
-	
-	// Move to next row
-	target += _width - 1;
-	
-	for (u16 i = 1; i < height; i++) {
-		// Wait until DMA channel is clear
-		while (DMA_Active());
-		
-		// Duplicate pixel
-		DMA_Force(*pos, target, width, DMA_16NOW);
-		
-		// Move to next row
-		target += _width;
+		GraphicsUnclipped::drawFilledRect(x, y, width, height, colour);
 	}
 }
 
@@ -218,78 +187,6 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char
 	}
 }
 
-// Draw a single pixel to the bitmap
-void GraphicsPort::drawClippedPixel(s16 x, s16 y, u16 colour) {
-	u32 pos = (y * _width) + x;
-	_data[pos] = colour;
-}
-
-// Draw a horizontal line - internal function
-void GraphicsPort::drawClippedHorizLine(s16 x, s16 y, s16 width, u16 colour) {
-	if (width-- > 0) {
-		// Draw initial pixel
-		u16* pos = _data + (y * _width) + x;
-		*pos = colour;
-		
-		if (width > 0) {
-			// Duplicate pixel
-			while(DMA_Active());
-			DMA_Force(*pos, (pos + 1), width, DMA_16NOW);
-		}
-	}
-}
-
-/// Draw a vertical line - internal function
-void GraphicsPort::drawClippedVertLine(s16 x, s16 y, s16 height, u16 colour) {
-	for (s16 i = y; i < y + height; i++) {
-		drawClippedPixel(x, i, colour);
-	}
-}
-
-// XOR out a pixel
-void GraphicsPort::drawClippedXORPixel(s16 x, s16 y) {
-	u16 pixel = (_data[x + (y * _width)] ^ 0xffff) | (1 << 15);
-	drawClippedPixel(x, y, pixel);
-}
-
-// XOR out a horizontal line
-void GraphicsPort::drawClippedXORHorizLine(s16 x, s16 y, u16 width) {
-	for (u16 i = 0; i < width; i++) {
-		drawClippedXORPixel(x + i, y);
-	}
-}
-
-// XOR out a vertical line
-void GraphicsPort::drawClippedXORVertLine(s16 x, s16 y, u16 height) {
-	for (u16 i = 0; i < height; i++) {
-		drawClippedXORPixel(x, y + i);
-	}
-}
-
-// XOR out a rectangle
-void GraphicsPort::drawClippedXORRect(s16 x, s16 y, u16 width, u16 height) {
-	
-	// Top
-	if (((y >= 0) && (y < SCREEN_HEIGHT)) || ((y >= TOP_SCREEN_Y_OFFSET) && (y < TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT))) {
-		drawClippedXORHorizLine(x, y, width);
-	}
-	
-	// Bottom
-	if ((y + height < SCREEN_HEIGHT) || ((y >= TOP_SCREEN_Y_OFFSET) && (y + height < TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT))) {
-		drawClippedXORHorizLine(x, y + height - 1, width);
-	}
-	
-	// Left
-	if ((x >= 0) && (x < _width)) {
-		drawClippedXORVertLine(x, y + 1, height - 2);
-	}
-	
-	// Right
-	if (x + width < _width) {
-		drawClippedXORVertLine(x + width - 1, y + 1, height - 2);
-	}
-}
-
 // Clip vertical line
 void GraphicsPort::clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadget::Rect& clipRect) {
 	
@@ -304,7 +201,7 @@ void GraphicsPort::clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadg
 		height = y2 - y + 1;
 		
 		// Draw the line
-		drawClippedVertLine(x, y, height, colour);
+		GraphicsUnclipped::drawVertLine(x, y, height, colour);
 	}
 }
 
@@ -322,7 +219,7 @@ void GraphicsPort::clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Gadg
 		width = x2 - x + 1;
 		
 		// Draw the line
-		drawClippedHorizLine(x, y, width, colour);
+		GraphicsUnclipped::drawHorizLine(x, y, width, colour);
 	}
 }
 
@@ -340,7 +237,7 @@ void GraphicsPort::clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect&
 		width = x2 - x + 1;
 		
 		// Draw the line
-		drawClippedXORHorizLine(x, y, width);
+		GraphicsUnclipped::drawXORHorizLine(x, y, width);
 	}
 }
 
@@ -358,7 +255,7 @@ void GraphicsPort::clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect&
 		height = y2 - y + 1;
 		
 		// Draw the line
-		drawClippedXORVertLine(x, y, height);
+		GraphicsUnclipped::drawXORVertLine(x, y, height);
 	}
 }
 
@@ -607,11 +504,14 @@ void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
 }
 
 //Draw bitmap - external function
-void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight) {
+void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
 	
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
 	
+	u16 bitmapWidth = bitmap->getWidth();
+	u16 bitmapHeight = bitmap->getHeight();
+
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
@@ -627,19 +527,22 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
 		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, _clipRectList->at(i));
+			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
-		clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, *_clipRect);
+		clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, *_clipRect);
 	}
 }
 
 //Draw bitmap with transparency - external function
-void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour) {
+void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour) {
 	
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
+
+	u16 bitmapWidth = bitmap->getWidth();
+	u16 bitmapHeight = bitmap->getHeight();
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
@@ -656,11 +559,11 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 	if (_clipRect == NULL) {
 		// Draw all visible rectangles
 		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, _clipRectList->at(i));
+			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, transparentColour, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
-		clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour, *_clipRect);
+		clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, transparentColour, *_clipRect);
 	}
 }
 
@@ -708,7 +611,7 @@ void GraphicsPort::drawXORVertLine(s16 x, s16 y, s16 height) {
 	}
 }
 
-void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, const Gadget::Rect& clipRect) {
 	
 	// Get co-ords of screen section we're drawing to
 	s16 minX = x;
@@ -738,12 +641,12 @@ void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 		}
 		
 		// Draw the bitmap
-		drawClippedBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight);
+		GraphicsUnclipped::drawBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY);
 	}
 }
 
-void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16 bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour, const Gadget::Rect& clipRect) {
-	
+void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour, const Gadget::Rect& clipRect) {
+
 	// Get co-ords of screen section we're drawing to
 	s16 minX = x;
 	s16 minY = y;
@@ -772,47 +675,7 @@ void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bi
 		}
 		
 		// Draw the bitmap
-		drawClippedBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY, bitmapWidth, bitmapHeight, transparentColour);
-	}
-}
-
-void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight) {
-	
-	// Precalculate line values for loop
-	u16* srcLine0 = (u16*)bitmap + bitmapX + (bitmapY * bitmapWidth);
-	
-	u16* srcLinei = srcLine0;
-	
-	u16* destLine0 = _data + x + (y * _width);
-	u16* destLinei = destLine0;
-	
-	u16 lastLine = y + height;
-	
-	for (u16 i = y; i < lastLine; i++) {
-		while (DMA_Active());
-		DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
-		
-		srcLinei += bitmapWidth;
-		destLinei += _width;
-	}
-}
-
-void GraphicsPort::drawClippedBitmap(s16 x, s16 y, u16 width, u16 height, const u16* bitmap, s16 bitmapX, s16  bitmapY, u16 bitmapWidth, u16 bitmapHeight, u16 transparentColour) {
-	
-	u16 source = 0;
-	
-	// Plot pixels one by one, ignoring transparent pixels
-	for (s16 i = 0; i < width; i++) {
-		for (s16 j = 0; j < height; j++) {
-			
-			// Get the source colour from the supplied bitmap
-			source = bitmap[((bitmapY + j) * bitmapWidth) + (bitmapX + i)];
-			
-			// Plot ignoring transparency
-			if (source != transparentColour) {
-				_data[((y + j) * _width) + (x + i)] = source;
-			}
-		}
+		GraphicsUnclipped::drawBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY, transparentColour);
 	}
 }
 
@@ -915,7 +778,7 @@ void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipR
 			y -= TOP_SCREEN_Y_OFFSET;
 		}
 		
-		drawClippedPixel(x, y, colour);
+		GraphicsUnclipped::drawPixel(x, y, colour);
 	}
 }
 
@@ -971,7 +834,7 @@ void GraphicsPort::clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Ga
 				
 				// Line entirely within visible region
 				// Draw the line
-				drawClippedLine(x1, y1, x2, y2, colour);
+				GraphicsUnclipped::drawLine(x1, y1, x2, y2, colour);
 				return;
 			} else if (code1 & code2) {
 				
@@ -1035,45 +898,6 @@ void GraphicsPort::clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Ga
 			}
 		}
 	}
-}
-
-void GraphicsPort::drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
-	int dx, dy, inx, iny, e;
-	
-	dx = x2 - x1;
-	dy = y2 - y1;
-	inx = dx > 0 ? 1 : -1;
-	iny = dy > 0 ? 1 : -1;
-	
-	if (dx < 0) dx = -dx;
-	if (dy < 0) dy = -dy;
-	
-	if (dx >= dy) {
-		dy <<= 1;
-		e = dy - dx;
-		dx <<= 1;
-		while (x1 != x2) {
-			drawClippedPixel(x1, y1,colour);
-			if (e >= 0) {
-				y1 += iny;
-				e-= dx;
-			}
-			e += dy; x1 += inx;
-		}
-	} else {
-		dx <<= 1;
-		e = dx - dy;
-		dy <<= 1;
-		while (y1 != y2) {
-			drawClippedPixel(x1, y1, colour);
-			if (e >= 0) {
-				x1 += inx;
-				e -= dy;
-			}
-			e += dx; y1 += iny;
-		}
-	}
-	drawClippedPixel(x1, y1, colour);
 }
 
 void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height) {

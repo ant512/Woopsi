@@ -1,4 +1,5 @@
 #include "animation.h"
+#include "bitmapbase.h"
 
 using namespace WoopsiUI;
 
@@ -15,13 +16,11 @@ Animation::Animation(const u8 speed, const LoopType loopType, const u16 loops) {
 	_loopCount = 0;
 }
 
-void Animation::addFrame(const u16* bitmap, const u16 width, const u16 height, const u8 delay) {
+void Animation::addFrame(const BitmapBase* bitmap, const u8 delay) {
 	
 	// Create new animation frame
 	AnimFrame newFrame;
 	newFrame.bitmap = bitmap;
-	newFrame.width = width;
-	newFrame.height = height;
 	newFrame.delay = delay;
 
 	// Append frame to end of frames vector

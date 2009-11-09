@@ -193,6 +193,10 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* strin
 	TextWriter::drawString(_data, _width, _height, font, string, strlen(string), x, y, 0, 0, _width - 1, _height - 1);
 }
 
+void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string) {
+	TextWriter::drawString(_data, _width, _height, font, string, length, x, y, 0, 0, _width - 1, _height - 1);
+}
+
 // Print a string in a specific colour
 void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour) {
 
@@ -206,6 +210,60 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* strin
 	// Output as normal
 	drawText(x, y, font, string);
 
+	// Reset colour
+	if (!isMonochrome) {
+		font->clearColour();
+	} else {
+		font->setColour(oldColour);
+	}
+}
+
+// Print a single character in a specific colour
+void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour) {
+	
+	// Store current font colour
+	bool isMonochrome = font->isMonochrome();
+	u16 oldColour = font->getColour();
+	
+	// Update font colour
+	font->setColour(colour);
+	
+	// Output as normal
+	drawText(x, y, font, letter);
+	
+	// Reset colour
+	if (!isMonochrome) {
+		font->clearColour();
+	} else {
+		font->setColour(oldColour);
+	}
+}
+
+// Print a single character
+void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, char letter) {
+	
+	// Convert char to char[]
+	char text[2];
+	text[0] = letter;
+	text[1] = '\0';
+	
+	// Output as normal
+	drawText(x, y, font, text);
+}
+
+// Print a string in a specific colour
+void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string, u16 colour) {
+	
+	// Store current font colour
+	bool isMonochrome = font->isMonochrome();
+	u16 oldColour = font->getColour();
+	
+	// Update font colour
+	font->setColour(colour);
+	
+	// Output as normal
+	drawText(x, y, font, length, string);
+	
 	// Reset colour
 	if (!isMonochrome) {
 		font->clearColour();
@@ -332,6 +390,28 @@ void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bi
 
 		srcLinei += bitmapWidth;
 		destLinei += _width;
+	}
+}
+
+//Draw bitmap with transparency
+void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour) {
+
+	u16 source = 0;
+	const u16* bitmapData = bitmap->getData();
+	u16 bitmapWidth = bitmap->getWidth();
+	
+	// Plot pixels one by one, ignoring transparent pixels
+	for (s16 i = 0; i < width; i++) {
+		for (s16 j = 0; j < height; j++) {
+			
+			// Get the source colour from the supplied bitmap
+			source = bitmapData[((bitmapY + j) * bitmapWidth) + (bitmapX + i)];
+			
+			// Plot ignoring transparency
+			if (source != transparentColour) {
+				_data[((y + j) * _width) + (x + i)] = source;
+			}
+		}
 	}
 }
 
@@ -499,3 +579,158 @@ void GraphicsUnclipped::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRad
 		drawFilledRect(xCentre - rx, yCentre - ry, width, ry * 2 + 1, colour);
 	}
 }
+
+void GraphicsUnclipped::drawXORPixel(s16 x, s16 y) {
+
+	// Get the pixel at the specified co-ords and XOR against 0xffff
+	u16 pixel = (_data[x + (y * _width)] ^ 0xffff) | (1 << 15);
+
+	// Draw the XORed pixel colour to the bitmap
+	drawPixel(x, y, pixel);
+}
+
+void GraphicsUnclipped::drawXORHorizLine(s16 x, s16 y, u16 width) {
+	for (u16 i = 0; i < width; i++) {
+		drawXORPixel(x + i, y);
+	}
+}
+
+void GraphicsUnclipped::drawXORVertLine(s16 x, s16 y, u16 height) {
+	for (u16 i = 0; i < height; i++) {
+		drawXORPixel(x, y + i);
+	}
+}
+
+void GraphicsUnclipped::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
+	
+	// Performs bounds checks so that individual rect lines are omitted if
+	// they fall outside the bounds of the bitmap
+
+	// Top
+	if ((y >= 0) && (y < _height)) {
+		drawXORHorizLine(x, y, width);
+	}
+	
+	// Bottom
+	if (y + height < _height) {
+		drawXORHorizLine(x, y + height - 1, width);
+	}
+	
+	// Left
+	if ((x >= 0) && (x < _width)) {
+		drawXORVertLine(x, y + 1, height - 2);
+	}
+	
+	// Right
+	if (x + width < _width) {
+		drawXORVertLine(x + width - 1, y + 1, height - 2);
+	}
+}
+
+void GraphicsUnclipped::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height) {
+	for (s32 j = 0; j < height; j++) {
+		drawXORHorizLine(x, y + j, width);
+	}
+}
+
+void GraphicsUnclipped::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height) {
+	
+	// Do nothing if no copying involved
+	if ((sourceX == destX) && (sourceY == destY)) return;
+	
+	// If there is no vertical movement and the source and destination overlap,
+	// we need to use an offscreen buffer to copy
+	if (sourceY == destY) {
+		if ((destX >= sourceX) && (destX <= sourceX + width)) {
+			u16* buffer = new u16[width];
+			u16* copySource = _data + sourceX + (sourceY * _width);
+			u16* copyDest = _data + destX + (destY * _width);
+			
+			for (u16 y = 0; y < height; y++) {
+				
+				// Copy row to buffer
+				while(DMA_Active());
+				DMA_Copy(copySource, buffer, width, DMA_16NOW);
+				
+				// Copy row back to screen
+				while(DMA_Active());
+				DMA_Copy(buffer, copyDest, width, DMA_16NOW);
+				
+				copySource += _width;
+				copyDest += _width;
+			}
+			
+			delete buffer;
+			
+			return;
+		}
+	}
+	
+	// Vertical movement or non overlap means we do not need to use an intermediate buffer
+	// Copy from top to bottom if moving up; from bottom to top if moving down.
+	// Ensures that rows to be copied are not overwritten
+	s16 delta;
+	u16* copySource;
+	u16* copyDest;
+	
+	if (sourceY > destY) {
+		
+		// Copy up
+		delta = _width;
+		copySource = _data + sourceX + (sourceY * _width);
+		copyDest = _data + destX + (destY * _width);
+	} else {
+		
+		// Copy down
+		delta = -_width;
+		copySource = _data + sourceX + ((sourceY + height - 1) * _width);
+		copyDest = _data + destX + ((destY + height - 1) * _width);
+	}
+	
+	// Perform copy	
+	for (u16 i = 0; i < height; ++i) {
+		
+		// Copy row
+		while(DMA_Active());
+		DMA_Copy(copySource, copyDest, width, DMA_16NOW);
+		
+		copySource += delta;
+		copyDest += delta;
+	}
+}
+
+void GraphicsUnclipped::dim(s16 x, s16 y, u16 width, u16 height) {
+	
+	s16 x2 = x + width - 1;
+	s16 y2 = y + height - 1;
+
+	u16* rowStart = _data + (y * _width);
+	u16 colStart = x;
+	u16 colPos;
+
+	// Loop through all pixels within the region
+	for (s16 i = y; i <= y2; i++) {
+
+		// Reset to start pixel row
+		colPos = colStart;
+
+		for (s16 j = x; j <= x2; j++) {
+	
+			// Get pixel data directly from the framebuffer
+			u16 colour = *(rowStart + colPos);
+		
+			// Halve the intensity of the colour (cheers Jeff)
+			colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
+
+			// Write back to framebuffer
+			*(rowStart + colPos) = 0x8000 | colour;
+
+			// Move to next pixel column
+			colPos++;
+		}
+
+		// Move to next pixel row
+		rowStart += _width;
+	}
+}
+		

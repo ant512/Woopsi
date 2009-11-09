@@ -119,6 +119,16 @@ namespace WoopsiUI {
 		 * @param string The string to output.
 		 */
 		virtual void drawText(s16 x, s16 y, FontBase* font, const char* string);
+
+		/**
+		 * Draw a particular length of a string to the bitmap.
+		 * @param x The x co-ordinate of the string.
+		 * @param y The y co-ordinate of the string.
+		 * @param font The font to draw with.
+		 * @param length The number of characters to output.
+		 * @param string The string to output.
+		 */
+		virtual void drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string);
 		
 		/**
 		 * Draw a string to the internal bitmap in a specific colour.
@@ -130,6 +140,36 @@ namespace WoopsiUI {
 		 */
 		virtual void drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour);
 		
+		/**
+		 * Draw a particular length of a string to the bitmap in a secific colour.
+		 * @param x The x co-ordinate of the string.
+		 * @param y The y co-ordinate of the string.
+		 * @param font The font to draw with.
+		 * @param length The number of characters to output.
+		 * @param string The string to output.
+		 * @param colour The colour of the string.
+		 */
+		virtual void drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string, u16 colour);
+		
+		/**
+		 * Draw a single character to the bitmap.
+		 * @param x The x co-ordinate of the character.
+		 * @param y The y co-ordinate of the character.
+		 * @param font The font to draw with.
+		 * @param letter The character to output.
+		 */
+		virtual void drawText(s16 x, s16 y, FontBase* font, char letter);
+	
+		/**
+		 * Draw a single character to the bitmap in a specific colour.
+		 * @param x The x co-ordinate of the character.
+		 * @param y The y co-ordinate of the character.
+		 * @param font The font to draw with.
+		 * @param letter The character to output.
+		 * @param colour The colour of the character.
+		 */
+		virtual void drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour);
+
 		/**
 		 * Draw an external bitmap to the internal bitmap.
 		 * @param x The x co-ordinate to draw the bitmap to.
@@ -143,6 +183,21 @@ namespace WoopsiUI {
 		 * @param bitmapHeight The height of the supplied bitmap.
 		 */
 		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY);
+
+		/**
+		 * Draw a bitmap to the port's bitmap, using the supplied transparent colour
+		 * as an invisible colour.  This is considerably slower than the standard bitmap
+		 * drawing routine as it plots pixel-by-pixel instead of using a scanline DMA copy.
+		 * @param x The x co-ordinate to draw the bitmap to.
+		 * @param y The y co-ordinate to draw the bitmap to.
+		 * @param width The width of the bitmap to draw.
+		 * @param height The height of the bitmap to draw.
+		 * @param bitmap Pointer to the bitmap to draw.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 * @param transparentColour The transparent colour used in the bitmap.
+		 */
+		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour);
 		
 		/**
 		 * Fill a region of the internal bitmap with the specified colour.
@@ -171,6 +226,72 @@ namespace WoopsiUI {
 		 * @param colour The colour of the ellipse.
 		 */
 		virtual void drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
+
+		/**
+		 * Invert the colour of the pixel at the specified co-ordinates.
+		 * @param x The x co-ordinate of the pixel.
+		 * @param y The y co-ordinate of the pixel.
+		 */
+		virtual void drawXORPixel(s16 x, s16 y);
+		
+		/**
+		 * Invert the colour of a horizontal line of pixels.
+		 * @param x The x co-ordinate of the line.
+		 * @param y The y co-ordinate of the line.
+		 * @param width The width of the line.
+		 */
+		virtual void drawXORHorizLine(s16 x, s16 y, u16 width);
+		
+		/**
+		 * Invert the colour of a vertical line of pixels.
+		 * @param x The x co-ordinate of the line.
+		 * @param y The y co-ordinate of the line.
+		 * @param height The height of the line.
+		 */
+		virtual void drawXORVertLine(s16 x, s16 y, u16 height);
+		
+		/**
+		 * Invert the colour of an unfilled rectangle of pixels.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 */
+		virtual void drawXORRect(s16 x, s16 y, u16 width, u16 height);
+		
+		/**
+		 * Invert the colour of an filled rectangle of pixels.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 */
+		virtual void drawFilledXORRect(s16 x, s16 y, u16 width, u16 height);
+
+		/**
+		 * Copy a rectangular region from the source co-ordinates to the
+		 * destination co-ordinates.  Uses the DMA for speed.  Worst-case
+		 * scenario uses an off-screen buffer for situations wherein there
+		 * is no vertical movement and the source and destination overlap,
+		 * in which case two copies are performed for each row (source to
+		 * buffer and buffer to destination).  Does not clip.
+		 * @param sourceX Source x co-ord.
+		 * @param sourceY Source y co-ord.
+		 * @param destX Destination x co-ord.
+		 * @param destY Destination y co-ord.
+		 * @param width Width of the rectangle to copy.
+		 * @param height Height of the rectangle to copy.
+		 */
+		void copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height);
+		
+		/**
+		 * Halve the brightness of a specified region.
+		 * @param x X co-ord of the region to dim.
+		 * @param y Y co-ord of the region to dim.
+		 * @param width Width of the region to dim.
+		 * @param height Height of the region to dim.
+		 */
+		void dim(s16 x, s16 y, u16 width, u16 height);
 
 	protected:
 		MutableBitmapBase* _bitmap;		/**< Bitmap */
