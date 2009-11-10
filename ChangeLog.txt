@@ -65,6 +65,7 @@ Change Log
     - Font system uses new Bitmap object hierarchy.
     - System fonts available as global objects.
     - Rewritten clipping routine in Font and MonoFont.
+    - Reorganised VC++ project with more filters.
 
 
   V0.39 (20091024)
