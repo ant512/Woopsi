@@ -388,43 +388,11 @@
 				Name="Core"
 				>
 				<File
-					RelativePath=".\libwoopsi\include\animation.h"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\include\date.h"
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\include\defaultstyle.h"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\include\defines.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\gadget.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\glyphs.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\mutablebitmapbase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\rectcache.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\textwriter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\woopsi.h"
 					>
 				</File>
 				<File
@@ -448,6 +416,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\fontbase.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\glyphs.h"
 						>
 					</File>
 					<File
@@ -490,10 +462,18 @@
 						RelativePath=".\libwoopsi\include\framebuffer.h"
 						>
 					</File>
+					<File
+						RelativePath=".\libwoopsi\include\mutablebitmapbase.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Graphics"
 					>
+					<File
+						RelativePath=".\libwoopsi\include\animation.h"
+						>
+					</File>
 					<File
 						RelativePath=".\libwoopsi\include\graphics.h"
 						>
@@ -504,6 +484,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\graphicsunclipped.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\textwriter.h"
 						>
 					</File>
 				</Filter>
@@ -556,6 +540,26 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\listdataeventhandler.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Gadgets"
+					>
+					<File
+						RelativePath=".\libwoopsi\include\defaultstyle.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\gadget.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\rectcache.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\woopsi.h"
 						>
 					</File>
 				</Filter>
