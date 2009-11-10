@@ -580,10 +580,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\include\decorationglyphbutton.h"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\include\gradient.h"
 					>
 				</File>
@@ -680,6 +676,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\cyclebutton.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\decorationglyphbutton.h"
 						>
 					</File>
 				</Filter>
