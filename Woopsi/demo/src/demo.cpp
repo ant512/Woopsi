@@ -7,6 +7,8 @@
 #include "bitmap/all_gfx.c"
 #include "bitmap/all_gfx.h"
 #include "bitmapwrapper.h"
+#include "bitmap.h"
+#include "graphics.h"
 
 void Demo::startup() {
 
@@ -14,26 +16,48 @@ void Demo::startup() {
 
 	Gadget::Rect rect;
 
-	// TODO: Change this to use standard screen/window gadgets
-	/*
-	// Create skinned screen
-	SkinnedScreen* sknScreen = new SkinnedScreen("Skin", Gadget::GADGET_DRAGGABLE, SkinnedScreen::SKINNED_SCREEN_SHOW_FLIP | SkinnedScreen::SKINNED_SCREEN_SHOW_DEPTH, screenSkin);
-	woopsiApplication->addGadget(sknScreen);
+	// Create SuperBitmap test screen
+	AmigaScreen* superBitmapScreen = new AmigaScreen("Woopsi Demo V0.36", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	woopsiApplication->addGadget(superBitmapScreen);
+	superBitmapScreen->setPermeable(true);
 
 	// Create skinned window
-	SkinnedWindow* sknWindow = new SkinnedWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, SkinnedWindow::SKINNED_WINDOW_SHOW_CLOSE | SkinnedWindow::SKINNED_WINDOW_SHOW_DEPTH, windowSkin);
-	sknScreen->addGadget(sknWindow);
+	AmigaWindow* superBitmapWindow = new AmigaWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	superBitmapScreen->addGadget(superBitmapWindow);
+
+	/** SuperBitmap preparation **/
+	// Create bitmap for superbitmap
+	Bitmap* superBitmapBitmap = new Bitmap(164, 191);
+
+	// Wrap the raw zombie_Bitmap data inside a BitmapWrapper class
+	BitmapWrapper* wrapper = new BitmapWrapper(zombie_Bitmap, 164, 191);
+
+	// Get a graphics object from the bitmap so that we can modify it
+	Graphics* gfx = superBitmapBitmap->newGraphics();
+
+	// Copy the wrapped bitmap to this bitmap
+	gfx->drawBitmap(0, 0, 164, 191, wrapper, 0, 0);
+
+	// Dim the bitmap
+	gfx->dim(0, 0, 164, 191);
+
+	// Draw on the bitmap
+	gfx->drawFilledCircle(10, 10, 20, woopsiRGB(31, 31, 31));
+	gfx->drawFilledRect(10, 40, 20, 20, woopsiRGB(31, 0, 0));
+	gfx->drawFilledEllipse(60, 60, 10, 30, woopsiRGB(10, 31, 0));
+
+	// Clean up
+	delete gfx;
+	delete wrapper;
 
 	// Attach bitmap
-	sknWindow->getClientRect(rect);
+	superBitmapWindow->getClientRect(rect);
 	SuperBitmap* superBitmap = new SuperBitmap(rect.x, rect.y, rect.width, rect.height, 164, 191, false);
-	superBitmap->drawBitmap(0, 0, 164, 191, zombie_Bitmap, 0, 0, 164, 191);
-	sknWindow->addGadget(superBitmap);
+	superBitmap->drawBitmap(0, 0, 164, 191, superBitmapBitmap, 0, 0);
+	superBitmapWindow->addGadget(superBitmap);
 
-	// Draw on superbitmap
-	superBitmap->drawFilledCircle(10, 10, 20, woopsiRGB(31, 31, 31));
-	superBitmap->drawFilledRect(10, 40, 20, 20, woopsiRGB(31, 0, 0));
-	superBitmap->drawFilledEllipse(60, 60, 10, 30, woopsiRGB(10, 31, 0));
+	// TODO: Change this to use standard screen/window gadgets
+	/*
 
 	// Anim button test
 	SkinnedWindow* ikWindow = new SkinnedWindow(30, 30, 121, 71, "IK", Gadget::GADGET_DRAGGABLE, SkinnedWindow::SKINNED_WINDOW_SHOW_CLOSE | SkinnedWindow::SKINNED_WINDOW_SHOW_DEPTH, windowSkin);

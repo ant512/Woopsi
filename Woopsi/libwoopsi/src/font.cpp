@@ -98,7 +98,7 @@ s16 Font::drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16 cli
 		for (u16 pY = 0; pY < clipHeight; ++pY) {
 			for (u16 pX = 0; pX < clipWidth; ++pX) {
 
-				sourceColour = _bitmap->getPixel(letterX + offsetStartX + pX, letterY + offsetStartY + pY);
+				sourceColour = getPixel(letterX + offsetStartX + pX, letterY + offsetStartY + pY);
 
 				if (sourceColour != transparentColour) {
 					bitmap->setPixel(x + offsetStartX + pX, y + offsetStartY + pY, sourceColour);

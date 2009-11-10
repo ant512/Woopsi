@@ -101,7 +101,7 @@ s16 MonoFont::drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16
 		for (u16 pY = 0; pY < clipHeight; ++pY) {
 			for (u16 pX = 0; pX < clipWidth; ++pX) {
 
-				sourceColour = _bitmap[((letterY + offsetStartY + pY) * fontBitmapWidth) + (letterX + offsetStartX + pX)];
+				sourceColour = getPixel(letterY + offsetStartY + pY, letterX + offsetStartX + pX);
 
 				if (sourceColour != transparentColour) {
 					bitmap->setPixel(x + offsetStartX + pX, y + offsetStartY + pY, sourceColour);
