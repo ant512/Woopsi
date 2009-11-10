@@ -8,6 +8,9 @@
 
 #include <nds.h>
 #include "framebuffer.h"
+#include "font.h"
+#include "monofont.h"
+#include "bitmapwrapper.h"
 
 // DMA handling bitmasks
 #define DMA_ON 0x80000000
@@ -154,10 +157,27 @@ void DC_FlushRange(const void *base, u32 size);
 extern WoopsiUI::FrameBuffer* frameBuffer[2];
 
 /**
+ * Pointers to Woopsi system fonts.
+ */
+extern WoopsiUI::BitmapWrapper* systemFontBitmap;
+extern WoopsiUI::Font* systemFont;
+extern WoopsiUI::MonoFont* tinyFont;
+
+/**
  * Initialise the DS' screens into framebuffer mode.  Also sets up some other subsystems
  * and IRQs.
  */
 void initWoopsiGfxMode();
+
+/**
+ * Initialise the Woopsi system fonts.
+ */
+void woopsiInitFonts();
+
+/**
+ * Delete the Woopsi system fonts.
+ */
+void woopsiFreeFonts();
 
 /**
  * Wait for a VBL.  Switches into a wait state if the lid is closed.

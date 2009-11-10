@@ -1,4 +1,5 @@
 #include "monofont.h"
+#include "mutablebitmapbase.h"
 
 using namespace WoopsiUI;
 
@@ -11,7 +12,10 @@ MonoFont::MonoFont(const u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, u8 widt
 }
 
 // Return a pixel at a given location 
-const u16 MonoFont::getPixel(const u32 position) const {
+const u16 MonoFont::getPixel(const s16 x, const s16 y) const {
+
+	u32 position = (y * getBitmapWidth()) + x;
+
 	if (_bitmap[position >> 4] & (1 << (16 - (position % 16)))) {
 		// Got some data
 		return getColour();
@@ -43,52 +47,64 @@ const bool MonoFont::scanGlyph(const u16 x, const u16 y) const {
 	return false;
 }
 
-s16 MonoFont::drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
+s16 MonoFont::drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
+
+	u8 fontWidth = getWidth();
+	u8 fontHeight = getHeight();
+	s16 output = x + fontWidth;
+
+	// Early exit if the char will be printed outside the clipping region
+	if (y > clipY2) return output;
+	if (y + fontHeight < clipY1) return output;
+	if (x > clipX2) return output;
+	if (x + fontWidth < clipX1) return output;
 
 	// Check that the font has data for the glyph
 	if (!isCharBlank(letter)) {
-	
-		u16 letterStart = letter * getWidth();
-		u8 letterStartY = 0;
-		u16 sourcePixel;
 
 		// Extract data from font object for extra speed
 		u16 transparentColour = getTransparentColour();
-		u8 fontWidth = getWidth();
-		u8 fontHeight = getHeight();
 		u16 fontBitmapWidth = getBitmapWidth();
+	
+		// Calculate the number of columns in the bitmap
+		u16 columns = fontBitmapWidth / fontWidth;
 
-		// Calculate the start position of the letter in the font bitmap
-		letterStartY = letterStart / fontBitmapWidth;
-		letterStart %= fontBitmapWidth;
+		// Calculate the position of the letter in the font bitmap
+		u16 letterY = (letter / columns) * fontHeight;
+		u16 letterX = (letter % columns) * fontWidth;
 
-		letterStart += fontHeight * (letterStartY * fontBitmapWidth);
-
-		// TODO: Finish per-row/per-column clipping here
 		// Calculate values for clipping
 		s16 startX = x > clipX1 ? x : clipX1;
 		s16 endX = x + fontWidth - 1 < clipX2 ? x + fontWidth - 1: clipX2;
 		s16 startY = y > clipY1 ? y : clipY1;
 		s16 endY = y + fontHeight - 1 < clipY2 ? y + fontHeight - 1: clipY2;
 
-		// Draw letter to the screen in rows
+		// Calculate clipping starting offsets - tells us the pixel offset
+		// from the top-left of the character that we start drawing from
+		u16 offsetStartX = x > clipX1 ? 0 : clipX1 - x;
+		u16 offsetStartY = y > clipY1 ? 0 : clipY1 - y;
 
-		u16 sourceColour = 0;
+		// Calculate dimensions of region to copy
+		u16 clipWidth = (endX - startX) + 1;
+		u16 clipHeight = (endY - startY) + 1;
 
-		for (s16 destPixelY = startY; destPixelY <= endY; destPixelY++) {
+		// Ensure region to be drawn does not exceed the size of the character
+		if (clipWidth > fontWidth - offsetStartX) clipWidth = fontWidth - offsetStartX;
+		if (clipHeight > fontHeight - offsetStartY) clipHeight = fontHeight - offsetStartY;
 
-			for (s16 destPixelX = startX; destPixelX <= endX; destPixelX++) {
+		// Abort if there is no copying to be done
+		if ((clipWidth == 0) || (clipHeight == 0)) return x + fontWidth;
 
-				// Get the array index of the pixel to copy
-				sourcePixel = letterStart + (destPixelX - x) + ((destPixelY - y) * fontBitmapWidth);
+		// Copy the pixel data
+		u16 sourceColour;
 
-				sourceColour = getPixel(sourcePixel);
+		for (u16 pY = 0; pY < clipHeight; ++pY) {
+			for (u16 pX = 0; pX < clipWidth; ++pX) {
 
-				// Is the pixel part of the font, not the background?
+				sourceColour = _bitmap[((letterY + offsetStartY + pY) * fontBitmapWidth) + (letterX + offsetStartX + pX)];
+
 				if (sourceColour != transparentColour) {
-
-					// Draw text pixel
-					bitmap[destPixelX + (destPixelY * bitmapWidth)] = sourceColour;
+					bitmap->setPixel(x + offsetStartX + pX, y + offsetStartY + pY, sourceColour);
 				}
 			}
 		}

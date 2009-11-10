@@ -7,6 +7,8 @@
 
 namespace WoopsiUI {
 
+	class MutableBitmapBase;
+
 	/**
 	 * Class providing static methods for text output.
 	 */
@@ -35,8 +37,6 @@ namespace WoopsiUI {
 		/**
 		 * Output an entire string to the specified bitmap.
 		 * @param bitmap The bitmap to draw to.
-		 * @param bitmapWidth The width of the bitmap being drawn to.
-		 * @param bitmapHeight The height of the bitmap being drawn to.
 		 * @param font The font to use for the glyph data.
 		 * @param string The string to output.
 		 * @param length The length of the string to output.  This makes it possible to supply
@@ -49,7 +49,7 @@ namespace WoopsiUI {
 		 * @param clipX2 The right edge of the clipping rectangle.
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 */
-		static void drawString(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, FontBase* font, const char* string, u8 length, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+		static void drawString(MutableBitmapBase* bitmap, FontBase* font, const char* string, u8 length, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 		
 		/**
 		 * Output a single character to one of the DS' screens.  The screen number is
@@ -74,8 +74,6 @@ namespace WoopsiUI {
 		 * must be supplied, and the x co-ordinate of the character is adjusted to take
 		 * the character's index into account.
 		 * @param bitmap The bitmap to draw to.
-		 * @param bitmapWidth The width of the bitmap being drawn to.
-		 * @param bitmapHeight The height of the bitmap being drawn to.
 		 * @param font The font to use for the glyph data.
 		 * @param letter The character to output.
 		 * @param charIndex The position of this character within a larger string.
@@ -86,7 +84,7 @@ namespace WoopsiUI {
 		 * @param clipX2 The right edge of the clipping rectangle.
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 */
-		static void drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, FontBase* font, char letter, s16 charIndex, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+		static void drawChar(MutableBitmapBase* bitmap, u16 bitmapWidth, u16 bitmapHeight, FontBase* font, char letter, s16 charIndex, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
 	private:
 		/**

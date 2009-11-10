@@ -6,6 +6,8 @@
 
 namespace WoopsiUI {
 
+	class MutableBitmapBase;
+
 	/**
 	 * Fixed-width monochrome bitmap font that uses a bitpacked bitmap of u16s as its glyph
 	 * data.  1 represents a filled pixel; 0 represents an empty pixel.
@@ -32,16 +34,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Get the colour of the pixel at the specified offset from the start of the bitmap.
-		 * @param position The pixel's offset from the start of the bitmap.
+		 * @param x The x co-ordinate of the pixel.
+		 * @param y The y co-ordinate of the pixel.
 		 * @return The pixel colour.
 		 */
-		const u16 getPixel(const u32 position) const;
+		const u16 getPixel(const s16 x, const s16 y) const;
 
 		/**
 		 * Draw an individual character of the font to the specified bitmap.
 		 * @param bitmap The bitmap to draw to.
-		 * @param bitmapWidth The width of the bitmap being drawn to.
-		 * @param bitmapHeight The height of the bitmap being drawn to.
 		 * @param letter The character to output.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
@@ -51,7 +52,7 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		s16 drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+		s16 drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
 	private:
 		const u16* _bitmap;					/**< Pointer to the bitmap containing the font glyphs */

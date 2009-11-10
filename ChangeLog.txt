@@ -62,6 +62,9 @@ Change Log
     - Added GraphicsUnclipped to perform raw unclipped bitmap drawing.
     - GraphicsPort inherits from GraphicsUnclipped in order to reduce code
       repetition.
+    - Font system uses new Bitmap object hierarchy.
+    - System fonts available as global objects.
+    - Rewritten clipping routine in Font and MonoFont.
 
 
   V0.39 (20091024)

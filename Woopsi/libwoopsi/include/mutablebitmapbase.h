@@ -17,6 +17,14 @@ namespace WoopsiUI {
 		 * @return Non-const pointer to the internal bitmap.
 		 */
 		virtual u16* getEditableData() const = 0;
+
+		/**
+		 * Set the colour of the specified pixel.
+		 * @param x X co-ord of the pixel to set.
+		 * @param y Y co-ord of the pixel to set.
+		 * @param colour New colour of the pixel.
+		 */
+		virtual void setPixel(const s16 x, const s16 y, const u16 colour) = 0;
 	};
 }
 

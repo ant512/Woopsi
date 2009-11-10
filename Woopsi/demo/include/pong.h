@@ -2,7 +2,6 @@
 #define _PONG_H_
 
 #include "woopsi.h"
-#include "sysfont.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "woopsitimer.h"

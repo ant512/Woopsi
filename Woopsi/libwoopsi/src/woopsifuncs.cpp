@@ -7,12 +7,16 @@
 #include <string.h>
 #include "woopsifuncs.h"
 #include "graphics.h"
+#include "sysfont.h"
 
 #ifdef USING_SDL
 
 #include "defines.h"
 
 WoopsiUI::FrameBuffer* frameBuffer[2];
+WoopsiUI::BitmapWrapper* systemFontBitmap;
+WoopsiUI::Font* systemFont;
+WoopsiUI::MonoFont* tinyFont;
 
 _pads Pad;
 _stylus Stylus;
@@ -54,6 +58,9 @@ void initWoopsiGfxMode() {
 	// How can this be fixed?
 	frameBuffer[0] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
 	frameBuffer[1] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	// Initialise system fonts
+	woopsiInitFonts();
 
 	// Initialise both arrays
 	WoopsiUI::Graphics* graphics = frameBuffer[0]->newGraphics();
@@ -365,6 +372,11 @@ void DC_FlushRange(const void *base, u32 size) {
 // Using libnds
 
 WoopsiUI::FrameBuffer* frameBuffer[2];
+
+WoopsiUI::BitmapWrapper* systemFontBitmap;
+WoopsiUI::Font* systemFont;
+WoopsiUI::MonoFont* tinyFont;
+
 _pads Pad;
 _stylus Stylus;
 
@@ -433,6 +445,8 @@ void initWoopsiGfxMode() {
 
 	frameBuffer[1] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM(0), SCREEN_WIDTH, SCREEN_HEIGHT);
 	frameBuffer[0] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM_SUB(0), SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	woopsiInitFonts();
 	
 	memset( &Stylus, 0, sizeof(_stylus) );
 }
@@ -454,3 +468,19 @@ void woopsiWaitVBL() {
 }
 
 #endif
+
+void woopsiInitFonts() {
+
+	// Initialise fonts
+	systemFontBitmap = new WoopsiUI::BitmapWrapper(sysfont_Bitmap, 256, 50);
+	systemFont = new WoopsiUI::Font(systemFontBitmap, 8, 10, 64543);
+	tinyFont = new WoopsiUI::MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, 32768);
+}
+
+void woopsiFreeFonts() {
+
+	// Delete fonts
+	delete tinyFont;
+	delete systemFont;
+	delete systemFontBitmap;
+}

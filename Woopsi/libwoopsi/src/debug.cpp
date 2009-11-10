@@ -2,13 +2,11 @@
 #include <string.h>
 #include <stdarg.h>
 #include "debug.h"
-#include "sysfont.h"
 #include "woopsifuncs.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "woopsi.h"
 #include "scrollingtextbox.h"
-#include "monofont.h"
 
 using namespace WoopsiUI;
 
@@ -90,7 +88,7 @@ void Debug::createGUI() {
 
 	// Create font
 	if (_font == NULL) {
-		_font = new MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, 32768);
+		_font = tinyFont;
 	}
 
 	// Add textbox

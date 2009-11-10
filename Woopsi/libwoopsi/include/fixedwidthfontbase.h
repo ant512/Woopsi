@@ -44,20 +44,12 @@ namespace WoopsiUI {
 		inline const u16 getBitmapHeight() const { return _bitmapHeight; };
 
 		/**
-		 * Get the colour of a pixel at a particular offset from the start of the bitmap.  Must
-		 * be overridden in subclasses.
-		 * @param position The offset of the pixel from the start of the bitmap.
-		 * @return The colour of the pixel.
-		 */
-		virtual const u16 getPixel(const u32 position) const = 0;
-
-		/**
 		 * Get the colour of the pixel at specified co-ordinates.
 		 * @param x The x co-ordinate of the pixel.
 		 * @param y The y co-ordinate of the pixel.
 		 * @return The colour of the pixel.
 		 */
-		inline const u16 getPixel(const u16 x, const u16 y) const { return getPixel(x + (y * _width)); };
+		virtual const u16 getPixel(const s16 x, const s16 y) const = 0;
 
 		/**
 		 * Gets the width of an individual glyph.

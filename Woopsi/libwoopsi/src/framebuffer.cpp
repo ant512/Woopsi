@@ -21,6 +21,18 @@ const u16 FrameBuffer::getPixel(s16 x, s16 y) const {
 	return _bitmap[pos];
 }
 
+// Draw a single pixel to the bitmap
+void FrameBuffer::setPixel(s16 x, s16 y, u16 colour) {
+
+	// Prevent overflows
+	if ((x < 0) || (y < 0)) return;
+	if ((x >= _width) || (y >= _height)) return;
+
+	// Plot the pixel
+	u32 pos = (y * _width) + x;
+	_bitmap[pos] = colour;
+}
+
 Graphics* FrameBuffer::newGraphics() {
 	return new Graphics(this);
 }

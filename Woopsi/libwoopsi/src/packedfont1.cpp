@@ -1,16 +1,19 @@
 #include "packedfont1.h"
+#include "mutablebitmapbase.h"
 
 using namespace WoopsiUI;
 
 void PackedFont1::renderChar(
 		const u16* pixelData, u16 pixelsPerRow,
-		u16* bitmap, u16 bitmapWidth,
+		MutableBitmapBase* bitmap,
 		s16 x, s16 y,
 		u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {
 	u16 colour = getColour();
 	u16 curr;
 	u16 mask;
+	u16 bitmapWidth = bitmap->getWidth();
+	u16* bitmapData = bitmap->getEditableData();
 
 	// adjust clipY2 to be the last row in the glyph
 	// so we only write while (y=<clipY2)
@@ -30,7 +33,7 @@ void PackedFont1::renderChar(
 		u16 pixelsToSkip = rowsToSkip * pixelsPerRow;
 		u16 bitsToSkip = pixelsToSkip & 15;
 		y = clipY1;
-		bitmap += bitmapWidth * rowsToSkip;
+		bitmapData += bitmapWidth * rowsToSkip;
 		pixelData += pixelsToSkip / 16;		// skip over a bunch of u16s
 		if (bitsToSkip) {
 			curr = *pixelData++;
@@ -40,8 +43,8 @@ void PackedFont1::renderChar(
 
 	while (y <= clipY2) {
 		// get pointer to next row
-		u16 *row = bitmap;
-		bitmap += bitmapWidth;
+		u16 *row = bitmapData;
+		bitmapData += bitmapWidth;
 
 		u16 rowCount = pixelsPerRow;
 		u16 rowX = x;

@@ -190,11 +190,11 @@ void GraphicsUnclipped::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour)
 }
 
 void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* string) {
-	TextWriter::drawString(_data, _width, _height, font, string, strlen(string), x, y, 0, 0, _width - 1, _height - 1);
+	TextWriter::drawString(_bitmap, font, string, strlen(string), x, y, 0, 0, _width - 1, _height - 1);
 }
 
 void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string) {
-	TextWriter::drawString(_data, _width, _height, font, string, length, x, y, 0, 0, _width - 1, _height - 1);
+	TextWriter::drawString(_bitmap, font, string, length, x, y, 0, 0, _width - 1, _height - 1);
 }
 
 // Print a string in a specific colour
@@ -583,10 +583,11 @@ void GraphicsUnclipped::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRad
 void GraphicsUnclipped::drawXORPixel(s16 x, s16 y) {
 
 	// Get the pixel at the specified co-ords and XOR against 0xffff
-	u16 pixel = (_data[x + (y * _width)] ^ 0xffff) | (1 << 15);
+	u32 pos = (y * _width) + x;
+	u16 colour = (_data[pos] ^ 0xffff) | (1 << 15);
 
 	// Draw the XORed pixel colour to the bitmap
-	drawPixel(x, y, pixel);
+	_data[pos] = colour;
 }
 
 void GraphicsUnclipped::drawXORHorizLine(s16 x, s16 y, u16 width) {

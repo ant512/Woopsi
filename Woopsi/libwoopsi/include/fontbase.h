@@ -8,6 +8,8 @@
 
 namespace WoopsiUI {
 
+	class MutableBitmapBase;
+
 	/**
 	 * Abstract class defining the basic properties of a font and providing some of the
 	 * essential functionality.  Should be used as a base class for all fonts.
@@ -90,8 +92,6 @@ namespace WoopsiUI {
 		/**
 		 * Draw an individual character of the font to the specified bitmap.
 		 * @param bitmap The bitmap to draw to.
-		 * @param bitmapWidth The width of the bitmap being drawn to.
-		 * @param bitmapHeight The height of the bitmap being drawn to.
 		 * @param letter The character to output.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
@@ -101,7 +101,7 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		virtual s16 drawChar(u16* bitmap, u16 bitmapWidth, u16 bitmapHeight, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
+		virtual s16 drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 		
 		/**
 		 * Get the width of a string in pixels when drawn with this font.

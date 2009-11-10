@@ -39,6 +39,14 @@ namespace WoopsiUI {
 		const u16 getPixel(s16 x, s16 y) const;
 
 		/**
+		 * Set the colour of the specified pixel.
+		 * @param x X co-ord of the pixel to set.
+		 * @param y Y co-ord of the pixel to set.
+		 * @param colour New colour of the pixel.
+		 */
+		void setPixel(const s16 x, const s16 y, const u16 colour);
+
+		/**
 		 * Get a pointer to the internal bitmap.
 		 * @return Pointer to the internal bitmap.
 		 */

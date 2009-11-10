@@ -3,7 +3,6 @@
 #include "woopsifuncs.h"
 #include "fontbase.h"
 #include "font.h"
-#include "sysfont.h"
 #include "contextmenu.h"
 #include "defaultstyle.h"
 #include "woopsitimer.h"
@@ -49,10 +48,11 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 
 Woopsi::~Woopsi() {
 	stopModal();
-	deleteSystemFont();
 	_font = NULL;
 	singleton = NULL;
 	_contextMenu = NULL;
+
+	woopsiFreeFonts();
 }
 
 void Woopsi::goModal() {
@@ -488,18 +488,10 @@ FontBase* Woopsi::getSystemFont() {
 
 	// Create font instance if it does not exist yet
 	if (_systemFont == NULL) {
-		_systemFont = new Font(sysfont_Bitmap, 256, 50, 8, 10, 64543);
+		_systemFont = systemFont;
 	}
 
 	return _systemFont;
-}
-
-// Delete the static font
-void Woopsi::deleteSystemFont() {
-	if (_systemFont != NULL) {
-		delete _systemFont;
-		_systemFont = NULL;
-	}
 }
 
 // Add a timer to the list of timers that receive VBL events

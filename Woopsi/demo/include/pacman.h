@@ -2,7 +2,6 @@
 #define _PACMAN_H_
 
 #include "woopsi.h"
-#include "sysfont.h"
 #include "woopsiarray.h"
 #include "superbitmap.h"
 #include "amigascreen.h"

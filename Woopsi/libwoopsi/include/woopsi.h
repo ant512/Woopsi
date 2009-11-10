@@ -269,11 +269,6 @@ namespace WoopsiUI {
 		virtual void handleVBL();
 
 		/**
-		 * Deletes the system font.
-		 */
-		static void deleteSystemFont();
-
-		/**
 		 * Click the specified gadget at the supplied co-ordinates.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.

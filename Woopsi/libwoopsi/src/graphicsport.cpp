@@ -8,7 +8,6 @@
 
 using namespace WoopsiUI;
 
-// TODO: Change this so it receives FrameBuffer pointer
 GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect) : GraphicsUnclipped(bitmap) {
 	_gadget = gadget;
 	_rect.x = x;
@@ -183,7 +182,7 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char
 			y -= TOP_SCREEN_Y_OFFSET;
 		}
 		
-		TextWriter::drawString(_data, _width, _height, font, string, length, x, y, clipX1, clipY1, clipX2, clipY2);
+		TextWriter::drawString(_bitmap, font, string, length, x, y, clipX1, clipY1, clipX2, clipY2);
 	}
 }
 
