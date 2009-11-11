@@ -81,7 +81,7 @@ void CycleTest::startup() {
 
 	// Get preferred dimensions for cycle button and resize
 	Debug::printf("getPreferredDimensions()");
-	Gadget::Rect rect;
+	Rect rect;
 	_cycleButton->getPreferredDimensions(rect);
 	_cycleButton->resize(rect.width, rect.height);
 	

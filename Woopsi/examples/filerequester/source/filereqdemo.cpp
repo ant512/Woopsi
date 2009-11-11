@@ -19,7 +19,7 @@ void FileReqDemo::startup() {
 	screen->addGadget(window);
 
 	// Get available area within window
-	Gadget::Rect rect;
+	Rect rect;
 	window->getClientRect(rect);
 	
 	// Add textbox - this will tell the user that we're waiting for the FAT system to start up

@@ -110,7 +110,7 @@ void Woopsi::handleVBL() {
 	}
 }
 
-void Woopsi::draw(Gadget::Rect clipRect) {
+void Woopsi::draw(Rect clipRect) {
 	clear(clipRect);
 }
 

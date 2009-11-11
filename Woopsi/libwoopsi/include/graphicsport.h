@@ -33,7 +33,7 @@ namespace WoopsiUI {
 		 * @param clipRectList An array of clipping regions within which the class must draw.  If set, clipRect must be NULL.
 		 * @param clipRect The clipping region within which the class must draw.  If set, clipRectList must be NULL.
 		 */
-		GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect);
+		GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Rect>* clipRectList, const Rect* clipRect);
 		
 		/**
 		 * Destructor.
@@ -294,7 +294,7 @@ namespace WoopsiUI {
 		 * uncovered by the scroll method.  This should be empty when passed,
 		 * and the regions should be drawn to once the scroll has finished.
 		 */
-		void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Gadget::Rect>* revealedRects);
+		void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Rect>* revealedRects);
 
 		/**
 		 * Halve the brightness of a specified region.
@@ -306,29 +306,29 @@ namespace WoopsiUI {
 		void dim(s16 x, s16 y, u16 width, u16 height);
 		
 	private:
-		Gadget* _gadget;								/**< Pointer to the gadget that the port will draw to */
-		Gadget::Rect* _clipRect;						/**< Clipping rect that the port must draw within */
-		const WoopsiArray<Gadget::Rect>* _clipRectList;	/**< List of rects that the port must draw within */
-		Gadget::Rect _rect;								/**< Total area that the port can draw within */
+		Gadget* _gadget;						/**< Pointer to the gadget that the port will draw to */
+		Rect* _clipRect;						/**< Clipping rect that the port must draw within */
+		const WoopsiArray<Rect>* _clipRectList;	/**< List of rects that the port must draw within */
+		Rect _rect;								/**< Total area that the port can draw within */
 
 		// Internal clipping routines
-		void clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipRect);
-		void clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Gadget::Rect& clipRect);
-		void clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Gadget::Rect& clipRect);
-		void clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadget::Rect& clipRect);
-		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Gadget::Rect& clipRect);
-		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour, const Gadget::Rect& clipRect);
-		void clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Gadget::Rect& clipRect);
-		void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Gadget::Rect& clipRect);
-		void clipXORPixel(s16 x, s16 y, const Gadget::Rect& clipRect);
-		void clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect& clipRect);
-		void clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect& clipRect);
-		void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Gadget::Rect& clipRect);
-		void clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Gadget::Rect& clipRect, WoopsiArray<Gadget::Rect>* revealedRects);
-		void clipDim(s16 x, s16 y, u16 width, u16 height, const Gadget::Rect& clipRect);
+		void clipPixel(s16 x, s16 y, u16 colour, const Rect& clipRect);
+		void clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Rect& clipRect);
+		void clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Rect& clipRect);
+		void clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Rect& clipRect);
+		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Rect& clipRect);
+		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour, const Rect& clipRect);
+		void clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Rect& clipRect);
+		void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect);
+		void clipXORPixel(s16 x, s16 y, const Rect& clipRect);
+		void clipXORHorizLine(s16 x, s16 y, s16 width, const Rect& clipRect);
+		void clipXORVertLine(s16 x, s16 y, s16 height, const Rect& clipRect);
+		void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Rect& clipRect);
+		void clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Rect& clipRect, WoopsiArray<Rect>* revealedRects);
+		void clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect);
 		
 		void convertPortToScreenSpace(s16* x, s16* y);
-		bool clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Gadget::Rect& clipRect);
+		bool clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Rect& clipRect);
 		u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);
 	};
 }

@@ -93,7 +93,7 @@ void Debug::createGUI() {
 
 	// Add textbox
 	if (_textBox == NULL) {
-		Gadget::Rect rect;
+		Rect rect;
 		_window->getClientRect(rect);
 
 		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);

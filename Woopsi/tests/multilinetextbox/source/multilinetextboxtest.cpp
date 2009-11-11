@@ -72,7 +72,7 @@ void MultiLineTextBoxTest::startup() {
 
 	// Get preferred dimensions for cycle button and resize
 	Debug::printf("getPreferredDimensions()");
-	Gadget::Rect rect;
+	Rect rect;
 	_textbox->getPreferredDimensions(rect);
 	_textbox->resize(rect.width, rect.height);
 	

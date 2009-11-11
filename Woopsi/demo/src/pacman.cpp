@@ -129,7 +129,7 @@ void PacMan::initGUI() {
 	_window->addGadgetEventHandler(this);
 	_window->setRefcon(1);
 
-	Gadget::Rect rect;
+	Rect rect;
 	_window->getClientRect(rect);
 
 	_superBitmap = new SuperBitmap(rect.x, rect.y, _width, _height, _width, _height, false);

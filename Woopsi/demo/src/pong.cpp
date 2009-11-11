@@ -56,7 +56,7 @@ void Pong::moveObjects() {
 	_bx += _bxSpeed;
 	_by += _bySpeed;
 
-	Gadget::Rect rect;
+	Rect rect;
 	_window->getClientRect(rect);
 
 	if (_bx > rect.width) {

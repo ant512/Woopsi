@@ -6,6 +6,7 @@
 #include "gadgeteventhandler.h"
 #include "woopsiarray.h"
 #include "glyphs.h"
+#include "rect.h"
 
 namespace WoopsiUI {
 
@@ -51,16 +52,6 @@ namespace WoopsiUI {
 			GADGET_NO_RAISE_EVENTS = 0x0020,			/**< Gadget does not raise events */
 			GADGET_DECORATION = 0x0040					/**< Gadget is a decoration */
 		};
-
-		/**
-		 * Struct describing a rectangle.
-		 */
-		typedef struct {
-			s16 x;								/**< X co-ordinate of the rectangle. */
-			s16 y;								/**< Y co-ordinate of the rectangle. */
-			s32 width;							/**< Width of the rectangle. */
-			s32 height;							/**< Height of the rectangle. */
-		} Rect;
 
 		/**
 		 * Struct describing some basic properties of a gadget.

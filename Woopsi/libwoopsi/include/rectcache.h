@@ -43,7 +43,7 @@ namespace WoopsiUI {
 		 * child gadgets.
 		 * @return The list of background regions.
 		 */
-		inline WoopsiArray<Gadget::Rect>* getBackgroundRegions() { return &_backgroundRegions; };
+		inline WoopsiArray<Rect>* getBackgroundRegions() { return &_backgroundRegions; };
 
 		/**
 		 * Return the list of foreground regions.  These are regions that represent the entire
@@ -51,7 +51,7 @@ namespace WoopsiUI {
 		 * child gadgets.
 		 * @return The list of foreground regions.
 		 */
-		inline WoopsiArray<Gadget::Rect>* getForegroundRegions() { return &_foregroundRegions; };
+		inline WoopsiArray<Rect>* getForegroundRegions() { return &_foregroundRegions; };
 
 		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
@@ -65,7 +65,7 @@ namespace WoopsiUI {
 		 * display that do not need to be redrawn.
 		 * @param sender Pointer to the gadget that initiated the split.
 		 */
-		void splitRectangles(WoopsiArray<Gadget::Rect>* invalidRectangles, WoopsiArray<Gadget::Rect>* validRects, const Gadget* sender) const;
+		void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects, const Gadget* sender) const;
 
 		/**
 		 * Move any rectangles from the visibleRects list that overlap this gadget
@@ -75,11 +75,11 @@ namespace WoopsiUI {
 		 * @param gadget The gadget that requested the lists.
 		 * @see splitRectangles()
 		 */
-		void removeOverlappedRects(WoopsiArray<Gadget::Rect>* visibleRects, WoopsiArray<Gadget::Rect>* invisibleRects, const Gadget* gadget) const;
+		void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const;
 
 	private:
-		WoopsiArray<Gadget::Rect> _foregroundRegions;		/**< List of the gadget's visible regions */
-		WoopsiArray<Gadget::Rect> _backgroundRegions;		/**< List of the gadget's visible regions with child rects removed */
+		WoopsiArray<Rect> _foregroundRegions;				/**< List of the gadget's visible regions */
+		WoopsiArray<Rect> _backgroundRegions;				/**< List of the gadget's visible regions with child rects removed */
 		const Gadget* _gadget;								/**< Owning gadget */
 		bool _foregroundInvalid;							/**< True if the foreground cache needs refreshing */
 		bool _backgroundInvalid;							/**< True if the background cache needs refreshing */

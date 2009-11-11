@@ -66,6 +66,7 @@ Change Log
     - System fonts available as global objects.
     - Rewritten clipping routine in Font and MonoFont.
     - Reorganised VC++ project with more filters.
+    - Rect struct moved out of Gadget class and into separate header.
 
 
   V0.39 (20091024)

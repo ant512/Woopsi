@@ -1653,12 +1653,12 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 }
 
 // Return vector of visible rects, including any covered by children
-WoopsiArray<Gadget::Rect>* Gadget::getForegroundRegions() {
+WoopsiArray<Rect>* Gadget::getForegroundRegions() {
 	return _rectCache->getForegroundRegions();
 }
 
 // Return vector of visible rects, not including any covered by children
-WoopsiArray<Gadget::Rect>* Gadget::getBackgroundRegions() {
+WoopsiArray<Rect>* Gadget::getBackgroundRegions() {
 	return _rectCache->getBackgroundRegions();
 }
 

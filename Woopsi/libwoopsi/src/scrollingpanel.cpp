@@ -54,7 +54,7 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 	if ((dx != 0) || (dy != 0)) {
 
 		// Perform scroll
-		WoopsiArray<Gadget::Rect> revealedRects;
+		WoopsiArray<Rect> revealedRects;
 		Rect rect;
 		getClientRect(rect);
 		GraphicsPort* port = newGraphicsPort(true);

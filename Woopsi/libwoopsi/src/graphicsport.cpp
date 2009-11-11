@@ -8,7 +8,7 @@
 
 using namespace WoopsiUI;
 
-GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Gadget::Rect>* clipRectList, const Gadget::Rect* clipRect) : GraphicsUnclipped(bitmap) {
+GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Rect>* clipRectList, const Rect* clipRect) : GraphicsUnclipped(bitmap) {
 	_gadget = gadget;
 	_rect.x = x;
 	_rect.y = y;
@@ -17,7 +17,7 @@ GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const
 	
 	// Set up clip rect
 	if (clipRect != NULL) {
-		_clipRect = new Gadget::Rect;
+		_clipRect = new Rect;
 		_clipRect->height = clipRect->height;
 		_clipRect->width = clipRect->width;
 		_clipRect->x = clipRect->x;
@@ -35,7 +35,7 @@ GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const
 }
 
 // Clip filled rectangle
-void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Rect& clipRect) {
 	
 	// Get end point of rect to draw
 	s16 x2 = x + width - 1;
@@ -169,7 +169,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char
 }
 
 // Clip and draw text
-void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Rect& clipRect) {
 	s16 clipX1 = clipRect.x;
 	s16 clipY1 = clipRect.y;
 	s16 clipX2 = clipRect.x + clipRect.width - 1;
@@ -187,7 +187,7 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char
 }
 
 // Clip vertical line
-void GraphicsPort::clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Rect& clipRect) {
 	
 	// Get end point of rect to draw
 	s16 x2 = x;
@@ -205,7 +205,7 @@ void GraphicsPort::clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Gadg
 }
 
 // Clip horizontal line
-void GraphicsPort::clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Rect& clipRect) {
 	
 	// Get end point of rect to draw
 	s16 x2 = x + width - 1;
@@ -223,7 +223,7 @@ void GraphicsPort::clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Gadg
 }
 
 // Clip XORed horizontal line
-void GraphicsPort::clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipXORHorizLine(s16 x, s16 y, s16 width, const Rect& clipRect) {
 	
 	// Get end point of rect to draw
 	s16 x2 = x + width - 1;
@@ -241,7 +241,7 @@ void GraphicsPort::clipXORHorizLine(s16 x, s16 y, s16 width, const Gadget::Rect&
 }
 
 // Clip XORed vertical line
-void GraphicsPort::clipXORVertLine(s16 x, s16 y, s16 height, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipXORVertLine(s16 x, s16 y, s16 height, const Rect& clipRect) {
 	
 	// Get end point of rect to draw
 	s16 x2 = x;
@@ -338,7 +338,7 @@ void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
 	}
 }
 
-void GraphicsPort::clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect) {
 	s16 f = 1 - radius;
 	s16 ddF_x = 0;
 	s16 ddF_y = -2 * radius;
@@ -610,7 +610,7 @@ void GraphicsPort::drawXORVertLine(s16 x, s16 y, s16 height) {
 	}
 }
 
-void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, const Rect& clipRect) {
 	
 	// Get co-ords of screen section we're drawing to
 	s16 minX = x;
@@ -644,7 +644,7 @@ void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapB
 	}
 }
 
-void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour, const Rect& clipRect) {
 
 	// Get co-ords of screen section we're drawing to
 	s16 minX = x;
@@ -694,7 +694,7 @@ void GraphicsPort::convertPortToScreenSpace(s16* x, s16* y) {
 }
 
 // Clip co-ordinates
-bool GraphicsPort::clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Gadget::Rect& clipRect) {
+bool GraphicsPort::clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Rect& clipRect) {
 	// Get co-ords of clipping rect
 	s16 minX = clipRect.x;
 	s16 minY = clipRect.y;
@@ -764,7 +764,7 @@ void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
 }
 
 // Clip and draw pixel
-void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Rect& clipRect) {
 	s16 clipX1 = clipRect.x;
 	s16 clipY1 = clipRect.y;
 	s16 clipX2 = clipRect.x + clipRect.width - 1;
@@ -812,7 +812,7 @@ u8 GraphicsPort::getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, 
 	return code;
 }
 
-void GraphicsPort::clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Rect& clipRect) {
 	
 	// Extract data from cliprect
 	s16 minX = clipRect.x;
@@ -968,7 +968,7 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 widt
 	}
 }
 
-void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Gadget::Rect>* revealedRects) {
+void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Rect>* revealedRects) {
 	
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
@@ -990,7 +990,7 @@ void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width,
 	}
 }
 
-void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Gadget::Rect& clipRect, WoopsiArray<Gadget::Rect>* revealedRects) {
+void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Rect& clipRect, WoopsiArray<Rect>* revealedRects) {
 	
 	// Convert height/width to co-ordinates
 	s16 sourceX1 = x;
@@ -1020,7 +1020,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 		s16 newY2 = y + height - 1;
 		
 		if (clipCoordinates(&newX1, &newY1, &newX2, &newY2, clipRect)) {
-			Gadget::Rect rect;
+			Rect rect;
 			rect.x = newX1;
 			rect.y = newY1;
 			rect.width = (newX2 - newX1) + 1;
@@ -1055,7 +1055,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 				s16 newY2 = y + height - 1;
 				
 				if (clipCoordinates(&newX1, &newY1, &newX2, &newY2, clipRect)) {
-					Gadget::Rect rect;
+					Rect rect;
 					rect.x = newX1;
 					rect.y = newY1;
 					rect.width = (newX2 - newX1) + 1;
@@ -1074,7 +1074,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 			if (sourceX1 < destX1) {
 				
 				// Revealed area on the left of the destination
-				Gadget::Rect rect;
+				Rect rect;
 				rect.x = sourceX1;
 				rect.y = sourceY1;
 				rect.width = (destX1 - sourceX1) + 1;
@@ -1104,7 +1104,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 			} else if (sourceX1 > destX1) {
 				
 				// Revealed area on the right of the destination
-				Gadget::Rect rect;
+				Rect rect;
 				rect.x = (destX1 + width) - 1;
 				rect.y = sourceY1;
 				rect.width = (sourceX1 - destX1) + 1;
@@ -1133,7 +1133,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 			} else if (sourceY1 < destY1) {
 
 				// Vertical movement only - revealed area above the destination
-				Gadget::Rect rect;
+				Rect rect;
 				rect.x = sourceX1;
 				rect.y = sourceY1;
 				rect.width = minWidth;
@@ -1144,7 +1144,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 			} else if (sourceY1 > destY1) {
 
 				// Vertical movement only - revealed area below the destination
-				Gadget::Rect rect;
+				Rect rect;
 				rect.x = sourceX1;
 				rect.y = (destY1 + minHeight) - 1;
 				rect.width = minWidth;
@@ -1178,7 +1178,7 @@ void GraphicsPort::dim(s16 x, s16 y, u16 width, u16 height) {
 	}
 }
 
-void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Gadget::Rect& clipRect) {
+void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect) {
 	
 	s16 x2 = x + width - 1;
 	s16 y2 = y + height - 1;

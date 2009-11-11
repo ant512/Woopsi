@@ -17,7 +17,7 @@ void ScrollTest::startup() {
 	screen->addGadget(window);
 
 	// Get available area within window
-	Gadget::Rect rect;
+	Rect rect;
 	window->getClientRect(rect);
 
 	// Add test panel

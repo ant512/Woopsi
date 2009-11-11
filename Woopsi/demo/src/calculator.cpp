@@ -4,6 +4,7 @@
 #include "amigascreen.h"
 #include "textbox.h"
 #include "button.h"
+#include "rect.h"
 
 Calculator::Calculator(AmigaScreen* screen) {
 	_screen = screen;
@@ -20,7 +21,7 @@ void Calculator::initGUI() {
 	_window = new AmigaWindow(0, 90, 60, 97, "Calc", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	_screen->addGadget(_window);
 
-	Gadget::Rect rect;
+	Rect rect;
 	_window->getClientRect(rect);
 
 	// Controls

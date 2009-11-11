@@ -9,12 +9,13 @@
 #include "bitmapwrapper.h"
 #include "bitmap.h"
 #include "graphics.h"
+#include "rect.h"
 
 void Demo::startup() {
 
 	Woopsi::startup();
 
-	Gadget::Rect rect;
+	Rect rect;
 
 	// Create SuperBitmap test screen
 	AmigaScreen* superBitmapScreen = new AmigaScreen("Woopsi Demo V0.36", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);

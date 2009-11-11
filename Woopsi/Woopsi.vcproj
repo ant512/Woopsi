@@ -555,6 +555,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\include\rect.h"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\include\rectcache.h"
 						>
 					</File>

@@ -20,7 +20,7 @@ void KeyTest::startup() {
 	outScreen->addGadget(window);
 
 	// Get available area within window
-	Gadget::Rect rect;
+	Rect rect;
 	window->getClientRect(rect);
 	
 	// Add textbox

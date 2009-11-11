@@ -71,7 +71,7 @@ void CalendarTest::startup() {
 
 	// Get preferred dimensions for cycle button and resize
 	Debug::printf("getPreferredDimensions()");
-	Gadget::Rect rect;
+	Rect rect;
 	_calendar->getPreferredDimensions(rect);
 	_calendar->resize(rect.width, rect.height);
 	

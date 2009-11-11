@@ -21,10 +21,10 @@ void RectCache::cacheForegroundRegions() {
 
 		// Create pointer to a vector to store the overlapped rectangles
 		// We can discard this later as we don't need it
-		WoopsiArray<Gadget::Rect>* invisibleRects = new WoopsiArray<Gadget::Rect>();
+		WoopsiArray<Rect>* invisibleRects = new WoopsiArray<Rect>();
 
 		// Copy the clipped gadget dimensions into a rect
-		Gadget::Rect rect;
+		Rect rect;
 		_gadget->getRectClippedToHierarchy(rect);
 
 		// Do we have a visible region left?
@@ -58,7 +58,7 @@ void RectCache::cacheBackgroundRegions() {
 
 		// Create pointer to a vector to store the overlapped rectangles
 		// We can discard this later as we don't need it
-		WoopsiArray<Gadget::Rect>* invisibleRects = new WoopsiArray<Gadget::Rect>();
+		WoopsiArray<Rect>* invisibleRects = new WoopsiArray<Rect>();
 
 		// Copy all foreground regions into the new vector
 		for (s32 i = 0; i < _foregroundRegions.size(); i++) {
@@ -83,13 +83,13 @@ void RectCache::cacheBackgroundRegions() {
 
 // Split rectangles into valid and invalid sub-rectangles
 // Used when calculating which portions of a gadget to draw
-void RectCache::splitRectangles(WoopsiArray<Gadget::Rect>* invalidRects, WoopsiArray<Gadget::Rect>* validRects, const Gadget* sender) const {
+void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, const Gadget* sender) const {
 
 	// Check for collisions with any rectangles in the vector
 	for (s32 i = 0; i < invalidRects->size(); i++) {
 
 		// Get rectangle to check
-		Gadget::Rect checkRect = invalidRects->at(i);
+		Rect checkRect = invalidRects->at(i);
 		s16 splitX[4];
 		s16 splitY[4];
 		u32 rectXCount = 0;
@@ -101,7 +101,7 @@ void RectCache::splitRectangles(WoopsiArray<Gadget::Rect>* invalidRects, WoopsiA
 			// Got a collision.  We need to split this rectangle
 
 			// Get clipped dimensions of gadget
-			Gadget::Rect gadgetRect;
+			Rect gadgetRect;
 			_gadget->getRectClippedToHierarchy(gadgetRect);
 
 			// Vertical split
@@ -227,7 +227,7 @@ void RectCache::splitRectangles(WoopsiArray<Gadget::Rect>* invalidRects, WoopsiA
 					if ((overlapXRect == xRects) && (overlapYRect == yRects)) {
 
 						// Got the overlap, so set the output values
-						Gadget::Rect overlapRect;
+						Rect overlapRect;
 						overlapRect.x = splitX[xRects];
 						overlapRect.y = splitY[yRects];
 						overlapRect.width = splitX[xRects + 1] - splitX[xRects];
@@ -254,7 +254,7 @@ void RectCache::splitRectangles(WoopsiArray<Gadget::Rect>* invalidRects, WoopsiA
 						}
 					} else {
 						// Not an overlap; add to vector
-						Gadget::Rect newRect;
+						Rect newRect;
 						newRect.x = splitX[xRects];
 						newRect.y = splitY[yRects];
 						newRect.width = splitX[xRects + 1] - splitX[xRects];
@@ -294,7 +294,7 @@ void RectCache::splitRectangles(WoopsiArray<Gadget::Rect>* invalidRects, WoopsiA
 // Remove any rectangles that this gadget overlaps from the visible vector
 // and add them to the invisible vector
 // Called when drawing a gadget to check that no higher gadgets get overwritten
-void RectCache::removeOverlappedRects(WoopsiArray<Gadget::Rect>* visibleRects, WoopsiArray<Gadget::Rect>* invisibleRects, const Gadget* gadget) const {
+void RectCache::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const {
 
 	const Gadget* parent = _gadget;
 	s32 gadgetIndex = -1;
