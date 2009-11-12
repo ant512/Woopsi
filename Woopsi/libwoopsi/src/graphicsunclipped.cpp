@@ -362,7 +362,7 @@ void GraphicsUnclipped::pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) {
 }     
 
 //Draw bitmap to the internal bitmap
-void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY) {
+void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
 	
 	u16 bitmapWidth = bitmap->getWidth();
 	u16 bitmapHeight = bitmap->getHeight();
@@ -394,7 +394,7 @@ void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bi
 }
 
 //Draw bitmap with transparency
-void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour) {
+void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour) {
 
 	u16 source = 0;
 	const u16* bitmapData = bitmap->getData();

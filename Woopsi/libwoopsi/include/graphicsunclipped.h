@@ -182,7 +182,7 @@ namespace WoopsiUI {
 		 * @param bitmapWidth The width of the supplied bitmap.
 		 * @param bitmapHeight The height of the supplied bitmap.
 		 */
-		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY);
+		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY);
 
 		/**
 		 * Draw a bitmap to the port's bitmap, using the supplied transparent colour
@@ -197,7 +197,7 @@ namespace WoopsiUI {
 		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
 		 * @param transparentColour The transparent colour used in the bitmap.
 		 */
-		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour);
+		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour);
 		
 		/**
 		 * Fill a region of the internal bitmap with the specified colour.
