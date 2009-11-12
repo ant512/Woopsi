@@ -29,7 +29,6 @@ const u16 Graphics::getPixel(s16 x, s16 y) const {
 	return GraphicsUnclipped::getPixel(x, y);
 }
 
-// External filled rectangle function
 void Graphics::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
@@ -149,6 +148,13 @@ void Graphics::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase*
 
 	if ((width > 0) && (height > 0)) {
 		GraphicsUnclipped::drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY);
+	}
+}
+
+void Graphics::dim(s16 x, s16 y, u16 width, u16 height) {
+
+	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
+		GraphicsUnclipped::dim(x, y, width, height);
 	}
 }
 

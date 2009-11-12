@@ -119,6 +119,15 @@ namespace WoopsiUI {
 		 */
 		virtual void floodFill(s16 x, s16 y, u16 newColour);
 
+		/**
+		 * Halve the brightness of a specified region.
+		 * @param x X co-ord of the region to dim.
+		 * @param y Y co-ord of the region to dim.
+		 * @param width Width of the region to dim.
+		 * @param height Height of the region to dim.
+		 */
+		void dim(s16 x, s16 y, u16 width, u16 height);
+
 	protected:
 		
 		/**
