@@ -83,7 +83,7 @@ void Graphics::drawXORVertLine(s16 x, s16 y, u16 height) {
 	u16 width = 1;
 
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
-		Graphics::drawXORVertLine(x, y, height);
+		GraphicsUnclipped::drawXORVertLine(x, y, height);
 	}
 }
 
