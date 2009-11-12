@@ -67,6 +67,9 @@ Change Log
     - Rewritten clipping routine in Font and MonoFont.
     - Reorganised VC++ project with more filters.
     - Rect struct moved out of Gadget class and into separate header.
+    - SuperBitmap no longer includes drawing functions; instead it exposes a
+      non-const pointer to its bitmap and a non-const pointer to a Graphics
+      object that can draw to the bitmap.
 
 
   V0.39 (20091024)

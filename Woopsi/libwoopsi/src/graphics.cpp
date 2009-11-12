@@ -55,6 +55,21 @@ void Graphics::drawVertLine(s16 x, s16 y, u16 height, u16 colour) {
 	}
 }
 
+void Graphics::drawXORPixel(s16 x, s16 y) {
+
+	// Prevent overflows
+	if ((x < 0) || (y < 0)) return;
+	if ((x >= _width) || (y >= _height)) return;
+
+	// Get the pixel at the specified co-ords and XOR against 0xffff
+	u32 pos = (y * _width) + x;
+	u16 colour = (_data[pos] ^ 0xffff) | (1 << 15);
+
+	// Draw the XORed pixel colour to the bitmap
+	_data[pos] = colour;
+}
+
+
 void Graphics::drawXORHorizLine(s16 x, s16 y, u16 width) {
 
 	u16 height = 1;

@@ -54,7 +54,7 @@ void Demo::startup() {
 	// Attach bitmap
 	superBitmapWindow->getClientRect(rect);
 	SuperBitmap* superBitmap = new SuperBitmap(rect.x, rect.y, rect.width, rect.height, 164, 191, false);
-	superBitmap->drawBitmap(0, 0, 164, 191, superBitmapBitmap, 0, 0);
+	superBitmap->getGraphics()->drawBitmap(0, 0, 164, 191, superBitmapBitmap, 0, 0);
 	superBitmapWindow->addGadget(superBitmap);
 
 	// TODO: Change this to use standard screen/window gadgets

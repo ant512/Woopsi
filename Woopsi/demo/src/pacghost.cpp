@@ -26,7 +26,7 @@ void PacGhost::reset() {
 void PacGhost::leaveHome() {
 
 	// Erase old
-	_game->getSuperBitmap()->drawFilledRect(_x, _y, _width, _height, woopsiRGB(31, 31, 31));
+	_game->getSuperBitmap()->getGraphics()->drawFilledRect(_x, _y, _width, _height, woopsiRGB(31, 31, 31));
 
 	_y -= _speed;
 

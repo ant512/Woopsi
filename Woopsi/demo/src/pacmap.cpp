@@ -53,23 +53,24 @@ PacMap::PacMap(PacMan* game) {
 void PacMap::draw() {
 
 	SuperBitmap* superBitmap = _game->getSuperBitmap();
+	Graphics* gfx = superBitmap->getGraphics();
 
 	for (u8 i = 0; i < _height; i++) {
 		for (u8 j = 0; j < _width; j++) {
 
 			// Draw gaps
 			if (_layout[i][j] != _wallBlock) {
-				superBitmap->drawFilledRect((j * _blockWidth), (i * _blockHeight), _blockWidth, _blockHeight, woopsiRGB(31, 31, 31));
+				gfx->drawFilledRect((j * _blockWidth), (i * _blockHeight), _blockWidth, _blockHeight, woopsiRGB(31, 31, 31));
 			}
 
 			// Draw walls
 			if (_layout[i][j] == _wallBlock) {
-				superBitmap->drawFilledRect((j * _blockWidth), (i * _blockHeight), _blockWidth, _blockHeight, _colour);
+				gfx->drawFilledRect((j * _blockWidth), (i * _blockHeight), _blockWidth, _blockHeight, _colour);
 			}
 			
 			// Draw pills
 			if (_layout[i][j] == _pillBlock) {
-				superBitmap->drawFilledRect((j * _blockWidth) + _pillOffset, (i * _blockHeight) + _pillOffset, _pillWidth, _pillHeight, _colour);
+				gfx->drawFilledRect((j * _blockWidth) + _pillOffset, (i * _blockHeight) + _pillOffset, _pillWidth, _pillHeight, _colour);
 			}
 		}
 	}
@@ -77,13 +78,14 @@ void PacMap::draw() {
 
 void PacMap::drawPills() {
 	SuperBitmap* superBitmap = _game->getSuperBitmap();
+	Graphics* gfx = superBitmap->getGraphics();
 
 	for (u8 i = 0; i < _height; i++) {
 		for (u8 j = 0; j < _width; j++) {
 			
 			// Draw pills
 			if (_layout[i][j] == _pillBlock) {
-				superBitmap->drawFilledRect((j * _blockWidth) + _pillOffset, (i * _blockHeight) + _pillOffset, _pillWidth, _pillHeight, _colour);
+				gfx->drawFilledRect((j * _blockWidth) + _pillOffset, (i * _blockHeight) + _pillOffset, _pillWidth, _pillHeight, _colour);
 			}
 		}
 	}

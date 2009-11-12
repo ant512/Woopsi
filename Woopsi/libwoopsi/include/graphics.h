@@ -75,6 +75,13 @@ namespace WoopsiUI {
 		virtual void drawVertLine(s16 x, s16 y, u16 height, u16 colour);
 
 		/**
+		 * Invert the colour of the pixel at the specified co-ordinates.
+		 * @param x The x co-ordinate of the pixel.
+		 * @param y The y co-ordinate of the pixel.
+		 */
+		virtual void drawXORPixel(s16 x, s16 y);
+
+		/**
 		 * Invert the colour of a horizontal line of pixels.
 		 * @param x The x co-ordinate of the line.
 		 * @param y The y co-ordinate of the line.

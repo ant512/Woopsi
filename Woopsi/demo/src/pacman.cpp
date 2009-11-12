@@ -67,8 +67,10 @@ void PacMan::run() {
 void PacMan::endGame() {
 	_gameOver = true;
 
-	_superBitmap->drawFilledRect(0, 0, _width, _height, _superBitmap->getBackColour());
-	_superBitmap->drawText(10, 40, _superBitmap->getFont(), "Game Over");
+	Graphics* gfx = _superBitmap->getGraphics();
+
+	gfx->drawFilledRect(0, 0, _width, _height, _superBitmap->getBackColour());
+	gfx->drawText(10, 40, _superBitmap->getFont(), "Game Over");
 }
 
 void PacMan::handleActionEvent(const GadgetEventArgs& e) {

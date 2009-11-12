@@ -13,7 +13,7 @@ PacSprite::PacSprite(PacMan* game) {
 }
 
 void PacSprite::draw() {
-	_game->getSuperBitmap()->drawFilledRect(_x, _y, _width, _height, _colour);
+	_game->getSuperBitmap()->getGraphics()->drawFilledRect(_x, _y, _width, _height, _colour);
 }
 
 bool PacSprite::checkCollision(PacSprite* sprite) {
@@ -101,7 +101,7 @@ bool PacSprite::move(u8 newDirection, u8 speed, bool isGhost) {
 		if (_game->getMap()->checkBlock(nextX, nextY, isGhost)) {
 
 			// Erase old
-			_game->getSuperBitmap()->drawFilledRect(_x, _y, _width, _height, woopsiRGB(31, 31, 31));
+			_game->getSuperBitmap()->getGraphics()->drawFilledRect(_x, _y, _width, _height, woopsiRGB(31, 31, 31));
 
 			_x = nextX;
 			_y = nextY;
