@@ -151,8 +151,15 @@ void Graphics::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase*
 	}
 }
 
-void Graphics::dim(s16 x, s16 y, u16 width, u16 height) {
+void Graphics::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height) {
+	if (clipBitmapCoordinates(&sourceX, &sourceY, &width, &height)) {
+		if (clipBitmapCoordinates(&destX, &destY, &width, &height)) {
+			GraphicsUnclipped::copy(sourceX, sourceY, destX, destY, width, height);
+		}
+	}
+}
 
+void Graphics::dim(s16 x, s16 y, u16 width, u16 height) {
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
 		GraphicsUnclipped::dim(x, y, width, height);
 	}
