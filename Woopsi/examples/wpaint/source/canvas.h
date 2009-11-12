@@ -4,6 +4,7 @@
 #include "window.h"
 #include "gadgeteventhandler.h"
 #include "superbitmap.h"
+#include "graphics.h"
 
 using namespace WoopsiUI;
 
@@ -27,13 +28,14 @@ public:
 		_superBitmap = new SuperBitmap(0, 0, 256, 192, 256, 192, 1);
 		_superBitmap->setDraggable(true);
 		_superBitmap->addGadgetEventHandler(this);
+		_graphics = _superBitmap->getGraphics();
 		addGadget(_superBitmap);
 		
 		_mode = CANVAS_MODE_FILLED_CIRCLE;
 		_foregroundColour = woopsiRGB(31, 0, 0);
 		_backgroundColour = woopsiRGB(0, 0, 0);
 		
-		_superBitmap->drawFilledRect(0, 0, 256, 192, _backgroundColour);
+		_graphics->drawFilledRect(0, 0, 256, 192, _backgroundColour);
 	};
 	
 	~Canvas() { };
@@ -46,39 +48,39 @@ public:
 		switch(_mode) {
 			case CANVAS_MODE_DOTTED_DRAW:
 			case CANVAS_MODE_SOLID_DRAW:
-				_superBitmap->drawPixel(e.getX(), e.getY(), _foregroundColour);
+				_graphics->drawPixel(e.getX(), e.getY(), _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_LINE:
-				_superBitmap->drawLine(e.getX() - (rand() % 20), e.getY() - (rand() % 20), e.getX() + (rand() % 20), e.getY() + (rand() % 20), _foregroundColour);
+				_graphics->drawLine(e.getX() - (rand() % 20), e.getY() - (rand() % 20), e.getX() + (rand() % 20), e.getY() + (rand() % 20), _foregroundColour);
 				break;
 			
 			case CANVAS_MODE_CIRCLE:
-				_superBitmap->drawCircle(e.getX(), e.getY(), 30, _foregroundColour);
+				_graphics->drawCircle(e.getX(), e.getY(), 30, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_FILLED_CIRCLE:
-				_superBitmap->drawFilledCircle(e.getX(), e.getY(), 30, _foregroundColour);
+				_graphics->drawFilledCircle(e.getX(), e.getY(), 30, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_RECT:
-				_superBitmap->drawRect(e.getX(), e.getY(), 30, 30, _foregroundColour);
+				_graphics->drawRect(e.getX(), e.getY(), 30, 30, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_FILLED_RECT:
-				_superBitmap->drawFilledRect(e.getX(), e.getY(), 30, 30, _foregroundColour);
+				_graphics->drawFilledRect(e.getX(), e.getY(), 30, 30, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_ELLIPSE:
-				_superBitmap->drawEllipse(e.getX(), e.getY(), 30, 20, _foregroundColour);
+				_graphics->drawEllipse(e.getX(), e.getY(), 30, 20, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_FILLED_ELLIPSE:
-				_superBitmap->drawFilledEllipse(e.getX(), e.getY(), 30, 20, _foregroundColour);
+				_graphics->drawFilledEllipse(e.getX(), e.getY(), 30, 20, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_FLOOD_FILL:
-				_superBitmap->floodFill(e.getX(), e.getY(), _foregroundColour);
+				_graphics->floodFill(e.getX(), e.getY(), _foregroundColour);
 				break;
 				
 			default:
@@ -93,11 +95,11 @@ public:
 	void handleDragEvent(const GadgetEventArgs& e) {
 		switch(_mode) {
 			case CANVAS_MODE_DOTTED_DRAW:
-				_superBitmap->drawPixel(e.getX(), e.getY(), _foregroundColour);
+				_graphics->drawPixel(e.getX(), e.getY(), _foregroundColour);
 				break;
 			
 			case CANVAS_MODE_SOLID_DRAW:
-				_superBitmap->drawLine(_oldStylusX, _oldStylusY, e.getX(), e.getY(), _foregroundColour);
+				_graphics->drawLine(_oldStylusX, _oldStylusY, e.getX(), e.getY(), _foregroundColour);
 				break;
 				
 			default:
@@ -112,11 +114,11 @@ public:
 	bool drag(s16 x, s16 y, s16 vX, s16 vY) {
 		switch(_mode) {
 			case CANVAS_MODE_DOTTED_DRAW:
-				_superBitmap->drawPixel(x, y, _foregroundColour);
+				_graphics->drawPixel(x, y, _foregroundColour);
 				break;
 			
 			case CANVAS_MODE_SOLID_DRAW:
-				_superBitmap->drawLine(_oldStylusX, _oldStylusY, x, y, _foregroundColour);
+				_graphics->drawLine(_oldStylusX, _oldStylusY, x, y, _foregroundColour);
 				break;
 			
 			default:
@@ -132,6 +134,7 @@ public:
 		
 private:
 	SuperBitmap* _superBitmap;
+	Graphics* _graphics;
 	s16 _oldStylusX;
 	s16 _oldStylusY;
 	CanvasMode _mode;
