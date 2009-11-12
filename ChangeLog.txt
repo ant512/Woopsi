@@ -72,6 +72,7 @@ Change Log
     - SuperBitmap no longer includes drawing functions; instead it exposes a
       non-const pointer to its bitmap and a non-const pointer to a Graphics
       object that can draw to the bitmap.
+    - Added bitmapdrawing example.
 
 
   V0.39 (20091024)
