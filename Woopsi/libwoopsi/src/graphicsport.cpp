@@ -236,7 +236,9 @@ void GraphicsPort::clipXORHorizLine(s16 x, s16 y, s16 width, const Rect& clipRec
 		width = x2 - x + 1;
 		
 		// Draw the line
-		GraphicsUnclipped::drawXORHorizLine(x, y, width);
+		for (u16 i = 0; i < width; i++) {
+			GraphicsUnclipped::drawXORPixel(x + i, y);
+		}
 	}
 }
 
@@ -254,7 +256,9 @@ void GraphicsPort::clipXORVertLine(s16 x, s16 y, s16 height, const Rect& clipRec
 		height = y2 - y + 1;
 		
 		// Draw the line
-		GraphicsUnclipped::drawXORVertLine(x, y, height);
+		for (u16 i = 0; i < height; i++) {
+			GraphicsUnclipped::drawXORPixel(x, y + i);
+		}
 	}
 }
 
