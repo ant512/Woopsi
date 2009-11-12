@@ -55,6 +55,24 @@ void Graphics::drawVertLine(s16 x, s16 y, u16 height, u16 colour) {
 	}
 }
 
+void Graphics::drawXORHorizLine(s16 x, s16 y, u16 width) {
+
+	u16 height = 1;
+
+	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
+		GraphicsUnclipped::drawXORHorizLine(x, y, width);
+	}
+}
+
+void Graphics::drawXORVertLine(s16 x, s16 y, u16 height) {
+
+	u16 width = 1;
+
+	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
+		Graphics::drawXORVertLine(x, y, height);
+	}
+}
+
 // Scanline floodfill algorithm
 void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 

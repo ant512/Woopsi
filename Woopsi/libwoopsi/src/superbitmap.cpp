@@ -153,6 +153,6 @@ void SuperBitmap::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s
 	_graphics->drawFilledEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
 }
 
-const Bitmap* SuperBitmap::getBitmap() const {
+Bitmap* SuperBitmap::getBitmap() {
 	return _bitmap;
 }

@@ -44,7 +44,7 @@ namespace WoopsiUI {
 		 * Get a pointer to the internal bitmap.
 		 * @return Pointer to the internal bitmap.
 		 */
-		const Bitmap* getBitmap() const;
+		Bitmap* getBitmap();
 
 		/**
 		 * Draws the region of the gadget that falls within the clipping region.  Should not

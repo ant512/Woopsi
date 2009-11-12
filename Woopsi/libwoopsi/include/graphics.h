@@ -73,6 +73,22 @@ namespace WoopsiUI {
 		 * @param colour The colour of the line.
 		 */
 		virtual void drawVertLine(s16 x, s16 y, u16 height, u16 colour);
+
+		/**
+		 * Invert the colour of a horizontal line of pixels.
+		 * @param x The x co-ordinate of the line.
+		 * @param y The y co-ordinate of the line.
+		 * @param width The width of the line.
+		 */
+		virtual void drawXORHorizLine(s16 x, s16 y, u16 width);
+		
+		/**
+		 * Invert the colour of a vertical line of pixels.
+		 * @param x The x co-ordinate of the line.
+		 * @param y The y co-ordinate of the line.
+		 * @param height The height of the line.
+		 */
+		virtual void drawXORVertLine(s16 x, s16 y, u16 height);
 		
 		/**
 		 * Draw an external bitmap to the internal bitmap.
