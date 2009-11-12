@@ -2,7 +2,6 @@
 #define _GRAPHICS_UNCLIPPED_H_
 
 #include <nds.h>
-#include "woopsiarray.h"
 #include "bitmapbase.h"
 #include "mutablebitmapbase.h"
 
@@ -12,7 +11,7 @@ namespace WoopsiUI {
 
 	/**
 	 * Class providing bitmap manipulation (drawing, etc) functions.  Functions
-	 * do 
+	 * do not clip to the dimensions of the bitmap.
 	 */
 	class GraphicsUnclipped {
 	public:
@@ -198,14 +197,6 @@ namespace WoopsiUI {
 		 * @param transparentColour The transparent colour used in the bitmap.
 		 */
 		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour);
-		
-		/**
-		 * Fill a region of the internal bitmap with the specified colour.
-		 * @param x The x co-ordinate to use as the starting point of the fill.
-		 * @param y The y co-ordinate to use as the starting point of the fill.
-		 * @param newColour The colour to fill with.
-		 */
-		virtual void floodFill(s16 x, s16 y, u16 newColour);
 
 		/**
 		 * Draw an unfilled ellipse to the bitmap.
@@ -298,23 +289,6 @@ namespace WoopsiUI {
 		u16* _data;						/**< Bitmap data */
 		u16 _width;
 		u16 _height;
-		
-		/**
-		 * Remove the last item from the flood fill stack and insert its properties into the
-		 * supplied x and y variables.
-		 * @param x The x co-ordinate of the pixel from the stack (output by the function).
-		 * @param y The y co-ordinate of the pixel from the stack (output by the function).
-		 * @param stack Pointer to the stack to pop from.
-		 */
-		bool popStack(s16* x, s16* y, WoopsiArray<s32>* stack);
-		
-		/**
-		 * Push new co-ordinates onto the stack.
-		 * @param x The x co-ordinate of the pixel to add to the stack.
-		 * @param y The y co-ordinate of the pixel to add to the stack.
-		 * @param stack The stack to add a new value to.
-		 */
-		void pushStack(s16 x, s16 y, WoopsiArray<s32>* stack);
 
 		/**
 		 * Copy constructor is protected to prevent usage.

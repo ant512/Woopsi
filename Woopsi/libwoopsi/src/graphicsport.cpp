@@ -319,7 +319,24 @@ void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 	}
 }
 
-// Draw filled circle - external function
+void GraphicsPort::drawCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+	
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x0, &y0);
+	
+	if (_clipRect == NULL) {
+		// Draw all visible rectangles
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipCircle(x0, y0, radius, colour, _clipRectList->at(i));
+		}
+	} else {
+		// Draw single rectangle
+		clipCircle(x0, y0, radius, colour, *_clipRect);
+	}
+}
+
 void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
@@ -335,6 +352,38 @@ void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
 	} else {
 		// Draw single rectangle
 		clipFilledCircle(x0, y0, radius, colour, *_clipRect);
+	}
+}
+
+void GraphicsPort::clipCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect) {
+	s16 f = 1 - radius;
+	s16 ddF_x = 0;
+	s16 ddF_y = -2 * radius;
+	s16 x = 0;
+	s16 y = radius;
+
+	clipPixel(x0, y0 + radius, colour, clipRect);
+	clipPixel(x0, y0 - radius, colour, clipRect);
+	clipPixel(x0 + radius, y0, colour, clipRect);
+	clipPixel(x0 - radius, y0, colour, clipRect);
+
+	while(x < y) {
+		if (f >= 0) {
+			y--;
+			ddF_y += 2;
+			f += ddF_y;
+		}
+		x++;
+		ddF_x += 2;
+		f += ddF_x + 1;    
+		clipPixel(x0 + x, y0 + y, colour, clipRect);
+		clipPixel(x0 - x, y0 + y, colour, clipRect);
+		clipPixel(x0 + x, y0 - y, colour, clipRect);
+		clipPixel(x0 - x, y0 - y, colour, clipRect);
+		clipPixel(x0 + y, y0 + x, colour, clipRect);
+		clipPixel(x0 - y, y0 + x, colour, clipRect);
+		clipPixel(x0 + y, y0 - x, colour, clipRect);
+		clipPixel(x0 - y, y0 - x, colour, clipRect);
 	}
 }
 
@@ -765,10 +814,10 @@ void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
 
 // Clip and draw pixel
 void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Rect& clipRect) {
-	s16 clipX1 = clipRect.x;
-	s16 clipY1 = clipRect.y;
-	s16 clipX2 = clipRect.x + clipRect.width - 1;
-	s16 clipY2 = clipRect.y + clipRect.height - 1;
+	s16 clipX1 = x;
+	s16 clipY1 = y;
+	s16 clipX2 = x;
+	s16 clipY2 = y;
 	
 	// Attempt to clip and draw
 	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
@@ -777,7 +826,43 @@ void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Rect& clipRect) {
 			y -= TOP_SCREEN_Y_OFFSET;
 		}
 		
-		GraphicsUnclipped::drawPixel(x, y, colour);
+		GraphicsUnclipped::drawPixel(clipX1, clipY1, colour);
+	}
+}
+
+void GraphicsPort::drawXORPixel(s16 x, s16 y) {
+	
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+	
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+	
+	if (_clipRect == NULL) {
+		// Draw all visible rects
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipXORPixel(x, y, _clipRectList->at(i));
+		}
+	} else {
+		// Draw single rectangle
+		clipXORPixel(x, y, *_clipRect);
+	}
+}
+
+void GraphicsPort::clipXORPixel(s16 x, s16 y, const Rect& clipRect) {
+	s16 clipX1 = x;
+	s16 clipY1 = y;
+	s16 clipX2 = x;
+	s16 clipY2 = y;
+	
+	// Attempt to clip and draw
+	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
+		// Compensate for top screen offset
+		if (y >= TOP_SCREEN_Y_OFFSET) {
+			y -= TOP_SCREEN_Y_OFFSET;
+		}
+		
+		GraphicsUnclipped::drawXORPixel(clipX1, clipY1);
 	}
 }
 
@@ -903,69 +988,8 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 widt
 	
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
-	
-	// Do nothing if no copying involved
-	if ((sourceX == destX) && (sourceY == destY)) return;
-	
-	// If there is no vertical movement and the source and destination overlap,
-	// we need to use an offscreen buffer to copy
-	if (sourceY == destY) {
-		if ((destX >= sourceX) && (destX <= sourceX + width)) {
-			u16* buffer = new u16[width];
-			u16* copySource = _data + sourceX + (sourceY * _width);
-			u16* copyDest = _data + destX + (destY * _width);
-			
-			for (u16 y = 0; y < height; y++) {
-				
-				// Copy row to buffer
-				while(DMA_Active());
-				DMA_Copy(copySource, buffer, width, DMA_16NOW);
-				
-				// Copy row back to screen
-				while(DMA_Active());
-				DMA_Copy(buffer, copyDest, width, DMA_16NOW);
-				
-				copySource += _width;
-				copyDest += _width;
-			}
-			
-			delete buffer;
-			
-			return;
-		}
-	}
-	
-	// Vertical movement or non overlap means we do not need to use an intermediate buffer
-	// Copy from top to bottom if moving up; from bottom to top if moving down.
-	// Ensures that rows to be copied are not overwritten
-	s16 delta;
-	u16* copySource;
-	u16* copyDest;
-	
-	if (sourceY > destY) {
-		
-		// Copy up
-		delta = _width;
-		copySource = _data + sourceX + (sourceY * _width);
-		copyDest = _data + destX + (destY * _width);
-	} else {
-		
-		// Copy down
-		delta = -_width;
-		copySource = _data + sourceX + ((sourceY + height - 1) * _width);
-		copyDest = _data + destX + ((destY + height - 1) * _width);
-	}
-	
-	// Perform copy	
-	for (u16 i = 0; i < height; ++i) {
-		
-		// Copy row
-		while(DMA_Active());
-		DMA_Copy(copySource, copyDest, width, DMA_16NOW);
-		
-		copySource += delta;
-		copyDest += delta;
-	}
+
+	GraphicsUnclipped::copy(sourceX, sourceY, destX, destY, width, height);
 }
 
 void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Rect>* revealedRects) {
@@ -1066,7 +1090,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 			}
 			
 			// Post-clipping regions overlap, so copy the source to the dest
-			copy(sourceX1, sourceY1, destX1, destY1, minWidth, minHeight);
+			GraphicsUnclipped::copy(sourceX1, sourceY1, destX1, destY1, minWidth, minHeight);
 		
 			// Work out the dimensions of the non-overlapped areas
 			
@@ -1215,4 +1239,3 @@ void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clip
 		}
 	}
 }
-		

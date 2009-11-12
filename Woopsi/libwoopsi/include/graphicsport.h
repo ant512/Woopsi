@@ -120,7 +120,16 @@ namespace WoopsiUI {
 		 * @param height The height of the rectangle.
 		 */
 		void drawBevelledRect(s16 x, s16 y, u16 width, u16 height);
-		
+
+		/**
+		 * Draw an unfilled circle to the internal bitmap.
+		 * @param x0 The x co-ordinate of the circle.
+		 * @param y0 The y co-ordinate of the circle.
+		 * @param radius The radius of the circle.
+		 * @param colour The colour of the circle.
+		 */
+		virtual void drawCircle(s16 x0, s16 y0, u16 radius, u16 colour);
+
 		/**
 		 * Draw a filled circle to the bitmap.
 		 * @param x0 The x co-ordinate of the circle.
@@ -129,6 +138,13 @@ namespace WoopsiUI {
 		 * @param colour The colour of the circle.
 		 */
 		void drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour);
+
+		/**
+		 * Invert the colour of the pixel at the specified co-ordinates.
+		 * @param x The x co-ordinate of the pixel.
+		 * @param y The y co-ordinate of the pixel.
+		 */
+		virtual void drawXORPixel(s16 x, s16 y);
 		
 		/**
 		 * Invert the colour of a horizontal line of pixels.
@@ -319,6 +335,7 @@ namespace WoopsiUI {
 		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Rect& clipRect);
 		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour, const Rect& clipRect);
 		void clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Rect& clipRect);
+		void clipCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect);
 		void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect);
 		void clipXORPixel(s16 x, s16 y, const Rect& clipRect);
 		void clipXORHorizLine(s16 x, s16 y, s16 width, const Rect& clipRect);
@@ -326,7 +343,7 @@ namespace WoopsiUI {
 		void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Rect& clipRect);
 		void clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Rect& clipRect, WoopsiArray<Rect>* revealedRects);
 		void clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect);
-		
+
 		void convertPortToScreenSpace(s16* x, s16* y);
 		bool clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Rect& clipRect);
 		u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);

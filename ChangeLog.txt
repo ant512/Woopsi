@@ -36,6 +36,8 @@ Change Log
     - dimmedscreen.h includes woopsi.h.
     - Graphics::drawBitmap() clips correctly if bitmap destination co-ords are
       greater than the size of the destination bitmap.
+    - GraphicsPort::drawPixel() clips correctly.
+    - GraphicsPort::drawXORPixel() clips correctly.
   
   - New Features:
     - Calendar test added.

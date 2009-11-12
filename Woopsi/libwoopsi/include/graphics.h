@@ -171,6 +171,23 @@ namespace WoopsiUI {
 		bool clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height);
 
 		/**
+		 * Remove the last item from the flood fill stack and insert its properties into the
+		 * supplied x and y variables.
+		 * @param x The x co-ordinate of the pixel from the stack (output by the function).
+		 * @param y The y co-ordinate of the pixel from the stack (output by the function).
+		 * @param stack Pointer to the stack to pop from.
+		 */
+		bool popStack(s16* x, s16* y, WoopsiArray<s32>* stack);
+		
+		/**
+		 * Push new co-ordinates onto the stack.
+		 * @param x The x co-ordinate of the pixel to add to the stack.
+		 * @param y The y co-ordinate of the pixel to add to the stack.
+		 * @param stack The stack to add a new value to.
+		 */
+		void pushStack(s16 x, s16 y, WoopsiArray<s32>* stack);
+
+		/**
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline Graphics(const Graphics& graphics) : GraphicsUnclipped(graphics) { };
