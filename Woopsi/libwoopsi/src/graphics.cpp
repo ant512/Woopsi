@@ -51,7 +51,7 @@ void Graphics::drawVertLine(s16 x, s16 y, u16 height, u16 colour) {
 	u16 width = 1;
 
 	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
-		Graphics::drawVertLine(x, y, height, colour);
+		GraphicsUnclipped::drawVertLine(x, y, height, colour);
 	}
 }
 
