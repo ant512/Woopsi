@@ -34,6 +34,8 @@ Change Log
     - Removed fatInitDefault() stub method for SDL out of individual .cpp files
       and into nds.h.
     - dimmedscreen.h includes woopsi.h.
+    - Graphics::drawBitmap() clips correctly if bitmap destination co-ords are
+      greater than the size of the destination bitmap.
   
   - New Features:
     - Calendar test added.

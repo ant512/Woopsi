@@ -100,12 +100,12 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 //Draw bitmap to the internal bitmap
 void Graphics::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY) {
 	
+	// Early exit conditions
+	if (x > _width) return;
+	if (y > _height) return;
+
 	u16 bitmapWidth = bitmap->getWidth();
 	u16 bitmapHeight = bitmap->getHeight();
-	const u16* bitmapData = bitmap->getData();
-
-	// Flush out the bitmap mem cache to ensure DMA can see correct data
-	DC_FlushRange(bitmapData, bitmapWidth * bitmapHeight * sizeof(u16));
 
 	// Ensure bitmap co-ordinates make sense
 	if (bitmapX < 0) {
