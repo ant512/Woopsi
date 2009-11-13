@@ -315,6 +315,18 @@ void woopsiWaitVBL() {
 	woopsiVblFunc();
 }
 
+void woopsiDmaCopy(const u16* source, u16* dest, u32 count) {
+	for (u32 i = 0; i < count; i++) {
+		*(dest + i) = *(source + i);
+	}
+}
+
+void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
+	for (u32 i = 0; i < count; i++) {
+		*(dest + i) = source;
+	}
+}
+
 void DMA_Copy(u16* source, u16* dest, u32 count, u32 mode) {
 	for (u32 i = 0; i < count; i++) {
 		*(dest + i) = *(source + i);
@@ -465,6 +477,40 @@ void woopsiWaitVBL() {
 		REG_POWERCNT = power_cr;
 	}
 	swiWaitForVBlank();
+}
+
+void woopsiDmaCopy(const u16* source, u16* dest, u32 count) {
+	u32 srca= (u32)source, dsta= (u32)dest;
+	count *= 2;
+
+	while(REG_DMA3CNT & DMA_BUSY);
+
+	if ((srca >> 24) == 0x02) DC_FlushRange(source, count);
+
+	if((srca|dsta|count) & 3)
+		dmaCopyHalfWords(3, source, dest, count);
+	else
+		dmaCopyWords(3, source, dest, count);
+
+	//dmaCopyHalfWords(3, source, dest, count * 2);
+
+	if ((dsta >> 24) == 0x02) DC_InvalidateRange(dest, count / 2);
+}
+
+void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
+
+	u32 dsta= (u32)dest;
+
+    while(REG_DMA3CNT & DMA_BUSY);
+
+	*dest = fill;
+
+	if (count > 1) {
+		DC_FlushRange(dest, 2);
+		DMA_Force(*dest, (dest + 1), (count - 1), DMA_16NOW);
+
+		if ((dsta>>24)==0x02) DC_InvalidateRange(dest, count);
+	}
 }
 
 #endif

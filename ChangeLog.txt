@@ -38,6 +38,8 @@ Change Log
       greater than the size of the destination bitmap.
     - GraphicsPort::drawPixel() clips correctly.
     - GraphicsPort::drawXORPixel() clips correctly.
+    - Wrapped DMA_Force and DMA_Copy inside woopsiDmaForce() and woopsiDmaCopy()
+      to fix ancient problems with DMA not seeing latest RAM state.
   
   - New Features:
     - Calendar test added.

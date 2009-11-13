@@ -30,45 +30,25 @@ const u16 GraphicsUnclipped::getPixel(s16 x, s16 y) const {
 
 // External filled rectangle function
 void GraphicsUnclipped::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
-
-	// Draw initial pixel to heap
-	u16* pos = new u16;
-	*pos = colour;
-
-	// Ensure DMA can see latest memory state
-	DC_FlushRange(pos, sizeof(u16));
 	
 	// Target location to draw to
 	u16* target = _data + (y * _width) + x;
 
 	for (u16 i = 0; i < height; i++) {
-		// Wait until DMA channel is clear
-		while (DMA_Active());
 
 		// Duplicate pixel
-		DMA_Force(*pos, target, width, DMA_16NOW);
+		woopsiDmaFill(colour, target, width);
 
 		// Move to next row
 		target += _width;
 	}
-
-	delete pos;
 }
 
 void GraphicsUnclipped::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 
-	// Draw initial pixel
 	u16* pos = _data + (y * _width) + x;
-	*pos = colour;
 
-	// Ensure DMA can see latest memory state
-	DC_FlushRange(pos, sizeof(u16));
-
-	// Wait until DMA channel is clear
-	while (DMA_Active());
-
-	// Duplicate pixel
-	if (width > 1) DMA_Force(*pos, (pos + 1), width - 1, DMA_16NOW);
+	woopsiDmaFill(colour, pos, width);
 }
 
 void GraphicsUnclipped::drawVertLine(s16 x, s16 y, u16 height, u16 colour) {
@@ -276,11 +256,7 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const
 void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
 	
 	u16 bitmapWidth = bitmap->getWidth();
-	u16 bitmapHeight = bitmap->getHeight();
 	const u16* bitmapData = bitmap->getData();
-
-	// Flush out the bitmap mem cache to ensure DMA can see correct data
-	DC_FlushRange(bitmapData, bitmapWidth * bitmapHeight * sizeof(u16));
 
 	// Precalculate line values for loop
 	u16* srcLine0 = (u16*)bitmapData + bitmapX + (bitmapY * bitmapWidth);
@@ -294,10 +270,7 @@ void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bi
 
 	for (u16 i = y; i < lastLine; i++) {
 
-		// Wait until DMA channel is clear
-		while (DMA_Active());
-
-		DMA_Copy(srcLinei, destLinei, width, DMA_16NOW);
+		woopsiDmaCopy(srcLinei, destLinei, width);
 
 		srcLinei += bitmapWidth;
 		destLinei += _width;
@@ -561,12 +534,10 @@ void GraphicsUnclipped::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16
 			for (u16 y = 0; y < height; y++) {
 				
 				// Copy row to buffer
-				while(DMA_Active());
-				DMA_Copy(copySource, buffer, width, DMA_16NOW);
+				woopsiDmaCopy(copySource, buffer, width);
 				
 				// Copy row back to screen
-				while(DMA_Active());
-				DMA_Copy(buffer, copyDest, width, DMA_16NOW);
+				woopsiDmaCopy(buffer, copyDest, width);
 				
 				copySource += _width;
 				copyDest += _width;
@@ -603,8 +574,7 @@ void GraphicsUnclipped::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16
 	for (u16 i = 0; i < height; ++i) {
 		
 		// Copy row
-		while(DMA_Active());
-		DMA_Copy(copySource, copyDest, width, DMA_16NOW);
+		woopsiDmaCopy(copySource, copyDest, width);
 		
 		copySource += delta;
 		copyDest += delta;

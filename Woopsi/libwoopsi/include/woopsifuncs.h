@@ -197,4 +197,8 @@ bool woopsiLidClosed();
  */
 void woopsiUpdateInput();
 
+void woopsiDmaCopy(const u16* source, u16* dest, u32 count);
+
+void woopsiDmaFill(u16 fill, u16* dest, u32 count);
+
 #endif
