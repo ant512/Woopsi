@@ -315,6 +315,12 @@ void woopsiWaitVBL() {
 	woopsiVblFunc();
 }
 
+void DMA_Force(u16 source, u16* dest, u32 count, u32 mode) {
+	for (u32 i = 0; i < count; i++) {
+		*(dest + i) = source;
+	}
+}
+
 void woopsiDmaCopy(const u16* source, u16* dest, u32 count) {
 	for (u32 i = 0; i < count; i++) {
 		*(dest + i) = *(source + i);
@@ -323,19 +329,7 @@ void woopsiDmaCopy(const u16* source, u16* dest, u32 count) {
 
 void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
 	for (u32 i = 0; i < count; i++) {
-		*(dest + i) = source;
-	}
-}
-
-void DMA_Copy(u16* source, u16* dest, u32 count, u32 mode) {
-	for (u32 i = 0; i < count; i++) {
-		*(dest + i) = *(source + i);
-	}
-}
-
-void DMA_Force(u16 source, u16* dest, u32 count, u32 mode) {
-	for (u32 i = 0; i < count; i++) {
-		*(dest + i) = source;
+		*(dest + i) = fill;
 	}
 }
 
@@ -529,4 +523,11 @@ void woopsiFreeFonts() {
 	delete tinyFont;
 	delete systemFont;
 	delete systemFontBitmap;
+}
+
+void woopsiFreeFrameBuffers() {
+
+	// Delete the framebuffers
+	delete frameBuffer[0];
+	delete frameBuffer[1];
 }

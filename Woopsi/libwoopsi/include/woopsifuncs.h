@@ -104,9 +104,9 @@ extern _stylus Stylus;
 #include <string.h>
 #include <math.h>
 
-void DMA_Copy(u16* source, u16* dest, u32 count, u32 mode);
-void DMA_Force(u16 source, u16* dest, u32 count, u32 mode);
 bool DMA_Active();
+
+void DMA_Force(u16 source, u16* dest, u32 count, u32 mode);
 
 void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 
@@ -130,15 +130,6 @@ void DC_FlushRange(const void *base, u32 size);
  * @return True if the channel is still active.
  */
 #define DMA_Active() (!(!(REG_DMA3CNT & DMA_ON)))
-
-/**
- * Perform a DMA copy using the first DMA channel.
- * @param source The source memory address.
- * @param dest The destination memory address.
- * @param count The number of values to copy.
- * @param mode The DMA mode to use.
- */
-#define DMA_Copy(source, dest, count, mode) {REG_DMA3SRC = (u32)source; REG_DMA3DST = (u32)dest; REG_DMA3CNT = (count) | (mode);}
 
 /**
  * Perform a DMA force using the first DMA channel.
@@ -180,6 +171,11 @@ void woopsiInitFonts();
 void woopsiFreeFonts();
 
 /**
+ * Delete the framebuffer objects.
+ */
+void woopsiFreeFrameBuffers();
+
+/**
  * Wait for a VBL.  Switches into a wait state if the lid is closed.
  */
 void woopsiWaitVBL();
@@ -197,8 +193,20 @@ bool woopsiLidClosed();
  */
 void woopsiUpdateInput();
 
+/**
+ * Perform a DMA copy.
+ * @param source Pointer to the source.
+ * @param dest Pointer to the destination.
+ * @param count The number of values to copy.
+ */
 void woopsiDmaCopy(const u16* source, u16* dest, u32 count);
 
+/**
+ * Fill region of memory with the same value using DMA.
+ * @param fill The value to fill with.
+ * @param dest Pointer to the destination.
+ * @param count The number of values to write.
+ */
 void woopsiDmaFill(u16 fill, u16* dest, u32 count);
 
 #endif

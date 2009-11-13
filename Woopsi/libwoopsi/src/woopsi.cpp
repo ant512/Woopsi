@@ -53,6 +53,7 @@ Woopsi::~Woopsi() {
 	_contextMenu = NULL;
 
 	woopsiFreeFonts();
+	woopsiFreeFrameBuffers();
 }
 
 void Woopsi::goModal() {
