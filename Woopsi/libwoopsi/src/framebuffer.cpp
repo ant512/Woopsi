@@ -1,5 +1,6 @@
 #include "framebuffer.h"
 #include "graphics.h"
+#include "woopsifuncs.h"
 
 using namespace WoopsiUI;
 
@@ -35,4 +36,14 @@ void FrameBuffer::setPixel(s16 x, s16 y, u16 colour) {
 
 Graphics* FrameBuffer::newGraphics() {
 	return new Graphics(this);
+}
+
+void FrameBuffer::blit(const s16 x, const s16 y, u16* data, const u32 size) {
+	u16* pos = _bitmap + (y * _width) + x;
+	woopsiDmaCopy(data, pos, size);
+}
+
+void FrameBuffer::blitFill(const s16 x, const s16 y, u16 colour, const u32 size) {
+	u16* pos = _bitmap + (y * _width) + x;
+	woopsiDmaFill(colour, pos, size);
 }

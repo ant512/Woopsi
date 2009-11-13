@@ -41,3 +41,13 @@ void Bitmap::setPixel(s16 x, s16 y, u16 colour) {
 Graphics* Bitmap::newGraphics() {
 	return new Graphics(this);
 }
+
+void Bitmap::blit(const s16 x, const s16 y, u16* data, const u32 size) {
+	u16* pos = _bitmap + (y * _width) + x;
+	woopsiDmaCopy(data, pos, size);
+}
+
+void Bitmap::blitFill(const s16 x, const s16 y, u16 colour, const u32 size) {
+	u16* pos = _bitmap + (y * _width) + x;
+	woopsiDmaFill(colour, pos, size);
+}

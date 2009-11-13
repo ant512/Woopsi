@@ -62,6 +62,24 @@ namespace WoopsiUI {
 		 */
 		Graphics* newGraphics();
 
+		/**
+		 * Blit data to the specified co-ordinates using the DMA hardware.
+		 * @param x The x co-ordinate to blit to.
+		 * @param y The y co-ordinate to blit to.
+		 * @param data The data to blit.
+		 * @param size The number of u16s to blit.
+		 */
+		void blit(const s16 x, const s16 y, u16* data, const u32 size);
+
+		/**
+		 * Fill at the specified co-ordinates using the DMA hardware.
+		 * @param x The x co-ordinate to blit to.
+		 * @param y The y co-ordinate to blit to.
+		 * @param colour The colour to fill with.
+		 * @param size The number of u16s to blit.
+		 */
+		void blitFill(const s16 x, const s16 y, u16 colour, const u32 size);
+
 	protected:
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
 

@@ -78,6 +78,8 @@ Change Log
       object that can draw to the bitmap.
     - Added bitmapdrawing example.
     - Added gadgetdrawing example.
+    - Added blit() and blitFill() methods to Bitmap and FrameBuffer, and
+      signatures to MutableBitmapBase.
 
 
   V0.39 (20091024)
@@ -130,7 +132,7 @@ Change Log
      - Fixed double-click in SDL (Quirky).
      - FileRequester fixed for SDL (Quirky).
      - SDL path fixes (Quirky).
-	 - Escape key to quit in SDL mode (Quirky).
+     - Escape key to quit in SDL mode (Quirky).
      - WindowBorderTop and SkinnedWindowBorderTop no longer have pointers to
        freed memory if window title changes (Quirky).
      - ScreenTitle and SkinnedScreenTitle no longer have pointers to freed
