@@ -33,24 +33,24 @@ void BitmapLoader::startup() {
 		Bitmap* bitmap = BitmapIO::loadBMP("/logo16_v3.bmp");
 		
 		// Draw the bitmap to the superbitmap
-		superBitmap->drawBitmap(0, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
+		superBitmap->getGraphics()->drawBitmap(0, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
 		
 		// Delete the bitmap now we no longer need it
 		delete bitmap;
 		
 		// Load a 16-bit BMP in 555 format with a V4 DIB header
 		bitmap = BitmapIO::loadBMP("/logo16_v4.bmp");
-		superBitmap->drawBitmap(bitmap->getWidth(), 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
+		superBitmap->getGraphics()->drawBitmap(bitmap->getWidth(), 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
 		delete bitmap;
 		
 		// Load a 24-bit BMP with a V3 DIB header
 		bitmap = BitmapIO::loadBMP("/logo24_v3.bmp");
-		superBitmap->drawBitmap(bitmap->getWidth() * 2, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
+		superBitmap->getGraphics()->drawBitmap(bitmap->getWidth() * 2, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
 		delete bitmap;
 		
 		// Load a 24-bit BMP with a V4 DIB header
 		bitmap = BitmapIO::loadBMP("/logo24_v4.bmp");
-		superBitmap->drawBitmap(bitmap->getWidth() * 3, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
+		superBitmap->getGraphics()->drawBitmap(bitmap->getWidth() * 3, 0, bitmap->getWidth(), bitmap->getHeight(), bitmap, 0, 0);
 		delete bitmap;
 		
 		// Save the bitmap
