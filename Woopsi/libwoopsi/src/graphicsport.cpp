@@ -48,11 +48,6 @@ void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 		width = x2 - x + 1;
 		height = y2 - y + 1;
 		
-		// Adjust for top-screen offset
-		if (y > TOP_SCREEN_Y_OFFSET) {
-			y -= TOP_SCREEN_Y_OFFSET;
-		}
-		
 		// Draw the rectangle
 		GraphicsUnclipped::drawFilledRect(x, y, width, height, colour);
 	}
@@ -825,11 +820,6 @@ void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Rect& clipRect) {
 	
 	// Attempt to clip and draw
 	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
-		// Compensate for top screen offset
-		if (y >= TOP_SCREEN_Y_OFFSET) {
-			y -= TOP_SCREEN_Y_OFFSET;
-		}
-		
 		GraphicsUnclipped::drawPixel(clipX1, clipY1, colour);
 	}
 }
@@ -861,11 +851,6 @@ void GraphicsPort::clipXORPixel(s16 x, s16 y, const Rect& clipRect) {
 	
 	// Attempt to clip and draw
 	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
-		// Compensate for top screen offset
-		if (y >= TOP_SCREEN_Y_OFFSET) {
-			y -= TOP_SCREEN_Y_OFFSET;
-		}
-		
 		GraphicsUnclipped::drawXORPixel(clipX1, clipY1);
 	}
 }
@@ -910,6 +895,12 @@ void GraphicsPort::clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Re
 	s16 maxY = clipRect.y + clipRect.height - 1;
 	
 	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
+	
+		// Compensate for top screen offset
+		if (y1 >= TOP_SCREEN_Y_OFFSET) {
+			y1 -= TOP_SCREEN_Y_OFFSET;
+			y2 -= TOP_SCREEN_Y_OFFSET;
+		}
 		
 		// Get outcodes for each point
 		u8 code1 = getClipLineOutCode(x1, y1, minX, minY, maxX, maxY);

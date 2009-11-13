@@ -86,7 +86,7 @@ void GraphicsUnclipped::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 		e = dy - dx;
 		dx <<= 1;
 		while (x1 != x2) {
-			drawPixel(x1, y1,colour);
+			GraphicsUnclipped::drawPixel(x1, y1,colour);
 			if (e >= 0) {
 					y1 += iny;
 					e-= dx;
@@ -98,7 +98,7 @@ void GraphicsUnclipped::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 		e = dx - dy;
 		dy <<= 1;
 		while (y1 != y2) {
-			drawPixel(x1, y1, colour);
+			GraphicsUnclipped::drawPixel(x1, y1, colour);
 			if (e >= 0) {
 					x1 += inx;
 					e -= dy;
@@ -106,7 +106,7 @@ void GraphicsUnclipped::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 			e += dx; y1 += iny;
 		}
 	}
-	drawPixel(x1, y1, colour);
+	GraphicsUnclipped::drawPixel(x1, y1, colour);
 }
 
 void GraphicsUnclipped::drawCircle(s16 x0, s16 y0, u16 radius, u16 colour) {

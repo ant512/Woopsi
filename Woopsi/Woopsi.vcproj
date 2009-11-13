@@ -30,7 +30,7 @@
 				CleanCommandLine="make clean"
 				Output="$(ConfigurationName)\$(ProjectName).nds"
 				PreprocessorDefinitions="WIN32;NDEBUG;VC7"
-				IncludeSearchPath="&quot;$(DKP_HOME)\libnds\include&quot;"
+				IncludeSearchPath="&quot;$(DKP_HOME)\libnds\include&quot;; &quot;$(DKP_HOME)\libnds\include\nds&quot;"
 				ForcedIncludes=""
 				AssemblySearchPath=""
 				ForcedUsingAssemblies=""
