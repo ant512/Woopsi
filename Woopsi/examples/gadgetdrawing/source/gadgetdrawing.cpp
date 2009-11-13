@@ -43,106 +43,43 @@ void GadgetDrawing::startup() {
 	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Control Window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	screen->addGadget(window);
 	
-	Button* button = new Button(rect.x, rect.y, 80, 12, "Off");
-	button->setRefcon(2);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
+	// Create array containing labels for all buttons
+	WoopsiArray<const char*> buttonText;
+	buttonText.push_back("Off");
+	buttonText.push_back("Lines");
+	buttonText.push_back("Ellipses");
+	buttonText.push_back("Filled Ellipses");
+	buttonText.push_back("Rects");
+	buttonText.push_back("Filled Rects");
+	buttonText.push_back("Filled XOR Rects");
+	buttonText.push_back("Horiz Lines");
+	buttonText.push_back("Vert Lines");
+	buttonText.push_back("Circles");
+	buttonText.push_back("Filled Circles");
+	buttonText.push_back("XOR Horiz Lines");
+	buttonText.push_back("XOR Vert Lines");
+	buttonText.push_back("XOR Rects");
+	buttonText.push_back("XOR Pixels");
+	buttonText.push_back("Pixels");
+	buttonText.push_back("Text");
+	buttonText.push_back("Bitmap");
+	buttonText.push_back("Bitmap Transparency");
+	buttonText.push_back("Dim");
 	
-	button = new Button(rect.x, rect.y + 12, 80, 12, "Lines");
-	button->setRefcon(3);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
+	// Calculate button dimensions based on size of window
+	u16 buttonWidth = rect.width / 2;
+	u16 buttonHeight = rect.height / 10;
 	
-	button = new Button(rect.x, rect.y + 24, 80, 12, "Ellipses");
-	button->setRefcon(4);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 36, 80, 12, "Filled Ellipses");
-	button->setRefcon(5);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 48, 80, 12, "Rects");
-	button->setRefcon(6);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 60, 80, 12, "Filled Rects");
-	button->setRefcon(7);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 72, 80, 12, "Filled XOR Rects");
-	button->setRefcon(8);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 84, 80, 12, "Horiz Lines");
-	button->setRefcon(9);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 96, 80, 12, "Vert Lines");
-	button->setRefcon(10);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 108, 80, 12, "Circles");
-	button->setRefcon(11);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 120, 80, 12, "Filled Circles");
-	button->setRefcon(12);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 132, 80, 12, "XOR Horiz Lines");
-	button->setRefcon(13);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x, rect.y + 144, 80, 12, "XOR Vert Lines");
-	button->setRefcon(14);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	// Second column of buttons
-	button = new Button(rect.x + 80, rect.y, 80, 12, "XOR Rects");
-	button->setRefcon(15);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x + 80, rect.y + 12, 80, 12, "XOR Pixels");
-	button->setRefcon(16);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x + 80, rect.y + 24, 80, 12, "Pixels");
-	button->setRefcon(17);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x + 80, rect.y + 36, 80, 12, "Text");
-	button->setRefcon(18);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x + 80, rect.y + 48, 80, 12, "Bitmap");
-	button->setRefcon(19);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x + 80, rect.y + 60, 80, 12, "Bitmap Transparency");
-	button->setRefcon(20);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
-	
-	button = new Button(rect.x + 80, rect.y + 84, 80, 12, "Dim");
-	button->setRefcon(21);
-	button->addGadgetEventHandler(this);
-	window->addGadget(button);
+	// Create all buttons using array of button text as labels
+	for (u8 i = 0; i < buttonText.size(); ++i) {
+		s16 buttonX = rect.x + ((i / 10) * buttonWidth);
+		s16 buttonY = rect.y + ((i % 10) * buttonHeight);
+		
+		Button* button = new Button(buttonX, buttonY, buttonWidth, buttonHeight, buttonText[i]);
+		button->setRefcon(i + 2);
+		button->addGadgetEventHandler(this);
+		window->addGadget(button);
+	}
 	
 	// Create a bitmap to use to test the bitmap drawing mode
 	_bitmap = new Bitmap(100, 20);
