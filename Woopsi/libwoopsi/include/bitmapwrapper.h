@@ -41,6 +41,15 @@ namespace WoopsiUI {
 		 */
 		inline const u16* getData() const { return _bitmap; };
 
+		/**
+		 * Get a pointer to the internal bitmap data at the specified
+		 * co-ordinates.
+		 * @param x The x co-ord of the data.
+		 * @param y The y co-ord of the data.
+		 * @return Pointer to the internal bitmap data.
+		 */
+		inline const u16* getData(s16 x, s16 y) const;
+
 	protected:
 		const u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
 

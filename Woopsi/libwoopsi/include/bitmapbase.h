@@ -18,6 +18,15 @@ namespace WoopsiUI {
 		virtual const u16* getData() const = 0;
 
 		/**
+		 * Get a pointer to the internal bitmap data at the specified
+		 * co-ordinates.
+		 * @param x The x co-ord of the data.
+		 * @param y The y co-ord of the data.
+		 * @return Pointer to the internal bitmap data.
+		 */
+		virtual const u16* getData(s16 x, s16 y) const = 0;
+
+		/**
 		 * Get the colour of the pixel at the specified co-ordinates
 		 * @param x The x co-ordinate of the pixel.
 		 * @param y The y co-ordinate of the pixel.

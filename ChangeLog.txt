@@ -80,6 +80,7 @@ Change Log
     - Added gadgetdrawing example.
     - Added blit() and blitFill() methods to Bitmap and FrameBuffer, and
       signatures to MutableBitmapBase.
+    - Added getData(x, y) method to all bitmap classes.
 
 
   V0.39 (20091024)

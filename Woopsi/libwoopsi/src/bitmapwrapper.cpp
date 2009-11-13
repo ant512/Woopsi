@@ -19,3 +19,14 @@ const u16 BitmapWrapper::getPixel(s16 x, s16 y) const {
 	u32 pos = (y * _width) + x;
 	return _bitmap[pos];
 }
+
+const u16* BitmapWrapper::getData(s16 x, s16 y) const {
+
+	// Prevent overflows
+	if ((x < 0) || (y < 0)) return 0;
+	if ((x >= _width) || (y >= _height)) return 0;
+
+	// Get the pixel
+	u32 pos = (y * _width) + x;
+	return _bitmap + pos;
+}
