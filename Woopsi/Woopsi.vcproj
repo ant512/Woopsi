@@ -50,39 +50,11 @@
 				Name="Core"
 				>
 				<File
-					RelativePath=".\libwoopsi\src\animation.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\date.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\defaultstyle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\src\font.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\src\gadget.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\listdata.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\src\rectcache.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\src\textwriter.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\src\woopsi.cpp"
 					>
 				</File>
 				<File
@@ -94,6 +66,10 @@
 					>
 					<File
 						RelativePath=".\libwoopsi\src\fixedwidthfontbase.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\font.cpp"
 						>
 					</File>
 					<File
@@ -153,6 +129,10 @@
 					Name="Graphics"
 					>
 					<File
+						RelativePath=".\libwoopsi\src\animation.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\src\graphics.cpp"
 						>
 					</File>
@@ -162,6 +142,30 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\src\graphicsunclipped.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\textwriter.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Gadgets"
+					>
+					<File
+						RelativePath=".\libwoopsi\src\defaultstyle.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\gadget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\rectcache.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\woopsi.cpp"
 						>
 					</File>
 				</Filter>
