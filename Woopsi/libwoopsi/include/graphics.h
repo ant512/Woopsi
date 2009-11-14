@@ -159,6 +159,16 @@ namespace WoopsiUI {
 		 */
 		void dim(s16 x, s16 y, u16 width, u16 height);
 
+		/**
+		 * Draw a line to the internal bitmap.
+		 * @param x1 The x co-ordinate of the start point of the line.
+		 * @param y1 The y co-ordinate of the start point of the line.
+		 * @param x2 The x co-ordinate of the end point of the line.
+		 * @param y2 The y co-ordinate of the end point of the line.
+		 * @param colour The colour of the line.
+		 */
+		virtual void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
+
 	protected:
 		
 		/**
@@ -186,6 +196,8 @@ namespace WoopsiUI {
 		 * @param stack The stack to add a new value to.
 		 */
 		void pushStack(s16 x, s16 y, WoopsiArray<s32>* stack);
+
+		u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);
 
 		/**
 		 * Copy constructor is protected to prevent usage.

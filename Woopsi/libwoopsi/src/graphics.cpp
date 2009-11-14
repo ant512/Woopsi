@@ -324,3 +324,98 @@ bool Graphics::clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height) {
 	// Return true as box can be drawn
 	return true;
 }
+
+u8 Graphics::getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax) {
+	u8 code = 0;
+	
+	if (y > yMax) code |= 1;
+	if (y < yMin) code |= 2;
+	if (x > xMax) code |= 4;
+	if (x < xMin) code |= 8;
+	
+	return code;
+}
+
+void Graphics::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
+	
+	// Extract data from cliprect
+	s16 minX = 0;
+	s16 minY = 0;
+	s16 maxX = _width - 1;
+	s16 maxY = _height - 1;
+		
+	// Get outcodes for each point
+	u8 code1 = getClipLineOutCode(x1, y1, minX, minY, maxX, maxY);
+	u8 code2 = getClipLineOutCode(x2, y2, minX, minY, maxX, maxY);
+	
+	// Clip
+	while (1) {
+		// Check for trivial cases
+		if (!(code1 | code2)) {
+			
+			// Line entirely within visible region
+			// Draw the line
+			GraphicsUnclipped::drawLine(x1, y1, x2, y2, colour);
+			return;
+		} else if (code1 & code2) {
+			
+			// Both end points fall within the same off-screen region
+			return;
+		} else {
+			
+			// No trivial accept
+			s16 x = 0;
+			s16 y = 0;
+			s32 t = 0;
+			u8 codeout;
+			
+			// Choose one of the end points to manipulate (only choose
+			// the end point that is still off screen)
+			codeout = code1 ? code1 : code2;
+			
+			// Check each region
+			if (codeout & 1) {
+				
+				// Check top value
+				t = ((maxY - y1) << 8) / (y2 - y1);
+				x = x1 + ((t * (x2 - x1)) >> 8);
+				y = maxY;
+			} else if (codeout & 2) {
+				
+				// Check bottom value
+				t = ((minY - y1) << 8) / (y2 - y1);
+				x = x1 + ((t * (x2 - x1)) >> 8);
+				y = minY;
+			} else if (codeout & 4) {
+				
+				// Check right value
+				t = ((maxX - x1) << 8) / (x2 - x1);
+				y = y1 + ((t * (y2 - y1)) >> 8);
+				x = maxX;
+			} else if (codeout & 8) {
+				
+				// Check left value
+				t = ((minX - x1) << 8) / (x2 - x1);
+				y = y1 + ((t * (y2 - y1)) >> 8);
+				x = minX;
+			}
+			
+			// Check to see which endpoint we clipped
+			if (codeout == code1) {
+				// First endpoint clipped; update first point
+				x1 = x;
+				y1 = y;
+				
+				// Clip again
+				code1 = getClipLineOutCode(x1, y1, minX, minY, maxX, maxY);
+			} else {
+				// Second endpoint clipped; update second point
+				x2 = x;
+				y2 = y;
+				
+				// Clip again
+				code2 = getClipLineOutCode(x2, y2, minX, minY, maxX, maxY);
+			}
+		}
+	}
+}
