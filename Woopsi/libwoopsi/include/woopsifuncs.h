@@ -104,41 +104,12 @@ extern _stylus Stylus;
 #include <string.h>
 #include <math.h>
 
-bool DMA_Active();
-
-void DMA_Force(u16 source, u16* dest, u32 count, u32 mode);
-
 void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
-
-// Simulate some features of libnds
-void DC_FlushRange(const void *base, u32 size);
 
 #else
 
 #include <nds/memory.h>
 #include <nds/bios.h>
-
-// DMA registers
-#define REG_DMA3SRC *(volatile u32*)0x040000D4
-#define REG_DMA3DST *(volatile u32*)0x040000D8
-#define REG_DMA3CNT *(volatile u32*)0x040000DC
-
-/**
- * Check if the first DMA channel is active.  DMA access is asynchronous so DMA
- * operations can run whilst the rest of the program is running, so it is
- * important to check that a channel is inactive before using it.
- * @return True if the channel is still active.
- */
-#define DMA_Active() (!(!(REG_DMA3CNT & DMA_ON)))
-
-/**
- * Perform a DMA force using the first DMA channel.
- * @param source The source memory address.
- * @param dest The destination memory address.
- * @param count The number of values to write.
- * @param mode The DMA mode to use.
- */
-#define DMA_Force(ulVal, dest, count, mode) {REG_DMA3SRC=(u32)&ulVal; REG_DMA3DST = (u32)dest; REG_DMA3CNT = (count) | (mode) | DMA_SRC_FIX;}
 
 #endif
 

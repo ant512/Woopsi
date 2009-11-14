@@ -315,12 +315,6 @@ void woopsiWaitVBL() {
 	woopsiVblFunc();
 }
 
-void DMA_Force(u16 source, u16* dest, u32 count, u32 mode) {
-	for (u32 i = 0; i < count; i++) {
-		*(dest + i) = source;
-	}
-}
-
 void woopsiDmaCopy(const u16* source, u16* dest, u32 count) {
 	for (u32 i = 0; i < count; i++) {
 		*(dest + i) = *(source + i);
@@ -331,10 +325,6 @@ void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
 	for (u32 i = 0; i < count; i++) {
 		*(dest + i) = fill;
 	}
-}
-
-bool DMA_Active() {
-	return false;
 }
 
 void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
@@ -367,10 +357,6 @@ void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
         *(Uint32 *)p = pixel;
         break;
     }
-}
-
-// Function does nothing, as mem does not need flushing in SDL
-void DC_FlushRange(const void *base, u32 size) {
 }
 
 #else
@@ -474,36 +460,89 @@ void woopsiWaitVBL() {
 }
 
 void woopsiDmaCopy(const u16* source, u16* dest, u32 count) {
-	u32 srca= (u32)source, dsta= (u32)dest;
-	count *= 2;
 
-	while(REG_DMA3CNT & DMA_BUSY);
+	// Get memory addresses of source and destination
+	u32 srca = (u32)source;
+	u32 dsta = (u32)dest;
 
-	if ((srca >> 24) == 0x02) DC_FlushRange(source, count);
+	// Precalculate the size of a single framebuffer for speed
+	u32 bmpSize = SCREEN_WIDTH * SCREEN_HEIGHT * 2;
 
-	if((srca|dsta|count) & 3)
-		dmaCopyHalfWords(3, source, dest, count);
-	else
-		dmaCopyWords(3, source, dest, count);
+	// Precalculate boundaries of framebuffer VRAM
+	u32 bmp[4];
+	bmp[0] = 0x06000000;
+	bmp[1] = 0x06000000 + bmpSize;
+	bmp[2] = 0x06200000;
+	bmp[3] = 0x06200000 + bmpSize;
 
-	//dmaCopyHalfWords(3, source, dest, count * 2);
+	// Use DMA hardware if both source and destination are within VRAM
+	if (((srca >= bmp[0]) && (srca < bmp[1])) ||
+		((srca >= bmp[2]) && (srca < bmp[3]))) {
+		if (((dsta >= bmp[0]) && (dsta < bmp[1])) ||
+			((dsta >= bmp[2]) && (dsta < bmp[3]))) {
 
-	if ((dsta >> 24) == 0x02) DC_InvalidateRange(dest, count / 2);
+			// libnds DMA functions work in bytes
+			count *= 2;
+
+			// Choose fastest DMA copy mode
+			if((srca|dsta|count) & 3)
+				dmaCopyHalfWords(3, source, dest, count);
+			else
+				dmaCopyWords(3, source, dest, count);
+
+			return;
+		}
+	}
+
+	// Cannot use DMA as not working exclusively with VRAM
+	// Use for-loop instead
+	for (u32 i = 0; i < count; i++) {
+		*(dest + i) = *(source + i);
+	}
 }
 
 void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
 
-	u32 dsta= (u32)dest;
-
-    while(REG_DMA3CNT & DMA_BUSY);
-
+	// Draw initial pixel
 	*dest = fill;
 
+	// Stop copying if there are no more pixels to draw
 	if (count > 1) {
-		DC_FlushRange(dest, 2);
-		DMA_Force(*dest, (dest + 1), (count - 1), DMA_16NOW);
 
-		if ((dsta>>24)==0x02) DC_InvalidateRange(dest, count);
+		u32 dsta = (u32)dest + 1;
+
+		// Precalculate the size of a single framebuffer for speed
+		u32 bmpSize = SCREEN_WIDTH * SCREEN_HEIGHT * 2;
+
+		// Precalculate boundaries of framebuffer VRAM
+		u32 bmp[4];
+		bmp[0] = 0x06000000;
+		bmp[1] = 0x06000000 + bmpSize;
+		bmp[2] = 0x06200000;
+		bmp[3] = 0x06200000 + bmpSize;
+
+		// Use DMA hardware if destination is within VRAM
+		if (((dsta >= bmp[0]) && (dsta < bmp[1])) ||
+			((dsta >= bmp[2]) && (dsta < bmp[3]))) {
+
+			// libnds DMA functions work in bytes
+			count *= 2;
+
+			if((dsta|count) & 3)
+				dmaFillHalfWords(fill, dest, count);
+			else
+				dmaFillWords(fill, dest, count);
+
+			//DMA_Force(*dest, (dest + 1), (count - 1), DMA_16NOW);
+
+			return;
+		}
+	}
+
+	// Cannot use DMA as not working exclusively with VRAM
+	// Use for-loop instead
+	for (u32 i = 0; i < count; i++) {
+		*(dest + i) = fill;
 	}
 }
 
