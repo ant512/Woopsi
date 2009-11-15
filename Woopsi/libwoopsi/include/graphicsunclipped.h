@@ -18,7 +18,7 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
-		 * @param width The bitmap that will be drawn to.
+		 * @param bitmap The bitmap that will be drawn to.
 		 */
 		GraphicsUnclipped(MutableBitmapBase* bitmap);
 
