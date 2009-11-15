@@ -12,6 +12,11 @@ namespace WoopsiUI {
 	public:
 
 		/**
+		 * Destructor.
+		 */
+		virtual inline ~BitmapBase() { };
+
+		/**
 		 * Get a pointer to the internal bitmap data.
 		 * @return Pointer to the internal bitmap data.
 		 */

@@ -13,6 +13,11 @@ namespace WoopsiUI {
 	public:
 
 		/**
+		 * Destructor.
+		 */
+		virtual inline ~MutableBitmapBase() { };
+
+		/**
 		 * Set the colour of the specified pixel.
 		 * @param x X co-ord of the pixel to set.
 		 * @param y Y co-ord of the pixel to set.
