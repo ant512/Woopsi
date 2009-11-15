@@ -194,6 +194,16 @@ namespace WoopsiUI {
 		 */
 		void pushStack(s16 x, s16 y, WoopsiArray<s32>* stack);
 
+		/**
+		 * Get the clipping code for the given co-ordinates based on the
+		 * given clipping region.
+		 * @param x X co-ordinate to clip.
+		 * @param y Y co-ordinate to clip.
+		 * @param xMin Minimum x value.
+		 * @param yMin Minimum y value.
+		 * @param xMax Maximum x value.
+		 * @param yMax Maximum y value.
+		 */
 		u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);
 
 		/**

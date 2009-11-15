@@ -74,6 +74,8 @@ namespace WoopsiUI {
 		 * must be supplied, and the x co-ordinate of the character is adjusted to take
 		 * the character's index into account.
 		 * @param bitmap The bitmap to draw to.
+ 		 * @param bitmapWidth The width of the supplied bitmap.
+		 * @param bitmapHeight The height of the supplied bitmap.
 		 * @param font The font to use for the glyph data.
 		 * @param letter The character to output.
 		 * @param charIndex The position of this character within a larger string.
