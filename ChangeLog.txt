@@ -8,6 +8,7 @@ Change Log
   - New Features:
     - Removed getEditableData() bodge from bitmap classes; all interaction with
       bitmap data happens through bitmap methods.
+    - SDL framebuffer code merged into FrameBuffer class.
 
 
   V0.40 (20091115)

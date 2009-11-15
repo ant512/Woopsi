@@ -53,11 +53,9 @@ void initWoopsiGfxMode() {
 		exit(2);
 	}
 
-	// Create framebuffer simulator arrays
-	// TODO: This leaks memory as the arrays are not deleted when the framebuffer is destroyed.
-	// How can this be fixed?
-	frameBuffer[0] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
-	frameBuffer[1] = new WoopsiUI::FrameBuffer(new u16[SCREEN_WIDTH * SCREEN_HEIGHT], SCREEN_WIDTH, SCREEN_HEIGHT);
+	// Create framebuffers
+	frameBuffer[0] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_HEIGHT);
+	frameBuffer[1] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
 	// Initialise system fonts
 	woopsiInitFonts();
@@ -73,29 +71,6 @@ void initWoopsiGfxMode() {
 }
 
 void woopsiVblFunc() {
-	//woopsiUpdateInput();
-	SDL_PixelFormat* format;
-	format = screen->format;
-	SDL_LockSurface(screen);
-
-	u32 r = 0;
-	u32 g = 0;
-	u32 b = 0;
-
-	// Draw both screens
-	for (u16 x = 0; x < SCREEN_WIDTH; ++x) {
-		for (u16 y = 0; y < SCREEN_HEIGHT; ++y) {
-			for (u8 screenNum = 0; screenNum < 2; ++screenNum) {
-				r = (frameBuffer[screenNum]->getPixel(x, y) & 31) << 3;
-				g = (frameBuffer[screenNum]->getPixel(x, y) & (31 << 5)) >> 2;
-				b = (frameBuffer[screenNum]->getPixel(x, y) & (31 << 10)) >> 7;
-
-				putPixel(screen, x, y + ((1 - screenNum) * SCREEN_HEIGHT), SDL_MapRGB(format, r, g, b));
-			}
-		}
-	}
-
-	SDL_UnlockSurface(screen);
 	SDL_UpdateRect(screen, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT * 2);
 
 	if (Stylus.Newpress) {
@@ -327,36 +302,64 @@ void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
 	}
 }
 
-void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
-    int bpp = surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to set */
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+void putSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
+	int bpp = surface->format->BytesPerPixel;
 
-    switch (bpp) {
-    case 1:
-        *p = pixel;
-        break;
+	/* Here p is the address to the pixel we want to set */
+	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
-    case 2:
-        *(Uint16 *)p = pixel;
-        break;
+	switch (bpp) {
+		case 1:
+			*p = pixel;
+			break;
 
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-            p[0] = (pixel >> 16) & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = pixel & 0xff;
-        } else {
-            p[0] = pixel & 0xff;
-            p[1] = (pixel >> 8) & 0xff;
-            p[2] = (pixel >> 16) & 0xff;
-        }
-        break;
+		case 2:
+			*(Uint16 *)p = pixel;
+			break;
 
-    case 4:
-        *(Uint32 *)p = pixel;
-        break;
-    }
+		case 3:
+			if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+				p[0] = (pixel >> 16) & 0xff;
+				p[1] = (pixel >> 8) & 0xff;
+				p[2] = pixel & 0xff;
+			} else {
+				p[0] = pixel & 0xff;
+				p[1] = (pixel >> 8) & 0xff;
+				p[2] = (pixel >> 16) & 0xff;
+			}
+			break;
+
+		case 4:
+			*(Uint32 *)p = pixel;
+			break;
+	}
+}
+
+Uint32 getSDLPixel(SDL_Surface *surface, int x, int y) {
+	int bpp = surface->format->BytesPerPixel;
+	
+	/* Here p is the address to the pixel we want to retrieve */
+	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+	
+	switch (bpp) {
+		case 1:
+			return *p;
+			
+		case 2:
+			return *(Uint16 *)p;
+			
+		case 3:
+			if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+				return p[0] << 16 | p[1] << 8 | p[2];
+			else
+				return p[0] | p[1] << 8 | p[2] << 16;
+			
+		case 4:
+			return *(Uint32 *)p;
+			
+		default:
+			return 0;       /* shouldn't happen, but avoids warnings */
+	} // switch
 }
 
 #else

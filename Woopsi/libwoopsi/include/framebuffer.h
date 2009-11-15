@@ -14,6 +14,25 @@ namespace WoopsiUI {
 	class FrameBuffer : public MutableBitmapBase {
 	public:
 
+#ifdef USING_SDL
+		// SDL version
+		
+		/**
+		 * Constructor.
+		 * @param data Pointer to the raw bitmap data.
+		 * @param width The width of the bitmap.
+		 * @param height The height of the bitmap.
+		 */
+		FrameBuffer(SDL_Surface* surface, u16 width, u16 height, u16 yOffset);
+		
+		/**
+		 * Get a pointer to the internal bitmap.
+		 * @return Pointer to the internal bitmap.
+		 */
+		const u16* getData() const;
+#else
+		// DS version
+		
 		/**
 		 * Constructor.
 		 * @param data Pointer to the raw bitmap data.
@@ -21,6 +40,13 @@ namespace WoopsiUI {
 		 * @param height The height of the bitmap.
 		 */
 		FrameBuffer(u16* data, u16 width, u16 height);
+		
+		/**
+		 * Get a pointer to the internal bitmap.
+		 * @return Pointer to the internal bitmap.
+		 */
+		inline const u16* getData() const { return _bitmap; };
+#endif
 
 		/**
 		 * Destructor.
@@ -42,12 +68,6 @@ namespace WoopsiUI {
 		 * @param colour New colour of the pixel.
 		 */
 		virtual void setPixel(const s16 x, const s16 y, const u16 colour);
-
-		/**
-		 * Get a pointer to the internal bitmap.
-		 * @return Pointer to the internal bitmap.
-		 */
-		inline const u16* getData() const { return _bitmap; };
 
 		/**
 		 * Get a pointer to the internal bitmap data at the specified
@@ -84,7 +104,19 @@ namespace WoopsiUI {
 		void blitFill(const s16 x, const s16 y, const u16 colour, const u32 size);
 
 	protected:
+		
+#ifdef USING_SDL
+		// SDL version
+		SDL_Surface* _surface;			/**< Pointer to the SDL surface */
+		u16 _yOffset;					/**< Y offset from top of surface to draw */
+		mutable u16* _dataBuffer;		/**< Buffer used when getData() is called */
+		//mutable s16 _dataBufferX;
+		//mutable s16 _dataBufferY;
+		//mutable bool _bufferValid;
+#else
+		// DS version
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
+#endif
 
 		/**
 		 * Copy constructor is protected to prevent usage.
