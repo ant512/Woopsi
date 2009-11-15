@@ -531,4 +531,3 @@ void GraphicsUnclipped::dim(s16 x, s16 y, u16 width, u16 height) {
 		}
 	}
 }
-		
