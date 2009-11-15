@@ -14,7 +14,6 @@ void PackedFont16::renderChar(
 		u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {
 	u16 colour = getColour();
-	u16 bitmapWidth = bitmap->getWidth();
 
 	// adjust clipY2 to be the last row+1 in the glyph
 	// so we only write while (y<=clipY2)
