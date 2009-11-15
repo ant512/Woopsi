@@ -13,12 +13,6 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Get a non-const pointer to the internal bitmap.
-		 * @return Non-const pointer to the internal bitmap.
-		 */
-		virtual u16* getEditableData() const = 0;
-
-		/**
 		 * Set the colour of the specified pixel.
 		 * @param x X co-ord of the pixel to set.
 		 * @param y Y co-ord of the pixel to set.
@@ -33,7 +27,7 @@ namespace WoopsiUI {
 		 * @param data The data to blit.
 		 * @param size The number of u16s to blit.
 		 */
-		virtual void blit(const s16 x, const s16 y, u16* data, const u32 size) = 0;
+		virtual void blit(const s16 x, const s16 y, const u16* data, const u32 size) = 0;
 
 		/**
 		 * Fill at the specified co-ordinates using the DMA hardware.
@@ -42,7 +36,7 @@ namespace WoopsiUI {
 		 * @param colour The colour to fill with.
 		 * @param size The number of u16s to blit.
 		 */
-		virtual void blitFill(const s16 x, const s16 y, u16 colour, const u32 size) = 0;
+		virtual void blitFill(const s16 x, const s16 y, const u16 colour, const u32 size) = 0;
 	};
 }
 

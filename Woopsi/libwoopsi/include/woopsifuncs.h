@@ -12,14 +12,6 @@
 #include "monofont.h"
 #include "bitmapwrapper.h"
 
-// DMA handling bitmasks
-#define DMA_ON 0x80000000
-#define DMA_NOW 0x00000000
-#define DMA_16 0x00000000
-#define DMA_32 0x04000000
-#define DMA_16NOW (DMA_ON | DMA_NOW | DMA_16)
-#define DMA_32NOW (DMA_ON | DMA_NOW | DMA_32)
-
 /**
  * Converts separate RGB component values into a single 16-bit value for use
  * with the DS' framebuffer.  All supplied values should be 5 bits wide (ie.

@@ -15,7 +15,6 @@ void PackedFont16::renderChar(
 {
 	u16 colour = getColour();
 	u16 bitmapWidth = bitmap->getWidth();
-	u16* bitmapData = bitmap->getEditableData();
 
 	// adjust clipY2 to be the last row+1 in the glyph
 	// so we only write while (y<=clipY2)
@@ -29,14 +28,12 @@ void PackedFont16::renderChar(
 		u16 rowsToSkip = clipY1 - y;
 		u16 pixelsToSkip = rowsToSkip * pixelsPerRow;
 		y = clipY1;
-		bitmapData += bitmapWidth * rowsToSkip;
 		pixelData += pixelsToSkip;
 	}
 
 	// now output pixels till we reach the end
 	while (y <= clipY2) {
 		// get pointer to next row in output
-		u16 *row = bitmapData;
 		u16 rowCount = pixelsPerRow;
 		u16 rowX = x;
 		while (rowCount-- > 0) {
@@ -48,14 +45,12 @@ void PackedFont16::renderChar(
 				&&
 				rowX >= clipX1 && rowX <= clipX2	// not clipped X-wise
 			) {
-				*row = colour ? colour : pixel;
+				bitmap->setPixel(rowX, y, colour ? colour : pixel);
 			}
 			rowX++;
-			row++;
 		}
 
 		// move output pointer down one row
 		y++;
-		bitmapData += bitmapWidth;
 	}
 }

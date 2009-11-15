@@ -1204,33 +1204,19 @@ void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clip
 
 	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
 
-		u16* rowStart = _data + (y * _width);
-		u16 colStart = x;
-		u16 colPos;
-
 		// Loop through all pixels within the region
-		for (s16 i = y; i <= y2; i++) {
-
-			// Reset to start pixel row
-			colPos = colStart;
-
-			for (s16 j = x; j <= x2; j++) {
+		for (s16 i = 0; i <= height; i++) {
+			for (s16 j = 0; j <= width; j++) {
 		
 				// Get pixel data directly from the framebuffer
-				u16 colour = *(rowStart + colPos);
+				u16 colour = _bitmap->getPixel(x + j, y + i);
 			
 				// Halve the intensity of the colour (cheers Jeff)
 				colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
 
 				// Write back to framebuffer
-				*(rowStart + colPos) = 0x8000 | colour;
-
-				// Move to next pixel column
-				colPos++;
+				_bitmap->setPixel(x + j, y + i, colour | 0x8000);
 			}
-
-			// Move to next pixel row
-			rowStart += _width;
 		}
 	}
 }

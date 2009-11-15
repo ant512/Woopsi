@@ -60,12 +60,7 @@ void Graphics::drawXORPixel(s16 x, s16 y) {
 	if ((x < 0) || (y < 0)) return;
 	if ((x >= _width) || (y >= _height)) return;
 
-	// Get the pixel at the specified co-ords and XOR against 0xffff
-	u32 pos = (y * _width) + x;
-	u16 colour = (_data[pos] ^ 0xffff) | (1 << 15);
-
-	// Draw the XORed pixel colour to the bitmap
-	_data[pos] = colour;
+	GraphicsUnclipped::drawXORPixel(x, y);
 }
 
 
@@ -103,9 +98,8 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 	// Initalise stack
 	WoopsiArray<s32>* stack = new WoopsiArray<s32>();
 
-	s16 x1; 
+	s16 x1;
 	u8 spanUp, spanDown;
-	s32 rowThis, rowUp, rowDown;
 	s16 rowStart;
 	u16 rowWidth;
 
@@ -116,12 +110,9 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 	while (popStack(&x, &y, stack)) {
 
 		x1 = x;
-		rowThis = y * _width;
-		rowUp = (y - 1) * _width;
-		rowDown = (y + 1) * _width;
 
 		// Locate leftmost column on screen in this row containing old colour
-		while ((x1 >= 0) && (_data[x1 + rowThis] == oldColour)) {
+		while ((x1 >= 0) && (_bitmap->getPixel(x1, y) == oldColour)) {
 			x1--;
 		}
 
@@ -134,26 +125,25 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 		spanUp = spanDown = 0;
 
 		// Scan right, filling each column of old colour
-		while ((x1 < _width) && (_data[x1 + rowThis] == oldColour)) {
+		while ((x1 < _width) && (_bitmap->getPixel(x1, y) == oldColour)) {
 
 			// Check pixel above
-			if ((!spanUp) && (y > 0) && (_data[x1 + rowUp] == oldColour)) {
+			if ((!spanUp) && (y > 0) && (_bitmap->getPixel(x1, y - 1) == oldColour)) {
 				pushStack(x1, y - 1, stack);
 				spanUp = 1;
-			} else if ((spanUp) && (y > 0) && (_data[x1 + rowUp] != oldColour)) {
+			} else if ((spanUp) && (y > 0) && (_bitmap->getPixel(x1, y - 1) != oldColour)) {
 				spanUp = 0;
 			}
 
 			// Check pixel below
-			if ((!spanDown) && (y < _height - 1) && (_data[x1 + rowDown] == oldColour)) {
+			if ((!spanDown) && (y < _height - 1) && (_bitmap->getPixel(x1, y + 1) == oldColour)) {
 				pushStack(x1, y + 1, stack);
 				spanDown = 1;
-			} else if ((spanDown) && (y < _height - 1) && (_data[x1 + rowDown] != oldColour)) {
+			} else if ((spanDown) && (y < _height - 1) && (_bitmap->getPixel(x1, y + 1) != oldColour)) {
 				spanDown = 0;
 			}
 
 			x1++;
-			rowWidth++;
 		}
 
 		// Draw line

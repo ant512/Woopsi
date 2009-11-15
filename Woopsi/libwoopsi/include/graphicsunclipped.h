@@ -283,7 +283,6 @@ namespace WoopsiUI {
 
 	protected:
 		MutableBitmapBase* _bitmap;		/**< Bitmap */
-		u16* _data;						/**< Bitmap data */
 		u16 _width;						/**< Bitmap width */
 		u16 _height;					/**< Bitmap height */
 

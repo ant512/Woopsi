@@ -7,57 +7,31 @@ using namespace WoopsiUI;
 // Constructor - allocates mem for bitmap
 GraphicsUnclipped::GraphicsUnclipped(MutableBitmapBase* bitmap) {
 	_bitmap = bitmap;
-	_data = bitmap->getEditableData();
 	_width = bitmap->getWidth();
 	_height = bitmap->getHeight();
 }
 
-// Draw a single pixel to the bitmap
 void GraphicsUnclipped::drawPixel(s16 x, s16 y, u16 colour) {
-
-	// Plot the pixel
-	u32 pos = (y * _width) + x;
-	_data[pos] = colour;
+	_bitmap->setPixel(x, y, colour);
 }
 
-// Get a single pixel from the bitmap
 const u16 GraphicsUnclipped::getPixel(s16 x, s16 y) const {
-
-	// Get the pixel
-	u32 pos = (y * _width) + x;
-	return _data[pos];
+	return _bitmap->getPixel(x, y);
 }
 
-// External filled rectangle function
 void GraphicsUnclipped::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
-	
-	// Target location to draw to
-	u16* target = _data + (y * _width) + x;
-
 	for (u16 i = 0; i < height; i++) {
-
-		// Duplicate pixel
-		woopsiDmaFill(colour, target, width);
-
-		// Move to next row
-		target += _width;
+		GraphicsUnclipped::drawHorizLine(x, y + i, width, colour);
 	}
 }
 
 void GraphicsUnclipped::drawHorizLine(s16 x, s16 y, u16 width, u16 colour) {
-
-	u16* pos = _data + (y * _width) + x;
-
-	woopsiDmaFill(colour, pos, width);
+	_bitmap->blitFill(x, y, colour, width);
 }
 
 void GraphicsUnclipped::drawVertLine(s16 x, s16 y, u16 height, u16 colour) {
-
-	u32 pos = x + (y * _width);
-
 	for (u16 i = 0; i < height; i++) {
-		_data[pos] = colour;
-		pos += _width;
+		_bitmap->setPixel(x, y + i, colour);
 	}
 }
 
@@ -254,26 +228,8 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const
 
 //Draw bitmap to the internal bitmap
 void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
-	
-	u16 bitmapWidth = bitmap->getWidth();
-	const u16* bitmapData = bitmap->getData();
-
-	// Precalculate line values for loop
-	u16* srcLine0 = (u16*)bitmapData + bitmapX + (bitmapY * bitmapWidth);
-
-	u16* srcLinei = srcLine0;
-
-	u16* destLine0 = _data + x + (y * _width);
-	u16* destLinei = destLine0;
-
-	u16 lastLine = y + height;
-
-	for (u16 i = y; i < lastLine; i++) {
-
-		woopsiDmaCopy(srcLinei, destLinei, width);
-
-		srcLinei += bitmapWidth;
-		destLinei += _width;
+	for (u16 i = 0; i < height; i++) {
+		_bitmap->blit(x, y + i, bitmap->getData(bitmapX, bitmapY + i), width);
 	}
 }
 
@@ -281,19 +237,16 @@ void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bi
 void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour) {
 
 	u16 source = 0;
-	const u16* bitmapData = bitmap->getData();
-	u16 bitmapWidth = bitmap->getWidth();
 	
 	// Plot pixels one by one, ignoring transparent pixels
 	for (s16 i = 0; i < width; i++) {
 		for (s16 j = 0; j < height; j++) {
-			
-			// Get the source colour from the supplied bitmap
-			source = bitmapData[((bitmapY + j) * bitmapWidth) + (bitmapX + i)];
+
+			source = bitmap->getPixel(bitmapX + i, bitmapY + j);
 			
 			// Plot ignoring transparency
 			if (source != transparentColour) {
-				_data[((y + j) * _width) + (x + i)] = source;
+				_bitmap->setPixel(x + i, y + j, source);
 			}
 		}
 	}
@@ -467,11 +420,10 @@ void GraphicsUnclipped::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRad
 void GraphicsUnclipped::drawXORPixel(s16 x, s16 y) {
 
 	// Get the pixel at the specified co-ords and XOR against 0xffff
-	u32 pos = (y * _width) + x;
-	u16 colour = (_data[pos] ^ 0xffff) | (1 << 15);
+	u16 colour = (_bitmap->getPixel(x, y) ^ 0xffff) | (1 << 15);
 
 	// Draw the XORed pixel colour to the bitmap
-	_data[pos] = colour;
+	_bitmap->setPixel(x, y, colour);
 }
 
 void GraphicsUnclipped::drawXORHorizLine(s16 x, s16 y, u16 width) {
@@ -528,19 +480,14 @@ void GraphicsUnclipped::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16
 	if (sourceY == destY) {
 		if ((destX >= sourceX) && (destX <= sourceX + width)) {
 			u16* buffer = new u16[width];
-			u16* copySource = _data + sourceX + (sourceY * _width);
-			u16* copyDest = _data + destX + (destY * _width);
 			
 			for (u16 y = 0; y < height; y++) {
 				
 				// Copy row to buffer
-				woopsiDmaCopy(copySource, buffer, width);
+				woopsiDmaCopy(_bitmap->getData(sourceX, sourceY + y), buffer, width);
 				
 				// Copy row back to screen
-				woopsiDmaCopy(buffer, copyDest, width);
-				
-				copySource += _width;
-				copyDest += _width;
+				_bitmap->blit(destX, destY + y, buffer, width);
 			}
 			
 			delete buffer;
@@ -552,67 +499,36 @@ void GraphicsUnclipped::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16
 	// Vertical movement or non overlap means we do not need to use an intermediate buffer
 	// Copy from top to bottom if moving up; from bottom to top if moving down.
 	// Ensures that rows to be copied are not overwritten
-	s16 delta;
-	u16* copySource;
-	u16* copyDest;
-	
 	if (sourceY > destY) {
 		
 		// Copy up
-		delta = _width;
-		copySource = _data + sourceX + (sourceY * _width);
-		copyDest = _data + destX + (destY * _width);
+		for (s32 i = 0; i < height; ++i) {
+			_bitmap->blit(destX, destY + i, _bitmap->getData(sourceX, sourceY + i), width);
+		}
 	} else {
 		
 		// Copy down
-		delta = -_width;
-		copySource = _data + sourceX + ((sourceY + height - 1) * _width);
-		copyDest = _data + destX + ((destY + height - 1) * _width);
-	}
-	
-	// Perform copy	
-	for (u16 i = 0; i < height; ++i) {
-		
-		// Copy row
-		woopsiDmaCopy(copySource, copyDest, width);
-		
-		copySource += delta;
-		copyDest += delta;
+		for (s32 i = height - 1; i >= 0; --i) {
+			_bitmap->blit(destX, destY + i, _bitmap->getData(sourceX, sourceY + i), width);
+		}
 	}
 }
 
 void GraphicsUnclipped::dim(s16 x, s16 y, u16 width, u16 height) {
-	
-	s16 x2 = x + width - 1;
-	s16 y2 = y + height - 1;
-
-	u16* rowStart = _data + (y * _width);
-	u16 colStart = x;
-	u16 colPos;
 
 	// Loop through all pixels within the region
-	for (s16 i = y; i <= y2; i++) {
-
-		// Reset to start pixel row
-		colPos = colStart;
-
-		for (s16 j = x; j <= x2; j++) {
+	for (s16 i = 0; i <= height; i++) {
+		for (s16 j = 0; j <= width; j++) {
 	
 			// Get pixel data directly from the framebuffer
-			u16 colour = *(rowStart + colPos);
+			u16 colour = _bitmap->getPixel(x + j, y + i);
 		
 			// Halve the intensity of the colour (cheers Jeff)
 			colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
 
 			// Write back to framebuffer
-			*(rowStart + colPos) = 0x8000 | colour;
-
-			// Move to next pixel column
-			colPos++;
+			_bitmap->setPixel(x + j, y + i, colour | 0x8000);
 		}
-
-		// Move to next pixel row
-		rowStart += _width;
 	}
 }
 		

@@ -1,7 +1,16 @@
 Change Log
 ----------
+  V0.41
+  
+  - Fixes:
+  
+  
+  - New Features:
+    - Removed getEditableData() bodge from bitmap classes; all interaction with
+      bitmap data happens through bitmap methods.
 
-  V0.40
+
+  V0.40 (20091115)
   
   - First alpha release.
   

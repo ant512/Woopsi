@@ -57,12 +57,6 @@ namespace WoopsiUI {
 		 * @return Pointer to the internal bitmap data.
 		 */
 		inline const u16* getData(s16 x, s16 y) const;
-		
-		/**
-		 * Get a non-const pointer to the internal bitmap.
-		 * @return Non-const pointer to the internal bitmap.
-		 */
-		inline u16* getEditableData() const { return _bitmap; }
 
 		/**
 		 * Get a new graphics object that can draw to this bitmap.
@@ -78,7 +72,7 @@ namespace WoopsiUI {
 		 * @param data The data to blit.
 		 * @param size The number of u16s to blit.
 		 */
-		void blit(const s16 x, const s16 y, u16* data, const u32 size);
+		void blit(const s16 x, const s16 y, const u16* data, const u32 size);
 
 		/**
 		 * Fill at the specified co-ordinates using the DMA hardware.
@@ -87,7 +81,7 @@ namespace WoopsiUI {
 		 * @param colour The colour to fill with.
 		 * @param size The number of u16s to blit.
 		 */
-		void blitFill(const s16 x, const s16 y, u16 colour, const u32 size);
+		void blitFill(const s16 x, const s16 y, const u16 colour, const u32 size);
 
 	protected:
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
