@@ -96,7 +96,8 @@ extern _stylus Stylus;
 #include <string.h>
 #include <math.h>
 
-void putPixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+void putSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
+Uint32 getSDLPixel(SDL_Surface *surface, int x, int y);
 
 #else
 
