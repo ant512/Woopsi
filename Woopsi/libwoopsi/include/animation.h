@@ -111,8 +111,6 @@ namespace WoopsiUI {
 		/**
 		 * Add a new frame to the animation.
 		 * @param bitmap Pointer to the bitmap to use in the new frame.
-		 * @param width The width of the bitmap.
-		 * @param height The height of the bitmap.
 		 * @param delay A frame-specific delay to make this frame appear longer than other
 		 * frames (measured in VBLs).
 		 */

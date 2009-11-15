@@ -23,9 +23,9 @@ namespace WoopsiUI {
 	 */
 	class DimmedScreen : public Screen {
 	public:
+
 		/**
 		 * Constructor.
-		 * @param font The font to use with the screen.
 		 */
 		DimmedScreen() : Screen("", 0) { };
 

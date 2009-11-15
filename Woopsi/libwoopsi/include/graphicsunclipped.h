@@ -18,8 +18,7 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
-		 * @param width The width of the bitmap.
-		 * @param height The height of the bitmap.
+		 * @param width The bitmap that will be drawn to.
 		 */
 		GraphicsUnclipped(MutableBitmapBase* bitmap);
 
@@ -178,8 +177,6 @@ namespace WoopsiUI {
 		 * @param bitmap Pointer to the bitmap to draw.
 		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
 		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
-		 * @param bitmapWidth The width of the supplied bitmap.
-		 * @param bitmapHeight The height of the supplied bitmap.
 		 */
 		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY);
 
@@ -287,8 +284,8 @@ namespace WoopsiUI {
 	protected:
 		MutableBitmapBase* _bitmap;		/**< Bitmap */
 		u16* _data;						/**< Bitmap data */
-		u16 _width;
-		u16 _height;
+		u16 _width;						/**< Bitmap width /*
+		u16 _height;					/**< Bitmap height */
 
 		/**
 		 * Copy constructor is protected to prevent usage.
