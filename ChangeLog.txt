@@ -3,7 +3,8 @@ Change Log
   V0.41
   
   - Fixes:
-  
+    - Removed Gadget::unregisterChildrenFromVBL() declaration from gadget.h as
+      the function does not exist.
   
   - New Features:
     - Removed getEditableData() bodge from bitmap classes; all interaction with

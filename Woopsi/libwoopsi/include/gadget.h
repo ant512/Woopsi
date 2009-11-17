@@ -754,12 +754,6 @@ namespace WoopsiUI {
 		void invalidateLowerGadgetsVisibleRectCache(Gadget* gadget);
 
 		/**
-		 * Removes all of this gadget's children from the list of gadgets that
-		 * receive VBL notifications.
-		 */
-		void unregisterChildrenFromVBL();
-
-		/**
 		 * Adds a gadget to this gadget's child stack.  The gadget is added to the
 		 * top of the stack.  Note that the gadget can only be added if it is not
 		 * already a child of another gadget.
