@@ -1,15 +1,14 @@
-#ifndef _LABEL_TEST_H_
-#define _LABEL_TEST_H_
+#ifndef _BUTTON_TEST_H_
+#define _BUTTON_TEST_H_
 
 #include "woopsi.h"
 #include "gadgeteventhandler.h"
 #include "gadgeteventargs.h"
 #include "button.h"
-#include "label.h"
 
 using namespace WoopsiUI;
 
-class LabelTest : public Woopsi, public GadgetEventHandler {
+class ButtonTest : public Woopsi, public GadgetEventHandler {
 public:
 	void startup();
 	void shutdown();
@@ -53,7 +52,7 @@ private:
 	Button* _enable;
 	Button* _disable;
 	Button* _dimensions;
-	Label* _label;
+	Button* _button;
 };
 
 #endif

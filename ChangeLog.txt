@@ -10,6 +10,7 @@ Change Log
       bitmap data happens through bitmap methods.
     - SDL framebuffer code merged into FrameBuffer class.
     - Added label test.
+    - Added button test.
 
 
   V0.40 (20091115)
