@@ -5,6 +5,9 @@ Change Log
   - Fixes:
     - Removed Gadget::unregisterChildrenFromVBL() declaration from gadget.h as
       the function does not exist.
+    - Graphics::dim() draws to correct dimensions.
+    - GraphicsPort::dim() clips properly.
+    - BitmapButton::getPreferredDimensions() returns the correct size.
   
   - New Features:
     - Removed getEditableData() bodge from bitmap classes; all interaction with
@@ -13,6 +16,10 @@ Change Log
     - Added label test.
     - Added button test.
     - Added DOS batch files to build examples and tests.
+    - Added grayScale() function to GraphicsUnclipped, Graphics and
+      GraphicsPort.
+    - BitmapButton greys out when disabled.
+    - Added bitmapbuttontest.
 
 
   V0.40 (20091115)

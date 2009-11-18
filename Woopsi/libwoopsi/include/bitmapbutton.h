@@ -51,6 +51,14 @@ namespace WoopsiUI {
 		 */
 		virtual bool release(s16 x, s16 y);
 
+		/**
+		 * Insert the dimensions that this gadget wants to have into the rect
+		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+		 * parent.
+		 * @param rect Reference to a rect to populate with data.
+		 */
+		virtual void getPreferredDimensions(Rect& rect) const;
+
 	protected:
 		const BitmapBase* _bitmapNormal;	/**< Bitmap to display when button is not clicked */
 		const BitmapBase* _bitmapClicked;	/**< Bitmap to display when button is clicked */

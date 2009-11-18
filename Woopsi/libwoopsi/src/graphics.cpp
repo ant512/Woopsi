@@ -292,6 +292,12 @@ void Graphics::dim(s16 x, s16 y, u16 width, u16 height) {
 	}
 }
 
+void Graphics::greyScale(s16 x, s16 y, u16 width, u16 height) {
+	if (clipBitmapCoordinates(&x, &y, &width, &height)) {
+		GraphicsUnclipped::greyScale(x, y, width, height);
+	}
+}
+
 // Clip co-ordinates
 bool Graphics::clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height) {
 

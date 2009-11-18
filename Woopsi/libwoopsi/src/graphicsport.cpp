@@ -1204,19 +1204,45 @@ void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clip
 
 	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
 
-		// Loop through all pixels within the region
-		for (s16 i = 0; i <= height; i++) {
-			for (s16 j = 0; j <= width; j++) {
-		
-				// Get pixel data directly from the framebuffer
-				u16 colour = _bitmap->getPixel(x + j, y + i);
-			
-				// Halve the intensity of the colour (cheers Jeff)
-				colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
+		width = (x2 - x) + 1;
+		height = (y2 - y) + 1;
 
-				// Write back to framebuffer
-				_bitmap->setPixel(x + j, y + i, colour | 0x8000);
-			}
+		GraphicsUnclipped::dim(x, y, width, height);
+	}
+}
+
+void GraphicsPort::greyScale(s16 x, s16 y, u16 width, u16 height) {
+
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+	
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+	
+	// Change the region
+	if (_clipRect == NULL) {
+			
+		// Change all visible rects
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipGreyScale(x, y, width, height, _clipRectList->at(i));
 		}
+	} else {
+
+		// Change single rectangle
+		clipGreyScale(x, y, width, height, *_clipRect);
+	}
+}
+
+void GraphicsPort::clipGreyScale(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect) {
+	
+	s16 x2 = x + width - 1;
+	s16 y2 = y + height - 1;
+
+	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
+
+		width = (x2 - x) + 1;
+		height = (y2 - y) + 1;
+
+		GraphicsUnclipped::greyScale(x, y, width, height);
 	}
 }

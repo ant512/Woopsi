@@ -166,6 +166,15 @@ namespace WoopsiUI {
 		 */
 		virtual void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
 
+		/**
+		 * Convert the region to greyscale.
+		 * @param x X co-ord of the region to change.
+		 * @param y Y co-ord of the region to change.
+		 * @param width Width of the region to change.
+		 * @param height Height of the region to change.
+		 */
+		void greyScale(s16 x, s16 y, u16 width, u16 height);
+
 	protected:
 		
 		/**

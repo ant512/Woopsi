@@ -320,6 +320,15 @@ namespace WoopsiUI {
 		 * @param height Height of the region to dim.
 		 */
 		void dim(s16 x, s16 y, u16 width, u16 height);
+
+		/**
+		 * Convert the region to greyscale.
+		 * @param x X co-ord of the region to change.
+		 * @param y Y co-ord of the region to change.
+		 * @param width Width of the region to change.
+		 * @param height Height of the region to change.
+		 */
+		void greyScale(s16 x, s16 y, u16 width, u16 height);
 		
 	private:
 		Gadget* _gadget;						/**< Pointer to the gadget that the port will draw to */
@@ -343,6 +352,7 @@ namespace WoopsiUI {
 		void clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Rect& clipRect);
 		void clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Rect& clipRect, WoopsiArray<Rect>* revealedRects);
 		void clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect);
+		void clipGreyScale(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect);
 
 		void convertPortToScreenSpace(s16* x, s16* y);
 		bool clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Rect& clipRect);

@@ -281,6 +281,15 @@ namespace WoopsiUI {
 		 */
 		void dim(s16 x, s16 y, u16 width, u16 height);
 
+		/**
+		 * Convert the region to greyscale.
+		 * @param x X co-ord of the region to change.
+		 * @param y Y co-ord of the region to change.
+		 * @param width Width of the region to change.
+		 * @param height Height of the region to change.
+		 */
+		void greyScale(s16 x, s16 y, u16 width, u16 height);
+
 	protected:
 		MutableBitmapBase* _bitmap;		/**< Bitmap */
 		u16 _width;						/**< Bitmap width */

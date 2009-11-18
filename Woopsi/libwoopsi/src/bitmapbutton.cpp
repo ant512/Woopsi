@@ -27,6 +27,11 @@ void BitmapButton::draw(Rect clipRect) {
 		port->drawBitmap(x, y, _width, _height, _bitmapNormal, _bitmapX, _bitmapY);
 	}
 
+	// Grey out the button if it is disabled
+	if (!isEnabled()) {
+		port->greyScale(x, y, _width, _height);
+	}
+
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
 
@@ -74,4 +79,12 @@ bool BitmapButton::release(s16 x, s16 y) {
 	}
 
 	return false;
+}
+
+// Get the preferred dimensions of the gadget
+void BitmapButton::getPreferredDimensions(Rect& rect) const {
+	rect.x = _x;
+	rect.y = _y;
+	rect.width = ((!_flags.borderless) << 1) + _bitmapNormal->getWidth();
+	rect.height = ((!_flags.borderless) << 1) + _bitmapNormal->getHeight();
 }
