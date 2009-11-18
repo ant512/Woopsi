@@ -1,36 +1,29 @@
+@echo off
+
 cd button
 make clean
 make
 
-cd ..
-cd calendar
+cd ../calendar
 make clean
 make
 
-cd ..
-cd cyclebutton
+cd ../cyclebutton
 make clean
 make
 
-cd ..
-cd label
+cd ../label
 make clean
 make
 
-cd ..
-cd multilinetextbox
+cd ../multilinetextbox
 make clean
 make
 
-cd ..
-cd radiobuttongroup
+cd ../radiobuttongroup
 make clean
 make
 
-cd ..
-cd textbox
+cd ../textbox
 make clean
 make
-
-cd ..
-pause
