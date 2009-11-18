@@ -524,7 +524,7 @@ void GraphicsUnclipped::dim(s16 x, s16 y, u16 width, u16 height) {
 			u16 colour = _bitmap->getPixel(x + j, y + i);
 		
 			// Halve the intensity of the colour (cheers Jeff)
-			colour = ((colour  >> 1) & (15 | (15 << 5) | (15 << 10)));
+			colour = ((colour >> 1) & (15 | (15 << 5) | (15 << 10)));
 
 			// Write back to framebuffer
 			_bitmap->setPixel(x + j, y + i, colour | 0x8000);
@@ -541,9 +541,14 @@ void GraphicsUnclipped::greyScale(s16 x, s16 y, u16 width, u16 height) {
 			// Get pixel data directly from the framebuffer
 			u16 colour = _bitmap->getPixel(x + j, y + i);
 
-			// Extract red channel and use that as the greyscale
-			u8 r = colour & 31;
-			colour = r | (r << 5) | (r << 10) | (1 << 15);
+			// Extract individual components
+			colour >>= 1;
+			u8 r = colour & 15;
+			u8 g = (colour >> 6) & 7;
+			u8 b = (colour >> 11) & 7;
+
+			colour = r + g + b;
+			colour = colour | (colour << 5) | (colour << 10) | (1 << 15);
 
 			// Write back to framebuffer
 			_bitmap->setPixel(x + j, y + i, colour | 0x8000);
