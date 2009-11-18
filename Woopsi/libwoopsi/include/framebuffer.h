@@ -110,9 +110,6 @@ namespace WoopsiUI {
 		SDL_Surface* _surface;			/**< Pointer to the SDL surface */
 		u16 _yOffset;					/**< Y offset from top of surface to draw */
 		mutable u16* _dataBuffer;		/**< Buffer used when getData() is called */
-		//mutable s16 _dataBufferX;
-		//mutable s16 _dataBufferY;
-		//mutable bool _bufferValid;
 #else
 		// DS version
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
