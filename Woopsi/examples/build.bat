@@ -1,82 +1,65 @@
+@echo off
+
 cd bitmapdrawing
 make clean
 make
 
-cd ..
-cd bitmaploader
+cd ../bitmaploader
 make clean
 make
 
-cd ..
-cd calendar
+cd ../calendar
 make clean
 make
 
-cd ..
-cd contextmenu
+cd ../contextmenu
 make clean
 make
 
-cd ..
-cd date
+cd ../date
 make clean
 make
 
-cd ..
-cd dimmedscreen
+cd ../dimmedscreen
 make clean
 make
 
-cd ..
-cd filerequester
+cd ../filerequester
 make clean
 make
 
-cd ..
-cd gadgetdrawing
+cd ../gadgetdrawing
 make clean
 make
 
-cd ..
-cd helloworld
+cd ../helloworld
 make clean
 make
 
-cd ..
-cd helloworld_alternative
+cd ../helloworld_alternative
 make clean
 make
 
-cd ..
-cd keyboard
+cd ../keyboard
 make clean
 make
 
-cd ..
-cd progressbar
+cd ../progressbar
 make clean
 make
 
-cd ..
-cd scrolltest
+cd ../scrolltest
 make clean
 make
 
-cd ..
-cd skins
+cd ../skins
 make clean
 make
 
-cd ..
-cd timer
+cd ../timer
 make clean
 make
 
-cd ..
-cd wpaint
+cd ../wpaint
 make clean
 make
-
-cd ..
-
-pause
