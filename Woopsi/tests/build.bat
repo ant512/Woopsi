@@ -1,6 +1,14 @@
 @echo off
 
-cd button
+cd animbutton
+make clean
+make
+
+cd ../bitmapbutton
+make clean
+make
+
+cd ../button
 make clean
 make
 
@@ -13,6 +21,10 @@ make clean
 make
 
 cd ../label
+make clean
+make
+
+cd ../listbox
 make clean
 make
 

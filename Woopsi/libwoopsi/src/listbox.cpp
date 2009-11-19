@@ -267,3 +267,12 @@ void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
 	redraw();
 	raiseValueChangeEvent();
 }
+
+// Get the preferred dimensions of the gadget
+void ListBox::getPreferredDimensions(Rect& rect) const {
+	rect.x = _x;
+	rect.y = _y;
+
+	rect.width = ((!_flags.borderless) << 1) + getCanvasWidth();
+	rect.height = ((!_flags.borderless) << 1) + getOptionHeight() * 3;
+}

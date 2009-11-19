@@ -99,7 +99,7 @@ namespace WoopsiUI {
 		 * Get the specified item.
 		 * @return The specified item.
 		 */
-		virtual inline ListDataItem* getItem(const s32 index) { return _items[index]; };
+		virtual inline ListDataItem* getItem(const s32 index) const { return _items[index]; };
 
 		/**
 		 * Sort the items alphabetically by the text of the items.

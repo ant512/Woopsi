@@ -11,6 +11,7 @@ Change Log
     - AnimButton::getPreferredDimensions() returns the correct size.
     - Anim button animation continues playing correctly when clicked if
       disabled.
+    - ListBox::getPreferredDimensions() returns the correct size.
   
   - New Features:
     - Removed getEditableData() bodge from bitmap classes; all interaction with
@@ -27,6 +28,7 @@ Change Log
       GraphicsPort.
     - AnimButton greys out when disabled.
     - Added animbutton test.
+    - Added listbox test.
 
 
   V0.40 (20091115)
