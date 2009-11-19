@@ -16,6 +16,7 @@ Change Log
     - Removed getEditableData() bodge from bitmap classes; all interaction with
       bitmap data happens through bitmap methods.
     - Moved IK bitmaps out of demo folder/NDS into animbutton test.
+    - ScrollingListBox::getPreferredDimensions() returns the correct size.
   
   - New Features:
     - SDL framebuffer code merged into FrameBuffer class.
@@ -32,6 +33,7 @@ Change Log
     - Added animbutton test.
     - Added listbox test.
     - ListBox greys out when disabled.
+    - Added scrollinglistbox test.
 
 
   V0.40 (20091115)

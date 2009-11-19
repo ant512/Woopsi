@@ -36,6 +36,10 @@ cd ../radiobuttongroup
 make clean
 make
 
+cd ../scrollinglistbox
+make clean
+make
+
 cd ../textbox
 make clean
 make

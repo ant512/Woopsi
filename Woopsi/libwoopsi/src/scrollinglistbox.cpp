@@ -135,3 +135,13 @@ void ScrollingListBox::removeAllOptions() {
 	_scrollbar->setMaximumValue(0);
 	_scrollbar->setValue(0);
 };
+
+// Get the preferred dimensions of the gadget
+void ScrollingListBox::getPreferredDimensions(Rect& rect) const {
+
+	// Get the listbox's preferred dimensions
+	_listbox->getPreferredDimensions(rect);
+
+	// Add on the scrollbar width
+	rect.width += _scrollbarWidth;
+}

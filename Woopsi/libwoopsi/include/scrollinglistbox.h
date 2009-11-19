@@ -218,6 +218,15 @@ namespace WoopsiUI {
 		 */
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _listbox->setSortInsertedItems(sortInsertedItems); };
 
+		/**
+		 * Insert the dimensions that this gadget wants to have into the rect
+		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+		 * parent.  Value is based on the length of the largest string in the
+		 * set of options.
+		 * @param rect Reference to a rect to populate with data.
+		 */
+		virtual void getPreferredDimensions(Rect& rect) const;
+
 	protected:
 		ListBox* _listbox;									/**< Pointer to the list box */
 		ScrollbarVertical* _scrollbar;						/**< Pointer to the scrollbar */
