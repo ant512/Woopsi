@@ -74,6 +74,16 @@ void ScrollingListBoxTest::startup() {
 	_listBox->addOption("Option 8", 8);
 	_listBox->addOption("Option 9", 9);
 	_listBox->addOption("Option 10", 10);
+	_listBox->addOption("Option 11", 11);
+	_listBox->addOption("Option 12", 12);
+	_listBox->addOption("Option 13", 13);
+	_listBox->addOption("Option 14", 14);
+	_listBox->addOption("Option 15", 15);
+	_listBox->addOption("Option 16", 16);
+	_listBox->addOption("Option 17", 17);
+	_listBox->addOption("Option 18", 18);
+	_listBox->addOption("Option 19", 19);
+	_listBox->addOption("Option 20", 20);
 	window->addGadget(_listBox);
 	_listBox->addGadgetEventHandler(this);
 	_listBox->setDoubleClickable(true);
