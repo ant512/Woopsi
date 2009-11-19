@@ -267,6 +267,20 @@ namespace WoopsiUI {
 		void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour);
 		
 		/**
+		 * Draw a bitmap to the port in greyscale.  This is considerably slower
+		 * than the standard bitmap drawing routine as it plots pixel-by-pixel instead
+		 * of using a scanline DMA copy.
+		 * @param x The x co-ordinate to draw the bitmap to.
+		 * @param y The y co-ordinate to draw the bitmap to.
+		 * @param width The width of the bitmap to draw.
+		 * @param height The height of the bitmap to draw.
+		 * @param bitmap Pointer to the bitmap to draw.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 */
+		virtual void drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY);
+		
+		/**
 		 * Draw a line to the port's bitmap.
 		 * @param x1 The x co-ordinate of the start point of the line.
 		 * @param y1 The y co-ordinate of the start point of the line.
@@ -343,6 +357,7 @@ namespace WoopsiUI {
 		void clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Rect& clipRect);
 		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Rect& clipRect);
 		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour, const Rect& clipRect);
+		void clipBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Rect& clipRect);
 		void clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Rect& clipRect);
 		void clipCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect);
 		void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect);

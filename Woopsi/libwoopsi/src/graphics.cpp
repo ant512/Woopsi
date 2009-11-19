@@ -278,6 +278,60 @@ void Graphics::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase*
 	}
 }
 
+void Graphics::drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY) {
+	
+	// Early exit conditions
+	if (x > _width) return;
+	if (y > _height) return;
+
+	u16 bitmapWidth = bitmap->getWidth();
+	u16 bitmapHeight = bitmap->getHeight();
+
+	// Ensure bitmap co-ordinates make sense
+	if (bitmapX < 0) {
+		bitmapX = 0;
+	}
+
+	if (bitmapY < 0) {
+		bitmapY = 0;
+	}
+
+	// Ensure dimensions of bitmap being drawn do not exceed size of bitmap RAM
+	if (x < 0) {
+		bitmapX -= x;
+		width += x;
+		x = 0;
+	}
+
+	if (y < 0) {
+		bitmapY -= y;
+		height += y;
+		y = 0;
+	}
+
+	if (x + width > _width) {
+		width = _width - x;
+	}
+
+	if (y + height > _height) {
+		height = _height - y;
+	}
+
+	// Ensure requested drawing dimensions do not exceed dimensions of bitmap
+	if (width > bitmapWidth - bitmapX) {
+		width = bitmapWidth - bitmapX;
+	}
+
+	if (height > bitmapHeight - bitmapY) {
+		height = bitmapHeight - bitmapY;
+	}
+
+	if ((width > 0) && (height > 0)) {
+		GraphicsUnclipped::drawBitmapGreyScale(x, y, width, height, bitmap, bitmapX, bitmapY);
+	}
+}
+
+
 void Graphics::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height) {
 	if (clipBitmapCoordinates(&sourceX, &sourceY, &width, &height)) {
 		if (clipBitmapCoordinates(&destX, &destY, &width, &height)) {

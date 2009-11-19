@@ -252,6 +252,33 @@ void GraphicsUnclipped::drawBitmap(s16 x, s16 y, u16 width, u16 height, const Bi
 	}
 }
 
+//Draw bitmap with transparency
+void GraphicsUnclipped::drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
+
+	u16 colour = 0;
+	
+	// Plot pixels one by ones
+	for (s16 i = 0; i < width; i++) {
+		for (s16 j = 0; j < height; j++) {
+
+			colour = bitmap->getPixel(bitmapX + i, bitmapY + j);
+
+			// Extract individual components
+			colour >>= 1;
+			u8 r = (colour >> 1) & 7;
+			u8 g = (colour >> 5) & 15;
+			u8 b = (colour >> 11) & 7;
+
+			colour = r + g + b;
+			colour = colour | (colour << 5) | (colour << 10) | (1 << 15);
+			
+
+			// Plot the pixel
+			_bitmap->setPixel(x + i, y + j, colour);
+		}
+	}
+}
+
 // Code borrowed from http://enchantia.com/software/graphapp/doc/tech/ellipses.html
 // and partially rendered readable.  This is L. Patrick's implementation of Doug
 // McIlroy's ellipse algorithm.
@@ -543,8 +570,8 @@ void GraphicsUnclipped::greyScale(s16 x, s16 y, u16 width, u16 height) {
 
 			// Extract individual components
 			colour >>= 1;
-			u8 r = colour & 15;
-			u8 g = (colour >> 6) & 7;
+			u8 r = (colour >> 1) & 7;
+			u8 g = (colour >> 5) & 15;
 			u8 b = (colour >> 11) & 7;
 
 			colour = r + g + b;

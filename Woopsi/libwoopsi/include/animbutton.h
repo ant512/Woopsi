@@ -63,13 +63,25 @@ namespace WoopsiUI {
 		 */
 		bool release(s16 x, s16 y);
 
+		/**
+		 * Insert the dimensions that this gadget wants to have into the rect
+		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+		 * parent.
+		 * @param rect Reference to a rect to populate with data.
+		 */
+		virtual void getPreferredDimensions(Rect& rect) const;
+
 	protected:
-		Animation* _animNormal;				/**< Animation played when button is not clicked */
-		Animation* _animClicked;			/**< Animation played when button is clicked */
-		u16 _animX;							/**< X co-ordinate of the animations */
-		u16 _animY;							/**< Y co-ordinate of the animations */
-		bool _initialised;					/**< Tracks if the animation has started or not */
-		WoopsiTimer* _timer;				/**< Controls animation timing and playback */
+		Animation* _animNormal;					/**< Animation played when button is not clicked */
+		Animation* _animClicked;				/**< Animation played when button is clicked */
+		u16 _animX;								/**< X co-ordinate of the animations */
+		u16 _animY;								/**< Y co-ordinate of the animations */
+		bool _initialised;						/**< Tracks if the animation has started or not */
+		WoopsiTimer* _timer;					/**< Controls animation timing and playback */
+		
+		static const int ANIM_BUTTON_DEFAULT_WIDTH;		/**< Default preferred width */
+		static const int ANIM_BUTTON_DEFAULT_HEIGHT;	/**< Default preferred height */
+
 
 		/**
 		 * Destructor.

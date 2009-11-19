@@ -8,6 +8,7 @@ Change Log
     - Graphics::dim() draws to correct dimensions.
     - GraphicsPort::dim() clips properly.
     - BitmapButton::getPreferredDimensions() returns the correct size.
+    - AnimButton::getPreferredDimensions() returns the correct size.
   
   - New Features:
     - Removed getEditableData() bodge from bitmap classes; all interaction with
@@ -19,7 +20,11 @@ Change Log
     - Added grayScale() function to GraphicsUnclipped, Graphics and
       GraphicsPort.
     - BitmapButton greys out when disabled.
-    - Added bitmapbuttontest.
+    - Added bitmapbutton test.
+    - Added drawBitmapGreyScale() function to GraphicsUnclipped, Graphics and
+      GraphicsPort.
+    - AnimButton greys out when disabled.
+    - Added animbutton test.
 
 
   V0.40 (20091115)

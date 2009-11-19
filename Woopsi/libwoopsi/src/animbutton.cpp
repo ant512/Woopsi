@@ -5,6 +5,10 @@
 
 using namespace WoopsiUI;
 
+// Set const values
+const int AnimButton::ANIM_BUTTON_DEFAULT_WIDTH = 10;
+const int AnimButton::ANIM_BUTTON_DEFAULT_HEIGHT = 10;
+
 AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, 0, NULL) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 
@@ -36,9 +40,17 @@ void AnimButton::draw(Rect clipRect) {
 
 	// Draw bitmaps
 	if (_flags.clicked) {
-		port->drawBitmap(x, y, _animClicked->getCurrentBitmap()->getWidth(), _animClicked->getCurrentBitmap()->getHeight(), _animClicked->getCurrentBitmap(), _animX, _animY);
+		if (isEnabled()) {
+			port->drawBitmap(x, y, _animClicked->getCurrentBitmap()->getWidth(), _animClicked->getCurrentBitmap()->getHeight(), _animClicked->getCurrentBitmap(), _animX, _animY);
+		} else {
+			port->drawBitmapGreyScale(x, y, _animClicked->getCurrentBitmap()->getWidth(), _animClicked->getCurrentBitmap()->getHeight(), _animClicked->getCurrentBitmap(), _animX, _animY);
+		}
 	} else {
-		port->drawBitmap(x, y, _animNormal->getCurrentBitmap()->getWidth(), _animNormal->getCurrentBitmap()->getHeight(), _animNormal->getCurrentBitmap(), _animX, _animY);
+		if (isEnabled()) {
+			port->drawBitmap(x, y, _animNormal->getCurrentBitmap()->getWidth(), _animNormal->getCurrentBitmap()->getHeight(), _animNormal->getCurrentBitmap(), _animX, _animY);
+		} else {
+			port->drawBitmapGreyScale(x, y, _animNormal->getCurrentBitmap()->getWidth(), _animNormal->getCurrentBitmap()->getHeight(), _animNormal->getCurrentBitmap(), _animX, _animY);
+		}
 	}
 
 	// Draw outline
@@ -121,4 +133,28 @@ bool AnimButton::release(s16 x, s16 y) {
 	}
 
 	return false;
+}
+
+// Get the preferred dimensions of the gadget
+void AnimButton::getPreferredDimensions(Rect& rect) const {
+	rect.x = _x;
+	rect.y = _y;
+
+	// Get the preferred size from the dimensions of one of the bitmaps in the anims
+	if (_animNormal->getFrameCount() > 0) {
+
+		// Get the size from the first bitmap in the normal animation
+		rect.width = ((!_flags.borderless) << 1) + _animNormal->getCurrentBitmap()->getWidth();
+		rect.height = ((!_flags.borderless) << 1) + _animNormal->getCurrentBitmap()->getHeight();
+	} else if (_animClicked->getFrameCount() > 0) {
+
+		// Get the size from the first bitmap in the clicked animation
+		rect.width = ((!_flags.borderless) << 1) + _animClicked->getCurrentBitmap()->getWidth();
+		rect.height = ((!_flags.borderless) << 1) + _animClicked->getCurrentBitmap()->getHeight();
+	} else {
+
+		// No bitmaps available - use defaults
+		rect.width = ANIM_BUTTON_DEFAULT_WIDTH;
+		rect.height = ANIM_BUTTON_DEFAULT_HEIGHT;
+	}
 }

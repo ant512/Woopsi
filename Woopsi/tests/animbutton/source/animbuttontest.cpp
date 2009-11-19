@@ -1,11 +1,11 @@
 // Includes
-#include "bitmapbuttontest.h"
+#include "animbuttontest.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "debug.h"
-#include "bittest1.h"
+#include "ik.h"
 
-void BitmapButtonTest::startup() {
+void  AnimButtonTest::startup() {
 
 	// Call base startup method
 	Woopsi::startup();
@@ -63,11 +63,30 @@ void BitmapButtonTest::startup() {
 	_disable->addGadgetEventHandler(this);
 	_dimensions->addGadgetEventHandler(this);
 	
-	// Create bitmap for button
-	_bitmap = new BitmapWrapper(bittest1_Bitmap, 92, 28);
+	// Create bitmaps for button
+	_bitmaps = (BitmapWrapper**)malloc(10 * sizeof(BitmapWrapper*));
+	_bitmaps[0] = new BitmapWrapper(ik1_Bitmap, 111, 53);
+	_bitmaps[1] = new BitmapWrapper(ik2_Bitmap, 111, 53);
+	_bitmaps[2] = new BitmapWrapper(ik3_Bitmap, 111, 53);
+	_bitmaps[3] = new BitmapWrapper(ik4_Bitmap, 111, 53);
+	_bitmaps[4] = new BitmapWrapper(ik5_Bitmap, 111, 53);
+	_bitmaps[5] = new BitmapWrapper(ik6_Bitmap, 111, 53);
+	_bitmaps[6] = new BitmapWrapper(ik7_Bitmap, 111, 53);
+	_bitmaps[7] = new BitmapWrapper(ik8_Bitmap, 111, 53);
+	_bitmaps[8] = new BitmapWrapper(ik9_Bitmap, 111, 53);
+	_bitmaps[9] = new BitmapWrapper(ik10_Bitmap, 111, 53);
 
 	// Add button
-	_button = new BitmapButton(30, 30, 94, 30, 0, 0, _bitmap, _bitmap);
+	_button = new AnimButton(30, 30, 111, 53, 0, 0);
+	
+	for (u8 i = 0; i < 5; ++i) {
+		_button->getNormalAnimation()->addFrame(_bitmaps[i + 5], 0);
+		_button->getClickedAnimation()->addFrame(_bitmaps[i], 0);
+	}
+	
+	_button->getNormalAnimation()->setSpeed(4);
+	_button->getClickedAnimation()->setSpeed(4);
+	
 	window->addGadget(_button);
 	_button->addGadgetEventHandler(this);
 	_button->setDoubleClickable(true);
@@ -86,15 +105,20 @@ void BitmapButtonTest::startup() {
 	redraw();
 }
 
-void BitmapButtonTest::shutdown() {
+void  AnimButtonTest::shutdown() {
 
-	delete _bitmap;
+	// Clean up
+	for (u8 i = 0; i < 10; ++i) {
+		delete _bitmaps[i];
+	}
+	
+	free(_bitmaps);
 
 	// Call base shutdown method
 	Woopsi::shutdown();
 }
 
-void BitmapButtonTest::handleClickEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Clicked");
@@ -102,7 +126,7 @@ void BitmapButtonTest::handleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleDragEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleDragEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Dragged");
@@ -110,7 +134,7 @@ void BitmapButtonTest::handleDragEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleReleaseEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleReleaseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Released");
@@ -118,7 +142,7 @@ void BitmapButtonTest::handleReleaseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Released outside");
@@ -126,7 +150,7 @@ void BitmapButtonTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleKeyPressEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleKeyPressEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Key pressed");
@@ -134,7 +158,7 @@ void BitmapButtonTest::handleKeyPressEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Key released");
@@ -142,7 +166,7 @@ void BitmapButtonTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleLidOpenEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleLidOpenEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Lid opened");
@@ -150,7 +174,7 @@ void BitmapButtonTest::handleLidOpenEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleLidCloseEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleLidCloseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Lid closed");
@@ -158,7 +182,7 @@ void BitmapButtonTest::handleLidCloseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleFocusEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleFocusEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Focused");
@@ -166,7 +190,7 @@ void BitmapButtonTest::handleFocusEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleBlurEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleBlurEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Blurred");
@@ -174,7 +198,7 @@ void BitmapButtonTest::handleBlurEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleCloseEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleCloseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Closed");
@@ -182,7 +206,7 @@ void BitmapButtonTest::handleCloseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleHideEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleHideEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Hidden");
@@ -190,7 +214,7 @@ void BitmapButtonTest::handleHideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleShowEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleShowEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shown");
@@ -198,7 +222,7 @@ void BitmapButtonTest::handleShowEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleEnableEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleEnableEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Enabled");
@@ -206,7 +230,7 @@ void BitmapButtonTest::handleEnableEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleDisableEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleDisableEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Disabled");
@@ -214,7 +238,7 @@ void BitmapButtonTest::handleDisableEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleValueChangeEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleValueChangeEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Value changed");
@@ -222,7 +246,7 @@ void BitmapButtonTest::handleValueChangeEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleResizeEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleResizeEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Resized");
@@ -230,7 +254,7 @@ void BitmapButtonTest::handleResizeEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleMoveEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleMoveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved");
@@ -238,7 +262,7 @@ void BitmapButtonTest::handleMoveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleScrollEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleScrollEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Scrolled");
@@ -246,7 +270,7 @@ void BitmapButtonTest::handleScrollEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleShiftClickEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleShiftClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shift clicked");
@@ -254,7 +278,7 @@ void BitmapButtonTest::handleShiftClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
+void  AnimButtonTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Context menu selected");
@@ -262,7 +286,7 @@ void BitmapButtonTest::handleContextMenuSelectionEvent(const ContextMenuEventArg
 	}
 }
 
-void BitmapButtonTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Double clicked");
@@ -270,7 +294,7 @@ void BitmapButtonTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleShelveEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleShelveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shelved");
@@ -278,7 +302,7 @@ void BitmapButtonTest::handleShelveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleUnshelveEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleUnshelveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Unshelved");
@@ -286,7 +310,7 @@ void BitmapButtonTest::handleUnshelveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleActionEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleActionEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Action");
@@ -342,7 +366,7 @@ void BitmapButtonTest::handleActionEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved forwards");
@@ -350,7 +374,7 @@ void BitmapButtonTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void BitmapButtonTest::handleMoveBackwardEvent(const GadgetEventArgs& e) {
+void  AnimButtonTest::handleMoveBackwardEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved backwards");

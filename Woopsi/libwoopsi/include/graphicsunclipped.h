@@ -196,6 +196,20 @@ namespace WoopsiUI {
 		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour);
 
 		/**
+		 * Draw a bitmap to the port's bitmap in greyscale.  This is considerably slower
+		 * than the standard bitmap drawing routine as it plots pixel-by-pixel instead
+		 * of using a scanline DMA copy.
+		 * @param x The x co-ordinate to draw the bitmap to.
+		 * @param y The y co-ordinate to draw the bitmap to.
+		 * @param width The width of the bitmap to draw.
+		 * @param height The height of the bitmap to draw.
+		 * @param bitmap Pointer to the bitmap to draw.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 */
+		virtual void drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY);
+
+		/**
 		 * Draw an unfilled ellipse to the bitmap.
 		 * @param xCentre The x co-ordinate of the ellipse's centre.
 		 * @param yCentre The y co-ordinate of the ellipse's centre.

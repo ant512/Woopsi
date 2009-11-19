@@ -45,6 +45,7 @@ namespace WoopsiUI {
 		 * @param speed Default speed of the animation.
 		 * @param loopType The loop type used by the animation.
 		 * @param loops The number of loops the animation should play through.
+		 * If this is set to 0, the animation loops infinitely.
 		 */
 		Animation(const u8 speed, const LoopType loopType, const u16 loops);
 		

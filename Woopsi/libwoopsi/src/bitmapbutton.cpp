@@ -22,14 +22,17 @@ void BitmapButton::draw(Rect clipRect) {
 	s16 y = x;
 
 	if (_flags.clicked) {
-		port->drawBitmap(x, y, _width, _height, _bitmapClicked, _bitmapX, _bitmapY);
+		if (isEnabled()) {
+			port->drawBitmap(x, y, _width, _height, _bitmapClicked, _bitmapX, _bitmapY);
+		} else {
+			port->drawBitmapGreyScale(x, y, _width, _height, _bitmapClicked, _bitmapX, _bitmapY);
+		}
 	} else {
-		port->drawBitmap(x, y, _width, _height, _bitmapNormal, _bitmapX, _bitmapY);
-	}
-
-	// Grey out the button if it is disabled
-	if (!isEnabled()) {
-		port->greyScale(x, y, _width, _height);
+		if (isEnabled()) {
+			port->drawBitmap(x, y, _width, _height, _bitmapNormal, _bitmapX, _bitmapY);
+		} else {
+			port->drawBitmapGreyScale(x, y, _width, _height, _bitmapNormal, _bitmapX, _bitmapY);
+		}
 	}
 
 	// Draw outline

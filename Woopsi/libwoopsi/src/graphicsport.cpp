@@ -614,6 +614,37 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapB
 	}
 }
 
+void GraphicsPort::drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
+	
+	// Ignore command if gadget deleted or invisible
+	if (!_gadget->isDrawingEnabled()) return;
+	
+	u16 bitmapWidth = bitmap->getWidth();
+	u16 bitmapHeight = bitmap->getHeight();
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+	
+	// Ensure width of rect being drawn into does not exceed size of bitmap
+	if (bitmapWidth - bitmapX < width) {
+		width = bitmapWidth - bitmapX;
+	}
+	
+	if (bitmapHeight - bitmapY < height) {
+		height = bitmapHeight - bitmapY;
+	}
+	
+	if (_clipRect == NULL) {
+		// Draw all visible rectangles
+		for (s32 i = 0; i < _clipRectList->size(); i++) {
+			clipBitmapGreyScale(x, y, width, height, bitmap, bitmapX, bitmapY, _clipRectList->at(i));
+		}
+	} else {
+		// Draw single rectangle
+		clipBitmapGreyScale(x, y, width, height, bitmap, bitmapX, bitmapY, *_clipRect);
+	}
+}
+
 // Draw XORed horizontal line - external function
 void GraphicsPort::drawXORHorizLine(s16 x, s16 y, s16 width) {
 	
@@ -723,6 +754,40 @@ void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapB
 		
 		// Draw the bitmap
 		GraphicsUnclipped::drawBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY, transparentColour);
+	}
+}
+
+void GraphicsPort::clipBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, const Rect& clipRect) {
+	
+	// Get co-ords of screen section we're drawing to
+	s16 minX = x;
+	s16 minY = y;
+	s16 maxX = x + width - 1;
+	s16 maxY = y + height - 1;
+	
+	// Attempt to clip
+	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
+		
+		// Calculate new width and height
+		width = maxX - minX + 1;
+		height = maxY - minY + 1;
+		
+		//Adjust bitmap co-ordinates to allow for clipping changes to visible section
+		if (minX > x) {
+			bitmapX += minX - x;
+		}
+		if (y < TOP_SCREEN_Y_OFFSET) {
+			if (minY > y) {
+				bitmapY += minY - y;
+			}
+		} else {
+			if (minY + TOP_SCREEN_Y_OFFSET > y) {
+				bitmapY += (minY + TOP_SCREEN_Y_OFFSET) - y;
+			}
+		}
+		
+		// Draw the bitmap
+		GraphicsUnclipped::drawBitmapGreyScale(minX, minY, width, height, bitmap, bitmapX, bitmapY);
 	}
 }
 
