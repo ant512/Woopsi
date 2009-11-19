@@ -93,9 +93,12 @@ void AnimButton::handleActionEvent(const GadgetEventArgs& e) {
 bool AnimButton::click(s16 x, s16 y) {
 	if (Gadget::click(x, y)) {
 
-		// Swap animations
-		_animNormal->stop();
-		_animClicked->play();
+		if (isEnabled()) {
+
+			// Swap animations
+			_animNormal->stop();
+			_animClicked->play();
+		}
 
 		return true;
 	}
