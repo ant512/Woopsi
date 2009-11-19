@@ -13,10 +13,10 @@ Change Log
       disabled.
     - ListBox::getPreferredDimensions() returns the correct size.
     - ListBox::draw() clips more effectively.
-  
-  - New Features:
     - Removed getEditableData() bodge from bitmap classes; all interaction with
       bitmap data happens through bitmap methods.
+  
+  - New Features:
     - SDL framebuffer code merged into FrameBuffer class.
     - Added label test.
     - Added button test.
@@ -30,6 +30,7 @@ Change Log
     - AnimButton greys out when disabled.
     - Added animbutton test.
     - Added listbox test.
+    - ListBox greys out when disabled.
 
 
   V0.40 (20091115)
