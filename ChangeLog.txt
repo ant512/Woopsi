@@ -15,6 +15,7 @@ Change Log
     - ListBox::draw() clips more effectively.
     - Removed getEditableData() bodge from bitmap classes; all interaction with
       bitmap data happens through bitmap methods.
+    - Moved IK bitmaps out of demo folder/NDS into animbutton test.
   
   - New Features:
     - SDL framebuffer code merged into FrameBuffer class.
