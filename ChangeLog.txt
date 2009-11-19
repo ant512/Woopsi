@@ -12,6 +12,7 @@ Change Log
     - Anim button animation continues playing correctly when clicked if
       disabled.
     - ListBox::getPreferredDimensions() returns the correct size.
+    - ListBox::draw() clips more effectively.
   
   - New Features:
     - Removed getEditableData() bodge from bitmap classes; all interaction with

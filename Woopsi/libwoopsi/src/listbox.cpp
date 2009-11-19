@@ -3,6 +3,7 @@
 #include "fontbase.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
+#include "debug.h"
 
 using namespace WoopsiUI;
 
@@ -34,19 +35,27 @@ void ListBox::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 	
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
-	
-	// TODO: Optimise this so that it limits its drawing to the clip rect's dimensios
-	// (at present it draws the entire gadget, although 99% of this drawing is clipped out)
-	
+	// Calculate clipping values adjusted to gadget-space
+	s16 clipX = clipRect.x - getX();
+	s16 clipY = clipRect.y - getY();
+	s16 clipWidth = clipRect.width;
+	s16 clipHeight = clipRect.height;
+
 	// Precalc values for option draw loop
 	s16 optionHeight = getOptionHeight();
-	s32 topOption = -_canvasY / optionHeight;
+	s32 topOption = (clipY - _canvasY) / optionHeight;
+	s32 bottomOption = topOption + (clipHeight * optionHeight);
 	s16 y = _canvasY + (topOption * optionHeight);
 	s32 i = topOption;
 
+	// Ensure bottom option does not exceed number of options
+	if (bottomOption >= _options.getItemCount()) bottomOption = _options.getItemCount() - 1;
+
+	// Draw background
+	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _backColour);
+
 	// Loop through all options drawing each one
-	while ((i < _options.getItemCount()) & (y < _height)) {
+	while (i <= bottomOption) {
 		
 		// Is the option selected?
 		if (_options.getItem(i)->selected) {
@@ -57,7 +66,11 @@ void ListBox::draw(Rect clipRect) {
 			}
 		
 			// Draw text
-			port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->selectedTextColour);
+			if (isEnabled()) {
+				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->selectedTextColour);
+			} else {
+				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _darkColour);
+			}
 		} else {
 			
 			// Draw background
@@ -66,7 +79,11 @@ void ListBox::draw(Rect clipRect) {
 			}
 			
 			// Draw text
-			port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->normalTextColour);
+			if (isEnabled()) {
+				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->normalTextColour);
+			} else {
+				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _darkColour);
+			}
 		}
 		
 		i++;
