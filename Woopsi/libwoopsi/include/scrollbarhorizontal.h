@@ -87,12 +87,6 @@ namespace WoopsiUI {
 		void setPageSize(const s16 pageSize);
 
 		/**
-		 * Set the amount scrolled by the arrow buttons
-		 * @param buttonScrollAmount The amount to scroll.
-		 */
-		void setButtonScrollAmount(const u16 buttonScrollAmount);
-
-		/**
 		 * Make the grip jump up or down the gutter.
 		 * @param direction 0 to jump left, 1 to jump right.
 		 */
@@ -148,7 +142,6 @@ namespace WoopsiUI {
 		Button* _leftButton;						/**< Pointer to the left button */
 		Button* _rightButton;						/**< Pointer to the right button */
 		u8 _buttonWidth;							/**< Width of the buttons */
-		u16 _buttonScrollAmount;					/**< Amount that the grip moves when a button is clicked */
 		u8 _scrollTimeout;							/**< VBLs needed until a button triggers another grip movement */
 		WoopsiTimer* _timer;						/**< Controls slider button repeats */
 

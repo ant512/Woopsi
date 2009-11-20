@@ -9,7 +9,6 @@ using namespace WoopsiUI;
 ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 
 	_buttonHeight = 10;
-	_buttonScrollAmount = 5;
 
 	// Create the children
 	_slider = new SliderVertical(0, 0, width, height - (_buttonHeight << 1));
@@ -77,11 +76,11 @@ void ScrollbarVertical::handleActionEvent(const GadgetEventArgs& e) {
 		if (_upButton->isClicked()) {
 
 			// Move the grip up
-			_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+			_slider->setValue(_slider->getValue() - _slider->getValuesPerPixel());
 		} else if (_downButton->isClicked()) {
 
 			// Move the grip down
-			_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+			_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
 		}
 
 		raiseValueChangeEvent();
@@ -102,7 +101,7 @@ void ScrollbarVertical::handleClickEvent(const GadgetEventArgs& e) {
 		_timer->start();
 
 		// Move the grip up
-		_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+		_slider->setValue(_slider->getValue() - _slider->getValuesPerPixel());
 
 		raiseValueChangeEvent();
 
@@ -112,7 +111,7 @@ void ScrollbarVertical::handleClickEvent(const GadgetEventArgs& e) {
 		_timer->start();
 
 		// Move the grip down
-		_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+		_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
 
 		raiseValueChangeEvent();
 	}
@@ -138,10 +137,6 @@ void ScrollbarVertical::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 
 void ScrollbarVertical::jumpGrip(u8 direction) {
 	_slider->jumpGrip(direction);
-}
-
-void ScrollbarVertical::setButtonScrollAmount(const u16 buttonScrollAmount) {
-	_buttonScrollAmount = buttonScrollAmount;
 }
 
 bool ScrollbarVertical::resize(u16 width, u16 height) {

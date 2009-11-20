@@ -130,6 +130,14 @@ namespace WoopsiUI {
 		 */
 		virtual bool resize(u16 width, u16 height);
 
+		/**
+		 * Get the value represented by each pixel in the gutter.
+		 * Note that this is an integer value; the actual value
+		 * most likely contains a fractional part.
+		 * @return The value represented by each pixel in the gutter.
+		 */
+		s16 getValuesPerPixel() const;
+
 	protected:
 		SliderVerticalGrip* _grip;					/**< Pointer to the grip */
 		s16 _minimumValue;							/**< Minimum value that the grip can represent */

@@ -263,3 +263,7 @@ bool SliderHorizontal::resize(u16 width, u16 height) {
 
 	return resized;
 }
+
+s16 SliderHorizontal::getValuesPerPixel() const {
+	return ((_maximumValue - _minimumValue) / _gutterWidth) + 1;
+}

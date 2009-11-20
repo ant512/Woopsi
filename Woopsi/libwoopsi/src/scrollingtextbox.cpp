@@ -21,7 +21,6 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 	_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
 	_scrollbar->setPageSize(rect.height);
 	_scrollbar->setValue(0 - _textbox->getCanvasY());
-	_scrollbar->setButtonScrollAmount(10);
 	_scrollbar->addGadgetEventHandler(this);
 
 	// Add children to child array

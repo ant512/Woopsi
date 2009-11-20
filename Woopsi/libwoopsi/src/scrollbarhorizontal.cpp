@@ -9,7 +9,6 @@ using namespace WoopsiUI;
 ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
 	
 	_buttonWidth = 10;
-	_buttonScrollAmount = 1;
 
 	// Create the children
 	_slider = new SliderHorizontal(0, 0, width - (_buttonWidth << 1), height);
@@ -77,11 +76,11 @@ void ScrollbarHorizontal::handleActionEvent(const GadgetEventArgs& e) {
 		if (_leftButton->isClicked()) {
 
 			// Move the grip left
-			_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+			_slider->setValue(_slider->getValue() - _slider->getValuesPerPixel());
 		} else if (_rightButton->isClicked()) {
 
 			// Move the grip right
-			_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+			_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
 		}
 	}
 }
@@ -100,7 +99,7 @@ void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
 		_timer->start();
 
 		// Move the grip left
-		_slider->setValue(_slider->getValue() - _buttonScrollAmount);
+		_slider->setValue(_slider->getValue() - _slider->getValuesPerPixel());
 
 	} else if (e.getSource() == _rightButton) {
 
@@ -108,7 +107,7 @@ void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
 		_timer->start();
 
 		// Move the grip right
-		_slider->setValue(_slider->getValue() + _buttonScrollAmount);
+		_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
 	}
 }
 
@@ -132,10 +131,6 @@ void ScrollbarHorizontal::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 
 void ScrollbarHorizontal::jumpGrip(u8 direction) {
 	_slider->jumpGrip(direction);
-}
-
-void ScrollbarHorizontal::setButtonScrollAmount(const u16 buttonScrollAmount) {
-	_buttonScrollAmount = buttonScrollAmount;
 }
 
 bool ScrollbarHorizontal::resize(u16 width, u16 height) {

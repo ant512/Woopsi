@@ -263,3 +263,7 @@ bool SliderVertical::resize(u16 width, u16 height) {
 
 	return resized;
 }
+
+s16 SliderVertical::getValuesPerPixel() const {
+	return ((_maximumValue - _minimumValue) / _gutterHeight) + 1;
+}

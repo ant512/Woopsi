@@ -20,6 +20,9 @@ Change Log
     - SliderHorizontal and SliderVertical produce correct values when they are
       showing a range of values large enough for the grip to be artificially
       enlarged.
+    - Scrollbar buttons scroll by amount based on max/min values and height of
+      slider rather than arbitrary value.
+    - Removed ScrollbarVertical and ScrollbarHorizontal setButtonScrollAmount().
   
   - New Features:
     - SDL framebuffer code merged into FrameBuffer class.
