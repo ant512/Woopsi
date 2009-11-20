@@ -136,6 +136,8 @@ namespace WoopsiUI {
 		s16 _maximumValue;							/**< Maximum value that the grip can represent */
 		s16 _minimumGripWidth;						/**< Smallest width that the grip can become */
 		s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter */
+		s32 _gutterWidth;							/**< Width of the gutter, taking into account
+														 any adjustments made to the width of the grip */
 
 		/**
 		 * Destructor.

@@ -10,8 +10,8 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_maximumValue = 0;
 	_minimumGripHeight = 5;
 	_pageSize = 1;
-	_flags.permeable = true;
 
+	_flags.permeable = true;
 	_flags.borderless = false;
 
 	// Create grip
@@ -21,6 +21,8 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_grip = new SliderVerticalGrip(rect.x, rect.y, rect.width, rect.height);
 	_grip->addGadgetEventHandler(this);
 	addGadget(_grip);
+
+	_gutterHeight = rect.height;
 }
 
 const s16 SliderVertical::getValue() const {
@@ -32,7 +34,7 @@ const s16 SliderVertical::getValue() const {
 	if (rect.height > _grip->getHeight()) {
 	
 		// Calculate ratio
-		u32 ratio = ((_maximumValue - _minimumValue) << 8) / rect.height;
+		u32 ratio = ((_maximumValue - _minimumValue) << 8) / _gutterHeight;
 		
 		// Calculate value
 		u32 val = ((_grip->getY() - getY()) - rect.y) * ratio;
@@ -65,7 +67,7 @@ void SliderVertical::setValue(const s16 value) {
 	if ((rect.height > _grip->getHeight()) && (_maximumValue != _minimumValue)) {
 	
 		// Calculate ratio (max fractional value of 255)
-		u32 ratio = (rect.height << 8) / (u32)(_maximumValue - _minimumValue);
+		u32 ratio = (_gutterHeight << 8) / (u32)(_maximumValue - _minimumValue);
 		
 		// Convert value using ratio
 		s32 newGripY = (newValue * ratio);
@@ -177,8 +179,22 @@ void SliderVertical::resizeGrip() {
 		// Bitshift to remove fraction
 		newHeight >>= 8;
 
+		// Calculate height of the gutter for use in ratio calculations
+		_gutterHeight = rect.height;
+
 		// Ensure height is within acceptable boundaries
-		if (newHeight < _minimumGripHeight) newHeight = _minimumGripHeight;
+		if (newHeight < _minimumGripHeight) {
+
+			// Adjust calculated height of gutter to take into account
+			// adjusted grip height.  Since we limit the height of the grip
+			// to ensure it doesn't get too small, we must treat the gutter
+			// as if it shrinks by the amount that the grip has been enlarged
+			_gutterHeight -= _minimumGripHeight - newHeight;
+
+			// Limit height of grip
+			newHeight = _minimumGripHeight;
+		}
+
 		if (newHeight > rect.height) newHeight = rect.height;
 	}
 

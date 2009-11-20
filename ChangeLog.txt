@@ -17,6 +17,9 @@ Change Log
       bitmap data happens through bitmap methods.
     - Moved IK bitmaps out of demo folder/NDS into animbutton test.
     - ScrollingListBox::getPreferredDimensions() returns the correct size.
+    - SliderHorizontal and SliderVertical produce correct values when they are
+      showing a range of values large enough for the grip to be artificially
+      enlarged.
   
   - New Features:
     - SDL framebuffer code merged into FrameBuffer class.

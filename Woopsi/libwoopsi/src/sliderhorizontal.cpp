@@ -10,8 +10,8 @@ SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget
 	_maximumValue = 0;
 	_minimumGripWidth = 5;
 	_pageSize = 1;
-	_flags.permeable = true;
 
+	_flags.permeable = true;
 	_flags.borderless = false;
 
 	// Create grip
@@ -21,6 +21,8 @@ SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget
 	_grip = new SliderHorizontalGrip(rect.x, rect.y, rect.width, rect.height);
 	_grip->addGadgetEventHandler(this);
 	addGadget(_grip);
+
+	_gutterWidth = rect.width;
 }
 
 const s16 SliderHorizontal::getValue() const {
@@ -32,7 +34,7 @@ const s16 SliderHorizontal::getValue() const {
 	if (rect.width > _grip->getWidth()) {
 	
 		// Calculate ratio
-		u32 ratio = ((_maximumValue - _minimumValue) << 8) / rect.width;
+		u32 ratio = ((_maximumValue - _minimumValue) << 8) / _gutterWidth;
 		
 		// Calculate value
 		u32 val = ((_grip->getX() - getX()) - rect.x) * ratio;
@@ -65,7 +67,7 @@ void SliderHorizontal::setValue(const s16 value) {
 	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
 	
 		// Calculate ratio (max fractional value of 255)
-		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
+		u32 ratio = (_gutterWidth << 8) / (u32)(_maximumValue - _minimumValue);
 
 		// Convert value using ratio
 		s32 newGripX = (newValue * ratio);
@@ -177,8 +179,22 @@ void SliderHorizontal::resizeGrip() {
 		// Bitshift to remove fraction
 		newWidth >>= 8;
 
+		// Calculate width of the gutter for use in ratio calculations
+		_gutterWidth = rect.width;
+
 		// Ensure width is within acceptable boundaries
-		if (newWidth < _minimumGripWidth) newWidth = _minimumGripWidth;
+		if (newWidth < _minimumGripWidth) {
+
+			// Adjust calculated width of gutter to take into account
+			// adjusted grip width.  Since we limit the width of the grip
+			// to ensure it doesn't get too small, we must treat the gutter
+			// as if it shrinks by the amount that the grip has been width
+			_gutterWidth -= _minimumGripWidth - newWidth;
+
+			// Limit width of grip
+			newWidth = _minimumGripWidth;
+		}
+
 		if (newWidth > rect.width) newWidth = rect.width;
 	}
 

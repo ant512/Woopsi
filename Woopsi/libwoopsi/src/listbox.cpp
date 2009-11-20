@@ -3,7 +3,6 @@
 #include "fontbase.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
-#include "debug.h"
 
 using namespace WoopsiUI;
 
