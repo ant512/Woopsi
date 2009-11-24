@@ -23,6 +23,7 @@ Change Log
     - Scrollbar buttons scroll by amount based on max/min values and height of
       slider rather than arbitrary value.
     - Removed ScrollbarVertical and ScrollbarHorizontal setButtonScrollAmount().
+    - AnimButton animations pause when the button is disabled.
   
   - New Features:
     - SDL framebuffer code merged into FrameBuffer class.

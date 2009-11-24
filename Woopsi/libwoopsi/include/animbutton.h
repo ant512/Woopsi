@@ -53,7 +53,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the click.
 		 * @return True if the click was successful.
 		 */
-		bool click(s16 x, s16 y);
+		virtual bool click(s16 x, s16 y);
 		
 		/**
 		 * Click the button at the specified co-ordinates.
@@ -61,7 +61,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the click.
 		 * @return True if the click was successful.
 		 */
-		bool release(s16 x, s16 y);
+		virtual bool release(s16 x, s16 y);
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
@@ -70,6 +70,18 @@ namespace WoopsiUI {
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
+
+		/**
+		 * Disabled the gadget.
+		 * @return True if the gadget was disabled.
+		 */
+		virtual bool disable();
+
+		/**
+		 * Enables the gadget.
+		 * @return True if the gadget was enabled.
+		 */
+		virtual bool enable();
 
 	protected:
 		Animation* _animNormal;					/**< Animation played when button is not clicked */

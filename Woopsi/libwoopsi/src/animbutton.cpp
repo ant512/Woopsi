@@ -161,3 +161,35 @@ void AnimButton::getPreferredDimensions(Rect& rect) const {
 		rect.height = ANIM_BUTTON_DEFAULT_HEIGHT;
 	}
 }
+
+bool AnimButton::disable() {
+	if (Gadget::disable()) {
+
+		// Pause running animations
+		_animNormal->pause();
+		_animClicked->pause();
+		_timer->pause();
+
+		return true;
+	}
+
+	return false;
+}
+
+bool AnimButton::enable() {
+	if (Gadget::enable()) {
+		
+		// Restart animations
+		if (_flags.clicked) {
+			_animClicked->play();
+		} else {
+			_animNormal->play();
+		}
+
+		_timer->start();
+
+		return true;
+	}
+
+	return false;
+}
