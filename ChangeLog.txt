@@ -1,7 +1,7 @@
 Change Log
 ----------
 
-  V0.41
+  V0.41 (20091124)
   
   - Fixes:
     - Removed Gadget::unregisterChildrenFromVBL() declaration from gadget.h as

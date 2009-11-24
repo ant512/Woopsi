@@ -54,7 +54,8 @@ namespace WoopsiUI {
 		virtual void drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
 		
 		/**
-		 * Draw a horizontal line to the internal bitmap.
+		 * Draw a horizontal line to the internal bitmap.  Faster than
+		 * drawLine() but limited to horizontal lines only.
 		 * @param x The x co-ordinate of the line.
 		 * @param y The y co-ordinate of the line.
 		 * @param width The width of the line.
@@ -63,7 +64,8 @@ namespace WoopsiUI {
 		virtual void drawHorizLine(s16 x, s16 y, u16 width, u16 colour);
 		
 		/**
-		 * Draw a vertical line to the internal bitmap.
+		 * Draw a vertical line to the internal bitmap.  Faster than
+		 * drawLine() but limited to vertical lines only.
 		 * @param x The x co-ordinate of the line.
 		 * @param y The y co-ordinate of the line.
 		 * @param height The height of the line.
@@ -92,7 +94,8 @@ namespace WoopsiUI {
 		virtual void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
 		
 		/**
-		 * Draw an unfilled circle to the internal bitmap.
+		 * Draw an unfilled circle to the internal bitmap.  Faster than
+		 * drawEllipse() but limited to circles only.
 		 * @param x0 The x co-ordinate of the circle.
 		 * @param y0 The y co-ordinate of the circle.
 		 * @param radius The radius of the circle.
@@ -101,7 +104,8 @@ namespace WoopsiUI {
 		virtual void drawCircle(s16 x0, s16 y0, u16 radius, u16 colour);
 		
 		/**
-		 * Draw a filled circle to the internal bitmap.
+		 * Draw a filled circle to the internal bitmap.  Faster than
+		 * drawFilledEllipse() but limited to circles only.
 		 * @param x0 The x co-ordinate of the circle.
 		 * @param y0 The y co-ordinate of the circle.
 		 * @param radius The radius of the circle.
