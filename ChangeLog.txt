@@ -1,5 +1,6 @@
 Change Log
 ----------
+
   V0.41
   
   - Fixes:
@@ -24,6 +25,7 @@ Change Log
       slider rather than arbitrary value.
     - Removed ScrollbarVertical and ScrollbarHorizontal setButtonScrollAmount().
     - AnimButton animations pause when the button is disabled.
+    - DMA copying function uses DMA for RAM->VRAM copies.
   
   - New Features:
     - SDL framebuffer code merged into FrameBuffer class.
