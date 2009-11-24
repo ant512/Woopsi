@@ -44,7 +44,7 @@
 /**
  * Woopsi version number.
  */
-#define WOOPSI_VERSION "0.40 Alpha"
+#define WOOPSI_VERSION "0.41 Alpha"
 
 /**
  * Copyright notice.
