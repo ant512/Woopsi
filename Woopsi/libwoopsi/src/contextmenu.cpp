@@ -75,7 +75,7 @@ void ContextMenu::handleReleaseEvent(const GadgetEventArgs& e) {
 
 		// Notify the gadget that opened this menu that an event has
 		// occurred, and send the item.
-		_opener->handleContextMenuSelection((ContextMenuItem*)e.getSource());
+		_opener->handleContextMenuSelection((const ContextMenuItem*)e.getSource());
 
 		shelve();
 	}

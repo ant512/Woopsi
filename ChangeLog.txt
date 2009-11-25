@@ -6,6 +6,10 @@ Change Log
   - Fixes:
     - ListData::swapItems() no longer raises a data changed event.
     - ListData::sort() raises a data changed event.
+    - ContextMenu does not miscast ContextMenuItem when calling listeners after
+      an item is selected.
+    - Woopsi class does not attempt to retrieve system font before it is
+      initialised.
   
   
   - New Features:

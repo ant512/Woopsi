@@ -32,6 +32,9 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 	// Set up singleton pointer
 	singleton = this;
 
+	// Set up DS display hardware
+	initWoopsiGfxMode();
+
 	// Get system font if no font supplied
 	if (font == NULL) {
 		_font = getSystemFont();
@@ -41,9 +44,6 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 	_contextMenu = new ContextMenu(_font);
 	addGadget(_contextMenu);
 	_contextMenu->shelve();
-
-	// Set up DS display hardware
-	initWoopsiGfxMode();
 }
 
 Woopsi::~Woopsi() {
