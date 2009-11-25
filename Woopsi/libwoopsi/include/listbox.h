@@ -3,7 +3,7 @@
 
 #include "scrollingpanel.h"
 #include "listdataeventhandler.h"
-#include "listdata.h"
+#include "listboxdata.h"
 
 namespace WoopsiUI {
 
@@ -108,7 +108,7 @@ namespace WoopsiUI {
 		 * Get the selected option.  Returns NULL if nothing is selected.
 		 * @return The selected option.
 		 */
-		virtual const ListData::ListDataItem* getSelectedOption() const;
+		virtual const ListDataItem* getSelectedOption() const;
 		
 		/**
 		 * Click this gadget at the supplied co-ordinates.
@@ -150,7 +150,7 @@ namespace WoopsiUI {
 		 * Get the specified option.
 		 * @return The specified option.
 		 */
-		virtual inline ListData::ListDataItem* getOption(const s32 index) { return _options.getItem(index); };
+		virtual inline const ListDataItem* getOption(const s32 index) { return _options.getItem(index); };
 
 		/**
 		 * Sort the options alphabetically by the text of the options.
@@ -197,7 +197,7 @@ namespace WoopsiUI {
 		virtual void getPreferredDimensions(Rect& rect) const;
 
 	protected:
-		ListData _options;								/**< Option storage. */
+		ListBoxData _options;							/**< Option storage. */
 		u8 _optionPadding;								/**< Padding between options. */
 
 		/**

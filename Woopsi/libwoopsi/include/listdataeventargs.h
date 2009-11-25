@@ -1,7 +1,7 @@
-#include "eventargs.h"
-
 #ifndef _LISTDATAEVENTARGS_H_
 #define _LISTDATAEVENTARGS_H_
+
+#include "eventargs.h"
 
 namespace WoopsiUI {
 

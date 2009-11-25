@@ -1,6 +1,20 @@
 Change Log
 ----------
 
+  V0.42
+  
+  - Fixes:
+    - ListData::swapItems() no longer raises a data changed event.
+    - ListData::sort() raises a data changed event.
+  
+  
+  - New Features:
+    - Split ListData class into ListData, ListDataItem, ListBoxData and
+      ListBoxDataItem classes for greater flexibility.
+    - Minor improvements to the ListBox's use of the ListBoxData class.
+    - Altered ListData::quickSort() and added compareTo() method to ListDataItem
+      to allow custom ordering of ListDataItem subclasses.
+
   V0.41 (20091124)
   
   - Fixes:

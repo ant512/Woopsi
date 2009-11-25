@@ -1,29 +1,19 @@
-#ifndef _LIST_DATA_H_
-#define _LIST_DATA_H_
+#ifndef _LIST_BASE_H_
+#define _LIST_BASE_H_
 
 #include "woopsiarray.h"
 #include "listdataeventhandler.h"
+#include "listdataitem.h"
 
 namespace WoopsiUI {
 
 	/**
-	 * Class representing a data item within a list.
+	 * Class representing a list of items.  Designed to be used by the ListBox class, etc, to
+	 * store its data.  Fires events to notify listeners when the list changes or a new selection
+	 * is made.
 	 */
 	class ListData {
 	public:
-
-		/**
-		 * Struct defining a single item.
-		 */
-		typedef struct {
-			char* text;							/**< Text to display for option. */
-			u32 value;							/**< Option value. */
-			u16 normalTextColour;				/**< Colour used for text when not selected. */
-			u16 normalBackColour;				/**< Colour used for background when not selected. */
-			u16 selectedTextColour;				/**< Colour used for text when selected. */
-			u16 selectedBackColour;				/**< Colour used for background when selected. */
-			bool selected;						/**< True if the option is selected. */
-		} ListDataItem;
 
 		/**
 		 * Constructor.
@@ -39,15 +29,11 @@ namespace WoopsiUI {
 		 * Add a new item.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
-		 * @param normalTextColour Colour to draw the text with when not selected.
-		 * @param normalBackColour Colour to draw the background with when not selected.
-		 * @param selectedTextColour Colour to draw the text with when selected.
-		 * @param selectedBackColour Colour to draw the background with when selected.
 		 */
-		virtual void addItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
+		virtual void addItem(const char* text, const u32 value, const bool isSelected);
 
 		/**
-		 * Remove an item by its index..
+		 * Remove an item by its index.
 		 * @param index The index of the option to remove.
 		 */
 		virtual void removeItem(const s32 index);
@@ -99,10 +85,10 @@ namespace WoopsiUI {
 		 * Get the specified item.
 		 * @return The specified item.
 		 */
-		virtual inline ListDataItem* getItem(const s32 index) const { return _items[index]; };
+		virtual inline const ListDataItem* getItem(const s32 index) const { return _items[index]; };
 
 		/**
-		 * Sort the items alphabetically by the text of the items.
+		 * Sort the items using their compareTo() methods.
 		 */
 		virtual void sort();
 
@@ -165,7 +151,7 @@ namespace WoopsiUI {
 		bool _sortInsertedItems;									/**< Automatically sorts items on insertion if true. */
 
 		/**
-		 * Quick sort the items alphabetically by the text of the items.
+		 * Quick sort the items using their compareTo() methods.
 		 * @param start The index to start sorting at.
 		 * @param end The index to stop sorting at.
 		 */
@@ -179,12 +165,11 @@ namespace WoopsiUI {
 		virtual void swapItems(const s32 index1, const s32 index2);
 
 		/**
-		 * Return the index that an item with the supplied text should be
-		 * inserted at to maintain a sorted list of data.
-		 * @param text The text of the item.
+		 * Return the index that an item should be inserted at to maintain a sorted list of data.
+		 * @param item The item to insert.
 		 * @return The index that the item should be imserted into at.
 		 */
-		const s32 getInsertionIndex(const char* text) const;
+		const s32 getSortedInsertionIndex(const ListDataItem* item) const;
 
 		/**
 		 * Raise a data changed event.

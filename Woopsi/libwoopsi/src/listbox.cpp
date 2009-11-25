@@ -53,35 +53,39 @@ void ListBox::draw(Rect clipRect) {
 	// Draw background
 	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _backColour);
 
+	const ListBoxDataItem* item = NULL;
+
 	// Loop through all options drawing each one
 	while (i <= bottomOption) {
+
+		item = (const ListBoxDataItem*)(_options.getItem(i));
 		
 		// Is the option selected?
-		if (_options.getItem(i)->selected) {
+		if (item->isSelected()) {
 			
 			// Draw background
-			if (_options.getItem(i)->selectedBackColour != _backColour) {
-				port->drawFilledRect(0, y, _width, optionHeight, _options.getItem(i)->selectedBackColour);
+			if (item->getSelectedBackColour() != _backColour) {
+				port->drawFilledRect(0, y, _width, optionHeight, item->getSelectedBackColour());
 			}
 		
 			// Draw text
 			if (isEnabled()) {
-				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->selectedTextColour);
+				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), item->getSelectedTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _darkColour);
+				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _darkColour);
 			}
 		} else {
 			
 			// Draw background
-			if (_options.getItem(i)->normalBackColour != _backColour) {
-				port->drawFilledRect(0, y, _width, optionHeight, _options.getItem(i)->normalBackColour);
+			if (item->getNormalBackColour() != _backColour) {
+				port->drawFilledRect(0, y, _width, optionHeight, item->getNormalBackColour());
 			}
 			
 			// Draw text
 			if (isEnabled()) {
-				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _options.getItem(i)->normalTextColour);
+				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), item->getNormalTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, _font, _options.getItem(i)->text, _darkColour);
+				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _darkColour);
 			}
 		}
 		
@@ -103,7 +107,7 @@ const s32 ListBox::getSelectedIndex() const {
 	return _options.getSelectedIndex();
 }
 
-const ListData::ListDataItem* ListBox::getSelectedOption() const {
+const ListDataItem* ListBox::getSelectedOption() const {
 	return _options.getSelectedItem();
 }
 
@@ -154,19 +158,17 @@ bool ListBox::click(s16 x, s16 y) {
 			// Calculate which option was clicked
 			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 			
+			const ListBoxDataItem* item = (const ListBoxDataItem*)(_options.getItem(newSelectedIndex));
+
 			// Are we setting or unsetting?
-			if (_options.getItem(newSelectedIndex)->selected) {
+			if (item->isSelected()) {
 				
 				// Deselecting
-				_options.getItem(newSelectedIndex)->selected = false;
+				_options.deselectItem(newSelectedIndex);
 			} else {
 			
 				// Selecting
-				if (_options.allowsMultipleSelections()) {
-					_options.getItem(newSelectedIndex)->selected = true;
-				} else {
-					_options.setSelectedIndex(newSelectedIndex);
-				}
+				_options.selectItem(newSelectedIndex);
 			}
 
 			redraw();

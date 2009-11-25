@@ -3,7 +3,7 @@
 
 #include "amigawindow.h"
 #include "scrollinglistbox.h"
-#include "listdata.h"
+#include "listboxdata.h"
 
 namespace WoopsiUI {
 
@@ -92,7 +92,7 @@ namespace WoopsiUI {
 		 * Get the selected option.  Returns NULL if nothing is selected.
 		 * @return The selected option.
 		 */
-		virtual inline const ListData::ListDataItem* getSelectedOption() const {
+		virtual inline const ListDataItem* getSelectedOption() const {
 			return _listbox->getSelectedOption();
 		};
 
@@ -109,7 +109,7 @@ namespace WoopsiUI {
 		 * Get the selected index.  Returns -1 if nothing is selected.
 		 * @return The selected index.
 		 */
-		virtual inline const ListData::ListDataItem* getOption(const s32 index) const {
+		virtual inline const ListDataItem* getOption(const s32 index) const {
 			return _listbox->getOption(index);
 		};
 

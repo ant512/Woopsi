@@ -54,10 +54,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\listdata.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\woopsifuncs.cpp"
 					>
 				</File>
@@ -166,6 +162,26 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\src\woopsi.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ListData"
+					>
+					<File
+						RelativePath=".\libwoopsi\src\listboxdata.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\listboxdataitem.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\listdata.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\listdataitem.cpp"
 						>
 					</File>
 				</Filter>
@@ -535,6 +551,14 @@
 					Name="ListData"
 					>
 					<File
+						RelativePath=".\libwoopsi\include\listboxdata.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\listboxdataitem.h"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\include\listdata.h"
 						>
 					</File>
@@ -544,6 +568,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\listdataeventhandler.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\listdataitem.h"
 						>
 					</File>
 				</Filter>

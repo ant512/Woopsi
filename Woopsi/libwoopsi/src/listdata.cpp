@@ -12,33 +12,19 @@ ListData::~ListData() {
 	removeAllItems();
 }
 
-void ListData::addItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
-	
-	// Create new memory for string
-	char* newText = new char[strlen(text) + 1];
-	
-	// Copy text
-	strcpy(newText, text);
-	
-	// Create new option
-	ListDataItem* newItem = new ListDataItem;
-	newItem->text = newText;
-	newItem->value = value;
-	newItem->normalTextColour = normalTextColour;
-	newItem->normalBackColour = normalBackColour;
-	newItem->selectedTextColour = selectedTextColour;
-	newItem->selectedBackColour = selectedBackColour;
-	newItem->selected = false;
+void ListData::addItem(const char* text, const u32 value, const bool isSelected) {
+
+	ListDataItem* item = new ListDataItem(text, value, isSelected);
 	
 	// Determine insert type
 	if (_sortInsertedItems) {
 		
 		// Sorted insert
-		_items.insert(getInsertionIndex(text), newItem);
+		_items.insert(getSortedInsertionIndex(item), item);
 	} else {
 
 		// Append
-		_items.push_back(newItem);
+		_items.push_back(item);
 	}
 
 	raiseDataChangedEvent();
@@ -50,7 +36,6 @@ void ListData::removeItem(const s32 index) {
 	if (index < _items.size()) {
 
 		// Delete the option
-		delete _items[index]->text;
 		delete _items[index];
 
 		// Erase the option from the list
@@ -68,13 +53,13 @@ const s32 ListData::getSelectedIndex() const {
 
 	// Get the first selected index
 	for (s32 i = 0; i < _items.size(); i++) {
-		if (_items[i]->selected) return i;
+		if (_items[i]->isSelected()) return i;
 	}
 	
 	return -1;
 }
 
-const ListData::ListDataItem* ListData::getSelectedItem() const {
+const ListDataItem* ListData::getSelectedItem() const {
 	
 	// Get the first selected option
 	s32 index = getSelectedIndex();
@@ -99,13 +84,13 @@ void ListData::setItemSelected(const s32 index, bool selected) {
 	// Deselect old options if we're making an option selected and we're not a multiple list
 	if (((!_allowMultipleSelections) || (index == -1)) && (selected)) {
 		for (s32 i = 0; i < _items.size(); i++) {
-			_items[i]->selected = false;
+			_items[i]->setSelected(false);
 		}
 	}
 
 	// Select or deselect the new option
 	if ((index > -1) && (index < _items.size())) {
-		_items[index]->selected = selected;
+		_items[index]->setSelected(selected);
 	}
 
 	raiseSelectionChangedEvent();
@@ -113,7 +98,7 @@ void ListData::setItemSelected(const s32 index, bool selected) {
 
 void ListData::deselectAllItems() {
 	for (s32 i = 0; i < _items.size(); i++) {
-		_items[i]->selected = false;
+		_items[i]->setSelected(false);
 	}
 
 	raiseSelectionChangedEvent();
@@ -122,7 +107,7 @@ void ListData::deselectAllItems() {
 void ListData::selectAllItems() {
 	if (_allowMultipleSelections) {
 		for (s32 i = 0; i < _items.size(); i++) {
-			_items[i]->selected = true;
+			_items[i]->setSelected(true);
 		}
 
 		raiseSelectionChangedEvent();
@@ -131,6 +116,8 @@ void ListData::selectAllItems() {
 
 void ListData::sort() {
 	quickSort(0, _items.size() - 1);
+	
+	raiseDataChangedEvent();
 }
 
 void ListData::quickSort(const s32 start, const s32 end) {
@@ -139,11 +126,11 @@ void ListData::quickSort(const s32 start, const s32 end) {
 		int left = start;
 		int right = end;
 
-		char* pivot = _items[(start + end) >> 1]->text;
+		ListDataItem* pivot = _items[(start + end) >> 1];
 
 		do {
-			while ((strcmp(_items[left]->text, pivot) < 0) && (left < end)) left++;
-			while ((strcmp(_items[right]->text, pivot) > 0) && (right > start)) right--;
+			while ((pivot->compareTo(_items[left]) > 0) && (left < end)) left++;
+			while ((pivot->compareTo(_items[right]) < 0) && (right > start)) right--;
 
 			if (left > right) break;
 
@@ -161,15 +148,12 @@ void ListData::swapItems(const s32 index1, const s32 index2) {
 	ListDataItem* tmp = _items[index1];
 	_items[index1] = _items[index2];
 	_items[index2] = tmp;
-
-	raiseDataChangedEvent();
 }
 
 void ListData::removeAllItems() {
 
 	// Delete all option data
 	for (s32 i = 0; i < _items.size(); i++) {
-		delete _items[i]->text;
 		delete _items[i];
 	}
 	
@@ -178,12 +162,12 @@ void ListData::removeAllItems() {
 	raiseDataChangedEvent();
 }
 
-const s32 ListData::getInsertionIndex(const char* text) const {
+const s32 ListData::getSortedInsertionIndex(const ListDataItem* item) const {
 
 	s32 i = 0;
 
 	// Locate slot where new option should go
-	while ((i < _items.size()) && (strcmp(_items[i]->text, text) < 0)) {
+	while ((i < _items.size()) && (item->compareTo(_items[i]) < 0)) {
 		i++;
 	}
 
