@@ -24,7 +24,7 @@ void CheckBox::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear the background
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
@@ -48,7 +48,7 @@ void CheckBox::draw(Rect clipRect) {
 	if (isEnabled()) {
 		port->drawText(_textX, _textY, _font, glyph);
 	} else {
-		port->drawText(_textX, _textY, _font, glyph, _darkColour);
+		port->drawText(_textX, _textY, _font, glyph, _colours.dark);
 	}
 
 	delete port;

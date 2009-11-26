@@ -11,9 +11,9 @@ void WindowBorderButton::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Choose a colour depending on parent's active state
-	u16 colour = _fillColour;
+	u16 colour = _colours.fill;
 	if (_parent != NULL) {
-		colour = _parent->hasFocus() ? _highlightColour : _fillColour;
+		colour = _parent->hasFocus() ? _colours.highlight : _colours.fill;
 	}
 
 	// Clear the background

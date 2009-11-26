@@ -19,21 +19,21 @@ void Button::draw(Rect clipRect) {
 	if (!isEnabled()) {
 
 		// Draw disabled state
-		port->drawFilledRect(0, 0, _width, _height, _backColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _darkColour);
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.dark);
 	} else if (!isClicked()) {
 
 		// Draw normal state
-		port->drawFilledRect(0, 0, _width, _height, _backColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 		port->drawText(_textX, _textY, _font, _text->getCharArray());
 	} else {
 
 		// Draw clicked state
-		port->drawFilledRect(0, 0, _width, _height, _darkColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.dark);
 
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _shineColour);
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.shine);
 	}
 
 	// Draw outline

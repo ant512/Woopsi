@@ -71,7 +71,7 @@ void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 		if (isEnabled()) {
 			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow));
 		} else {
-			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow), _darkColour);
+			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow), _colours.dark);
 		}
 
 		currentRow++;
@@ -103,7 +103,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
  	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);

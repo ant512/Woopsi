@@ -98,7 +98,7 @@ void FileRequester::handleDoubleClickEvent(const GadgetEventArgs& e) {
 			if (selected != NULL) {
 
 				// Detect type by examining text colour
-				if (selected->getNormalTextColour() == _shineColour) {
+				if (selected->getNormalTextColour() == _colours.shine) {
 
 					// Got a directory
 					appendPath(selected->getText());
@@ -164,11 +164,11 @@ void FileRequester::readDirectory() {
 		if (st.st_mode & S_IFDIR) {
 
 			// Directory
-			directories.addItem(storedFilename, 0, _shineColour, _backColour, _shineColour, _highlightColour);
+			directories.addItem(storedFilename, 0, _colours.shine, _colours.back, _colours.shine, _colours.highlight);
 		} else {
 
 			// File
-			files.addItem(storedFilename, 0, _shadowColour, _backColour, _shadowColour, _highlightColour);
+			files.addItem(storedFilename, 0, _colours.shadow, _colours.back, _colours.shadow, _colours.highlight);
 		}
 	}
 

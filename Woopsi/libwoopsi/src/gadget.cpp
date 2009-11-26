@@ -47,12 +47,12 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_newY = 0;
 
 	// Set default colours
-	_backColour = DefaultStyle::backColour;
-	_shineColour = DefaultStyle::shineColour;
-	_highlightColour = DefaultStyle::highlightColour;
-	_shadowColour = DefaultStyle::shadowColour;
-	_fillColour = DefaultStyle::fillColour;
-	_darkColour = DefaultStyle::darkColour;
+	_colours.back = DefaultStyle::backColour;
+	_colours.shine = DefaultStyle::shineColour;
+	_colours.highlight = DefaultStyle::highlightColour;
+	_colours.shadow = DefaultStyle::shadowColour;
+	_colours.fill = DefaultStyle::fillColour;
+	_colours.dark = DefaultStyle::darkColour;
 
 	// Set initial flag values
 	_flags.clicked = false;
@@ -248,13 +248,13 @@ const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
 
 void Gadget::clear(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.back);
 	delete port;
 }
 
 void Gadget::clear() {
 	GraphicsPort* port = newInternalGraphicsPort(true);
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.back);
 	delete port;
 }
 

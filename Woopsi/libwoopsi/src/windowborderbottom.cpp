@@ -12,9 +12,9 @@ WindowBorderBottom::WindowBorderBottom(s16 x, s16 y, u16 width, u16 height, u8 s
 void WindowBorderBottom::draw(Rect clipRect) {
 
 	// Choose a colour depending on parent's active state
-	u16 colour = _fillColour;
+	u16 colour = _colours.fill;
 	if (_parent != NULL) {
-		colour = _parent->hasFocus() ? _highlightColour : _fillColour;
+		colour = _parent->hasFocus() ? _colours.highlight : _colours.fill;
 	}
 
 	// Get a new graphics port
@@ -24,16 +24,16 @@ void WindowBorderBottom::draw(Rect clipRect) {
 	port->drawFilledRect(1, 0, _width - 2, _height - 1, colour);
 
 	// Top
-	port->drawHorizLine(_sideBorderSize - 1, 0, _width - (_sideBorderSize << 1) + 2, _shineColour);
+	port->drawHorizLine(_sideBorderSize - 1, 0, _width - (_sideBorderSize << 1) + 2, _colours.shine);
 
 	// Left
-	port->drawVertLine(0, 0, _height, _shineColour);
+	port->drawVertLine(0, 0, _height, _colours.shine);
 
 	// Right
-	port->drawVertLine(_width - 1, 0, _height, _shadowColour);
+	port->drawVertLine(_width - 1, 0, _height, _colours.shadow);
 
 	// Bottom of window
-	port->drawHorizLine(0, _height - 1, _width, _shadowColour);
+	port->drawHorizLine(0, _height - 1, _width, _colours.shadow);
 
 	// Tidy up
 	delete port;

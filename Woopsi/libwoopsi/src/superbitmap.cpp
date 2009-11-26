@@ -35,7 +35,7 @@ SuperBitmap::~SuperBitmap() {
 }
 
 void SuperBitmap::clearBitmap() {
-	_graphics->drawFilledRect(0, 0, _bitmap->getWidth(), _bitmap->getHeight(), _backColour);
+	_graphics->drawFilledRect(0, 0, _bitmap->getWidth(), _bitmap->getHeight(), _colours.back);
 }
 
 void SuperBitmap::draw(Rect clipRect) {

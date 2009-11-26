@@ -86,6 +86,18 @@ namespace WoopsiUI {
 		} NameValuePair;
 
 		/**
+		 * Struct containing all colours that a gadget depends on.
+		 */
+		typedef struct {
+			u16 back;							/**< Colour used as background */
+			u16 shine;							/**< Colour used as light bevel edge */
+			u16 highlight;						/**< Colour used as highlighted elements */
+			u16 shadow;							/**< Colour used as dark bevel edge */
+			u16 fill;							/**< Colour used as foreground fill */
+			u16 dark;							/**< Colour used as scrollbar gutters etc */
+		} GadgetColours;
+
+		/**
 		 * Constructor.
 		 * @param x The x co-ordinate of the gadget.
 		 * @param y The y co-ordinate of the gadget.
@@ -331,37 +343,37 @@ namespace WoopsiUI {
 		 * Gets the colour used as the background fill.
 		 * @return Background fill colour.
 		 */
-		inline const u16 getBackColour() const { return _backColour; };
+		inline const u16 getBackColour() const { return _colours.back; };
 
 		/**
 		 * Gets the colour used as the light edge in bevelled boxes.
 		 * @return Shine colour.
 		 */
-		inline const u16 getShineColour() const { return _shineColour; };
+		inline const u16 getShineColour() const { return _colours.shine; };
 
 		/**
 		 * Gets the colour used as the fill in focused window borders.
 		 * @return Highlight colour.
 		 */
-		inline const u16 getHighlightColour() const { return _highlightColour; };
+		inline const u16 getHighlightColour() const { return _colours.highlight; };
 
 		/**
 		 * Gets the colour used as the dark edge in bevelled boxes.
 		 * @return Shadow colour.
 		 */
-		inline const u16 getShadowColour() const { return _shadowColour; };
+		inline const u16 getShadowColour() const { return _colours.shadow; };
 
 		/**
 		 * Gets the colour used as the fill in unfocused window borders.
 		 * @return Fill colour.
 		 */
-		inline const u16 getFillColour() const { return _fillColour; };
+		inline const u16 getFillColour() const { return _colours.fill; };
 
 		/**
 		 * Gets the colour used as the fill in scrollbar gutters.
 		 * @return Dark colour.
 		 */
-		inline const u16 getDarkColour() const { return _darkColour; };
+		inline const u16 getDarkColour() const { return _colours.dark; };
 
 		/**
 		 * Gets the type of outline used in this gadget.
@@ -440,37 +452,37 @@ namespace WoopsiUI {
 		 * Sets the background colour.
 		 * @param colour The new background colour.
 		 */
-		inline void setBackColour(const u16 colour) { _backColour = colour; };
+		inline void setBackColour(const u16 colour) { _colours.back = colour; };
 
 		/**
 		 * Sets the shine colour.
 		 * @param colour The new shine colour.
 		 */
-		inline void setShineColour(const u16 colour) { _shineColour = colour; };
+		inline void setShineColour(const u16 colour) { _colours.shine = colour; };
 
 		/**
 		 * Sets the highlight colour.
 		 * @param colour The new highlight colour.
 		 */
-		inline void setHighlightColour(const u16 colour) { _highlightColour = colour; };
+		inline void setHighlightColour(const u16 colour) { _colours.highlight = colour; };
 
 		/**
 		 * Sets the shadow colour.
 		 * @param colour The new shadow colour.
 		 */
-		inline void setShadowColour(const u16 colour) { _shadowColour = colour; };
+		inline void setShadowColour(const u16 colour) { _colours.shadow = colour; };
 
 		/**
 		 * Sets the fill colour.
 		 * @param colour The new fill colour.
 		 */
-		inline void setFillColour(const u16 colour) { _fillColour = colour; };
+		inline void setFillColour(const u16 colour) { _colours.fill = colour; };
 
 		/**
 		 * Sets the dark colour.
 		 * @param colour The new dark colour.
 		 */
-		inline void setDarkColour(const u16 colour) { _darkColour = colour; };
+		inline void setDarkColour(const u16 colour) { _colours.dark = colour; };
 
 		/**
 		 * Sets the close type other gadgets should use when closing this gadget.
@@ -945,12 +957,7 @@ namespace WoopsiUI {
 		s16 _newY;								/**< Physical y co-ordinate where gadget is being dragged to */
 
 		// Colour definitions
-		u16 _backColour;						/**< Colour used as background */
-		u16 _shineColour;						/**< Colour used as light bevel edge */
-		u16 _highlightColour;					/**< Colour used as highlighted elements */
-		u16 _shadowColour;						/**< Colour used as dark bevel edge */
-		u16 _fillColour;						/**< Colour used as foreground fill */
-		u16 _darkColour;						/**< Colour used as scrollbar gutters etc */
+		GadgetColours _colours;					/**< All colours used by a gadget */
 
 		// Status
 		Flags _flags;							/**< Flags struct */

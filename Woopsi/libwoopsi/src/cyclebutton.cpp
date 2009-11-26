@@ -48,30 +48,30 @@ void CycleButton::draw(Rect clipRect) {
 	if (!isEnabled()) {
 
 		// Draw disabled state
-		port->drawFilledRect(0, 0, _width, _height, _backColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, _font, GLYPH_CYCLE, _darkColour);
+		port->drawText(_padding, _textY, _font, GLYPH_CYCLE, _colours.dark);
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _shadowColour);
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _shineColour);
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shadow);
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shine);
 
 		// Only draw text if options exist
 		if (_options.size() > 0) {
-			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text, _darkColour);
+			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text, _colours.dark);
 		}
 	} else if (!isClicked()) {
 
 		// Draw normal state
-		port->drawFilledRect(0, 0, _width, _height, _backColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 		// Draw cycle glyph
 		port->drawText(_padding, _textY, _font, GLYPH_CYCLE);
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _shadowColour);
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _shineColour);
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shadow);
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shine);
 
 		// Only draw text if options exist
 		if (_options.size() > 0) {
@@ -80,18 +80,18 @@ void CycleButton::draw(Rect clipRect) {
 	} else {
 
 		// Draw clicked state
-		port->drawFilledRect(0, 0, _width, _height, _darkColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.dark);
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, _font, GLYPH_CYCLE, _shineColour);
+		port->drawText(_padding, _textY, _font, GLYPH_CYCLE, _colours.shine);
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _shineColour);
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _shadowColour);
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shine);
+		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shadow);
 
 		// Only draw text if options exist
 		if (_options.size() > 0) {
-			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text, _shineColour);
+			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text, _colours.shine);
 		}
 	}
 

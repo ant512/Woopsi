@@ -15,7 +15,7 @@ void DecorationGlyphButton::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear the background
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 	// Draw the glyph
 	if (_flags.clicked) {

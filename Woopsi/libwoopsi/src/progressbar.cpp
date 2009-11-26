@@ -45,11 +45,11 @@ void ProgressBar::draw(Rect clipRect) {
 	pixelValue >>= 8;
 
 	// Draw filled region
-	port->drawFilledRect(rect.x, rect.y, pixelValue, rect.height, _highlightColour);
+	port->drawFilledRect(rect.x, rect.y, pixelValue, rect.height, _colours.highlight);
 	
 	// Draw unfilled background
 	if (pixelValue < rect.width) {
-		port->drawFilledRect(rect.x + pixelValue, rect.y, rect.width - pixelValue, rect.height, _backColour);
+		port->drawFilledRect(rect.x + pixelValue, rect.y, rect.width - pixelValue, rect.height, _colours.back);
 	}
 
 	// Draw outline

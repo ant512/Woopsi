@@ -27,7 +27,7 @@ void ListBox::addOption(const char* text, const u32 value, const u16 normalTextC
 }
 
 void ListBox::addOption(const char* text, const u32 value) {
-	addOption(text, value, _shadowColour, _backColour, _shadowColour, _highlightColour);
+	addOption(text, value, _colours.shadow, _colours.back, _colours.shadow, _colours.highlight);
 }
 
 void ListBox::removeOption(const s32 index) {
@@ -55,7 +55,7 @@ void ListBox::draw(Rect clipRect) {
 	if (bottomOption >= _options.getItemCount()) bottomOption = _options.getItemCount() - 1;
 
 	// Draw background
-	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _backColour);
+	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _colours.back);
 
 	const ListDataItem* item = NULL;
 
@@ -68,7 +68,7 @@ void ListBox::draw(Rect clipRect) {
 		if (item->isSelected()) {
 			
 			// Draw background
-			if (item->getSelectedBackColour() != _backColour) {
+			if (item->getSelectedBackColour() != _colours.back) {
 				port->drawFilledRect(clipX, y, _width, optionHeight, item->getSelectedBackColour());
 			}
 		
@@ -76,12 +76,12 @@ void ListBox::draw(Rect clipRect) {
 			if (isEnabled()) {
 				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), item->getSelectedTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _darkColour);
+				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _colours.dark);
 			}
 		} else {
 			
 			// Draw background
-			if (item->getNormalBackColour() != _backColour) {
+			if (item->getNormalBackColour() != _colours.back) {
 				port->drawFilledRect(clipX, y, _width, optionHeight, item->getNormalBackColour());
 			}
 			
@@ -89,7 +89,7 @@ void ListBox::draw(Rect clipRect) {
 			if (isEnabled()) {
 				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), item->getNormalTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _darkColour);
+				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _colours.dark);
 			}
 		}
 		

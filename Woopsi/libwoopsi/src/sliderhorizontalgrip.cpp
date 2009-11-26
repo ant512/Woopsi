@@ -11,9 +11,9 @@ void SliderHorizontalGrip::draw(Rect clipRect) {
 
 	// Draw background
 	if (!_flags.clicked) {
-		port->drawFilledRect(0, 0, _width, _height, _fillColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.fill);
 	} else {
-		port->drawFilledRect(0, 0, _width, _height, _highlightColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.highlight);
 	}
 
 	// Draw outline

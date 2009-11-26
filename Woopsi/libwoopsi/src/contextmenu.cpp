@@ -85,10 +85,10 @@ void ContextMenu::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	port->drawFilledRect(0, 0, _width, _height, _shineColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.shine);
 
 	// Draw outline
-	port->drawRect(0, 0, _width, _height, _shadowColour);
+	port->drawRect(0, 0, _width, _height, _colours.shadow);
 
 	delete port;
 }

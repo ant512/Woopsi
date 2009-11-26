@@ -16,15 +16,15 @@ void ContextMenuItem::draw(Rect clipRect) {
 
 	if (!isEnabled()) {
 		// Draw disabled item
-		port->drawFilledRect(0, 0, _width, _height, _shineColour);
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _darkColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.shine);
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.dark);
 	} else if (isClicked()) {
 		// Draw clicked item
-		port->drawFilledRect(0, 0, _width, _height, _shadowColour);
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _shineColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.shadow);
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.shine);
 	} else {
 		// Draw standard item
-		port->drawFilledRect(0, 0, _width, _height, _shineColour);
+		port->drawFilledRect(0, 0, _width, _height, _colours.shine);
 		port->drawText(_textX, _textY, _font, _text->getCharArray());
 	}
 

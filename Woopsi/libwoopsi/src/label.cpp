@@ -33,12 +33,12 @@ void Label::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 	if (isEnabled()) {
 		port->drawText(_textX, _textY, _font, _text->getCharArray());
 	} else {
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _darkColour);
+		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.dark);
 	}
 
 	// Draw outline

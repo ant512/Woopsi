@@ -24,7 +24,7 @@ void ScrollingPanel::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear
-	port->drawFilledRect(0, 0, _width, _height, _backColour);
+	port->drawFilledRect(0, 0, _width, _height, _colours.back);
 
 	// Draw border
 	port->drawBevelledRect(0, 0, _width, _height);
