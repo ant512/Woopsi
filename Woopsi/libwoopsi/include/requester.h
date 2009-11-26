@@ -3,7 +3,7 @@
 
 #include "amigawindow.h"
 #include "scrollinglistbox.h"
-#include "listboxdata.h"
+#include "listdata.h"
 
 namespace WoopsiUI {
 

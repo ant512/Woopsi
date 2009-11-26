@@ -53,12 +53,12 @@ void ListBox::draw(Rect clipRect) {
 	// Draw background
 	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _backColour);
 
-	const ListBoxDataItem* item = NULL;
+	const ListDataItem* item = NULL;
 
 	// Loop through all options drawing each one
 	while (i <= bottomOption) {
 
-		item = (const ListBoxDataItem*)(_options.getItem(i));
+		item = _options.getItem(i);
 		
 		// Is the option selected?
 		if (item->isSelected()) {
@@ -158,7 +158,7 @@ bool ListBox::click(s16 x, s16 y) {
 			// Calculate which option was clicked
 			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 			
-			const ListBoxDataItem* item = (const ListBoxDataItem*)(_options.getItem(newSelectedIndex));
+			const ListDataItem* item = _options.getItem(newSelectedIndex);
 
 			// Are we setting or unsetting?
 			if (item->isSelected()) {
@@ -266,6 +266,8 @@ void ListBox::resizeCanvas() {
 
 	// Ensure canvas is at least as tall as the gadget
 	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;
+
+	_canvasHeight -= 1;
 }
 
 void ListBox::sort() {

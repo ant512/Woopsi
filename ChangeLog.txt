@@ -10,12 +10,13 @@ Change Log
       an item is selected.
     - Woopsi class does not attempt to retrieve system font before it is
       initialised.
+    - ListBox canvas height no longer includes extra pixel.
   
   
   - New Features:
-    - Split ListData class into ListData, ListDataItem, ListBoxData and
-      ListBoxDataItem classes for greater flexibility.
-    - Minor improvements to the ListBox's use of the ListBoxData class.
+    - Split ListData class into ListData and ListDataItem classes for greater
+      flexibility.
+    - Minor improvements to the ListBox's use of the ListData class.
     - Altered ListData::quickSort() and added compareTo() method to ListDataItem
       to allow custom ordering of ListDataItem subclasses.
 

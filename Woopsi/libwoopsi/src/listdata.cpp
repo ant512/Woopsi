@@ -12,9 +12,10 @@ ListData::~ListData() {
 	removeAllItems();
 }
 
-void ListData::addItem(const char* text, const u32 value, const bool isSelected) {
-
-	ListDataItem* item = new ListDataItem(text, value, isSelected);
+void ListData::addItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
+	
+	// Create new option
+	ListDataItem* item = new ListDataItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
 	
 	// Determine insert type
 	if (_sortInsertedItems) {

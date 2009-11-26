@@ -3,7 +3,7 @@
 
 #include "scrollingpanel.h"
 #include "listdataeventhandler.h"
-#include "listboxdata.h"
+#include "listdata.h"
 
 namespace WoopsiUI {
 
@@ -197,8 +197,8 @@ namespace WoopsiUI {
 		virtual void getPreferredDimensions(Rect& rect) const;
 
 	protected:
-		ListBoxData _options;							/**< Option storage. */
-		u8 _optionPadding;								/**< Padding between options. */
+		ListData _options;							/**< Option storage. */
+		u8 _optionPadding;							/**< Padding between options. */
 
 		/**
 		 * Destructor.

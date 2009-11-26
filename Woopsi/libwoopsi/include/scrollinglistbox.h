@@ -4,7 +4,7 @@
 #include "gadget.h"
 #include "listbox.h"
 #include "gadgeteventhandler.h"
-#include "listboxdata.h"
+#include "listdata.h"
 
 namespace WoopsiUI {
 
