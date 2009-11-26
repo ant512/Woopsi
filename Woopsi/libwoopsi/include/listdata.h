@@ -43,13 +43,13 @@ namespace WoopsiUI {
 		virtual void removeItem(const s32 index);
 
 		/**
-		 * Select an item by its index.  Does not deselect any other selected items.
+		 * Select an item by its index.
 		 * @param index The index of the item to select.
 		 */
 		virtual void selectItem(const s32 index);
 
 		/**
-		 * Select an item by its index.  Does not deselect any other selected items.
+		 * Deselect an item by its index.
 		 * @param index The index of the item to select.
 		 */
 		virtual void deselectItem(const s32 index);
@@ -100,9 +100,7 @@ namespace WoopsiUI {
 		 * Get the total number of items.
 		 * @return The number of items.
 		 */
-		virtual inline const s32 getItemCount() const {
-			return _items.size();
-		}
+		virtual inline const s32 getItemCount() const { return _items.size(); };
 
 		/**
 		 * Select all items.  Does nothing if the list does not allow multiple selections.

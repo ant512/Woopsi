@@ -14,6 +14,7 @@ Change Log
     - ListBox raises an action event when double-clicked.
     - ListBox ignores double-clicks that occur across multiple items.
     - Removed unused Gadget::_doubleClickTime member.
+    - ListBox redraws every time data changes.
   
   
   - New Features:

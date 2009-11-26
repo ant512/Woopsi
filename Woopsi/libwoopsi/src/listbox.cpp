@@ -283,7 +283,6 @@ void ListBox::resizeCanvas() {
 
 void ListBox::sort() {
 	_options.sort();
-	redraw();
 }
 
 void ListBox::removeAllOptions() {
@@ -292,6 +291,7 @@ void ListBox::removeAllOptions() {
 
 void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
 	resizeCanvas();
+	redraw();
 }
 
 void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
