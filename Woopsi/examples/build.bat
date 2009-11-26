@@ -60,6 +60,10 @@ cd ../timer
 make clean
 make
 
+cd ../windowless
+make clean
+make
+
 cd ../wpaint
 make clean
 make

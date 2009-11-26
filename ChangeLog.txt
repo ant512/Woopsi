@@ -2,7 +2,7 @@ Change Log
 ----------
 
   V0.42
-  
+
   - Fixes:
     - ListData::swapItems() no longer raises a data changed event.
     - ListData::sort() raises a data changed event.
@@ -28,6 +28,7 @@ Change Log
     - ScrollingPanel implements ScrollingBase's allow/disallow scroll plane
       features to prevent scrolling on certain planes.
     - ListBox does not allow horizontal scrolling.
+    - Added windowless example project.
 
 
   V0.41 (20091124)
