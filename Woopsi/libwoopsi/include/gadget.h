@@ -556,6 +556,14 @@ namespace WoopsiUI {
 		virtual bool click(s16 x, s16 y);
 
 		/**
+		 * Check if the click is a double-click
+		 * @param x X co-ordinate of the click.
+		 * @param y Y co-ordinate of the click.
+		 * @return True if the click is a double-click.
+		 */
+		virtual bool isDoubleClick(s16 x, s16 y);
+
+		/**
 		 * Double-click this gadget at the supplied co-ordinates.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.

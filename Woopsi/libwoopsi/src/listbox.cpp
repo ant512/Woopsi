@@ -138,29 +138,17 @@ void ListBox::selectAllOptions() {
 bool ListBox::click(s16 x, s16 y) {
 
 	// Check for a double-click
-	if (_flags.doubleClickable) {
+	if (isDoubleClick(x, y)) {
 
-		// Within the allowed time?
-		if (woopsiApplication != NULL) {
-			if (Stylus.DblClick) {
+		// Calculate which option was clicked
+		s32 selectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();
 
-				// Within the allowed region?
-				if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
-					if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
+		// Has the same option been clicked twice?  Ignore double-clicks that
+		// occur on different items
+		if (selectedIndex == _lastSelectedIndex) {
 
-						// Calculate which option was clicked
-						s32 selectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();
-
-						// Has the same option been clicked twice?  Ignore double-clicks that
-						// occur on different items
-						if (selectedIndex == _lastSelectedIndex) {
-			
-							// Process click as a double-click
-							return doubleClick(x, y);
-						}
-					}
-				}
-			}
+			// Process click as a double-click
+			return doubleClick(x, y);
 		}
 	}
 

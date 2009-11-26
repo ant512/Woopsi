@@ -1117,25 +1117,29 @@ bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
 	return (resize(width, height) | moved);
 }
 
+bool Gadget::isDoubleClick(s16 x, s16 y) {
+
+	// Check for a double-click
+	if ((_flags.doubleClickable) && hasFocus() && (woopsiApplication != NULL) && (Stylus.DblClick)) {
+
+		// Within the allowed region?
+		if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
+			if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 bool Gadget::click(s16 x, s16 y) {
 
 	// Check for a double-click
-	if (_flags.doubleClickable) {
+	if (isDoubleClick(x, y)) {
 
-		// Within the allowed time?
-		if (woopsiApplication != NULL) {
-			if (Stylus.DblClick) {
-
-				// Within the allowed region?
-				if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
-					if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
-
-						// Process click as a double-click
-						return doubleClick(x, y);
-					}
-				}
-			}
-		}
+		// Process click as a double-click
+		return doubleClick(x, y);
 	}
 
 	if (checkCollision(x, y)) {

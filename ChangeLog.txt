@@ -15,6 +15,8 @@ Change Log
     - ListBox ignores double-clicks that occur across multiple items.
     - Removed unused Gadget::_doubleClickTime member.
     - ListBox redraws every time data changes.
+    - Double-click only counted as such if the gadget already has focus (ie.
+      must be the same gadget clicked twice).
   
   
   - New Features:
@@ -29,6 +31,7 @@ Change Log
       features to prevent scrolling on certain planes.
     - ListBox does not allow horizontal scrolling.
     - Added windowless example project.
+    - Added Gadget::isDoubleClick() to check for double-clicks.
 
 
   V0.41 (20091124)

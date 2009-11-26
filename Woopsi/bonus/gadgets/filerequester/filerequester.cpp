@@ -4,6 +4,7 @@
 #include "filerequester.h"
 #include "button.h"
 #include "filepath.h"
+#include "listdataitem.h"
 
 using namespace WoopsiUI;
 
@@ -92,15 +93,15 @@ void FileRequester::handleDoubleClickEvent(const GadgetEventArgs& e) {
 		if (e.getSource() == _listbox) {
 
 			// Work out which option was clicked - if it was a directory, we move to the new path
-			const ListData::ListDataItem* selected = getSelectedOption();
+			const ListDataItem* selected = getSelectedOption();
 
 			if (selected != NULL) {
 
 				// Detect type by examining text colour
-				if (selected->normalTextColour == _shineColour) {
+				if (selected->getNormalTextColour() == _shineColour) {
 
 					// Got a directory
-					appendPath(selected->text);
+					appendPath(selected->getText());
 				} else {
 
 					// File selected; raise event
@@ -176,12 +177,12 @@ void FileRequester::readDirectory() {
 
 		// Add directory
 		_listbox->addOption(
-			directories.getItem(i)->text,
+			directories.getItem(i)->getText(),
 			fileNumber,
-			directories.getItem(i)->normalTextColour,
-			directories.getItem(i)->normalBackColour,
-			directories.getItem(i)->selectedTextColour,
-			directories.getItem(i)->selectedBackColour
+			directories.getItem(i)->getNormalTextColour(),
+			directories.getItem(i)->getNormalBackColour(),
+			directories.getItem(i)->getSelectedTextColour(),
+			directories.getItem(i)->getSelectedBackColour()
 		);
 		
 		fileNumber++;
@@ -190,12 +191,12 @@ void FileRequester::readDirectory() {
 
 		// Add file
 		_listbox->addOption(
-			files.getItem(i)->text,
+			files.getItem(i)->getText(),
 			fileNumber,
-			files.getItem(i)->normalTextColour,
-			files.getItem(i)->normalBackColour,
-			files.getItem(i)->selectedTextColour,
-			files.getItem(i)->selectedBackColour
+			files.getItem(i)->getNormalTextColour(),
+			files.getItem(i)->getNormalBackColour(),
+			files.getItem(i)->getSelectedTextColour(),
+			files.getItem(i)->getSelectedBackColour()
 		);
 		
 		fileNumber++;

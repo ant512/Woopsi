@@ -67,7 +67,7 @@ void FileReqDemo::handleValueChangeEvent(const GadgetEventArgs& e) {
 		if (e.getSource()->getRefcon() == 1) {
 		
 			// Update the textbox with the name of the requested file
-			_textbox->setText(((FileRequester*)e.getSource())->getSelectedOption()->text);
+			_textbox->setText(((FileRequester*)e.getSource())->getSelectedOption()->getText());
 		}
 	}
 }
