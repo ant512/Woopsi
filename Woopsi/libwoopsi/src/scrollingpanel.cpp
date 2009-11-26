@@ -13,6 +13,10 @@ ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, F
 	_canvasHeight = rect.height;
 	_canvasX = 0;
 	_canvasY = 0;
+	
+	setAllowsVerticalScroll(true);
+	setAllowsHorizontalScroll(true);
+
 	_flags.permeable = true;
 }
 
@@ -49,6 +53,10 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 	} else if (_canvasY + dy > 0) {
 		dy = -_canvasY;
 	}
+
+	// Prevent scrolling in disallowed planes
+	if (!allowsVerticalScroll()) dy = 0;
+	if (!allowsHorizontalScroll()) dx = 0;
 
 	// Perform scroll if necessary
 	if ((dx != 0) || (dy != 0)) {

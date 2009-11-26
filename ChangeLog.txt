@@ -20,6 +20,11 @@ Change Log
     - Minor improvements to the ListBox's use of the ListData class.
     - Altered ListData::quickSort() and added compareTo() method to ListDataItem
       to allow custom ordering of ListDataItem subclasses.
+    - ScrollingBase adds support for specifying planes on which scrolling can
+      occur.
+    - ScrollingPanel implements ScrollingBase's allow/disallow scroll plane
+      features to prevent scrolling on certain planes.
+    - ListBox does not allow horizontal scrolling.
 
   V0.41 (20091124)
   

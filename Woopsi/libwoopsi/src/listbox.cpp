@@ -12,6 +12,9 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Scrollin
 	_flags.doubleClickable = true;
 	_optionPadding = 2;
 	_options.addListDataEventHandler(this);
+
+	// Disallow horizontal scrolling
+	setAllowsHorizontalScroll(false);
 }
 
 ListBox::~ListBox() {

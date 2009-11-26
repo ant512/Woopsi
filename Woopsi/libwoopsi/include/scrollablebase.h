@@ -55,11 +55,35 @@ namespace WoopsiUI {
 		 */
 		virtual void jump(s32 x, s32 y) = 0;
 
+		/**
+		 * Returns true if vertical scrolling is allowed.
+		 * @return True if vertical scrolling is allowed.
+		 */
+		inline bool allowsVerticalScroll() const { return _allowVerticalScroll; };
+
+		/**
+		 * Returns true if horizontal scrolling is allowed.
+		 * @return True if horizontal scrolling is allowed.
+		 */
+		inline bool allowsHorizontalScroll() const { return _allowHorizontalScroll; };
+
 	protected:
-		s32 _canvasX;						/**< X co-ordinate of the vitual canvas */
-		s32 _canvasY;						/**< Y co-ordinate of the virtual canvas */
-		s32 _canvasWidth;					/**< Width of the virtual canvas */
-		s32 _canvasHeight;					/**< Height of the virtual canvas */
+		s32 _canvasX;						/**< X co-ordinate of the vitual canvas. */
+		s32 _canvasY;						/**< Y co-ordinate of the virtual canvas. */
+		s32 _canvasWidth;					/**< Width of the virtual canvas. */
+		s32 _canvasHeight;					/**< Height of the virtual canvas. */
+
+		/**
+		 * Set whether or not horizontal scrolling is allowed.
+		 * @param allow True to allow horizontal scrolling; false to deny it.
+		 */
+		inline void setAllowsVerticalScroll(bool allow) { _allowVerticalScroll = allow; };
+
+		/**
+		 * Set whether or not horizontal scrolling is allowed.
+		 * @param allow True to allow horizontal scrolling; false to deny it.
+		 */
+		inline void setAllowsHorizontalScroll(bool allow) { _allowHorizontalScroll = allow; };
 
 		/**
 		 * Sets the width of the virtual canvas.
@@ -77,6 +101,10 @@ namespace WoopsiUI {
 		 * Destructor.
 		 */
 		virtual inline ~ScrollableBase() { }
+
+	private:
+		bool _allowVerticalScroll;			/**< True if vertical scrolling is allowed. */
+		bool _allowHorizontalScroll;		/**< True if horizontal scrolling is allowed. */
 	};
 }
 
