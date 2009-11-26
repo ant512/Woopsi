@@ -11,8 +11,6 @@
 #include "graphics.h"
 #include "rect.h"
 
-#define DEMO_VERSION "Woopsi Demo V0.41 Alpha"
-
 void Demo::startup() {
 
 	Woopsi::startup();

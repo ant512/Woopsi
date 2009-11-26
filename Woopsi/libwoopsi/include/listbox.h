@@ -199,6 +199,7 @@ namespace WoopsiUI {
 	protected:
 		ListData _options;							/**< Option storage. */
 		u8 _optionPadding;							/**< Padding between options. */
+		s32 _lastSelectedIndex;						/**< Index of the last option selected. */
 
 		/**
 		 * Destructor.

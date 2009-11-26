@@ -4,6 +4,8 @@
 #include "woopsi.h"
 #include "alert.h"
 
+#define DEMO_VERSION "Woopsi Demo V0.42 Alpha"
+
 using namespace WoopsiUI;
 
 class PacMan;

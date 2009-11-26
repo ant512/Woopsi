@@ -12,6 +12,7 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Scrollin
 	_flags.doubleClickable = true;
 	_optionPadding = 2;
 	_options.addListDataEventHandler(this);
+	_lastSelectedIndex = -1;
 
 	// Disallow horizontal scrolling
 	setAllowsHorizontalScroll(false);
@@ -147,8 +148,16 @@ bool ListBox::click(s16 x, s16 y) {
 				if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
 					if ((_lastClickY > y - _doubleClickBounds) && (_lastClickY < y + _doubleClickBounds)) {
 
-						// Process click as a double-click
-						return doubleClick(x, y);
+						// Calculate which option was clicked
+						s32 selectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();
+
+						// Has the same option been clicked twice?  Ignore double-clicks that
+						// occur on different items
+						if (selectedIndex == _lastSelectedIndex) {
+			
+							// Process click as a double-click
+							return doubleClick(x, y);
+						}
 					}
 				}
 			}
@@ -159,19 +168,19 @@ bool ListBox::click(s16 x, s16 y) {
 		if (isEnabled()) {
 
 			// Calculate which option was clicked
-			s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
+			_lastSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 			
-			const ListDataItem* item = _options.getItem(newSelectedIndex);
+			const ListDataItem* item = _options.getItem(_lastSelectedIndex);
 
 			// Are we setting or unsetting?
 			if (item->isSelected()) {
 				
 				// Deselecting
-				_options.deselectItem(newSelectedIndex);
+				_options.deselectItem(_lastSelectedIndex);
 			} else {
 			
 				// Selecting
-				_options.selectItem(newSelectedIndex);
+				_options.selectItem(_lastSelectedIndex);
 			}
 
 			redraw();

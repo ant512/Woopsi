@@ -12,6 +12,7 @@ Change Log
       initialised.
     - ListBox canvas height no longer includes extra pixel.
     - ListBox raises an action event when double-clicked.
+    - ListBox ignores double-clicks that occur across multiple items.
   
   
   - New Features:
