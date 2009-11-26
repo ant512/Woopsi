@@ -11,6 +11,7 @@ Change Log
     - Woopsi class does not attempt to retrieve system font before it is
       initialised.
     - ListBox canvas height no longer includes extra pixel.
+    - ListBox raises an action event when double-clicked.
   
   
   - New Features:

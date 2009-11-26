@@ -44,7 +44,7 @@ void ListBox::draw(Rect clipRect) {
 	s16 optionHeight = getOptionHeight();
 	s32 topOption = (clipY - _canvasY) / optionHeight;
 	s32 bottomOption = topOption + (clipHeight * optionHeight);
-	s16 y = _canvasY + (topOption * optionHeight);
+	s16 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
 	s32 i = topOption;
 
 	// Ensure bottom option does not exceed number of options
@@ -65,7 +65,7 @@ void ListBox::draw(Rect clipRect) {
 			
 			// Draw background
 			if (item->getSelectedBackColour() != _backColour) {
-				port->drawFilledRect(0, y, _width, optionHeight, item->getSelectedBackColour());
+				port->drawFilledRect(clipX, y, _width, optionHeight, item->getSelectedBackColour());
 			}
 		
 			// Draw text
@@ -78,7 +78,7 @@ void ListBox::draw(Rect clipRect) {
 			
 			// Draw background
 			if (item->getNormalBackColour() != _backColour) {
-				port->drawFilledRect(0, y, _width, optionHeight, item->getNormalBackColour());
+				port->drawFilledRect(clipX, y, _width, optionHeight, item->getNormalBackColour());
 			}
 			
 			// Draw text
@@ -243,6 +243,7 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 			setDragging(x, y);
 
 			raiseDoubleClickEvent(x, y);
+			raiseActionEvent(x, y, 0, 0, KEY_CODE_NONE);
 
 			return true;
 		}
@@ -266,8 +267,6 @@ void ListBox::resizeCanvas() {
 
 	// Ensure canvas is at least as tall as the gadget
 	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;
-
-	_canvasHeight -= 1;
 }
 
 void ListBox::sort() {
