@@ -955,7 +955,6 @@ namespace WoopsiUI {
 		s16 _lastClickX;						/**< X co-ordinate of last click */
 		s16 _lastClickY;						/**< Y co-ordinate of last click */
 		s16 _doubleClickBounds;					/**< Area in which a click is assumed to be a double-click */
-		s16 _doubleClickTime;					/**< VBLs within which a second click must occur to class as a double-click */
 
 		// Hierarchy control
 		Gadget* _parent;						/**< Pointer to the gadget's parent */

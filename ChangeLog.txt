@@ -13,6 +13,7 @@ Change Log
     - ListBox canvas height no longer includes extra pixel.
     - ListBox raises an action event when double-clicked.
     - ListBox ignores double-clicks that occur across multiple items.
+    - Removed unused Gadget::_doubleClickTime member.
   
   
   - New Features:
@@ -26,6 +27,7 @@ Change Log
     - ScrollingPanel implements ScrollingBase's allow/disallow scroll plane
       features to prevent scrolling on certain planes.
     - ListBox does not allow horizontal scrolling.
+
 
   V0.41 (20091124)
   

@@ -76,7 +76,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_lastClickX = 0;
 	_lastClickY = 0;
 	_doubleClickBounds = DOUBLE_CLICK_BOUNDS;
-	_doubleClickTime = DOUBLE_CLICK_TIME;
 
 	// Set other default values
 	_decorationCount = 0;
