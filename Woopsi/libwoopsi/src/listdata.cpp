@@ -168,7 +168,7 @@ const s32 ListData::getSortedInsertionIndex(const ListDataItem* item) const {
 	s32 i = 0;
 
 	// Locate slot where new option should go
-	while ((i < _items.size()) && (item->compareTo(_items[i]) < 0)) {
+	while ((i < _items.size()) && (item->compareTo(_items[i]) > 0)) {
 		i++;
 	}
 

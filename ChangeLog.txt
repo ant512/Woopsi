@@ -20,6 +20,8 @@ Change Log
     - ListBox::draw() calculates top and bottom visible options correctly, and
       does not overwrite options at the top of the list with those from the
       bottom.
+    - ListBox automatically scrolls when items are removed from the ListData
+      object to ensure it does not display past the end of the canvas.
   
   
   - New Features:

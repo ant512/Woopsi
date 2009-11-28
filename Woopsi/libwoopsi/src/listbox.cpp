@@ -262,11 +262,16 @@ void ListBox::resizeCanvas() {
 	Rect rect;
 	getClientRect(rect);
 
+	s32 oldCanvasHeight = _canvasHeight;
+
 	// Resize the canvas
 	_canvasHeight = (_options.getItemCount() * getOptionHeight());
 
 	// Ensure canvas is at least as tall as the gadget
 	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;
+
+	// If resize has left scroll position beyond end of canvas, adjust to compensate
+	if (_canvasY + (_canvasHeight - _height) < 0) scroll(0, -(oldCanvasHeight - (_canvasHeight - _height)));
 }
 
 void ListBox::sort() {
@@ -278,6 +283,10 @@ void ListBox::removeAllOptions() {
 }
 
 void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
+	
+	// Forget the last selected item as it may have changed
+	_lastSelectedIndex = -1;
+
 	resizeCanvas();
 	redraw();
 }
