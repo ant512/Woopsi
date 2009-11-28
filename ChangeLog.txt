@@ -17,6 +17,9 @@ Change Log
     - ListBox redraws every time data changes.
     - Double-click only counted as such if the gadget already has focus (ie.
       must be the same gadget clicked twice).
+    - ListBox::draw() calculates top and bottom visible options correctly, and
+      does not overwrite options at the top of the list with those from the
+      bottom.
   
   
   - New Features:

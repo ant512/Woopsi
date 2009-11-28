@@ -47,8 +47,8 @@ void ListBox::draw(Rect clipRect) {
 	// Precalc values for option draw loop
 	s16 optionHeight = getOptionHeight();
 	s32 topOption = (clipY - _canvasY) / optionHeight;
-	s32 bottomOption = topOption + (clipHeight * optionHeight);
-	s16 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
+	s32 bottomOption = topOption + (clipHeight / optionHeight) + 1;
+	s32 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
 	s32 i = topOption;
 
 	// Ensure bottom option does not exceed number of options
