@@ -36,6 +36,12 @@ namespace WoopsiUI {
 		virtual void addOption(const char* text, const u32 value);
 
 		/**
+		 * Add an option to the gadget.
+		 * @param option The option to add.
+		 */
+		virtual void addOption(ListDataItem* option);
+
+		/**
 		 * Add a new option to the gadget.  Does not redraw the gadget.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.

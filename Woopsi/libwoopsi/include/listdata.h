@@ -37,6 +37,14 @@ namespace WoopsiUI {
 		virtual void addItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
 
 		/**
+		 * Add an existing item.  ListData becomes the owner of the option and will delete it
+		 * when the list is deleted.
+		 * @param item The item to add.
+		 */
+		virtual void addItem(ListDataItem* item);
+
+
+		/**
 		 * Remove an item by its index.
 		 * @param index The index of the option to remove.
 		 */

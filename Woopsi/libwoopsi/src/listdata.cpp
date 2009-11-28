@@ -12,11 +12,8 @@ ListData::~ListData() {
 	removeAllItems();
 }
 
-void ListData::addItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
-	
-	// Create new option
-	ListDataItem* item = new ListDataItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
-	
+void ListData::addItem(ListDataItem* item) {
+
 	// Determine insert type
 	if (_sortInsertedItems) {
 		
@@ -29,6 +26,12 @@ void ListData::addItem(const char* text, const u32 value, const u16 normalTextCo
 	}
 
 	raiseDataChangedEvent();
+}
+
+void ListData::addItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
+	
+	// Create new option
+	addItem(new ListDataItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour));
 }
 
 void ListData::removeItem(const s32 index) {

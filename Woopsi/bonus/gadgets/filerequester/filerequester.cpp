@@ -4,7 +4,7 @@
 #include "filerequester.h"
 #include "button.h"
 #include "filepath.h"
-#include "listdataitem.h"
+#include "filerequesterdataitem.h"
 
 using namespace WoopsiUI;
 
@@ -33,6 +33,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setOutlineType(OUTLINE_OUT);
 	_listbox->setAllowMultipleSelections(false);
+	_listbox->setSortInsertedItems(true);
 	addGadget(_listbox);
 
 	// Calculate OK button dimensions
@@ -124,23 +125,23 @@ void FileRequester::readDirectory() {
 
 	// Clear current options
 	_listbox->removeAllOptions();
+	
+	// Add "Loading..." option to display whilst directory is enumerated
+	_listbox->addOption("Loading...", 0);
 
+	// Disable drawing for speed
+	disableDrawing();
+	
+	// Remove the "Loading..." option
+	_listbox->removeAllOptions();
+	
 	struct stat st;
-	s32 fileNumber = 0;
 
 	DIR* dir = opendir(_path->getPath());
 
 	// Did we get the dir successfully?
 	if (dir == NULL) return;
-
-	// Create lists to temporarily store file and directory data
-	ListData files;
-	ListData directories;
-
-	// Ensure lists automatically sort their data
-	files.setSortInsertedItems(true);
-	directories.setSortInsertedItems(true);
-
+	
 	// Read data into options list
 	struct dirent* ent;
 
@@ -164,49 +165,20 @@ void FileRequester::readDirectory() {
 		if (st.st_mode & S_IFDIR) {
 
 			// Directory
-			directories.addItem(storedFilename, 0, _colours.shine, _colours.back, _colours.shine, _colours.highlight);
+			_listbox->addOption(new FileRequesterDataItem(storedFilename, 0, _colours.shine, _colours.back, _colours.shine, _colours.highlight, true));
 		} else {
 
 			// File
-			files.addItem(storedFilename, 0, _colours.shadow, _colours.back, _colours.shadow, _colours.highlight);
+			_listbox->addOption(new FileRequesterDataItem(storedFilename, 0, _colours.shadow, _colours.back, _colours.shadow, _colours.highlight, false));
 		}
 	}
-
-	// Push all directories and files into options list
-	for (s32 i = 0; i < directories.getItemCount(); i++) {
-
-		// Add directory
-		_listbox->addOption(
-			directories.getItem(i)->getText(),
-			fileNumber,
-			directories.getItem(i)->getNormalTextColour(),
-			directories.getItem(i)->getNormalBackColour(),
-			directories.getItem(i)->getSelectedTextColour(),
-			directories.getItem(i)->getSelectedBackColour()
-		);
-		
-		fileNumber++;
-	}
-	for (s32 i = 0; i < files.getItemCount(); i++) {
-
-		// Add file
-		_listbox->addOption(
-			files.getItem(i)->getText(),
-			fileNumber,
-			files.getItem(i)->getNormalTextColour(),
-			files.getItem(i)->getNormalBackColour(),
-			files.getItem(i)->getSelectedTextColour(),
-			files.getItem(i)->getSelectedBackColour()
-		);
-		
-		fileNumber++;
-	}
+	
+	// Re-enable drawing now that the list is complete
+	enableDrawing();
+	redraw();
 
 	// Close the directory
 	closedir(dir);
-
-	// Redraw the list
-	_listbox->redraw();
 }
 
 void FileRequester::setPath(const char* path) {

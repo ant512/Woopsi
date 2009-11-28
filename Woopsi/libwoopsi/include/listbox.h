@@ -4,6 +4,7 @@
 #include "scrollingpanel.h"
 #include "listdataeventhandler.h"
 #include "listdata.h"
+#include "listdataitem.h"
 
 namespace WoopsiUI {
 
@@ -29,25 +30,31 @@ namespace WoopsiUI {
 		ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
 
 		/**
-		 * Add a new option to the gadget using default colours.  Does not redraw the gadget.
+		 * Add a new option to the gadget using default colours.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 */
 		virtual void addOption(const char* text, const u32 value);
 
 		/**
-		 * Remove an option from the gadget by its index.  Does not redraw the gadget.
+		 * Add an option to the gadget.
+		 * @param option The option to add.
+		 */
+		virtual void addOption(ListDataItem* option);
+
+		/**
+		 * Remove an option from the gadget by its index.
 		 * @param index The index of the option to remove.
 		 */
 		virtual void removeOption(const s32 index);
 
 		/**
-		 * Remove all options from the gadget.  Does not redraw the gadget.
+		 * Remove all options from the gadget.
 		 */
 		virtual void removeAllOptions();
 
 		/**
-		 * Add a new option to the gadget.  Does not redraw the gadget.
+		 * Add a new option to the gadget.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 * @param normalTextColour Colour to draw the text with when not selected.
@@ -58,14 +65,14 @@ namespace WoopsiUI {
 		virtual void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
 
 		/**
-		 * Select an option by its index.  Does not deselect any other selected options.
+		 * Select an option by its index.
 		 * Redraws the gadget and raises a value changed event.
 		 * @param index The index of the option to select.
 		 */
 		virtual void selectOption(const s32 index);
 
 		/**
-		 * Select an option by its index.  Does not deselect any other selected options.
+		 * Select an option by its index.
 		 * Redraws the gadget and raises a value changed event.
 		 * @param index The index of the option to select.
 		 */

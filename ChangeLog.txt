@@ -23,7 +23,6 @@ Change Log
     - ListBox automatically scrolls when items are removed from the ListData
       object to ensure it does not display past the end of the canvas.
   
-  
   - New Features:
     - Split ListData class into ListData and ListDataItem classes for greater
       flexibility.
@@ -39,7 +38,11 @@ Change Log
     - Added Gadget::isDoubleClick() to check for double-clicks.
     - Combined various colour members in Gadget class into GadgetColours struct.
     - Merged TextWriter into GraphicsXXX classes and removed original class.
-
+    - Added FileRequesterDataItem class to store data for file requester.
+    - FileRequester uses new compareTo() functionality for substantial speed
+      increase and lower memory usage.
+    - FileRequester displays "Loading..." message whilst directories are
+      enumerated.
 
   V0.41 (20091124)
   
