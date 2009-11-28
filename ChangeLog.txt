@@ -36,6 +36,7 @@ Change Log
     - Added windowless example project.
     - Added Gadget::isDoubleClick() to check for double-clicks.
     - Combined various colour members in Gadget class into GadgetColours struct.
+    - Merged TextWriter into GraphicsXXX classes and removed original class.
 
 
   V0.41 (20091124)

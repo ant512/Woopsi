@@ -1,5 +1,4 @@
 #include "bitmap.h"
-#include "textwriter.h"
 #include "woopsifuncs.h"
 #include "graphics.h"
 

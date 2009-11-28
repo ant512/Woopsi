@@ -2,7 +2,6 @@
 #define _TEXTBOX_H_
 
 #include <nds.h>
-#include "textwriter.h"
 #include "label.h"
 #include "woopsistring.h"
 

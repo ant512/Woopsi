@@ -1,7 +1,6 @@
 #include "graphicsport.h"
 #include "defines.h"
 #include "fontbase.h"
-#include "textwriter.h"
 #include "woopsifuncs.h"
 #include "framebuffer.h"
 #include "bitmapbase.h"
@@ -177,7 +176,13 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char
 			y -= TOP_SCREEN_Y_OFFSET;
 		}
 		
-		TextWriter::drawString(_bitmap, font, string, length, x, y, clipX1, clipY1, clipX2, clipY2);
+		// Draw the string char by char
+		for (u32 i = 0; i < length; i++) {
+			x = font->drawChar(_bitmap, string[i], x, y, clipX1, clipY1, clipX2, clipY2);
+
+			// Abort if x pos outside clipping region
+			if (x > clipX2) return;
+		}
 	}
 }
 

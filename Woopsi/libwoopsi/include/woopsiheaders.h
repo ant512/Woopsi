@@ -72,7 +72,6 @@
 #include "sysfont.h"
 #include "text.h"
 #include "textbox.h"
-#include "textwriter.h"
 #include "window.h"
 #include "windowborderbottom.h"
 #include "windowborderbutton.h"

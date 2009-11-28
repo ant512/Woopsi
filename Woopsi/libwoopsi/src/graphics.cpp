@@ -1,5 +1,4 @@
 #include "graphics.h"
-#include "textwriter.h"
 #include "woopsifuncs.h"
 
 using namespace WoopsiUI;

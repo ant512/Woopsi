@@ -140,10 +140,6 @@
 						RelativePath=".\libwoopsi\src\graphicsunclipped.cpp"
 						>
 					</File>
-					<File
-						RelativePath=".\libwoopsi\src\textwriter.cpp"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Gadgets"
@@ -496,10 +492,6 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\graphicsunclipped.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\textwriter.h"
 						>
 					</File>
 				</Filter>

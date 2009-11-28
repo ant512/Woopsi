@@ -7,6 +7,7 @@
 #include "woopsiarray.h"
 #include "glyphs.h"
 #include "rect.h"
+#include "fontbase.h"
 
 namespace WoopsiUI {
 

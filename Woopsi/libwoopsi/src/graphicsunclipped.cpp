@@ -1,5 +1,4 @@
 #include "graphicsunclipped.h"
-#include "textwriter.h"
 #include "woopsifuncs.h"
 
 using namespace WoopsiUI;
@@ -144,11 +143,16 @@ void GraphicsUnclipped::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour)
 }
 
 void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* string) {
-	TextWriter::drawString(_bitmap, font, string, strlen(string), x, y, 0, 0, _width - 1, _height - 1);
+	drawText(x, y, font, strlen(string), string);
 }
 
 void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string) {
-	TextWriter::drawString(_bitmap, font, string, length, x, y, 0, 0, _width - 1, _height - 1);
+	for (u32 i = 0; i < length; i++) {
+		x = font->drawChar(_bitmap, string[i], x, y, 0, 0, _width - 1, _height - 1);
+
+		// Abort if x pos outside bitmap
+		if (x > _width - 1) return;
+	}
 }
 
 // Print a string in a specific colour

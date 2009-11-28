@@ -2,7 +2,6 @@
 #define _LABEL_H_
 
 #include <nds.h>
-#include "textwriter.h"
 #include "gadget.h"
 #include "woopsistring.h"
 
