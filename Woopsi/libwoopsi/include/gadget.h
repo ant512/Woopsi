@@ -390,7 +390,7 @@ namespace WoopsiUI {
 		u32 setRefcon(u32 refcon);
 
 		/**
-		 * Sets this gadget's border state.  This does not redraw the gadget.
+		 * Sets this gadget's border state.
 		 * @param isBorderless The border state.
 		 */
 		void setBorderless(bool isBorderless);

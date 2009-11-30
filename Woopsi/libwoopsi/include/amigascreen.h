@@ -78,28 +78,24 @@ namespace WoopsiUI {
 		/**
 		 * Shows the flip button if it is hidden.  Has no effect
 		 * if the screen is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void showFlipButton();
 
 		/**
 		 * Shows the depth button if it is hidden.  Has no effect
 		 * if the screen is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void showDepthButton();
 
 		/**
 		 * Hides the flip button if it is visible.  Has no effect
 		 * if the screen is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void hideFlipButton();
 
 		/**
 		 * Hides the depth button if it is hidden.  Has no effect
 		 * if the screen is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void hideDepthButton();
 

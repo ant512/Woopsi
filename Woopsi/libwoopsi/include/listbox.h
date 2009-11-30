@@ -135,21 +135,18 @@ namespace WoopsiUI {
 		
 		/**
 		 * Sets whether multiple selections are possible or not.
-		 * Does not redraw the gadget.
 		 * @param allowMultipleSelections True to allow multiple selections.
 		 */
 		virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) { _options.setAllowMultipleSelections(allowMultipleSelections); };
 
 		/**
 		 * Sets whether multiple selections are possible or not.
-		 * Does not redraw the gadget.
 		 * @return True if multiple selections are allowed.
 		 */
 		virtual inline const bool allowsMultipleSelections() const { return _options.allowsMultipleSelections(); };
 
 		/**
 		 * Resize the scrolling canvas to encompass all options.
-		 * Does not redraw the gadget.
 		 */
 		virtual void resizeCanvas();
 

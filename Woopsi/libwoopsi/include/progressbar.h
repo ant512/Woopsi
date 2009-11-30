@@ -53,7 +53,7 @@ namespace WoopsiUI {
 		inline void setMaximumValue(const s16 value) { _maximumValue = value; };
 
 		/**
-		 * Set the value that of the progress bar.  This will redraw the gadget.
+		 * Set the value that of the progress bar. 
 		 * @param value The new value.
 		 */
 		void setValue(const s16 value);

@@ -43,7 +43,7 @@ namespace WoopsiUI {
 		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
 
 		/**
-		 * Add a new option to the gadget using default colours.  Does not redraw the gadget.
+		 * Add a new option to the gadget using default colours.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 */
@@ -52,7 +52,7 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Add a new option to the gadget.  Does not redraw the gadget.
+		 * Add a new option to the gadget.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 * @param normalTextColour Colour to draw the text with when not selected.
@@ -65,7 +65,7 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Remove an option from the gadget by its index.  Does not redraw the gadget.
+		 * Remove an option from the gadget by its index.
 		 * @param index The index of the option to remove.
 		 */
 		virtual inline void removeOption(const s32 index) {
@@ -73,7 +73,7 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Remove all options from the gadget.  Does not redraw the gadget.
+		 * Remove all options from the gadget.
 		 */
 		virtual inline void removeAllOptions() {
 			_listbox->removeAllOptions();
@@ -98,7 +98,6 @@ namespace WoopsiUI {
 
 		/**
 		 * Sets whether multiple selections are possible or not.
-		 * Does not redraw the gadget.
 		 * @param allowMultipleSelections True to allow multiple selections.
 		 */
 		virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) {

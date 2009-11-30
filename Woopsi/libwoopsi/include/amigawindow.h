@@ -131,28 +131,24 @@ namespace WoopsiUI {
 		/**
 		 * Shows the close button if it is hidden.  Has no effect
 		 * if the window is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void showCloseButton();
 
 		/**
 		 * Shows the depth button if it is hidden.  Has no effect
 		 * if the window is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void showDepthButton();
 
 		/**
 		 * Hides the close button if it is visible.  Has no effect
 		 * if the window is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void hideCloseButton();
 
 		/**
 		 * Hides the depth button if it is hidden.  Has no effect
 		 * if the window is borderless.
-		 * Will redraw the gadget.
 		 */
 		virtual void hideDepthButton();
 

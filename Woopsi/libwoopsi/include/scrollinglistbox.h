@@ -30,7 +30,7 @@ namespace WoopsiUI {
 		ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
 
 		/**
-		 * Add a new option to the gadget using default colours.  Does not redraw the gadget.
+		 * Add a new option to the gadget using default colours.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 */
@@ -43,7 +43,7 @@ namespace WoopsiUI {
 		virtual void addOption(ListBoxDataItem* option);
 
 		/**
-		 * Add a new option to the gadget.  Does not redraw the gadget.
+		 * Add a new option to the gadget.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 * @param normalTextColour Colour to draw the text with when not selected.
@@ -54,13 +54,13 @@ namespace WoopsiUI {
 		virtual void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
 
 		/**
-		 * Remove an option from the gadget by its index.  Does not redraw the gadget.
+		 * Remove an option from the gadget by its index.
 		 * @param index The index of the option to remove.
 		 */
 		virtual void removeOption(const s32 index);
 
 		/**
-		 * Remove all options from the gadget.  Does not redraw the gadget.
+		 * Remove all options from the gadget.
 		 */
 		virtual void removeAllOptions();
 
@@ -133,7 +133,6 @@ namespace WoopsiUI {
 		
 		/**
 		 * Sets whether multiple selections are possible or not.
-		 * Does not redraw the gadget.
 		 * @param allowMultipleSelections True to allow multiple selections.
 		 */
 		virtual inline void setAllowMultipleSelections(const bool allowMultipleSelections) {
@@ -142,7 +141,6 @@ namespace WoopsiUI {
 
 		/**
 		 * Resize the scrolling canvas to encompass all options.
-		 * Does not redraw the gadget.
 		 */
 		virtual inline void resizeCanvas() {
 			_listbox->resizeCanvas();
