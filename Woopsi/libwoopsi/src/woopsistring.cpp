@@ -222,3 +222,7 @@ void WoopsiString::allocateMemory(u32 chars, bool preserve) {
 		_allocatedSize = chars + _growAmount;
 	}
 }
+
+void WoopsiString::copyToCharArray(char* buffer) const {
+	strcpy(buffer, _text);
+}

@@ -53,6 +53,7 @@ Change Log
     - ContextMenu sends ListDataItem objects with event arguments instead of
       ContextMenuItem objects.
     - Deleted ContextMenuItem class.
+    - Added WoopsiString::copyToCharArray().
 
   V0.41 (20091124)
   

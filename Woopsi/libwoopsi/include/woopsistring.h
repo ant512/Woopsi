@@ -41,6 +41,15 @@ namespace WoopsiUI {
 		 * @return Pointer to the char array.
 		 */
 		virtual inline const char* getCharArray() const { return _text; };
+
+		/**
+		 * Copy the internal array to the supplied buffer.  The buffer must be
+		 * large enough to contain the full text in the string.  The
+		 * getLength() method can be used to obtain the length of the string.
+		 * The buffer will be (getLength() + 1), to accomodate the terminator.
+		 * @param buffer Buffer to copy the internal char array to.
+		 */
+		virtual void copyToCharArray(char* buffer) const;
 		
 		/**
 		 * Set the text in the string.
