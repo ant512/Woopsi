@@ -28,10 +28,10 @@ void ListData::addItem(ListDataItem* item) {
 	raiseDataChangedEvent();
 }
 
-void ListData::addItem(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
+void ListData::addItem(const char* text, const u32 value) {
 	
 	// Create new option
-	addItem(new ListDataItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour));
+	addItem(new ListDataItem(text, value));
 }
 
 void ListData::removeItem(const s32 index) {

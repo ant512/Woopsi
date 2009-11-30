@@ -4,7 +4,7 @@
 #include "scrollingpanel.h"
 #include "listdataeventhandler.h"
 #include "listdata.h"
-#include "listdataitem.h"
+#include "listboxlistdataitem.h"
 
 namespace WoopsiUI {
 
@@ -40,7 +40,7 @@ namespace WoopsiUI {
 		 * Add an option to the gadget.
 		 * @param option The option to add.
 		 */
-		virtual void addOption(ListDataItem* option);
+		virtual void addOption(ListBoxListDataItem* option);
 
 		/**
 		 * Remove an option from the gadget by its index.
@@ -115,7 +115,7 @@ namespace WoopsiUI {
 		 * Get the selected option.  Returns NULL if nothing is selected.
 		 * @return The selected option.
 		 */
-		virtual const ListDataItem* getSelectedOption() const;
+		virtual const ListBoxListDataItem* getSelectedOption() const;
 		
 		/**
 		 * Click this gadget at the supplied co-ordinates.
@@ -157,7 +157,7 @@ namespace WoopsiUI {
 		 * Get the specified option.
 		 * @return The specified option.
 		 */
-		virtual inline const ListDataItem* getOption(const s32 index) { return _options.getItem(index); };
+		virtual inline const ListBoxListDataItem* getOption(const s32 index) { return (ListBoxListDataItem*)_options.getItem(index); };
 
 		/**
 		 * Sort the options alphabetically by the text of the options.

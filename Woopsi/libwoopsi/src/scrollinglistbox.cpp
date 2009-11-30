@@ -112,7 +112,7 @@ void ScrollingListBox::setFont(FontBase* font) {
 	_scrollbar->setFont(font);
 }
 
-void ScrollingListBox::addOption(ListDataItem* item) {
+void ScrollingListBox::addOption(ListBoxListDataItem* item) {
 	_listbox->addOption(item);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
 }

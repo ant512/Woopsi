@@ -381,6 +381,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\src\listboxlistdataitem.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\src\scrollinglistbox.cpp"
 						>
 					</File>
@@ -800,6 +804,10 @@
 					>
 					<File
 						RelativePath=".\libwoopsi\include\listbox.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\listboxlistdataitem.h"
 						>
 					</File>
 					<File
