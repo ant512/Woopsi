@@ -38,7 +38,7 @@ Change Log
     - Added Gadget::isDoubleClick() to check for double-clicks.
     - Combined various colour members in Gadget class into GadgetColours struct.
     - Merged TextWriter into GraphicsXXX classes and removed original class.
-    - Added FileRequesterDataItem class to store data for file requester.
+    - Added FileListDataItem class to store data for file requester.
     - FileRequester uses new compareTo() functionality for substantial speed
       increase and lower memory usage.
     - FileRequester displays "Loading..." message whilst directories are
