@@ -1,12 +1,12 @@
-#ifndef _CONTEXTMENUEVENTARGS_H_
-#define _CONTEXTMENUEVENTARGS_H_
+#ifndef _CONTEXT_MENU_EVENT_ARGS_H_
+#define _CONTEXT_MENU_EVENT_ARGS_H_
 
 #include "eventargs.h"
 
 namespace WoopsiUI {
 
 	class Gadget;
-	class ContextMenuItem;
+	class ListDataItem;
 	class ContextMenuEventArgs;
 
 	/**
@@ -20,7 +20,7 @@ namespace WoopsiUI {
 		 * @param source Pointer to the ContextMenu object that raised the event.
 		 * @param item Pointer to the ContextMenuItem that caused the event.
 		 */
-		ContextMenuEventArgs(const Gadget* source, const ContextMenuItem* item) : EventArgs<const Gadget*>(source) {
+		ContextMenuEventArgs(const Gadget* source, const ListDataItem* item) : EventArgs<const Gadget*>(source) {
 			_item = item;
 		};
 
@@ -28,10 +28,10 @@ namespace WoopsiUI {
 		 * Get the item that caused the event.
 		 * @return Pointer to the item that caused the event.
 		 */
-		inline const ContextMenuItem* getItem() const { return _item; };
+		inline const ListDataItem* getItem() const { return _item; };
 
 	private:
-		const ContextMenuItem* _item;			/**< Pointer to the item that caused the event */
+		const ListDataItem* _item;			/**< Pointer to the item that caused the event */
 	};
 }
 

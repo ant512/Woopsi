@@ -8,7 +8,7 @@
 #include "defaultstyle.h"
 #include "gadgeteventargs.h"
 #include "contextmenu.h"
-#include "contextmenuitem.h"
+#include "listdataitem.h"
 #include "contextmenueventargs.h"
 #include "rectcache.h"
 #include "framebuffer.h"
@@ -552,7 +552,7 @@ void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
 	}
 }
 
-void Gadget::raiseContextMenuSelectionEvent(const ContextMenuItem* contextMenuItem) {
+void Gadget::raiseContextMenuSelectionEvent(const ListDataItem* contextMenuItem) {
 	if (raisesEvents()) {
 		ContextMenuEventArgs e(this, contextMenuItem);
 
@@ -1832,7 +1832,7 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 			woopsiApplication->getContextMenu()->setOpener(this);
 
 			for (s32 i = 0; i < _contextMenuItems.size(); i++) {
-				woopsiApplication->getContextMenu()->newMenuItem(_contextMenuItems[i].name, _contextMenuItems[i].value);
+				woopsiApplication->getContextMenu()->addOption(_contextMenuItems[i].name, _contextMenuItems[i].value);
 			}
 			
 			woopsiApplication->getContextMenu()->unshelve();
@@ -1840,7 +1840,7 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 	}
 }
 
-bool Gadget::handleContextMenuSelection(const ContextMenuItem* item) {
+bool Gadget::handleContextMenuSelection(const ListDataItem* item) {
 	raiseContextMenuSelectionEvent(item);
 
 	return true;

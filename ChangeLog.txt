@@ -49,6 +49,12 @@ Change Log
       greater flexibility.
     - CycleButton uses the ListData class to store its data - options can now
        be selected, removed, sorted, etc.
+    - ListBox::getPreferredDimensions() bases width on size of text in options.
+    - ContextMenu used a ListBox to store/view its data.
+    - ContextMenu includes getPreferredDimensions() method.
+    - ContextMenu sends ListDataItem objects with event arguments instead of
+      ContextMenuItem objects.
+    - Deleted ContextMenuItem class.
 
   V0.41 (20091124)
   

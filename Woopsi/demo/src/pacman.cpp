@@ -10,7 +10,7 @@
 #include "pacplayer.h"
 #include "pacghost.h"
 #include "pacghosts.h"
-#include "contextmenuitem.h"
+#include "listdataitem.h"
 
 PacMan::PacMan(AmigaScreen* screen) : GadgetEventHandler() {
 	_screen = screen;

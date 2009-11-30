@@ -710,10 +710,6 @@
 						RelativePath=".\libwoopsi\include\contextmenueventargs.h"
 						>
 					</File>
-					<File
-						RelativePath=".\libwoopsi\include\contextmenuitem.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Keyboard"

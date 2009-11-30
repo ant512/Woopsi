@@ -305,6 +305,18 @@ void ListBox::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
 
-	rect.width = ((!_flags.borderless) << 1) + getCanvasWidth();
-	rect.height = ((!_flags.borderless) << 1) + getOptionHeight() * 3;
+	s16 maxWidth = 0;
+	s16 optionWidth = 0;
+
+	// Locate longest string in options
+	for (s32 i = 0; i < _options.getItemCount(); ++i) {
+		optionWidth = _font->getStringWidth(_options.getItem(i)->getText());
+
+		if (optionWidth > maxWidth) {
+			maxWidth = optionWidth;
+		}
+	}
+
+	rect.width = ((!_flags.borderless) << 1) + (_optionPadding << 1) + maxWidth;
+	rect.height = ((!_flags.borderless) << 1) + (getOptionHeight() * 3);
 }

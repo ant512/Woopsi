@@ -3,6 +3,7 @@
 
 #include "gadget.h"
 #include "gadgeteventhandler.h"
+#include "listbox.h"
 
 namespace WoopsiUI {
 
@@ -24,17 +25,11 @@ namespace WoopsiUI {
 		ContextMenu(FontBase* font = NULL);
 
 		/**
-		 * Handles events raised by the gadget's sub-gadgets.
-		 * @param e The event arguments.
-		 */
-		virtual void handleReleaseEvent(const GadgetEventArgs& e);
-
-		/**
 		 * Add a new menu item to the gadget.
 		 * @param text Text to show in the item.
 		 * @param value The value of the item.
 		 */
-		virtual ContextMenuItem* newMenuItem(const char* text, u32 value);
+		virtual void addOption(const char* text, u32 value);
 
 		/**
 		 * Draw the region of the menu within the clipping rect.
@@ -79,8 +74,30 @@ namespace WoopsiUI {
 		 */
 		virtual inline bool blur() { return false; };
 
+		/**
+		 * Insert the dimensions that this gadget wants to have into the rect
+		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
+		 * parent.  Value is based on the length of the largest string in the
+		 * set of options.
+		 * @param rect Reference to a rect to populate with data.
+		 */
+		virtual void getPreferredDimensions(Rect& rect) const;
+
+		/**
+		 * Handles events raised by the gadget's sub-gadgets.
+		 * @param e The event arguments.
+		 */
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handles events raised by the gadget's sub-gadgets.
+		 * @param e The event arguments.
+		 */
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
+
 	private:
 		Gadget* _opener;				/**< Pointer to the gadget that opened the menu */
+		ListBox* _listbox;				/**< Pointer to the list box */
 
 		/**
 		 * Destructor.
