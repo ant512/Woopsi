@@ -46,7 +46,7 @@ namespace WoopsiUI {
 		 * Copy the internal array to the supplied buffer.  The buffer must be
 		 * large enough to contain the full text in the string.  The
 		 * getLength() method can be used to obtain the length of the string.
-		 * The buffer will be (getLength() + 1), to accomodate the terminator.
+		 * The buffer will be (getLength() + 1), to accommodate the terminator.
 		 * @param buffer Buffer to copy the internal char array to.
 		 */
 		virtual void copyToCharArray(char* buffer) const;
