@@ -22,12 +22,12 @@ ListBox::~ListBox() {
 	_options.removeListDataEventHandler(this);
 }
 
-void ListBox::addOption(ListBoxListDataItem* option) {
+void ListBox::addOption(ListBoxDataItem* option) {
 	_options.addItem(option);
 }
 
 void ListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
-	addOption(new ListBoxListDataItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour));
+	addOption(new ListBoxDataItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour));
 }
 
 void ListBox::addOption(const char* text, const u32 value) {
@@ -61,12 +61,12 @@ void ListBox::draw(Rect clipRect) {
 	// Draw background
 	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _colours.back);
 
-	const ListBoxListDataItem* item = NULL;
+	const ListBoxDataItem* item = NULL;
 
 	// Loop through all options drawing each one
 	while (i <= bottomOption) {
 
-		item = (const ListBoxListDataItem*)_options.getItem(i);
+		item = (const ListBoxDataItem*)_options.getItem(i);
 		
 		// Is the option selected?
 		if (item->isSelected()) {
@@ -115,8 +115,8 @@ const s32 ListBox::getSelectedIndex() const {
 	return _options.getSelectedIndex();
 }
 
-const ListBoxListDataItem* ListBox::getSelectedOption() const {
-	return (const ListBoxListDataItem*)_options.getSelectedItem();
+const ListBoxDataItem* ListBox::getSelectedOption() const {
+	return (const ListBoxDataItem*)_options.getSelectedItem();
 }
 
 void ListBox::selectOption(const s32 index) {
@@ -162,7 +162,7 @@ bool ListBox::click(s16 x, s16 y) {
 			// Calculate which option was clicked
 			_lastSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 			
-			const ListBoxListDataItem* item = (const ListBoxListDataItem*)_options.getItem(_lastSelectedIndex);
+			const ListBoxDataItem* item = (const ListBoxDataItem*)_options.getItem(_lastSelectedIndex);
 
 			// Are we setting or unsetting?
 			if (item->isSelected()) {

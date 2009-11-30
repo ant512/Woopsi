@@ -1,8 +1,8 @@
-#include "listboxlistdataitem.h"
+#include "listboxdataitem.h"
 
 using namespace WoopsiUI;
 
-ListBoxListDataItem::ListBoxListDataItem(const char* text, const u32 value,
+ListBoxDataItem::ListBoxDataItem(const char* text, const u32 value,
 						   const u16 normalTextColour,
 						   const u16 normalBackColour,
 						   const u16 selectedTextColour,

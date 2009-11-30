@@ -43,7 +43,9 @@ Change Log
       increase and lower memory usage.
     - FileRequester displays "Loading..." message whilst directories are
       enumerated.
-    - Split ListDataItem into ListDataItem and ListBoxListDataItem classes for
+    - Split ListDataItem into ListDataItem and ListBoxDataItem classes for
+      greater flexibility.
+    - Split FileRequester into FileListBox and FileRequester classes for
       greater flexibility.
 
   V0.41 (20091124)

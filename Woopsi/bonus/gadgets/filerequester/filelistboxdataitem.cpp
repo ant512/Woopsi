@@ -1,14 +1,14 @@
-#include "filerequesterdataitem.h"
+#include "filelistboxdataitem.h"
 
 using namespace WoopsiUI;
 
-FileRequesterDataItem::FileRequesterDataItem(const char* text, const u32 value,
+FileListBoxDataItem::FileListBoxDataItem(const char* text, const u32 value,
 		const u16 normalTextColour,
 		const u16 normalBackColour,
 		const u16 selectedTextColour,
 		const u16 selectedBackColour,
 		const bool isDirectory)
-			: ListDataItem(text,
+			: ListBoxDataItem(text,
 						   value,
 						   normalTextColour,
 						   normalBackColour,
@@ -18,14 +18,15 @@ FileRequesterDataItem::FileRequesterDataItem(const char* text, const u32 value,
 	_isDirectory = isDirectory;
 }
 
-s8 FileRequesterDataItem::compareTo(const ListDataItem* item) const {
+s8 FileListBoxDataItem::compareTo(const FileListBoxDataItem* item) const {
 
 	// Cast to right type to get to extra fields
-	FileRequesterDataItem* fileItem = (FileRequesterDataItem*)item;
+	const FileListBoxDataItem* fileItem = (const FileListBoxDataItem*)item;
 	
 	// Directories come before files
 	if (_isDirectory && !fileItem->isDirectory()) return -1;
 	if (!_isDirectory && fileItem->isDirectory()) return 1;
 	
-	return strcmp(getText(), fileItem->getText());
+	// Fall back to standard comparison if both items are of the same type
+	return ListBoxDataItem::compareTo(item);
 }

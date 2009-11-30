@@ -1,15 +1,15 @@
-#ifndef _FILE_REQUESTER_DATA_ITEM_H_
-#define _FILE_REQUESTER_DATA_ITEM_H_
+#ifndef _FILE_LISTBOX_DATA_ITEM_H_
+#define _FILE_LISTBOX_DATA_ITEM_H_
 
 #include <nds.h>
-#include "listdataitem.h"
+#include "listboxdataitem.h"
 
 namespace WoopsiUI {
 
 	/**
 	 * Class representing a data item within a file requester list.
 	 */
-	class FileRequesterDataItem : public ListDataItem {
+	class FileListBoxDataItem : public ListBoxDataItem {
 	public:
 
 		/**
@@ -21,7 +21,7 @@ namespace WoopsiUI {
 		 * @param selectedTextColour Colour to draw the text with when selected.
 		 * @param selectedBackColour Colour to draw the background with when selected.
 		 */
-		FileRequesterDataItem(const char* text, const u32 value,
+		FileListBoxDataItem(const char* text, const u32 value,
 			const u16 normalTextColour,
 			const u16 normalBackColour,
 			const u16 selectedTextColour,
@@ -46,7 +46,7 @@ namespace WoopsiUI {
 		 * a value less than 0 if this item is less than the argument, and
 		 * a value greater than 0 if this item is greater than the argument.
 		 */
-		virtual s8 compareTo(const ListDataItem* item) const;
+		virtual s8 compareTo(const FileListBoxDataItem* item) const;
 
 	private:
 		bool _isDirectory;						/**< True if the option is a directory. */

@@ -2,12 +2,9 @@
 #define _FILE_REQUESTER_H_
 
 #include "amigawindow.h"
-#include "scrollinglistbox.h"
 #include "listdata.h"
-
-#ifdef ARM9
-#include <fat.h>
-#endif
+#include "filelistboxdataitem.h"
+#include "filelistbox.h"
 
 namespace WoopsiUI {
 
@@ -15,21 +12,24 @@ namespace WoopsiUI {
 	class FilePath;
 
 	/**
-	 * Class providing a window containing a listbox, an OK button and a Cancel button.
-	 * Designed to allow users selection a file from the filesytem.  When a file is
-	 * selected the requester will automatically close.
+	 * Class providing a window containing a file listbox, an OK button and a
+	 * Cancel button.
+	 * Designed to allow users selection a file from the filesytem.  When a file
+	 * is selected the requester will automatically close.
 	 *
-	 * To read the value of the selected option or options, you should listen for the
-	 * value changed event.  This will fire when the user double-clicks an option or
-	 * clicks the OK button.
+	 * To read the value of the selected option or options, you should listen
+	 * for the value changed event.  This will fire when the user double-clicks
+	 * an option or clicks the OK button.
 	 *
 	 * To add this class to a project:
-	 * - Enable libfat in the makefile by changing the line that reads "LIBS	:= -lnds9" to
-	 *   "LIBS	:= -lfat -lnds9";
+	 * - Enable libfat in the makefile by changing the line that reads
+	 *      LIBS	:= -lnds9
+	 *   to
+	 *      LIBS	:= -lfat -lnds9
 	 * - Call "fatInitDefault();" somewhere in your setup code.
 	 *
-	 * Note that including libfat increases the ROM size by ~100K.  Also note that this
-	 * code is not compatible with the SDL build of Woopsi.
+	 * Note that including libfat increases the ROM size by ~100K.  Also note
+	 * that this code is not compatible with the SDL build of Woopsi.
 	 */
 	class FileRequester : public AmigaWindow {
 	public:
@@ -56,7 +56,7 @@ namespace WoopsiUI {
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event arguments.
 		 */
-		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
+		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Add a new option to the gadget using default colours.  Does not redraw the gadget.
@@ -108,7 +108,7 @@ namespace WoopsiUI {
 		 * Get the selected option.  Returns NULL if nothing is selected.
 		 * @return The selected option.
 		 */
-		virtual inline const ListDataItem* getSelectedOption() const {
+		virtual inline const FileListBoxDataItem* getSelectedOption() const {
 			return _listbox->getSelectedOption();
 		};
 
@@ -125,7 +125,7 @@ namespace WoopsiUI {
 		 * Get the specified option.
 		 * @return The specified option.
 		 */
-		virtual inline const ListDataItem* getOption(const s32 index) const {
+		virtual inline const FileListBoxDataItem* getOption(const s32 index) const {
 			return _listbox->getOption(index);
 		};
 
@@ -167,18 +167,12 @@ namespace WoopsiUI {
 	protected:
 		Button* _okButton;					/**< Pointer to the OK button */
 		Button* _cancelButton;				/**< Pointer to the cancel button */
-		ScrollingListBox* _listbox;			/**< Pointer to the list box */
-		FilePath* _path;					/**< Path currently displayed */
+		FileListBox* _listbox;				/**< Pointer to the list box */
 
 		/**
 		 * Destructor.
 		 */
-		virtual ~FileRequester();
-
-		/**
-		 * Populate list with directory data.
-		 */
-		virtual void readDirectory();
+		virtual ~FileRequester() { };
 		
 		/**
 		 * Copy constructor is protected to prevent usage.

@@ -1,5 +1,5 @@
-#ifndef _LIST_BOX_LIST_DATA_ITEM_H_
-#define _LIST_BOX_LIST_DATA_ITEM_H_
+#ifndef _LISTBOX_DATA_ITEM_H_
+#define _LISTBOX_DATA_ITEM_H_
 
 #include <nds.h>
 #include "listdataitem.h"
@@ -9,7 +9,7 @@ namespace WoopsiUI {
 	/**
 	 * Class representing a data item within a ListBox.
 	 */
-	class ListBoxListDataItem : public ListDataItem {
+	class ListBoxDataItem : public ListDataItem {
 	public:
 
 		/**
@@ -21,7 +21,7 @@ namespace WoopsiUI {
 		 * @param selectedTextColour Colour to draw the text with when selected.
 		 * @param selectedBackColour Colour to draw the background with when selected.
 		 */
-		ListBoxListDataItem(const char* text, const u32 value,
+		ListBoxDataItem(const char* text, const u32 value,
 			const u16 normalTextColour,
 			const u16 normalBackColour,
 			const u16 selectedTextColour,

@@ -5,7 +5,7 @@
 #include "listbox.h"
 #include "gadgeteventhandler.h"
 #include "listdata.h"
-#include "listboxlistdataitem.h"
+#include "listboxdataitem.h"
 
 namespace WoopsiUI {
 
@@ -40,7 +40,7 @@ namespace WoopsiUI {
 		 * Add an option to the gadget.
 		 * @param option The option to add.
 		 */
-		virtual void addOption(ListBoxListDataItem* option);
+		virtual void addOption(ListBoxDataItem* option);
 
 		/**
 		 * Add a new option to the gadget.  Does not redraw the gadget.
@@ -127,7 +127,7 @@ namespace WoopsiUI {
 		 * Get the selected option.  Returns NULL if nothing is selected.
 		 * @return The selected option.
 		 */
-		virtual inline const ListBoxListDataItem* getSelectedOption() const {
+		virtual inline const ListBoxDataItem* getSelectedOption() const {
 			return _listbox->getSelectedOption();
 		};
 		
@@ -152,7 +152,7 @@ namespace WoopsiUI {
 		 * Get the selected index.  Returns -1 if nothing is selected.
 		 * @return The selected index.
 		 */
-		virtual inline const ListBoxListDataItem* getOption(const s32 index) const {
+		virtual inline const ListBoxDataItem* getOption(const s32 index) const {
 			return _listbox->getOption(index);
 		};
 

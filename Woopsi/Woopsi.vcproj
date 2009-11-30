@@ -381,7 +381,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\src\listboxlistdataitem.cpp"
+						RelativePath=".\libwoopsi\src\listboxdataitem.cpp"
 						>
 					</File>
 					<File
@@ -807,7 +807,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\include\listboxlistdataitem.h"
+						RelativePath=".\libwoopsi\include\listboxdataitem.h"
 						>
 					</File>
 					<File
