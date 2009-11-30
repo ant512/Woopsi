@@ -47,6 +47,8 @@ Change Log
       greater flexibility.
     - Split FileRequester into FileListBox and FileRequester classes for
       greater flexibility.
+    - CycleButton uses the ListData class to store its data - options can now
+       be selected, removed, sorted, etc.
 
   V0.41 (20091124)
   

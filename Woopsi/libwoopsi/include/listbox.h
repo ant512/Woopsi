@@ -157,7 +157,9 @@ namespace WoopsiUI {
 		 * Get the specified option.
 		 * @return The specified option.
 		 */
-		virtual inline const ListBoxDataItem* getOption(const s32 index) { return (const ListBoxDataItem*)_options.getItem(index); };
+		virtual inline const ListBoxDataItem* getOption(const s32 index) {
+			return (const ListBoxDataItem*)_options.getItem(index);
+		};
 
 		/**
 		 * Sort the options alphabetically by the text of the options.
@@ -168,7 +170,9 @@ namespace WoopsiUI {
 		 * Get the total number of options.
 		 * @return The number of options.
 		 */
-		virtual inline const s32 getOptionCount() const { return _options.getItemCount(); };
+		virtual inline const s32 getOptionCount() const {
+			return _options.getItemCount();
+		};
 
 		/**
 		 * Get the height of a single option.
@@ -180,7 +184,9 @@ namespace WoopsiUI {
 		 * Sets whether or not items added to the list are automatically sorted on insert or not.
 		 * @param sortInsertedItems True to enable sort on insertion.
 		 */
-		virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _options.setSortInsertedItems(sortInsertedItems); };
+		virtual inline void setSortInsertedItems(const bool sortInsertedItems) {
+			_options.setSortInsertedItems(sortInsertedItems);
+		};
 
 		/**
 		 * Handles list data changed events.

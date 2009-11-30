@@ -6,39 +6,59 @@ using namespace WoopsiUI;
 
 CycleButton::CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, "", font) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
-	_selectedIndex = 0;
 
 	// Force text to align left (x) and centre (y)  
 	_textX = (_padding * 3) + _font->getCharWidth(GLYPH_CYCLE) + 2;
 	_textY = (_height - _font->getHeight()) >> 1;
-}
 
-CycleButton::~CycleButton() {
-
-	// Delete all option data
-	for (s32 i = 0; i < _options.size(); i++) {
-		delete _options[i]->text;
-		delete _options[i];
-	}
-
-	_options.clear();
+	_options.addListDataEventHandler(this);
+	_options.setAllowMultipleSelections(false);
 }
 
 void CycleButton::addOption(const char* text, const u32 value) {
+	_options.addItem(new ListDataItem(text, value));
 
-	// Create new memory for string
-	char* newText = new char[strlen(text) + 1];
+	// Select the option if this is the first option added
+	if (_options.getItemCount() == 1) {
+		selectOption(0);
+	}
+}
 
-	// Copy text
-	strcpy(newText, text);
+void CycleButton::removeOption(const s32 index) {
+	_options.removeItem(index);
+}
 
-	// Create new option
-	CycleButtonOption* newOption = new CycleButtonOption;
-	newOption->text = newText;
-	newOption->value = value;
+void CycleButton::setSelectedIndex(const s32 index) {
+	_options.setItemSelected(index, true);
+}
 
-	// Add to option array
-	_options.push_back(newOption);
+void CycleButton::selectOption(const s32 index) {
+	_options.setItemSelected(index, true);
+}
+
+const s32 CycleButton::getSelectedIndex() const {
+	return _options.getSelectedIndex();
+}
+
+const ListDataItem* CycleButton::getSelectedOption() const {
+	return _options.getSelectedItem();
+}
+
+void CycleButton::sort() {
+	_options.sort();
+}
+
+void CycleButton::removeAllOptions() {
+	_options.removeAllItems();
+}
+
+void CycleButton::handleListDataChangedEvent(const ListDataEventArgs& e) {
+	redraw();
+}
+
+void CycleButton::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
+	redraw();
+	raiseValueChangeEvent();
 }
 
 void CycleButton::draw(Rect clipRect) {
@@ -57,9 +77,9 @@ void CycleButton::draw(Rect clipRect) {
 		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shadow);
 		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shine);
 
-		// Only draw text if options exist
-		if (_options.size() > 0) {
-			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text, _colours.dark);
+		// Only draw text if option is selected
+		if (_options.getSelectedItem() != NULL) {
+			port->drawText(_textX, _textY, _font, _options.getSelectedItem()->getText(), _colours.dark);
 		}
 	} else if (!isClicked()) {
 
@@ -73,9 +93,9 @@ void CycleButton::draw(Rect clipRect) {
 		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shadow);
 		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shine);
 
-		// Only draw text if options exist
-		if (_options.size() > 0) {
-			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text);
+		// Only draw text if option is selected
+		if (_options.getSelectedItem() != NULL) {
+			port->drawText(_textX, _textY, _font, _options.getSelectedItem()->getText());
 		}
 	} else {
 
@@ -89,9 +109,9 @@ void CycleButton::draw(Rect clipRect) {
 		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shine);
 		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shadow);
 
-		// Only draw text if options exist
-		if (_options.size() > 0) {
-			port->drawText(_textX, _textY, _font, _options[_selectedIndex]->text, _colours.shine);
+		// Only draw text if option is selected
+		if (_options.getSelectedItem() != NULL) {
+			port->drawText(_textX, _textY, _font, _options.getSelectedItem()->getText(), _colours.shine);
 		}
 	}
 
@@ -113,18 +133,21 @@ bool CycleButton::release(s16 x, s16 y) {
 
 		// Determine which release event to fire
 		if (checkCollision(x, y)) {
-			
+
 			// Choose next option
-			if (_options.size() > 1) {
-				_selectedIndex++;
+			if (_options.getItemCount() > 1) {
 
-				// Wrap around
-				if (_selectedIndex >= _options.size()) {
-					_selectedIndex = 0;
+				s32 selectedIndex = _options.getSelectedIndex();
+
+				if (selectedIndex < _options.getItemCount() - 1) {
+
+					// Move to next option
+					selectOption(selectedIndex + 1);
+				} else {
+
+					// Wrap around as there are no more options
+					selectOption(0);
 				}
-
-				// Raise "value change" event
-				raiseValueChangeEvent();
 			}
 
 			// Release occurred within gadget; raise release
@@ -132,9 +155,9 @@ bool CycleButton::release(s16 x, s16 y) {
 		} else {
 			// Release occurred outside gadget; raise release
 			raiseReleaseOutsideEvent(x, y);
+	
+			redraw();
 		}
-
-		redraw();
 
 		return true;
 	}
@@ -151,8 +174,8 @@ void CycleButton::getPreferredDimensions(Rect& rect) const {
 	s16 optionWidth = 0;
 
 	// Locate longest string in options
-	for (s32 i = 0; i < _options.size(); ++i) {
-		optionWidth = _font->getStringWidth(_options.at(i)->text);
+	for (s32 i = 0; i < _options.getItemCount(); ++i) {
+		optionWidth = _font->getStringWidth(_options.getItem(i)->getText());
 
 		if (optionWidth > maxWidth) {
 			maxWidth = optionWidth;
