@@ -21,6 +21,8 @@ import os,glob,re,sys,getopt,string,tempfile
 # If its in PATH, that'll do
 # If not, try $DEVKITARM/bin
 # If not, try $DEVKITPRO/devkitARM/bin
+# If not, we might be in Windows - the paths do not follow Windows standards,
+# so make a last-ditch attempt at finding it in the default path.
 # If not, fail
 def findgit(name):
 	# look through PATH
@@ -38,6 +40,12 @@ def findgit(name):
 		if _d:
 			_p = os.path.join(_d,"devkitARM","bin",name)
 			if (os.path.exists(_p)): return _p
+			
+	# still not found; try Windows default path
+	_p = os.path.join("C:\\devkitPro\\devkitARM\\bin", name)
+	if (os.path.exists(_p)) : return _p
+	
+	# Cannot find grit
 	return None
 
 # --------------------------------------------------
@@ -238,11 +246,19 @@ def convert(bitmap, fontname):
 		_superclass = "PackedFont1"
 	else:
 		_superclass = "PackedFont16"
+		
+	# Get some more substitution values
+	_guardname = string.upper(fontname)
+	_filename = string.lower(fontname)
+	_superclass_filename = string.lower(_superclass)
 
 	# build our dictionary of substitution values
 	subs={
 		"fontname"	:fontname,
+		"guardname"	:_guardname,
+		"filename"	:_filename,
 		"superclass"	:_superclass,
+		"superclassfilename"	:_superclass_filename,
 		"bitmap"	:bitmap,
 		"count"		:_count,
 		"widmax"	:_widmax,
@@ -258,16 +274,23 @@ def convert(bitmap, fontname):
 	fp = open(fontname+".h", "w")
 	write(fp, subs, r"""
 //
-// $fontname.h
+// $filename.h
 //
 // Do not edit - created by 'bmp2font' from $bitmap
 //
-#pragma once
-#include "${superclass}.h"
-class ${fontname}: public ${superclass} {
-public:
-	${fontname}(u8 fixedWidth=0);
-};
+#ifndef _${guardname}_H_
+#define _${guardname}_H_
+
+#include "${superclassfilename}.h"
+
+namespace WoopsiUI {
+	class ${fontname}: public ${superclass} {
+	public:
+		${fontname}(u8 fixedWidth=0);
+	};
+}
+
+#endif
 """)
 	fp.close()
 
@@ -275,12 +298,14 @@ public:
 	fp = open(fontname+".cpp", "w")
 	write(fp,subs,r"""
 //
-// $fontname.cpp
+// $filename.cpp
 //
 // Do not edit - created by 'bmp2font' from $bitmap
 //
-#include "$fontname.h"
+#include "$filename.h"
 #include <nds.h>		/* for u16 */
+
+using namespace WoopsiUI;
 
 static const u16 ${fontname}_glyphdata[$count] = {
 """)

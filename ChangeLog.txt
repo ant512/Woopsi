@@ -6,6 +6,10 @@ Change Log
   - Fixes:
     - ListBox draws correctly when dragged (clipping problem from 0.41).
     - Multiple fixes to the PackedFont set of classes.
+    - bmp2font checks the default Windows location for grit.
+    - bmp2font adds fonts to the WoopsiUI namespace.
+    - bmp2font follows #ifdef/#endif guard style.
+    - bmp2font uses more appropriate casing for filenames, etc.
   
   - New Features:
     - Added packedfonts example.
