@@ -5,8 +5,11 @@ Change Log
   
   - Fixes:
     - ListBox draws correctly when dragged (clipping problem from 0.41).
+    - Multiple fixes to the PackedFont set of classes.
   
   - New Features:
+    - Added packedfonts example.
+    - Added courier, couriermono and latha fonts to the bonus folder.
   
 
   V0.42 (20091205)

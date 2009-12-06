@@ -54,8 +54,6 @@ namespace WoopsiUI {
 		/**
 		 * Draw an individual character of the font to the specified bitmap.
 		 * @param bitmap The bitmap to draw to.
-		 * @param bitmapWidth The width of the bitmap being drawn to.
-		 * @param bitmapHeight The height of the bitmap being drawn to.
 		 * @param letter The character to output.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
@@ -66,8 +64,7 @@ namespace WoopsiUI {
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
 		virtual s16 drawChar(
-			u16* bitmap,
-			u16 bitmapWidth, u16 bitmapHeight,
+			MutableBitmapBase* bitmap,
 			char letter,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
@@ -105,8 +102,7 @@ namespace WoopsiUI {
 		 * Render an individual character of the font to the specified bitmap.
 		 * @param pixelData The font-specific pixel data
 		 * @param pixelsPerRow The number of pixels to render per row (for this character)
-		 * @param bitmap Top-left corner of output space to draw to.
-		 * @param bitmapWidth The width of the bitmap being drawn to.
+		 * @param bitmap The bitmap to draw to.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
 		 * @param clipX1 The left edge of the clipping rectangle.
@@ -116,7 +112,7 @@ namespace WoopsiUI {
 		 */
 		virtual void renderChar(
 			const u16* pixelData, u16 pixelsPerRow,
-			u16* bitmap, u16 bitmapWidth,
+			MutableBitmapBase* bitmap,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 
