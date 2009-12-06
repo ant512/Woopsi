@@ -1,7 +1,15 @@
 Change Log
 ----------
 
-  V0.42
+  V0.43
+  
+  - Fixes:
+    - ListBox draws correctly when dragged (clipping problem from 0.41).
+  
+  - New Features:
+  
+
+  V0.42 (20091205)
 
   - Fixes:
     - ListData::swapItems() no longer raises a data changed event.
@@ -46,7 +54,7 @@ Change Log
     - Split FileRequester into FileListBox and FileRequester classes for
       greater flexibility.
     - CycleButton uses the ListData class to store its data - options can now
-       be selected, removed, sorted, etc.
+      be selected, removed, sorted, etc.
     - ListBox::getPreferredDimensions() bases width on size of text in options.
     - ContextMenu used a ListBox to store/view its data.
     - ContextMenu includes getPreferredDimensions() method.
@@ -97,7 +105,6 @@ Change Log
     - Added listbox test.
     - ListBox greys out when disabled.
     - Added scrollinglistbox test.
-
 
   V0.40 (20091115)
   
@@ -180,7 +187,6 @@ Change Log
       signatures to MutableBitmapBase.
     - Added getData(x, y) method to all bitmap classes.
 
-
   V0.39 (20091024)
   
   - Fixes:
@@ -215,7 +221,6 @@ Change Log
     - Added BitmapLoader example.
     - Added SuperBitmap::drawBitmap() overload to handle Bitmap objects.
   
-
   V0.38 (20090428)
   
   - Fixes:

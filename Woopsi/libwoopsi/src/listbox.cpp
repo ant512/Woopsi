@@ -50,8 +50,15 @@ void ListBox::draw(Rect clipRect) {
 
 	// Precalc values for option draw loop
 	s16 optionHeight = getOptionHeight();
+	
+	// Ensure that we subtract 1 from topOption to ensure that the option
+	// above is drawn if it is partially visible
 	s32 topOption = ((clipY - _canvasY) / optionHeight) - 1;
-	s32 bottomOption = topOption + (clipHeight / optionHeight) + 1;
+	
+	// Ensure that we add 2 to the bottom option to ensure that the option
+	// below is draw if it is partially visible - subbing 1 from topOption
+	// means we need to add an additional 1 to compensate
+	s32 bottomOption = topOption + (clipHeight / optionHeight) + 2;
 	s32 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
 	s32 i = topOption;
 
