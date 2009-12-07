@@ -13,7 +13,7 @@ Change Log
   
   - New Features:
     - Added packedfonts example.
-    - Added courier, couriermono and latha fonts to the bonus folder.
+    - Added dozens of packed fonts to the bonus folder.
   
 
   V0.42 (20091205)
