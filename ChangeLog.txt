@@ -10,6 +10,9 @@ Change Log
     - bmp2font adds fonts to the WoopsiUI namespace.
     - bmp2font follows #ifdef/#endif guard style.
     - bmp2font uses more appropriate casing for filenames, etc.
+    - CycleButton redraws correctly when released if it contains no options.
+    - Label and subclasses recalculate their text position and redraw when their
+      fonts are changed.
   
   - New Features:
     - Added packedfonts example.

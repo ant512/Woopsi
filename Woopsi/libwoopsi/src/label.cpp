@@ -164,3 +164,12 @@ void Label::getPreferredDimensions(Rect& rect) const {
 	rect.width = ((!_flags.borderless + _padding) << 1) + _font->getStringWidth(_text->getCharArray());
 	rect.height = ((!_flags.borderless + _padding) << 1) + _font->getHeight();
 }
+
+void Label::setFont(FontBase* font) {
+	_font = font;
+
+	// Need to recalculate the text position as the font may have changed size
+	calculateTextPosition();
+
+	redraw();
+}

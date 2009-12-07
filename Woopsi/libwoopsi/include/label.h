@@ -133,6 +133,12 @@ namespace WoopsiUI {
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
 
+		/**
+		 * Sets the font.
+		 * @param font A pointer to the font to use.
+		 */
+		virtual void setFont(FontBase* font);
+
 	protected:
 		WoopsiString* _text;					/**< Text that the textbox will display */
 		u16 _textX;								/**< X co-ordinate of the text relative to the gadget */

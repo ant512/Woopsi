@@ -155,9 +155,9 @@ bool CycleButton::release(s16 x, s16 y) {
 		} else {
 			// Release occurred outside gadget; raise release
 			raiseReleaseOutsideEvent(x, y);
-	
-			redraw();
 		}
+
+		redraw();
 
 		return true;
 	}
