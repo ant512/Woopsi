@@ -13,6 +13,9 @@ Change Log
     - CycleButton redraws correctly when released if it contains no options.
     - Label and subclasses recalculate their text position and redraw when their
       fonts are changed.
+    - TextBox does not attempt to move cursor when clicked if it contains no
+      text.
+    - TextBox cursor moves correctly when clicked if a PackedFont font is used.
   
   - New Features:
     - Added packedfonts example.
