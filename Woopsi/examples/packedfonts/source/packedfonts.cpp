@@ -19,9 +19,15 @@
 #include "garamond10.h"
 #include "garamond18.h"
 #include "gillsans11.h"
+#include "gillsans11b.h"
 #include "gloucester10.h"
 #include "goudy9.h"
+#include "gulimche12.h"
+#include "gulimche12b.h"
+#include "gungsuh12.h"
+#include "gungsuh15.h"
 #include "gungsuhche11.h"
+#include "gungsuhche15.h"
 #include "kartika9.h"
 #include "kartika10.h"
 #include "latha.h"
@@ -35,6 +41,7 @@
 #include "mangal9.h"
 #include "modern9.h"
 #include "modern9b.h"
+#include "msgothic8.h"
 #include "msgothic9.h"
 #include "mssans9.h"
 #include "mssans9b.h"
@@ -78,9 +85,15 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Garamond 10", new Garamond10()));
 	_fonts->push_back(new FontDefinition("Garamond 18", new Garamond18()));
 	_fonts->push_back(new FontDefinition("Gill Sans 11", new GillSans11()));
+	_fonts->push_back(new FontDefinition("Gill Sans 11b", new GillSans11b()));
 	_fonts->push_back(new FontDefinition("Gloucester 10", new Gloucester10()));
 	_fonts->push_back(new FontDefinition("Goudy 9", new Goudy9()));
+	_fonts->push_back(new FontDefinition("Gulimche 12", new Gulimche12()));
+	_fonts->push_back(new FontDefinition("Gulimche 12b", new Gulimche12b()));
+	_fonts->push_back(new FontDefinition("Gungsuh 12", new Gungsuh12()));
+	_fonts->push_back(new FontDefinition("Gungsuh 15", new Gungsuh15()));
 	_fonts->push_back(new FontDefinition("Gungsuhche 11", new Gungsuhche11()));
+	_fonts->push_back(new FontDefinition("Gungsuhche 15", new Gungsuhche15()));
 	_fonts->push_back(new FontDefinition("Kartika 9", new Kartika9()));
 	_fonts->push_back(new FontDefinition("Kartika 10", new Kartika10()));
 	_fonts->push_back(new FontDefinition("Latha", new Latha()));
@@ -94,6 +107,7 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Mangal 9", new Mangal9()));
 	_fonts->push_back(new FontDefinition("Modern 9", new Modern9()));
 	_fonts->push_back(new FontDefinition("Modern 9b", new Modern9b()));
+	_fonts->push_back(new FontDefinition("MS Gothic 8", new MSGothic8()));
 	_fonts->push_back(new FontDefinition("MS Gothic 9", new MSGothic9()));
 	_fonts->push_back(new FontDefinition("MS Sans 9", new MSSans9()));
 	_fonts->push_back(new FontDefinition("MS Sans 9b", new MSSans9b()));
