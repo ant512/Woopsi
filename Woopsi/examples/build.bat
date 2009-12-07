@@ -44,6 +44,10 @@ cd ../keyboard
 make clean
 make
 
+cd ../packedfonts
+make clean
+make
+
 cd ../progressbar
 make clean
 make
