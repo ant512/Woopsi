@@ -19,7 +19,6 @@
 #include "fonts/dotum13.h"
 #include "fonts/fixedsys12.h"
 #include "fonts/garamond10.h"
-#include "fonts/garamond18.h"
 #include "fonts/gillsans11.h"
 #include "fonts/gillsans11b.h"
 #include "fonts/gloucester10.h"
@@ -39,7 +38,6 @@
 #include "fonts/lucida6.h"
 #include "fonts/lucida10.h"
 #include "fonts/lucidacalligraphy14.h"
-#include "fonts/macdemo.h"
 #include "fonts/mangal9.h"
 #include "fonts/modern9.h"
 #include "fonts/modern9b.h"
@@ -86,7 +84,6 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Dotum 13", new Dotum13()));
 	_fonts->push_back(new FontDefinition("Fixed Sys 12", new FixedSys12()));
 	_fonts->push_back(new FontDefinition("Garamond 10", new Garamond10()));
-	_fonts->push_back(new FontDefinition("Garamond 18", new Garamond18()));
 	_fonts->push_back(new FontDefinition("Gill Sans 11", new GillSans11()));
 	_fonts->push_back(new FontDefinition("Gill Sans 11b", new GillSans11b()));
 	_fonts->push_back(new FontDefinition("Gloucester 10", new Gloucester10()));
@@ -106,7 +103,6 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Lucida 6", new Lucida6()));
 	_fonts->push_back(new FontDefinition("Lucida 10", new Lucida10()));
 	_fonts->push_back(new FontDefinition("Lucida Calligraphy 14", new LucidaCalligraphy14()));
-	_fonts->push_back(new FontDefinition("Mac Demo", new MacDemo()));
 	_fonts->push_back(new FontDefinition("Mangal 9", new Mangal9()));
 	_fonts->push_back(new FontDefinition("Modern 9", new Modern9()));
 	_fonts->push_back(new FontDefinition("Modern 9b", new Modern9b()));

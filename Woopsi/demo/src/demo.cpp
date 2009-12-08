@@ -10,10 +10,14 @@
 #include "bitmap.h"
 #include "graphics.h"
 #include "rect.h"
+#include "defaultstyle.h"
+#include "fonts/newtopaz.h"
 
 void Demo::startup() {
 
 	Woopsi::startup();
+
+	DefaultStyle::font = new NewTopaz();
 
 	Rect rect;
 

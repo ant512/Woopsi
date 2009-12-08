@@ -450,10 +450,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\fonts\garamond18.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\fonts\gillsans11.cpp"
 					>
 				</File>
@@ -527,10 +523,6 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\src\fonts\lucidacalligraphy14.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\src\fonts\macdemo.cpp"
 					>
 				</File>
 				<File
@@ -1108,10 +1100,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\include\fonts\garamond18.h"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\include\fonts\gillsans11.h"
 					>
 				</File>
@@ -1185,10 +1173,6 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\include\fonts\lucidacalligraphy14.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\fonts\macdemo.h"
 					>
 				</File>
 				<File
