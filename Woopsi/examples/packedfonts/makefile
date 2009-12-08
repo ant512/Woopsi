@@ -22,8 +22,8 @@ ICON 		:= $(CURDIR)/../../../libwoopsi/icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source ../../libwoopsi/src data ../../bonus/fonts/packedfonts
-INCLUDES	:=	include ../../libwoopsi/include ../../bonus/fonts/packedfonts
+SOURCES		:=	source ../../libwoopsi/src data ../../libwoopsi/src/fonts
+INCLUDES	:=	include ../../libwoopsi/include ../../libwoopsi/include/fonts
 DEFINES		:=
 
 #-------------------------------------------------------------------------------

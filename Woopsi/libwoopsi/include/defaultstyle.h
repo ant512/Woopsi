@@ -21,7 +21,7 @@ namespace WoopsiUI {
 		static u16 shadowColour;					/**< Colour used as dark bevel edge */
 		static u16 fillColour;						/**< Colour used as foreground fill */
 		static u16 darkColour;						/**< Colour used as scrollbar gutters etc */
-		static FontBase* font;							/**< Default font */
+		static FontBase* font;						/**< Default font */
 	};
 }
 

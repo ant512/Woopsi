@@ -16,8 +16,8 @@ PATH 		:= $(DEVKITARM)/bin:$(PATH)
 TARGET		:=	libwoopsi
 BUILD		:=	build
 RELEASE     :=  lib
-SOURCES		:=	src
-INCLUDES	:=	include build
+SOURCES		:=	src src/fonts
+INCLUDES	:=	include include/fonts build
 LIBDIRS		:=	$(DEVKITPRO)/libnds
 
 #-------------------------------------------------------------------------------

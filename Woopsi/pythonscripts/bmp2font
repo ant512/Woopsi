@@ -271,7 +271,7 @@ def convert(bitmap, fontname):
 	}
 
 	# now we can write the real files out
-	fp = open(fontname+".h", "w")
+	fp = open(_filename+".h", "w")
 	write(fp, subs, r"""
 //
 // $filename.h
@@ -295,7 +295,7 @@ namespace WoopsiUI {
 	fp.close()
 
 	# now the content file
-	fp = open(fontname+".cpp", "w")
+	fp = open(_filename+".cpp", "w")
 	write(fp,subs,r"""
 //
 // $filename.cpp

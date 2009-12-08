@@ -18,11 +18,6 @@ Collections
   instead making use of its own DynamicArray class.  This is done to reduce the
   size of Woopsi ROMs.  The collections in this folder are a linked list and a
   hashmap.  Both have associated iterator classes.
-
-Fonts
------
-
-  A collection of fonts for use with Woopsi.
   
 Gadgets
 -------
