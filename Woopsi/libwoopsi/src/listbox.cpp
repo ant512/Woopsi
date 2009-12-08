@@ -60,7 +60,6 @@ void ListBox::draw(Rect clipRect) {
 	// means we need to add an additional 1 to compensate
 	s32 bottomOption = topOption + (clipHeight / optionHeight) + 2;
 	s32 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
-	s32 i = topOption;
 
 	// Ensure top options is not negative
 	if (topOption < 0) topOption = 0;
@@ -74,6 +73,7 @@ void ListBox::draw(Rect clipRect) {
 	const ListBoxDataItem* item = NULL;
 
 	// Loop through all options drawing each one
+	s32 i = topOption;
 	while (i <= bottomOption) {
 
 		item = (const ListBoxDataItem*)_options.getItem(i);
