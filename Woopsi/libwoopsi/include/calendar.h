@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "gadgetstyle.h"
 #include "gadgeteventhandler.h"
 
 #define CALENDAR_ROWS 8
@@ -34,7 +35,7 @@ namespace WoopsiUI {
 		 * @param flags Standard flags.
 		 * @param font Optional font to use for text output.
 		 */
-		Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, u32 flags, FontBase* font = NULL);
+		Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, u32 flags, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.

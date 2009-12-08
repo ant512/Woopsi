@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-AmigaScreen::AmigaScreen(const char* title, u32 flags, u32 screenFlags, FontBase* font) : Screen(title, flags, font) {
+AmigaScreen::AmigaScreen(const char* title, u32 flags, u32 screenFlags, GadgetStyle* style) : Screen(title, flags, style) {
 
 	_titleHeight = SCREEN_TITLE_HEIGHT;
 
@@ -37,7 +37,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 			_flags.borderless = true;
 		} else {
 			// Add borders
-			_screenTitle = new ScreenTitle(_titleHeight, this, _font);
+			_screenTitle = new ScreenTitle(_titleHeight, this, _style);
 			_screenTitle->addGadgetEventHandler(this);
 			insertGadget(_screenTitle);
 
@@ -45,7 +45,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 			// Create depth button
 			if (_screenFlags.showDepthButton) {
-				_depthButton = new DecorationGlyphButton(buttonX - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, _font);
+				_depthButton = new DecorationGlyphButton(buttonX - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, _style);
 				_depthButton->addGadgetEventHandler(this);
 				addGadget(_depthButton);
 
@@ -54,7 +54,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 			// Create flip button
 			if (_screenFlags.showFlipButton) {
-				_flipButton = new DecorationGlyphButton(buttonX - SCREEN_FLIP_BUTTON_WIDTH, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, _font);
+				_flipButton = new DecorationGlyphButton(buttonX - SCREEN_FLIP_BUTTON_WIDTH, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, _style);
 				_flipButton->addGadgetEventHandler(this);
 				addGadget(_flipButton);
 			}
@@ -122,7 +122,7 @@ void AmigaScreen::showFlipButton() {
 		if (_screenFlags.showDepthButton) buttonX -= SCREEN_DEPTH_BUTTON_WIDTH;
 		
 		// Recreate flip button
-		_flipButton = new DecorationGlyphButton(buttonX, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, _font);
+		_flipButton = new DecorationGlyphButton(buttonX, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, _style);
 		_flipButton->addGadgetEventHandler(this);
 		addGadget(_flipButton);
 
@@ -135,7 +135,7 @@ void AmigaScreen::showDepthButton() {
 		_screenFlags.showDepthButton = true;
 		
 		// Recreate depth button
-		_depthButton = new DecorationGlyphButton(_width - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, _font);
+		_depthButton = new DecorationGlyphButton(_width - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, _style);
 		_depthButton->addGadgetEventHandler(this);
 		addGadget(_depthButton);
 

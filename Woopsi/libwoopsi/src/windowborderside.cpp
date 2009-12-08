@@ -12,9 +12,9 @@ WindowBorderSide::WindowBorderSide(s16 x, s16 y, u16 width, u16 height) : Gadget
 void WindowBorderSide::draw(Rect clipRect) {
 
 	// Choose a colour depending on parent's active state
-	u16 colour = _colours.fill;
+	u16 colour = getFillColour();
 	if (_parent != NULL) {
-		colour = _parent->hasFocus() ? _colours.highlight : _colours.fill;
+		colour = _parent->hasFocus() ? getHighlightColour() : getFillColour();
 	}
 
 	// Get a new graphics port
@@ -24,10 +24,10 @@ void WindowBorderSide::draw(Rect clipRect) {
 	port->drawFilledRect(1, 0, _width - 1, _height, colour);
 
 	// Left
-	port->drawVertLine(0, 0, _height, _colours.shine);
+	port->drawVertLine(0, 0, _height, getShineColour());
 
 	// Right
-	port->drawVertLine(_width - 1, 0, _height, _colours.shadow);
+	port->drawVertLine(_width - 1, 0, _height, getShadowColour());
 
 	delete port;
 }

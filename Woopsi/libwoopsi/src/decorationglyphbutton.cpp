@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-DecorationGlyphButton::DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font) : Button(x, y, width, height, normalGlyph, font) {
+DecorationGlyphButton::DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, GadgetStyle* style) : Button(x, y, width, height, normalGlyph, style) {
 	_flags.decoration = true;
 
 	_normalGlyph = normalGlyph;
@@ -15,13 +15,13 @@ void DecorationGlyphButton::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear the background
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	// Draw the glyph
 	if (_flags.clicked) {
-		port->drawText(_textX, _textY, _font, _clickedGlyph);
+		port->drawText(_textX, _textY, getFont(), _clickedGlyph);
 	} else {
-		port->drawText(_textX, _textY, _font, _normalGlyph);
+		port->drawText(_textX, _textY, getFont(), _normalGlyph);
 	}
 
 	// Draw outline

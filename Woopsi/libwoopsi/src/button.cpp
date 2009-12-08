@@ -4,11 +4,11 @@
 
 using namespace WoopsiUI;
 
-Button::Button(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Label(x, y, width, height, text, font) {
+Button::Button(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style) : Label(x, y, width, height, text, style) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 }
 
-Button::Button(s16 x, s16 y, u16 width, u16 height, char letter, FontBase* font) : Label(x, y, width, height, letter, font) {
+Button::Button(s16 x, s16 y, u16 width, u16 height, char letter, GadgetStyle* style) : Label(x, y, width, height, letter, style) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 }
 
@@ -19,21 +19,21 @@ void Button::draw(Rect clipRect) {
 	if (!isEnabled()) {
 
 		// Draw disabled state
-		port->drawFilledRect(0, 0, _width, _height, _colours.back);
+		port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.dark);
+		port->drawText(_textX, _textY, getFont(), _text->getCharArray(), getDarkColour());
 	} else if (!isClicked()) {
 
 		// Draw normal state
-		port->drawFilledRect(0, 0, _width, _height, _colours.back);
+		port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
-		port->drawText(_textX, _textY, _font, _text->getCharArray());
+		port->drawText(_textX, _textY, getFont(), _text->getCharArray());
 	} else {
 
 		// Draw clicked state
-		port->drawFilledRect(0, 0, _width, _height, _colours.dark);
+		port->drawFilledRect(0, 0, _width, _height, getDarkColour());
 
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.shine);
+		port->drawText(_textX, _textY, getFont(), _text->getCharArray(), getShineColour());
 	}
 
 	// Draw outline

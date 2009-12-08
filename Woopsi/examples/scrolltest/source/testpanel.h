@@ -1,6 +1,7 @@
 #include <nds.h>
 #include "gadget.h"
 #include "scrollingpanel.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -20,7 +21,7 @@ namespace WoopsiUI {
 		 * @param flags Flags bitmask.
 		 * @param font Font to use with the panel.
 		 */
-		TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
+		TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
 		
 		/**
 		 * Draw the test panel.

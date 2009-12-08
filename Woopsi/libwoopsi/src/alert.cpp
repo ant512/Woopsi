@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
+Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, style) {
 
 	// Define OK button text
 	const char* buttonText = "OK";
@@ -18,8 +18,8 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char*
 
 	// Calculate button dimensions
 	Rect buttonRect;
-	buttonRect.width = _font->getStringWidth(buttonText) + (padding << 1);
-	buttonRect.height = _font->getHeight() + (padding << 1);
+	buttonRect.width = getFont()->getStringWidth(buttonText) + (padding << 1);
+	buttonRect.height = getFont()->getHeight() + (padding << 1);
 	buttonRect.x = rect.x + ((rect.width / 2) - (buttonRect.width / 2));
 	buttonRect.y = (rect.y + rect.height) - (buttonRect.height + padding);
 
@@ -29,7 +29,7 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char*
 	addGadget(_button);
 
 	// Create textbox
-	_textBox = new MultiLineTextBox(rect.x + padding, rect.y + padding, rect.width - (padding << 1), rect.height - (buttonRect.height + (padding << 2)), text, GADGET_DRAGGABLE, 100, font);
+	_textBox = new MultiLineTextBox(rect.x + padding, rect.y + padding, rect.width - (padding << 1), rect.height - (buttonRect.height + (padding << 2)), text, GADGET_DRAGGABLE, 100, style);
 	addGadget(_textBox);
 }
 

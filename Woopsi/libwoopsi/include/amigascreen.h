@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "gadgeteventhandler.h"
 #include "screen.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -43,7 +44,7 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 */
-		AmigaScreen(const char* title, u32 flags, u32 screenFlags, FontBase* font = NULL);
+		AmigaScreen(const char* title, u32 flags, u32 screenFlags, GadgetStyle* style = NULL);
 
 		/**
 		 * Sets this gadget's border state.  Setting to false hides the title bar.

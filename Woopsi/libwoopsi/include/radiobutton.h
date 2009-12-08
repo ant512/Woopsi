@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "button.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -35,7 +36,7 @@ namespace WoopsiUI {
 		 * @param height The height of the radio button.
 		 * @param font The font to use for the radio button.
 		 */
-		RadioButton(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
+		RadioButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

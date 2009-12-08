@@ -555,12 +555,12 @@ void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
 void woopsiInitDefaultGadgetStyle() {
 	defaultGadgetStyle = new WoopsiUI::GadgetStyle();
 
-	defaultGadgetStyle->backColour = woopsiRGB(20, 20, 20);
-	defaultGadgetStyle->shineColour = woopsiRGB(31, 31, 31);
-	defaultGadgetStyle->highlightColour = woopsiRGB(12, 17, 23);
-	defaultGadgetStyle->shadowColour = woopsiRGB(0, 0, 0);
-	defaultGadgetStyle->fillColour = woopsiRGB(24, 24, 24);
-	defaultGadgetStyle->darkColour = woopsiRGB(15, 15, 15);
+	defaultGadgetStyle->colours.back = woopsiRGB(20, 20, 20);
+	defaultGadgetStyle->colours.shine = woopsiRGB(31, 31, 31);
+	defaultGadgetStyle->colours.highlight = woopsiRGB(12, 17, 23);
+	defaultGadgetStyle->colours.shadow = woopsiRGB(0, 0, 0);
+	defaultGadgetStyle->colours.fill = woopsiRGB(24, 24, 24);
+	defaultGadgetStyle->colours.dark = woopsiRGB(15, 15, 15);
 	defaultGadgetStyle->font = NULL;
 }
 

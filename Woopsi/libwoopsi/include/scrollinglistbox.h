@@ -6,6 +6,7 @@
 #include "gadgeteventhandler.h"
 #include "listdata.h"
 #include "listboxdataitem.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -27,7 +28,7 @@ namespace WoopsiUI {
 		 * @param height The height of the gadget.
 		 * @param font The font to use with the listbox.
 		 */
-		ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
+		ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 
 		/**
 		 * Add a new option to the gadget using default colours.

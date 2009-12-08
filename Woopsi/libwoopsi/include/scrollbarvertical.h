@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "gadget.h"
 #include "gadgeteventhandler.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -31,7 +32,7 @@ namespace WoopsiUI {
 		 * @param height The height of the slider.
 		 * @param font The font to use for this gadget.
 		 */
-		ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
+		ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 
 		/**
 		 * Get the smallest value that the slider can represent.

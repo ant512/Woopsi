@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, FontBase* font) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, font) {
+Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, style) {
 
 	_flags.shiftClickChildren = false;
 
@@ -16,12 +16,12 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, Fon
 	// Calculate list box
 	Rect listboxRect;
 	listboxRect.width = rect.width - (padding << 1);
-	listboxRect.height = rect.height - (padding * 5) - _font->getHeight();
+	listboxRect.height = rect.height - (padding * 5) - getFont()->getHeight();
 	listboxRect.x = rect.x + padding;
 	listboxRect.y = rect.y + padding;
 
 	// Create list box
-	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, font);
+	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, _style);
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setOutlineType(OUTLINE_OUT);
 	addGadget(_listbox);
@@ -29,7 +29,7 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const char* title, Fon
 	// Calculate OK button dimensions
 	Rect buttonRect;
 	buttonRect.width = (rect.width - (padding * 3)) >> 1;
-	buttonRect.height = _font->getHeight() + (padding << 1);
+	buttonRect.height = getFont()->getHeight() + (padding << 1);
 	buttonRect.x = rect.x + padding;
 	buttonRect.y = (rect.y + rect.height) - (buttonRect.height + padding);
 

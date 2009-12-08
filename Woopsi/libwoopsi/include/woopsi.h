@@ -4,6 +4,7 @@
 #include <nds.h>
 #include <vector>
 #include "gadget.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -28,7 +29,7 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param font Pointer to a font object for use within this class.
 		 */
-		Woopsi(FontBase* font = NULL);
+		Woopsi(GadgetStyle* style = NULL);
 		
 		/**
 		 * Destructor.
@@ -137,12 +138,6 @@ namespace WoopsiUI {
 		virtual void eraseRect(Rect rect);
 
 		/**
-		 * Get a pointer to the system font.
-		 * @return A pointer to the system font.
-		 */
-		static FontBase* getSystemFont();
-
-		/**
 		 * Add the supplied timer to the list of timers that receive VBL notifications.
 		 * This is handled automatically by the WoopsiTimer constructor and should not be
 		 * used in user code.
@@ -224,7 +219,6 @@ namespace WoopsiUI {
 		
 		static WoopsiArray<WoopsiTimer*> _vblListeners;		/**< Array of timers that receive VBL events */
 		static WoopsiArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion */
-		static FontBase* _systemFont;						/**< Pointer to the default font */
 		static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */
 		ContextMenu* _contextMenu;							/**< Pointer to the context menu */
 		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked */

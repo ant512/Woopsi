@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-WindowBorderButton::WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font) : DecorationGlyphButton(x, y, width, height, normalGlyph, clickedGlyph, font) {
+WindowBorderButton::WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, GadgetStyle* style) : DecorationGlyphButton(x, y, width, height, normalGlyph, clickedGlyph, style) {
 }
 
 void WindowBorderButton::draw(Rect clipRect) {
@@ -11,9 +11,9 @@ void WindowBorderButton::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Choose a colour depending on parent's active state
-	u16 colour = _colours.fill;
+	u16 colour = getFillColour();
 	if (_parent != NULL) {
-		colour = _parent->hasFocus() ? _colours.highlight : _colours.fill;
+		colour = _parent->hasFocus() ? getHighlightColour() : getFillColour();
 	}
 
 	// Clear the background
@@ -21,9 +21,9 @@ void WindowBorderButton::draw(Rect clipRect) {
 
 	// Draw the glyph
 	if (_flags.clicked) {
-		port->drawText(_textX, _textY, _font, _clickedGlyph);
+		port->drawText(_textX, _textY, getFont(), _clickedGlyph);
 	} else {
-		port->drawText(_textX, _textY, _font, _normalGlyph);
+		port->drawText(_textX, _textY, getFont(), _normalGlyph);
 	}
 
 	// Draw outline

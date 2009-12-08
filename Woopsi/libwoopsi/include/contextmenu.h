@@ -2,6 +2,7 @@
 #define _CONTEXT_MENU_H_
 
 #include "gadget.h"
+#include "gadgetstyle.h"
 #include "gadgeteventhandler.h"
 #include "listbox.h"
 
@@ -22,7 +23,7 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param font The font to use with the context menu.
 		 */
-		ContextMenu(FontBase* font = NULL);
+		ContextMenu(GadgetStyle* style = NULL);
 
 		/**
 		 * Add a new menu item to the gadget.

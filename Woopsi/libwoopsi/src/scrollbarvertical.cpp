@@ -6,7 +6,7 @@
 
 using namespace WoopsiUI;
 
-ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
+ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, GADGET_BORDERLESS, style) {
 
 	_buttonHeight = 10;
 
@@ -14,10 +14,10 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, FontBa
 	_slider = new SliderVertical(0, 0, width, height - (_buttonHeight << 1));
 	_slider->addGadgetEventHandler(this);
 
-	_upButton = new Button(0, height - (_buttonHeight << 1), width, _buttonHeight, GLYPH_ARROW_UP, _font);
+	_upButton = new Button(0, height - (_buttonHeight << 1), width, _buttonHeight, GLYPH_ARROW_UP, _style);
 	_upButton->addGadgetEventHandler(this);
 
-	_downButton = new Button(0, height - _buttonHeight, width, _buttonHeight, GLYPH_ARROW_DOWN, _font);
+	_downButton = new Button(0, height - _buttonHeight, width, _buttonHeight, GLYPH_ARROW_DOWN, _style);
 	_downButton->addGadgetEventHandler(this);
 
 	// Create timer

@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "gadget.h"
 #include "graphics.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -30,7 +31,7 @@ namespace WoopsiUI {
 		 * the gadget will function as a background image.
 		 * @param font The font to use for text output.
 		 */
-		SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, FontBase* font = NULL);
+		SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, GadgetStyle* style = NULL);
 
 		/**
 		 * Get a pointer to the internal bitmap.

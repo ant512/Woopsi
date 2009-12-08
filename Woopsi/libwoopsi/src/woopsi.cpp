@@ -12,9 +12,6 @@ using namespace WoopsiUI;
 // Instantiate singleton
 Woopsi* Woopsi::singleton = NULL;
 
-// Initialise static system font
-FontBase* Woopsi::_systemFont = NULL;
-
 // Initialise static VBL listener vector
 WoopsiArray<WoopsiTimer*> Woopsi::_vblListeners;
 
@@ -24,7 +21,7 @@ WoopsiArray<Gadget*> Woopsi::_deleteQueue;
 // Initialise VBL counter
 u32 Woopsi::_vblCount = 0;
 
-Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, font) {
+Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, style) {
 	_lidClosed = false;
 	_flags.modal = true;
 	_clickedGadget = NULL;
@@ -35,22 +32,43 @@ Woopsi::Woopsi(FontBase* font) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET 
 	// Set up DS display hardware
 	initWoopsiGfxMode();
 
-	// Get system font if no font supplied
-	if (font == NULL) {
-		_font = getSystemFont();
+	// Do we need to fetch the default style?
+	if (style == NULL) {
+
+		// Use default style
+		if (defaultGadgetStyle != NULL) {
+			_style->colours.back = defaultGadgetStyle->colours.back;
+			_style->colours.shine = defaultGadgetStyle->colours.shine;
+			_style->colours.highlight = defaultGadgetStyle->colours.highlight;
+			_style->colours.shadow = defaultGadgetStyle->colours.shadow;
+			_style->colours.fill = defaultGadgetStyle->colours.fill;
+			_style->colours.dark = defaultGadgetStyle->colours.dark;
+			_style->font = defaultGadgetStyle->font;
+		}
+	} else {
+
+		// Use specified style
+		_style->colours.back = style->colours.back;
+		_style->colours.shine = style->colours.shine;
+		_style->colours.highlight = style->colours.highlight;
+		_style->colours.shadow = style->colours.shadow;
+		_style->colours.fill = style->colours.fill;
+		_style->colours.dark = style->colours.dark;
+		_style->font = style->font;
 	}
 
 	// Create context menu
-	_contextMenu = new ContextMenu(_font);
+	_contextMenu = new ContextMenu(_style);
 	addGadget(_contextMenu);
 	_contextMenu->shelve();
 }
 
 Woopsi::~Woopsi() {
 	stopModal();
-	_font = NULL;
 	singleton = NULL;
 	_contextMenu = NULL;
+
+	delete _style;
 
 	woopsiFreeFonts();
 	woopsiFreeFrameBuffers();
@@ -478,22 +496,6 @@ void Woopsi::eraseRect(Rect rect) {
 		// Tidy up
 		delete invalidRectangles;
 	}
-}
-
-// Return a pointer to the static system font
-FontBase* Woopsi::getSystemFont() {
-
-	// Attempt to retrieve the default font
-	if (defaultGadgetStyle->font != NULL) {
-		return defaultGadgetStyle->font;
-	}
-
-	// Create font instance if it does not exist yet
-	if (_systemFont == NULL) {
-		_systemFont = systemFont;
-	}
-
-	return _systemFont;
 }
 
 // Add a timer to the list of timers that receive VBL events

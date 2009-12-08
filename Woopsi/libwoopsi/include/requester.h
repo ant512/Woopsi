@@ -4,6 +4,7 @@
 #include "amigawindow.h"
 #include "scrollinglistbox.h"
 #include "listdata.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -28,7 +29,7 @@ namespace WoopsiUI {
 		 * @param title The title of the window.
 		 * @param font Optional font to use for text output.
 		 */
-		Requester(s16 x, s16 y, u16 width, u16 height, const char* title, FontBase* font = NULL);
+		Requester(s16 x, s16 y, u16 width, u16 height, const char* title, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.

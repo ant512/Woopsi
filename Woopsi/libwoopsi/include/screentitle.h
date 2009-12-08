@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -24,7 +25,7 @@ namespace WoopsiUI {
 		 * @param screen Pointer to the screen that contains this gadget.
 		 * @param font The font to use for the title bar.
 		 */
-		ScreenTitle(u16 height, Screen* screen, FontBase* font = NULL);
+		ScreenTitle(u16 height, Screen* screen, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

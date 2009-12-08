@@ -6,6 +6,7 @@
 #include "listdataeventhandler.h"
 #include "listdata.h"
 #include "listdataitem.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -24,7 +25,7 @@ namespace WoopsiUI {
 		 * @param height The height of the button.
 		 * @param font The font that the button should use.
 		 */
-		CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font = NULL);
+		CycleButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the region of the textbox within the clipping rect. Should not be called

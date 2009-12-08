@@ -7,7 +7,7 @@
 
 using namespace WoopsiUI;
 
-FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
+FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 
 	_flags.shiftClickChildren = false;
 
@@ -23,12 +23,12 @@ FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, 
 	// Calculate list box
 	Rect listboxRect;
 	listboxRect.width = rect.width - (padding << 1);
-	listboxRect.height = rect.height - (padding * 5) - _font->getHeight();
+	listboxRect.height = rect.height - (padding * 5) - getFont()->getHeight();
 	listboxRect.x = rect.x + padding;
 	listboxRect.y = rect.y + padding;
 
 	// Create list box
-	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, font);
+	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, _style);
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setOutlineType(OUTLINE_OUT);
 	_listbox->setAllowMultipleSelections(false);
@@ -56,7 +56,7 @@ void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
 			if (selected != NULL) {
 
 				// Detect type by examining text colour
-				if (selected->getNormalTextColour() == _colours.shine) {
+				if (selected->getNormalTextColour() == getShineColour()) {
 
 					// Got a directory
 					appendPath(selected->getText());
@@ -116,11 +116,11 @@ void FileListBox::readDirectory() {
 		if (st.st_mode & S_IFDIR) {
 
 			// Directory
-			_listbox->addOption(new FileListBoxDataItem(storedFilename, 0, _colours.shine, _colours.back, _colours.shine, _colours.highlight, true));
+			_listbox->addOption(new FileListBoxDataItem(storedFilename, 0, getShineColour(), getBackColour(), getShineColour(), getHighlightColour(), true));
 		} else {
 
 			// File
-			_listbox->addOption(new FileListBoxDataItem(storedFilename, 0, _colours.shadow, _colours.back, _colours.shadow, _colours.highlight, false));
+			_listbox->addOption(new FileListBoxDataItem(storedFilename, 0, getShadowColour(), getBackColour(), getShadowColour(), getHighlightColour(), false));
 		}
 	}
 	

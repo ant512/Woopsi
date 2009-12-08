@@ -95,7 +95,7 @@ void SliderHorizontal::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Draw background
-	port->drawFilledRect(0, 0, _width, _height, _colours.dark);
+	port->drawFilledRect(0, 0, _width, _height, getDarkColour());
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);

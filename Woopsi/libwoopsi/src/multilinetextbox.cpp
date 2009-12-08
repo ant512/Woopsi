@@ -6,7 +6,7 @@
 
 using namespace WoopsiUI;
 
-MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, FontBase* font) : ScrollingPanel(x, y, width, height, flags, font) {
+MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, GadgetStyle* style) : ScrollingPanel(x, y, width, height, flags, style) {
 
 	_outline = OUTLINE_IN;
 
@@ -17,7 +17,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const ch
 
 	Rect rect;
 	getClientRect(rect);
-	_text = new Text(_font, "", rect.width - (_padding << 1));
+	_text = new Text(getFont(), "", rect.width - (_padding << 1));
 
 	_flags.draggable = true;
 	_maxRows = maxRows;
@@ -71,7 +71,7 @@ void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 		if (isEnabled()) {
 			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow));
 		} else {
-			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow), _colours.dark);
+			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow), getDarkColour());
 		}
 
 		currentRow++;
@@ -103,7 +103,7 @@ void MultiLineTextBox::draw(Rect clipRect) {
  	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
@@ -148,7 +148,7 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 			
 			// Sum the width of each char in the row to find the x co-ord 
 			for (s32 i = 0; i < cursorLineOffset; i++) {
-				cursorX += _font->getCharWidth(lineData[i]);
+				cursorX += getFont()->getCharWidth(lineData[i]);
 			}
 		}
 
@@ -160,7 +160,7 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 		cursorY = getRowY(cursorRow) + _canvasY;
 
 		// Draw cursor
-		port->drawFilledXORRect(cursorX, cursorY, _font->getCharWidth(_text->getCharArray()[_cursorPos]), _font->getHeight());
+		port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(_text->getCharArray()[_cursorPos]), getFont()->getHeight());
 	}
 
 	delete port;
@@ -358,7 +358,7 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
 
 void MultiLineTextBox::setFont(FontBase* font) {
-	_font = font;
+	_style->font = font;
 	_text->setFont(font);
 
 	// Ensure that we have the correct number of rows

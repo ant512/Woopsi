@@ -16,7 +16,7 @@ Debug::Debug() {
 	_screen = NULL;
 	_window = NULL;
 	_textBox = NULL;
-	_font = NULL;
+	_style = NULL;
 
 	createGUI();
 }
@@ -24,7 +24,7 @@ Debug::Debug() {
 Debug::~Debug() {
 	_screen->close();
 
-	delete _font;
+	delete _style;
 }
 
 void Debug::createDebug() {
@@ -86,9 +86,16 @@ void Debug::createGUI() {
 		_window->redraw();
 	}
 
-	// Create font
-	if (_font == NULL) {
-		_font = tinyFont;
+	// Create style
+	if (_style == NULL) {
+		_style = new GadgetStyle();
+		_style->colours.back = defaultGadgetStyle->colours.back;
+		_style->colours.shine = defaultGadgetStyle->colours.shine;
+		_style->colours.highlight = defaultGadgetStyle->colours.highlight;
+		_style->colours.shadow = defaultGadgetStyle->colours.shadow;
+		_style->colours.fill = defaultGadgetStyle->colours.fill;
+		_style->colours.dark = defaultGadgetStyle->colours.dark;
+		_style->font = tinyFont;
 	}
 
 	// Add textbox
@@ -96,7 +103,7 @@ void Debug::createGUI() {
 		Rect rect;
 		_window->getClientRect(rect);
 
-		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _font);
+		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _style);
 		_textBox->disableDrawing();
 		_window->addGadget(_textBox);
 		_textBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);

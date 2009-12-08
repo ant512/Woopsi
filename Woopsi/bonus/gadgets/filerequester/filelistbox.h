@@ -5,6 +5,7 @@
 #include "filelistboxdataitem.h"
 #include "gadget.h"
 #include "gadgeteventhandler.h"
+#include "gadgetstyle.h"
 
 #ifdef ARM9
 #include <fat.h>
@@ -45,7 +46,7 @@ namespace WoopsiUI {
 		 * @param path The initial path to display.
 		 * @param font Optional font to use for text output.
 		 */
-		FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, u32 flags, FontBase* font = NULL);
+		FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, u32 flags, GadgetStyle* style = NULL);
 	
 		/**
 		 * Handles events raised by its sub-gadgets.

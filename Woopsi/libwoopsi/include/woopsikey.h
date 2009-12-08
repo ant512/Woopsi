@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "button.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -54,7 +55,7 @@ namespace WoopsiUI {
 		 * @param keyType The type of key.
 		 * @param font The font that the button should use.
 		 */
-		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* text, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, FontBase* font = NULL);
+		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* text, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
 		/**
 		 * Constructor for keys for the keyboard that display a string.  Different string is
@@ -72,7 +73,7 @@ namespace WoopsiUI {
 		 * @param keyType The type of key.
 		 * @param font The font that the button should use.
 		 */
-		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* normalText, const char* shiftText, const char* controlText, const char* shiftControlText, const char* capsLockText, const char* controlCapsLockText, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, FontBase* font = NULL);
+		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* normalText, const char* shiftText, const char* controlText, const char* shiftControlText, const char* capsLockText, const char* controlCapsLockText, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
 		/**
 		 * Constructor for keys for the keyboard that display a single char.
@@ -84,7 +85,7 @@ namespace WoopsiUI {
 		 * @param keyType The type of key.
 		 * @param font The font that the button should use.
 		 */
-		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char glyph, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, FontBase* font = NULL);
+		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char glyph, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
 		/**
 		 * Return the type of key this object represents.

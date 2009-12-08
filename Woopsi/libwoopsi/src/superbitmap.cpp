@@ -7,7 +7,7 @@
 using namespace WoopsiUI;
 
 // Constructor - allocates mem for bitmap
-SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS, font) {
+SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, GadgetStyle* style) : Gadget(x, y, width, height, GADGET_BORDERLESS, style) {
 	
 	_bitmap = new Bitmap(bitmapWidth, bitmapHeight);
 	_graphics = _bitmap->newGraphics();
@@ -35,7 +35,7 @@ SuperBitmap::~SuperBitmap() {
 }
 
 void SuperBitmap::clearBitmap() {
-	_graphics->drawFilledRect(0, 0, _bitmap->getWidth(), _bitmap->getHeight(), _colours.back);
+	_graphics->drawFilledRect(0, 0, _bitmap->getWidth(), _bitmap->getHeight(), getBackColour());
 }
 
 void SuperBitmap::draw(Rect clipRect) {

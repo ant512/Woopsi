@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -23,7 +24,7 @@ namespace WoopsiUI {
 		 * @param window Pointer to the window that contains this border.
 		 * @param font The font to display the text with.
 		 */
-		WindowBorderTop(s16 x, u16 width, u16 height, Window* window, FontBase* font = NULL);
+		WindowBorderTop(s16 x, u16 width, u16 height, Window* window, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

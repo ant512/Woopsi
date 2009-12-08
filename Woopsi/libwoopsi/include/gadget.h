@@ -8,6 +8,7 @@
 #include "glyphs.h"
 #include "rect.h"
 #include "fontbase.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -87,29 +88,17 @@ namespace WoopsiUI {
 		} NameValuePair;
 
 		/**
-		 * Struct containing all colours that a gadget depends on.
-		 */
-		typedef struct {
-			u16 back;							/**< Colour used as background */
-			u16 shine;							/**< Colour used as light bevel edge */
-			u16 highlight;						/**< Colour used as highlighted elements */
-			u16 shadow;							/**< Colour used as dark bevel edge */
-			u16 fill;							/**< Colour used as foreground fill */
-			u16 dark;							/**< Colour used as scrollbar gutters etc */
-		} GadgetColours;
-
-		/**
 		 * Constructor.
 		 * @param x The x co-ordinate of the gadget.
 		 * @param y The y co-ordinate of the gadget.
 		 * @param width The width of the gadget.
 		 * @param height The height of the gadget.
 		 * @param flags Bitmask specifying some set-up values for the gadget.
-		 * @param font Pointer to a font object to use for text output.  If no object is
-		 * specified the gadget will fetch the default system font from the Woopsi class.
+		 * @param style Pointer to a style object containing visual appearance
+		 * data.  If no object is specified the gadget will use the default style.
 		 * @see GadgetFlagType.
 		 */
-		Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font = NULL);
+		Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
 		
 		/**
 		 * Get the x co-ordinate of the gadget in "Woopsi space".
@@ -344,37 +333,37 @@ namespace WoopsiUI {
 		 * Gets the colour used as the background fill.
 		 * @return Background fill colour.
 		 */
-		inline const u16 getBackColour() const { return _colours.back; };
+		inline const u16 getBackColour() const { return _style->colours.back; };
 
 		/**
 		 * Gets the colour used as the light edge in bevelled boxes.
 		 * @return Shine colour.
 		 */
-		inline const u16 getShineColour() const { return _colours.shine; };
+		inline const u16 getShineColour() const { return _style->colours.shine; };
 
 		/**
 		 * Gets the colour used as the fill in focused window borders.
 		 * @return Highlight colour.
 		 */
-		inline const u16 getHighlightColour() const { return _colours.highlight; };
+		inline const u16 getHighlightColour() const { return _style->colours.highlight; };
 
 		/**
 		 * Gets the colour used as the dark edge in bevelled boxes.
 		 * @return Shadow colour.
 		 */
-		inline const u16 getShadowColour() const { return _colours.shadow; };
+		inline const u16 getShadowColour() const { return _style->colours.shadow; };
 
 		/**
 		 * Gets the colour used as the fill in unfocused window borders.
 		 * @return Fill colour.
 		 */
-		inline const u16 getFillColour() const { return _colours.fill; };
+		inline const u16 getFillColour() const { return _style->colours.fill; };
 
 		/**
 		 * Gets the colour used as the fill in scrollbar gutters.
 		 * @return Dark colour.
 		 */
-		inline const u16 getDarkColour() const { return _colours.dark; };
+		inline const u16 getDarkColour() const { return _style->colours.dark; };
 
 		/**
 		 * Gets the type of outline used in this gadget.
@@ -453,37 +442,37 @@ namespace WoopsiUI {
 		 * Sets the background colour.
 		 * @param colour The new background colour.
 		 */
-		inline void setBackColour(const u16 colour) { _colours.back = colour; };
+		inline void setBackColour(const u16 colour) { _style->colours.back = colour; };
 
 		/**
 		 * Sets the shine colour.
 		 * @param colour The new shine colour.
 		 */
-		inline void setShineColour(const u16 colour) { _colours.shine = colour; };
+		inline void setShineColour(const u16 colour) { _style->colours.shine = colour; };
 
 		/**
 		 * Sets the highlight colour.
 		 * @param colour The new highlight colour.
 		 */
-		inline void setHighlightColour(const u16 colour) { _colours.highlight = colour; };
+		inline void setHighlightColour(const u16 colour) { _style->colours.highlight = colour; };
 
 		/**
 		 * Sets the shadow colour.
 		 * @param colour The new shadow colour.
 		 */
-		inline void setShadowColour(const u16 colour) { _colours.shadow = colour; };
+		inline void setShadowColour(const u16 colour) { _style->colours.shadow = colour; };
 
 		/**
 		 * Sets the fill colour.
 		 * @param colour The new fill colour.
 		 */
-		inline void setFillColour(const u16 colour) { _colours.fill = colour; };
+		inline void setFillColour(const u16 colour) { _style->colours.fill = colour; };
 
 		/**
 		 * Sets the dark colour.
 		 * @param colour The new dark colour.
 		 */
-		inline void setDarkColour(const u16 colour) { _colours.dark = colour; };
+		inline void setDarkColour(const u16 colour) { _style->colours.dark = colour; };
 
 		/**
 		 * Sets the close type other gadgets should use when closing this gadget.
@@ -957,8 +946,8 @@ namespace WoopsiUI {
 		s16 _newX;								/**< Physical x co-ordinate where gadget is being dragged to */
 		s16 _newY;								/**< Physical y co-ordinate where gadget is being dragged to */
 
-		// Colour definitions
-		GadgetColours _colours;					/**< All colours used by a gadget */
+		// Style
+		GadgetStyle* _style;					/**< All style information used by a gadget */
 
 		// Status
 		Flags _flags;							/**< Flags struct */
@@ -986,8 +975,6 @@ namespace WoopsiUI {
 
 		OutlineType _outline;					/**< Type of outline the gadget uses */
 		CloseType _closeType;					/**< Type of close method that should be called for the gadget */
-
-		FontBase* _font;						/**< Font that the gadget will use for drawing text/glyphs */
 
 		// Context menu item definitions
 		WoopsiArray<NameValuePair> _contextMenuItems;	/**< List of all context menu name/value pairs */

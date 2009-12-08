@@ -27,6 +27,8 @@ Change Log
   - New Features:
     - Added packedfonts example.
     - Added dozens of packed fonts.
+    - Replaced font pointer in gadget constructors with a pointer to a
+      GadgetStyle object.
   
 
   V0.42 (20091205)

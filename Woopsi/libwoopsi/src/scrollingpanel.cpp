@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
+ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 	
 	Rect rect;
 	getClientRect(rect);
@@ -24,7 +24,7 @@ void ScrollingPanel::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	// Draw border
 	port->drawBevelledRect(0, 0, _width, _height);

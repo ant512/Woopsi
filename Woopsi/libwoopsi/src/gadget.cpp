@@ -15,18 +15,38 @@
 
 using namespace WoopsiUI;
 
-Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
+Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) {
 
 	// Set properties from parameters
 	_x = x;
 	_y = y;
 	_width = width;
 	_height = height;
-	_font = font;
+	_style = new GadgetStyle();
 
-	// Do we need to fetch the system font?
-	if (_font == NULL) {
-		_font = Woopsi::getSystemFont();
+	// Do we need to fetch the default style?
+	if (style == NULL) {
+
+		// Use default style
+		if (defaultGadgetStyle != NULL) {
+			_style->colours.back = defaultGadgetStyle->colours.back;
+			_style->colours.shine = defaultGadgetStyle->colours.shine;
+			_style->colours.highlight = defaultGadgetStyle->colours.highlight;
+			_style->colours.shadow = defaultGadgetStyle->colours.shadow;
+			_style->colours.fill = defaultGadgetStyle->colours.fill;
+			_style->colours.dark = defaultGadgetStyle->colours.dark;
+			_style->font = defaultGadgetStyle->font;
+		}
+	} else {
+
+		// Use specified style
+		_style->colours.back = style->colours.back;
+		_style->colours.shine = style->colours.shine;
+		_style->colours.highlight = style->colours.highlight;
+		_style->colours.shadow = style->colours.shadow;
+		_style->colours.fill = style->colours.fill;
+		_style->colours.dark = style->colours.dark;
+		_style->font = style->font;
 	}
 
 	// Mask flags against bitmasks and logical NOT twice to obtain boolean values
@@ -45,14 +65,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_grabPointY = 0;
 	_newX = 0;
 	_newY = 0;
-
-	// Set default colours
-	_colours.back = defaultGadgetStyle->backColour;
-	_colours.shine = defaultGadgetStyle->shineColour;
-	_colours.highlight = defaultGadgetStyle->highlightColour;
-	_colours.shadow = defaultGadgetStyle->shadowColour;
-	_colours.fill = defaultGadgetStyle->fillColour;
-	_colours.dark = defaultGadgetStyle->darkColour;
 
 	// Set initial flag values
 	_flags.clicked = false;
@@ -131,6 +143,7 @@ Gadget::~Gadget() {
 	_shelvedGadgets.clear();
 
 	delete _rectCache;
+	delete _style;
 }
 
 const s16 Gadget::getX() const {
@@ -248,13 +261,13 @@ const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
 
 void Gadget::clear(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 	delete port;
 }
 
 void Gadget::clear() {
 	GraphicsPort* port = newInternalGraphicsPort(true);
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 	delete port;
 }
 
@@ -1733,11 +1746,11 @@ void Gadget::getRectClippedToHierarchy(Rect& rect) const {
 }
 
 FontBase* Gadget::getFont() const {
-	return _font;
+	return _style->font;
 }
 
 void Gadget::setFont(FontBase* font) {
-	_font = font;
+	_style->font = font;
 }
 
 bool Gadget::remove() {

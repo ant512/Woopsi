@@ -3,20 +3,20 @@
 
 using namespace WoopsiUI;
 
-ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, FontBase* font) : Gadget(x, y, width, height, flags, font) {
+ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 	_scrollbarWidth = 9;
 
 	setBorderless(true);
 
 	_flags.shiftClickChildren = false;
 
-	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, font);
+	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, _style);
 	_textbox->addGadgetEventHandler(this);
 	
 	// Create scrollbar
 	Rect rect;
 	_textbox->getClientRect(rect);
-	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, font);
+	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, _style);
 	_scrollbar->setMinimumValue(0);
 	_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
 	_scrollbar->setPageSize(rect.height);
@@ -61,7 +61,7 @@ void ScrollingTextBox::appendText(const char text) {
 }
 
 void ScrollingTextBox::setFont(FontBase* font) {
-	_font = font;
+	_style->font = font;
 	_textbox->setFont(font);
 	_scrollbar->setFont(font);
 }

@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "amigawindow.h"
 #include "woopsiarray.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -29,7 +30,7 @@ namespace WoopsiUI {
 		 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
 		 * @param font Optional font to use for text output.
 		 */
-		WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font = NULL);
+		WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.

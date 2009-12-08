@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "label.h"
 #include "woopsistring.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -23,7 +24,7 @@ namespace WoopsiUI {
 		 * @param text Pointer to a string to display in the textbox.
 		 * @param font The font to use in this text box.
 		 */
-		TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font = NULL);
+		TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style = NULL);
 		
 		/**
 		 * Constructor for a textbox containing a single character.
@@ -34,7 +35,7 @@ namespace WoopsiUI {
 		 * @param letter Single character to display in the textbox.
 		 * @param font The font to use in this text box.
 		 */
-		TextBox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBase* font = NULL);
+		TextBox(s16 x, s16 y, u16 width, u16 height, const char letter, GadgetStyle* style = NULL);
 		
 		/**
 		 * Draw the region of the textbox within the clipping rect. Should not be called

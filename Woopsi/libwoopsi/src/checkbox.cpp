@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-CheckBox::CheckBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, GLYPH_CHECK_BOX_ON, font) {
+CheckBox::CheckBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Button(x, y, width, height, GLYPH_CHECK_BOX_ON, style) {
 	_state = CHECK_BOX_STATE_OFF;
 	_flags.borderless = false;
 	_outline = OUTLINE_OUT;
@@ -24,7 +24,7 @@ void CheckBox::draw(Rect clipRect) {
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Clear the background
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);
@@ -46,9 +46,9 @@ void CheckBox::draw(Rect clipRect) {
 
 	// Draw tick
 	if (isEnabled()) {
-		port->drawText(_textX, _textY, _font, glyph);
+		port->drawText(_textX, _textY, getFont(), glyph);
 	} else {
-		port->drawText(_textX, _textY, _font, glyph, _colours.dark);
+		port->drawText(_textX, _textY, getFont(), glyph, getDarkColour());
 	}
 
 	delete port;

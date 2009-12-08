@@ -2,7 +2,7 @@
 
 using namespace WoopsiUI;
 
-WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* text, const KeyType keyType, FontBase* font) : Button(x, y, width, height, text, font) {
+WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* text, const KeyType keyType, GadgetStyle* style) : Button(x, y, width, height, text, style) {
 	_keyType = keyType;
 	_keyMode = KEY_MODE_NORMAL;
 
@@ -23,7 +23,7 @@ WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* text, cons
 	strcpy(_controlCapsLockText, text);
 }
 
-WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* normalText, const char* shiftText, const char* controlText, const char* shiftControlText, const char* capsLockText, const char* controlCapsLockText, const KeyType keyType, FontBase* font) : Button(x, y, width, height, normalText, font) {
+WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* normalText, const char* shiftText, const char* controlText, const char* shiftControlText, const char* capsLockText, const char* controlCapsLockText, const KeyType keyType, GadgetStyle* style) : Button(x, y, width, height, normalText, style) {
 	_keyType = keyType;
 	_keyMode = KEY_MODE_NORMAL;
 
@@ -44,7 +44,7 @@ WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* normalText
 	strcpy(_controlCapsLockText, controlCapsLockText);
 }
 
-WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char glyph, const KeyType keyType, FontBase* font) : Button(x, y, width, height, glyph, font) {
+WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char glyph, const KeyType keyType, GadgetStyle* style) : Button(x, y, width, height, glyph, style) {
 	_keyType = keyType;
 	_keyMode = KEY_MODE_NORMAL;
 

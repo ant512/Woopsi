@@ -7,7 +7,7 @@
 
 using namespace WoopsiUI;
 
-FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, u32 flags, FontBase* font) : AmigaWindow(x, y, width, height, title, flags, AMIGA_WINDOW_SHOW_DEPTH, font) {
+FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, u32 flags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, AMIGA_WINDOW_SHOW_DEPTH, style) {
 
 	_flags.shiftClickChildren = false;
 
@@ -20,12 +20,12 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 	// Calculate list box
 	Rect listboxRect;
 	listboxRect.width = rect.width - (padding << 1);
-	listboxRect.height = rect.height - (padding * 5) - _font->getHeight();
+	listboxRect.height = rect.height - (padding * 5) - getFont()->getHeight();
 	listboxRect.x = rect.x + padding;
 	listboxRect.y = rect.y + padding;
 
 	// Create list box
-	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, path, 0, font);
+	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, path, 0, style);
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setPath(path);
@@ -34,7 +34,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 	// Calculate OK button dimensions
 	Rect buttonRect;
 	buttonRect.width = (rect.width - (padding * 3)) >> 1;
-	buttonRect.height = _font->getHeight() + (padding << 1);
+	buttonRect.height = getFont()->getHeight() + (padding << 1);
 	buttonRect.x = rect.x + padding;
 	buttonRect.y = (rect.y + rect.height) - (buttonRect.height + padding);
 

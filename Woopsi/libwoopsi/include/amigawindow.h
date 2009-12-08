@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "window.h"
 #include "gadgeteventhandler.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -48,7 +49,7 @@ namespace WoopsiUI {
 		 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
 		 * @param font The font to use for the window.
 		 */
-		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font = NULL);
+		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, GadgetStyle* style = NULL);
 
 		/**
 		 * Show or hide the Amiga borders.

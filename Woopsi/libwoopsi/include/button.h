@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "label.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -21,7 +22,7 @@ namespace WoopsiUI {
 		 * @param text The text for the button to display.
 		 * @param font The font that the button should use.
 		 */
-		Button(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font = NULL);
+		Button(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style = NULL);
 
 		/**
 		 * Constructor for buttons that display a single char.
@@ -32,7 +33,7 @@ namespace WoopsiUI {
 		 * @param letter The character for the button to display.
 		 * @param font The font that the button should use.
 		 */
-		Button(s16 x, s16 y, u16 width, u16 height, char letter, FontBase* font = NULL);
+		Button(s16 x, s16 y, u16 width, u16 height, char letter, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the region of the textbox within the clipping rect. Should not be called

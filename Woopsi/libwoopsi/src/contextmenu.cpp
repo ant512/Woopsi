@@ -4,11 +4,11 @@
 
 using namespace WoopsiUI;
 
-ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
+ContextMenu::ContextMenu(GadgetStyle* style) : Gadget(0, 0, 20, 20, 0, style) {
 	setBorderless(false);
 	_opener = NULL;
 
-	_listbox = new ListBox(1, 1, 0, 0, font);
+	_listbox = new ListBox(1, 1, 0, 0, style);
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setBorderless(true);
@@ -16,7 +16,7 @@ ContextMenu::ContextMenu(FontBase* font) : Gadget(0, 0, 20, 20, 0, font) {
 }
 
 void ContextMenu::addOption(const char* text, u32 value) {
-	_listbox->addOption(text, value, _colours.shadow, _colours.shine, _colours.shine, _colours.shadow);
+	_listbox->addOption(text, value, getShadowColour(), getShineColour(), getShineColour(), getShadowColour());
 
 	// Get preferred size of the gadget so we can resize it
 	Rect rect;
@@ -59,10 +59,10 @@ void ContextMenu::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	port->drawFilledRect(0, 0, _width, _height, _colours.shine);
+	port->drawFilledRect(0, 0, _width, _height, getShineColour());
 
 	// Draw outline
-	port->drawRect(0, 0, _width, _height, _colours.shadow);
+	port->drawRect(0, 0, _width, _height, getShadowColour());
 
 	delete port;
 }

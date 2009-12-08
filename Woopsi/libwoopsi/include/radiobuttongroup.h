@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -25,7 +26,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the group.
 		 * @param font The font to use with the group.
 		 */
-		RadioButtonGroup(s16 x, s16 y, FontBase* font = NULL);
+		RadioButtonGroup(s16 x, s16 y, GadgetStyle* style = NULL);
 
 		/**
 		 * Simple method for adding a new radio button to the group.

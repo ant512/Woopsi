@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "decorationglyphbutton.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -23,7 +24,7 @@ namespace WoopsiUI {
 		 * @param clickedGlyph The glyph to display when the gadget is clicked.
 		 * @param font The font to use.
 		 */
-		WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font = NULL);
+		WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

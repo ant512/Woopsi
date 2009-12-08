@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "gadgetstyle.h"
 
 #define SCREEN_TITLE_HEIGHT 13
 #define SCREEN_FLIP_BUTTON_WIDTH 16
@@ -24,7 +25,7 @@ namespace WoopsiUI {
 		 * @param flags Bitmask specifying some set-up values for the screen.
 		 * @param font The font to use with the screen.
 		 */
-		Screen(const char* title, u32 flags, FontBase* font = NULL);
+		Screen(const char* title, u32 flags, GadgetStyle* style = NULL);
 		
 		/**
 		 * Insert the properties of the space within this gadget that is available

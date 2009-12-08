@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "button.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -24,7 +25,7 @@ namespace WoopsiUI {
 		 * @param clickedGlyph Character to display when clicked.
 		 * @param font Font to use.
 		 */
-		DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, FontBase* font = NULL);
+		DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the region of the button that falls within the clipRect.

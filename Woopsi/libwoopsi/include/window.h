@@ -5,6 +5,7 @@
 #include "gadget.h"
 #include "fontbase.h"
 #include "graphicsport.h"
+#include "gadgetstyle.h"
 
 #define WINDOW_TITLE_HEIGHT 13
 #define WINDOW_BORDER_SIZE 4
@@ -30,7 +31,7 @@ namespace WoopsiUI {
 		 * @param flags Standard gadget flags bitmask.
 		 * @param font Font to use with this window.
 		 */
-		Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, FontBase* font = NULL);
+		Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

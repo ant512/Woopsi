@@ -5,6 +5,7 @@
 #include "listdata.h"
 #include "filelistboxdataitem.h"
 #include "filelistbox.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -44,7 +45,7 @@ namespace WoopsiUI {
 		 * @param text The text to display in the window.
 		 * @param font Optional font to use for text output.
 		 */
-		FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, u32 flags, FontBase* font = NULL);
+		FileRequester(s16 x, s16 y, u16 width, u16 height, const char* title, const char* path, u32 flags, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.

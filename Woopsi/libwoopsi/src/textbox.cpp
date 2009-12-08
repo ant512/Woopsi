@@ -3,14 +3,14 @@
 
 using namespace WoopsiUI;
 
-TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, FontBase* font) : Label(x, y, width, height, text, font) {
+TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style) : Label(x, y, width, height, text, style) {
 	_cursorPos = 0;
 	_showCursor = true;
 	setOutlineType(OUTLINE_OUT_IN);
 	moveCursorToPosition(_text->getLength());
 }
 
-TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char letter, FontBase* font) : Label(x, y, width, height, letter, font) {
+TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char letter, GadgetStyle* style) : Label(x, y, width, height, letter, style) {
 	_cursorPos = 0;
 	_showCursor = true;
 	setOutlineType(OUTLINE_OUT_IN);
@@ -21,17 +21,17 @@ void TextBox::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	if (isEnabled()) {
-		port->drawText(_textX, _textY, _font, _text->getCharArray());
+		port->drawText(_textX, _textY, getFont(), _text->getCharArray());
 	} else {
-		port->drawText(_textX, _textY, _font, _text->getCharArray(), _colours.dark);
+		port->drawText(_textX, _textY, getFont(), _text->getCharArray(), getDarkColour());
 	}
 
 	// Draw cursor
 	if (_showCursor) {
-		port->drawFilledXORRect(getCursorXPos(), _textY, _font->getCharWidth(_text->getCharArray()[_cursorPos]), _font->getHeight());
+		port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(_text->getCharArray()[_cursorPos]), getFont()->getHeight());
 	}
 
 	// Draw outline
@@ -46,7 +46,7 @@ const u16 TextBox::getCursorXPos() const {
 	u16 cursorX = _textX;
 
 	for (u16 i = 0; i < _cursorPos; i++) {
-		cursorX += _font->getCharWidth(_text->getCharArray()[i]);
+		cursorX += getFont()->getCharWidth(_text->getCharArray()[i]);
 	}
 
 	return cursorX;
@@ -169,7 +169,7 @@ bool TextBox::click(s16 x, s16 y) {
 
 				// Locate the first character that comes after the clicked character
 				while ((charX < clickX) && (charIndex < _text->getLength())) {
-					charX += _font->getCharWidth(_text->getCharArray()[charIndex]);
+					charX += getFont()->getCharWidth(_text->getCharArray()[charIndex]);
 					++charIndex;
 				}
 

@@ -3,13 +3,13 @@
 
 using namespace WoopsiUI;
 
-RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, FontBase* font) : Gadget(x, y, 0, 0, GADGET_BORDERLESS, font) {
+RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, GadgetStyle* style) : Gadget(x, y, 0, 0, GADGET_BORDERLESS, style) {
 	_selectedGadget = NULL;
 }
 
 RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 height) {
 	
-	RadioButton* newButton = new RadioButton(x, y, width, height, _font);
+	RadioButton* newButton = new RadioButton(x, y, width, height, _style);
 	addGadget(newButton);
 
 	// Do we need to resize?

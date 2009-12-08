@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "multilinetextbox.h"
 #include "gadgeteventhandler.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -32,7 +33,7 @@ namespace WoopsiUI {
 		 * 0 will make the textbox track only the visible rows.
 		 * @param font The font to use in this text box.
 		 */
-		ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
+		ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, GadgetStyle* style = NULL);
 
 		/**
 		 * Set the horizontal alignment of text within the textbox.

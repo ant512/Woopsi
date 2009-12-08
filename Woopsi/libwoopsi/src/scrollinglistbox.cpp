@@ -4,20 +4,20 @@
 
 using namespace WoopsiUI;
 
-ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, 0, font) {
+ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
 	_scrollbarWidth = 9;
 
 	setBorderless(true);
 
 	_flags.shiftClickChildren = false;
 
-	_listbox = new ListBox(0, 0, width - _scrollbarWidth, height, font);
+	_listbox = new ListBox(0, 0, width - _scrollbarWidth, height, _style);
 	_listbox->addGadgetEventHandler(this);
 
 	// Create scrollbar
 	Rect rect;
 	_listbox->getClientRect(rect);
-	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, font);
+	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, _style);
 	_scrollbar->setMinimumValue(0);
 	_scrollbar->setMaximumValue(0);
 	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
@@ -107,7 +107,7 @@ bool ScrollingListBox::resize(u16 width, u16 height) {
 }
 
 void ScrollingListBox::setFont(FontBase* font) {
-	_font = font;
+	_style->font = font;
 	_listbox->setFont(font);
 	_scrollbar->setFont(font);
 }

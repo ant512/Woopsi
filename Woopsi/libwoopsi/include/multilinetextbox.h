@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "scrollingpanel.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -51,7 +52,7 @@ namespace WoopsiUI {
 		 * 0 will make the textbox track only the visible rows.
 		 * @param font The font to use in this text box.
 		 */
-		MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, FontBase* font = NULL);
+		MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the region of the textbox within the clipping rect.

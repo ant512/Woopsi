@@ -4,12 +4,12 @@
 
 using namespace WoopsiUI;
 
-CycleButton::CycleButton(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Button(x, y, width, height, "", font) {
+CycleButton::CycleButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Button(x, y, width, height, "", style) {
 	_outline = OUTLINE_CLICK_DEPENDENT;
 
 	// Force text to align left (x) and centre (y)  
-	_textX = (_padding * 3) + _font->getCharWidth(GLYPH_CYCLE) + 2;
-	_textY = (_height - _font->getHeight()) >> 1;
+	_textX = (_padding * 3) + getFont()->getCharWidth(GLYPH_CYCLE) + 2;
+	_textY = (_height - getFont()->getHeight()) >> 1;
 
 	_options.addListDataEventHandler(this);
 	_options.setAllowMultipleSelections(false);
@@ -68,50 +68,50 @@ void CycleButton::draw(Rect clipRect) {
 	if (!isEnabled()) {
 
 		// Draw disabled state
-		port->drawFilledRect(0, 0, _width, _height, _colours.back);
+		port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, _font, GLYPH_CYCLE, _colours.dark);
+		port->drawText(_padding, _textY, getFont(), GLYPH_CYCLE, getDarkColour());
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shadow);
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shine);
+		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShadowColour());
+		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShineColour());
 
 		// Only draw text if option is selected
 		if (_options.getSelectedItem() != NULL) {
-			port->drawText(_textX, _textY, _font, _options.getSelectedItem()->getText(), _colours.dark);
+			port->drawText(_textX, _textY, getFont(), _options.getSelectedItem()->getText(), getDarkColour());
 		}
 	} else if (!isClicked()) {
 
 		// Draw normal state
-		port->drawFilledRect(0, 0, _width, _height, _colours.back);
+		port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, _font, GLYPH_CYCLE);
+		port->drawText(_padding, _textY, getFont(), GLYPH_CYCLE);
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shadow);
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shine);
+		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShadowColour());
+		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShineColour());
 
 		// Only draw text if option is selected
 		if (_options.getSelectedItem() != NULL) {
-			port->drawText(_textX, _textY, _font, _options.getSelectedItem()->getText());
+			port->drawText(_textX, _textY, getFont(), _options.getSelectedItem()->getText());
 		}
 	} else {
 
 		// Draw clicked state
-		port->drawFilledRect(0, 0, _width, _height, _colours.dark);
+		port->drawFilledRect(0, 0, _width, _height, getDarkColour());
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, _font, GLYPH_CYCLE, _colours.shine);
+		port->drawText(_padding, _textY, getFont(), GLYPH_CYCLE, getShineColour());
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), _colours.shine);
-		port->drawVertLine((_padding << 1) + _font->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), _colours.shadow);
+		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShineColour());
+		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShadowColour());
 
 		// Only draw text if option is selected
 		if (_options.getSelectedItem() != NULL) {
-			port->drawText(_textX, _textY, _font, _options.getSelectedItem()->getText(), _colours.shine);
+			port->drawText(_textX, _textY, getFont(), _options.getSelectedItem()->getText(), getShineColour());
 		}
 	}
 
@@ -175,7 +175,7 @@ void CycleButton::getPreferredDimensions(Rect& rect) const {
 
 	// Locate longest string in options
 	for (s32 i = 0; i < _options.getItemCount(); ++i) {
-		optionWidth = _font->getStringWidth(_options.getItem(i)->getText());
+		optionWidth = getFont()->getStringWidth(_options.getItem(i)->getText());
 
 		if (optionWidth > maxWidth) {
 			maxWidth = optionWidth;
@@ -183,5 +183,5 @@ void CycleButton::getPreferredDimensions(Rect& rect) const {
 	}
 
 	rect.width = ((!_flags.borderless + _padding) << 1) + _textX + maxWidth;
-	rect.height = ((!_flags.borderless + _padding) << 1) + _textY + _font->getHeight();
+	rect.height = ((!_flags.borderless + _padding) << 1) + _textY + getFont()->getHeight();
 }

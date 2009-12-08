@@ -9,7 +9,7 @@
 
 using namespace WoopsiUI;
 
-Calendar::Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, u32 flags, FontBase* font) : Gadget(x, y, width, height, flags, font) {
+Calendar::Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 	_date = NULL;
 	_visibleDate = NULL;
 
@@ -29,7 +29,7 @@ void Calendar::draw(Rect clipRect) {
 
 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
-	port->drawFilledRect(0, 0, _width, _height, _colours.back);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	// Draw outline
 	port->drawBevelledRect(0, 0, _width, _height);

@@ -3,7 +3,7 @@
 #include "amigascreen.h"
 #include "amigawindow.h"
 
-#include "defaultstyle.h"
+#include "woopsifuncs.h"
 
 #include "fonts/arial9.h"
 #include "fonts/bankgothic12.h"
@@ -127,7 +127,7 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Trebuchet 8", new Trebuchet8()));
 	_fonts->push_back(new FontDefinition("Tunga 9", new Tunga8()));
 	
-	DefaultStyle::font = new NewTopaz();
+	defaultGadgetStyle->font = new NewTopaz();
 
 	// Create screen
 	AmigaScreen* screen = new AmigaScreen("Hello World Screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
@@ -142,7 +142,8 @@ void PackedFonts::startup() {
 	window->getClientRect(rect);
 	
 	// Add textbox
-	_textbox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height / 2, "The quick brown fox jumped over the lazy dog.", 0, 0, _fonts->at(0)->font);
+	_textbox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height / 2, "The quick brown fox jumped over the lazy dog.", 0, 0);
+	_textbox->setFont(_fonts->at(0)->font);
 	window->addGadget(_textbox);
 	
 	// Add cyclebutton

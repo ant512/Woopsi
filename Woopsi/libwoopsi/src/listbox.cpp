@@ -6,7 +6,7 @@
 
 using namespace WoopsiUI;
 
-ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, FontBase* font) : ScrollingPanel(x, y, width, height, 0, font) {
+ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : ScrollingPanel(x, y, width, height, 0, style) {
 	_outline = OUTLINE_IN;
 	_flags.draggable = true;
 	_flags.doubleClickable = true;
@@ -31,7 +31,7 @@ void ListBox::addOption(const char* text, const u32 value, const u16 normalTextC
 }
 
 void ListBox::addOption(const char* text, const u32 value) {
-	addOption(text, value, _colours.shadow, _colours.back, _colours.shadow, _colours.highlight);
+	addOption(text, value, getShadowColour(), getBackColour(), getShadowColour(), getHighlightColour());
 }
 
 void ListBox::removeOption(const s32 index) {
@@ -67,7 +67,7 @@ void ListBox::draw(Rect clipRect) {
 	if (bottomOption >= _options.getItemCount()) bottomOption = _options.getItemCount() - 1;
 
 	// Draw background
-	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _colours.back);
+	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, getBackColour());
 
 	// Calculate values for loop
 	s32 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
@@ -84,28 +84,28 @@ void ListBox::draw(Rect clipRect) {
 		if (item->isSelected()) {
 			
 			// Draw background
-			if (item->getSelectedBackColour() != _colours.back) {
+			if (item->getSelectedBackColour() != getBackColour()) {
 				port->drawFilledRect(clipX, y, _width, optionHeight, item->getSelectedBackColour());
 			}
 		
 			// Draw text
 			if (isEnabled()) {
-				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), item->getSelectedTextColour());
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), item->getSelectedTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _colours.dark);
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), getDarkColour());
 			}
 		} else {
 			
 			// Draw background
-			if (item->getNormalBackColour() != _colours.back) {
+			if (item->getNormalBackColour() != getBackColour()) {
 				port->drawFilledRect(clipX, y, _width, optionHeight, item->getNormalBackColour());
 			}
 			
 			// Draw text
 			if (isEnabled()) {
-				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), item->getNormalTextColour());
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), item->getNormalTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, _font, item->getText(), _colours.dark);
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), getDarkColour());
 			}
 		}
 		
@@ -269,7 +269,7 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 }
 
 const u16 ListBox::getOptionHeight() const {
-	return _font->getHeight() + (_optionPadding << 1);
+	return getFont()->getHeight() + (_optionPadding << 1);
 }
 
 void ListBox::resizeCanvas() {
@@ -322,7 +322,7 @@ void ListBox::getPreferredDimensions(Rect& rect) const {
 
 	// Locate longest string in options
 	for (s32 i = 0; i < _options.getItemCount(); ++i) {
-		optionWidth = _font->getStringWidth(_options.getItem(i)->getText());
+		optionWidth = getFont()->getStringWidth(_options.getItem(i)->getText());
 
 		if (optionWidth > maxWidth) {
 			maxWidth = optionWidth;

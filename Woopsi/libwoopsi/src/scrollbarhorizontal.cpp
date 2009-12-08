@@ -14,10 +14,10 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Fo
 	_slider = new SliderHorizontal(0, 0, width - (_buttonWidth << 1), height);
 	_slider->addGadgetEventHandler(this);
 
-	_leftButton = new Button(width - (_buttonWidth << 1), 0, _buttonWidth, height, GLYPH_ARROW_LEFT, _font);
+	_leftButton = new Button(width - (_buttonWidth << 1), 0, _buttonWidth, height, GLYPH_ARROW_LEFT, _style);
 	_leftButton->addGadgetEventHandler(this);
 
-	_rightButton = new Button(width - _buttonWidth, 0, _buttonWidth, height, GLYPH_ARROW_RIGHT, _font);
+	_rightButton = new Button(width - _buttonWidth, 0, _buttonWidth, height, GLYPH_ARROW_RIGHT, _style);
 	_rightButton->addGadgetEventHandler(this);
 
 	// Create timer

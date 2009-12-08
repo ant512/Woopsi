@@ -7,7 +7,7 @@
 
 using namespace WoopsiUI;
 
-AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, FontBase* font) : Window(x, y, width, height, title, flags, font) {
+AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, GadgetStyle* style) : Window(x, y, width, height, title, flags, style) {
 
 	_windowBorderTop = NULL;
 	_windowBorderLeft = NULL;
@@ -99,7 +99,7 @@ void AmigaWindow::createBorder() {
 
 	// Add close button
 	if (_windowFlags.showCloseButton) {
-		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _font);
+		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _style);
 		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
 
@@ -109,7 +109,7 @@ void AmigaWindow::createBorder() {
 
 	// Add depth button
 	if (_windowFlags.showDepthButton) {
-		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _font);
+		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _style);
 		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 
@@ -117,7 +117,7 @@ void AmigaWindow::createBorder() {
 	}
 
 	// Add borders
-	_windowBorderTop = new WindowBorderTop(topBorderX, topBorderWidth, WINDOW_TITLE_HEIGHT, this, _font);
+	_windowBorderTop = new WindowBorderTop(topBorderX, topBorderWidth, WINDOW_TITLE_HEIGHT, this, _style);
 	_windowBorderLeft = new WindowBorderSide(0, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderRight = new WindowBorderSide(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderBottom = new WindowBorderBottom(0, _height - WINDOW_BORDER_SIZE, _width, WINDOW_BORDER_SIZE, WINDOW_BORDER_SIZE);
@@ -367,7 +367,7 @@ void AmigaWindow::showCloseButton() {
 		_windowFlags.showCloseButton = true;
 		
 		// Recreate close button
-		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _font);
+		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _style);
 		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
 
@@ -388,7 +388,7 @@ void AmigaWindow::showDepthButton() {
 		_windowFlags.showDepthButton = true;
 		
 		// Recreate depth button
-		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _font);
+		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _style);
 		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 
