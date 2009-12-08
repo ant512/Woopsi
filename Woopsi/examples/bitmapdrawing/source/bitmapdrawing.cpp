@@ -97,7 +97,7 @@ void BitmapDrawing::startup() {
 	Graphics* gfx = _bitmap->newGraphics();
 	gfx->drawFilledRect(0, 0, 100, 20, woopsiRGB(31, 0, 0));
 	gfx->drawFilledCircle(50, 10, 10, woopsiRGB(0, 31, 0));
-	gfx->drawText(30, 5, systemFont, "Bitmap", woopsiRGB(0, 0, 31));
+	gfx->drawText(30, 5, getFont(), "Bitmap", woopsiRGB(0, 0, 31));
 	delete gfx;
 	
 	// Set to line drawing mode
@@ -463,7 +463,7 @@ void BitmapDrawing::drawText() {
 	s16 x = rand() % 256;
 	s16 y = rand() % 192;
 	
-	_graphics->drawText(x, y, systemFont, "Text!", getRandomColour());
+	_graphics->drawText(x, y, getFont(), "Text!", getRandomColour());
 }
 
 void BitmapDrawing::drawBitmap() {
