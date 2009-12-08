@@ -235,18 +235,22 @@ void Demo::startup() {
 
 	Label* rlabel1 = new Label(125, 14, 60, 14, "Radio 1");
 	rlabel1->setBorderless(true);
+	rlabel1->setTextAlignmentHoriz(Label::TEXT_ALIGNMENT_HORIZ_LEFT);
 	gadgetTestWindow->addGadget(rlabel1);
 
 	Label* rlabel2 = new Label(125, 26, 60, 14, "Radio 2");
 	rlabel2->setBorderless(true);
+	rlabel2->setTextAlignmentHoriz(Label::TEXT_ALIGNMENT_HORIZ_LEFT);
 	gadgetTestWindow->addGadget(rlabel2);
 
 	Label* rlabel3 = new Label(125, 38, 60, 14, "Radio 3");
 	rlabel3->setBorderless(true);
+	rlabel3->setTextAlignmentHoriz(Label::TEXT_ALIGNMENT_HORIZ_LEFT);
 	gadgetTestWindow->addGadget(rlabel3);
 
 	Label* rlabel4 = new Label(125, 50, 60, 14, "Radio 4");
 	rlabel4->setBorderless(true);
+	rlabel4->setTextAlignmentHoriz(Label::TEXT_ALIGNMENT_HORIZ_LEFT);
 	gadgetTestWindow->addGadget(rlabel4);
 
 	CheckBox* check1 = new CheckBox(110, 72, 12, 12);
@@ -259,14 +263,17 @@ void Demo::startup() {
 
 	Label* clabel1 = new Label(125, 70, 60, 14, "Check 1");
 	clabel1->setBorderless(true);
+	clabel1->setTextAlignmentHoriz(Label::TEXT_ALIGNMENT_HORIZ_LEFT);
 	gadgetTestWindow->addGadget(clabel1);
 
 	Label* clabel2 = new Label(125, 84, 60, 14, "Check 2");
 	clabel2->setBorderless(true);
+	clabel2->setTextAlignmentHoriz(Label::TEXT_ALIGNMENT_HORIZ_LEFT);
 	gadgetTestWindow->addGadget(clabel2);
 
 	Label* clabel3 = new Label(125, 98, 60, 14, "Check 3");
 	clabel3->setBorderless(true);
+	clabel3->setTextAlignmentHoriz(Label::TEXT_ALIGNMENT_HORIZ_LEFT);
 	gadgetTestWindow->addGadget(clabel3);
 
 	Requester* req = new Requester(10, 10, 140, 100, "Text");
