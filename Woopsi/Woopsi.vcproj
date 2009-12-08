@@ -145,10 +145,6 @@
 					Name="Gadgets"
 					>
 					<File
-						RelativePath=".\libwoopsi\src\defaultstyle.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\src\gadget.cpp"
 						>
 					</File>
@@ -787,11 +783,11 @@
 					Name="Gadgets"
 					>
 					<File
-						RelativePath=".\libwoopsi\include\defaultstyle.h"
+						RelativePath=".\libwoopsi\include\gadget.h"
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\include\gadget.h"
+						RelativePath=".\libwoopsi\include\gadgetstyle.h"
 						>
 					</File>
 					<File

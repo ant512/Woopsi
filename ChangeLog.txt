@@ -20,6 +20,9 @@ Change Log
     - MultiLineTextBox redraws and adjusts text position when font is changed.
     - ListBox does not attempt to draw item -1 in list.
     - PackedFontBase::isCharBlank() returns the correct value.
+    - Renamed DefaultStyle class to GadgetStyle.
+    - Instance of GadgetStyle created at Woopsi startup instead of using static
+      properties of DefaultStyle class.
   
   - New Features:
     - Added packedfonts example.

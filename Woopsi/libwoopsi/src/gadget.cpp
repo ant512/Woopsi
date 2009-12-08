@@ -5,7 +5,7 @@
 #include "gadgeteventhandler.h"
 #include "fontbase.h"
 #include "contextmenu.h"
-#include "defaultstyle.h"
+#include "gadgetstyle.h"
 #include "gadgeteventargs.h"
 #include "contextmenu.h"
 #include "listdataitem.h"
@@ -47,12 +47,12 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, FontBase* font) {
 	_newY = 0;
 
 	// Set default colours
-	_colours.back = DefaultStyle::backColour;
-	_colours.shine = DefaultStyle::shineColour;
-	_colours.highlight = DefaultStyle::highlightColour;
-	_colours.shadow = DefaultStyle::shadowColour;
-	_colours.fill = DefaultStyle::fillColour;
-	_colours.dark = DefaultStyle::darkColour;
+	_colours.back = defaultGadgetStyle->backColour;
+	_colours.shine = defaultGadgetStyle->shineColour;
+	_colours.highlight = defaultGadgetStyle->highlightColour;
+	_colours.shadow = defaultGadgetStyle->shadowColour;
+	_colours.fill = defaultGadgetStyle->fillColour;
+	_colours.dark = defaultGadgetStyle->darkColour;
 
 	// Set initial flag values
 	_flags.clicked = false;

@@ -20,7 +20,7 @@
 #include "date.h"
 #include "debug.h"
 #include "decorationglyphbutton.h"
-#include "defaultstyle.h"
+#include "gadgetstyle.h"
 #include "defines.h"
 #include "dimmedscreen.h"
 #include "eventargs.h"

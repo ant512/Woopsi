@@ -17,6 +17,7 @@ WoopsiUI::FrameBuffer* frameBuffer[2];
 WoopsiUI::BitmapWrapper* systemFontBitmap;
 WoopsiUI::Font* systemFont;
 WoopsiUI::MonoFont* tinyFont;
+WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 _pads Pad;
 _stylus Stylus;
@@ -59,6 +60,8 @@ void initWoopsiGfxMode() {
 
 	// Initialise system fonts
 	woopsiInitFonts();
+
+	woopsiInitDefaultGadgetStyle();
 
 	// Initialise both arrays
 	WoopsiUI::Graphics* graphics = frameBuffer[0]->newGraphics();
@@ -367,10 +370,10 @@ Uint32 getSDLPixel(SDL_Surface *surface, int x, int y) {
 // Using libnds
 
 WoopsiUI::FrameBuffer* frameBuffer[2];
-
 WoopsiUI::BitmapWrapper* systemFontBitmap;
 WoopsiUI::Font* systemFont;
 WoopsiUI::MonoFont* tinyFont;
+WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 _pads Pad;
 _stylus Stylus;
@@ -442,6 +445,7 @@ void initWoopsiGfxMode() {
 	frameBuffer[0] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM_SUB(0), SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	woopsiInitFonts();
+	woopsiInitDefaultGadgetStyle();
 	
 	memset( &Stylus, 0, sizeof(_stylus) );
 }
@@ -547,6 +551,22 @@ void woopsiDmaFill(u16 fill, u16* dest, u32 count) {
 }
 
 #endif
+
+void woopsiInitDefaultGadgetStyle() {
+	defaultGadgetStyle = new WoopsiUI::GadgetStyle();
+
+	defaultGadgetStyle->backColour = woopsiRGB(20, 20, 20);
+	defaultGadgetStyle->shineColour = woopsiRGB(31, 31, 31);
+	defaultGadgetStyle->highlightColour = woopsiRGB(12, 17, 23);
+	defaultGadgetStyle->shadowColour = woopsiRGB(0, 0, 0);
+	defaultGadgetStyle->fillColour = woopsiRGB(24, 24, 24);
+	defaultGadgetStyle->darkColour = woopsiRGB(15, 15, 15);
+	defaultGadgetStyle->font = NULL;
+}
+
+void woopsiFreeDefaultGadgetStyle() {
+	delete defaultGadgetStyle;
+}
 
 void woopsiInitFonts() {
 

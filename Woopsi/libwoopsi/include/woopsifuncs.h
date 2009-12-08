@@ -11,6 +11,7 @@
 #include "font.h"
 #include "monofont.h"
 #include "bitmapwrapper.h"
+#include "gadgetstyle.h"
 
 /**
  * Converts separate RGB component values into a single 16-bit value for use
@@ -117,12 +118,23 @@ extern WoopsiUI::FrameBuffer* frameBuffer[2];
 extern WoopsiUI::BitmapWrapper* systemFontBitmap;
 extern WoopsiUI::Font* systemFont;
 extern WoopsiUI::MonoFont* tinyFont;
+extern WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 /**
  * Initialise the DS' screens into framebuffer mode.  Also sets up some other subsystems
  * and IRQs.
  */
 void initWoopsiGfxMode();
+
+/**
+ * Initialise the default gadget style.
+ */
+void woopsiInitDefaultGadgetStyle();
+
+/**
+ * Delete the default gadget style.
+ */
+void woopsiFreeDefaultGadgetStyle();
 
 /**
  * Initialise the Woopsi system fonts.

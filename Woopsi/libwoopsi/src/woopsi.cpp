@@ -4,7 +4,7 @@
 #include "fontbase.h"
 #include "font.h"
 #include "contextmenu.h"
-#include "defaultstyle.h"
+#include "gadgetstyle.h"
 #include "woopsitimer.h"
 
 using namespace WoopsiUI;
@@ -54,6 +54,7 @@ Woopsi::~Woopsi() {
 
 	woopsiFreeFonts();
 	woopsiFreeFrameBuffers();
+	woopsiFreeDefaultGadgetStyle();
 }
 
 void Woopsi::goModal() {
@@ -482,9 +483,9 @@ void Woopsi::eraseRect(Rect rect) {
 // Return a pointer to the static system font
 FontBase* Woopsi::getSystemFont() {
 
-	// Attempt to retrieve the DefaultStyle font
-	if (DefaultStyle::font != NULL) {
-		return DefaultStyle::font;
+	// Attempt to retrieve the default font
+	if (defaultGadgetStyle->font != NULL) {
+		return defaultGadgetStyle->font;
 	}
 
 	// Create font instance if it does not exist yet
