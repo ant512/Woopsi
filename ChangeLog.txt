@@ -17,6 +17,7 @@ Change Log
       text.
     - TextBox cursor moves correctly when clicked if a PackedFont font is used.
     - Template project no longer references Gadget::Rect.
+    - MultiLineTextBox redraws and adjusts text position when font is changed.
   
   - New Features:
     - Added packedfonts example.
