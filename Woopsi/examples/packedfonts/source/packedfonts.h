@@ -5,7 +5,7 @@
 #include "fontbase.h"
 #include "gadgeteventhandler.h"
 #include "gadgeteventargs.h"
-#include "textbox.h"
+#include "multilinetextbox.h"
 #include "cyclebutton.h"
 #include "woopsiarray.h"
 
@@ -43,7 +43,7 @@ private:
 	};
 	
 	WoopsiArray<FontDefinition*>* _fonts;
-	TextBox* _textbox;
+	MultiLineTextBox* _textbox;
 	CycleButton* _cycleButton;
 };
 

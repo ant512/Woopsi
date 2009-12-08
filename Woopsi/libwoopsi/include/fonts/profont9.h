@@ -1,11 +1,11 @@
+
 //
 // profont9.h
 //
-// Do not edit - created by 'bmp2font' from bitmaps/profont9.bmp
+// Do not edit - created by 'bmp2font' from ProFont9.bmp
 //
-
-#ifndef _PRO_FONT_9_H_
-#define _PRO_FONT_9_H_
+#ifndef _PROFONT9_H_
+#define _PROFONT9_H_
 
 #include "packedfont16.h"
 

@@ -146,7 +146,7 @@ void PackedFonts::startup() {
 	window->getClientRect(rect);
 	
 	// Add textbox
-	_textbox = new TextBox(rect.x, rect.y, rect.width, rect.height / 2, "The quick brown fox", _fonts->at(0)->font);
+	_textbox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height / 2, "The quick brown fox jumped over the lazy dog.\n", 0, 0, _fonts->at(0)->font);
 	window->addGadget(_textbox);
 	
 	// Add cyclebutton

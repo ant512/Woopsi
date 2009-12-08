@@ -360,6 +360,23 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 void MultiLineTextBox::setFont(FontBase* font) {
 	_font = font;
 	_text->setFont(font);
+
+	// Ensure that we have the correct number of rows
+	if (_text->getLineCount() > _maxRows) {
+		_text->stripTopLines(_text->getLineCount() - _maxRows);
+
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+	}
+
+	// Update max scroll value
+	if (_text->getLineCount() > _visibleRows) {
+		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+
+		// Scroll to bottom of new text
+		jump(0, -(_canvasHeight - _height));
+	}
+
+	redraw();
 }
 
 const u16 MultiLineTextBox::getPageCount() const {
