@@ -13,7 +13,7 @@ u16 PackedFontBase::getCharWidth(char letter) const
 
 const bool PackedFontBase::isCharBlank(const char letter) const
 {
-	if (letter >= _first && letter <= _last) return _glyphWidth[letter - _first] != 0;
+	if (letter >= _first && letter <= _last) return _glyphWidth[letter - _first] == 0;
 	return false;
 }
 
