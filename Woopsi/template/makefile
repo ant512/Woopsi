@@ -187,7 +187,7 @@ _DEFS		= $(DEFINES)
 
 # use Woopsi
 ifneq ($(USE_WOOPSI),)
-_INCS		+= -I$(DEVKITPRO)/libwoopsi/include
+_INCS		+= -I$(DEVKITPRO)/libwoopsi/include -I$(DEVKITPRO)/libwoopsi/include/fonts
 _LIBS		+= -L$(DEVKITPRO)/libwoopsi/lib -lwoopsi
 endif
 
