@@ -17,8 +17,6 @@ void Demo::startup() {
 
 	Woopsi::startup();
 
-	defaultGadgetStyle->font = new NewTopaz();
-
 	Rect rect;
 
 	// Create SuperBitmap test screen

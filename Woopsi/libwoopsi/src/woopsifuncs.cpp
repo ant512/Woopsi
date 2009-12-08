@@ -14,8 +14,6 @@
 #include "defines.h"
 
 WoopsiUI::FrameBuffer* frameBuffer[2];
-WoopsiUI::BitmapWrapper* systemFontBitmap;
-WoopsiUI::Font* systemFont;
 WoopsiUI::MonoFont* tinyFont;
 WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
@@ -370,8 +368,6 @@ Uint32 getSDLPixel(SDL_Surface *surface, int x, int y) {
 // Using libnds
 
 WoopsiUI::FrameBuffer* frameBuffer[2];
-WoopsiUI::BitmapWrapper* systemFontBitmap;
-WoopsiUI::Font* systemFont;
 WoopsiUI::MonoFont* tinyFont;
 WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
@@ -561,7 +557,7 @@ void woopsiInitDefaultGadgetStyle() {
 	defaultGadgetStyle->colours.shadow = woopsiRGB(0, 0, 0);
 	defaultGadgetStyle->colours.fill = woopsiRGB(24, 24, 24);
 	defaultGadgetStyle->colours.dark = woopsiRGB(15, 15, 15);
-	defaultGadgetStyle->font = NULL;
+	defaultGadgetStyle->font = new WoopsiUI::NewTopaz();;
 }
 
 void woopsiFreeDefaultGadgetStyle() {
@@ -571,8 +567,6 @@ void woopsiFreeDefaultGadgetStyle() {
 void woopsiInitFonts() {
 
 	// Initialise fonts
-	systemFontBitmap = new WoopsiUI::BitmapWrapper(sysfont_Bitmap, 256, 50);
-	systemFont = new WoopsiUI::Font(systemFontBitmap, 8, 10, 64543);
 	tinyFont = new WoopsiUI::MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, 32768);
 }
 
@@ -580,8 +574,6 @@ void woopsiFreeFonts() {
 
 	// Delete fonts
 	delete tinyFont;
-	delete systemFont;
-	delete systemFontBitmap;
 }
 
 void woopsiFreeFrameBuffers() {

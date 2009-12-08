@@ -21,7 +21,7 @@ Pong::Pong(AmigaScreen* screen) {
 	_upHeld = false;
 	_downHeld = false;
 	
-	_font = systemFont;
+	_font = defaultGadgetStyle->font;
 	_fontRColour = 0;
 	_fontGColour = 0;
 	_fontBColour = 0;

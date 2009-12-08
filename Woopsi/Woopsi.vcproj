@@ -85,10 +85,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\src\sysfont.c"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\src\tinyfont.c"
 						>
 					</File>

@@ -23,12 +23,14 @@ Change Log
     - Renamed DefaultStyle class to GadgetStyle.
     - Instance of GadgetStyle created at Woopsi startup instead of using static
       properties of DefaultStyle class.
+    - Removed systemFont global; relying on defaultGadgetStyle instead.
   
   - New Features:
     - Added packedfonts example.
     - Added dozens of packed fonts.
     - Replaced font pointer in gadget constructors with a pointer to a
       GadgetStyle object.
+    - Changed default font to NewTopaz.
   
 
   V0.42 (20091205)

@@ -12,6 +12,7 @@
 #include "monofont.h"
 #include "bitmapwrapper.h"
 #include "gadgetstyle.h"
+#include "fonts/newtopaz.h"
 
 /**
  * Converts separate RGB component values into a single 16-bit value for use
@@ -115,8 +116,6 @@ extern WoopsiUI::FrameBuffer* frameBuffer[2];
 /**
  * Pointers to Woopsi system fonts.
  */
-extern WoopsiUI::BitmapWrapper* systemFontBitmap;
-extern WoopsiUI::Font* systemFont;
 extern WoopsiUI::MonoFont* tinyFont;
 extern WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
