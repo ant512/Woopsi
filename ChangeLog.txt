@@ -16,10 +16,11 @@ Change Log
     - TextBox does not attempt to move cursor when clicked if it contains no
       text.
     - TextBox cursor moves correctly when clicked if a PackedFont font is used.
+    - Template project no longer references Gadget::Rect.
   
   - New Features:
     - Added packedfonts example.
-    - Added dozens of packed fonts to the bonus folder.
+    - Added dozens of packed fonts.
   
 
   V0.42 (20091205)

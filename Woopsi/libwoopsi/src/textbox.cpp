@@ -173,8 +173,10 @@ bool TextBox::click(s16 x, s16 y) {
 					++charIndex;
 				}
 
-				// Move back to the clicked character
-				charIndex--;
+				// Move back to the clicked character if we've moved past it
+				if (charX > clickX) {
+					charIndex--;
+				}
 
 				moveCursorToPosition(charIndex);
 			}
