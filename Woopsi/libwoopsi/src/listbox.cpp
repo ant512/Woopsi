@@ -59,7 +59,6 @@ void ListBox::draw(Rect clipRect) {
 	// below is draw if it is partially visible - subbing 1 from topOption
 	// means we need to add an additional 1 to compensate
 	s32 bottomOption = topOption + (clipHeight / optionHeight) + 2;
-	s32 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
 
 	// Ensure top options is not negative
 	if (topOption < 0) topOption = 0;
@@ -70,10 +69,13 @@ void ListBox::draw(Rect clipRect) {
 	// Draw background
 	port->drawFilledRect(clipX, clipY, clipWidth, clipHeight, _colours.back);
 
+	// Calculate values for loop
+	s32 y = _canvasY + (topOption * optionHeight) + (!isBorderless());
+	s32 i = topOption;
+
 	const ListBoxDataItem* item = NULL;
 
-	// Loop through all options drawing each one
-	s32 i = topOption;
+	// Loop through all options drawing each ones
 	while (i <= bottomOption) {
 
 		item = (const ListBoxDataItem*)_options.getItem(i);
