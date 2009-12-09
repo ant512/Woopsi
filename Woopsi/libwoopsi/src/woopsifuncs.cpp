@@ -7,14 +7,12 @@
 #include <string.h>
 #include "woopsifuncs.h"
 #include "graphics.h"
-#include "sysfont.h"
 
 #ifdef USING_SDL
 
 #include "defines.h"
 
 WoopsiUI::FrameBuffer* frameBuffer[2];
-WoopsiUI::MonoFont* tinyFont;
 WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 _pads Pad;
@@ -56,9 +54,7 @@ void initWoopsiGfxMode() {
 	frameBuffer[0] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_HEIGHT);
 	frameBuffer[1] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 
-	// Initialise system fonts
-	woopsiInitFonts();
-
+	// Initialise default style
 	woopsiInitDefaultGadgetStyle();
 
 	// Initialise both arrays
@@ -368,7 +364,6 @@ Uint32 getSDLPixel(SDL_Surface *surface, int x, int y) {
 // Using libnds
 
 WoopsiUI::FrameBuffer* frameBuffer[2];
-WoopsiUI::MonoFont* tinyFont;
 WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 _pads Pad;
@@ -440,7 +435,6 @@ void initWoopsiGfxMode() {
 	frameBuffer[1] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM(0), SCREEN_WIDTH, SCREEN_HEIGHT);
 	frameBuffer[0] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM_SUB(0), SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	woopsiInitFonts();
 	woopsiInitDefaultGadgetStyle();
 	
 	memset( &Stylus, 0, sizeof(_stylus) );
@@ -562,18 +556,6 @@ void woopsiInitDefaultGadgetStyle() {
 
 void woopsiFreeDefaultGadgetStyle() {
 	delete defaultGadgetStyle;
-}
-
-void woopsiInitFonts() {
-
-	// Initialise fonts
-	tinyFont = new WoopsiUI::MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, 32768);
-}
-
-void woopsiFreeFonts() {
-
-	// Delete fonts
-	delete tinyFont;
 }
 
 void woopsiFreeFrameBuffers() {

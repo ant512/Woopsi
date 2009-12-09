@@ -7,6 +7,7 @@
 #include "amigawindow.h"
 #include "woopsi.h"
 #include "scrollingtextbox.h"
+#include "tinyfont.h"
 
 using namespace WoopsiUI;
 
@@ -24,6 +25,7 @@ Debug::Debug() {
 Debug::~Debug() {
 	_screen->close();
 
+	delete _style->font;
 	delete _style;
 }
 
@@ -95,7 +97,7 @@ void Debug::createGUI() {
 		_style->colours.shadow = defaultGadgetStyle->colours.shadow;
 		_style->colours.fill = defaultGadgetStyle->colours.fill;
 		_style->colours.dark = defaultGadgetStyle->colours.dark;
-		_style->font = tinyFont;
+		_style->font = new TinyFont();
 	}
 
 	// Add textbox

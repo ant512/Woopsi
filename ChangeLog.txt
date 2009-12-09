@@ -24,6 +24,8 @@ Change Log
     - Instance of GadgetStyle created at Woopsi startup instead of using static
       properties of DefaultStyle class.
     - Removed systemFont global; relying on defaultGadgetStyle instead.
+    - Removed tinyFont global; Debug class now creates its own instance.
+    - TinyFont follows class pattern used by Jeff's PackedFonts.
   
   - New Features:
     - Added packedfonts example.

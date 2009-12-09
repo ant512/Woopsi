@@ -114,9 +114,8 @@ Uint32 getSDLPixel(SDL_Surface *surface, int x, int y);
 extern WoopsiUI::FrameBuffer* frameBuffer[2];
 
 /**
- * Pointers to Woopsi system fonts.
+ * Pointer to the default gadget style.
  */
-extern WoopsiUI::MonoFont* tinyFont;
 extern WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 /**
@@ -134,16 +133,6 @@ void woopsiInitDefaultGadgetStyle();
  * Delete the default gadget style.
  */
 void woopsiFreeDefaultGadgetStyle();
-
-/**
- * Initialise the Woopsi system fonts.
- */
-void woopsiInitFonts();
-
-/**
- * Delete the Woopsi system fonts.
- */
-void woopsiFreeFonts();
 
 /**
  * Delete the framebuffer objects.

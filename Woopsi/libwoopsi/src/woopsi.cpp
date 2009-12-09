@@ -70,7 +70,6 @@ Woopsi::~Woopsi() {
 
 	delete _style;
 
-	woopsiFreeFonts();
 	woopsiFreeFrameBuffers();
 	woopsiFreeDefaultGadgetStyle();
 }

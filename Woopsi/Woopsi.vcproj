@@ -85,7 +85,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\src\tinyfont.c"
+						RelativePath=".\libwoopsi\src\tinyfont.cpp"
 						>
 					</File>
 				</Filter>
@@ -671,7 +671,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\include\sysfont.h"
+						RelativePath=".\libwoopsi\include\tinyfont.h"
 						>
 					</File>
 				</Filter>

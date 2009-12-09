@@ -69,7 +69,6 @@
 #include "slidervertical.h"
 #include "sliderverticalgrip.h"
 #include "superbitmap.h"
-#include "sysfont.h"
 #include "text.h"
 #include "textbox.h"
 #include "window.h"

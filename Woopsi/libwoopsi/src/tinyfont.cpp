@@ -1,4 +1,9 @@
-const unsigned short tinyfont_Bitmap[192] __attribute__ ((aligned (4))) = {
+#include <nds.h>
+#include "tinyfont.h"
+
+using namespace WoopsiUI;
+
+static const u16 tinyfont_Bitmap[192] __attribute__ ((aligned (4))) = {
 0, 0, 0, 0, 0, 0, 0, 0, 
 0, 0, 0, 0, 0, 0, 0, 0, 
 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -24,3 +29,6 @@ const unsigned short tinyfont_Bitmap[192] __attribute__ ((aligned (4))) = {
 60110, 52878, 42186, 60078, 36526, 20046, 42208, 0, 
 0, 0, 0, 0, 0, 0, 0, 0
 };
+
+TinyFont::TinyFont(u16 drawColour) : MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, drawColour) {
+}
