@@ -17,7 +17,7 @@ namespace WoopsiUI {
 	class RectCache;
 
 	/**
-	 * Class proving all the basic functionality of a Woopsi gadget.
+	 * Class providing all the basic functionality of a Woopsi gadget.
 	 * All Woopsi gadgets must inherit from this class.
 	 */
 	class Gadget {
