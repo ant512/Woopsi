@@ -40,6 +40,7 @@ Change Log
     - Added old system font under the name Topaz using the same class pattern as
       the TinyFont.
     - Added defaultstyle example.
+    - Built with devkitARM r27 and libnds 1.4.0.
   
 
   V0.42 (20091205)
