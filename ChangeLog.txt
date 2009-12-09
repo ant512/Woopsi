@@ -27,6 +27,8 @@ Change Log
     - Removed tinyFont global; Debug class now creates its own instance.
     - TinyFont follows class pattern used by Jeff's PackedFonts.
     - Graphics::floodFill() no longer gets stuck in an infinite loop.
+    - Moved logos out of demo data folder and into new logos folder in bmp.
+    - Removed unused bitmaps from demo.
   
   - New Features:
     - Added packedfonts example.
