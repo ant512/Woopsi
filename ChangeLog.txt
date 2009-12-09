@@ -34,6 +34,8 @@ Change Log
     - Replaced font pointer in gadget constructors with a pointer to a
       GadgetStyle object.
     - Changed default font to NewTopaz.
+    - Added old system font under the name Topaz using the same class pattern as
+      the TinyFont.
   
 
   V0.42 (20091205)

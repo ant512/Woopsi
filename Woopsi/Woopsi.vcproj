@@ -598,6 +598,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\libwoopsi\src\fonts\topaz.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\libwoopsi\src\fonts\trebuchet8.cpp"
 					>
 				</File>
@@ -1241,6 +1245,10 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\include\fonts\tinyfont.h"
+					>
+				</File>
+				<File
+					RelativePath=".\libwoopsi\include\fonts\topaz.h"
 					>
 				</File>
 				<File

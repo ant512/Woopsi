@@ -58,6 +58,7 @@
 #include "fonts/roman13i.h"
 #include "fonts/script9b.h"
 #include "fonts/timesnewroman9.h"
+#include "fonts/topaz.h"
 #include "fonts/trebuchet8.h"
 #include "fonts/tunga8.h"
 
@@ -122,6 +123,7 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Roman 13i", new Roman13i()));
 	_fonts->push_back(new FontDefinition("Script 9b", new Script9b()));
 	_fonts->push_back(new FontDefinition("Times New Roman 9", new TimesNewRoman9()));
+	_fonts->push_back(new FontDefinition("Topaz", new Topaz()));
 	_fonts->push_back(new FontDefinition("Trebuchet 8", new Trebuchet8()));
 	_fonts->push_back(new FontDefinition("Tunga 9", new Tunga8()));
 	

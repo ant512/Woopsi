@@ -31,4 +31,4 @@ static const u16 tinyfont_Bitmap[192] __attribute__ ((aligned (4))) = {
 };
 
 TinyFont::TinyFont(u16 drawColour) : MonoFont(tinyfont_Bitmap, 128, 24, 4, 6, drawColour) {
-}
+};
