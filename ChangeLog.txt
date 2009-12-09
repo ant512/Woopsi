@@ -38,6 +38,7 @@ Change Log
     - Changed default font to NewTopaz.
     - Added old system font under the name Topaz using the same class pattern as
       the TinyFont.
+    - Added defaultstyle example.
   
 
   V0.42 (20091205)
