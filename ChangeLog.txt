@@ -29,6 +29,7 @@ Change Log
     - Graphics::floodFill() no longer gets stuck in an infinite loop.
     - Moved logos out of demo data folder and into new logos folder in bmp.
     - Removed unused bitmaps from demo.
+    - Added missing FileListBox class.
   
   - New Features:
     - Added packedfonts example.
