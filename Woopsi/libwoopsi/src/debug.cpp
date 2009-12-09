@@ -7,7 +7,7 @@
 #include "amigawindow.h"
 #include "woopsi.h"
 #include "scrollingtextbox.h"
-#include "tinyfont.h"
+#include "fonts/tinyfont.h"
 
 using namespace WoopsiUI;
 
