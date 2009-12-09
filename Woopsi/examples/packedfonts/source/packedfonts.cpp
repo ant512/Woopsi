@@ -35,7 +35,6 @@
 #include "fonts/latha9.h"
 #include "fonts/latha10.h"
 #include "fonts/latha15.h"
-#include "fonts/lucida6.h"
 #include "fonts/lucida10.h"
 #include "fonts/lucidacalligraphy14.h"
 #include "fonts/mangal9.h"
@@ -100,7 +99,6 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Latha 9", new Latha9()));
 	_fonts->push_back(new FontDefinition("Latha 10", new Latha10()));
 	_fonts->push_back(new FontDefinition("Latha 15", new Latha15()));
-	_fonts->push_back(new FontDefinition("Lucida 6", new Lucida6()));
 	_fonts->push_back(new FontDefinition("Lucida 10", new Lucida10()));
 	_fonts->push_back(new FontDefinition("Lucida Calligraphy 14", new LucidaCalligraphy14()));
 	_fonts->push_back(new FontDefinition("Mangal 9", new Mangal9()));
