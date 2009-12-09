@@ -143,10 +143,11 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 			}
 
 			x1++;
+			rowWidth++;
 		}
 
 		// Draw line
-		drawHorizLine(rowStart, y, rowWidth, newColour);
+		GraphicsUnclipped::drawHorizLine(rowStart, y, rowWidth, newColour);
 	}
 
 	delete stack;
