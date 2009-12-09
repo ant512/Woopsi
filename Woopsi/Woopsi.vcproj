@@ -506,10 +506,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\fonts\lucida6.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\fonts\lucidacalligraphy14.cpp"
 					>
 				</File>
@@ -1153,10 +1149,6 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\include\fonts\lucida10.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\fonts\lucida6.h"
 					>
 				</File>
 				<File
