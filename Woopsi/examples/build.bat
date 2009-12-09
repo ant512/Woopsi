@@ -20,6 +20,10 @@ cd ../date
 make clean
 make
 
+cd ../defaultstyle
+make clean
+make
+
 cd ../dimmedscreen
 make clean
 make
