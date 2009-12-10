@@ -74,7 +74,10 @@ namespace WoopsiUI {
 		 * @param capsLockText The text for the key to display when caps lock is held.
 		 * @param controlCapsLockText The text for the key to display when caps lock and control are held.
 		 * @param keyType The type of key.
-		 * @param font The font that the button should use.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* normalText, const char* shiftText, const char* controlText, const char* shiftControlText, const char* capsLockText, const char* controlCapsLockText, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
@@ -86,7 +89,10 @@ namespace WoopsiUI {
 		 * @param height The height of the key.
 		 * @param glyph The letter for the key to display.
 		 * @param keyType The type of key.
-		 * @param font The font that the button should use.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char glyph, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
