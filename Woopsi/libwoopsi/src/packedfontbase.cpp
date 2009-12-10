@@ -43,7 +43,7 @@ s16 PackedFontBase::drawChar(
 	s16 x, s16 y,
 	u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {
-	// if there is no glyphdata for this letter, just advance by an 'm'
+	// if there is no glyphdata for this letter, just advance by a space
 	if (letter < _first || letter > _last) {
 		return x + _spWidth;
 	}

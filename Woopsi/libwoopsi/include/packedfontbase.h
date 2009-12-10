@@ -40,8 +40,8 @@ namespace WoopsiUI {
 			  FontBase(height, 0),
 			  _first(first), _last(last),
 			  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
-			  _fontWidth(0),	// Thanks, John
-			  _spWidth(spWidth), _widMax(fixedWidth) { }
+			  _fontWidth(0),
+			  _spWidth(spWidth), _widMax(fixedWidth) { };
 
 		/**
 		 * Makes this font fixed-width, though doesn't allow the spacing to be less
@@ -49,7 +49,7 @@ namespace WoopsiUI {
 		 * don't know the required size, pass 1.
 		 * @param fontWidth Font width to use (0 for proportional, 1 for wide-enough)
 		 */
-		inline void setFontWidth(u8 fontWidth) { _fontWidth = (fontWidth && (fontWidth < _widMax)) ? _widMax : fontWidth; }
+		inline void setFontWidth(u8 fontWidth) { _fontWidth = (fontWidth && (fontWidth < _widMax)) ? _widMax : fontWidth; };
 
 		/**
 		 * Draw an individual character of the font to the specified bitmap.
@@ -117,14 +117,14 @@ namespace WoopsiUI {
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 
 	protected:
-		u8 _first;
-		u8 _last;
-		const u16 *_glyphData;	
-		const u16 *_glyphOffset;
-		const u8 *_glyphWidth;
-		u8 _fontWidth;
-		u8 _spWidth;
-		u8 _widMax;
+		u8 _first;					/**< The first letter that the font contains */
+		u8 _last;					/**< The last letter that the font contains */
+		const u16 *_glyphData;		/**< All data for each glyph */
+		const u16 *_glyphOffset;	/**< Locations of each character in _glyphData */
+		const u8 *_glyphWidth;		/**< Width in pixels of each glyph in _glyphData */
+		u8 _fontWidth;				/**< Width of the font, or 0 for proportional */
+		u8 _spWidth;				/**< Width of a blank space */
+		u8 _widMax;					/**< The maximum width of a character in the font */
 	};
 }
 

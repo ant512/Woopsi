@@ -74,8 +74,8 @@ typedef struct STYLUS {
 	s16 Y;						/**< Y co-ord of the stylus */
 	s16 Vx;						/**< X distance the stylus has moved in the last vblank */
 	s16 Vy;						/**< Y distance the stylus has moved in the last vblank */
-	s16 oldVx;
-	s16 oldVy;
+	s16 oldVx;					/**< X co-ord of the stylus at the previous vblank */
+	s16 oldVy;					/**< Y co-ord of the stylus at the previous vblank */
 	s16 Downtime;				/**< Number of vblanks stylus has been held */
 	s16 Uptime;					/**< Number of vblanks stylus has been released */
 	s16 DblClick;				/**< Indicates a double click */
