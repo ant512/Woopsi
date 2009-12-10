@@ -9,7 +9,14 @@ namespace WoopsiUI {
 	class Graphics;
 
 	/**
-	 * Class wrapper around the framebuffer
+	 * Bitmap subclass designed exclusively as a way to wrap the framebuffer
+	 * in a bitmap object.  It can then be treated as any other bitmap - it
+	 * can be drawn to with setPixel(), blit() and blitFill() methods, and
+	 * it can produce a Graphics object for more complex drawing functions.
+	 *
+	 * The FrameBuffer class automatically switches from using the DS'
+	 * framebuffer (more accurately, a 16-bit background) to using an SDL
+	 * surface if Woopsi is compiled in SDL mode.
 	 */
 	class FrameBuffer : public MutableBitmapBase {
 	public:

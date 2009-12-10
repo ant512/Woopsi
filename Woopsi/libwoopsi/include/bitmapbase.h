@@ -6,7 +6,15 @@
 namespace WoopsiUI {
 
 	/**
-	 * Abstract class defining the basic properties of the bitmap.
+	 * Abstract class defining the basic properties of a bitmap.  Since
+	 * the DS has 16-bit displays (1 alpha bit and 5 bits each for RGB),
+	 * all bitmaps must expose their data in the same format.
+	 *
+	 * However, since this class does not define how the data is stored,
+	 * it is possible for a subclass to store the bitmap data in whatever
+	 * format necessary (1, 2, 4, 8, 24 or 32-bits, or any format at all)
+	 * as long as it translates back to the DS' native 16-bit format when
+	 * accessed externally.
 	 */
 	class BitmapBase {
 	public:

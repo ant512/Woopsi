@@ -7,9 +7,9 @@
 namespace WoopsiUI {
 
 	/**
-	 * Class designed as a wrapper for raw u16* data to enable it to be used
-	 * as a Bitmap class.  Since raw u16* data should be const, the bitmap
-	 * is read-only.
+	 * Class designed to wrap raw u16* data within a bitmap object.  This
+	 * enables the data to be accessed just like any other bitmap object.
+	 * Since raw u16* data should be const, the bitmap is read-only.
 	 */
 	class BitmapWrapper : public BitmapBase {
 	public:
