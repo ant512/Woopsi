@@ -43,6 +43,13 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
+		 * @param title The screen's title.
+		 * @param flags Bitmask specifying some setup values for the object.
+		 * @param screenFlags Screen-specific setup bitmask.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		AmigaScreen(const char* title, u32 flags, u32 screenFlags, GadgetStyle* style = NULL);
 

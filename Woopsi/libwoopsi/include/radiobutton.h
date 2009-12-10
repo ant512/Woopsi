@@ -34,7 +34,10 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the radio button, relative to its parent.
 		 * @param width The width of the radio button.
 		 * @param height The height of the radio button.
-		 * @param font The font to use for the radio button.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		RadioButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 

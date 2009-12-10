@@ -29,7 +29,10 @@ namespace WoopsiUI {
 		 * @param bitmapHeight The desired height of the gadget's bitmap.
 		 * @param isDecoration Specify if the gadget is a decoration or not.  If set to true
 		 * the gadget will function as a background image.
-		 * @param font The font to use for text output.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, GadgetStyle* style = NULL);
 

@@ -50,7 +50,10 @@ namespace WoopsiUI {
 		 * forgotten; text is essentially stored as a queue, and adding to the back
 		 * of a full queue causes the front items to be popped off.  Setting this to
 		 * 0 will make the textbox track only the visible rows.
-		 * @param font The font to use in this text box.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, GadgetStyle* style = NULL);
 

@@ -94,7 +94,10 @@ namespace WoopsiUI {
 		 * @param width The width of the gadget.
 		 * @param height The height of the gadget.
 		 * @param flags Bitmask specifying some set-up values for the gadget.
-		 * @param style Pointer to a style object containing visual appearance
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 * data.  If no object is specified the gadget will use the default style.
 		 * @see GadgetFlagType.
 		 */

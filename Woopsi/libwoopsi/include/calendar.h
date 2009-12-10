@@ -33,7 +33,10 @@ namespace WoopsiUI {
 		 * @param month The default month to display.
 		 * @param year The default year to display.
 		 * @param flags Standard flags.
-		 * @param font Optional font to use for text output.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, u32 flags, GadgetStyle* style = NULL);
 

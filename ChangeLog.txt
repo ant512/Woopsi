@@ -30,6 +30,8 @@ Change Log
     - Moved logos out of demo data folder and into new logos folder in bmp.
     - Removed unused bitmaps from demo.
     - Added missing FileListBox class.
+    - ScrollbarHorizontal passes font object (via style) to Gadget constructor
+      correctly.
   
   - New Features:
     - Added packedfonts example.

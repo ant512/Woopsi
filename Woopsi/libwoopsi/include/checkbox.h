@@ -30,7 +30,10 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the checkbox, relative to its parent.
 		 * @param width The width of the checkbox.
 		 * @param height The height of the checkbox.
-		 * @param font The font to use for the checkbox.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		CheckBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 

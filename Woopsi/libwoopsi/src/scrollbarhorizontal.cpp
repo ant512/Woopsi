@@ -6,7 +6,7 @@
 
 using namespace WoopsiUI;
 
-ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, FontBase* font) : Gadget(x, y, width, height, GADGET_BORDERLESS) {
+ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, GADGET_BORDERLESS, style) {
 	
 	_buttonWidth = 10;
 

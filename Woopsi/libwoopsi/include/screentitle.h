@@ -23,7 +23,10 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param height The height of the title bar.
 		 * @param screen Pointer to the screen that contains this gadget.
-		 * @param font The font to use for the title bar.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		ScreenTitle(u16 height, Screen* screen, GadgetStyle* style = NULL);
 

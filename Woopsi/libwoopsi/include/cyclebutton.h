@@ -23,7 +23,10 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the button, relative to its parent.
 		 * @param width The width of the button.
 		 * @param height The height of the button.
-		 * @param font The font that the button should use.
+		 * @param style The style that the button should use.  If this is not
+		 * specified, the button will use the values stored in the global
+		 * defaultGadgetStyle object.  The button will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		CycleButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 

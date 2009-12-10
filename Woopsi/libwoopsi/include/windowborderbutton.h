@@ -22,7 +22,10 @@ namespace WoopsiUI {
 		 * @param height The height of the gadget.
 		 * @param normalGlyph The glyph to display when the gadget is not clicked.
 		 * @param clickedGlyph The glyph to display when the gadget is clicked.
-		 * @param font The font to use.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, GadgetStyle* style = NULL);
 

@@ -28,7 +28,10 @@ namespace WoopsiUI {
 		 * @param title The title of the window.
 		 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the Amiga borders.
 		 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
-		 * @param font Optional font to use for text output.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, GadgetStyle* style = NULL);
 

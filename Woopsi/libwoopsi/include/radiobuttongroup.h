@@ -24,7 +24,10 @@ namespace WoopsiUI {
 		 * the position and dimensions of its children.
 		 * @param x The x co-ordinate of the group.
 		 * @param y The y co-ordinate of the group.
-		 * @param font The font to use with the group.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		RadioButtonGroup(s16 x, s16 y, GadgetStyle* style = NULL);
 

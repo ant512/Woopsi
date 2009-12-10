@@ -27,7 +27,10 @@ namespace WoopsiUI {
 		 * @param width The width of the window.
 		 * @param height The height of the window.
 		 * @param title The title of the window.
-		 * @param font Optional font to use for text output.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		Requester(s16 x, s16 y, u16 width, u16 height, const char* title, GadgetStyle* style = NULL);
 

@@ -23,7 +23,10 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param title The title of the screen; not displayed by default.
 		 * @param flags Bitmask specifying some set-up values for the screen.
-		 * @param font The font to use with the screen.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
 		Screen(const char* title, u32 flags, GadgetStyle* style = NULL);
 		
