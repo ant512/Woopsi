@@ -43,6 +43,8 @@ Change Log
       the TinyFont.
     - Added defaultstyle example.
     - Built with devkitARM r27 and libnds 1.4.0.
+    - Replaced FontBitPacker with bmp2font, a .NET app that can convert a BMP to
+      any of Woopsi's 4 font formats.
   
 
   V0.42 (20091205)
