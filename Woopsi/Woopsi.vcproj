@@ -1287,37 +1287,69 @@
 				>
 			</File>
 			<File
-				RelativePath=".\demo\src\pacghost.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\src\pacghosts.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\src\pacman.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\src\pacmap.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\src\pacplayer.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\src\pacsprite.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\demo\src\pong.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\demo\src\zombie.cpp"
+			<Filter
+				Name="Bitmaps"
 				>
-			</File>
+				<File
+					RelativePath=".\demo\src\bittest1.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\bittest2.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\bittest3.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\bittest4.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\bittest5.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\bittest6.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\zombie.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="PacMan"
+				>
+				<File
+					RelativePath=".\demo\src\pacghost.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\pacghosts.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\pacman.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\pacmap.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\pacplayer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\src\pacsprite.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Demo Header Files"
@@ -1331,37 +1363,69 @@
 				>
 			</File>
 			<File
-				RelativePath=".\demo\include\pacghost.h"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\include\pacghosts.h"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\include\pacman.h"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\include\pacmap.h"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\include\pacplayer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\demo\include\pacsprite.h"
-				>
-			</File>
-			<File
 				RelativePath=".\demo\include\pong.h"
 				>
 			</File>
-			<File
-				RelativePath=".\demo\include\zombie.h"
+			<Filter
+				Name="PacMan"
 				>
-			</File>
+				<File
+					RelativePath=".\demo\include\pacghost.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\pacghosts.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\pacman.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\pacmap.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\pacplayer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\pacsprite.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Bitmaps"
+				>
+				<File
+					RelativePath=".\demo\include\bittest1.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\bittest2.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\bittest3.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\bittest4.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\bittest5.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\bittest6.h"
+					>
+				</File>
+				<File
+					RelativePath=".\demo\include\zombie.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\Makefile"
