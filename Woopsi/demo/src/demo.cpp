@@ -4,8 +4,6 @@
 #include "calculator.h"
 #include "pong.h"
 #include "pacman.h"
-#include "bitmap/all_gfx.c"
-#include "bitmap/all_gfx.h"
 #include "bitmapwrapper.h"
 #include "bitmap.h"
 #include "graphics.h"
@@ -13,6 +11,12 @@
 #include "gadgetstyle.h"
 #include "fonts/newtopaz.h"
 #include "zombie.h"
+#include "bittest1.h"
+#include "bittest2.h"
+#include "bittest3.h"
+#include "bittest4.h"
+#include "bittest5.h"
+#include "bittest6.h"
 
 void Demo::startup() {
 
@@ -188,9 +192,9 @@ void Demo::startup() {
 	demoScreen->addGadget(buttonWindow);
 
 	buttonWindow->getClientRect(rect);
-	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y, 92, 28, 0, 0, new BitmapWrapper(bittest1_Bitmap, 92, 28), new BitmapWrapper(bittest4_Bitmap, 92, 28)));
-	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 28, 92, 28, 0, 0, new BitmapWrapper(bittest2_Bitmap, 92, 28), new BitmapWrapper(bittest5_Bitmap, 92, 28)));
-	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 56, 92, 27, 0, 0, new BitmapWrapper(bittest3_Bitmap, 92, 28), new BitmapWrapper(bittest6_Bitmap, 92, 28)));
+	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y, 92, 28, 0, 0, new BitTest1(), new BitTest4()));
+	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 28, 92, 28, 0, 0, new BitTest2(), new BitTest5()));
+	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 56, 92, 27, 0, 0, new BitTest3(), new BitTest6()));
 
 	// Gadget test
 	AmigaScreen* gadgetTestScreen = new AmigaScreen("Gadget test", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);

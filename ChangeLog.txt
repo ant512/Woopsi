@@ -36,6 +36,9 @@ Change Log
     - Removed PAGfx binary from demo.
     - Removed zombie.c file from demo and replaced with bmp2bitmap-generated
       class.
+    - Removed bittest files from demo and replaced with bmp2bitmap-generated
+      classes.
+    - Removed all_gfx file from demo.
   
   - New Features:
     - Added packedfonts example.
