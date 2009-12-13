@@ -12,6 +12,7 @@
 #include "rect.h"
 #include "gadgetstyle.h"
 #include "fonts/newtopaz.h"
+#include "zombie.h"
 
 void Demo::startup() {
 
@@ -32,14 +33,14 @@ void Demo::startup() {
 	// Create bitmap for superbitmap
 	Bitmap* superBitmapBitmap = new Bitmap(164, 191);
 
-	// Wrap the raw zombie_Bitmap data inside a BitmapWrapper class
-	BitmapWrapper* wrapper = new BitmapWrapper(zombie_Bitmap, 164, 191);
-
 	// Get a graphics object from the bitmap so that we can modify it
 	Graphics* gfx = superBitmapBitmap->newGraphics();
 
+	// Create a zombie bitmap
+	Zombie* zombie = new Zombie();
+
 	// Copy the wrapped bitmap to this bitmap
-	gfx->drawBitmap(0, 0, 164, 191, wrapper, 0, 0);
+	gfx->drawBitmap(0, 0, 164, 191, zombie, 0, 0);
 
 	// Dim the bitmap
 	gfx->dim(0, 0, 164, 191);
@@ -51,7 +52,7 @@ void Demo::startup() {
 
 	// Clean up
 	delete gfx;
-	delete wrapper;
+	delete zombie;
 
 	// Attach bitmap
 	superBitmapWindow->getClientRect(rect);

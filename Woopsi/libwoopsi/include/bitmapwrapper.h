@@ -48,7 +48,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ord of the data.
 		 * @return Pointer to the internal bitmap data.
 		 */
-		inline const u16* getData(s16 x, s16 y) const;
+		const u16* getData(s16 x, s16 y) const;
 
 	protected:
 		const u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */

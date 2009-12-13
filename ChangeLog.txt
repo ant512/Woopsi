@@ -32,6 +32,10 @@ Change Log
     - Added missing FileListBox class.
     - ScrollbarHorizontal passes font object (via style) to Gadget constructor
       correctly.
+    - BitmapWrapper::getData(x, y) no longer causes a compiler warning.
+    - Removed PAGfx binary from demo.
+    - Removed zombie.c file from demo and replaced with bmp2bitmap-generated
+      class.
   
   - New Features:
     - Added packedfonts example.

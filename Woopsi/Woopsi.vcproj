@@ -1314,6 +1314,10 @@
 				RelativePath=".\demo\src\pong.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\demo\src\zombie.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Demo Header Files"
@@ -1352,6 +1356,10 @@
 			</File>
 			<File
 				RelativePath=".\demo\include\pong.h"
+				>
+			</File>
+			<File
+				RelativePath=".\demo\include\zombie.h"
 				>
 			</File>
 		</Filter>
