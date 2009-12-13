@@ -45,7 +45,8 @@ Change Log
     - Built with devkitARM r27 and libnds 1.4.0.
     - Replaced FontBitPacker with bmp2font, a .NET app that can convert a BMP to
       any of Woopsi's 4 font formats.
-  
+    - Added bmp2bitmap, a .NET app that will convert a BMP to a Woopsi
+      BitmapWrapper class.
 
   V0.42 (20091205)
 
