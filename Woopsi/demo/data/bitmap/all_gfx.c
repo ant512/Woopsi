@@ -4,7 +4,6 @@ extern "C" {
 
 #include "all_gfx.h"
 
-#include "zombie.c"
 #include "bittest1.c"
 #include "bittest2.c"
 #include "bittest3.c"
