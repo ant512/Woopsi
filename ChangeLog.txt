@@ -39,6 +39,7 @@ Change Log
     - Removed bittest files from demo and replaced with bmp2bitmap-generated
       classes.
     - Removed all_gfx file from demo.
+    - Uses stack instead of heap for converting chars to strings.
   
   - New Features:
     - Added packedfonts example.
