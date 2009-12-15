@@ -44,13 +44,11 @@ void WoopsiString::setText(const char* text) {
 
 void WoopsiString::setText(const char text) {
 
-	char* newText = new char[2];
+	char newText[2];
 	newText[0] = text;
 	newText[1] = '\0';
 
 	setText(newText);
-
-	delete[] newText;
 }
 
 void WoopsiString::append(const char* text) {
@@ -73,13 +71,11 @@ void WoopsiString::append(const char* text) {
 
 void WoopsiString::append(const char text) {
 
-	char* newText = new char[2];
+	char newText[2];
 	newText[0] = text;
 	newText[1] = '\0';
 
 	append(newText);
-
-	delete[] newText;
 }
 
 void WoopsiString::insert(const char* text, u32 index) {
@@ -146,13 +142,11 @@ void WoopsiString::insert(const char* text, u32 index) {
 }
 
 void WoopsiString::insert(const char text, u32 index) {
-	char* newText = new char[2];
+	char newText[2];
 	newText[0] = text;
 	newText[1] = '\0';
 
 	insert(newText, index);
-
-	delete[] newText;
 }
 
 void WoopsiString::remove(const u32 startIndex) {

@@ -276,13 +276,11 @@ void MultiLineTextBox::setText(const char* text) {
 
 void MultiLineTextBox::setText(const char text) {
 
-	char* newText = new char[2];
+	char newText[2];
 	newText[0] = text;
 	newText[1] = '\0';
 
 	setText(newText);
-
-	delete[] newText;
 }
 
 void MultiLineTextBox::appendText(const char* text) {
@@ -311,13 +309,11 @@ void MultiLineTextBox::appendText(const char* text) {
 
 void MultiLineTextBox::appendText(const char text) {
 
-	char* newText = new char[2];
+	char newText[2];
 	newText[0] = text;
 	newText[1] = '\0';
 
 	appendText(newText);
-
-	delete[] newText;
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex) {
