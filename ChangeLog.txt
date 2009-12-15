@@ -54,6 +54,9 @@ Change Log
       any of Woopsi's 4 font formats.
     - Added bmp2bitmap, a .NET app that will convert a BMP to a Woopsi
       BitmapWrapper class.
+    - Added font2bmp, a .NET app that will produce a BMP from a Windows font.
+    - Added font2font, a .NET app that will convert a Windows font directly to
+      a Woopsi font class.
 
   V0.42 (20091205)
 
