@@ -161,6 +161,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Events"
+					>
+					<File
+						RelativePath=".\libwoopsi\src\gadgeteventhandlerlist.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Gadgets"
@@ -740,6 +748,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\gadgeteventhandler.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\gadgeteventhandlerlist.h"
 						>
 					</File>
 				</Filter>

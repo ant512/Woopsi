@@ -56,7 +56,7 @@ void RadioButtonGroup::setSelectedGadget(RadioButton* gadget) {
 			_selectedGadget->setState(RadioButton::RADIO_BUTTON_STATE_ON);
 		}
 
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 
@@ -64,7 +64,7 @@ void RadioButtonGroup::setSelectedIndex(s32 index) {
 	if (index < _gadgets.size()) {
 		setSelectedGadget((RadioButton*)_gadgets[index]);
 
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 

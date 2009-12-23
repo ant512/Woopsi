@@ -76,7 +76,7 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 				_selectedDayButton = (Button*)e.getSource();
 
 				// Raise an action event
-				raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
+				_gadgetEventHandlers->raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
 			}
 
 			delete newDate;
@@ -423,7 +423,7 @@ bool Calendar::resize(u16 width, u16 height) {
 
 		redraw();
 
-		raiseResizeEvent(width, height);
+		_gadgetEventHandlers->raiseResizeEvent(width, height);
 
 		return true;
 	}

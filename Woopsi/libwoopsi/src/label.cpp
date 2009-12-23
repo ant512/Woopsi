@@ -95,42 +95,42 @@ void Label::setText(const char* text) {
 	_text->setText(text);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::setText(const char text) {
 	_text->setText(text);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::appendText(const char* text) {
 	_text->append(text);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::appendText(const char text) {
 	_text->append(text);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::insertText(const char* text, const u32 index) {
 	_text->insert(text, index);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::insertText(const char text, const u32 index) {
 	_text->insert(text, index);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 bool Label::resize(u16 width, u16 height) {

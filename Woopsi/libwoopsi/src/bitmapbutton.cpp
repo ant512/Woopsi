@@ -67,13 +67,13 @@ bool BitmapButton::release(s16 x, s16 y) {
 		// Determine which release event to fire
 		if (checkCollision(x, y)) {
 			// Release occurred within gadget; raise release
-			raiseReleaseEvent(x, y);
+			_gadgetEventHandlers->raiseReleaseEvent(x, y);
 
 			// Also raise "action" event
-			raiseActionEvent(x, y, 0, 0, KEY_CODE_NONE);
+			_gadgetEventHandlers->raiseActionEvent(x, y, 0, 0, KEY_CODE_NONE);
 		} else {
 			// Release occurred outside gadget; raise release
-			raiseReleaseOutsideEvent(x, y);
+			_gadgetEventHandlers->raiseReleaseOutsideEvent(x, y);
 		}
 
 		redraw();

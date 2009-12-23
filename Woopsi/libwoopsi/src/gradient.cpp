@@ -116,7 +116,7 @@ bool Gradient::resize(u16 width, u16 height) {
 
 		redraw();
 
-		raiseResizeEvent(width, height);
+		_gadgetEventHandlers->raiseResizeEvent(width, height);
 
 		return true;
 	}

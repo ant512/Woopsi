@@ -80,7 +80,7 @@ bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
 				delete port;
 			}
 
-			raiseDragEvent(x, y, vX, vY);
+			_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
 
 			return true;
 		}

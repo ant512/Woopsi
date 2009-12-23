@@ -13,7 +13,7 @@ void CheckBox::setState(CheckBox::CheckBoxState state) {
 	if (_state != state) {
 		_state = state;
 
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 
 		redraw();
 	}

@@ -213,7 +213,7 @@ bool ListBox::click(s16 x, s16 y) {
 			// Enable dragging
 			setDragging(x, y);
 
-			raiseClickEvent(x, y);
+			_gadgetEventHandlers->raiseClickEvent(x, y);
 		}
 
 		return true;
@@ -258,8 +258,8 @@ bool ListBox::doubleClick(s16 x, s16 y) {
 			// Enable dragging
 			setDragging(x, y);
 
-			raiseDoubleClickEvent(x, y);
-			raiseActionEvent(x, y, 0, 0, KEY_CODE_NONE);
+			_gadgetEventHandlers->raiseDoubleClickEvent(x, y);
+			_gadgetEventHandlers->raiseActionEvent(x, y, 0, 0, KEY_CODE_NONE);
 
 			return true;
 		}
@@ -309,7 +309,7 @@ void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
 
 void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 // Get the preferred dimensions of the gadget

@@ -87,7 +87,7 @@ void ScrollbarHorizontal::handleActionEvent(const GadgetEventArgs& e) {
 
 void ScrollbarHorizontal::handleValueChangeEvent(const GadgetEventArgs& e) {
 	if (e.getSource() == _slider) {
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 

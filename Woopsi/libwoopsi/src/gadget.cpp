@@ -97,6 +97,8 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_closeType = CLOSE_TYPE_CLOSE;
 
 	_rectCache = new RectCache(this);
+
+	_gadgetEventHandlers = new GadgetEventHandlerList(this);
 }
 
 Gadget::~Gadget() {
@@ -144,6 +146,7 @@ Gadget::~Gadget() {
 
 	delete _rectCache;
 	delete _style;
+	delete _gadgetEventHandlers;
 }
 
 const s16 Gadget::getX() const {
@@ -315,266 +318,6 @@ bool Gadget::checkCollision(Gadget* gadget) const {
 	return checkCollision(rect.x, rect.y, rect.width, rect.height);
 }
 
-void Gadget::raiseClickEvent(s16 x, s16 y) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleClickEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseDoubleClickEvent(s16 x, s16 y) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleDoubleClickEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseShiftClickEvent(s16 x, s16 y) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleShiftClickEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseReleaseEvent(s16 x, s16 y) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleReleaseEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseReleaseOutsideEvent(s16 x, s16 y) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleReleaseOutsideEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, vX, vY, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleDragEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseMoveForwardEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleMoveForwardEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseMoveBackwardEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleMoveBackwardEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseKeyPressEvent(KeyCode keyCode) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, keyCode);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleKeyPressEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseKeyReleaseEvent(KeyCode keyCode) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, keyCode);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleKeyReleaseEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseLidCloseEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleLidCloseEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseLidOpenEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleLidOpenEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseFocusEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleFocusEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseBlurEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleBlurEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseCloseEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleCloseEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseHideEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleHideEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseShowEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleShowEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseShelveEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleShelveEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseUnshelveEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleUnshelveEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseEnableEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleEnableEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseDisableEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleDisableEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseValueChangeEvent() {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleValueChangeEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseResizeEvent(u16 width, u16 height) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleResizeEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, vX, vY, KEY_CODE_NONE);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleMoveEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
-	if (raisesEvents()) {
-		GadgetEventArgs e(this, x, y, vX, vY, keyCode);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleActionEvent(e);
-		}
-	}
-}
-
-void Gadget::raiseContextMenuSelectionEvent(const ListDataItem* contextMenuItem) {
-	if (raisesEvents()) {
-		ContextMenuEventArgs e(this, contextMenuItem);
-
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleContextMenuSelectionEvent(e);
-		}
-	}
-}
-
 void Gadget::drawChildren() {
 	for (s32 i = 0; i < _gadgets.size(); i++) {
 		_gadgets[i]->redraw();
@@ -695,7 +438,7 @@ void Gadget::eraseGadget(Gadget* gadget) {
 void Gadget::close() {
 
 	if (!_flags.deleted) {
-		raiseCloseEvent();
+		_gadgetEventHandlers->raiseCloseEvent();
 
 		_flags.deleted = true;
 		_flags.drawingEnabled = false;
@@ -720,7 +463,7 @@ bool Gadget::shelve() {
 
 	if (!_flags.shelved) {
 
-		raiseShelveEvent();
+		_gadgetEventHandlers->raiseShelveEvent();
 
 		erase();
 
@@ -745,7 +488,7 @@ bool Gadget::unshelve() {
 
 	if (_flags.shelved) {
 
-		raiseUnshelveEvent();
+		_gadgetEventHandlers->raiseUnshelveEvent();
 
 		_flags.drawingEnabled = true;
 		_flags.shelved = false;
@@ -993,7 +736,7 @@ bool Gadget::enable() {
 
 		redraw();
 
-		raiseEnableEvent();
+		_gadgetEventHandlers->raiseEnableEvent();
 
 		return true;
 	}
@@ -1007,7 +750,7 @@ bool Gadget::disable() {
 
 		redraw();
 
-		raiseDisableEvent();
+		_gadgetEventHandlers->raiseDisableEvent();
 
 		return true;
 	}
@@ -1072,7 +815,7 @@ bool Gadget::moveTo(s16 x, s16 y) {
 
 		redraw();
 
-		raiseMoveEvent(x, y, x - oldX, y - oldY);
+		_gadgetEventHandlers->raiseMoveEvent(x, y, x - oldX, y - oldY);
 
 		return true;
 	}
@@ -1114,7 +857,7 @@ bool Gadget::resize(u16 width, u16 height) {
 
 		redraw();
 
-		raiseResizeEvent(width, height);
+		_gadgetEventHandlers->raiseResizeEvent(width, height);
 
 		return true;
 	}
@@ -1190,7 +933,7 @@ bool Gadget::click(s16 x, s16 y) {
 			// Enable dragging
 			setDragging(x, y);
 
-			raiseClickEvent(x, y);
+			_gadgetEventHandlers->raiseClickEvent(x, y);
 		}
 
 		return true;
@@ -1237,7 +980,7 @@ bool Gadget::doubleClick(s16 x, s16 y) {
 			// Enable dragging
 			setDragging(x, y);
 
-			raiseDoubleClickEvent(x, y);
+			_gadgetEventHandlers->raiseDoubleClickEvent(x, y);
 
 			return true;
 		}
@@ -1268,7 +1011,7 @@ bool Gadget::shiftClick(s16 x, s16 y) {
 			// Set up the context menu
 			showContextMenu(x, y);
 
-			raiseShiftClickEvent(x, y);
+			_gadgetEventHandlers->raiseShiftClickEvent(x, y);
 
 			return true;
 		}
@@ -1290,10 +1033,10 @@ bool Gadget::release(s16 x, s16 y) {
 		// Determine which release event to fire
 		if (checkCollision(x, y)) {
 			// Release occurred within gadget; raise release
-			raiseReleaseEvent(x, y);
+			_gadgetEventHandlers->raiseReleaseEvent(x, y);
 		} else {
 			// Release occurred outside gadget; raise release
-			raiseReleaseOutsideEvent(x, y);
+			_gadgetEventHandlers->raiseReleaseOutsideEvent(x, y);
 		}
 
 		return true;
@@ -1305,7 +1048,7 @@ bool Gadget::release(s16 x, s16 y) {
 bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	if ((isEnabled()) && (_flags.dragging)) {
 		if ((vX != 0) || (vY != 0)) {
-			raiseDragEvent(x, y, vX, vY);
+			_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
 		}
 
 		return true;
@@ -1318,7 +1061,7 @@ bool Gadget::keyPress(KeyCode keyCode) {
 	if (isEnabled()) {
 		
 		// Raise keypress for this gadget
-		raiseKeyPressEvent(keyCode);
+		_gadgetEventHandlers->raiseKeyPressEvent(keyCode);
 
 		// Handle active child
 		if (_focusedGadget != NULL) {
@@ -1335,7 +1078,7 @@ bool Gadget::keyRelease(KeyCode keyCode) {
 	if (isEnabled()) {
 
 		// Raise key release for this gadget
-		raiseKeyReleaseEvent(keyCode);
+		_gadgetEventHandlers->raiseKeyReleaseEvent(keyCode);
 
 		// Handle active child
 		if (_focusedGadget != NULL) {
@@ -1349,7 +1092,7 @@ bool Gadget::keyRelease(KeyCode keyCode) {
 }
 
 void Gadget::lidClose() {
-	raiseLidCloseEvent();
+	_gadgetEventHandlers->raiseLidCloseEvent();
 
 	// Run lid closed on all gadgets
 	for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1358,7 +1101,7 @@ void Gadget::lidClose() {
 }
 
 void Gadget::lidOpen() {
-	raiseLidOpenEvent();
+	_gadgetEventHandlers->raiseLidOpenEvent();
 
 	// Run lid opened on all gadgets
 	for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1381,7 +1124,7 @@ bool Gadget::focus() {
 
 		// Raise an event only if the gadget did not have focus
 		if (!hadFocus) {
-			raiseFocusEvent();
+			_gadgetEventHandlers->raiseFocusEvent();
 			return true;
 		}
 	}
@@ -1404,7 +1147,7 @@ bool Gadget::blur() {
 
 	// Raise an event only if the gadget had focus
 	if (hadFocus) {
-		raiseBlurEvent();
+		_gadgetEventHandlers->raiseBlurEvent();
 		return true;
 	}
 
@@ -1414,7 +1157,7 @@ bool Gadget::blur() {
 bool Gadget::raiseToTop() {
 	if (_parent != NULL) {
 		if (_parent->raiseGadgetToTop(this)) {
-			raiseMoveForwardEvent();
+			_gadgetEventHandlers->raiseMoveForwardEvent();
 			return true;
 		}
 	}
@@ -1425,7 +1168,7 @@ bool Gadget::raiseToTop() {
 bool Gadget::lowerToBottom() {
 	if (_parent != NULL) {
 		if (_parent->lowerGadgetToBottom(this)) {
-			raiseMoveBackwardEvent();
+			_gadgetEventHandlers->raiseMoveBackwardEvent();
 			return true;
 		}
 	}
@@ -1854,7 +1597,7 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 }
 
 bool Gadget::handleContextMenuSelection(const ListDataItem* item) {
-	raiseContextMenuSelectionEvent(item);
+	_gadgetEventHandlers->raiseContextMenuSelectionEvent(item);
 
 	return true;
 }
@@ -1867,7 +1610,7 @@ bool Gadget::show() {
 		// top of the newly-visible gadget
 		_parent->invalidateLowerGadgetsVisibleRectCache(this);
 
-		raiseShowEvent();
+		_gadgetEventHandlers->raiseShowEvent();
 		redraw();
 		return true;
 	}
@@ -1882,7 +1625,7 @@ bool Gadget::hide() {
 		// Ensure the gadget isn't running modally
 		stopModal();
 
-		raiseHideEvent();
+		_gadgetEventHandlers->raiseHideEvent();
 		erase();
 		return true;
 	}
@@ -1921,14 +1664,5 @@ void Gadget::goModal() {
 	// Loop until no longer modal
 	while (isModal() && (woopsiApplication != NULL)) {
 		woopsiApplication->processOneVBL(this);
-	}
-}
-
-void Gadget::removeGadgetEventHandler(GadgetEventHandler* eventHandler) {
-	for (s32 i = 0; i < _gadgetEventHandlers.size(); ++i) {
-		if (_gadgetEventHandlers.at(i) == eventHandler) {
-			_gadgetEventHandlers.erase(i);
-			return;
-		}
 	}
 }

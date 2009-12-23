@@ -89,7 +89,7 @@ bool ContextMenu::resize(u16 width, u16 height) {
 		enableDrawing();
 		redraw();
 
-		raiseResizeEvent(width, height);
+		_gadgetEventHandlers->raiseResizeEvent(width, height);
 
 		return true;
 	}

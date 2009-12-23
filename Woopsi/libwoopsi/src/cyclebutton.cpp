@@ -58,7 +58,7 @@ void CycleButton::handleListDataChangedEvent(const ListDataEventArgs& e) {
 
 void CycleButton::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void CycleButton::draw(Rect clipRect) {
@@ -151,10 +151,10 @@ bool CycleButton::release(s16 x, s16 y) {
 			}
 
 			// Release occurred within gadget; raise release
-			raiseReleaseEvent(x, y);
+			_gadgetEventHandlers->raiseReleaseEvent(x, y);
 		} else {
 			// Release occurred outside gadget; raise release
-			raiseReleaseOutsideEvent(x, y);
+			_gadgetEventHandlers->raiseReleaseOutsideEvent(x, y);
 		}
 
 		redraw();

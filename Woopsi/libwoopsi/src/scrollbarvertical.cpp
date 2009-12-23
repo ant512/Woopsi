@@ -83,13 +83,13 @@ void ScrollbarVertical::handleActionEvent(const GadgetEventArgs& e) {
 			_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
 		}
 
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 
 void ScrollbarVertical::handleValueChangeEvent(const GadgetEventArgs& e) {
 	if (e.getSource() == _slider) {
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 
@@ -103,7 +103,7 @@ void ScrollbarVertical::handleClickEvent(const GadgetEventArgs& e) {
 		// Move the grip up
 		_slider->setValue(_slider->getValue() - _slider->getValuesPerPixel());
 
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 
 	} else if (e.getSource() == _downButton) {
 
@@ -113,7 +113,7 @@ void ScrollbarVertical::handleClickEvent(const GadgetEventArgs& e) {
 		// Move the grip down
 		_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
 
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 

@@ -29,7 +29,7 @@ bool Screen::focus() {
 				_parent->setFocusedGadget(this);
 			}
 			
-			raiseFocusEvent();
+			_gadgetEventHandlers->raiseFocusEvent();
 			
 			return true;
 		}
@@ -82,7 +82,7 @@ bool Screen::click(s16 x, s16 y) {
 				woopsiApplication->setClickedGadget(this);
 			}
 			
-			raiseClickEvent(x, y);
+			_gadgetEventHandlers->raiseClickEvent(x, y);
 		}
 			
 		return true;
@@ -210,7 +210,7 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 					// Erase the screen from its old location
 					((Woopsi*)_parent)->eraseRect(rect);
 					
-					raiseDragEvent(x, y, vX, vY);
+					_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
 					
 					// Handle visible region caching
 					invalidateVisibleRectCache();

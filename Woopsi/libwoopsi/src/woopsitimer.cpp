@@ -28,7 +28,7 @@ bool WoopsiTimer::run() {
 				_frameCount = 0;
 			}
 
-			raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
+			_gadgetEventHandlers->raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
 
 			return true;
 		}

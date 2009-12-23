@@ -57,7 +57,7 @@ void TextBox::setText(const char* text) {
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::setText(const char text) {
@@ -65,7 +65,7 @@ void TextBox::setText(const char text) {
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::appendText(const char* text) {
@@ -73,7 +73,7 @@ void TextBox::appendText(const char* text) {
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::appendText(const char text) {
@@ -81,7 +81,7 @@ void TextBox::appendText(const char text) {
 	moveCursorToPosition(_text->getLength());
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::insertText(const char* text, const u32 index) {
@@ -98,7 +98,7 @@ void TextBox::insertText(const char* text, const u32 index) {
 	moveCursorToPosition(index + insertLen);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::insertText(const char text, const u32 index) {
@@ -108,7 +108,7 @@ void TextBox::insertText(const char text, const u32 index) {
 	moveCursorToPosition(getCursorPosition() + 1);
 	calculateTextPosition();
 	redraw();
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::insertTextAtCursor(const char* text) {

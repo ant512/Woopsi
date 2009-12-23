@@ -8,7 +8,7 @@ TEXT2 		:= using Woopsi
 TEXT3 		:= woopsi.sourceforge.net
 
 # 4-bit-deep bitmap file to use as icon in loader menus
-ICON 		:= $(DEVKITPRO)/libwoopsi/icon/logo.bmp 
+ICON 		:= $(DEVKITPRO)/libwoopsi/icon/logo.bmp
 
 #-------------------------------------------------------------------------------
 # TARGET is the name of the output file
@@ -30,7 +30,7 @@ DEFINES		:=
 # If USE_WOOPSI is defined, compile/link against Woopsi
 # If USE_FAT is defined, compile/link against libfat
 #-------------------------------------------------------------------------------
-USE_WOOPSI	= 1
+USE_WOOPSI		= 1
 #USE_FAT		= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our

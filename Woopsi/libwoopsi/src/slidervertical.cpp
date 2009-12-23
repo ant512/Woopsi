@@ -137,7 +137,7 @@ void SliderVertical::handleDragEvent(const GadgetEventArgs& e) {
 	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
 
 		// Grip has moved
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 
@@ -147,7 +147,7 @@ void SliderVertical::handleMoveEvent(const GadgetEventArgs& e) {
 	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
 
 		// Grip has moved
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
 }
 

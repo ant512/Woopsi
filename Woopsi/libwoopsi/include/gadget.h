@@ -9,6 +9,7 @@
 #include "rect.h"
 #include "fontbase.h"
 #include "gadgetstyle.h"
+#include "gadgeteventhandlerlist.h"
 
 namespace WoopsiUI {
 
@@ -416,13 +417,13 @@ namespace WoopsiUI {
 		 * all events raised by this gadget.
 		 * @param eventHandler A pointer to the event handler.
 		 */
-		inline void addGadgetEventHandler(GadgetEventHandler* eventHandler) { _gadgetEventHandlers.push_back(eventHandler); };
+		inline void addGadgetEventHandler(GadgetEventHandler* eventHandler) { _gadgetEventHandlers->addGadgetEventHandler(eventHandler); };
 
 		/**
 		 * Remove a gadget event handler.
 		 * @param eventHandler A pointer to the event handler to remove.
 		 */
-		void removeGadgetEventHandler(GadgetEventHandler* eventHandler);
+		inline void removeGadgetEventHandler(GadgetEventHandler* eventHandler) { _gadgetEventHandlers->removeGadgetEventHandler(eventHandler); };
 
 		/**
 		 * Enables or disables event firing for this gadget.
@@ -956,7 +957,7 @@ namespace WoopsiUI {
 		Flags _flags;							/**< Flags struct */
 
 		// Event handling
-		WoopsiArray<GadgetEventHandler*> _gadgetEventHandlers;		/**< Pointer to list of event handlers */
+		GadgetEventHandlerList* _gadgetEventHandlers;		/**< List of event handlers */
 
 		// Double-clicking
 		u32 _lastClickTime;						/**< VBL count when last clicked */
@@ -1076,171 +1077,6 @@ namespace WoopsiUI {
 		 * @return A new graphics port object.
 		 */
 		virtual GraphicsPort* newInternalGraphicsPort(Rect clipRect);
-
-		/**
-		 * Raise a click event to the event handler.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 */
-		void raiseClickEvent(s16 x, s16 y);
-
-		/**
-		 * Raise a double-click event to the event handler.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 */
-		void raiseDoubleClickEvent(s16 x, s16 y);
-
-		/**
-		 * Raise a shift click event to the event handler.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 */
-		void raiseShiftClickEvent(s16 x, s16 y);
-
-		/**
-		 * Raise a stylus release event to the event handler.
-		 * @param x The x co-ordinate of the release.
-		 * @param y The y co-ordinate of the release.
-		 */
-		void raiseReleaseEvent(s16 x, s16 y);
-
-		/**
-		 * Raise a stylus release-outside event to the event handler.
-		 * @param x The x co-ordinate of the release.
-		 * @param y The y co-ordinate of the release.
-		 */
-		void raiseReleaseOutsideEvent(s16 x, s16 y);
-
-		/**
-		 * Raise a stylus drag event to the event handler.
-		 * @param x The x co-ordinate of the stylus when the drag started.
-		 * @param y The y co-ordinate of the stylus when the drag started.
-		 * @param vX The horizontal distance dragged.
-		 * @param vY The vertical distance dragged.
-		 */
-		void raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY);
-
-		/**
-		 * Raise a move forward event to the event handler.
-		 */
-		void raiseMoveForwardEvent();
-
-		/**
-		 * Raise a move backward event to the event handler.
-		 */
-		void raiseMoveBackwardEvent();
-
-		/**
-		 * Raise a key press event to the event handler.
-		 * @param keyCode The code of the key that caused the event.
-		 */
-		void raiseKeyPressEvent(KeyCode keyCode);
-
-		/**
-		 * Raise a key release event to the event handler.
-		 * @param keyCode The code of the key that caused the event.
-		 */
-		void raiseKeyReleaseEvent(KeyCode keyCode);
-
-		/**
-		 * Raise a lid closed event to the event handler.
-		 */
-		void raiseLidCloseEvent();
-
-		/**
-		 * Raise a lid opened event to the event handler.
-		 */
-		void raiseLidOpenEvent();
-
-		/**
-		 * Raise a focus event to the event handler.
-		 */
-		void raiseFocusEvent();
-
-		/**
-		 * Raise a blur event to the event handler.
-		 */
-		void raiseBlurEvent();
-
-		/**
-		 * Raise a close event to the event handler.
-		 */
-		void raiseCloseEvent();
-
-		/**
-		 * Raise a hide event to the event handler.
-		 */
-		void raiseHideEvent();
-
-		/**
-		 * Raise a show event to the event handler.
-		 */
-		void raiseShowEvent();
-
-		/**
-		 * Raise a shelve event to the event handler.
-		 */
-		void raiseShelveEvent();
-
-		/**
-		 * Raise a unshelve event to the event handler.
-		 */
-		void raiseUnshelveEvent();
-
-		/**
-		 * Raise an enable event to the event handler.
-		 */
-		void raiseEnableEvent();
-
-		/**
-		 * Raise a disable event to the event handler.
-		 */
-		void raiseDisableEvent();
-
-		/**
-		 * Raise a value change event to the event handler.
-		 */
-		void raiseValueChangeEvent();
-
-		/**
-		 * Raise a resize event to the event handler.
-		 * @param width The new width of the gadget.
-		 * @param height The new height of the gadget.
-		 */
-		void raiseResizeEvent(u16 width, u16 height);
-
-		/**
-		 * Raise a move event to the event handler.
-		 * @param x The new x co-ordinate of the gadget.
-		 * @param y The new y co-ordinate of the gadget.
-		 * @param vX The horizontal distance moved.
-		 * @param vY The vertical distance moved.
-		 */
-		void raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY);
-
-		/**
-		 * Raise a context menu selection event to the event handler.
-		 * @param contextMenuItem Pointer to the menu item selected.
-		 */
-		void raiseContextMenuSelectionEvent(const ListDataItem* contextMenuItem);
-
-		/**
-		 * Raise an action event to the event handler.  This should be called when
-		 * a gadget's purpose has been fulfilled.  For example, in the case of a
-		 * button, this event is raised when the button is released within its
-		 * boundaries.  The button has produced a valid click, and thus fulfilled
-		 * its purpose, so it needs to raise an "action" event.
-		 * Not all parameters are valid for every event, but since each gadget will
-		 * raise an action event specific to its own behaviour this function allows
-		 * all EventArgs values to be set.
-		 * @param x The x co-ordinate of the event.
-		 * @param y The y co-ordinate of the event.
-		 * @param vX Horizontal difference involved in the event.
-		 * @param vY Vertical difference involved in the event.
-		 * @param keyCode Keycode of the event.
-		 */
-		void raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode);
 
 		/**
 		 * Get the index of the next visible gadget higher up the z-order.

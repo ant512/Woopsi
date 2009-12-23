@@ -58,6 +58,12 @@ Change Log
     - Added font2bmp, a .NET app that will produce a BMP from a Windows font.
     - Added font2font, a .NET app that will convert a Windows font directly to
       a Woopsi font class.
+    - Added new GadgetEventHandlerList class and moved event raising code into
+      it from the Gadget class.
+    - Duplicate gadget event handlers cannot be added to a gadget.
+    - Added build and deploy batch files for libwoopsi.
+    - Tests all build against libwoopsi instead of the raw Woopsi source.
+    - Most examples build against libwoopsi instead of the raw Woopsi source.
 
   V0.42 (20091205)
 

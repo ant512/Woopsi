@@ -109,7 +109,7 @@ bool ScrollingPanel::drag(s16 x, s16 y, s16 vX, s16 vY) {
 				// Perform scroll
 				scroll(vX, vY);
 
-				raiseDragEvent(x, y, vX, vY);
+				_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
 
 				return true;
 			}
@@ -182,8 +182,8 @@ void ScrollingPanel::raiseScrollEvent() {
 	if (raisesEvents()) {
 		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 	
-		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
-			_gadgetEventHandlers.at(i)->handleScrollEvent(e);
+		for (int i = 0; i < _gadgetEventHandlers->size(); ++i) {
+			_gadgetEventHandlers->at(i)->handleScrollEvent(e);
 		}
 	}
 }

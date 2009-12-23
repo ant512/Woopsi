@@ -271,7 +271,7 @@ void MultiLineTextBox::setText(const char* text) {
 
 	redraw();
 
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::setText(const char text) {
@@ -304,7 +304,7 @@ void MultiLineTextBox::appendText(const char* text) {
 
 	redraw();
 
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::appendText(const char text) {
@@ -331,7 +331,7 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 
 	redraw();
 
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
@@ -349,7 +349,7 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
 	redraw();
 
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 
@@ -451,7 +451,7 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 
 	redraw();
 
-	if (raiseEvent) raiseValueChangeEvent();
+	if (raiseEvent) _gadgetEventHandlers->raiseValueChangeEvent();
 
 	return true;
 }
@@ -518,7 +518,7 @@ void MultiLineTextBox::insertText(const char* text, const u32 index) {
 
 	redraw();
 
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::insertText(const char text, const u32 index) {
@@ -537,7 +537,7 @@ void MultiLineTextBox::insertText(const char text, const u32 index) {
 
 	redraw();
 
-	raiseValueChangeEvent();
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 bool MultiLineTextBox::click(s16 x, s16 y) {

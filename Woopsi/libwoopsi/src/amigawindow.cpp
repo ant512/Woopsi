@@ -157,7 +157,7 @@ bool AmigaWindow::click(s16 x, s16 y) {
 				woopsiApplication->setClickedGadget(this);
 			}
 
-			raiseClickEvent(x, y);
+			_gadgetEventHandlers->raiseClickEvent(x, y);
 		}
 
 		return true;
@@ -268,7 +268,7 @@ bool AmigaWindow::resize(u16 width, u16 height) {
 
 		redraw();
 
-		raiseResizeEvent(width, height);
+		_gadgetEventHandlers->raiseResizeEvent(width, height);
 
 		return true;
 	}

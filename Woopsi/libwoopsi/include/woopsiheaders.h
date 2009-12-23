@@ -31,6 +31,7 @@
 #include "gadget.h"
 #include "gadgeteventargs.h"
 #include "gadgeteventhandler.h"
+#include "gadgeteventhandlerlist.h"
 #include "glyphs.h"
 #include "gradient.h"
 #include "graphics.h"

@@ -17,7 +17,7 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 			((RadioButtonGroup*)_parent)->setSelectedGadget(this);
 		}
 
-		raiseValueChangeEvent();
+		_gadgetEventHandlers->raiseValueChangeEvent();
 
 		redraw();
 	}

@@ -75,7 +75,7 @@ bool SuperBitmap::drag(s16 x, s16 y, s16 vX, s16 vY) {
 		// Redraw the gadget
 		redraw();
 
-		raiseDragEvent(x, y, vX, vY);
+		_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
 
 		return true;
 	}
