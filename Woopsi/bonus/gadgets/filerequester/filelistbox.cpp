@@ -63,7 +63,7 @@ void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
 				} else {
 
 					// File selected; raise event
-					raiseValueChangeEvent();
+					_gadgetEventHandlers->raiseValueChangeEvent();
 				}
 			}
 			

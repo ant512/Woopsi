@@ -67,7 +67,7 @@ void FileRequester::handleReleaseEvent(const GadgetEventArgs& e) {
 		} else if (e.getSource() == _okButton) {
 
 			// Raise value changed event to event handler
-			raiseValueChangeEvent();
+			_gadgetEventHandlers->raiseValueChangeEvent();
 
 			// Close the window
 			close();
@@ -83,7 +83,7 @@ void FileRequester::handleValueChangeEvent(const GadgetEventArgs& e) {
 		if (e.getSource() == _listbox) {
 
 			// File selected; raise event
-			raiseValueChangeEvent();
+			_gadgetEventHandlers->raiseValueChangeEvent();
 
 			// Close the window
 			close();
