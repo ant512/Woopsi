@@ -1,7 +1,13 @@
 Change Log
 ----------
 
-  V0.43
+  V0.44
+  
+  Fixes:
+    - Moved fatInitDefault() SDL function into woopsifuncs.cpp.
+    
+
+  V0.43 (20091223)
   
   - Fixes:
     - ListBox draws correctly when dragged (clipping problem from 0.41).

@@ -359,6 +359,8 @@ Uint32 getSDLPixel(SDL_Surface *surface, int x, int y) {
 	} // switch
 }
 
+int fatInitDefault() { return 1; }
+
 #else
 
 // Using libnds
