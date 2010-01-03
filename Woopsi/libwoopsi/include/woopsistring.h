@@ -104,10 +104,10 @@ namespace WoopsiUI {
 		virtual void remove(const u32 startIndex, const u32 count);
 
 		/**
-		 * Get the length of the string in characters.
+		 * Get the of number of UTF-8 tokens (ie. the length) of the string.
 		 * @return The length of the string.
 		 */
-		virtual inline const u32 getLength() const { return _length; };
+		virtual const u32 getLength() const;
 
 		/**
 		 * Copy constructor.
@@ -124,22 +124,19 @@ namespace WoopsiUI {
 			delete[] _text;
 			_text = NULL;
 		};
-
-		/**
-		 * Overload the [] operator to allow array-style access.
-		 * @param index The index to retrieve.
-		 * @return The char at the specified index.
-		 */
-		char& operator[](const u32 index) const {
-			return _text[index];
-		};
 		
 		/**
 		 * Get the character at the specified index.
 		 * @param index The index of the character to retrieve.
 		 * @return The character at the specified index.
 		 */
-		virtual inline const char getCharAt(u32 index) { return _text[index]; }; 
+		virtual const u32 getCharAt(u32 index) const;
+
+		/**
+		 * Return a pointer to the specified UTF-8 token.
+		 * @param index Index of the UTF-8 token to retrieve.
+		 */
+		virtual char* getToken(const u32 index) const;
 
 	protected:
 		char* _text;							/**< Raw char array data */
@@ -162,7 +159,42 @@ namespace WoopsiUI {
 		 * Get the amount of allocated memory.
 		 * @return The number of chars allocated in RAM.
 		 */
-		virtual inline u32 getAllocatedSize() { return _allocatedSize; };
+		virtual inline u32 getAllocatedSize() const { return _allocatedSize; };
+
+		/**
+		 * Get the UTF-8 token at the specified index.
+		 * @param string String containing the token.
+		 * @param index Index of the token.
+		 * @return Pointer to the UTF-8 token.
+		 */
+		char* getUTF8Token(const char* string, u32 index) const;
+
+		/**
+		 * Get the number of chars read in the UTF-8 token and its codepoint.  In the case of
+		 * an invalid codepoint, numChars will be 0.
+		 * @param string String to analyse.
+		 * @param numChars Pointer to a u8 that will hold the number of chars in the codepoint once
+		 * the method ends.  Will contain 0 if the codepoint is invalid.
+		 * @return The codepoint.
+		 */
+		u32 getCodePoint(const char* string, u8* numChars) const;
+
+		/**
+		 * Get the unicode char at the specified index.
+		 * @param string String to retrieve the char from.
+		 * @param index The index of the character to retrieve.
+		 * @return The unicode char at the specified index.
+		 */
+		u32 getUnicodeCharAt(const char* string, u32 index) const;
+
+		/**
+		 * Copies the valid utf-8 tokens of the string src into string dest 
+		 * and returns the number of chars in the filtered string.
+		 * @param dest Destination string.
+		 * @param stc Source string.
+		 * @return The number of chars in the filtered string.
+		 */
+		u32 filterString(char* dest, const char* src) const;
 
 	private:
 		u32 _length;							/**< Cache length of string for fast access */

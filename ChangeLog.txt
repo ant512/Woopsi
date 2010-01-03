@@ -4,9 +4,17 @@ Change Log
   V0.44
   
   Fixes:
-    - Moved fatInitDefault() SDL function into woopsifuncs.cpp.
+    - Moved fatInitDefault() SDL function into woopsifuncs.cpp (Quirky).
+    - ScrollingPanel::raiseScrollEvent() only fires if events are enabled.
+    - Gadget::raisesEvents() retrieves its value from the GadgetEventHandlerList
+      object.
+    - Gadget::setRaisesEvents() alters the GadgetEventHandlerList object.
+    - Removed the raisesEvents flag from the Gadget class.
     
-
+  New Features:
+    - Added FontBase::getCharHeight().
+    - WoopsiString supports UTF-8 (Lakedaemon).
+	
   V0.43 (20091223)
   
   - Fixes:

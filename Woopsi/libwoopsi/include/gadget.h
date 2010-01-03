@@ -71,7 +71,6 @@ namespace WoopsiUI {
 			u8 enabled : 1;						/**< True if the gadget is enabled. */
 			u8 decoration : 1;					/**< True if the gadget is a decoration. */
 			u8 permeable : 1;					/**< True if the gadget's children can exceed its dimensions. */
-			u8 raisesEvents : 1;				/**< True if the gadget can raise events. */
 			u8 erased : 1;						/**< True if the gadget is currently erased from the frame buffer. */
 			u8 shiftClickChildren : 1;			/**< True if the gadget sends shift clicks to its children. */
 			u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid. */
@@ -263,7 +262,7 @@ namespace WoopsiUI {
 		 * Check if this gadget raises events or not.
 		 * @return True if events are enabled.
 		 */
-		inline const bool raisesEvents() const { return _flags.raisesEvents & !isDeleted(); };
+		inline const bool raisesEvents() const { return _gadgetEventHandlers->isEnabled(); };
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
@@ -429,7 +428,9 @@ namespace WoopsiUI {
 		 * Enables or disables event firing for this gadget.
 		 * @param raisesEvents True to enable events, false to disable.
 		 */
-		inline void setRaisesEvents(const bool raisesEvents) { _flags.raisesEvents = raisesEvents; };
+		inline void setRaisesEvents(const bool raisesEvents) { 
+			raisesEvents ? _gadgetEventHandlers->enable() : _gadgetEventHandlers->disable();
+		};
 
 		/**
 		 * Disabled drawing of this gadget. Gadgets hidden using this method will still

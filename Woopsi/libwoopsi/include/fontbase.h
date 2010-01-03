@@ -128,6 +128,13 @@ namespace WoopsiUI {
 		virtual u16 getCharWidth(char letter) const = 0;
 
 		/**
+		 * Get the height of an individual character.
+		 * @param letter The letter to get the height of.
+		 * @return The height of the character in pixels.
+		 */
+		virtual u16 getCharHeight(char letter) const { return _height; };
+
+		/**
 		 * Gets the height of the font.
 		 * @return The height of the font.
 		 */

@@ -58,7 +58,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 
 	// Following flags are set to true if not passed in flags parameter
 	_flags.shiftClickChildren = (!(flags & GADGET_NO_SHIFT_CLICK_CHILDREN));
-	_flags.raisesEvents = (!(flags & GADGET_NO_RAISE_EVENTS));
 
 	// Dragging values
 	_grabPointX = 0;
@@ -439,10 +438,10 @@ void Gadget::close() {
 
 	if (!_flags.deleted) {
 		_gadgetEventHandlers->raiseCloseEvent();
+		_gadgetEventHandlers->disable();
 
 		_flags.deleted = true;
 		_flags.drawingEnabled = false;
-		_flags.raisesEvents = false;
 
 		// Ensure the gadget isn't running modally
 		stopModal();

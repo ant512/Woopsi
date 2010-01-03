@@ -179,7 +179,7 @@ bool ScrollingPanel::clipToClientRect(Rect& clipRect) {
 }
 
 void ScrollingPanel::raiseScrollEvent() {
-	if (raisesEvents()) {
+	if (_gadgetEventHandlers->isEnabled()) {
 		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
 	
 		for (int i = 0; i < _gadgetEventHandlers->size(); ++i) {
