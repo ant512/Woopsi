@@ -7,6 +7,7 @@ using namespace WoopsiUI;
 RadioButton::RadioButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Button(x, y, width, height, GLYPH_SCREEN_DEPTH_UP, style) {
 	_state = RADIO_BUTTON_STATE_OFF;
 	_flags.borderless = true;
+	setFont(_style->glyphFont);
 }
 
 void RadioButton::setState(RadioButton::RadioButtonState state) {
@@ -52,7 +53,7 @@ void RadioButton::draw(Rect clipRect) {
 	if (isEnabled()) {
 		port->drawText(_textX, _textY, getFont(), glyph);
 	} else {
-		port->drawText(_textX, _textY, getFont(), glyph, getDarkColour());
+		port->drawText(_textX, _textY, getFont(), glyph, 0, 1, getDarkColour());
 	}
 
 	delete port;

@@ -1,4 +1,5 @@
 #include "fixedwidthfontbase.h"
+#include "woopsistring.h"
 
 using namespace WoopsiUI;
 
@@ -7,6 +8,10 @@ FixedWidthFontBase::FixedWidthFontBase(const u16 bitmapWidth, const u16 bitmapHe
 	_bitmapWidth = bitmapWidth;
 	_bitmapHeight = bitmapHeight;
 	_width = width;
+}
+
+u16 FixedWidthFontBase::getStringWidth(const WoopsiString& text) const {
+	return text.getLength() * getWidth();
 }
 
 void FixedWidthFontBase::createGlyphMap() {

@@ -8,14 +8,14 @@ CycleButton::CycleButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style
 	_outline = OUTLINE_CLICK_DEPENDENT;
 
 	// Force text to align left (x) and centre (y)  
-	_textX = (_padding * 3) + getFont()->getCharWidth(GLYPH_CYCLE) + 2;
+	_textX = (_padding * 3) + _style->glyphFont->getCharWidth(GLYPH_CYCLE) + 2;
 	_textY = (_height - getFont()->getHeight()) >> 1;
 
 	_options.addListDataEventHandler(this);
 	_options.setAllowMultipleSelections(false);
 }
 
-void CycleButton::addOption(const char* text, const u32 value) {
+void CycleButton::addOption(const WoopsiString& text, const u32 value) {
 	_options.addItem(new ListDataItem(text, value));
 
 	// Select the option if this is the first option added
@@ -71,15 +71,15 @@ void CycleButton::draw(Rect clipRect) {
 		port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, getFont(), GLYPH_CYCLE, getDarkColour());
+		port->drawText(_padding, _textY, _style->glyphFont, GLYPH_CYCLE, 0, 1, getDarkColour());
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShadowColour());
-		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShineColour());
+		port->drawVertLine((_padding << 1) + _style->glyphFont->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShadowColour());
+		port->drawVertLine((_padding << 1) + _style->glyphFont->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShineColour());
 
 		// Only draw text if option is selected
 		if (_options.getSelectedItem() != NULL) {
-			port->drawText(_textX, _textY, getFont(), _options.getSelectedItem()->getText(), getDarkColour());
+			port->drawText(_textX, _textY, getFont(), _options.getSelectedItem()->getText(), 0, _options.getSelectedItem()->getText().getLength(), getDarkColour());
 		}
 	} else if (!isClicked()) {
 
@@ -87,11 +87,11 @@ void CycleButton::draw(Rect clipRect) {
 		port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, getFont(), GLYPH_CYCLE);
+		port->drawText(_padding, _textY, _style->glyphFont, GLYPH_CYCLE);
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShadowColour());
-		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShineColour());
+		port->drawVertLine((_padding << 1) + _style->glyphFont->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShadowColour());
+		port->drawVertLine((_padding << 1) + _style->glyphFont->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShineColour());
 
 		// Only draw text if option is selected
 		if (_options.getSelectedItem() != NULL) {
@@ -103,15 +103,15 @@ void CycleButton::draw(Rect clipRect) {
 		port->drawFilledRect(0, 0, _width, _height, getDarkColour());
 
 		// Draw cycle glyph
-		port->drawText(_padding, _textY, getFont(), GLYPH_CYCLE, getShineColour());
+		port->drawText(_padding, _textY, _style->glyphFont, GLYPH_CYCLE, 0, 1, getShineColour());
 
 		// Draw separator
-		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShineColour());
-		port->drawVertLine((_padding << 1) + getFont()->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShadowColour());
+		port->drawVertLine((_padding << 1) + _style->glyphFont->getCharWidth(GLYPH_CYCLE), _padding, _height - (_padding << 1), getShineColour());
+		port->drawVertLine((_padding << 1) + _style->glyphFont->getCharWidth(GLYPH_CYCLE) + 1, _padding, _height - (_padding << 1), getShadowColour());
 
 		// Only draw text if option is selected
 		if (_options.getSelectedItem() != NULL) {
-			port->drawText(_textX, _textY, getFont(), _options.getSelectedItem()->getText(), getShineColour());
+			port->drawText(_textX, _textY, getFont(), _options.getSelectedItem()->getText(), 0, _options.getSelectedItem()->getText().getLength(), getShineColour());
 		}
 	}
 

@@ -3,18 +3,11 @@
 
 using namespace WoopsiUI;
 
-TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style) : Label(x, y, width, height, text, style) {
+TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Label(x, y, width, height, text, style) {
 	_cursorPos = 0;
 	_showCursor = true;
 	setOutlineType(OUTLINE_OUT_IN);
-	moveCursorToPosition(_text->getLength());
-}
-
-TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const char letter, GadgetStyle* style) : Label(x, y, width, height, letter, style) {
-	_cursorPos = 0;
-	_showCursor = true;
-	setOutlineType(OUTLINE_OUT_IN);
-	moveCursorToPosition(_text->getLength());
+	moveCursorToPosition(_text.getLength());
 }
 
 void TextBox::draw(Rect clipRect) {
@@ -24,14 +17,14 @@ void TextBox::draw(Rect clipRect) {
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	if (isEnabled()) {
-		port->drawText(_textX, _textY, getFont(), _text->getCharArray());
+		port->drawText(_textX, _textY, getFont(), _text);
 	} else {
-		port->drawText(_textX, _textY, getFont(), _text->getCharArray(), getDarkColour());
+		port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), getDarkColour());
 	}
 
 	// Draw cursor
 	if (_showCursor) {
-		port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(_text->getCharArray()[_cursorPos]), getFont()->getHeight());
+		port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(_text.getCharAt(_cursorPos)), getFont()->getHeight());
 	}
 
 	// Draw outline
@@ -46,54 +39,38 @@ const u16 TextBox::getCursorXPos() const {
 	u16 cursorX = _textX;
 
 	for (u16 i = 0; i < _cursorPos; i++) {
-		cursorX += getFont()->getCharWidth(_text->getCharArray()[i]);
+		cursorX += getFont()->getCharWidth(_text.getCharAt(i));
 	}
 
 	return cursorX;
 }
 
-void TextBox::setText(const char* text) {
-	_text->setText(text);
-	moveCursorToPosition(_text->getLength());
+void TextBox::setText(const WoopsiString& text) {
+	_text.setText(text);
+	moveCursorToPosition(_text.getLength());
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void TextBox::setText(const char text) {
-	_text->setText(text);
-	moveCursorToPosition(_text->getLength());
+void TextBox::appendText(const WoopsiString& text) {
+	_text.append(text);
+	moveCursorToPosition(_text.getLength());
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void TextBox::appendText(const char* text) {
-	_text->append(text);
-	moveCursorToPosition(_text->getLength());
-	calculateTextPosition();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-void TextBox::appendText(const char text) {
-	_text->append(text);
-	moveCursorToPosition(_text->getLength());
-	calculateTextPosition();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-void TextBox::insertText(const char* text, const u32 index) {
+void TextBox::insertText(const WoopsiString& text, const u32 index) {
 	// Get current text length - use this later to quickly get the length
 	// of the inserted string to shift the cursor around
-	u32 oldLen = _text->getLength();
+	u32 oldLen = _text.getLength();
 
-	_text->insert(text, index);
+	_text.insert(text, index);
 	
 	// Get the new string length and use it to calculate the length
 	// of the inserted string
-	u32 insertLen = _text->getLength() - oldLen;
+	u32 insertLen = _text.getLength() - oldLen;
 
 	moveCursorToPosition(index + insertLen);
 	calculateTextPosition();
@@ -101,26 +78,12 @@ void TextBox::insertText(const char* text, const u32 index) {
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void TextBox::insertText(const char text, const u32 index) {
-	_text->insert(text, index);
-
-	// Cursor position just increases by one as we're inserting a single char
-	moveCursorToPosition(getCursorPosition() + 1);
-	calculateTextPosition();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-void TextBox::insertTextAtCursor(const char* text) {
-	insertText(text, getCursorPosition());
-}
-
-void TextBox::insertTextAtCursor(const char text) {
+void TextBox::insertTextAtCursor(const WoopsiString& text) {
 	insertText(text, getCursorPosition());
 }
 
 void TextBox::moveCursorToPosition(const u32 position) {
-	u32 len = _text->getLength();
+	u32 len = _text.getLength();
 	_cursorPos = len >= position ? position : len;
 
 	redraw();
@@ -162,14 +125,14 @@ bool TextBox::click(s16 x, s16 y) {
 			// Work out where in the string the textbox was clicked and move the cursor to that
 			// location
 
-			if (_text->getLength() > 0) {
+			if (_text.getLength() > 0) {
 				s16 clickX = x - getX();
 				s16 charX = _textX;
 				u32 charIndex = 0;
 
 				// Locate the first character that comes after the clicked character
-				while ((charX < clickX) && (charIndex < _text->getLength())) {
-					charX += getFont()->getCharWidth(_text->getCharArray()[charIndex]);
+				while ((charX < clickX) && (charIndex < _text.getLength())) {
+					charX += getFont()->getCharWidth(_text.getCharAt(charIndex));
 					++charIndex;
 				}
 

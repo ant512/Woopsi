@@ -5,6 +5,7 @@
 #include "window.h"
 #include "gadgeteventhandler.h"
 #include "gadgetstyle.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -52,7 +53,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, GadgetStyle* style = NULL);
+		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, u32 windowFlags, GadgetStyle* style = NULL);
 
 		/**
 		 * Show or hide the Amiga borders.

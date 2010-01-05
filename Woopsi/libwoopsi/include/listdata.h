@@ -4,6 +4,7 @@
 #include "woopsiarray.h"
 #include "listdataeventhandler.h"
 #include "listdataitem.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -30,7 +31,7 @@ namespace WoopsiUI {
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 */
-		virtual void addItem(const char* text, const u32 value);
+		virtual void addItem(const WoopsiString& text, const u32 value);
 
 		/**
 		 * Add an existing item.  ListData becomes the owner of the option and will delete it

@@ -6,6 +6,7 @@
 #include <nds.h>
 #include "amigawindow.h"
 #include "gadgetstyle.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -33,7 +34,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, GadgetStyle* style = NULL);
+		Alert(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& text, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles release events raised by its sub-gadgets.

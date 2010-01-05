@@ -2,7 +2,7 @@
 
 using namespace WoopsiUI;
 
-Text::Text(FontBase* font, const char* text, u16 width) : WoopsiString(text) {
+Text::Text(FontBase* font, const WoopsiString& text, u16 width) : WoopsiString() {
 	_font = font;
 	_width = width;
 	_lineSpacing = 1;
@@ -25,8 +25,21 @@ const u8 Text::getLineLength(const s32 lineNumber) const {
 const u8 Text::getLineTrimmedLength(const s32 lineNumber) const {
 	s16 length = getLineLength(lineNumber);
 
+	// Get char at the end of the line
+	const char* currentChar = _text + _linePositions[lineNumber] + length - 1;
+	u32 codePoint = 0;
+
 	// Strip any trailing spaces, etc
-	while ((length > 0) && (_font->isCharBlank(_text[_linePositions[lineNumber] + length - 1]))) {
+	while (length > 0) {
+
+		// Scan backwards to the next valid codepoint
+		while (!(codePoint = getCodePoint(currentChar, NULL))) {
+			currentChar--;
+		}
+		
+		// Stop scanning if the current char is no blank
+		if (!_font->isCharBlank(codePoint)) break;
+
 		length--;
 	}
 
@@ -34,11 +47,16 @@ const u8 Text::getLineTrimmedLength(const s32 lineNumber) const {
 }
 
 const u8 Text::getLinePixelLength(const s32 lineNumber) const {
-	return _font->getStringWidth(getLinePointer(lineNumber), getLineLength(lineNumber));
+	return _font->getStringWidth(*this, getLineStartIndex(lineNumber), getLineLength(lineNumber));
 }
 
 const u8 Text::getLineTrimmedPixelLength(const s32 lineNumber) const {
-	return _font->getStringWidth(getLinePointer(lineNumber), getLineTrimmedLength(lineNumber));
+	return _font->getStringWidth(*this, getLineStartIndex(lineNumber), getLineTrimmedLength(lineNumber));
+}
+
+void Text::setText(const WoopsiString& text) {
+	WoopsiString::setText(text);
+	wrap();
 }
 
 void Text::setText(const char* text) {
@@ -46,27 +64,17 @@ void Text::setText(const char* text) {
 	wrap();
 }
 
-void Text::setText(const char text) {
+void Text::setText(const u32 text) {
 	WoopsiString::setText(text);
 	wrap();
 }
 
-void Text::append(const char* text) {
+void Text::append(const WoopsiString& text) {
 	WoopsiString::append(text);
 	wrap(getLength() - 1);
 }
 
-void Text::append(const char text) {
-	WoopsiString::append(text);
-	wrap(getLength() - 1);
-}
-
-void Text::insert(const char* text, const u32 index) {
-	WoopsiString::insert(text, index);
-	wrap(index);
-}
-
-void Text::insert(const char text, const u32 index) {
+void Text::insert(const WoopsiString& text, const u32 index) {
 	WoopsiString::insert(text, index);
 	wrap(index);
 }

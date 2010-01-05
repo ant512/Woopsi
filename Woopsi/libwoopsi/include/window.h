@@ -34,7 +34,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, GadgetStyle* style = NULL);
+		Window(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
@@ -66,13 +66,13 @@ namespace WoopsiUI {
 		 * Set the title of the window.
 		 * @param title The new title.
 		 */
-		void setTitle(const char* title);
+		void setTitle(const WoopsiString& title);
 
 		/**
 		 * Get the title of the window.
 		 * @return The title of the window.
 		 */
-		const char* getTitle() { return _title; };
+		const WoopsiString& getTitle() { return _title; };
 
 		/**
 		 * Notify this gadget that it is being dragged, and set its drag point.
@@ -82,16 +82,12 @@ namespace WoopsiUI {
 		virtual void setDragging(u16 x, u16 y);
 
 	protected:
-		char* _title;							/**< Title of the window */
+		WoopsiString _title;							/**< Title of the window */
 
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~Window() {
-			if (_title != NULL) {
-				delete [] _title;
-			}
-		};
+		virtual inline ~Window() { };
 
 		/**
 		 * Copy constructor is protected to prevent usage.

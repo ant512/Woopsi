@@ -2,13 +2,14 @@
 #include "button.h"
 #include "multilinetextbox.h"
 #include "text.h"
+#include "woopsistring.h"
 
 using namespace WoopsiUI;
 
-Alert::Alert(s16 x, s16 y, u16 width, u16 height, const char* title, const char* text, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, style) {
+Alert::Alert(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& text, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, style) {
 
 	// Define OK button text
-	const char* buttonText = "OK";
+	WoopsiString buttonText = "OK";
 
 	// Padding around the main text
 	u8 padding = 2;

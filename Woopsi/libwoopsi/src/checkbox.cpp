@@ -7,6 +7,7 @@ CheckBox::CheckBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Bu
 	_state = CHECK_BOX_STATE_OFF;
 	_flags.borderless = false;
 	_outline = OUTLINE_OUT;
+	setFont(_style->glyphFont);
 }
 
 void CheckBox::setState(CheckBox::CheckBoxState state) {
@@ -48,7 +49,7 @@ void CheckBox::draw(Rect clipRect) {
 	if (isEnabled()) {
 		port->drawText(_textX, _textY, getFont(), glyph);
 	} else {
-		port->drawText(_textX, _textY, getFont(), glyph, getDarkColour());
+		port->drawText(_textX, _textY, getFont(), glyph, 0, 1, getDarkColour());
 	}
 
 	delete port;

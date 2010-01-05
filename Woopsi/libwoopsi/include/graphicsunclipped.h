@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "bitmapbase.h"
 #include "mutablebitmapbase.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -120,17 +121,17 @@ namespace WoopsiUI {
 		 * @param font The font to draw with.
 		 * @param string The string to output.
 		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, const char* string);
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string);
 
 		/**
-		 * Draw a particular length of a string to the bitmap.
+		 * Draw a particular length of a string to the bitmap in a specific colour.
 		 * @param x The x co-ordinate of the string.
 		 * @param y The y co-ordinate of the string.
 		 * @param font The font to draw with.
 		 * @param length The number of characters to output.
 		 * @param string The string to output.
 		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string);
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour);
 		
 		/**
 		 * Draw a string to the internal bitmap in a specific colour.
@@ -140,38 +141,8 @@ namespace WoopsiUI {
 		 * @param string The string to output.
 		 * @param colour The colour of the string.
 		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour);
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length);
 		
-		/**
-		 * Draw a particular length of a string to the bitmap in a secific colour.
-		 * @param x The x co-ordinate of the string.
-		 * @param y The y co-ordinate of the string.
-		 * @param font The font to draw with.
-		 * @param length The number of characters to output.
-		 * @param string The string to output.
-		 * @param colour The colour of the string.
-		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string, u16 colour);
-		
-		/**
-		 * Draw a single character to the bitmap.
-		 * @param x The x co-ordinate of the character.
-		 * @param y The y co-ordinate of the character.
-		 * @param font The font to draw with.
-		 * @param letter The character to output.
-		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, char letter);
-	
-		/**
-		 * Draw a single character to the bitmap in a specific colour.
-		 * @param x The x co-ordinate of the character.
-		 * @param y The y co-ordinate of the character.
-		 * @param font The font to draw with.
-		 * @param letter The character to output.
-		 * @param colour The colour of the character.
-		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour);
-
 		/**
 		 * Draw an external bitmap to the internal bitmap.
 		 * @param x The x co-ordinate to draw the bitmap to.

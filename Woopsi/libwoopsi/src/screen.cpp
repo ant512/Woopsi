@@ -7,12 +7,9 @@
 
 using namespace WoopsiUI;
 
-Screen::Screen(const char* title, u32 flags, GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, flags, style) {
+Screen::Screen(const WoopsiString& title, u32 flags, GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, flags, style) {
 	_titleHeight = 0;
-	
-	_title = NULL;
-	setTitle(title);
-	
+	_title = title;
 	_flags.borderless = true;
 }
 
@@ -304,19 +301,8 @@ void Screen::getClientRect(Rect& rect) const {
 	rect.height = _height;
 }
 
-void Screen::setTitle(const char* title) {
-
-	// Have we already created a block of memory that we need to free?
-	if (_title != NULL) {
-		// Free the memory
-		delete [] _title;
-	}
-
-	// Create new memory for string
-	_title = new char[strlen(title) + 1];
-
-	// Copy text
-	strcpy(_title, title);
+void Screen::setTitle(const WoopsiString& title) {
+	_title = title;
 
 	redraw();
 }

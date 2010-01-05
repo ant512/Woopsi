@@ -7,7 +7,7 @@
 
 using namespace WoopsiUI;
 
-AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, GadgetStyle* style) : Window(x, y, width, height, title, flags, style) {
+AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, u32 windowFlags, GadgetStyle* style) : Window(x, y, width, height, title, flags, style) {
 
 	_windowBorderTop = NULL;
 	_windowBorderLeft = NULL;

@@ -2,13 +2,13 @@
 #define _FONT_BASE_H_
 
 #include <nds.h>
-#include <string.h>
 
 #define GLYPH_MAP_SIZE 32
 
 namespace WoopsiUI {
 
 	class MutableBitmapBase;
+	class WoopsiString;
 
 	/**
 	 * Abstract class defining the basic properties of a font and providing some of the
@@ -42,7 +42,7 @@ namespace WoopsiUI {
 		 * @return True if the glyph contains any pixels to be drawn.  False if the glyph is
 		 * blank.
 		 */
-		virtual const bool isCharBlank(const char letter) const = 0;
+		virtual const bool isCharBlank(const u32 letter) const = 0;
 		
 		/**
 		 * Sets the colour to use as the drawing colour.  If set, this overrides the colours
@@ -101,14 +101,14 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		virtual s16 drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
+		virtual s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 		
 		/**
 		 * Get the width of a string in pixels when drawn with this font.
 		 * @param text The string to check.
 		 * @return The width of the string in pixels.
 		 */
-		virtual u16 getStringWidth(const char* text) const = 0;
+		virtual u16 getStringWidth(const WoopsiString& text) const = 0;
 
 		/**
 		 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -118,21 +118,21 @@ namespace WoopsiUI {
 		 * @param length The length of the string in chars.
 		 * @return The width of the string in pixels.
 		 */
-		virtual u16 getStringWidth(const char* text, u16 length) const = 0;
+		virtual u16 getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const = 0;
 
 		/**
 		 * Get the width of an individual character.
 		 * @param letter The character to get the width of.
 		 * @return The width of the character in pixels.
 		 */
-		virtual u16 getCharWidth(char letter) const = 0;
+		virtual u16 getCharWidth(u32 letter) const = 0;
 
 		/**
 		 * Get the height of an individual character.
 		 * @param letter The letter to get the height of.
 		 * @return The height of the character in pixels.
 		 */
-		virtual u16 getCharHeight(char letter) const { return _height; };
+		virtual u16 getCharHeight(u32 letter) const { return _height; };
 
 		/**
 		 * Gets the height of the font.

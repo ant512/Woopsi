@@ -2,6 +2,7 @@
 #define _LIST_DATA_ITEM_H_
 
 #include <nds.h>
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -17,7 +18,7 @@ namespace WoopsiUI {
 		 * @param text The text to display in the item.
 		 * @param value The value of the item.
 		 */
-		ListDataItem(const char* text, const u32 value);
+		ListDataItem(const WoopsiString& text, const u32 value);
 		
 		/**
 		 * Destructor.
@@ -28,7 +29,7 @@ namespace WoopsiUI {
 		 * Get the item's text.
 		 * @return The item's text.
 		 */
-		inline const char* getText() const { return _text; };
+		inline const WoopsiString& getText() const { return _text; };
 
 		/**
 		 * Get the item's value.
@@ -61,7 +62,7 @@ namespace WoopsiUI {
 		virtual s8 compareTo(const ListDataItem* item) const;
 
 	private:
-		char* _text;							/**< Text to display for option. */
+		WoopsiString _text;						/**< Text to display for option. */
 		u32 _value;								/**< Option value. */
 		bool _isSelected;						/**< True if the option is selected. */
 	};

@@ -553,10 +553,13 @@ void woopsiInitDefaultGadgetStyle() {
 	defaultGadgetStyle->colours.shadow = woopsiRGB(0, 0, 0);
 	defaultGadgetStyle->colours.fill = woopsiRGB(24, 24, 24);
 	defaultGadgetStyle->colours.dark = woopsiRGB(15, 15, 15);
-	defaultGadgetStyle->font = new WoopsiUI::NewTopaz();;
+	defaultGadgetStyle->font = new WoopsiUI::NewTopaz();
+	defaultGadgetStyle->glyphFont = new WoopsiUI::GlyphFont();
 }
 
 void woopsiFreeDefaultGadgetStyle() {
+	delete defaultGadgetStyle->font;
+	delete defaultGadgetStyle->glyphFont;
 	delete defaultGadgetStyle;
 }
 

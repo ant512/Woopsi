@@ -6,7 +6,7 @@
 
 using namespace WoopsiUI;
 
-MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, GadgetStyle* style) : ScrollingPanel(x, y, width, height, flags, style) {
+MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows, GadgetStyle* style) : ScrollingPanel(x, y, width, height, flags, style) {
 
 	_outline = OUTLINE_IN;
 
@@ -68,10 +68,16 @@ void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 		textX = getRowX(currentRow) + _canvasX;
 		textY = getRowY(currentRow) + _canvasY;
 
+		//if (isEnabled()) {
+		//	port->drawText(textX, textY, _text->getFont(), _text->getLinePointer(currentRow), 0, rowLength);
+		//} else {
+		//	port->drawText(textX, textY, _text->getFont(), _text->getLinePointer(currentRow), 0, rowLength, getDarkColour());
+		//}
+		
 		if (isEnabled()) {
-			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow));
+			port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(currentRow), rowLength);
 		} else {
-			port->drawText(textX, textY, _text->getFont(), rowLength, _text->getLinePointer(currentRow), getDarkColour());
+			port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(currentRow), rowLength, getDarkColour());
 		}
 
 		currentRow++;
@@ -173,7 +179,7 @@ u8 MultiLineTextBox::getRowX(s32 row) {
 	getClientRect(rect);
 
 	u8 rowLength = _text->getLineTrimmedLength(row);
-	u8 rowPixelWidth = _text->getFont()->getStringWidth(_text->getLinePointer(row), rowLength);
+	u8 rowPixelWidth = _text->getFont()->getStringWidth(*_text, _text->getLineStartIndex(row), rowLength);
 
 	// Calculate horizontal position
 	switch (_hAlignment) {
@@ -250,7 +256,7 @@ const Text* MultiLineTextBox::getText() const {
 	return _text;
 }
 
-void MultiLineTextBox::setText(const char* text) {
+void MultiLineTextBox::setText(const WoopsiString& text) {
 
 	_text->setText(text);
 
@@ -274,16 +280,7 @@ void MultiLineTextBox::setText(const char* text) {
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void MultiLineTextBox::setText(const char text) {
-
-	char newText[2];
-	newText[0] = text;
-	newText[1] = '\0';
-
-	setText(newText);
-}
-
-void MultiLineTextBox::appendText(const char* text) {
+void MultiLineTextBox::appendText(const WoopsiString& text) {
 
 	_text->append(text);
 
@@ -305,15 +302,6 @@ void MultiLineTextBox::appendText(const char* text) {
 	redraw();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-void MultiLineTextBox::appendText(const char text) {
-
-	char newText[2];
-	newText[0] = text;
-	newText[1] = '\0';
-
-	appendText(newText);
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex) {
@@ -474,11 +462,7 @@ void MultiLineTextBox::hideCursor() {
 	}
 }
 
-void MultiLineTextBox::insertTextAtCursor(const char* text) {
-	insertText(text, getCursorPosition());
-}
-
-void MultiLineTextBox::insertTextAtCursor(const char text) {
+void MultiLineTextBox::insertTextAtCursor(const WoopsiString& text) {
 	insertText(text, getCursorPosition());
 }
 
@@ -495,7 +479,7 @@ void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 	redraw();
 }
 
-void MultiLineTextBox::insertText(const char* text, const u32 index) {
+void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 	// Get current text length - use this later to quickly get the length
 	// of the inserted string to shift the cursor around
 	u32 oldLen = _text->getLength();
@@ -507,25 +491,6 @@ void MultiLineTextBox::insertText(const char* text, const u32 index) {
 	u32 insertLen = _text->getLength() - oldLen;
 
 	moveCursorToPosition(index + insertLen);
-
-	// Update max scroll value
-	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
-
-		// Scroll to bottom of new text
-		jump(0, -(_canvasHeight - _height));
-	}
-
-	redraw();
-
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-void MultiLineTextBox::insertText(const char text, const u32 index) {
-	_text->insert(text, index);
-
-	// Cursor position just increases by one as we're inserting a single char
-	moveCursorToPosition(getCursorPosition() + 1);
 
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {

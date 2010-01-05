@@ -34,7 +34,7 @@ namespace WoopsiUI {
 		 * Constructor to create a string from a single character.
 		 * @param letter Single character to use as the basis of the string.
 		 */
-		WoopsiString(const char letter);
+		WoopsiString(const u32 letter);
 		
 		/**
 		 * Returns a pointer to the raw char array data.
@@ -53,6 +53,12 @@ namespace WoopsiUI {
 		
 		/**
 		 * Set the text in the string.
+		 * @param text WoopsiString containing the new data for this string.
+		 */
+		virtual void setText(const WoopsiString& text);
+
+		/**
+		 * Set the text in the string.
 		 * @param text Char array to use as the new data for this string.
 		 */
 		virtual void setText(const char* text);
@@ -61,33 +67,20 @@ namespace WoopsiUI {
 		 * Set the text in the string.
 		 * @param text Character to to use as the new data for this string.
 		 */
-		virtual void setText(const char text);
-		
+		virtual void setText(const u32 text);
+
 		/**
 		 * Append text to the end of the string.
 		 * @param text String to append.
 		 */
-		virtual void append(const char* text);
-
-		/**
-		 * Append text to the end of the string.
-		 * @param text Char to append.
-		 */
-		virtual void append(const char text);
+		virtual void append(const WoopsiString& text);
 
 		/**
 		 * Insert text at the specified character index.
 		 * @param text The text to insert.
 		 * @param index The index at which to insert the text.
 		 */
-		virtual void insert(const char* text, const u32 index);
-
-		/**
-		 * Insert text at the specified character index.
-		 * @param text Char to insert
-		 * @param index The index at which to insert the char.
-		 */
-		virtual void insert(const char text, const u32 index);
+		virtual void insert(const WoopsiString& text, const u32 index);
 
 		/**
 		 * Remove all characters from the string from the start index onwards.
@@ -107,7 +100,13 @@ namespace WoopsiUI {
 		 * Get the of number of UTF-8 tokens (ie. the length) of the string.
 		 * @return The length of the string.
 		 */
-		virtual const u32 getLength() const;
+		virtual const u32 getLength() const { return _stringLength; };
+
+		/**
+		 * Get the of number of bytes in the string.
+		 * @return The number of bytes of the string.
+		 */
+		virtual const u32 getByteCount() const { return _dataLength; };
 
 		/**
 		 * Copy constructor.
@@ -133,10 +132,36 @@ namespace WoopsiUI {
 		virtual const u32 getCharAt(u32 index) const;
 
 		/**
+		 * Get a pointer to the UTF-8 token at the specified index.
+		 * @param string String containing the token.
+		 * @param index Index of the token.
+		 * @return Pointer to the UTF-8 token.
+		 */
+		char* getUTF8Token(const char* string, u32 index) const;
+		
+		/**
+		 * Get the number of chars read in the UTF-8 token and its codepoint.  In the case of
+		 * an invalid codepoint, the value returned will be 0.
+		 * @param string String to analyse.
+		 * @param numChars Pointer to a u8 that will hold the number of chars in the codepoint once
+		 * the method ends.
+		 * @return The codepoint.  Returns 0 if the codepoint is invalid.
+		 */
+		u32 getCodePoint(const char* string, u8* numChars) const;
+
+		/**
 		 * Return a pointer to the specified UTF-8 token.
 		 * @param index Index of the UTF-8 token to retrieve.
 		 */
 		virtual char* getToken(const u32 index) const;
+		
+		WoopsiString& operator=(const WoopsiString& string);
+		WoopsiString& operator=(const char* string);
+		WoopsiString& operator=(u32 letter);
+
+		virtual inline u32 compareTo(const WoopsiString& string) const {
+			return strcmp(_text, string.getCharArray());
+		}
 
 	protected:
 		char* _text;							/**< Raw char array data */
@@ -162,24 +187,6 @@ namespace WoopsiUI {
 		virtual inline u32 getAllocatedSize() const { return _allocatedSize; };
 
 		/**
-		 * Get the UTF-8 token at the specified index.
-		 * @param string String containing the token.
-		 * @param index Index of the token.
-		 * @return Pointer to the UTF-8 token.
-		 */
-		char* getUTF8Token(const char* string, u32 index) const;
-
-		/**
-		 * Get the number of chars read in the UTF-8 token and its codepoint.  In the case of
-		 * an invalid codepoint, numChars will be 0.
-		 * @param string String to analyse.
-		 * @param numChars Pointer to a u8 that will hold the number of chars in the codepoint once
-		 * the method ends.  Will contain 0 if the codepoint is invalid.
-		 * @return The codepoint.
-		 */
-		u32 getCodePoint(const char* string, u8* numChars) const;
-
-		/**
 		 * Get the unicode char at the specified index.
 		 * @param string String to retrieve the char from.
 		 * @param index The index of the character to retrieve.
@@ -189,15 +196,20 @@ namespace WoopsiUI {
 
 		/**
 		 * Copies the valid utf-8 tokens of the string src into string dest 
-		 * and returns the number of chars in the filtered string.
+		 * and returns the number of bytes in the filtered string.
 		 * @param dest Destination string.
 		 * @param stc Source string.
-		 * @return The number of chars in the filtered string.
+		 * @param totalUnicodeChars Output parameter populated with the total number
+		 * of unicode characters in the filtered string.
+		 * @return The number of bytes in the filtered string.
 		 */
-		u32 filterString(char* dest, const char* src) const;
+		u32 filterString(char* dest, const char* src, u32* totalUnicodeChars) const;
+
+		const u32 calculateStringLength() const;
 
 	private:
-		u32 _length;							/**< Cache length of string for fast access */
+		u32 _dataLength;						/**< Length of char data in the string */
+		u32 _stringLength;						/**< Number of unicode tokens in the string */
 		u32 _allocatedSize;						/**< Number of bytes allocated for this string */
 		u32 _growAmount;						/**< Number of chars that the string grows by
 													 whenever it needs to get larger */

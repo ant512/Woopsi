@@ -38,7 +38,7 @@ namespace WoopsiUI {
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 */
-		virtual void addOption(const char* text, const u32 value);
+		virtual void addOption(const WoopsiString& text, const u32 value);
 
 		/**
 		 * Add an option to the gadget.
@@ -66,7 +66,7 @@ namespace WoopsiUI {
 		 * @param selectedTextColour Colour to draw the text with when selected.
 		 * @param selectedBackColour Colour to draw the background with when selected.
 		 */
-		virtual void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
+		virtual void addOption(const WoopsiString& text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
 
 		/**
 		 * Select an option by its index.

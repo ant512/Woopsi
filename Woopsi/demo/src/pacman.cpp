@@ -70,7 +70,7 @@ void PacMan::endGame() {
 	Graphics* gfx = _superBitmap->getGraphics();
 
 	gfx->drawFilledRect(0, 0, _width, _height, _superBitmap->getBackColour());
-	gfx->drawText(10, 40, _superBitmap->getFont(), "Game Over");
+	gfx->drawText(15, 40, _superBitmap->getFont(), "Game Over", 0, 9);
 }
 
 void PacMan::handleActionEvent(const GadgetEventArgs& e) {

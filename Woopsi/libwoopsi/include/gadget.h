@@ -10,6 +10,7 @@
 #include "fontbase.h"
 #include "gadgetstyle.h"
 #include "gadgeteventhandlerlist.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -83,8 +84,8 @@ namespace WoopsiUI {
 		 * Struct describing a name/value pair.
 		 */
 		typedef struct {
-			u32 value;							/**< Value associated with the name */
-			char* name;							/**< Name associated with the value */
+			u32 value;								/**< Value associated with the name */
+			WoopsiString name;						/**< Name associated with the value */
 		} NameValuePair;
 
 		/**
@@ -330,7 +331,7 @@ namespace WoopsiUI {
 		 * Gets a pointer to the gadget's font.
 		 * @return A pointer to the gadget's font.
 		 */
-		FontBase* getFont() const;
+		virtual FontBase* getFont() const;
 
 		/**
 		 * Gets the colour used as the background fill.
@@ -881,7 +882,7 @@ namespace WoopsiUI {
 		 * @param name The name of the menu item.
 		 * @param value The value of the menu item.
 		 */
-		void addContextMenuItem(const char* name, u32 value);
+		void addContextMenuItem(const WoopsiString& name, u32 value);
 
 		/**
 		 * Show the context menu for this gadget at the specified co-ordinates.

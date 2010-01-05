@@ -36,6 +36,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 			_style->colours.fill = defaultGadgetStyle->colours.fill;
 			_style->colours.dark = defaultGadgetStyle->colours.dark;
 			_style->font = defaultGadgetStyle->font;
+			_style->glyphFont = defaultGadgetStyle->glyphFont;
 		}
 	} else {
 
@@ -47,6 +48,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 		_style->colours.fill = style->colours.fill;
 		_style->colours.dark = style->colours.dark;
 		_style->font = style->font;
+		_style->glyphFont = style->glyphFont;
 	}
 
 	// Mask flags against bitmasks and logical NOT twice to obtain boolean values
@@ -123,11 +125,6 @@ Gadget::~Gadget() {
 	
 	if (_parent != NULL) {
 		_parent->removeChild(this);
-	}
-
-	// Delete context menu data
-	for (s32 i = 0; i < _contextMenuItems.size(); i++) {
-		delete [] _contextMenuItems[i].name;
 	}
 
 	// Delete children
@@ -1565,14 +1562,10 @@ bool Gadget::removeChild(Gadget* gadget) {
 	return false;
 }
 
-void Gadget::addContextMenuItem(const char* name, u32 value) {
-	
-	// Create a copy of the string
-	char* newName = new char[strlen(name) + 1];
-	strcpy(newName, name);
+void Gadget::addContextMenuItem(const WoopsiString& name, u32 value) {
 
 	NameValuePair newItem;
-	newItem.name = newName;
+	newItem.name = name;
 	newItem.value = value;
 
 	_contextMenuItems.push_back(newItem);

@@ -52,7 +52,7 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		s16 drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+		s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
 	private:
 		const u16* _bitmap;					/**< Pointer to the bitmap containing the font glyphs */

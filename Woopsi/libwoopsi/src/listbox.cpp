@@ -26,11 +26,11 @@ void ListBox::addOption(ListBoxDataItem* option) {
 	_options.addItem(option);
 }
 
-void ListBox::addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
+void ListBox::addOption(const WoopsiString& text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 	addOption(new ListBoxDataItem(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour));
 }
 
-void ListBox::addOption(const char* text, const u32 value) {
+void ListBox::addOption(const WoopsiString& text, const u32 value) {
 	addOption(text, value, getShadowColour(), getBackColour(), getShadowColour(), getHighlightColour());
 }
 
@@ -90,9 +90,9 @@ void ListBox::draw(Rect clipRect) {
 		
 			// Draw text
 			if (isEnabled()) {
-				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), item->getSelectedTextColour());
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), 0, item->getText().getLength(), item->getSelectedTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), getDarkColour());
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), 0, item->getText().getLength(), getDarkColour());
 			}
 		} else {
 			
@@ -103,9 +103,9 @@ void ListBox::draw(Rect clipRect) {
 			
 			// Draw text
 			if (isEnabled()) {
-				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), item->getNormalTextColour());
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), 0, item->getText().getLength(), item->getNormalTextColour());
 			} else {
-				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), getDarkColour());
+				port->drawText(_optionPadding, y + _optionPadding, getFont(), item->getText(), 0, item->getText().getLength(), getDarkColour());
 			}
 		}
 		

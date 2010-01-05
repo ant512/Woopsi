@@ -2,7 +2,6 @@
 #define _FIXED_WIDTH_FONT_BASE_H_
 
 #include <nds.h>
-#include <string.h>
 #include "fontbase.h"
 
 namespace WoopsiUI {
@@ -62,7 +61,7 @@ namespace WoopsiUI {
 		 * @param text The string to check.
 		 * @return The width of the string in pixels.
 		 */
-		inline u16 getStringWidth(const char* text) const { return strlen(text) * getWidth(); };
+		u16 getStringWidth(const WoopsiString& text) const;
 
 		/**
 		 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -72,14 +71,14 @@ namespace WoopsiUI {
 		 * @param length The length of the string in chars.
 		 * @return The width of the string in pixels.
 		 */
-		inline u16 getStringWidth(const char* text, u16 length) const { return length * getWidth(); };
+		inline u16 getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const { return length * getWidth(); };
 
 		/**
 		 * Get the width of an individual character.
 		 * @param letter The character to get the width of.
 		 * @return The width of the character in pixels.
 		 */
-		inline u16 getCharWidth(char letter) const { return getWidth(); };
+		inline u16 getCharWidth(u32 letter) const { return getWidth(); };
 
 		/**
 		 * Checks if supplied character is blank in the current font.
@@ -87,7 +86,7 @@ namespace WoopsiUI {
 		 * @return True if the glyph contains any pixels to be drawn.  False if the glyph is
 		 * blank.
 		 */
-		virtual inline const bool isCharBlank(const char letter) const { return !(_glyphMap[letter >> 3] & (1 << (letter % 8))); };
+		virtual inline const bool isCharBlank(const u32 letter) const { return !(_glyphMap[letter >> 3] & (1 << (letter % 8))); };
 		
 	protected: 
 		/**

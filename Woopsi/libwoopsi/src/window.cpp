@@ -2,9 +2,8 @@
 
 using namespace WoopsiUI;
 
-Window::Window(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
-	_title = NULL;
-	setTitle(title);
+Window::Window(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
+	_title = title;
 }
 
 bool Window::release(s16 x, s16 y) {
@@ -93,19 +92,8 @@ void Window::draw(Rect clipRect) {
 	clear(clipRect);
 }
 
-void Window::setTitle(const char* title) {
-
-	// Have we already created a block of memory that we need to free?
-	if (_title != NULL) {
-		// Free the memory
-		delete [] _title;
-	}
-
-	// Create new memory for string
-	_title = new char[strlen(title) + 1];
-
-	// Copy text
-	strcpy(_title, title);
+void Window::setTitle(const WoopsiString& title) {
+	_title = title;
 
 	redraw();
 }

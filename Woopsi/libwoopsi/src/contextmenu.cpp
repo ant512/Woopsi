@@ -15,7 +15,7 @@ ContextMenu::ContextMenu(GadgetStyle* style) : Gadget(0, 0, 20, 20, 0, style) {
 	addGadget(_listbox);
 }
 
-void ContextMenu::addOption(const char* text, u32 value) {
+void ContextMenu::addOption(const WoopsiString& text, u32 value) {
 	_listbox->addOption(text, value, getShadowColour(), getShineColour(), getShineColour(), getShadowColour());
 
 	// Get preferred size of the gadget so we can resize it

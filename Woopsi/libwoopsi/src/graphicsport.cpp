@@ -52,98 +52,36 @@ void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 	}
 }
 
-// Print a single character in a specific colour
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour) {
-	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
-	// Store current font colour
-	bool isMonochrome = font->isMonochrome();
-	u16 oldColour = font->getColour();
-	
-	// Update font colour
-	font->setColour(colour);
-	
-	// Output as normal
-	drawText(x, y, font, letter);
-	
-	// Reset colour
-	if (!isMonochrome) {
-		font->clearColour();
-	} else {
-		font->setColour(oldColour);
-	}
-}
-
 // Print a string in a specific colour
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour) {
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length) {
 	
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
-	
-	// Store current font colour
-	bool isMonochrome = font->isMonochrome();
-	u16 oldColour = font->getColour();
-	
-	// Update font colour
-	font->setColour(colour);
-	
-	// Output as normal
-	drawText(x, y, font, string);
-	
-	// Reset colour
-	if (!isMonochrome) {
-		font->clearColour();
-	} else {
-		font->setColour(oldColour);
-	}
-}
 
-// Print a single character
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, char letter) {
-	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
-	// Convert char to char[]
-	char text[2];
-	text[0] = letter;
-	text[1] = '\0';
-	
-	// Output as normal
-	drawText(x, y, font, text);
-}
-
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const char* string) {
-	drawText(x, y, font, strlen(string), string);
-}
-
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string) {
-	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
 	if (_clipRect == NULL) {
 		// Draw all visible rects
 		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipText(x, y, font, length, string, _clipRectList->at(i));
+			clipText(x, y, font, string, startIndex, length, _clipRectList->at(i));
 		}
 	} else {
 		// Draw single rectangle
-		clipText(x, y, font, length, string, *_clipRect);
+		clipText(x, y, font, string, startIndex, length, *_clipRect);
 	}
 }
 
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string) {
+	drawText(x, y, font, string, 0, string.getLength());
+}
+
 // Print a string in a specific colour
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string, u16 colour) {
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour) {
 	
 	// Ignore command if gadget deleted or invisible
 	if (!_gadget->isDrawingEnabled()) return;
-	
+
 	// Store current font colour
 	bool isMonochrome = font->isMonochrome();
 	u16 oldColour = font->getColour();
@@ -152,7 +90,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char
 	font->setColour(colour);
 	
 	// Output as normal
-	drawText(x, y, font, length, string);
+	drawText(x, y, font, string, startIndex, length);
 	
 	// Reset colour
 	if (!isMonochrome) {
@@ -163,7 +101,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, u16 length, const char
 }
 
 // Clip and draw text
-void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Rect& clipRect) {
+void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, const Rect& clipRect) {
 	s16 clipX1 = clipRect.x;
 	s16 clipY1 = clipRect.y;
 	s16 clipX2 = clipRect.x + clipRect.width - 1;
@@ -177,8 +115,13 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, u16 length, const char
 		}
 		
 		// Draw the string char by char
+		const char* currentChar = string.getToken(startIndex);
+		u8 charSize = 0;
+
 		for (u32 i = 0; i < length; i++) {
-			x = font->drawChar(_bitmap, string[i], x, y, clipX1, clipY1, clipX2, clipY2);
+			x = font->drawChar(_bitmap, string.getCodePoint(currentChar, &charSize), x, y, clipX1, clipY1, clipX2, clipY2);
+
+			currentChar += charSize;
 
 			// Abort if x pos outside clipping region
 			if (x > clipX2) return;

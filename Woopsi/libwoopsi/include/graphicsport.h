@@ -187,17 +187,7 @@ namespace WoopsiUI {
 		 * @param font The font to draw with.
 		 * @param string The string to output.
 		 */
-		void drawText(s16 x, s16 y, FontBase* font, const char* string);
-		
-		/**
-		 * Draw a particular length of a string to the bitmap.
-		 * @param x The x co-ordinate of the string.
-		 * @param y The y co-ordinate of the string.
-		 * @param font The font to draw with.
-		 * @param length The number of characters to output.
-		 * @param string The string to output.
-		 */
-		void drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string);
+		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string);
 
 		/**
 		 * Draw a particular length of a string to the bitmap in a secific colour.
@@ -208,36 +198,17 @@ namespace WoopsiUI {
 		 * @param string The string to output.
 		 * @param colour The colour of the string.
 		 */
-		void drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string, u16 colour);
+		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour);
 		
 		/**
-		 * Draw a single character to the bitmap.
-		 * @param x The x co-ordinate of the character.
-		 * @param y The y co-ordinate of the character.
-		 * @param font The font to draw with.
-		 * @param letter The character to output.
-		 */
-		void drawText(s16 x, s16 y, FontBase* font, char letter);
-		
-		/**
-		 * Draw a string to the bitmap in a specific colour.
+		 * Draw a portion of a string to the bitmap.
 		 * @param x The x co-ordinate of the string.
 		 * @param y The y co-ordinate of the string.
 		 * @param font The font to draw with.
 		 * @param string The string to output.
 		 * @param colour The colour of the string.
 		 */
-		void drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour);
-		
-		/**
-		 * Draw a single character to the bitmap in a specific colour.
-		 * @param x The x co-ordinate of the character.
-		 * @param y The y co-ordinate of the character.
-		 * @param font The font to draw with.
-		 * @param letter The character to output.
-		 * @param colour The colour of the character.
-		 */
-		void drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour);
+		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length);
 		
 		/**
 		 * Draw a bitmap to the port's bitmap.
@@ -358,7 +329,7 @@ namespace WoopsiUI {
 		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Rect& clipRect);
 		void clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour, const Rect& clipRect);
 		void clipBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, const Rect& clipRect);
-		void clipText(s16 x, s16 y, FontBase* font, u16 length, const char* string, const Rect& clipRect);
+		void clipText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, const Rect& clipRect);
 		void clipCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect);
 		void clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect);
 		void clipXORPixel(s16 x, s16 y, const Rect& clipRect);

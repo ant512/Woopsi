@@ -5,6 +5,7 @@
 #include "gadgeteventhandler.h"
 #include "screen.h"
 #include "gadgetstyle.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -51,7 +52,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		AmigaScreen(const char* title, u32 flags, u32 screenFlags, GadgetStyle* style = NULL);
+		AmigaScreen(const WoopsiString& title, u32 flags, u32 screenFlags, GadgetStyle* style = NULL);
 
 		/**
 		 * Sets this gadget's border state.  Setting to false hides the title bar.

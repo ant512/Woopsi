@@ -65,7 +65,7 @@ namespace WoopsiUI {
 		 */
 		virtual s16 drawChar(
 			MutableBitmapBase* bitmap,
-			char letter,
+			u32 letter,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
@@ -74,7 +74,7 @@ namespace WoopsiUI {
 		 * @param text The string to check.
 		 * @return The width of the string in pixels.
 		 */
-		virtual u16 getStringWidth(const char* text) const;
+		virtual u16 getStringWidth(const WoopsiString& text) const;
 
 		/**
 		 * Get the width of a string with a specified length in pixels when drawn with this font.
@@ -84,19 +84,19 @@ namespace WoopsiUI {
 		 * @param length The length of the string in chars.
 		 * @return The width of the string in pixels.
 		 */
-		virtual u16 getStringWidth(const char* text, u16 length) const;
+		virtual u16 getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const;
 
 		/**
 		 * Get the width of an individual character.
 		 * @param letter The character to get the width of.
 		 * @return The width of the character in pixels.
 		 */
-		virtual u16 getCharWidth(char letter) const;
+		virtual u16 getCharWidth(u32 letter) const;
 
 		/**
 		 * Text uses this to decide whether a given character is blank or not
 		 */
-		const bool isCharBlank(const char letter) const;
+		const bool isCharBlank(const u32 letter) const;
 
 		/**
 		 * Render an individual character of the font to the specified bitmap.

@@ -17,6 +17,7 @@
 #include "bittest4.h"
 #include "bittest5.h"
 #include "bittest6.h"
+#include "woopsistring.h"
 
 void Demo::startup() {
 
@@ -106,6 +107,7 @@ void Demo::startup() {
 
 	Gradient* gradient = new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
 	newScreen2->insertGadget(gradient);
+
 	gradient->addContextMenuItem("Context Menu", 0);
 	gradient->addContextMenuItem("Test 1", 0);
 	gradient->addContextMenuItem("Test 2", 0);

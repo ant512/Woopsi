@@ -23,7 +23,13 @@ namespace WoopsiUI {
 		 * @param text A string that this text object should wrap around.
 		 * @param width The pixel width at which the text should wrap.
 		 */
-		Text(FontBase* font, const char* text, u16 width);
+		Text(FontBase* font, const WoopsiString& text, u16 width);
+
+		/**
+		 * Set the text in the string.
+		 * @param text Char array to use as the new data for this string.
+		 */
+		virtual void setText(const WoopsiString& text);
 
 		/**
 		 * Set the text in the string.
@@ -35,33 +41,20 @@ namespace WoopsiUI {
 		 * Set the text in the string.
 		 * @param text Character to to use as the new data for this string.
 		 */
-		virtual void setText(const char text);
+		virtual void setText(const u32 text);
 		
 		/**
 		 * Append text to the end of the string.
 		 * @param text String to append.
 		 */
-		virtual void append(const char* text);
-
-		/**
-		 * Append text to the end of the string.
-		 * @param text Char to append.
-		 */
-		virtual void append(const char text);
+		virtual void append(const WoopsiString& text);
 
 		/**
 		 * Insert text at the specified character index.
 		 * @param text The text to insert.
 		 * @param index The char index to insert at.
 		 */
-		virtual void insert(const char* text, const u32 index);
-
-		/**
-		 * Insert text at the specified character index.
-		 * @param text Char to insert.
-		 * @param index The char index to insert at.
-		 */
-		virtual void insert(const char text, const u32 index);
+		virtual void insert(const WoopsiString& text, const u32 index);
 
 		/**
 		 * Remove all characters from the string from the start index onwards.

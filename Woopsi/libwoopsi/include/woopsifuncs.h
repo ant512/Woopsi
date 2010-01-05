@@ -12,7 +12,8 @@
 #include "monofont.h"
 #include "bitmapwrapper.h"
 #include "gadgetstyle.h"
-#include "fonts/newtopaz.h"
+#include "newtopaz.h"
+#include "glyphfont.h"
 
 /**
  * Converts separate RGB component values into a single 16-bit value for use

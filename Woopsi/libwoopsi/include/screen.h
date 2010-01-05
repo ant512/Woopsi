@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "gadget.h"
 #include "gadgetstyle.h"
+#include "woopsistring.h"
 
 #define SCREEN_TITLE_HEIGHT 13
 #define SCREEN_FLIP_BUTTON_WIDTH 16
@@ -28,7 +29,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		Screen(const char* title, u32 flags, GadgetStyle* style = NULL);
+		Screen(const WoopsiString& title, u32 flags, GadgetStyle* style = NULL);
 		
 		/**
 		 * Insert the properties of the space within this gadget that is available
@@ -49,7 +50,7 @@ namespace WoopsiUI {
 		 * Get the screen's title.
 		 * @return The screen's title.
 		 */
-		virtual inline const char* getTitle() const { return _title; };
+		virtual inline const WoopsiString& getTitle() const { return _title; };
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
@@ -130,20 +131,16 @@ namespace WoopsiUI {
 		 * Set the title of the screen.
 		 * @param title The new title.
 		 */
-		void setTitle(const char* title);
+		void setTitle(const WoopsiString& title);
 
 	protected:
 		u8 _titleHeight;						/**< Height of the title bar */
-		char* _title;							/**< Title of the screen */
+		WoopsiString _title;					/**< Title of the screen */
 
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~Screen() {
-			if (_title != NULL) {
-				delete [] _title;
-			}
-		};
+		virtual inline ~Screen() { };
 
 		/**
 		 * Copy constructor is protected to prevent usage.

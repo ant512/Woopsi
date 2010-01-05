@@ -2,6 +2,7 @@
 #define _DATE_H_
 
 #include <nds.h>
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -30,13 +31,13 @@ namespace WoopsiUI {
 		 * Get the name of the current day.
 		 * @return The name of the current day.
 		 */
-		inline const char* getDayName() const { return _dayNames[_weekDay]; };
+		inline const WoopsiString& getDayName() const { return _dayNames[_weekDay]; };
 
 		/**
 		 * Get the name of the current month.
 		 * @return The name of the current month.
 		 */
-		inline const char* getMonthName() const { return _monthNames[_month - 1]; };
+		inline const WoopsiString& getMonthName() const { return _monthNames[_month - 1]; };
 
 		/**
 		 * Get the integer value of the current day of the week.  Value is 0-based
@@ -123,12 +124,12 @@ namespace WoopsiUI {
 		bool operator!=(const Date& date) const;
 
 	private:
-		u8 _day;								/**< The day */
-		u8 _month;								/**< The month */
-		u16 _year;								/**< The year */
-		u8 _weekDay;							/**< The week day */
-		static const char* _dayNames[7];		/**< Array of day names */
-		static const char* _monthNames[12];		/**< Array of month names */
+		u8 _day;										/**< The day */
+		u8 _month;										/**< The month */
+		u16 _year;										/**< The year */
+		u8 _weekDay;									/**< The week day */
+		static const WoopsiString _dayNames[7];			/**< Array of day names */
+		static const WoopsiString _monthNames[12];		/**< Array of month names */
 
 		/**
 		 * Returns 1 if the date falls before the 29th of Feb and the year is a leap year.

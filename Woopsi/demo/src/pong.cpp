@@ -112,7 +112,7 @@ void Pong::draw() {
 	port->drawFilledCircle(_bx, _by, _bRadius, woopsiRGB(0, 31, 0));
 
 	// Text
-	port->drawText(15, 2, _font, "It's Pong!", woopsiRGB(_fontRColour, _fontGColour, _fontBColour));
+	port->drawText(15, 2, _font, "It's Pong!", 0, 10, woopsiRGB(_fontRColour, _fontGColour, _fontBColour));
 
 	delete port;
 

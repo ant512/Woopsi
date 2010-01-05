@@ -2,10 +2,10 @@
 
 using namespace WoopsiUI;
 
-const char* Date::_dayNames[7] = {
+const WoopsiString Date::_dayNames[7] = {
 							"Sunday", "Monday", "Tuesday", "Wednesday",
 							"Thursday", "Friday", "Saturday"};
-const char* Date::_monthNames[12] = {
+const WoopsiString Date::_monthNames[12] = {
 							"January", "February", "March", "April",
 							"May", "June", "July", "August", "September",
 							"October", "November", "December"};

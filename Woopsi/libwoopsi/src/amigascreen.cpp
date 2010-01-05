@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-AmigaScreen::AmigaScreen(const char* title, u32 flags, u32 screenFlags, GadgetStyle* style) : Screen(title, flags, style) {
+AmigaScreen::AmigaScreen(const WoopsiString& title, u32 flags, u32 screenFlags, GadgetStyle* style) : Screen(title, flags, style) {
 
 	_titleHeight = SCREEN_TITLE_HEIGHT;
 

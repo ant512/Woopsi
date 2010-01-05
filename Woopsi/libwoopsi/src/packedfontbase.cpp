@@ -1,9 +1,10 @@
 #include "packedfontbase.h"
 #include "mutablebitmapbase.h"
+#include "woopsistring.h"
 
 using namespace WoopsiUI;
 
-u16 PackedFontBase::getCharWidth(char letter) const
+u16 PackedFontBase::getCharWidth(u32 letter) const
 {
 	if (_fontWidth) return _fontWidth;
 
@@ -11,35 +12,49 @@ u16 PackedFontBase::getCharWidth(char letter) const
 	return _glyphWidth[letter - _first] + 1;
 }
 
-const bool PackedFontBase::isCharBlank(const char letter) const
+const bool PackedFontBase::isCharBlank(const u32 letter) const
 {
 	if (letter >= _first && letter <= _last) return _glyphWidth[letter - _first] == 0;
 	return false;
 }
 
-u16 PackedFontBase::getStringWidth(const char* text) const
+u16 PackedFontBase::getStringWidth(const WoopsiString& text) const
 {
+	if (_fontWidth) return _fontWidth * text.getLength();
+
 	u16 total = 0;
-	while (*text) {
-		total += getCharWidth(*text++);
+
+	const char* currentChar = text.getCharArray();
+	u8 bytes = 0;
+
+	for (u32 i = 0; i < text.getLength(); ++i) {
+		total += getCharWidth(text.getCodePoint(currentChar, &bytes));
+		currentChar += bytes;
 	}
+
 	return total;
 }
 
-u16 PackedFontBase::getStringWidth(const char* text, u16 length) const
+u16 PackedFontBase::getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const
 {
 	if (_fontWidth) return _fontWidth * length;
 
 	u16 total = 0;
-	while (length-- > 0) {
-		total += getCharWidth(*text++);
+
+	const char* currentChar = text.getToken(startIndex);
+	u8 bytes = 0;
+
+	for (u32 i = startIndex; i < text.getLength(); ++i) {
+		total += getCharWidth(text.getCodePoint(currentChar, &bytes));
+		currentChar += bytes;
 	}
+
 	return total;
 }
 
 s16 PackedFontBase::drawChar(
 	MutableBitmapBase* bitmap,
-	char letter,
+	u32 letter,
 	s16 x, s16 y,
 	u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {

@@ -7,6 +7,7 @@
 #include "listdata.h"
 #include "listdataitem.h"
 #include "gadgetstyle.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -42,7 +43,7 @@ namespace WoopsiUI {
 		 * @param text The text of the option.
 		 * @param value The value of the option.
 		 */
-		void addOption(const char* text, const u32 value);
+		void addOption(const WoopsiString& text, const u32 value);
 
 		/**
 		 * Remove an option from the gadget by its index.

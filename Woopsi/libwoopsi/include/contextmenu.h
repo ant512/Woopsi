@@ -33,7 +33,7 @@ namespace WoopsiUI {
 		 * @param text Text to show in the item.
 		 * @param value The value of the item.
 		 */
-		virtual void addOption(const char* text, u32 value);
+		virtual void addOption(const WoopsiString& text, u32 value);
 
 		/**
 		 * Draw the region of the menu within the clipping rect.

@@ -16,9 +16,11 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Ga
 
 	_leftButton = new Button(width - (_buttonWidth << 1), 0, _buttonWidth, height, GLYPH_ARROW_LEFT, _style);
 	_leftButton->addGadgetEventHandler(this);
+	_leftButton->setFont(_style->glyphFont);
 
 	_rightButton = new Button(width - _buttonWidth, 0, _buttonWidth, height, GLYPH_ARROW_RIGHT, _style);
 	_rightButton->addGadgetEventHandler(this);
+	_rightButton->setFont(_style->glyphFont);
 
 	// Create timer
 	_scrollTimeout = 10;

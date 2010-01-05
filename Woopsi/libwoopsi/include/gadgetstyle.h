@@ -30,6 +30,7 @@ namespace WoopsiUI {
 	public:
 		GadgetColours colours;				/**< All gadget colours */
 		FontBase* font;						/**< Default font */
+		FontBase* glyphFont;				/**< Default glyph font */
 	};
 }
 

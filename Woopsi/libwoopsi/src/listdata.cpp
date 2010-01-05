@@ -28,7 +28,7 @@ void ListData::addItem(ListDataItem* item) {
 	raiseDataChangedEvent();
 }
 
-void ListData::addItem(const char* text, const u32 value) {
+void ListData::addItem(const WoopsiString& text, const u32 value) {
 	
 	// Create new option
 	addItem(new ListDataItem(text, value));

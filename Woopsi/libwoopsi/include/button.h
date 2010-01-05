@@ -25,21 +25,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The button will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		Button(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style = NULL);
-
-		/**
-		 * Constructor for buttons that display a single char.
-		 * @param x The x co-ordinate of the button, relative to its parent.
-		 * @param y The y co-ordinate of the button, relative to its parent.
-		 * @param width The width of the button.
-		 * @param height The height of the button.
-		 * @param letter The character for the button to display.
-		 * @param style The style that the button should use.  If this is not
-		 * specified, the button will use the values stored in the global
-		 * defaultGadgetStyle object.  The button will copy the properties of
-		 * the style into its own internal style object.
-		 */
-		Button(s16 x, s16 y, u16 width, u16 height, char letter, GadgetStyle* style = NULL);
+		Button(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the region of the textbox within the clipping rect. Should not be called

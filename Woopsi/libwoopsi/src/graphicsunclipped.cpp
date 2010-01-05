@@ -142,13 +142,19 @@ void GraphicsUnclipped::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour)
 	}
 }
 
-void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* string) {
-	drawText(x, y, font, strlen(string), string);
+void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string) {
+	drawText(x, y, font, string, 0, string.getLength());
 }
 
-void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string) {
+void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length) {
+
+	const char* currentChar = string.getToken(startIndex);
+	u8 charSize = 0;
+
 	for (u32 i = 0; i < length; i++) {
-		x = font->drawChar(_bitmap, string[i], x, y, 0, 0, _width - 1, _height - 1);
+		x = font->drawChar(_bitmap, string.getCodePoint(currentChar, &charSize), x, y, 0, 0, _width - 1, _height - 1);
+
+		currentChar += charSize;
 
 		// Abort if x pos outside bitmap
 		if (x > _width - 1) return;
@@ -156,7 +162,7 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const
 }
 
 // Print a string in a specific colour
-void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* string, u16 colour) {
+void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour) {
 
 	// Store current font colour
 	bool isMonochrome = font->isMonochrome();
@@ -166,62 +172,8 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const char* strin
 	font->setColour(colour);
 
 	// Output as normal
-	drawText(x, y, font, string);
+	drawText(x, y, font, string, startIndex, length);
 
-	// Reset colour
-	if (!isMonochrome) {
-		font->clearColour();
-	} else {
-		font->setColour(oldColour);
-	}
-}
-
-// Print a single character in a specific colour
-void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, char letter, u16 colour) {
-	
-	// Store current font colour
-	bool isMonochrome = font->isMonochrome();
-	u16 oldColour = font->getColour();
-	
-	// Update font colour
-	font->setColour(colour);
-	
-	// Output as normal
-	drawText(x, y, font, letter);
-	
-	// Reset colour
-	if (!isMonochrome) {
-		font->clearColour();
-	} else {
-		font->setColour(oldColour);
-	}
-}
-
-// Print a single character
-void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, char letter) {
-	
-	// Convert char to char[]
-	char text[2];
-	text[0] = letter;
-	text[1] = '\0';
-	
-	// Output as normal
-	drawText(x, y, font, text);
-}
-
-// Print a string in a specific colour
-void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, u16 length, const char* string, u16 colour) {
-	
-	// Store current font colour
-	bool isMonochrome = font->isMonochrome();
-	u16 oldColour = font->getColour();
-	
-	// Update font colour
-	font->setColour(colour);
-	
-	// Output as normal
-	drawText(x, y, font, length, string);
-	
 	// Reset colour
 	if (!isMonochrome) {
 		font->clearColour();

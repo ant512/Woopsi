@@ -4,10 +4,10 @@
 #include <nds.h>
 #include "scrollingpanel.h"
 #include "gadgetstyle.h"
+#include "woopsistring.h"
+#include "text.h"
 
 namespace WoopsiUI {
-
-	class Text;
 
 	/**
 	 * Textbox that offers multiple lines of text.  Has scrolling
@@ -55,7 +55,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows = 0, GadgetStyle* style = NULL);
+		MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows = 0, GadgetStyle* style = NULL);
 
 		/**
 		 * Draw the region of the textbox within the clipping rect.
@@ -104,26 +104,14 @@ namespace WoopsiUI {
 		 * Set the text displayed in the textbox.
 		 * @param text String to display.
 		 */
-		virtual void setText(const char* text);
-
-		/**
-		 * Set the text displayed in the textbox.
-		 * @param text Character to display.
-		 */
-		virtual void setText(const char text);
+		virtual void setText(const WoopsiString& text);
 
 		/**
 		 * Append new text to the end of the current text
 		 * displayed in the textbox.
 		 * @param text String to append.
 		 */
-		virtual void appendText(const char* text);
-
-		/**
-		 * Append new text to the end of the current text displayed in the textbox.
-		 * @param text Char to append.
-		 */
-		virtual void appendText(const char text);
+		virtual void appendText(const WoopsiString& text);
 
 		/**
 		 * Remove all characters from the string from the start index onwards.
@@ -189,26 +177,13 @@ namespace WoopsiUI {
 		 * @param text The text to insert.
 		 * @param index Index at which to insert the text.
 		 */
-		virtual void insertText(const char* text, const u32 index);
-
-		/**
-		 * Insert text at the specified index.
-		 * @param text Char to insert.
-		 * @param index Index at which to insert the char.
-		 */
-		virtual void insertText(const char text, const u32 index);
+		virtual void insertText(const WoopsiString& text, const u32 index);
 
 		/**
 		 * Insert text at the current cursor position.
 		 * @param text The text to insert.
 		 */
-		virtual void insertTextAtCursor(const char* text);
-
-		/**
-		 * Insert text at the current cursor position.
-		 * @param text Char to insert.
-		 */
-		virtual void insertTextAtCursor(const char text);
+		virtual void insertTextAtCursor(const WoopsiString& text);
 
 		/**
 		 * Click this gadget at the supplied co-ordinates.
@@ -280,7 +255,7 @@ namespace WoopsiUI {
 		/**
 		 * Destructor.
 		 */
-		virtual ~MultiLineTextBox();
+		inline virtual ~MultiLineTextBox();
 
 		/**
 		 * Copy constructor is protected to prevent usage.

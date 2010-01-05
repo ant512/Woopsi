@@ -186,10 +186,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\decorationglyphbutton.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\gradient.cpp"
 					>
 				</File>
@@ -226,6 +222,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\src\cyclebutton.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\decorationglyphbutton.cpp"
 						>
 					</File>
 				</Filter>
@@ -455,6 +455,10 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\src\fonts\gloucester10.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\libwoopsi\src\fonts\glyphfont.cpp"
 					>
 				</File>
 				<File
@@ -1109,6 +1113,10 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\include\fonts\gloucester10.h"
+					>
+				</File>
+				<File
+					RelativePath=".\libwoopsi\include\fonts\glyphfont.h"
 					>
 				</File>
 				<File

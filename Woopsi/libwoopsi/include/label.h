@@ -45,21 +45,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		Label(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style = NULL);
-		
-		/**
-		 * Constructor for a label containing a single character.
-		 * @param x The x co-ordinate of the text box, relative to its parent.
-		 * @param y The y co-ordinate of the text box, relative to its parent.
-		 * @param width The width of the textbox.
-		 * @param height The height of the textbox.
-		 * @param letter Single character to display in the textbox.
-		 * @param style The style that the gadget should use.  If this is not
-		 * specified, the gadget will use the values stored in the global
-		 * defaultGadgetStyle object.  The gadget will copy the properties of
-		 * the style into its own internal style object.
-		 */
-		Label(s16 x, s16 y, u16 width, u16 height, const char letter, GadgetStyle* style = NULL);
+		Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
 		
 		/**
 		 * Draw the region of the label within the clipping rect. Should not be called
@@ -84,45 +70,45 @@ namespace WoopsiUI {
 		 * Returns a pointer to the string shown in the label.
 		 * @return Pointer to the string.
 		 */
-		virtual inline const char* getText() const { return _text->getCharArray(); };
+		virtual inline const char* getText() const { return _text.getCharArray(); };
 		
 		/**
 		 * Set the text displayed in the label.
 		 * @param text String to display.
 		 */
-		virtual void setText(const char* text);
+		virtual void setText(const WoopsiString& text);
 
 		/**
 		 * Set the text displayed in the label.
 		 * @param text Character to display.
 		 */
-		virtual void setText(const char text);
+		virtual void setText(const u32 text);
 		
 		/**
 		 * Append new text to the end of the current text displayed in the label.
 		 * @param text String to append.
 		 */
-		virtual void appendText(const char* text);
+		virtual void appendText(const WoopsiString& text);
 
 		/**
 		 * Append new text to the end of the current text displayed in the label.
 		 * @param text Char to append.
 		 */
-		virtual void appendText(const char text);
+		virtual void appendText(const u32 text);
 
 		/**
 		 * Insert text at the specified index.
 		 * @param text The text to insert.
 		 * @param index Index at which to insert the text.
 		 */
-		virtual void insertText(const char* text, const u32 index);
+		virtual void insertText(const WoopsiString& text, const u32 index);
 
 		/**
 		 * Insert text at the specified index.
 		 * @param text Char to insert.
 		 * @param index Index at which to insert the char.
 		 */
-		virtual void insertText(const char text, const u32 index);
+		virtual void insertText(const u32 text, const u32 index);
 
 		/**
 		 * Resize the gadget to the new dimensions.
@@ -147,7 +133,7 @@ namespace WoopsiUI {
 		virtual void setFont(FontBase* font);
 
 	protected:
-		WoopsiString* _text;					/**< Text that the textbox will display */
+		WoopsiString _text;						/**< Text that the textbox will display */
 		u16 _textX;								/**< X co-ordinate of the text relative to the gadget */
 		u16 _textY;								/**< Y co-ordinate of the text relative to the gadget */
 		u8 _padding;							/**< Padding around the text in pixels */
@@ -162,10 +148,7 @@ namespace WoopsiUI {
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~Label() {
-			delete _text;
-			_text = NULL;
-		};
+		virtual inline ~Label() { };
 
 		/**
 		 * Copy constructor is protected to prevent usage.

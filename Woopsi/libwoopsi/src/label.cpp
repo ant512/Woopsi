@@ -3,28 +3,14 @@
 
 using namespace WoopsiUI;
 
-Label::Label(s16 x, s16 y, u16 width, u16 height, const char* text, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
+Label::Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
 	_outline = OUTLINE_IN;
 
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_padding = 2;
 
-	_text = new WoopsiString();
 	setText(text);
-
-	calculateTextPosition();
-}
-
-Label::Label(s16 x, s16 y, u16 width, u16 height, const char letter, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
-	_outline = OUTLINE_IN;
-
-	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
-	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
-	_padding = 2;
-
-	_text = new WoopsiString();
-	setText(letter);
 
 	calculateTextPosition();
 }
@@ -36,9 +22,9 @@ void Label::draw(Rect clipRect) {
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	if (isEnabled()) {
-		port->drawText(_textX, _textY, getFont(), _text->getCharArray());
+		port->drawText(_textX, _textY, getFont(), _text);
 	} else {
-		port->drawText(_textX, _textY, getFont(), _text->getCharArray(), getDarkColour());
+		port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), getDarkColour());
 	}
 
 	// Draw outline
@@ -66,13 +52,13 @@ void Label::calculateTextPosition() {
 	// Calculate horizontal position
 	switch (_hAlignment) {
 		case TEXT_ALIGNMENT_HORIZ_CENTRE:
-			_textX = (_width - getFont()->getStringWidth(_text->getCharArray())) >> 1;
+			_textX = (_width - getFont()->getStringWidth(_text)) >> 1;
 			break;
 		case TEXT_ALIGNMENT_HORIZ_LEFT:
 			_textX = _padding;
 			break;
 		case TEXT_ALIGNMENT_HORIZ_RIGHT:
-			_textX = _width - getFont()->getStringWidth(_text->getCharArray()) - _padding;
+			_textX = _width - getFont()->getStringWidth(_text) - _padding;
 			break;
 	}
 }
@@ -91,43 +77,43 @@ void Label::setTextAlignmentVert(TextAlignmentVert alignment) {
 	redraw();
 }
 
-void Label::setText(const char* text) {
-	_text->setText(text);
+void Label::setText(const WoopsiString& text) {
+	_text = text;
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void Label::setText(const char text) {
-	_text->setText(text);
+void Label::setText(const u32 text) {
+	_text.setText(text);
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void Label::appendText(const char* text) {
-	_text->append(text);
+void Label::appendText(const WoopsiString& text) {
+	_text.append(text);
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void Label::appendText(const char text) {
-	_text->append(text);
+void Label::appendText(const u32 text) {
+	_text.append(text);
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void Label::insertText(const char* text, const u32 index) {
-	_text->insert(text, index);
+void Label::insertText(const WoopsiString& text, const u32 index) {
+	_text.insert(text, index);
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void Label::insertText(const char text, const u32 index) {
-	_text->insert(text, index);
+void Label::insertText(const u32 text, const u32 index) {
+	_text.insert(text, index);
 	calculateTextPosition();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
@@ -161,7 +147,7 @@ bool Label::resize(u16 width, u16 height) {
 void Label::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
-	rect.width = ((!_flags.borderless + _padding) << 1) + getFont()->getStringWidth(_text->getCharArray());
+	rect.width = ((!_flags.borderless + _padding) << 1) + getFont()->getStringWidth(_text);
 	rect.height = ((!_flags.borderless + _padding) << 1) + getFont()->getHeight();
 }
 

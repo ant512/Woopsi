@@ -16,9 +16,11 @@ ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, Gadget
 
 	_upButton = new Button(0, height - (_buttonHeight << 1), width, _buttonHeight, GLYPH_ARROW_UP, _style);
 	_upButton->addGadgetEventHandler(this);
+	_upButton->setFont(_style->glyphFont);
 
 	_downButton = new Button(0, height - _buttonHeight, width, _buttonHeight, GLYPH_ARROW_DOWN, _style);
 	_downButton->addGadgetEventHandler(this);
+	_downButton->setFont(_style->glyphFont);
 
 	// Create timer
 	_scrollTimeout = 10;

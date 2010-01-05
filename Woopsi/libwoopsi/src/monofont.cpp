@@ -47,7 +47,7 @@ const bool MonoFont::scanGlyph(const u16 x, const u16 y) const {
 	return false;
 }
 
-s16 MonoFont::drawChar(MutableBitmapBase* bitmap, char letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
+s16 MonoFont::drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
 
 	u8 fontWidth = getWidth();
 	u8 fontHeight = getHeight();
