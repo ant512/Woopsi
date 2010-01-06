@@ -1,4 +1,4 @@
-* Copyright (c) 2007-2009, Antony Dzeryn
+* Copyright (c) 2007-2010, Antony Dzeryn
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -34,12 +34,7 @@ Woopsi
   
   The system itself is loosely based on the Commodore Amiga's "Intuition"
   windowing system.  The look-and-feel of the system intentionally resembles the
-  old Amiga system.  There are several reasons for this:
-  
-  - It gives me a template to work from, reducing the amount of work I need to
-    do;
-  - Intuition was designed for low-power, low-resolution hardware;
-  - It seemed like a good idea at the time.
+  old Amiga system.
   
   The windowing system is *not* intended to be a complete desktop environment.
   It is *not* going to be a DS version of GNOME, KDE or Windows Explorer.  It
@@ -117,11 +112,16 @@ Features
   - Simple API for rapid GUI creation;
   - Non pre-emptive, FIFO multitasking - each gadget runs simultaneously;
   - Uses 16-bit framebuffer display mode;
+  - Unicode strings using UTF-8 encoding.
   - Multiple build options:
-    - Standard libnds build
+    - Standard libnds build;
     - SDL layer to facilitate native compilation on non-DS platforms and
       aid porting;
     - libwoopsi.a library.
+  - Suite of supporting Windows tools:
+    - bmp2font, to convert BMPs to Woopsi fonts;
+    - bmp2bmp, to convert BMPs to Woopsi bitmaps;
+    - font2font, to convert Windows fonts to Woopsi fonts.
 
 
 Requirements
@@ -171,6 +171,7 @@ Credits and Acknowlegements
   - Testing, technical advice, other contributions   - Jeff Laing
   - PALib independence                               - Steve
   - More testing and suggestions                     - John Buxton
+  - Unicode work                                     - Olivier Binda
   - Simian Zombie logo                               - John Clay
   - Thanks to                                        - The devKitPro team
                                                      - The PALib team

@@ -18,7 +18,6 @@
 #include "bittest5.h"
 #include "bittest6.h"
 #include "woopsistring.h"
-#include "debug.h"
 
 void Demo::startup() {
 
@@ -297,8 +296,6 @@ void Demo::startup() {
 	// Add Welcome notice
 	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
 	newScreen2->addGadget(_alert);
-
-	Debug::printf("test");
 
 	enableDrawing();	// Ensure Woopsi can now draw itself
 	redraw();			// Draw initial state
