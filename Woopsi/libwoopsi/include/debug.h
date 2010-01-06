@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadgetstyle.h"
+#include "woopsistring.h"
 
 #define DEBUG_ACTIVE true
 
@@ -71,7 +72,7 @@ namespace WoopsiUI {
 		 * Print a string to the debug console.
 		 * @param msg The string to print.
 		 */
-		void output(const char* msg);
+		void output(const WoopsiString& msg);
 	};
 }
 

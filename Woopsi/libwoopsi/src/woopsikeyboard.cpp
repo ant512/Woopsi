@@ -8,7 +8,7 @@
 
 using namespace WoopsiUI;
 
-WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* title, u32 flags, u32 windowFlags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, windowFlags, style) {
+WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, u32 windowFlags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, windowFlags, style) {
 
 	// Get available window region
 	Rect rect;
@@ -47,13 +47,18 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (7 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "i", "I", "i", "I", "I", "I"));
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (8 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "o", "O", "o", "O", "O", "O"));
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (9 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "p", "P", "p", "P", "P", "P"));
-	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (10 * (1 + buttonWidth)), buttonY, 1 + (buttonWidth * 2) - (buttonWidth / 2), buttonHeight, GLYPH_BACKSPACE, WoopsiKey::KEY_BACKSPACE));
+
+	WoopsiKey* backspaceKey = new WoopsiKey(buttonX + (buttonWidth / 2) + (10 * (1 + buttonWidth)), buttonY, 1 + (buttonWidth * 2) - (buttonWidth / 2), buttonHeight, GLYPH_BACKSPACE, WoopsiKey::KEY_BACKSPACE);
+	backspaceKey->setFont(_style->glyphFont);
+	addGadget(backspaceKey);
 
 	buttonY += buttonHeight + 1;
 
 	// Caps ASDFGHJKL Return
 	_capsLockKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, GLYPH_CAPS_LOCK, WoopsiKey::KEY_CAPS_LOCK);
+	_capsLockKey->setFont(_style->glyphFont);
 	addGadget(_capsLockKey);
+
 	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "a", "A", "a", "A", "A", "A"));
 	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "s", "S", "s", "S", "S", "S"));
 	addGadget(new WoopsiKey(buttonX + (3 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "d", "D", "d", "D", "D", "D"));
@@ -63,13 +68,18 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 	addGadget(new WoopsiKey(buttonX + (7 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "j", "J", "j", "J", "J", "J"));
 	addGadget(new WoopsiKey(buttonX + (8 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "k", "K", "k", "K", "K", "K"));
 	addGadget(new WoopsiKey(buttonX + (9 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "l", "L", "l", "L", "L", "L"));
-	addGadget(new WoopsiKey(buttonX + (10 * (1 + buttonWidth)), buttonY, 1 + (buttonWidth * 2), buttonHeight, GLYPH_RETURN, WoopsiKey::KEY_RETURN));
+
+	WoopsiKey* returnKey = new WoopsiKey(buttonX + (10 * (1 + buttonWidth)), buttonY, 1 + (buttonWidth * 2), buttonHeight, GLYPH_RETURN, WoopsiKey::KEY_RETURN);
+	returnKey->setFont(_style->glyphFont);
+	addGadget(returnKey);
 
 	buttonY += buttonHeight + 1;
 
 	// Shift ZXCVBNM,./
 	_shiftKey = new WoopsiKey(buttonX, buttonY, (buttonWidth * 2) - (buttonWidth / 2) - 1, buttonHeight, GLYPH_SHIFT, WoopsiKey::KEY_SHIFT);
+	_shiftKey->setFont(_style->glyphFont);
 	addGadget(_shiftKey);
+
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "z", "Z", "z", "Z", "Z", "Z"));
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "x", "X", "x", "X", "X", "X"));
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (3 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "c", "C", "c", "C", "C", "C"));
@@ -85,7 +95,9 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const char* 
 
 	// Ctrl ;'# Space [] backslash
 	_controlKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, GLYPH_CONTROL, WoopsiKey::KEY_CONTROL);
+	_controlKey->setFont(_style->glyphFont);
 	addGadget(_controlKey);
+
 	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "`", "~", "`", "~", "`", "`"));
 	addGadget(new WoopsiKey(buttonX + (2 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, ";", ":", ";", ":", ";", ";"));
 	addGadget(new WoopsiKey(buttonX + (3 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "'", "\"", "'", "\"", "'", "'"));

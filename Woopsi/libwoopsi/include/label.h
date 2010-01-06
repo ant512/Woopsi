@@ -70,7 +70,7 @@ namespace WoopsiUI {
 		 * Returns a pointer to the string shown in the label.
 		 * @return Pointer to the string.
 		 */
-		virtual inline const char* getText() const { return _text.getCharArray(); };
+		virtual inline const WoopsiString& getText() const { return _text; };
 		
 		/**
 		 * Set the text displayed in the label.

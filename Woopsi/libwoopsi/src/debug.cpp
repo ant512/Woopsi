@@ -35,7 +35,7 @@ void Debug::createDebug() {
 	}
 }
 
-void Debug::output(const char* text) {
+void Debug::output(const WoopsiString& text) {
 	if (DEBUG_ACTIVE) {
 		if (woopsiApplication != NULL) {
 			createDebug();

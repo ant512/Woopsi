@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const char* text, u32 flags, s16 maxRows, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
+ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 	_scrollbarWidth = 9;
 
 	setBorderless(true);
@@ -40,22 +40,12 @@ const Text* ScrollingTextBox::getText() const {
 	return _textbox->getText();
 }
 
-void ScrollingTextBox::setText(const char* text) {
+void ScrollingTextBox::setText(const WoopsiString& text) {
 	_textbox->setText(text);
 	_scrollbar->redraw();
 }
 
-void ScrollingTextBox::setText(const char text) {
-	_textbox->setText(text);
-	_scrollbar->redraw();
-}
-
-void ScrollingTextBox::appendText(const char* text) {
-	_textbox->appendText(text);
-	_scrollbar->redraw();
-}
-
-void ScrollingTextBox::appendText(const char text) {
+void ScrollingTextBox::appendText(const WoopsiString& text) {
 	_textbox->appendText(text);
 	_scrollbar->redraw();
 }

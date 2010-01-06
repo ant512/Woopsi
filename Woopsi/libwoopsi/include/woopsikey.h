@@ -58,7 +58,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* text, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
+		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
 		/**
 		 * Constructor for keys for the keyboard that display a string.  Different string is
@@ -79,22 +79,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char* normalText, const char* shiftText, const char* controlText, const char* shiftControlText, const char* capsLockText, const char* controlCapsLockText, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
-
-		/**
-		 * Constructor for keys for the keyboard that display a single char.
-		 * @param x The x co-ordinate of the button, relative to its parent.
-		 * @param y The y co-ordinate of the button, relative to its parent.
-		 * @param width The width of the key.
-		 * @param height The height of the key.
-		 * @param glyph The letter for the key to display.
-		 * @param keyType The type of key.
-		 * @param style The style that the gadget should use.  If this is not
-		 * specified, the gadget will use the values stored in the global
-		 * defaultGadgetStyle object.  The gadget will copy the properties of
-		 * the style into its own internal style object.
-		 */
-		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const char glyph, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
+		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& normalText, const WoopsiString& shiftText, const WoopsiString& controlText, const WoopsiString& shiftControlText, const WoopsiString& capsLockText, const WoopsiString& controlCapsLockText, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
 		/**
 		 * Return the type of key this object represents.
@@ -125,25 +110,18 @@ namespace WoopsiUI {
 
 	protected:
 		KeyType _keyType;					/**< Type of key represented by this object */
-		char* _normalText;					/**< Text displayed when in normal mode */
-		char* _shiftText;					/**< Text displayed when in shift mode */
-		char* _controlText;					/**< Text displayed when in control mode */
-		char* _shiftControlText;			/**< Text displayed when in shift/control mode */
-		char* _capsLockText;				/**< Text displayed when in caps lock mode */
-		char* _controlCapsLockText;			/**< Text displayed when in control/caps lock mode */
+		WoopsiString _normalText;			/**< Text displayed when in normal mode */
+		WoopsiString _shiftText;			/**< Text displayed when in shift mode */
+		WoopsiString _controlText;			/**< Text displayed when in control mode */
+		WoopsiString _shiftControlText;		/**< Text displayed when in shift/control mode */
+		WoopsiString _capsLockText;			/**< Text displayed when in caps lock mode */
+		WoopsiString _controlCapsLockText;	/**< Text displayed when in control/caps lock mode */
 		KeyMode _keyMode;					/**< Current mode */
 
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~WoopsiKey() {
-			delete[] _normalText;
-			delete[] _shiftText;
-			delete[] _controlText;
-			delete[] _shiftControlText;
-			delete[] _capsLockText;
-			delete[] _controlCapsLockText;
-		};
+		virtual inline ~WoopsiKey() { };
 
 		/**
 		 * Copy constructor is protected to prevent usage.

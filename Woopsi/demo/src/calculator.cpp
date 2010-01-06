@@ -58,11 +58,11 @@ void Calculator::initGUI() {
 }
 
 void Calculator::appendText(const char* text) {
-	if ((strcmp(_output->getText(), "0") == 0) || (_wipeNeeded)) {
+	if ((strcmp(_output->getText().getCharArray(), "0") == 0) || (_wipeNeeded)) {
 		_wipeNeeded = false;
 		_output->setText(text);
 	} else {
-		if (strlen(_output->getText()) < 5) {
+		if (strlen(_output->getText().getCharArray()) < 5) {
 			_output->appendText(text);
 		}
 	}
@@ -73,10 +73,10 @@ void Calculator::appendText(const char* text) {
 void Calculator::doAdd() {
 	if (_opCode == 0) {
 		_opCode = 1;
-		_val1 = atoi(_output->getText());
+		_val1 = atoi(_output->getText().getCharArray());
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText());
+		_val2 = atoi(_output->getText().getCharArray());
 
 		doFunction();
 		_opCode = 1;
@@ -88,10 +88,10 @@ void Calculator::doAdd() {
 void Calculator::doSubtract() {
 	if (_opCode == 0) {
 		_opCode = 2;
-		_val1 = atoi(_output->getText());
+		_val1 = atoi(_output->getText().getCharArray());
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText());
+		_val2 = atoi(_output->getText().getCharArray());
 
 		doFunction();
 		_opCode = 2;
@@ -103,10 +103,10 @@ void Calculator::doSubtract() {
 void Calculator::doMultiply() {
 	if (_opCode == 0) {
 		_opCode = 3;
-		_val1 = atoi(_output->getText());
+		_val1 = atoi(_output->getText().getCharArray());
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText());
+		_val2 = atoi(_output->getText().getCharArray());
 
 		doFunction();
 		_opCode = 3;
@@ -118,10 +118,10 @@ void Calculator::doMultiply() {
 void Calculator::doDivide() {
 	if (_opCode == 0) {
 		_opCode = 4;
-		_val1 = atoi(_output->getText());
+		_val1 = atoi(_output->getText().getCharArray());
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText());
+		_val2 = atoi(_output->getText().getCharArray());
 
 		doFunction();
 		_opCode = 4;
@@ -235,10 +235,10 @@ void Calculator::itoa(s32 n, char s[])
 void Calculator::handleClickEvent(const GadgetEventArgs& e) {
 	Button* button = (Button*)e.getSource();
 
-	if (strcmp(button->getText(), "=") == 0) {
+	if (strcmp(button->getText().getCharArray(), "=") == 0) {
 		doEquals();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText(), "C") == 0) {
+	} else if (strcmp(button->getText().getCharArray(), "C") == 0) {
 
 		_output->setText("0");
 		_val1 = 0;
@@ -246,19 +246,19 @@ void Calculator::handleClickEvent(const GadgetEventArgs& e) {
 		_opCode = 0;
 		_output->redraw();
 
-	} else if (strcmp(button->getText(), "+") == 0) {
+	} else if (strcmp(button->getText().getCharArray(), "+") == 0) {
 		doAdd();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText(), "-") == 0) {
+	} else if (strcmp(button->getText().getCharArray(), "-") == 0) {
 		doSubtract();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText(), "*") == 0) {
+	} else if (strcmp(button->getText().getCharArray(), "*") == 0) {
 		doMultiply();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText(), "/") == 0) {
+	} else if (strcmp(button->getText().getCharArray(), "/") == 0) {
 		doDivide();
 		_wipeNeeded = true;
 	} else {
-		appendText(button->getText());
+		appendText(button->getText().getCharArray());
 	}
 }

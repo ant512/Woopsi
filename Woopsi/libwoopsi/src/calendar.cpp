@@ -58,7 +58,7 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 			// Handle day button release
 
 			// Calculate the new date
-			u8 day = atoi(((Button*)e.getSource())->getText());
+			u8 day = atoi(((Button*)e.getSource())->getText().getCharArray());
 			Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
 			// Prevent changes if new date is same as old
@@ -272,7 +272,7 @@ void Calendar::buildGUI() {
 
 	// Add day labels
 	Label* label;
-	const char* dayInitials = "MTWTFSS";
+	WoopsiString dayInitials[7] = {"M", "T", "W", "T", "F", "S", "S"};
 	s16 labelX = rect.x;
 
 	for (u8 i = 0; i < CALENDAR_COLS; ++i) {

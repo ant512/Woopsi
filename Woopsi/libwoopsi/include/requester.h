@@ -32,7 +32,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		Requester(s16 x, s16 y, u16 width, u16 height, const char* title, GadgetStyle* style = NULL);
+		Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
@@ -51,7 +51,7 @@ namespace WoopsiUI {
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 */
-		virtual inline void addOption(const char* text, const u32 value) {
+		virtual inline void addOption(const WoopsiString& text, const u32 value) {
 			_listbox->addOption(text, value);
 		};
 
@@ -64,7 +64,7 @@ namespace WoopsiUI {
 		 * @param selectedTextColour Colour to draw the text with when selected.
 		 * @param selectedBackColour Colour to draw the background with when selected.
 		 */
-		virtual inline void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
+		virtual inline void addOption(const WoopsiString& text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 			_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
 		};
 
