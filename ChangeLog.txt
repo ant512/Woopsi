@@ -10,6 +10,7 @@ Change Log
       object.
     - Gadget::setRaisesEvents() alters the GadgetEventHandlerList object.
     - Removed the raisesEvents flag from the Gadget class.
+    - Bmp2Font produces working Font classes.
     
   New Features:
     - Added FontBase::getCharHeight().
