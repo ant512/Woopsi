@@ -72,7 +72,7 @@ namespace WoopsiUI {
 		 * Print a string to the debug console.
 		 * @param msg The string to print.
 		 */
-		void output(const WoopsiString& msg);
+		void output(const char* msg);
 	};
 }
 

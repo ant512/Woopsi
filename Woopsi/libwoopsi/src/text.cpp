@@ -37,10 +37,11 @@ const u8 Text::getLineTrimmedLength(const s32 lineNumber) const {
 			currentChar--;
 		}
 		
-		// Stop scanning if the current char is no blank
+		// Stop scanning if the current char is not blank
 		if (!_font->isCharBlank(codePoint)) break;
 
 		length--;
+		currentChar--;
 	}
 
 	return length;

@@ -84,13 +84,6 @@ void Label::setText(const WoopsiString& text) {
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void Label::setText(const u32 text) {
-	_text.setText(text);
-	calculateTextPosition();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
 void Label::appendText(const WoopsiString& text) {
 	_text.append(text);
 	calculateTextPosition();
@@ -98,21 +91,7 @@ void Label::appendText(const WoopsiString& text) {
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-void Label::appendText(const u32 text) {
-	_text.append(text);
-	calculateTextPosition();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
 void Label::insertText(const WoopsiString& text, const u32 index) {
-	_text.insert(text, index);
-	calculateTextPosition();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-void Label::insertText(const u32 text, const u32 index) {
 	_text.insert(text, index);
 	calculateTextPosition();
 	redraw();

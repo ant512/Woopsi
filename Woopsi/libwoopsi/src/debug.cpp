@@ -35,7 +35,7 @@ void Debug::createDebug() {
 	}
 }
 
-void Debug::output(const WoopsiString& text) {
+void Debug::output(const char* text) {
 	if (DEBUG_ACTIVE) {
 		if (woopsiApplication != NULL) {
 			createDebug();
@@ -98,6 +98,7 @@ void Debug::createGUI() {
 		_style->colours.fill = defaultGadgetStyle->colours.fill;
 		_style->colours.dark = defaultGadgetStyle->colours.dark;
 		_style->font = new TinyFont();
+		_style->glyphFont = defaultGadgetStyle->glyphFont;
 	}
 
 	// Add textbox

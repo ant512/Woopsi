@@ -67,8 +67,8 @@ namespace WoopsiUI {
 		virtual void setTextAlignmentVert(TextAlignmentVert alignment);
 		
 		/**
-		 * Returns a pointer to the string shown in the label.
-		 * @return Pointer to the string.
+		 * Returns the string shown in the label.
+		 * @return The label's text.
 		 */
 		virtual inline const WoopsiString& getText() const { return _text; };
 		
@@ -77,12 +77,6 @@ namespace WoopsiUI {
 		 * @param text String to display.
 		 */
 		virtual void setText(const WoopsiString& text);
-
-		/**
-		 * Set the text displayed in the label.
-		 * @param text Character to display.
-		 */
-		virtual void setText(const u32 text);
 		
 		/**
 		 * Append new text to the end of the current text displayed in the label.
@@ -91,24 +85,11 @@ namespace WoopsiUI {
 		virtual void appendText(const WoopsiString& text);
 
 		/**
-		 * Append new text to the end of the current text displayed in the label.
-		 * @param text Char to append.
-		 */
-		virtual void appendText(const u32 text);
-
-		/**
 		 * Insert text at the specified index.
 		 * @param text The text to insert.
 		 * @param index Index at which to insert the text.
 		 */
 		virtual void insertText(const WoopsiString& text, const u32 index);
-
-		/**
-		 * Insert text at the specified index.
-		 * @param text Char to insert.
-		 * @param index Index at which to insert the char.
-		 */
-		virtual void insertText(const u32 text, const u32 index);
 
 		/**
 		 * Resize the gadget to the new dimensions.

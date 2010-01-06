@@ -68,7 +68,7 @@ void ButtonTest::startup() {
 	_button->addGadgetEventHandler(this);
 	_button->setDoubleClickable(true);
 	_button->setRefcon(1);
-
+	
 	// Get preferred dimensions for label and resize
 	Debug::printf("getPreferredDimensions()");
 	Rect rect;
