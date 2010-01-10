@@ -4,9 +4,14 @@
 #include <nds.h>
 
 namespace WoopsiUI {
+	
+	class StringIterator;
 
 	/**
-	 * Yet another string class.  Where possible, the string avoids allocating memory
+	 * Unicode string class.  Uses UTF-8 encoding.  For optimal performance, use the
+	 * StringIterator class to iterate over a WoopsiString instance.
+	 *
+	 * Where possible, the string avoids allocating memory
 	 * each time the string grows or shrinks.  This means that the string may consume
 	 * more memory than the number of chars would seem to dictate if the object previously
 	 * contained a large string that has subsequently been truncated.  It also means
@@ -41,12 +46,20 @@ namespace WoopsiUI {
 		 * @return Pointer to the char array.
 		 */
 		virtual inline const char* getCharArray() const { return _text; };
+		
+		/**
+		 * Creates and returns a new StringIterator object that will iterate
+		 * over this string.  The object must be manually deleted once it is
+		 * no longer needed.
+		 * @return A new StringIterator object.
+		 */
+		StringIterator* newStringIterator() const;
 
 		/**
 		 * Copy the internal array to the supplied buffer.  The buffer must be
 		 * large enough to contain the full text in the string.  The
-		 * getLength() method can be used to obtain the length of the string.
-		 * The buffer will be (getLength() + 1), to accommodate the terminator.
+		 * getByteCount() method can be used to obtain the length of the string.
+		 * The buffer will be (getByteCount() + 1), to accommodate the terminator.
 		 * @param buffer Buffer to copy the internal char array to.
 		 */
 		virtual void copyToCharArray(char* buffer) const;
@@ -125,7 +138,10 @@ namespace WoopsiUI {
 		};
 		
 		/**
-		 * Get the character at the specified index.
+		 * Get the character at the specified index.  This function is useful for
+		 * finding the occasional character at an index, but for iterating over strings
+		 * it is exceptionally slow.  The newStringIterator() method should be used
+		 * to retrieve an iterator object that can iterate over the string efficiently.
 		 * @param index The index of the character to retrieve.
 		 * @return The character at the specified index.
 		 */
@@ -208,6 +224,8 @@ namespace WoopsiUI {
 		const u32 calculateStringLength() const;
 
 	private:
+		friend class StringIterator;
+		
 		u32 _dataLength;						/**< Length of char data in the string */
 		u32 _stringLength;						/**< Number of unicode tokens in the string */
 		u32 _allocatedSize;						/**< Number of bytes allocated for this string */

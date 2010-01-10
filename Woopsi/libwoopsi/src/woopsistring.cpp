@@ -1,5 +1,6 @@
 #include <string.h>
 #include "woopsistring.h"
+#include "stringiterator.h"
 
 using namespace WoopsiUI;
 
@@ -47,6 +48,10 @@ WoopsiString& WoopsiString::operator=(const char* string) {
 WoopsiString& WoopsiString::operator=(const u32 letter) {
 	setText(letter);
 	return *this;
+}
+
+StringIterator* WoopsiString::newStringIterator() const {
+	return new StringIterator(this);
 }
 
 void WoopsiString::setText(const WoopsiString& text) {
