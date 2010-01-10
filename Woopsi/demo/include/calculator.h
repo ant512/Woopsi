@@ -7,6 +7,7 @@
 #include "amigawindow.h"
 #include "textbox.h"
 #include "gadgeteventargs.h"
+#include "woopsistring.h"
 
 using namespace WoopsiUI;
 
@@ -34,7 +35,7 @@ private:
 	void doDivide();
 	void doEquals();
 	void updateDisplay();
-	void appendText(const char* text);
+	void appendText(const WoopsiString& text);
 	void doFunction();
 	void initGUI();
 

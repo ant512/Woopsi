@@ -42,12 +42,6 @@ namespace WoopsiUI {
 		WoopsiString(const u32 letter);
 		
 		/**
-		 * Returns a pointer to the raw char array data.
-		 * @return Pointer to the char array.
-		 */
-		virtual inline const char* getCharArray() const { return _text; };
-		
-		/**
 		 * Creates and returns a new StringIterator object that will iterate
 		 * over this string.  The object must be manually deleted once it is
 		 * no longer needed.
@@ -222,6 +216,12 @@ namespace WoopsiUI {
 		u32 filterString(char* dest, const char* src, u32* totalUnicodeChars) const;
 
 		const u32 calculateStringLength() const;
+
+		/**
+		 * Returns a pointer to the raw char array data.
+		 * @return Pointer to the char array.
+		 */
+		virtual inline const char* getCharArray() const { return _text; };
 
 	private:
 		friend class StringIterator;

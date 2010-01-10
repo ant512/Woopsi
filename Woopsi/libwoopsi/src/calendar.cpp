@@ -58,7 +58,12 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 			// Handle day button release
 
 			// Calculate the new date
-			u8 day = atoi(((Button*)e.getSource())->getText().getCharArray());
+
+			// Extract raw char data; this could be much more efficient
+			char string[((Button*)e.getSource())->getText().getByteCount()];
+			((Button*)e.getSource())->getText().copyToCharArray(string);
+
+			u8 day = atoi(string);
 			Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
 			// Prevent changes if new date is same as old

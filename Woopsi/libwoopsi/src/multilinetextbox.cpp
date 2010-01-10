@@ -166,7 +166,7 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 		cursorY = getRowY(cursorRow) + _canvasY;
 
 		// Draw cursor
-		port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(_text->getCharArray()[_cursorPos]), getFont()->getHeight());
+		port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(_text->getCharAt(_cursorPos)), getFont()->getHeight());
 	}
 
 	delete port;

@@ -5,6 +5,7 @@
 #include "textbox.h"
 #include "button.h"
 #include "rect.h"
+#include "stringiterator.h"
 
 Calculator::Calculator(AmigaScreen* screen) {
 	_screen = screen;
@@ -57,12 +58,12 @@ void Calculator::initGUI() {
 	}
 }
 
-void Calculator::appendText(const char* text) {
-	if ((strcmp(_output->getText().getCharArray(), "0") == 0) || (_wipeNeeded)) {
+void Calculator::appendText(const WoopsiString& text) {
+	if ((_output->getText().getCharAt(0) == '0') || (_wipeNeeded)) {
 		_wipeNeeded = false;
 		_output->setText(text);
 	} else {
-		if (strlen(_output->getText().getCharArray()) < 5) {
+		if (_output->getText().getLength() < 5) {
 			_output->appendText(text);
 		}
 	}
@@ -71,12 +72,17 @@ void Calculator::appendText(const char* text) {
 }
 
 void Calculator::doAdd() {
+
+	// Extract raw char data; this could be much more efficient
+	char string[_output->getText().getByteCount()];
+	_output->getText().copyToCharArray(string);
+
 	if (_opCode == 0) {
 		_opCode = 1;
-		_val1 = atoi(_output->getText().getCharArray());
+		_val1 = atoi(string);
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText().getCharArray());
+		_val2 = atoi(string);
 
 		doFunction();
 		_opCode = 1;
@@ -86,12 +92,17 @@ void Calculator::doAdd() {
 }
 
 void Calculator::doSubtract() {
+
+	// Extract raw char data; this could be much more efficient
+	char string[_output->getText().getByteCount()];
+	_output->getText().copyToCharArray(string);
+
 	if (_opCode == 0) {
 		_opCode = 2;
-		_val1 = atoi(_output->getText().getCharArray());
+		_val1 = atoi(string);
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText().getCharArray());
+		_val2 = atoi(string);
 
 		doFunction();
 		_opCode = 2;
@@ -101,12 +112,17 @@ void Calculator::doSubtract() {
 }
 
 void Calculator::doMultiply() {
+
+	// Extract raw char data; this could be much more efficient
+	char string[_output->getText().getByteCount()];
+	_output->getText().copyToCharArray(string);
+
 	if (_opCode == 0) {
 		_opCode = 3;
-		_val1 = atoi(_output->getText().getCharArray());
+		_val1 = atoi(string);
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText().getCharArray());
+		_val2 = atoi(string);
 
 		doFunction();
 		_opCode = 3;
@@ -116,12 +132,17 @@ void Calculator::doMultiply() {
 }
 
 void Calculator::doDivide() {
+
+	// Extract raw char data; this could be much more efficient
+	char string[_output->getText().getByteCount()];
+	_output->getText().copyToCharArray(string);
+
 	if (_opCode == 0) {
 		_opCode = 4;
-		_val1 = atoi(_output->getText().getCharArray());
+		_val1 = atoi(string);
 		_output->setText("0");
 	} else {
-		_val2 = atoi(_output->getText().getCharArray());
+		_val2 = atoi(string);
 
 		doFunction();
 		_opCode = 4;
@@ -235,10 +256,10 @@ void Calculator::itoa(s32 n, char s[])
 void Calculator::handleClickEvent(const GadgetEventArgs& e) {
 	Button* button = (Button*)e.getSource();
 
-	if (strcmp(button->getText().getCharArray(), "=") == 0) {
+	if (button->getText().getCharAt(0) == '=') {
 		doEquals();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText().getCharArray(), "C") == 0) {
+	} else if (button->getText().getCharAt(0) == 'C') {
 
 		_output->setText("0");
 		_val1 = 0;
@@ -246,19 +267,19 @@ void Calculator::handleClickEvent(const GadgetEventArgs& e) {
 		_opCode = 0;
 		_output->redraw();
 
-	} else if (strcmp(button->getText().getCharArray(), "+") == 0) {
+	} else if (button->getText().getCharAt(0) == '+') {
 		doAdd();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText().getCharArray(), "-") == 0) {
+	} else if (button->getText().getCharAt(0) == '-') {
 		doSubtract();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText().getCharArray(), "*") == 0) {
+	} else if (button->getText().getCharAt(0) == '*') {
 		doMultiply();
 		_wipeNeeded = true;
-	} else if (strcmp(button->getText().getCharArray(), "/") == 0) {
+	} else if (button->getText().getCharAt(0) == '/') {
 		doDivide();
 		_wipeNeeded = true;
 	} else {
-		appendText(button->getText().getCharArray());
+		appendText(button->getText());
 	}
 }

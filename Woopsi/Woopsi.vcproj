@@ -89,6 +89,10 @@
 					Name="Strings"
 					>
 					<File
+						RelativePath=".\libwoopsi\src\stringiterator.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\src\text.cpp"
 						>
 					</File>
@@ -730,6 +734,10 @@
 				<Filter
 					Name="Strings"
 					>
+					<File
+						RelativePath=".\libwoopsi\include\stringiterator.h"
+						>
+					</File>
 					<File
 						RelativePath=".\libwoopsi\include\text.h"
 						>

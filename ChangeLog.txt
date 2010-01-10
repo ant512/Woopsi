@@ -22,6 +22,7 @@ Change Log
     - Various changes in Text class to support UTF-8.
     - Changed parameters to GraphicsUnclipped::drawText() (and subclasses).
     - Added StringIterator class, for efficient iteration over a UTF-8 string.
+    - Removed dependence on WoopsiString::getCharArray().
 	
   V0.43 (20091223)
   

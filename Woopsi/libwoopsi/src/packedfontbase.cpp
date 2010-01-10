@@ -1,6 +1,7 @@
 #include "packedfontbase.h"
 #include "mutablebitmapbase.h"
 #include "woopsistring.h"
+#include "stringiterator.h"
 
 using namespace WoopsiUI;
 
@@ -24,13 +25,13 @@ u16 PackedFontBase::getStringWidth(const WoopsiString& text) const
 
 	u16 total = 0;
 
-	const char* currentChar = text.getCharArray();
-	u8 bytes = 0;
+	StringIterator* iterator = text.newStringIterator();
+	
+	do {
+		total += getCharWidth(iterator->getCodePoint(NULL));
+	} while (iterator->moveToNext());
 
-	for (u32 i = 0; i < text.getLength(); ++i) {
-		total += getCharWidth(text.getCodePoint(currentChar, &bytes));
-		currentChar += bytes;
-	}
+	delete iterator;
 
 	return total;
 }
