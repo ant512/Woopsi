@@ -4,6 +4,7 @@
 #include "woopsifuncs.h"
 #include "framebuffer.h"
 #include "bitmapbase.h"
+#include "stringiterator.h"
 
 using namespace WoopsiUI;
 
@@ -115,17 +116,17 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 		}
 		
 		// Draw the string char by char
-		const char* currentChar = string.getToken(startIndex);
-		u8 charSize = 0;
+		StringIterator* iterator = string.newStringIterator();
+		iterator->moveTo(startIndex);
 
-		for (u32 i = 0; i < length; i++) {
-			x = font->drawChar(_bitmap, string.getCodePoint(currentChar, &charSize), x, y, clipX1, clipY1, clipX2, clipY2);
-
-			currentChar += charSize;
+		do {
+			x = font->drawChar(_bitmap, iterator->getCodePoint(NULL), x, y, clipX1, clipY1, clipX2, clipY2);
 
 			// Abort if x pos outside clipping region
-			if (x > clipX2) return;
-		}
+			if (x > clipX2) break;
+		} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+
+		delete iterator;
 	}
 }
 

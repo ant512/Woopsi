@@ -5,50 +5,35 @@
 
 using namespace WoopsiUI;
 
-u16 PackedFontBase::getCharWidth(u32 letter) const
-{
+u16 PackedFontBase::getCharWidth(u32 letter) const {
 	if (_fontWidth) return _fontWidth;
 
 	if (letter < _first || letter > _last) return _spWidth;
 	return _glyphWidth[letter - _first] + 1;
 }
 
-const bool PackedFontBase::isCharBlank(const u32 letter) const
-{
+const bool PackedFontBase::isCharBlank(const u32 letter) const {
 	if (letter >= _first && letter <= _last) return _glyphWidth[letter - _first] == 0;
 	return false;
 }
 
-u16 PackedFontBase::getStringWidth(const WoopsiString& text) const
-{
-	if (_fontWidth) return _fontWidth * text.getLength();
-
-	u16 total = 0;
-
-	StringIterator* iterator = text.newStringIterator();
-	
-	do {
-		total += getCharWidth(iterator->getCodePoint(NULL));
-	} while (iterator->moveToNext());
-
-	delete iterator;
-
-	return total;
+u16 PackedFontBase::getStringWidth(const WoopsiString& text) const {
+	return getStringWidth(text, 0, text.getLength());
 }
 
-u16 PackedFontBase::getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const
-{
+u16 PackedFontBase::getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const {
 	if (_fontWidth) return _fontWidth * length;
 
 	u16 total = 0;
 
-	const char* currentChar = text.getToken(startIndex);
-	u8 bytes = 0;
+	StringIterator* iterator = text.newStringIterator();
+	iterator->moveTo(startIndex);
+	
+	do {
+		total += getCharWidth(iterator->getCodePoint(NULL));
+	} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
 
-	for (u32 i = startIndex; i < text.getLength(); ++i) {
-		total += getCharWidth(text.getCodePoint(currentChar, &bytes));
-		currentChar += bytes;
-	}
+	delete iterator;
 
 	return total;
 }

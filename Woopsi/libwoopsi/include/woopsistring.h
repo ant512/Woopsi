@@ -140,30 +140,6 @@ namespace WoopsiUI {
 		 * @return The character at the specified index.
 		 */
 		virtual const u32 getCharAt(u32 index) const;
-
-		/**
-		 * Get a pointer to the UTF-8 token at the specified index.
-		 * @param string String containing the token.
-		 * @param index Index of the token.
-		 * @return Pointer to the UTF-8 token.
-		 */
-		char* getUTF8Token(const char* string, u32 index) const;
-		
-		/**
-		 * Get the number of chars read in the UTF-8 token and its codepoint.  In the case of
-		 * an invalid codepoint, the value returned will be 0.
-		 * @param string String to analyse.
-		 * @param numChars Pointer to a u8 that will hold the number of chars in the codepoint once
-		 * the method ends.
-		 * @return The codepoint.  Returns 0 if the codepoint is invalid.
-		 */
-		u32 getCodePoint(const char* string, u8* numChars) const;
-
-		/**
-		 * Return a pointer to the specified UTF-8 token.
-		 * @param index Index of the UTF-8 token to retrieve.
-		 */
-		virtual char* getToken(const u32 index) const;
 		
 		WoopsiString& operator=(const WoopsiString& string);
 		WoopsiString& operator=(const char* string);
@@ -222,6 +198,30 @@ namespace WoopsiUI {
 		 * @return Pointer to the char array.
 		 */
 		virtual inline const char* getCharArray() const { return _text; };
+
+		/**
+		 * Return a pointer to the specified UTF-8 token.
+		 * @param index Index of the UTF-8 token to retrieve.
+		 */
+		virtual char* getToken(const u32 index) const;
+
+		/**
+		 * Get a pointer to the UTF-8 token at the specified index.
+		 * @param string String containing the token.
+		 * @param index Index of the token.
+		 * @return Pointer to the UTF-8 token.
+		 */
+		char* getUTF8Token(const char* string, u32 index) const;
+
+		/**
+		 * Get the number of chars read in the UTF-8 token and its codepoint.  In the case of
+		 * an invalid codepoint, the value returned will be 0.
+		 * @param string String to analyse.
+		 * @param numChars Pointer to a u8 that will hold the number of chars in the codepoint once
+		 * the method ends.
+		 * @return The codepoint.  Returns 0 if the codepoint is invalid.
+		 */
+		u32 getCodePoint(const char* string, u8* numChars) const;
 
 	private:
 		friend class StringIterator;

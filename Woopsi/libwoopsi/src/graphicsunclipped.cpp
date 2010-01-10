@@ -1,5 +1,6 @@
 #include "graphicsunclipped.h"
 #include "woopsifuncs.h"
+#include "stringiterator.h"
 
 using namespace WoopsiUI;
 
@@ -148,17 +149,18 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const WoopsiStrin
 
 void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length) {
 
-	const char* currentChar = string.getToken(startIndex);
-	u8 charSize = 0;
+	// Draw the string char by char
+	StringIterator* iterator = string.newStringIterator();
+	iterator->moveTo(startIndex);
 
-	for (u32 i = 0; i < length; i++) {
-		x = font->drawChar(_bitmap, string.getCodePoint(currentChar, &charSize), x, y, 0, 0, _width - 1, _height - 1);
-
-		currentChar += charSize;
+	do {
+		x = font->drawChar(_bitmap, iterator->getCodePoint(NULL), x, y, 0, 0, _width - 1, _height - 1);
 
 		// Abort if x pos outside bitmap
-		if (x > _width - 1) return;
-	}
+		if (x > _width - 1) break;
+	} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+
+	delete iterator;
 }
 
 // Print a string in a specific colour

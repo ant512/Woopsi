@@ -12,12 +12,12 @@ StringIterator::StringIterator(const WoopsiString* string) {
 u8 StringIterator::getCurrentCharSize() {
 	u8 size = 0;
 	
-	if (_string->getLength()) {
-		return _string->getCodePoint(_currentChar, &size);
-	}
-	
-	// No string data
-	return 0;
+	// Return 0 if string has no data
+	if (_string->getLength() == 0) return 0;
+
+	// Return char size
+	_string->getCodePoint(_currentChar, &size);
+	return size;
 }
 
 void StringIterator::moveToFirst() {

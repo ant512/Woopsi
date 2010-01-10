@@ -76,6 +76,7 @@ void Calculator::doAdd() {
 	// Extract raw char data; this could be much more efficient
 	char string[_output->getText().getByteCount()];
 	_output->getText().copyToCharArray(string);
+	string[_output->getText().getByteCount()] = '\0';
 
 	if (_opCode == 0) {
 		_opCode = 1;
@@ -96,6 +97,7 @@ void Calculator::doSubtract() {
 	// Extract raw char data; this could be much more efficient
 	char string[_output->getText().getByteCount()];
 	_output->getText().copyToCharArray(string);
+	string[_output->getText().getByteCount()] = '\0';
 
 	if (_opCode == 0) {
 		_opCode = 2;
@@ -114,8 +116,9 @@ void Calculator::doSubtract() {
 void Calculator::doMultiply() {
 
 	// Extract raw char data; this could be much more efficient
-	char string[_output->getText().getByteCount()];
+	char string[_output->getText().getByteCount() + 1];
 	_output->getText().copyToCharArray(string);
+	string[_output->getText().getByteCount()] = '\0';
 
 	if (_opCode == 0) {
 		_opCode = 3;
@@ -136,6 +139,7 @@ void Calculator::doDivide() {
 	// Extract raw char data; this could be much more efficient
 	char string[_output->getText().getByteCount()];
 	_output->getText().copyToCharArray(string);
+	string[_output->getText().getByteCount()] = '\0';
 
 	if (_opCode == 0) {
 		_opCode = 4;
