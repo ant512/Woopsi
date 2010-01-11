@@ -85,11 +85,19 @@ void WoopsiString::setText(const u32 text) {
 	getCodePoint((char*)&text, &numBytes);
 
 	// Create a char array large enough to contain just the unicode character and the terminator
-	char newText[numBytes];
+	char* newText = new char[numBytes];
 
 	memcpy(newText, &text, numBytes);
 
-	setText(newText);
+	// Ensure we've got enough memory available
+	allocateMemory(numBytes, false);
+
+	// Copy/filter the valid UTF-8 tokens into _text and cache the length
+	u32 unicodeChars = 0;
+	_dataLength = filterString(_text, newText, numBytes, &unicodeChars);
+	_stringLength = unicodeChars;
+
+	delete[] newText;
 }
 
 void WoopsiString::append(const WoopsiString& text) {

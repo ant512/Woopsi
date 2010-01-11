@@ -198,7 +198,7 @@ void Text::wrap(u32 charIndex) {
 				breakPos = scanPos;
 
 				// Terminate?
-				if (_text[scanPos] == '\0') {
+				if (scanPos >= getByteCount()) {
 				    endReached = true;
                     break;
 				}
