@@ -173,14 +173,6 @@ namespace WoopsiUI {
 		virtual inline u32 getAllocatedSize() const { return _allocatedSize; };
 
 		/**
-		 * Get the unicode char at the specified index.
-		 * @param string String to retrieve the char from.
-		 * @param index The index of the character to retrieve.
-		 * @return The unicode char at the specified index.
-		 */
-		u32 getUnicodeCharAt(const char* string, u32 index) const;
-
-		/**
 		 * Copies the valid utf-8 tokens of the string src into string dest 
 		 * and returns the number of bytes in the filtered string.
 		 * @param dest Destination string.
@@ -189,9 +181,7 @@ namespace WoopsiUI {
 		 * of unicode characters in the filtered string.
 		 * @return The number of bytes in the filtered string.
 		 */
-		u32 filterString(char* dest, const char* src, u32* totalUnicodeChars) const;
-
-		const u32 calculateStringLength() const;
+		u32 filterString(char* dest, const char* src, u32 sourceBytes, u32* totalUnicodeChars) const;
 
 		/**
 		 * Returns a pointer to the raw char array data.
@@ -204,14 +194,6 @@ namespace WoopsiUI {
 		 * @param index Index of the UTF-8 token to retrieve.
 		 */
 		virtual char* getToken(const u32 index) const;
-
-		/**
-		 * Get a pointer to the UTF-8 token at the specified index.
-		 * @param string String containing the token.
-		 * @param index Index of the token.
-		 * @return Pointer to the UTF-8 token.
-		 */
-		char* getUTF8Token(const char* string, u32 index) const;
 
 		/**
 		 * Get the number of chars read in the UTF-8 token and its codepoint.  In the case of

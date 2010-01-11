@@ -55,17 +55,26 @@ StringIterator* WoopsiString::newStringIterator() const {
 }
 
 void WoopsiString::setText(const WoopsiString& text) {
-	setText(text.getCharArray());
+
+	// Ensure we've got enough memory available
+	allocateMemory(text.getLength(), false);
+
+	// Copy/filter the valid UTF-8 tokens into _text and cache the length
+	u32 unicodeChars = 0;
+	_dataLength = filterString(_text, text.getCharArray(), text.getLength(), &unicodeChars);
+	_stringLength = unicodeChars;
 }
 
 void WoopsiString::setText(const char* text) {
 
+	u32 length = strlen(text);
+
 	// Ensure we've got enough memory available
-	allocateMemory(strlen(text) + 1, false);
+	allocateMemory(length, false);
 
 	// Copy/filter the valid UTF-8 tokens into _text and cache the length
 	u32 unicodeChars = 0;
-	_dataLength = filterString(_text, text, &unicodeChars);
+	_dataLength = filterString(_text, text, length, &unicodeChars);
 	_stringLength = unicodeChars;
 }
 
@@ -76,12 +85,9 @@ void WoopsiString::setText(const u32 text) {
 	getCodePoint((char*)&text, &numBytes);
 
 	// Create a char array large enough to contain just the unicode character and the terminator
-	char newText[numBytes + 1];
+	char newText[numBytes];
 
 	memcpy(newText, &text, numBytes);
-	
-	// Append the terminator
-	newText[numBytes] = '\0';
 
 	setText(newText);
 }
@@ -95,11 +101,11 @@ void WoopsiString::append(const WoopsiString& text) {
 	}
 
 	// Ensure we've got enough memory available
-	allocateMemory(_dataLength + text.getByteCount() + 1, true);
+	allocateMemory(_dataLength + text.getByteCount(), true);
 
 	// Append/filter the valid utf-8 tokens to _text
 	u32 unicodeChars = 0;
-	_dataLength += filterString(_text + _dataLength, text.getCharArray(), &unicodeChars);
+	_dataLength += filterString(_text + _dataLength, text.getCharArray(), text.getLength(), &unicodeChars);
 	_stringLength += unicodeChars;
 }
 
@@ -111,10 +117,13 @@ char* WoopsiString::getToken(u32 index) const {
 	// Early exit if we want the entire string
 	if (index == 0) return _text;
 
+	// Early exit if the index is greater than the length of the string
+	if (index >= _stringLength) return NULL;
+
 	char token;
 	char* pos = _text;
 
-	while ((index > 0) && (*pos !='\0')) {
+	while (index > 0) {
 
 		pos++;
 		token = *pos;
@@ -125,28 +134,8 @@ char* WoopsiString::getToken(u32 index) const {
 		}
 	}
 
-	// No corresponding token found; just return the entire string
-	return _text;
-}
-
-const u32 WoopsiString::calculateStringLength() const {
-        
-	// Early exit if the string is empty
-	if (!hasData()) return 0;
-
-	char token;
-	char* pos = _text;
-	u32 numTokens = 0;
-
-	while (*pos !='\0') {
-		token = *pos;
-
-		if ((token < 0x80) || ((token > 0xC2) && (token < 0xFE))) numTokens++;
-
-		pos++;
-	}
-
-	return numTokens; 
+	// No corresponding token found
+	return NULL;
 }
 
 void WoopsiString::insert(const WoopsiString& text, u32 index) { 
@@ -157,11 +146,17 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 		return;
 	}
 
+	// Early exit if we're just appending
+	if (index >= _stringLength) {
+		append(text);
+		return;
+	}
+
 	// Locate the point at which we can cut the existing string 
 	u32 insertPoint = getToken(index) - _text;
 
 	// Get the total size of the string that we need
-	u32 newSize = _dataLength + text.getByteCount() + 1;
+	u32 newSize = _dataLength + text.getByteCount();
 
 	// Reallocate memory if the existing memory isn't large enough
 	if (_allocatedSize < newSize) {
@@ -174,11 +169,11 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 
 		// Insert the additional text into the new string
 		u32 unicodeChars = 0;
-		u32 size = filterString(newText + insertPoint, text.getCharArray(), &unicodeChars);
+		u32 size = filterString(newText + insertPoint, text.getCharArray(), text.getLength(), &unicodeChars);
 		_stringLength += unicodeChars;
 
 		// Copy the end of the existing text the the newly allocated string
-		if (_dataLength > insertPoint) strcpy(newText + insertPoint + size, _text + insertPoint);
+		if (_dataLength > insertPoint) memcpy(newText + insertPoint + size, _text + insertPoint, _dataLength - insertPoint);
 
 		_allocatedSize = newSize;
 
@@ -191,13 +186,13 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 	} else {
 
 		// Existing size large enough, so make space in string for insert
-		for (u32 i = 0; i < insertPoint; ++i) {
-			_text[newSize - i] = _text[_dataLength - i];
+		for (u32 i = 0; i < _dataLength - insertPoint; ++i) {
+			_text[newSize - i - 1] = _text[_dataLength - i - 1];
 		}
 
 		// Insert the additional text into the new string
 		u32 unicodeChars = 0;
-		_dataLength += filterString(_text + insertPoint, text.getCharArray(), &unicodeChars);
+		_dataLength += filterString(_text + insertPoint, text.getCharArray(), text.getLength(), &unicodeChars);
 		_stringLength += unicodeChars;
 	}
 }
@@ -206,25 +201,27 @@ void WoopsiString::remove(const u32 startIndex) {
 
 	// Reject if requested operation makes no sense
 	if (!hasData()) return;
-	if (startIndex > _dataLength) return;
+	if (startIndex >= _stringLength) return;
 	if (_dataLength == 0) return;
 
 	// Find the UTF-8 token corresponding to startIndex        
 	char* pos = getToken(startIndex);
+
+	// Abort if unable to find index
+	if (pos == NULL) return;
         
 	// Removing characters from the end of the string is trivial - simply
-	// move the terminator and decrease the length
-	*pos = '\0';
+	// decrease the length
 	_dataLength = pos - _text;
 
-	_stringLength = calculateStringLength();
+	_stringLength -= (_stringLength - startIndex);
 }
 
 void WoopsiString::remove(const u32 startIndex, const u32 count) {
 
 	// Reject if requested operation makes no sense
 	if (!hasData()) return;
-	if (startIndex > _dataLength) return;
+	if (startIndex >= _stringLength) return;
 	if (_dataLength == 0) return;
 
 	// Find the utf-8 token corresponding to startIndex
@@ -233,17 +230,18 @@ void WoopsiString::remove(const u32 startIndex, const u32 count) {
 	// Find the utf-8 token corresponding to startIndex + count
 	char* endPos = getToken(startIndex + count);
 
+	// Abort if unable to find start/end points
+	if (startPos == NULL) return;
+	if (endPos == NULL) return;
+
 	// Copy characters from a point after the area to be deleted into the space created
 	// by the deletion
 	if (startPos < endPos) memmove(startPos, endPos, _dataLength - u32(endPos - _text));
 	
 	// Decrease length
-	_dataLength -= endPos - startPos;
+	_dataLength -= (endPos - startPos);
 
-	// Append terminator to the string since we didn't copy it initially
-	_text[_dataLength] = '\0';
-
-	_stringLength = calculateStringLength();
+	_stringLength -= count;
 }
 
 const u32 WoopsiString::getCharAt(u32 index) const {
@@ -265,7 +263,7 @@ void WoopsiString::allocateMemory(u32 chars, bool preserve) {
 		if (_text != NULL) {
 
 			// Preserve existing data if required
-			if (preserve) strcpy(newText, _text);
+			if (preserve) memcpy(newText, _text, _dataLength);
 
 			delete[] _text;
 		}
@@ -279,39 +277,15 @@ void WoopsiString::allocateMemory(u32 chars, bool preserve) {
 }
 
 void WoopsiString::copyToCharArray(char* buffer) const {
-	strcpy(buffer, _text);
+	memcpy(buffer, _text, _dataLength);
+	buffer[_dataLength] = '\0';
 }
 
-char* WoopsiString::getUTF8Token(const char* string, u32 index) const {
-
-	char token;
-	char* pos = (char*)string;
-
-	while ((index > 0) && (*pos !='\0')) {
-		pos++;
-		token = *pos;
-
-		if ((token < 0x80) || ((token > 0xC2) && (token < 0xFE))) {
-			if (index <= 1) return pos;
-	
-			index--;
-		}
-	}
-	
-	// No corresponding token found; just return the entire string
-	return (char*)string;
-}
-
-u32 WoopsiString::getUnicodeCharAt(const char* string, u32 index) const {
-	char* pos = getUTF8Token(string, index);
-	return getCodePoint(pos, NULL);
-}
-
-u32 WoopsiString::filterString(char* dest, const char* src, u32* totalUnicodeChars) const {
+u32 WoopsiString::filterString(char* dest, const char* src, u32 sourceBytes, u32* totalUnicodeChars) const {
 	u8 bytes;
 	u32 totalBytes = 0;
 
-	while (*src != '\0') {
+	while (totalBytes < sourceBytes) {
 		getCodePoint(src, &bytes);
 
 		if (bytes == 0) {
@@ -328,9 +302,6 @@ u32 WoopsiString::filterString(char* dest, const char* src, u32* totalUnicodeCha
 			dest += bytes;
 		}
 	}
-
-	// Terminate the string
-	*dest =  '\0';
 
 	return totalBytes;
 }
