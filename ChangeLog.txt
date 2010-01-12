@@ -16,6 +16,9 @@ Change Log
       - Lucida10;
       - Roman 10;
       - Trebuchet8.
+    - FileRequester no longer has transparent regions.
+    - FileRequester sorts correctly.
+    - FileRequester does not attempt to draw when drawing is disabled.
     
   New Features:
     - Added FontBase::getCharHeight().

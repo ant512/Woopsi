@@ -4,18 +4,18 @@
 #include "filelistbox.h"
 #include "button.h"
 #include "filepath.h"
+#include "graphicsport.h"
 
 using namespace WoopsiUI;
 
-FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
+FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 
 	_flags.shiftClickChildren = false;
 
 	// Padding around the gadgets
 	u8 padding = 2;
 
-	// Create the path object
-	_path = new FilePath(path);
+	_path = NULL;
 
 	Rect rect;
 	getClientRect(rect);
@@ -34,16 +34,20 @@ FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, 
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setSortInsertedItems(true);
 	addGadget(_listbox);
-
-	setPath(path);
 }
 
 FileListBox::~FileListBox() {
-	delete _path;
+	if (_path) delete _path;
 }
 
 bool FileListBox::resize(u16 width, u16 height) {
 	return false;
+}
+
+void FileListBox::draw(Rect clipRect) {
+	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	delete port;
 }
 
 void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
@@ -79,6 +83,8 @@ void FileListBox::readDirectory() {
 	
 	// Add "Loading..." option to display whilst directory is enumerated
 	_listbox->addOption("Loading...", 0);
+
+	bool drawingEnabled = isDrawingEnabled();
 
 	// Disable drawing for speed
 	disableDrawing();
@@ -130,15 +136,22 @@ void FileListBox::readDirectory() {
 	}
 	
 	// Re-enable drawing now that the list is complete
-	enableDrawing();
-	redraw();
+	if (drawingEnabled) {
+		enableDrawing();
+		redraw();
+	}
 
 	// Close the directory
 	closedir(dir);
 }
 
 void FileListBox::setPath(const WoopsiString& path) {
-	_path->setPath(path);
+
+	if (_path == NULL) {
+		_path = new FilePath(path);
+	} else {
+		_path->setPath(path);
+	}
 
 	// Fetch new directory data
 	readDirectory();

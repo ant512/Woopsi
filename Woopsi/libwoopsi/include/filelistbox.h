@@ -44,10 +44,9 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the listbox.
 		 * @param width The width of the listbox.
 		 * @param height The height of the listbox.
-		 * @param path The initial path to display.
 		 * @param font Optional font to use for text output.
 		 */
-		FileListBox(s16 x, s16 y, u16 width, u16 height, const char* path, u32 flags, GadgetStyle* style = NULL);
+		FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
 	
 		/**
 		 * Handles events raised by its sub-gadgets.
@@ -162,6 +161,14 @@ namespace WoopsiUI {
 		 * inserts trailing slash.
 		 */
 		virtual void appendPath(const WoopsiString& path);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the draw() function to draw all visible regions.
+		 * @param clipRect The clipping region to draw.
+		 * @see draw()
+		 */
+		virtual void draw(Rect clipRect);
 
 	protected:
 		ScrollingListBox* _listbox;			/**< Pointer to the list box */

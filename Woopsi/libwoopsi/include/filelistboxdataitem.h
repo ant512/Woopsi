@@ -46,7 +46,7 @@ namespace WoopsiUI {
 		 * a value less than 0 if this item is less than the argument, and
 		 * a value greater than 0 if this item is greater than the argument.
 		 */
-		virtual s8 compareTo(const FileListBoxDataItem* item) const;
+		virtual s8 compareTo(const ListDataItem* item) const;
 
 	private:
 		bool _isDirectory;						/**< True if the option is a directory. */

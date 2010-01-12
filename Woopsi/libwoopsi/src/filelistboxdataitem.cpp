@@ -18,7 +18,7 @@ FileListBoxDataItem::FileListBoxDataItem(const char* text, const u32 value,
 	_isDirectory = isDirectory;
 }
 
-s8 FileListBoxDataItem::compareTo(const FileListBoxDataItem* item) const {
+s8 FileListBoxDataItem::compareTo(const ListDataItem* item) const {
 
 	// Cast to right type to get to extra fields
 	const FileListBoxDataItem* fileItem = (const FileListBoxDataItem*)item;

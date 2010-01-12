@@ -25,7 +25,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const char* ti
 	listboxRect.y = rect.y + padding;
 
 	// Create list box
-	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, path, 0, style);
+	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, 0, style);
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setPath(path);
