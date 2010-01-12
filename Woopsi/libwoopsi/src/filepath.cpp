@@ -34,6 +34,7 @@ void FilePath::appendPath(const WoopsiString& path) {
 
 				// Found a slash; remove everything after it
 				_path.remove(iterator->getIndex() + 1);
+				break;
 			}
 		} while (iterator->moveToPrevious());
 
