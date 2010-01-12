@@ -11,6 +11,11 @@ Change Log
     - Gadget::setRaisesEvents() alters the GadgetEventHandlerList object.
     - Removed the raisesEvents flag from the Gadget class.
     - Bmp2Font produces working Font classes.
+    - Deleted badly-converted fonts:
+      - Latha;
+      - Lucida10;
+      - Roman 10;
+      - Trebuchet8.
     
   New Features:
     - Added FontBase::getCharHeight().

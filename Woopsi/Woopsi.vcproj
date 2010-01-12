@@ -502,10 +502,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\fonts\latha.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\fonts\latha10.cpp"
 					>
 				</File>
@@ -1161,10 +1157,6 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\include\fonts\kartika9.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\fonts\latha.h"
 					>
 				</File>
 				<File
