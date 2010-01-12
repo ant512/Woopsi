@@ -158,7 +158,7 @@ namespace WoopsiUI {
 		/**
 		 * Overloaded assignment operator.  Copies the data from
 		 * the argument char to this string.
-		 * @param string The char to copy.
+		 * @param letter The char to copy.
 		 * @return This string.
 		 */
 		WoopsiString& operator=(u32 letter);
@@ -203,6 +203,7 @@ namespace WoopsiUI {
 		 * and returns the number of bytes in the filtered string.
 		 * @param dest Destination string.
 		 * @param src Source string.
+		 * @param sourceBytes Number of bytes in the source string.
 		 * @param totalUnicodeChars Output parameter populated with the total number
 		 * of unicode characters in the filtered string.
 		 * @return The number of bytes in the filtered string.
