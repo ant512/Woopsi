@@ -263,10 +263,12 @@ void Calendar::buildGUI() {
 
 	// Add arrows and month label
 	_leftArrow = new Button(rect.x, rect.y, columnWidths[0], columnHeights[0], GLYPH_ARROW_LEFT);
+	_leftArrow->setFont(_style->glyphFont);
 	_leftArrow->addGadgetEventHandler(this);
 	addGadget(_leftArrow);
 
 	_rightArrow = new Button((rect.width - columnWidths[CALENDAR_COLS - 1]) + 1, rect.y, columnWidths[CALENDAR_COLS - 1], columnHeights[0], GLYPH_ARROW_RIGHT);
+	_rightArrow->setFont(_style->glyphFont);
 	_rightArrow->addGadgetEventHandler(this);
 	addGadget(_rightArrow);
 
