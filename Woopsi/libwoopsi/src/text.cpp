@@ -1,11 +1,13 @@
 #include "text.h"
+#include "stringiterator.h"
 
 using namespace WoopsiUI;
 
-Text::Text(FontBase* font, const WoopsiString& text, u16 width) : WoopsiString() {
+Text::Text(FontBase* font, const WoopsiString& text, u16 width) : WoopsiString(text) {
 	_font = font;
 	_width = width;
 	_lineSpacing = 1;
+	wrap();
 }
 
 FontBase* Text::getFont() const {
@@ -22,7 +24,7 @@ const u8 Text::getLineLength(const s32 lineNumber) const {
 }
 
 // Calculate the length of an individual line sans right-hand spaces
-const u8 Text::getLineTrimmedLength(const s32 lineNumber) const {
+const s16 Text::getLineTrimmedLength(const s32 lineNumber) const {
 	s16 length = getLineLength(lineNumber);
 
 	// Get char at the end of the line
@@ -47,11 +49,11 @@ const u8 Text::getLineTrimmedLength(const s32 lineNumber) const {
 	return length;
 }
 
-const u8 Text::getLinePixelLength(const s32 lineNumber) const {
+const s16 Text::getLinePixelLength(const s32 lineNumber) const {
 	return _font->getStringWidth(*this, getLineStartIndex(lineNumber), getLineLength(lineNumber));
 }
 
-const u8 Text::getLineTrimmedPixelLength(const s32 lineNumber) const {
+const s16 Text::getLineTrimmedPixelLength(const s32 lineNumber) const {
 	return _font->getStringWidth(*this, getLineStartIndex(lineNumber), getLineTrimmedLength(lineNumber));
 }
 
@@ -108,9 +110,8 @@ void Text::wrap(u32 charIndex) {
 
 	// Declare vars in advance of loop
 	u32 pos = 0;
-	u32 scanPos;
 	u32 lineWidth;
-	u32 breakPos;
+	u32 breakIndex;
 	bool endReached = false;
 	
 	if (_linePositions.size() == 0) charIndex = 0;
@@ -164,63 +165,77 @@ void Text::wrap(u32 charIndex) {
 		_linePositions.push_back(0);
 	}
 
-	// Keep looping through text until we hit the terminator
+	// Loop through string until the end
+	StringIterator* iterator = newStringIterator();
+
 	while (!endReached) {
-		scanPos = pos;
-		breakPos = 0;
+		breakIndex = 0;
 		lineWidth = 0;
 
-		// Search for line breaks and valid breakpoints until we exceed the width of the
-		// text field or we run out of string to process
-		while (lineWidth + _font->getCharWidth(_text[scanPos]) < _width) {
-			lineWidth += _font->getCharWidth(_text[scanPos]);
+		if (iterator->moveTo(pos)) {
 
-			// Check for line return
-			if (_text[scanPos] == '\n') {
+			// Search for line breaks and valid breakpoints until we exceed the width of the
+			// text field or we run out of string to process
+			while (lineWidth + _font->getCharWidth(iterator->getCodePoint()) <= _width) {
+				lineWidth += _font->getCharWidth(iterator->getCodePoint());
 
-				// Remember this breakpoint
-				breakPos = scanPos;
-				break;
-			} else if ((_text[scanPos] == ' ') ||
-					   (_text[scanPos] == ',') ||
-					   (_text[scanPos] == '.') ||
-					   (_text[scanPos] == '-') ||
-					   (_text[scanPos] == ':') ||
-					   (_text[scanPos] == ';') ||
-					   (_text[scanPos] == '?') ||
-					   (_text[scanPos] == '!') ||
-					   (_text[scanPos] == '+') ||
-					   (_text[scanPos] == '=') ||
-					   (_text[scanPos] == '/') ||
-					   (_text[scanPos] == '\0')) {
+				// Check for line return
+				if (iterator->getCodePoint() == '\n') {
 
-				// Remember the most recent breakpoint
-				breakPos = scanPos;
+					// Remember this breakpoint
+					breakIndex = iterator->getIndex();
+					break;
+				} else if ((iterator->getCodePoint() == ' ') ||
+						   (iterator->getCodePoint() == ',') ||
+						   (iterator->getCodePoint() == '.') ||
+						   (iterator->getCodePoint() == '-') ||
+						   (iterator->getCodePoint() == ':') ||
+						   (iterator->getCodePoint() == ';') ||
+						   (iterator->getCodePoint() == '?') ||
+						   (iterator->getCodePoint() == '!') ||
+						   (iterator->getCodePoint() == '+') ||
+						   (iterator->getCodePoint() == '=') ||
+						   (iterator->getCodePoint() == '/') ||
+						   (iterator->getCodePoint() == '\0')) {
 
-				// Terminate?
-				if (scanPos >= getByteCount()) {
-				    endReached = true;
-                    break;
+					// Remember the most recent breakpoint
+					breakIndex = iterator->getIndex();
+				}
+
+				// Move to the next character
+				if (!iterator->moveToNext()) {
+
+					// No more text; abort loop
+					endReached = true;
+					break;
 				}
 			}
-
-			// Move to the next character
-			scanPos++;
+		} else {
+			endReached = true;
 		}
 
 		// Process any found data
-		if (scanPos > pos) {
+		if (iterator->getIndex() > pos) {
 
 			// If we didn't find a breakpoint split at the current position
-			if (breakPos == 0) breakPos = scanPos - 1;
+			if (breakIndex == 0) breakIndex = iterator->getIndex();
 
-			// Trim preceeding spaces from the start of the next line
-			while (_text[breakPos + 1] == ' ') {
-				breakPos++;
+			// Trim blank space from the start of the next line
+			StringIterator* breakIterator = newStringIterator();
+			breakIterator->moveTo(breakIndex);
+
+			while (_font->isCharBlank(breakIterator->getCodePoint())) {
+				if (breakIterator->moveToNext()) {
+					breakIndex++;
+				} else {
+					break;
+				}
 			}
 
+			delete breakIterator;
+
 			// Add the start of the next line to the vector
-			pos = breakPos + 1;
+			pos = breakIndex;
 			_linePositions.push_back(pos);
 
 			// Is this the longest line observed so far?
@@ -238,11 +253,15 @@ void Text::wrap(u32 charIndex) {
 			}
 		} else {
 
-			// Add a blank row
-			pos++;
-			_linePositions.push_back(pos);
+			// Add a blank row if we're not at the end of the string
+			if (iterator->getIndex() < getLength()) {
+				pos++;
+				_linePositions.push_back(pos);
+			}
 		}
 	}
+
+	delete iterator;
 
 	// Calculate the total height of the text
 	_textPixelHeight = getLineCount() * (_font->getHeight() + _lineSpacing);
@@ -297,7 +316,6 @@ const u32 Text::getLineContainingCharIndex(const u32 index) const {
 			// Located the index
 			return mid;
 		}
-
 
 		// Check to see if we've moved past the line that contains the index
 		// We have to do this because the index we're looking for can be within

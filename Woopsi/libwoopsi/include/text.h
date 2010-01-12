@@ -101,14 +101,14 @@ namespace WoopsiUI {
 		 * @param lineNumber The line number to check.
 		 * @return The number of characters in the line.
 		 */
-		const u8 getLineTrimmedLength(const s32 lineNumber) const;
+		const s16 getLineTrimmedLength(const s32 lineNumber) const;
 
 		/**
 		 * Get the width in pixels of the specified line number.
 		 * @param lineNumber The line number to check.
 		 * @return The pixel width of the line.
 		 */
-		const u8 getLinePixelLength(const s32 lineNumber) const;
+		const s16 getLinePixelLength(const s32 lineNumber) const;
 
 		/**
 		 * Get the width in pixels of the specified line number,
@@ -116,7 +116,7 @@ namespace WoopsiUI {
 		 * @param lineNumber The line number to check.
 		 * @return The pixel width of the line.
 		 */
-		const u8 getLineTrimmedPixelLength(const s32 lineNumber) const;
+		const s16 getLineTrimmedPixelLength(const s32 lineNumber) const;
 
 		/**
 		 * Get a pointer to the specified line.

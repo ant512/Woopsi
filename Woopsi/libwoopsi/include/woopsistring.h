@@ -40,6 +40,20 @@ namespace WoopsiUI {
 		 * @param letter Single character to use as the basis of the string.
 		 */
 		WoopsiString(const u32 letter);
+
+		/**
+		 * Copy constructor.
+		 * @param string WoopsiString object to create a copy of.
+		 */
+		WoopsiString(const WoopsiString& string);
+
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~WoopsiString() {
+			delete[] _text;
+			_text = NULL;
+		};
 		
 		/**
 		 * Creates and returns a new StringIterator object that will iterate
@@ -115,22 +129,6 @@ namespace WoopsiUI {
 		 */
 		virtual const u32 getByteCount() const { return _dataLength; };
 
-		/**
-		 * Copy constructor.
-		 * @param string WoopsiString object to create a copy of.
-		 */
-		inline WoopsiString(const WoopsiString& string) {
-			setText(string.getCharArray());
-		};
-
-		/**
-		 * Destructor.
-		 */
-		virtual inline ~WoopsiString() {
-			delete[] _text;
-			_text = NULL;
-		};
-		
 		/**
 		 * Get the character at the specified index.  This function is useful for
 		 * finding the occasional character at an index, but for iterating over strings

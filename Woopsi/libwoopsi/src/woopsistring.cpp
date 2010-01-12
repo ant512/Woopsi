@@ -32,6 +32,16 @@ WoopsiString::WoopsiString(const u32 text) {
 	setText(text);
 }
 
+WoopsiString::WoopsiString(const WoopsiString& string) {
+	_text = NULL;
+	_dataLength = 0;
+	_stringLength = 0;
+	_allocatedSize = 0;
+	_growAmount = 32;
+
+	setText(string);
+};
+
 WoopsiString& WoopsiString::operator=(const WoopsiString& string) {
 	if (&string != this) {
 		setText(string);
