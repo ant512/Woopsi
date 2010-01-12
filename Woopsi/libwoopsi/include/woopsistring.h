@@ -139,10 +139,38 @@ namespace WoopsiUI {
 		 */
 		virtual const u32 getCharAt(u32 index) const;
 		
+		/**
+		 * Overloaded assignment operator.  Copies the data within
+		 * the argument string to this string.
+		 * @param string The string to copy.
+		 * @return This string.
+		 */
 		WoopsiString& operator=(const WoopsiString& string);
+
+		/**
+		 * Overloaded assignment operator.  Copies the data within
+		 * the argument char array to this string.
+		 * @param string The string to copy.
+		 * @return This string.
+		 */
 		WoopsiString& operator=(const char* string);
+
+		/**
+		 * Overloaded assignment operator.  Copies the data from
+		 * the argument char to this string.
+		 * @param string The char to copy.
+		 * @return This string.
+		 */
 		WoopsiString& operator=(u32 letter);
 
+		/**
+		 * Compares this string to the argument.
+		 * @param string String to compare to.
+		 * @return Zero if both strings are equal.  A value greater than zero indicates
+		 * that this string is greater than the argument string.  A value less than zero
+		 * indicates the opposite.  Note that the return value indicates the *byte* that
+		 * does not match, not the *character*.
+		 */
 		virtual inline u32 compareTo(const WoopsiString& string) const {
 			return strcmp(_text, string.getCharArray());
 		}
@@ -174,7 +202,7 @@ namespace WoopsiUI {
 		 * Copies the valid utf-8 tokens of the string src into string dest 
 		 * and returns the number of bytes in the filtered string.
 		 * @param dest Destination string.
-		 * @param stc Source string.
+		 * @param src Source string.
 		 * @param totalUnicodeChars Output parameter populated with the total number
 		 * of unicode characters in the filtered string.
 		 * @return The number of bytes in the filtered string.

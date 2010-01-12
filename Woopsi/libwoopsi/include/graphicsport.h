@@ -194,8 +194,9 @@ namespace WoopsiUI {
 		 * @param x The x co-ordinate of the string.
 		 * @param y The y co-ordinate of the string.
 		 * @param font The font to draw with.
-		 * @param length The number of characters to output.
 		 * @param string The string to output.
+		 * @param startIndex The start index within the string from which drawing will commence.
+		 * @param length The number of characters to draw.
 		 * @param colour The colour of the string.
 		 */
 		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour);
@@ -206,7 +207,8 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the string.
 		 * @param font The font to draw with.
 		 * @param string The string to output.
-		 * @param colour The colour of the string.
+		 * @param startIndex The start index within the string from which drawing will commence.
+		 * @param length The number of characters to draw.
 		 */
 		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length);
 		

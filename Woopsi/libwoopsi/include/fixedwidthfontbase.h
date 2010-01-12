@@ -64,12 +64,13 @@ namespace WoopsiUI {
 		u16 getStringWidth(const WoopsiString& text) const;
 
 		/**
-		 * Get the width of a string with a specified length in pixels when drawn with this font.
+		 * Get the width of a portion of a string in pixels when drawn with this font.
 		 * Useful if you want to determine the length of a string without a terminator, or
 		 * the length of a section of a string.
 		 * @param text The string to check.
-		 * @param length The length of the string in chars.
-		 * @return The width of the string in pixels.
+		 * @param startIndex The start point of the substring within the string.
+		 * @param length The length of the substring in chars.
+		 * @return The width of the substring in pixels.
 		 */
 		inline u16 getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const { return length * getWidth(); };
 
