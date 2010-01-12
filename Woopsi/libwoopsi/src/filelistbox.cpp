@@ -93,7 +93,7 @@ void FileListBox::readDirectory() {
 
 	DIR* dir = opendir(path);
 
-	delete path;
+	delete[] path;
 
 	// Did we get the dir successfully?
 	if (dir == NULL) return;
