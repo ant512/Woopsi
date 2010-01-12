@@ -44,12 +44,12 @@
 /**
  * Woopsi version number.
  */
-#define WOOPSI_VERSION "0.43 Alpha"
+#define WOOPSI_VERSION "0.44 Alpha"
 
 /**
  * Copyright notice.
  */
-#define WOOPSI_COPYRIGHT "Copyright 2007-2009 Antony Dzeryn"
+#define WOOPSI_COPYRIGHT "Copyright 2007-2010 Antony Dzeryn"
 
 /**
  * Ensure NULL is defined.
