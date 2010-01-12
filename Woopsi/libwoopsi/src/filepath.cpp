@@ -37,6 +37,8 @@ void FilePath::appendPath(const WoopsiString& path) {
 			}
 		} while (iterator->moveToPrevious());
 
+		delete iterator;
+
 		return;
 	}
 
