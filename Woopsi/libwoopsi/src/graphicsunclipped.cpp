@@ -154,7 +154,7 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const WoopsiStrin
 	iterator->moveTo(startIndex);
 
 	do {
-		x = font->drawChar(_bitmap, iterator->getCodePoint(NULL), x, y, 0, 0, _width - 1, _height - 1);
+		x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, 0, 0, _width - 1, _height - 1);
 
 		// Abort if x pos outside bitmap
 		if (x > _width - 1) break;

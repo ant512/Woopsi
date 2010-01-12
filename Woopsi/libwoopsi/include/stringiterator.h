@@ -19,10 +19,13 @@ namespace WoopsiUI {
 		bool moveTo(u32 index);
 		
 		inline u32 getIndex() const { return _currentIndex; };
-		u32 getCodePoint(u8* numBytes) const;
+		u32 getCodePoint() const;
 		
 	protected:
-		u8 getCurrentCharSize();
+		u8 getCodePointSize();
+
+		void iterateForwardsTo(u32 index);
+		void iterateBackwardsTo(u32 index);
 		
 	private:
 		const WoopsiString* _string;

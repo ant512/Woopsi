@@ -120,7 +120,7 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 		iterator->moveTo(startIndex);
 
 		do {
-			x = font->drawChar(_bitmap, iterator->getCodePoint(NULL), x, y, clipX1, clipY1, clipX2, clipY2);
+			x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, clipX1, clipY1, clipX2, clipY2);
 
 			// Abort if x pos outside clipping region
 			if (x > clipX2) break;
