@@ -94,7 +94,7 @@ void FileListBox::readDirectory() {
 	
 	struct stat st;
 
-	char* path = new char[_path->getPath().getLength()];
+	char* path = new char[_path->getPath().getLength() + 1];
 	_path->getPath().copyToCharArray(path);
 
 	DIR* dir = opendir(path);
