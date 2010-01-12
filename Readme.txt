@@ -136,7 +136,7 @@ Requirements
    
   Woopsi was developed using:
   
-  - devkitPro
+  - devkitARM
   - VC++ 2005 Express
   - VC++ 2008 Express
   - PALib
