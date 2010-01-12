@@ -29,6 +29,7 @@ Change Log
     - Added StringIterator class, for efficient iteration over a UTF-8 string.
     - Removed dependence on WoopsiString::getCharArray().
     - Promoted FileRequester gadget from bonus folder to main library.
+    - libfat enabled by default in test projects and template.
 	
   V0.43 (20091223)
   
