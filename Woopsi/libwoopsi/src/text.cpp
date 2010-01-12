@@ -218,13 +218,13 @@ void Text::wrap(u32 charIndex) {
 		if (iterator->getIndex() > pos) {
 
 			// If we didn't find a breakpoint split at the current position
-			if (breakIndex == 0) breakIndex = iterator->getIndex();
+			if (breakIndex == 0) breakIndex = iterator->getIndex() - 1;
 
 			// Trim blank space from the start of the next line
 			StringIterator* breakIterator = newStringIterator();
-			breakIterator->moveTo(breakIndex);
+			breakIterator->moveTo(breakIndex + 1);
 
-			while (_font->isCharBlank(breakIterator->getCodePoint())) {
+			while (breakIterator->getCodePoint() == ' ') {
 				if (breakIterator->moveToNext()) {
 					breakIndex++;
 				} else {
@@ -235,7 +235,7 @@ void Text::wrap(u32 charIndex) {
 			delete breakIterator;
 
 			// Add the start of the next line to the vector
-			pos = breakIndex;
+			pos = breakIndex + 1;
 			_linePositions.push_back(pos);
 
 			// Is this the longest line observed so far?

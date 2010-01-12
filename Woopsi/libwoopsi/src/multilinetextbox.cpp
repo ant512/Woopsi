@@ -67,12 +67,6 @@ void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 
 		textX = getRowX(currentRow) + _canvasX;
 		textY = getRowY(currentRow) + _canvasY;
-
-		//if (isEnabled()) {
-		//	port->drawText(textX, textY, _text->getFont(), _text->getLinePointer(currentRow), 0, rowLength);
-		//} else {
-		//	port->drawText(textX, textY, _text->getFont(), _text->getLinePointer(currentRow), 0, rowLength, getDarkColour());
-		//}
 		
 		if (isEnabled()) {
 			port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(currentRow), rowLength);
