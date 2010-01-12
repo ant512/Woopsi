@@ -8,7 +8,7 @@ TEXT2 		:= using Woopsi
 TEXT3 		:= woopsi.sourceforge.net
 
 # 4-bit-deep bitmap file to use as icon in loader menus
-ICON 		:= $(CURDIR)/../../../libwoopsi/icon/logo.bmp
+ICON 		:= $(DEVKITPRO)/libwoopsi/icon/logo.bmp
 
 #-------------------------------------------------------------------------------
 # TARGET is the name of the output file
@@ -22,16 +22,16 @@ ICON 		:= $(CURDIR)/../../../libwoopsi/icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source ../../libwoopsi/src ../../libwoopsi/src/fonts data ../../bonus/gadgets/filerequester
-INCLUDES	:=	include ../../libwoopsi/include ../../libwoopsi/include/fonts
+SOURCES		:=	source data gfx
+INCLUDES	:=	include
 DEFINES		:=
 
 #-------------------------------------------------------------------------------
 # If USE_WOOPSI is defined, compile/link against Woopsi
 # If USE_FAT is defined, compile/link against libfat
 #-------------------------------------------------------------------------------
-#USE_WOOPSI	= 1
-USE_FAT		= 1
+USE_WOOPSI		= 1
+USE_FAT			= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our
 # resultant .nds from working on some loaders.  By default, ndstool puts boot
@@ -154,6 +154,10 @@ $(OUTPUT).nds		: 	$(OFILES)
 #-------------------------------------------------------------------------------
 LIBDIRS		+= $(DEVKITPRO)/libnds
 
+ifneq ($(USE_WOOPSI),)
+LIBDIRS		+= $(DEVKITPRO)/libwoopsi
+endif
+
 # add all directories specified in INCLUDES and SOURCES
 _INCS		+= $(foreach dir,$(INCLUDES),-I$(CURDIR)/../$(dir))
 _INCS		+= $(foreach dir,$(SOURCES),-I$(CURDIR)/../$(dir))
@@ -183,7 +187,7 @@ _DEFS		= $(DEFINES)
 
 # use Woopsi
 ifneq ($(USE_WOOPSI),)
-_INCS		+= -I$(DEVKITPRO)/libwoopsi/include
+_INCS		+= -I$(DEVKITPRO)/libwoopsi/include -I$(DEVKITPRO)/libwoopsi/include/fonts
 _LIBS		+= -L$(DEVKITPRO)/libwoopsi/lib -lwoopsi
 endif
 

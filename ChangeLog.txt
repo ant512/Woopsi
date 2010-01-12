@@ -28,6 +28,7 @@ Change Log
     - Changed parameters to GraphicsUnclipped::drawText() (and subclasses).
     - Added StringIterator class, for efficient iteration over a UTF-8 string.
     - Removed dependence on WoopsiString::getCharArray().
+    - Promoted FileRequester gadget from bonus folder to main library.
 	
   V0.43 (20091223)
   

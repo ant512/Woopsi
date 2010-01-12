@@ -389,6 +389,26 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="FileRequester"
+					>
+					<File
+						RelativePath=".\libwoopsi\src\filelistbox.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\filelistboxdataitem.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\filepath.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\filerequester.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Fonts"
@@ -1044,6 +1064,26 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\scrollinglistbox.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="FileRequester"
+					>
+					<File
+						RelativePath=".\libwoopsi\include\filelistbox.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\filelistboxdataitem.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\filepath.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\filerequester.h"
 						>
 					</File>
 				</Filter>
