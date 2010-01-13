@@ -20,6 +20,10 @@ namespace WoopsiUI {
 	 *
 	 * Additionally, the string increases its array size by _growAmount every time it
 	 * needs to allocate extra memory, potentially reducing the number of reallocs needed.
+	 *
+	 * The string is not null-terminated.  Instead, it uses a _stringLength member that
+	 * stores the number of characters in the string.  This saves a byte and makes calls
+	 * to getLength() run in O(1) time instead of O(n).
 	 */
 	class WoopsiString {
 	public:
@@ -67,7 +71,9 @@ namespace WoopsiUI {
 		 * Copy the internal array to the supplied buffer.  The buffer must be
 		 * large enough to contain the full text in the string.  The
 		 * getByteCount() method can be used to obtain the length of the string.
-		 * The buffer will be (getByteCount() + 1), to accommodate the terminator.
+		 * Unlike the WoopsiString class, the char array is null-terminated.
+		 * The buffer must be (getByteCount() + 1) bytes long, in order to
+		 * accommodate the terminator.
 		 * @param buffer Buffer to copy the internal char array to.
 		 */
 		virtual void copyToCharArray(char* buffer) const;
