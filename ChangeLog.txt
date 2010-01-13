@@ -44,6 +44,8 @@ Change Log
     - Added WoopsiString::lastIndexOf().
     - Added WoopsiString::subString().
     - Added WoopsiString::indexOf().
+    - TextBox implements key repeats when left or right d-pad is held down;
+      cursor moves repeatedly until end of string reached or d-pad released.
 	
   V0.43 (20091223)
   

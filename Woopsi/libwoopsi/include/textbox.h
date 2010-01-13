@@ -5,14 +5,18 @@
 #include "label.h"
 #include "woopsistring.h"
 #include "gadgetstyle.h"
+#include "gadgeteventhandler.h"
+#include "gadgeteventargs.h"
 
 namespace WoopsiUI {
+
+	class WoopsiTimer;
 
 	/**
 	 * Single-line textbox gadget.  Can align text both vertically and horizontally in
 	 * different ways.
 	 */
-	class TextBox : public Label {
+	class TextBox : public Label, public GadgetEventHandler {
 	public:
 
 		/**
@@ -109,9 +113,26 @@ namespace WoopsiUI {
 		 */
 		virtual bool keyPress(KeyCode keyCode);
 
+		/**
+		 * Send a key release to the gadget.
+		 * @param keyCode The keycode to send to the gadget.
+		 * @return True if the key release was processed.
+		 */
+		virtual bool keyRelease(KeyCode keyCode);
+
+		/**
+		 * Handle a gadget action event.
+		 * @param e The event data.
+		 */
+		virtual void handleActionEvent(const GadgetEventArgs& e);
+
 	protected:
-		u32 _cursorPos;							/**< Position of the cursor within the string */
-		bool _showCursor;						/**< Set to true to make cursor visible */
+		u32 _cursorPos;							/**< Position of the cursor within the string. */
+		bool _showCursor;						/**< Set to true to make cursor visible. */
+		WoopsiTimer* _timer;					/**< Timer for handling dpad repeats. */
+		u32 _initialRepeatTime;					/**< Time until held dpad starts to repeat. */
+		u32 _secondaryRepeatTime;				/**< Time until dpad already repeating repeats again. */
+		KeyCode _heldDirection;					/**< Currently held dpad direction. */
 
 		/**
 		 * Get the x co-ordinate of the cursor in pixels.
