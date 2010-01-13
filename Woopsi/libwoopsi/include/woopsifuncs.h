@@ -14,6 +14,7 @@
 #include "gadgetstyle.h"
 #include "newtopaz.h"
 #include "glyphfont.h"
+#include "defines.h"
 
 /**
  * Converts separate RGB component values into a single 16-bit value for use
