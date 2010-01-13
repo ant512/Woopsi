@@ -172,7 +172,7 @@ namespace WoopsiUI {
 		void drawXORRect(s16 x, s16 y, u16 width, u16 height);
 		
 		/**
-		 * Invert the colour of an filled rectangle of pixels.
+		 * Invert the colour of a filled rectangle of pixels.
 		 * @param x The x co-ordinate of the rectangle.
 		 * @param y The y co-ordinate of the rectangle.
 		 * @param width The width of the rectangle.
