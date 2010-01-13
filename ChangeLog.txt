@@ -25,6 +25,8 @@ Change Log
     - Removed glyphs from NewTopaz and Topaz fonts.
     - Changed NewTopaz font to PackedFont1 from PackedFont16.
     - Changed Topaz font to MonoFont from Font.
+    - Fixed memory leak when enumerating directories in FileListBox.
+    - FileListBox shows dummy file list when in SDL mode.
     
   New Features:
     - Added FontBase::getCharHeight().
