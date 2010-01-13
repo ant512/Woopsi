@@ -17,9 +17,6 @@ FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetS
 
 	_flags.shiftClickChildren = false;
 
-	// Padding around the gadgets
-	u8 padding = 2;
-
 	_path = NULL;
 
 	Rect rect;
@@ -27,10 +24,10 @@ FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetS
 
 	// Calculate list box
 	Rect listboxRect;
-	listboxRect.width = rect.width - (padding << 1);
-	listboxRect.height = rect.height - (padding * 5) - getFont()->getHeight();
-	listboxRect.x = rect.x + padding;
-	listboxRect.y = rect.y + padding;
+	listboxRect.width = rect.width;
+	listboxRect.height = rect.height;
+	listboxRect.x = rect.x;
+	listboxRect.y = rect.y;
 
 	// Create list box
 	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, _style);

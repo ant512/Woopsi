@@ -28,6 +28,8 @@ Change Log
     - Fixed memory leak when enumerating directories in FileListBox.
     - FileListBox shows dummy file list when in SDL mode.
     - Graphical corruption in GraphicsPort::clipScroll() fixed.
+    - Fixed FileRequester layout.
+    - Replaced magic number double click time with define in woopsifuncs.cpp.
     
   New Features:
     - Added FontBase::getCharHeight().

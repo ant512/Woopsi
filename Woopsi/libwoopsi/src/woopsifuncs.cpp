@@ -266,7 +266,7 @@ void woopsiVblFunc() {
 
 	if (Stylus.Held) {
 
-		Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime + Stylus.Uptime < 45);
+		Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime + Stylus.Uptime < DOUBLE_CLICK_TIME);
 
 		if (Stylus.Newpress) {
 			Stylus.Vx = Stylus.oldVx = 0;
@@ -392,7 +392,7 @@ void woopsiUpdateInput() {
 	Stylus.Held     = Pad.Held.Touch;
 	Stylus.Released = Pad.Released.Touch;
 
-	Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime + Stylus.Uptime < 45);
+	Stylus.DblClick = Stylus.Newpress && (Stylus.Downtime + Stylus.Uptime < DOUBLE_CLICK_TIME);
 	Stylus.Downtime *= !Stylus.Newpress; // = 0 if newpress
 	Stylus.Downtime += Stylus.Held;
 
