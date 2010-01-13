@@ -1156,7 +1156,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 					} else if (sourceY1 > destY1) {
 						
 						// Revealed area below the destination
-						rect.y = (destY1 + height) - 1;
+						rect.y = (destY1 + minHeight) - 1;
 						rect.height = (sourceY1 - destY1) + 1;
 					}
 

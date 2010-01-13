@@ -24,7 +24,7 @@ void TestPanel::draw(Rect clipRect) {
 
 	// Draw contents.  Note that all co-ordinates are offset by the canvas
 	// x and y co-ordinates
-	port->drawText(30 + getCanvasX(), 60 + getCanvasY(), getFont(), "Scrolling Panel Test", woopsiRGB(0, 0, 15));
+	//port->drawText(30 + getCanvasX(), 60 + getCanvasY(), getFont(), "Scrolling Panel Test", 0, 20, woopsiRGB(0, 0, 15));
 	port->drawFilledRect(70 + getCanvasX(), 90 + getCanvasY(), 100, 100, woopsiRGB(15, 0, 0));
 
 	// Clean up
