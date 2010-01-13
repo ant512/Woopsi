@@ -1,12 +1,12 @@
 #ifndef _TOPAZ_H_
 #define _TOPAZ_H_
 
-#include "font.h"
+#include "monofont.h"
 
 namespace WoopsiUI {
-	class Topaz : public Font {
+	class Topaz : public MonoFont {
 	public:
-		Topaz();
+		Topaz(u16 drawColour = 32768);
 	};
 }
 

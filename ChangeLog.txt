@@ -22,6 +22,9 @@ Change Log
     - FilePath uses WoopsiString::lastIndexOf() to change to parse path string.
     - Dragging a screen that isn't the top screen so that it is not visible no
       longer causes a crash.
+    - Removed glyphs from NewTopaz and Topaz fonts.
+    - Changed NewTopaz font to PackedFont1 from PackedFont16.
+    - Changed Topaz font to MonoFont from Font.
     
   New Features:
     - Added FontBase::getCharHeight().
