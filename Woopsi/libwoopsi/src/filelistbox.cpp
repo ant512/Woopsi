@@ -186,6 +186,9 @@ void FileListBox::readDirectory() {
 		delete storedFilename;
 	}
 
+	// Close the directory
+	closedir(dir);
+
 #endif
 	
 	// Re-enable drawing now that the list is complete
@@ -193,9 +196,6 @@ void FileListBox::readDirectory() {
 		enableDrawing();
 		redraw();
 	}
-
-	// Close the directory
-	closedir(dir);
 }
 
 void FileListBox::setPath(const WoopsiString& path) {

@@ -256,7 +256,7 @@ namespace WoopsiUI {
 		 * does not match, not the *character*.
 		 */
 		virtual inline s32 compareTo(const WoopsiString& string) const {
-			return strcmp(_text, string.getCharArray());
+			return strncmp(_text, string.getCharArray(), getLength());
 		}
 
 	protected:

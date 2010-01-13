@@ -34,7 +34,15 @@ void TextBox::draw(Rect clipRect) {
 
 	// Draw cursor
 	if (_showCursor) {
-		port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(_text.getCharAt(_cursorPos)), getFont()->getHeight());
+		if (_cursorPos < _text.getLength()) {
+
+			// Cursor within the string - draw over the character
+			port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(_text.getCharAt(_cursorPos)), getFont()->getHeight());
+		} else {
+
+			// Cursor past end of string - draw a space
+			port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(' '), getFont()->getHeight());
+		}
 	}
 
 	// Draw outline
