@@ -305,7 +305,7 @@ const s32 WoopsiString::lastIndexOf(u32 letter) const {
 }
 
 const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex) const {
-	return lastIndexOf(letter, startIndex, getLength() - 1 - (getLength() - startIndex));
+	return lastIndexOf(letter, startIndex, getLength() - (getLength() - startIndex));
 }
 
 const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex, u32 count) const {
@@ -326,7 +326,7 @@ const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex, u32 count) const
 		}
 
 		charsExamined++;
-	} while (iterator->moveToPrevious() && (charsExamined < count));
+	} while (iterator->moveToPrevious() && (charsExamined <= count));
 
 	delete iterator;
 

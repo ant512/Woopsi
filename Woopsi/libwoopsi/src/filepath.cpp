@@ -26,10 +26,10 @@ void FilePath::appendPath(const WoopsiString& path) {
 
 		// Locate start of the previous directory in the path string
 		// by searching for the previous slash
-		u32 slashIndex = _path.lastIndexOf('/', _path.getLength() - 2);
+		s32 slashIndex = _path.lastIndexOf('/', _path.getLength() - 2);
 
 		// Remove everything after the slash
-		if (slashIndex > 0) {
+		if (slashIndex > -1) {
 			_path.remove(slashIndex + 1);
 		}
 
