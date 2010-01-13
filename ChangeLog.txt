@@ -27,6 +27,7 @@ Change Log
     - Changed Topaz font to MonoFont from Font.
     - Fixed memory leak when enumerating directories in FileListBox.
     - FileListBox shows dummy file list when in SDL mode.
+    - Graphical corruption in GraphicsPort::clipScroll() fixed.
     
   New Features:
     - Added FontBase::getCharHeight().
