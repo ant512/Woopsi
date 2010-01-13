@@ -20,6 +20,8 @@ Change Log
     - FileRequester sorts correctly.
     - FileRequester does not attempt to draw when drawing is disabled.
     - FilePath uses WoopsiString::lastIndexOf() to change to parse path string.
+    - Dragging a screen that isn't the top screen so that it is not visible no
+      longer causes a crash.
     
   New Features:
     - Added FontBase::getCharHeight().

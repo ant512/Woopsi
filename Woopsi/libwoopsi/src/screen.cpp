@@ -158,7 +158,9 @@ bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
 						if (_newY > _y) rect.height -= _newY - _y;
 						
 						GraphicsPort* port = newGraphicsPort(true);
-						port->copy(rect.x, rect.y, rect.x, rect.y + vY, rect.width, rect.height);
+						if (rect.height > 0) {
+							port->copy(rect.x, rect.y, rect.x, rect.y + vY, rect.width, rect.height);
+						}
 						
 						delete port;
 					}
