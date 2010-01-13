@@ -25,20 +25,13 @@ void FilePath::appendPath(const WoopsiString& path) {
 		if (_path.getLength() == 1) return;
 
 		// Locate start of the previous directory in the path string
-		// by moving backwards along the string hunting slashes
-		StringIterator* iterator = _path.newStringIterator();
-		iterator->moveTo(_path.getLength() - 2);
+		// by searching for the previous slash
+		u32 slashIndex = _path.lastIndexOf('/', _path.getLength() - 2);
 
-		do {
-			if (iterator->getCodePoint() == '/') {
-
-				// Found a slash; remove everything after it
-				_path.remove(iterator->getIndex() + 1);
-				break;
-			}
-		} while (iterator->moveToPrevious());
-
-		delete iterator;
+		// Remove everything after the slash
+		if (slashIndex > 0) {
+			_path.remove(slashIndex + 1);
+		}
 
 		return;
 	}

@@ -267,6 +267,100 @@ const u32 WoopsiString::getCharAt(u32 index) const {
 	return getCodePoint(token, NULL);
 }
 
+const s32 WoopsiString::indexOf(u32 letter) const {
+	return indexOf(letter, 0, getLength());
+}
+
+const s32 WoopsiString::indexOf(u32 letter, u32 startIndex) const {
+	return indexOf(letter, startIndex, getLength() - startIndex);
+}
+
+const s32 WoopsiString::indexOf(u32 letter, u32 startIndex, u32 count) const {
+
+	// Exit if no data available
+	if (!hasData()) return -1;
+
+	s32 index = -1;
+	u32 charsExamined = 0;
+
+	StringIterator* iterator = newStringIterator();
+	iterator->moveTo(startIndex);
+
+	do {
+		if (iterator->getCodePoint() == letter) {
+			index = iterator->getIndex();
+			break;
+		}
+
+		charsExamined++;
+	} while (iterator->moveToNext() && (charsExamined < count));
+
+	delete iterator;
+
+	return index;
+}
+
+const s32 WoopsiString::lastIndexOf(u32 letter) const {
+	return lastIndexOf(letter, getLength() - 1, getLength());
+}
+
+const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex) const {
+	return lastIndexOf(letter, startIndex, getLength() - 1 - (getLength() - startIndex));
+}
+
+const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex, u32 count) const {
+
+	// Exit if no data available
+	if (!hasData()) return -1;
+
+	s32 index = -1;
+	u32 charsExamined = 0;
+
+	StringIterator* iterator = newStringIterator();
+	iterator->moveTo(startIndex);
+
+	do {
+		if (iterator->getCodePoint() == letter) {
+			index = iterator->getIndex();
+			break;
+		}
+
+		charsExamined++;
+	} while (iterator->moveToPrevious() && (charsExamined < count));
+
+	delete iterator;
+
+	return index;
+}
+
+WoopsiString* WoopsiString::subString(u32 startIndex) const {
+	return subString(startIndex, getLength() - startIndex);
+}
+
+WoopsiString* WoopsiString::subString(u32 startIndex, u32 length) const {
+	WoopsiString* subString = new WoopsiString();
+	StringIterator* iterator = newStringIterator();
+	iterator->moveTo(startIndex);
+
+	// Build up the string character by character.  This is slower than
+	// a straightforward memcpy(), but as we don't know how many bytes
+	// are in the requested substring we can't pre-allocate a buffer for
+	// the memcpy().  The only possible way to achieve this is to use a
+	// two-pass algorithm that firstly gets the number of bytes in the
+	// substring, then performs the memcpy().  However, the method used
+	// here is probably just as fast, as the string always over-allocates.
+	u32 count = 0;
+	while (count < length) {
+		subString->append(iterator->getCodePoint());
+		iterator->moveToNext();
+		count++;
+	}
+
+	delete iterator;
+
+	return subString;
+}
+
 void WoopsiString::allocateMemory(u32 chars, bool preserve) {
 
 	// Do we already have enough memory allocated to contain this new size?

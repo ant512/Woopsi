@@ -19,6 +19,7 @@ Change Log
     - FileRequester no longer has transparent regions.
     - FileRequester sorts correctly.
     - FileRequester does not attempt to draw when drawing is disabled.
+    - FilePath uses WoopsiString::lastIndexOf() to change to parse path string.
     
   New Features:
     - Added FontBase::getCharHeight().
@@ -33,6 +34,9 @@ Change Log
     - Removed dependence on WoopsiString::getCharArray().
     - Promoted FileRequester gadget from bonus folder to main library.
     - libfat enabled by default in test projects and template.
+    - Added WoopsiString::lastIndexOf().
+    - Added WoopsiString::subString().
+    - Added WoopsiString::indexOf().
 	
   V0.43 (20091223)
   

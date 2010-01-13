@@ -138,6 +138,84 @@ namespace WoopsiUI {
 		 * @return The character at the specified index.
 		 */
 		virtual const u32 getCharAt(u32 index) const;
+
+		/**
+		 * Returns the first index of the specified letter within the string.
+		 * Will return -1 if the letter is not found.
+		 * @param letter Letter to find.
+		 * @return The index of the letter.
+		 */
+		const s32 indexOf(u32 letter) const;
+
+		/**
+		 * Returns the first index of the specified letter within the string.
+		 * Will return -1 if the letter is not found.  Scans through the string
+		 * from "startIndex" until it has examined all subsequent letters.
+		 * @param letter Letter to find.
+		 * @param startIndex The index to start searching from.
+		 * @return The index of the letter.
+		 */
+		const s32 indexOf(u32 letter, u32 startIndex) const;
+
+		/**
+		 * Returns the first index of the specified letter within the string.
+		 * Will return -1 if the letter is not found.  Scans through the string
+		 * from "startIndex" until it has examined all letters within the
+		 * range "count".
+		 * @param letter Letter to find.
+		 * @param startIndex The index to start searching from.
+		 * @param count The number of characters to examine.
+		 * @return The index of the letter.
+		 */
+		virtual const s32 indexOf(u32 letter, u32 startIndex, u32 count) const;
+
+		/**
+		 * Returns the last index of the specified letter within the string.
+		 * Will return -1 if the letter is not found.
+		 * @param letter Letter to find.
+		 * @return The index of the letter.
+		 */
+		const s32 lastIndexOf(u32 letter) const;
+
+		/**
+		 * Returns the last index of the specified letter within the string.
+		 * Will return -1 if the letter is not found.  Scans through the string
+		 * backwards from "startIndex" until it has examined all preceding letters
+		 * within the string.
+		 * @param letter Letter to find.
+		 * @param startIndex The index to start searching from.
+		 * @return The index of the letter.
+		 */
+		const s32 lastIndexOf(u32 letter, u32 startIndex) const;
+
+		/**
+		 * Returns the last index of the specified letter within the string.
+		 * Will return -1 if the letter is not found.  Scans through the string
+		 * backwards from "startIndex" until it has examined all letters within the
+		 * range "count".
+		 * @param letter Letter to find.
+		 * @param startIndex The index to start searching from.
+		 * @param count The number of characters to examine.
+		 * @return The index of the letter.
+		 */
+		virtual const s32 lastIndexOf(u32 letter, u32 startIndex, u32 count) const;
+
+		/**
+		 * Get a substring from this string.  It is the responsibility of the
+		 * caller to delete the substring when it is no longer required.
+		 * @param startIndex The starting point of the substring.
+		 * @return A pointer to a new WoopsiString object containing the substring.
+		 */
+		WoopsiString* subString(u32 startIndex) const;
+
+		/**
+		 * Get a substring from this string.  It is the responsibility of the
+		 * caller to delete the substring when it is no longer required.
+		 * @param startIndex The starting point of the substring.
+		 * @param length The length of the substring.
+		 * @return A pointer to a new WoopsiString object containing the substring.
+		 */
+		WoopsiString* subString(u32 startIndex, u32 length) const;
 		
 		/**
 		 * Overloaded assignment operator.  Copies the data within
@@ -171,7 +249,7 @@ namespace WoopsiUI {
 		 * indicates the opposite.  Note that the return value indicates the *byte* that
 		 * does not match, not the *character*.
 		 */
-		virtual inline u32 compareTo(const WoopsiString& string) const {
+		virtual inline s32 compareTo(const WoopsiString& string) const {
 			return strcmp(_text, string.getCharArray());
 		}
 
@@ -190,7 +268,7 @@ namespace WoopsiUI {
 		 * Check if we've got any string data stored or not.
 		 * @return True if the string contains any data; false if no data has yet been supplied.
 		 */
-		virtual inline bool hasData() const { return (_text != NULL); };
+		virtual inline bool hasData() const { return _dataLength > 0; };
 
 		/**
 		 * Get the amount of allocated memory.
