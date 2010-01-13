@@ -86,4 +86,4 @@ static const u16 topaz_Bitmap[640] __attribute__ ((aligned (4))) = {
 24582, 0, 0, 0, 48, 0, 0, 0
 };
 
-Topaz::Topaz(u16 drawColour) : MonoFont(topaz_Bitmap, 256, 40, 8, 5, drawColour) { };
+Topaz::Topaz(u16 drawColour) : MonoFont(topaz_Bitmap, 256, 40, 8, 10, drawColour) { };

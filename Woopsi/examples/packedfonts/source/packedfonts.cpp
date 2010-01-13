@@ -31,11 +31,9 @@
 #include "fonts/gungsuhche15.h"
 #include "fonts/kartika9.h"
 #include "fonts/kartika10.h"
-#include "fonts/latha.h"
 #include "fonts/latha9.h"
 #include "fonts/latha10.h"
 #include "fonts/latha15.h"
-#include "fonts/lucida10.h"
 #include "fonts/lucidacalligraphy14.h"
 #include "fonts/mangal9.h"
 #include "fonts/modern9.h"
@@ -52,14 +50,12 @@
 #include "fonts/poorrichard12.h"
 #include "fonts/profont9.h"
 #include "fonts/roman9b.h"
-#include "fonts/roman10.h"
 #include "fonts/roman11i.h"
 #include "fonts/roman13.h"
 #include "fonts/roman13i.h"
 #include "fonts/script9b.h"
 #include "fonts/timesnewroman9.h"
 #include "fonts/topaz.h"
-#include "fonts/trebuchet8.h"
 #include "fonts/tunga8.h"
 
 void PackedFonts::startup() {
@@ -96,11 +92,9 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Gungsuhche 15", new Gungsuhche15()));
 	_fonts->push_back(new FontDefinition("Kartika 9", new Kartika9()));
 	_fonts->push_back(new FontDefinition("Kartika 10", new Kartika10()));
-	_fonts->push_back(new FontDefinition("Latha", new Latha()));
 	_fonts->push_back(new FontDefinition("Latha 9", new Latha9()));
 	_fonts->push_back(new FontDefinition("Latha 10", new Latha10()));
 	_fonts->push_back(new FontDefinition("Latha 15", new Latha15()));
-	_fonts->push_back(new FontDefinition("Lucida 10", new Lucida10()));
 	_fonts->push_back(new FontDefinition("Lucida Calligraphy 14", new LucidaCalligraphy14()));
 	_fonts->push_back(new FontDefinition("Mangal 9", new Mangal9()));
 	_fonts->push_back(new FontDefinition("Modern 9", new Modern9()));
@@ -117,14 +111,12 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Poor Richard 12", new PoorRichard12()));
 	_fonts->push_back(new FontDefinition("Pro Font 9", new ProFont9()));
 	_fonts->push_back(new FontDefinition("Roman 9b", new Roman9b()));
-	_fonts->push_back(new FontDefinition("Roman 10", new Roman10()));
 	_fonts->push_back(new FontDefinition("Roman 11i", new Roman11i()));
 	_fonts->push_back(new FontDefinition("Roman 13", new Roman13()));
 	_fonts->push_back(new FontDefinition("Roman 13i", new Roman13i()));
 	_fonts->push_back(new FontDefinition("Script 9b", new Script9b()));
 	_fonts->push_back(new FontDefinition("Times New Roman 9", new TimesNewRoman9()));
 	_fonts->push_back(new FontDefinition("Topaz", new Topaz()));
-	_fonts->push_back(new FontDefinition("Trebuchet 8", new Trebuchet8()));
 	_fonts->push_back(new FontDefinition("Tunga 9", new Tunga8()));
 	
 	defaultGadgetStyle->font = new NewTopaz();
