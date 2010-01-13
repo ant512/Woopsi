@@ -1,6 +1,4 @@
 #include <nds.h>
-#include <fcntl.h>
-#include <dirent.h>
 #include "filerequester.h"
 #include "button.h"
 #include "filepath.h"

@@ -25,15 +25,8 @@ namespace WoopsiUI {
 	 * for the value changed event.  This will fire when the user double-clicks
 	 * an option or clicks the OK button.
 	 *
-	 * To add this class to a project:
-	 * - Enable libfat in the makefile by changing the line that reads
-	 *      LIBS	:= -lnds9
-	 *   to
-	 *      LIBS	:= -lfat -lnds9
-	 * - Call "fatInitDefault();" somewhere in your setup code.
-	 *
-	 * Note that including libfat increases the ROM size by ~100K.  Also note
-	 * that this code is not compatible with the SDL build of Woopsi.
+	 * When using this class, ensure you call "fatInitDefault();" somewhere
+	 * in your setup code.
 	 */
 	class FileListBox : public Gadget, public GadgetEventHandler  {
 	public:
