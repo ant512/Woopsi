@@ -30,6 +30,7 @@ Change Log
     - Graphical corruption in GraphicsPort::clipScroll() fixed.
     - Fixed FileRequester layout.
     - Replaced magic number double click time with define in woopsifuncs.cpp.
+    - TestPanel class in scrolltest example draws its border correctly.
     
   New Features:
     - Added FontBase::getCharHeight().

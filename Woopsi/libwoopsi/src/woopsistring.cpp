@@ -67,11 +67,11 @@ StringIterator* WoopsiString::newStringIterator() const {
 void WoopsiString::setText(const WoopsiString& text) {
 
 	// Ensure we've got enough memory available
-	allocateMemory(text.getLength(), false);
+	allocateMemory(text.getByteCount(), false);
 
 	// Copy/filter the valid UTF-8 tokens into _text and cache the length
 	u32 unicodeChars = 0;
-	_dataLength = filterString(_text, text.getCharArray(), text.getLength(), &unicodeChars);
+	_dataLength = filterString(_text, text.getCharArray(), text.getByteCount(), &unicodeChars);
 	_stringLength = unicodeChars;
 }
 
@@ -111,19 +111,13 @@ void WoopsiString::setText(const u32 text) {
 }
 
 void WoopsiString::append(const WoopsiString& text) {
-	
-	// Early exit if the string is empty
-	if (!hasData()) {
-		setText(text);
-		return;
-	}
 
 	// Ensure we've got enough memory available
 	allocateMemory(_dataLength + text.getByteCount(), true);
 
 	// Append/filter the valid utf-8 tokens to _text
 	u32 unicodeChars = 0;
-	_dataLength += filterString(_text + _dataLength, text.getCharArray(), text.getLength(), &unicodeChars);
+	_dataLength += filterString(_text + _dataLength, text.getCharArray(), text.getByteCount(), &unicodeChars);
 	_stringLength += unicodeChars;
 }
 

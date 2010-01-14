@@ -72,9 +72,9 @@ void TextBoxTest::startup() {
 
 	// Get preferred dimensions for cycle button and resize
 	Debug::printf("getPreferredDimensions()");
-	Rect rect;
-	_textbox->getPreferredDimensions(rect);
-	_textbox->resize(rect.width, rect.height);
+	//Rect rect;
+	//_textbox->getPreferredDimensions(rect);
+	//_textbox->resize(rect.width, rect.height);
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
