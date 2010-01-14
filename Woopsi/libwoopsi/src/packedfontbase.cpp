@@ -27,7 +27,7 @@ u16 PackedFontBase::getStringWidth(const WoopsiString& text, u32 startIndex, u32
 	u16 total = 0;
 
 	StringIterator* iterator = text.newStringIterator();
-	iterator->moveTo(startIndex);
+	if (!iterator->moveTo(startIndex)) return 0;
 	
 	do {
 		total += getCharWidth(iterator->getCodePoint());

@@ -278,7 +278,7 @@ const s32 WoopsiString::indexOf(u32 letter, u32 startIndex, u32 count) const {
 	u32 charsExamined = 0;
 
 	StringIterator* iterator = newStringIterator();
-	iterator->moveTo(startIndex);
+	if (!iterator->moveTo(startIndex)) return -1;
 
 	do {
 		if (iterator->getCodePoint() == letter) {
@@ -311,7 +311,7 @@ const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex, u32 count) const
 	u32 charsExamined = 0;
 
 	StringIterator* iterator = newStringIterator();
-	iterator->moveTo(startIndex);
+	if (!iterator->moveTo(startIndex)) return -1;
 
 	do {
 		if (iterator->getCodePoint() == letter) {
@@ -334,7 +334,7 @@ WoopsiString* WoopsiString::subString(u32 startIndex) const {
 WoopsiString* WoopsiString::subString(u32 startIndex, u32 length) const {
 	WoopsiString* subString = new WoopsiString();
 	StringIterator* iterator = newStringIterator();
-	iterator->moveTo(startIndex);
+	if (!iterator->moveTo(startIndex)) return NULL;
 
 	// Build up the string character by character.  This is slower than
 	// a straightforward memcpy(), but as we don't know how many bytes
