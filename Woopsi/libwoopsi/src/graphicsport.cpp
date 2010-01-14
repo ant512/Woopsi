@@ -1046,7 +1046,8 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 	
 	// Check if the destination does not overlap the source - if so, we just
 	// need to push the source region (clipped) to the redraw array
-	if ((sourceX1 + width >= destX1) && (sourceY1 + height >= destY1) && (sourceX1 < destX1 + width) && (sourceY1 < destY1 + height)) {
+	if ((sourceX2 < sourceX1) || (sourceY2 < sourceY1)) {
+	//if ((sourceX1 + width >= destX1) && (sourceY1 + height >= destY1) && (sourceX1 < destX1 + width) && (sourceY1 < destY1 + height)) {
 		s16 newX1 = x;
 		s16 newY1 = y;
 		s16 newX2 = x + width - 1;
