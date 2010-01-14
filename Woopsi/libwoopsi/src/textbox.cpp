@@ -1,6 +1,7 @@
 #include "textbox.h"
 #include "graphicsport.h"
 #include "woopsitimer.h"
+#include "stringiterator.h"
 
 using namespace WoopsiUI;
 
@@ -146,20 +147,25 @@ bool TextBox::click(s16 x, s16 y) {
 			if (_text.getLength() > 0) {
 				s16 clickX = x - getX();
 				s16 charX = _textX;
-				u32 charIndex = 0;
 
 				// Locate the first character that comes after the clicked character
-				while ((charX < clickX) && (charIndex < _text.getLength())) {
-					charX += getFont()->getCharWidth(_text.getCharAt(charIndex));
-					++charIndex;
+				StringIterator* iterator = _text.newStringIterator();
+				iterator->moveToFirst();
+
+				while (charX < clickX) {
+					charX += getFont()->getCharWidth(iterator->getCodePoint());
+					
+					if (!iterator->moveToNext()) break;
 				}
 
 				// Move back to the clicked character if we've moved past it
 				if (charX > clickX) {
-					charIndex--;
+					iterator->moveToPrevious();
 				}
 
-				moveCursorToPosition(charIndex);
+				moveCursorToPosition(iterator->getIndex());
+
+				delete iterator;
 			}
 		}
 

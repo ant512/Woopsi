@@ -36,7 +36,7 @@ Change Log
     - WoopsiString supports UTF-8 (Lakedaemon).
     - Split glyphs into separate GlyphFont.
     - GadgetStyle includes a glyph font.
-    - Most gadgets converted to use WoopsiStrings instead of raw chars/char
+    - All gadgets converted to use WoopsiStrings instead of raw chars/char
       arrays, meaning they support UTF-8.
     - Various changes in Text class to support UTF-8.
     - Changed parameters to GraphicsUnclipped::drawText() (and subclasses).
