@@ -21,18 +21,20 @@ void TestPanel::draw(Rect clipRect) {
 
 	// Draw background
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-	
-	// Draw border
-	port->drawBevelledRect(0, 0, _width, _height);
-	delete port;
-	
-	port = newGraphicsPort(clipRect);
 
 	// Draw contents.  Note that all co-ordinates are offset by the canvas
 	// x and y co-ordinates
-	//port->drawText(30 + getCanvasX(), 60 + getCanvasY(), getFont(), "Scrolling Panel Test", 0, 20, woopsiRGB(0, 0, 15));
+	port->drawText(30 + getCanvasX(), 60 + getCanvasY(), getFont(), "Scrolling Panel Test", 0, 20, woopsiRGB(0, 0, 15));
 	port->drawFilledRect(200 + getCanvasX(), 90 + getCanvasY(), 100, 100, woopsiRGB(15, 0, 0));
-
+	
+	// Draw border
+	//port->drawBevelledRect(0, 0, _width, _height);
+	port->drawVertLine(_width - 1, 0, _height, woopsiRGB(0, 0, 0));
+	port->drawHorizLine(0, _height - 1, _width, woopsiRGB(0, 0, 0));
+	
+	port->drawVertLine(0, 0, _height, woopsiRGB(31, 31, 31));
+	port->drawHorizLine(0, 0, _width, woopsiRGB(31, 31, 31));
+	
 	// Clean up
 	delete port;
 };

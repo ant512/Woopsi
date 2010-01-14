@@ -114,6 +114,11 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 		if (y >= TOP_SCREEN_Y_OFFSET) {
 			y -= TOP_SCREEN_Y_OFFSET;
 		}
+
+		// Abort if trying to draw the characters offscreen
+		if (x > clipX2) return;
+		if (y > clipY2) return;
+		if (y < clipY1 - font->getHeight()) return;
 		
 		// Draw the string char by char
 		StringIterator* iterator = string.newStringIterator();
