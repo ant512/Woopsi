@@ -18,6 +18,8 @@ ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, G
 	setAllowsHorizontalScroll(true);
 
 	_flags.permeable = true;
+
+	_outline = OUTLINE_OUT;
 }
 
 void ScrollingPanel::draw(Rect clipRect) {

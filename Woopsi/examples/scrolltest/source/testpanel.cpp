@@ -28,12 +28,7 @@ void TestPanel::draw(Rect clipRect) {
 	port->drawFilledRect(200 + getCanvasX(), 90 + getCanvasY(), 100, 100, woopsiRGB(15, 0, 0));
 	
 	// Draw border
-	//port->drawBevelledRect(0, 0, _width, _height);
-	port->drawVertLine(_width - 1, 0, _height, woopsiRGB(0, 0, 0));
-	port->drawHorizLine(0, _height - 1, _width, woopsiRGB(0, 0, 0));
-	
-	port->drawVertLine(0, 0, _height, woopsiRGB(31, 31, 31));
-	port->drawHorizLine(0, 0, _width, woopsiRGB(31, 31, 31));
+	port->drawBevelledRect(0, 0, _width, _height);
 	
 	// Clean up
 	delete port;

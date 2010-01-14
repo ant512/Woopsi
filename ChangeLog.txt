@@ -33,6 +33,7 @@ Change Log
     - TestPanel class in scrolltest example draws its border correctly.
     - Fixed a crash in GraphicsPort::drawText() when trying to draw text outside
       the clipRect with a PackedFont1 font; should provide a minor speedup.
+    - ScrollingPanel draws its border correctly.
     
   New Features:
     - Added FontBase::getCharHeight().
