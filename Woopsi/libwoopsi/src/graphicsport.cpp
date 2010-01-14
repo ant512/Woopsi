@@ -1024,6 +1024,7 @@ void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width,
 	}
 }
 
+// TODO: Refactor this, it's a mess of repeated code
 void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Rect& clipRect, WoopsiArray<Rect>* revealedRects) {
 	
 	// Convert height/width to co-ordinates
@@ -1045,9 +1046,15 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 	s16 destX2 = sourceX2 + xDistance;
 	s16 destY2 = sourceY2 + yDistance;
 	
-	// Check if the destination does not overlap the source - if so, we just
-	// need to push the source region (clipped) to the redraw array
+	// Check if the destination does not overlap the source - in that case,
+	// we're scrolling the visible portion totally off-screen.  We just
+	// need to push the entire region (clipped) to the redraw array
+	// so that the current display is overwritten with totally new content.
+	//
+	// If the source rect has a negative width or height, the two rects
+	// do not overlap
 	if ((sourceX2 < sourceX1) || (sourceY2 < sourceY1)) {
+		
 		s16 newX1 = x;
 		s16 newY1 = y;
 		s16 newX2 = x + width - 1;
@@ -1065,24 +1072,30 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 		return;
 	}
 		
-	// Destination does overlap source, so attempt to use copy routine to scroll
-	// the region
+	// Destination does overlap source.  We need to check if that holds true
+	// when the regions are clipped.  If not, we can just redraw the clipped
+	// region.  If they overlap then we can use the copy function to peform
+	// the scroll
 	if (clipCoordinates(&sourceX1, &sourceY1, &sourceX2, &sourceY2, clipRect)) {
 		if (clipCoordinates(&destX1, &destY1, &destX2, &destY2, clipRect)) {
 			
+			// Get the dimensions of the source and destination regions
 			s16 widthSource = (sourceX2 - sourceX1) + 1;
 			s16 widthDest = (destX2 - destX1) + 1;
 			s16 heightSource = (sourceY2 - sourceY1) + 1;
 			s16 heightDest = (destY2 - destY1) + 1;
 			
-			// Get smallest dimensions - cannot copy into a space too small to accommodate it
-			s16 minWidth = widthSource > widthDest ? widthDest : widthSource;
-			s16 minHeight = heightSource > heightDest ? heightDest : heightSource;
-			
-			// Check if the post-clipping regions still overlap
-			if ((sourceX1 + minWidth >= destX1) && (sourceY1 + minHeight >= destY1) && (sourceX1 < destX1 + minWidth) && (sourceY1 < destY1 + minHeight)) {
+			// Check if the post-clipping regions no longer overlap.  If they do
+			// not, the contents of the display is being scrolled off-screen (again)
+			// so we just redraw the clipped source region.
+			//
+			// Also, ensure that the two regions are the same size.  If not, we cannot
+			// copy one to the other, so just redraw instead.
+			if (((sourceX1 + widthSource <= destX1) || (sourceX1 >= destX1 + widthDest) || (sourceY1 + heightSource <= destY1) || (sourceY1 >= destY1 + heightDest))
+				|| (widthSource != widthDest) || (heightSource != heightDest)) {
 				
-				// Post-clipping regions do not overlap - redraw the clipped source region
+				// Post-clipping regions do not overlap or are of incompatible sizes.
+				// Push the clipped source region into the redraw array
 				s16 newX1 = x;
 				s16 newY1 = y;
 				s16 newX2 = x + width - 1;
@@ -1099,8 +1112,8 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 				return;
 			}
 			
-			// Post-clipping regions overlap, so copy the source to the dest
-			GraphicsUnclipped::copy(sourceX1, sourceY1, destX1, destY1, minWidth, minHeight);
+			// Post-clipping regions overlap and are the same size, so copy the source to the dest
+			GraphicsUnclipped::copy(sourceX1, sourceY1, destX1, destY1, widthSource, heightSource);
 		
 			// Work out the dimensions of the non-overlapped areas
 			
@@ -1112,14 +1125,14 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 				rect.x = sourceX1;
 				rect.y = sourceY1;
 				rect.width = (destX1 - sourceX1) + 1;
-				rect.height = minHeight;
+				rect.height = heightSource;
 				
 				revealedRects->push_back(rect);
 				
 				// Vertical area
 				if (sourceY1 != destY1) {
 					rect.x = destX1;
-					rect.width = minWidth - rect.width;
+					rect.width = widthSource - rect.width;
 					
 					if (sourceY1 < destY1) {
 						
@@ -1128,7 +1141,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 					} else if (sourceY1 > destY1) {
 						
 						// Revealed area below the destination
-						rect.y = (destY1 + minHeight) - 1;
+						rect.y = destY2 + 1;
 						rect.height = (sourceY1 - destY1) + 1;
 					}
 					
@@ -1139,16 +1152,16 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 				
 				// Revealed area on the right of the destination
 				Rect rect;
-				rect.x = (destX1 + width) - 1;
+				rect.x = destX2 + 1;
 				rect.y = sourceY1;
 				rect.width = (sourceX1 - destX1) + 1;
-				rect.height = minHeight;
+				rect.height = heightSource;
 				revealedRects->push_back(rect);
 				
 				// Vertical area
 				if (sourceY1 != destY1) {
 					rect.x = sourceX1;
-					rect.width = minWidth - rect.width;
+					rect.width = widthSource - rect.width;
 					
 					if (sourceY1 < destY1) {
 						
@@ -1157,7 +1170,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 					} else if (sourceY1 > destY1) {
 						
 						// Revealed area below the destination
-						rect.y = (destY1 + minHeight) - 1;
+						rect.y = destY2 + 1;
 						rect.height = (sourceY1 - destY1) + 1;
 					}
 
@@ -1170,7 +1183,7 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 				Rect rect;
 				rect.x = sourceX1;
 				rect.y = sourceY1;
-				rect.width = minWidth;
+				rect.width = widthSource;
 				rect.height = (destY1 - sourceY1) + 1;
 
 				revealedRects->push_back(rect);
@@ -1180,13 +1193,30 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 				// Vertical movement only - revealed area below the destination
 				Rect rect;
 				rect.x = sourceX1;
-				rect.y = (destY1 + minHeight) - 1;
-				rect.width = minWidth;
+				rect.y = destY2 + 1;
+				rect.width = widthSource;
 				rect.height = (sourceY1 - destY1) + 1;
 
 				revealedRects->push_back(rect);
 			}
 		}
+	}
+
+	// If we reach this point, either the source or the destination is off-screen.
+	// There's nothing we can do to optimise this, so we just add the region to
+	// the redraw list.
+	s16 newX1 = x;
+	s16 newY1 = y;
+	s16 newX2 = x + width - 1;
+	s16 newY2 = y + height - 1;
+	
+	if (clipCoordinates(&newX1, &newY1, &newX2, &newY2, clipRect)) {
+		Rect rect;
+		rect.x = newX1;
+		rect.y = newY1;
+		rect.width = (newX2 - newX1) + 1;
+		rect.height = (newY2 - newY1) + 1;
+		revealedRects->push_back(rect);
 	}
 }
 
