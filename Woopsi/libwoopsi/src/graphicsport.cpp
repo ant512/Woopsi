@@ -117,14 +117,15 @@ void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 		
 		// Draw the string char by char
 		StringIterator* iterator = string.newStringIterator();
-		iterator->moveTo(startIndex);
+		
+		if (iterator->moveTo(startIndex)) {
+			do {
+				x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, clipX1, clipY1, clipX2, clipY2);
 
-		do {
-			x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, clipX1, clipY1, clipX2, clipY2);
-
-			// Abort if x pos outside clipping region
-			if (x > clipX2) break;
-		} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+				// Abort if x pos outside clipping region
+				if (x > clipX2) break;
+			} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+		}
 
 		delete iterator;
 	}
@@ -1047,7 +1048,6 @@ void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 wi
 	// Check if the destination does not overlap the source - if so, we just
 	// need to push the source region (clipped) to the redraw array
 	if ((sourceX2 < sourceX1) || (sourceY2 < sourceY1)) {
-	//if ((sourceX1 + width >= destX1) && (sourceY1 + height >= destY1) && (sourceX1 < destX1 + width) && (sourceY1 < destY1 + height)) {
 		s16 newX1 = x;
 		s16 newY1 = y;
 		s16 newX2 = x + width - 1;

@@ -34,7 +34,7 @@ void StringIterator::moveToLast() {
 
 bool StringIterator::moveToNext() {
 	
-	if (_currentIndex < _string->getLength()) {
+	if (_currentIndex < _string->getLength() - 1) {
 		_currentChar += getCodePointSize();
 		_currentIndex++;
 		

@@ -151,14 +151,15 @@ void GraphicsUnclipped::drawText(s16 x, s16 y, FontBase* font, const WoopsiStrin
 
 	// Draw the string char by char
 	StringIterator* iterator = string.newStringIterator();
-	iterator->moveTo(startIndex);
+	
+	if (iterator->moveTo(startIndex)) {
+		do {
+			x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, 0, 0, _width - 1, _height - 1);
 
-	do {
-		x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, 0, 0, _width - 1, _height - 1);
-
-		// Abort if x pos outside bitmap
-		if (x > _width - 1) break;
-	} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+			// Abort if x pos outside bitmap
+			if (x > _width - 1) break;
+		} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+	}
 
 	delete iterator;
 }
