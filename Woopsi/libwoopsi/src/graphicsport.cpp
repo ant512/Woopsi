@@ -1029,199 +1029,119 @@ void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width,
 	}
 }
 
-// TODO: Refactor this, it's a mess of repeated code
 void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Rect& clipRect, WoopsiArray<Rect>* revealedRects) {
 	
-	// Convert height/width to co-ordinates
-	s16 sourceX1 = x;
-	s16 sourceY1 = y;
-	s16 sourceX2 = x + width - 1;
-	s16 sourceY2 = y + height - 1;
+	// Calculate the dimensions of the area being scrolled
+	s16 regionX1 = x;
+	s16 regionY1 = y;
+	s16 regionX2 = x + width - 1;
+	s16 regionY2 = y + height - 1;
 	
-	// Adjust source to compensate for the fact that we are scrolling, not copying - 
-	// we are overwriting part of the source with itself
-	if (xDistance < 0) sourceX1 -= xDistance;
-	if (xDistance > 0) sourceX2 -= xDistance;
-	if (yDistance < 0) sourceY1 -= yDistance;
-	if (yDistance > 0) sourceY2 -= yDistance;
-	
-	// Get co-ords of destination rectangle
-	s16 destX1 = sourceX1 + xDistance;
-	s16 destY1 = sourceY1 + yDistance;
-	s16 destX2 = sourceX2 + xDistance;
-	s16 destY2 = sourceY2 + yDistance;
-	
-	// Check if the destination does not overlap the source - in that case,
-	// we're scrolling the visible portion totally off-screen.  We just
-	// need to push the entire region (clipped) to the redraw array
-	// so that the current display is overwritten with totally new content.
-	//
-	// If the source rect has a negative width or height, the two rects
-	// do not overlap
-	if ((sourceX2 < sourceX1) || (sourceY2 < sourceY1)) {
+	// Clip the dimensions so that they fit within the clip rect
+	if (clipCoordinates(&regionX1, &regionY1, &regionX2, &regionY2, clipRect)) {
 		
-		s16 newX1 = x;
-		s16 newY1 = y;
-		s16 newX2 = x + width - 1;
-		s16 newY2 = y + height - 1;
+		// Calculate co-ordinates of source rect
+		s16 sourceX1 = regionX1;
+		s16 sourceY1 = regionY1;
+		s16 sourceX2 = regionX2;
+		s16 sourceY2 = regionY2;
 		
-		if (clipCoordinates(&newX1, &newY1, &newX2, &newY2, clipRect)) {
+		// Adjust source to compensate for the fact that we are scrolling, not
+		// copying - we are overwriting part of the source with itself
+		if (xDistance < 0) sourceX1 -= xDistance;
+		if (xDistance > 0) sourceX2 -= xDistance;
+		if (yDistance < 0) sourceY1 -= yDistance;
+		if (yDistance > 0) sourceY2 -= yDistance;
+		
+		// Check if the destination does not overlap the source - in that case,
+		// we're scrolling the visible portion totally off-screen.  We just
+		// need to push the entire region (clipped) to the redraw array
+		// so that the current display is overwritten with totally new content.
+		//
+		// If the source rect has a negative width or height, the two rects
+		// do not overlap
+		if ((sourceX2 < sourceX1) || (sourceY2 < sourceY1)) {
 			Rect rect;
-			rect.x = newX1;
-			rect.y = newY1;
-			rect.width = (newX2 - newX1) + 1;
-			rect.height = (newY2 - newY1) + 1;
+			rect.x = regionX1;
+			rect.y = regionY1;
+			rect.width = regionX2 + 1;
+			rect.height = regionY2 + 1;
 			revealedRects->push_back(rect);
+			
+			return;
 		}
 		
-		return;
-	}
+		// Get co-ords of destination rectangle
+		s16 destX1 = sourceX1 + xDistance;
+		s16 destY1 = sourceY1 + yDistance;
+		s16 destX2 = sourceX2 + xDistance;
+		s16 destY2 = sourceY2 + yDistance;
 		
-	// Destination does overlap source.  We need to check if that holds true
-	// when the regions are clipped.  If not, we can just redraw the clipped
-	// region.  If they overlap then we can use the copy function to peform
-	// the scroll
-	if (clipCoordinates(&sourceX1, &sourceY1, &sourceX2, &sourceY2, clipRect)) {
-		if (clipCoordinates(&destX1, &destY1, &destX2, &destY2, clipRect)) {
+		// Get the dimensions of the source and destination regions
+		s16 widthSource = (sourceX2 - sourceX1) + 1;
+		s16 heightSource = (sourceY2 - sourceY1) + 1;
+		
+		// Post-clipping regions overlap and are the same size, so copy the source to the dest
+		GraphicsUnclipped::copy(sourceX1, sourceY1, destX1, destY1, widthSource, heightSource);
+		
+		// Work out the dimensions of the non-overlapped areas
+		s16 clippedWidth = (regionX2 - regionX1) + 1;
+		s16 clippedHeight = (regionY2 - regionY1) + 1;
+		
+		// Horizontal area
+		if (sourceX1 < destX1) {
 			
-			// Get the dimensions of the source and destination regions
-			s16 widthSource = (sourceX2 - sourceX1) + 1;
-			s16 widthDest = (destX2 - destX1) + 1;
-			s16 heightSource = (sourceY2 - sourceY1) + 1;
-			s16 heightDest = (destY2 - destY1) + 1;
+			// Revealed area on the left of the destination
+			Rect rect;
+			rect.x = sourceX1;
+			rect.y = sourceY1 < destY1 ? sourceY1 : destY1;
+			rect.width = (destX1 - sourceX1);
+			rect.height = clippedHeight;
 			
-			// Check if the post-clipping regions no longer overlap.  If they do
-			// not, the contents of the display is being scrolled off-screen (again)
-			// so we just redraw the clipped source region.
-			//
-			// Also, ensure that the two regions are the same size.  If not, we cannot
-			// copy one to the other, so just redraw instead.
-			if (((sourceX1 + widthSource <= destX1) || (sourceX1 >= destX1 + widthDest) || (sourceY1 + heightSource <= destY1) || (sourceY1 >= destY1 + heightDest))
-				|| (widthSource != widthDest) || (heightSource != heightDest)) {
-				
-				// Post-clipping regions do not overlap or are of incompatible sizes.
-				// Push the clipped source region into the redraw array
-				s16 newX1 = x;
-				s16 newY1 = y;
-				s16 newX2 = x + width - 1;
-				s16 newY2 = y + height - 1;
-				
-				if (clipCoordinates(&newX1, &newY1, &newX2, &newY2, clipRect)) {
-					Rect rect;
-					rect.x = newX1;
-					rect.y = newY1;
-					rect.width = (newX2 - newX1) + 1;
-					rect.height = (newY2 - newY1) + 1;
-					revealedRects->push_back(rect);
-				}
-				return;
+			if ((rect.height > 0) && (rect.width > 0)) {
+				revealedRects->push_back(rect);
 			}
 			
-			// Post-clipping regions overlap and are the same size, so copy the source to the dest
-			GraphicsUnclipped::copy(sourceX1, sourceY1, destX1, destY1, widthSource, heightSource);
-		
-			// Work out the dimensions of the non-overlapped areas
+		} else if (sourceX1 > destX1) {
 			
-			// Horizontal area
-			if (sourceX1 < destX1) {
-				
-				// Revealed area on the left of the destination
-				Rect rect;
-				rect.x = sourceX1;
-				rect.y = sourceY1;
-				rect.width = (destX1 - sourceX1) + 1;
-				rect.height = heightSource;
-				
-				revealedRects->push_back(rect);
-				
-				// Vertical area
-				if (sourceY1 != destY1) {
-					rect.x = destX1;
-					rect.width = widthSource - rect.width;
-					
-					if (sourceY1 < destY1) {
-						
-						// Revealed area above the destination
-						rect.height = (destY1 - sourceY1) + 1;
-					} else if (sourceY1 > destY1) {
-						
-						// Revealed area below the destination
-						rect.y = destY2 + 1;
-						rect.height = (sourceY1 - destY1) + 1;
-					}
-					
-					revealedRects->push_back(rect);
-				}
-				
-			} else if (sourceX1 > destX1) {
-				
-				// Revealed area on the right of the destination
-				Rect rect;
-				rect.x = destX2 + 1;
-				rect.y = sourceY1;
-				rect.width = (sourceX1 - destX1) + 1;
-				rect.height = heightSource;
-				revealedRects->push_back(rect);
-				
-				// Vertical area
-				if (sourceY1 != destY1) {
-					rect.x = sourceX1;
-					rect.width = widthSource - rect.width;
-					
-					if (sourceY1 < destY1) {
-						
-						// Revealed area above the destination
-						rect.height = (destY1 - sourceY1) + 1;
-					} else if (sourceY1 > destY1) {
-						
-						// Revealed area below the destination
-						rect.y = destY2 + 1;
-						rect.height = (sourceY1 - destY1) + 1;
-					}
-
-					revealedRects->push_back(rect);
-				}
-
-			} else if (sourceY1 < destY1) {
-
-				// Vertical movement only - revealed area above the destination
-				Rect rect;
-				rect.x = sourceX1;
-				rect.y = sourceY1;
-				rect.width = widthSource;
-				rect.height = (destY1 - sourceY1) + 1;
-
-				revealedRects->push_back(rect);
-
-			} else if (sourceY1 > destY1) {
-
-				// Vertical movement only - revealed area below the destination
-				Rect rect;
-				rect.x = sourceX1;
-				rect.y = destY2 + 1;
-				rect.width = widthSource;
-				rect.height = (sourceY1 - destY1) + 1;
-
+			// Revealed area on the right of the destination
+			Rect rect;
+			rect.x = destX2 + 1;
+			rect.y = sourceY1 < destY1 ? sourceY1 : destY1;
+			rect.width = (sourceX1 - destX1);
+			rect.height = clippedHeight;
+			
+			if ((rect.height > 0) && (rect.width > 0)) {
 				revealedRects->push_back(rect);
 			}
 		}
-	}
-
-	// If we reach this point, either the source or the destination is off-screen.
-	// There's nothing we can do to optimise this, so we just add the region to
-	// the redraw list.
-	s16 newX1 = x;
-	s16 newY1 = y;
-	s16 newX2 = x + width - 1;
-	s16 newY2 = y + height - 1;
-	
-	if (clipCoordinates(&newX1, &newY1, &newX2, &newY2, clipRect)) {
-		Rect rect;
-		rect.x = newX1;
-		rect.y = newY1;
-		rect.width = (newX2 - newX1) + 1;
-		rect.height = (newY2 - newY1) + 1;
-		revealedRects->push_back(rect);
+		
+		if (sourceY1 < destY1) {
+			
+			// Vertical movement only - revealed area above the destination
+			Rect rect;
+			rect.x = sourceX1 < destX1 ? sourceX1 : destX1;
+			rect.y = sourceY1;
+			rect.width = clippedWidth;
+			rect.height = (destY1 - sourceY1);
+			
+			if ((rect.height > 0) && (rect.width > 0)) {
+				revealedRects->push_back(rect);
+			}
+			
+		} else if (sourceY1 > destY1) {
+			
+			// Vertical movement only - revealed area below the destination
+			Rect rect;
+			rect.x = sourceX1 < destX1 ? sourceX1 : destX1;
+			rect.y = destY2 + 1;
+			rect.width = clippedWidth;
+			rect.height = (sourceY1 - destY1);
+			
+			if ((rect.height > 0) && (rect.width > 0)) {
+				revealedRects->push_back(rect);
+			}
+		}
 	}
 }
 
