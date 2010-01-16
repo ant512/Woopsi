@@ -119,13 +119,6 @@ namespace WoopsiUI {
 		const s16 getLineTrimmedPixelLength(const s32 lineNumber) const;
 
 		/**
-		 * Get a pointer to the specified line.
-		 * @param lineNumber The line to get a pointer to.
-		 * @return A pointer to the line.
-		 */
-		inline const char* getLinePointer(const s32 lineNumber) const { return getCharArray() + _linePositions[lineNumber]; };
-
-		/**
 		 * Get the total height of the text in pixels.
 		 * @return The total height of the text.
 		 */
@@ -196,6 +189,13 @@ namespace WoopsiUI {
 		 * @return The index within the char array of the start of the supplied line.
 		 */
 		const u32 getLineStartIndex(const u32 line) const { return _linePositions[line]; };
+
+		/**
+		 * Get a pointer to the specified line.
+		 * @param lineNumber The line to get a pointer to.
+		 * @return A pointer to the line.
+		 */
+		inline const char* getLinePointer(const s32 lineNumber) const { return getToken(_linePositions[lineNumber]); };
 
 	private:
 		/**

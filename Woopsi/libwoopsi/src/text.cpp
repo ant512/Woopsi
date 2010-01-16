@@ -25,28 +25,22 @@ const u8 Text::getLineLength(const s32 lineNumber) const {
 
 // Calculate the length of an individual line sans right-hand spaces
 const s16 Text::getLineTrimmedLength(const s32 lineNumber) const {
-	s16 length = getLineLength(lineNumber);
+   s16 length = getLineLength(lineNumber);
 
-	// Get char at the end of the line
-	const char* currentChar = _text + _linePositions[lineNumber] + length - 1;
-	u32 codePoint = 0;
+   // Loop through string until the end
+   StringIterator* iterator = newStringIterator();
+   
+   // Get char at the end of the line
+   if (iterator->moveTo(_linePositions[lineNumber] + length - 1)) {
+	   do{
+		  if (!_font->isCharBlank(iterator->getCodePoint())) break;
+		  length--;
+	   } while (iterator->moveToPrevious());
+	   return length;
+   }
 
-	// Strip any trailing spaces, etc
-	while (length > 0) {
-
-		// Scan backwards to the next valid codepoint
-		while (!(codePoint = getCodePoint(currentChar, NULL))) {
-			currentChar--;
-		}
-		
-		// Stop scanning if the current char is not blank
-		if (!_font->isCharBlank(codePoint)) break;
-
-		length--;
-		currentChar--;
-	}
-
-	return length;
+   // May occur if data has been horribly corrupted somewhere
+   return 0;
 }
 
 const s16 Text::getLinePixelLength(const s32 lineNumber) const {

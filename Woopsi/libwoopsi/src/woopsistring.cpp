@@ -69,10 +69,10 @@ void WoopsiString::setText(const WoopsiString& text) {
 	// Ensure we've got enough memory available
 	allocateMemory(text.getByteCount(), false);
 
-	// Copy/filter the valid UTF-8 tokens into _text and cache the length
-	u32 unicodeChars = 0;
-	_dataLength = filterString(_text, text.getCharArray(), text.getByteCount(), &unicodeChars);
-	_stringLength = unicodeChars;
+	memcpy(_text, text.getCharArray(), text.getByteCount());
+
+	_dataLength = text.getByteCount();
+	_stringLength = text.getLength();
 }
 
 void WoopsiString::setText(const char* text) {
@@ -115,10 +115,10 @@ void WoopsiString::append(const WoopsiString& text) {
 	// Ensure we've got enough memory available
 	allocateMemory(_dataLength + text.getByteCount(), true);
 
-	// Append/filter the valid utf-8 tokens to _text
-	u32 unicodeChars = 0;
-	_dataLength += filterString(_text + _dataLength, text.getCharArray(), text.getByteCount(), &unicodeChars);
-	_stringLength += unicodeChars;
+	memcpy(_text + _dataLength, text.getCharArray(), text.getByteCount());
+
+	_dataLength += text.getByteCount();
+	_stringLength += text.getLength();
 }
 
 char* WoopsiString::getToken(u32 index) const {
