@@ -88,26 +88,31 @@ void WoopsiString::setText(const char* text) {
 	_stringLength = unicodeChars;
 }
 
-void WoopsiString::setText(const u32 text) {
+void WoopsiString::setText(const u32 codePoint) {
 
-	// Get the number of bytes in the character
+	// Encode the character
 	u8 numBytes = 0;
-	getCodePoint((char*)&text, &numBytes);
+	const char* encoded = encodeCodePoint(codePoint, &numBytes);
 
-	// Create a char array large enough to contain just the unicode character and the terminator
-	char* newText = new char[numBytes];
+	// Is the codepoint valid?
+	if (encoded != NULL) {
 
-	memcpy(newText, &text, numBytes);
-
-	// Ensure we've got enough memory available
-	allocateMemory(numBytes, false);
-
-	// Copy/filter the valid UTF-8 tokens into _text and cache the length
-	u32 unicodeChars = 0;
-	_dataLength = filterString(_text, newText, numBytes, &unicodeChars);
-	_stringLength = unicodeChars;
-
-	delete[] newText;
+		// Ensure we've got enough memory available
+		allocateMemory(numBytes, false);
+	
+		// Copy the valid UTF-8 token into _text and cache the length
+		memcpy(_text, encoded, numBytes);
+		
+		_dataLength = numBytes;
+		_stringLength = 1;
+	
+		delete[] encoded;
+	} else {
+		
+		// Codepoint is invalid; we just need to truncate the string
+		_dataLength = 0;
+		_stringLength = 0;
+	}
 }
 
 void WoopsiString::append(const WoopsiString& text) {
@@ -475,4 +480,46 @@ u32 WoopsiString::getCodePoint(const char* string, u8* numChars) const {
 
 	// 11111110 and 11111111 are invalid
 	return 0;
+}
+
+const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
+	
+	numBytes = 0;
+	
+	if (codepoint<0x80) {
+		(*numBytes)=1;
+		char* buffer = new char[1];
+		buffer[0]=codepoint;
+		return buffer;
+	}
+
+	if (codepoint<0x0800) {
+		(*numBytes) = 2;
+		char* buffer = new char[2];
+		buffer[0] = (codepoint>>6) + 0xC0;
+		buffer[1] = (codepoint & 0x1F) + 0x80;
+		return buffer;
+	}
+
+	if (codepoint<0x10000) {
+		(*numBytes) = 3;
+		char* buffer = new char[3];
+		buffer[0] = (codepoint>>12) + 0xE0;
+		buffer[1] = ((codepoint>>6) & 0x3F) + 0x80;
+		buffer[2] = (codepoint & 0x3F) + 0x80;
+		return buffer;
+	}
+	
+	if (codepoint<0x10FFFF) {
+		(*numBytes) = 4;
+		char* buffer = new char[4];
+		buffer[0] = (codepoint>>18) + 0xF0;
+		buffer[1] = ((codepoint>>12) & 0x3F) + 0x80;
+		buffer[2] = ((codepoint>>6) & 0x3F) + 0x80;
+		buffer[3] = (codepoint & 0x3F) + 0x80;
+		return buffer;
+	}
+
+	// No legal codepoints after this point
+	return NULL;
 }

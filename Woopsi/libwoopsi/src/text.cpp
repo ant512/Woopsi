@@ -35,7 +35,7 @@ const s16 Text::getLineTrimmedLength(const s32 lineNumber) const {
 	   do{
 		  if (!_font->isCharBlank(iterator->getCodePoint())) break;
 		  length--;
-	   } while (iterator->moveToPrevious());
+	   } while (iterator->moveToPrevious() && (length >= 0));
 	   return length;
    }
 

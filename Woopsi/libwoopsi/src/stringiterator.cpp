@@ -28,8 +28,8 @@ void StringIterator::moveToFirst() {
 void StringIterator::moveToLast() {
 
 	// Position the iterator at the last byte in the string
-	_currentChar = _string->getCharArray() + _string->getByteCount() - 1;
-	_currentIndex = _string->getByteCount() - 1;
+	_currentChar = _string->getCharArray() + _string->getByteCount();
+	_currentIndex = _string->getLength();
 
 	// If the current byte does not represent a full character,
 	// locate the start of the character

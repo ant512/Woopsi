@@ -8,22 +8,23 @@ namespace WoopsiUI {
 	class StringIterator;
 
 	/**
-	 * Unicode string class.  Uses UTF-8 encoding.  For optimal performance, use the
-	 * StringIterator class to iterate over a WoopsiString instance.
+	 * Unicode string class.  Uses UTF-8 encoding.  For optimal performance, use
+	 * the StringIterator class to iterate over a WoopsiString instance.
 	 *
 	 * Where possible, the string avoids allocating memory
-	 * each time the string grows or shrinks.  This means that the string may consume
-	 * more memory than the number of chars would seem to dictate if the object previously
-	 * contained a large string that has subsequently been truncated.  It also means
-	 * that increasing the length of such a string is a cheaper operation as memory does
-	 * not need to allocated and copied.
+	 * each time the string grows or shrinks.  This means that the string may
+	 * consume more memory than the number of chars would seem to dictate if the
+	 * object previously contained a large string that has subsequently been
+	 * truncated.  It also means that increasing the length of such a string is
+	 * a cheaper operation as memory does not need to allocated and copied.
 	 *
-	 * Additionally, the string increases its array size by _growAmount every time it
-	 * needs to allocate extra memory, potentially reducing the number of reallocs needed.
+	 * Additionally, the string increases its array size by _growAmount every
+	 * time it needs to allocate extra memory, potentially reducing the number
+	 * of reallocs needed.
 	 *
-	 * The string is not null-terminated.  Instead, it uses a _stringLength member that
-	 * stores the number of characters in the string.  This saves a byte and makes calls
-	 * to getLength() run in O(1) time instead of O(n).
+	 * The string is not null-terminated.  Instead, it uses a _stringLength
+	 * member that stores the number of characters in the string.  This saves a
+	 * byte and makes calls to getLength() run in O(1) time instead of O(n).
 	 */
 	class WoopsiString {
 	public:
@@ -35,7 +36,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor to create a string from a char array.
-		 * @param text Pointer to a char array to use as the basis of the string.
+		 * @param text Pointer to a char array to use as the basis of the
+		 * string.
 		 */
 		WoopsiString(const char* text);
 		
@@ -136,10 +138,11 @@ namespace WoopsiUI {
 		virtual const u32 getByteCount() const { return _dataLength; };
 
 		/**
-		 * Get the character at the specified index.  This function is useful for
-		 * finding the occasional character at an index, but for iterating over strings
-		 * it is exceptionally slow.  The newStringIterator() method should be used
-		 * to retrieve an iterator object that can iterate over the string efficiently.
+		 * Get the character at the specified index.  This function is useful
+		 * for finding the occasional character at an index, but for iterating
+		 * over strings it is exceptionally slow.  The newStringIterator()
+		 * method should be used to retrieve an iterator object that can iterate
+		 * over the string efficiently.
 		 * @param index The index of the character to retrieve.
 		 * @return The character at the specified index.
 		 */
@@ -186,8 +189,8 @@ namespace WoopsiUI {
 		/**
 		 * Returns the last index of the specified letter within the string.
 		 * Will return -1 if the letter is not found.  Scans through the string
-		 * backwards from "startIndex" until it has examined all preceding letters
-		 * within the string.
+		 * backwards from "startIndex" until it has examined all preceding
+		 * letters within the string.
 		 * @param letter Letter to find.
 		 * @param startIndex The index to start searching from.
 		 * @return The index of the letter.
@@ -197,8 +200,8 @@ namespace WoopsiUI {
 		/**
 		 * Returns the last index of the specified letter within the string.
 		 * Will return -1 if the letter is not found.  Scans through the string
-		 * backwards from "startIndex" until it has examined all letters within the
-		 * range "count".
+		 * backwards from "startIndex" until it has examined all letters within
+		 * the range "count".
 		 * @param letter Letter to find.
 		 * @param startIndex The index to start searching from.
 		 * @param count The number of characters to examine.
@@ -210,7 +213,8 @@ namespace WoopsiUI {
 		 * Get a substring from this string.  It is the responsibility of the
 		 * caller to delete the substring when it is no longer required.
 		 * @param startIndex The starting point of the substring.
-		 * @return A pointer to a new WoopsiString object containing the substring.
+		 * @return A pointer to a new WoopsiString object containing the
+		 * substring.
 		 */
 		WoopsiString* subString(u32 startIndex) const;
 
@@ -219,29 +223,30 @@ namespace WoopsiUI {
 		 * caller to delete the substring when it is no longer required.
 		 * @param startIndex The starting point of the substring.
 		 * @param length The length of the substring.
-		 * @return A pointer to a new WoopsiString object containing the substring.
+		 * @return A pointer to a new WoopsiString object containing the
+		 * substring.
 		 */
 		WoopsiString* subString(u32 startIndex, u32 length) const;
 		
 		/**
-		 * Overloaded assignment operator.  Copies the data within
-		 * the argument string to this string.
+		 * Overloaded assignment operator.  Copies the data within the argument
+		 * string to this string.
 		 * @param string The string to copy.
 		 * @return This string.
 		 */
 		WoopsiString& operator=(const WoopsiString& string);
 
 		/**
-		 * Overloaded assignment operator.  Copies the data within
-		 * the argument char array to this string.
+		 * Overloaded assignment operator.  Copies the data within the argument
+		 * char array to this string.
 		 * @param string The string to copy.
 		 * @return This string.
 		 */
 		WoopsiString& operator=(const char* string);
 
 		/**
-		 * Overloaded assignment operator.  Copies the data from
-		 * the argument char to this string.
+		 * Overloaded assignment operator.  Copies the data from the argument
+		 * char to this string.
 		 * @param letter The char to copy.
 		 * @return This string.
 		 */
@@ -250,10 +255,10 @@ namespace WoopsiUI {
 		/**
 		 * Compares this string to the argument.
 		 * @param string String to compare to.
-		 * @return Zero if both strings are equal.  A value greater than zero indicates
-		 * that this string is greater than the argument string.  A value less than zero
-		 * indicates the opposite.  Note that the return value indicates the *byte* that
-		 * does not match, not the *character*.
+		 * @return Zero if both strings are equal.  A value greater than zero
+		 * indicates that this string is greater than the argument string.  A
+		 * value less than zero indicates the opposite.  Note that the return
+		 * value indicates the *byte* that does not match, not the *character*.
 		 */
 		virtual inline s32 compareTo(const WoopsiString& string) const {
 			return strncmp(_text, string.getCharArray(), getLength());
@@ -265,14 +270,15 @@ namespace WoopsiUI {
 		/**
 		 * Allocate memory for the string.
 		 * @param chars Number of chars to allocate.
-		 * @param preserve If true, the data in the existing memory will be preserved if new
-		 * memory must be allocated
+		 * @param preserve If true, the data in the existing memory will be
+		 * preserved if new memory must be allocated
 		 */
 		virtual void allocateMemory(u32 chars, bool preserve);
 
 		/**
 		 * Check if we've got any string data stored or not.
-		 * @return True if the string contains any data; false if no data has yet been supplied.
+		 * @return True if the string contains any data; false if no data has
+		 * yet been supplied.
 		 */
 		virtual inline bool hasData() const { return _dataLength > 0; };
 
@@ -288,8 +294,8 @@ namespace WoopsiUI {
 		 * @param dest Destination string.
 		 * @param src Source string.
 		 * @param sourceBytes Number of bytes in the source string.
-		 * @param totalUnicodeChars Output parameter populated with the total number
-		 * of unicode characters in the filtered string.
+		 * @param totalUnicodeChars Output parameter populated with the total
+		 * number of unicode characters in the filtered string.
 		 * @return The number of bytes in the filtered string.
 		 */
 		u32 filterString(char* dest, const char* src, u32 sourceBytes, u32* totalUnicodeChars) const;
@@ -307,11 +313,11 @@ namespace WoopsiUI {
 		virtual char* getToken(const u32 index) const;
 
 		/**
-		 * Get the number of chars read in the UTF-8 token and its codepoint.  In the case of
-		 * an invalid codepoint, the value returned will be 0.
+		 * Get the number of chars read in the UTF-8 token and its codepoint.
+		 * In the case of an invalid codepoint, the value returned will be 0.
 		 * @param string String to analyse.
-		 * @param numChars Pointer to a u8 that will hold the number of chars in the codepoint once
-		 * the method ends.
+		 * @param numChars Pointer to a u8 that will hold the number of chars in
+		 * the codepoint once the method ends.
 		 * @return The codepoint.  Returns 0 if the codepoint is invalid.
 		 */
 		u32 getCodePoint(const char* string, u8* numChars) const;
@@ -319,11 +325,23 @@ namespace WoopsiUI {
 	private:
 		friend class StringIterator;
 		
-		u32 _dataLength;						/**< Length of char data in the string */
-		u32 _stringLength;						/**< Number of unicode tokens in the string */
-		u32 _allocatedSize;						/**< Number of bytes allocated for this string */
-		u32 _growAmount;						/**< Number of chars that the string grows by
-													 whenever it needs to get larger */
+		u32 _dataLength;		/**< Length of char data in the string */
+		u32 _stringLength;		/*< Number of unicode tokens in the string */
+		u32 _allocatedSize;		/**< Number of bytes allocated for this string */
+		u32 _growAmount;		/**< Number of chars that the string grows by
+									 whenever it needs to get larger */
+									 
+		/**
+		 * Encodes a codepoint into its UTF-8 representation.  Will allocate
+		 * a block of memory if the encode is successful containing the encoded
+		 * data.  This memory must be deleted with delete[] when it is no longer
+		 * needed to avoid a memory leak.  If the codepoint is not valid, the
+		 * method will return NULL.
+		 * @param codePoint Codepoint to encode.
+		 * @param numBytes The number of bytes in the encoded data.
+		 * @return The encoded codepoint.
+		 */
+		 const char* encodeCodePoint(u32 codePoint, u8* numBytes) const;
 	};
 }
 
