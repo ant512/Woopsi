@@ -9,30 +9,35 @@ StringIterator::StringIterator(const WoopsiString* string) {
 	_currentIndex = 0;
 }
 
-u8 StringIterator::getCodePointSize() {
-	u8 size = 0;
-	
-	// Return 0 if string has no data
-	if (_string->getLength() == 0) return 0;
-
-	// Return char size
-	_string->getCodePoint(_currentChar, &size);
-	return size;
-}
-
 void StringIterator::moveToFirst() {
 	_currentChar = _string->getCharArray();
 	_currentIndex = 0;
 }
 
+u8 StringIterator::getCodePointSize() {
+	
+	// Return 0 if string has no data
+	if (_string->getLength() == 0) return 0;
+	
+	char value=*_currentChar;
+	if (value<0x80) return 1;  
+	if (value<0xC2) return 0; // Can't be a leading char
+	if (value<0xE0) return 2;
+	if (value<0xF0) return 3;
+	if (value<0xF4) return 4; // Doesn't have legal unicode leading char after that
+	return 0;
+}
+
 void StringIterator::moveToLast() {
+	
+	if (_string->getLength() > 0) {
+		_currentChar = _string->getCharArray() + _string->getByteCount() - 1; 
 
-	// Position the iterator at the last byte in the string
-	_currentChar = _string->getCharArray() + _string->getByteCount();
-	_currentIndex = _string->getLength();
-
-	// Locate the start of the character
-	moveToPrevious();
+		while ((*_currentChar >= 0x80) && (*_currentChar < 0xC0)) _currentChar--;
+		
+		// String has been filtered before; no need to check if value >=0xF4
+		_currentIndex = _string->getLength()-1;
+	}
 }
 
 bool StringIterator::moveToNext() {
@@ -53,14 +58,9 @@ bool StringIterator::moveToPrevious() {
 	if (_currentIndex == 0) return false;
 	
 	// Move back one char to ensure we're in the middle of a char sequence
-	_currentChar--;
-	
-	while (!_string->getCodePoint(_currentChar, NULL)) {
+	do {
 		_currentChar--;
-		
-		// Stop looking if we've reached the start of the string
-		if (_currentIndex == 0) return false;
-	}
+	} while ((*_currentChar >= 0x80) && (*_currentChar < 0xC0));   
 	
 	// Loop has ended, so we must have found a valid codepoint; we know
 	// that we're looking at the previous character index
