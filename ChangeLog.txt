@@ -48,6 +48,8 @@ Change Log
     - WoopsiString::insert() explicitly calls its own setText() and append()
       methods to prevent the Text class from wrapping twice.
     - Added WoopsiString::encodeCodePoint().
+    - PackedFontBase::isCharBlank() returns correct value if character not
+      present in font (fixes horizontal alignment in MulitLineTextBox).
     
   New Features:
     - Added FontBase::getCharHeight().

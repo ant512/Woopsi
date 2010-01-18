@@ -14,7 +14,7 @@ u16 PackedFontBase::getCharWidth(u32 letter) const {
 
 const bool PackedFontBase::isCharBlank(const u32 letter) const {
 	if (letter >= _first && letter <= _last) return _glyphWidth[letter - _first] == 0;
-	return false;
+	return true;
 }
 
 u16 PackedFontBase::getStringWidth(const WoopsiString& text) const {
