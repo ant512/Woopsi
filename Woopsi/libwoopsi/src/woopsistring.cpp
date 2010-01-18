@@ -159,13 +159,13 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 
 	// Early exit if the string is empty
 	if (!hasData()) {
-		setText(text);
+		WoopsiString::setText(text);
 		return;
 	}
 
 	// Early exit if we're just appending
 	if (index >= _stringLength) {
-		append(text);
+		WoopsiString::append(text);
 		return;
 	}
 
@@ -185,9 +185,10 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 		if (insertPoint > 0) memcpy(newText, _text, insertPoint);
 
 		// Insert the additional text into the new string
-		u32 unicodeChars = 0;
-		u32 size = filterString(newText + insertPoint, text.getCharArray(), text.getLength(), &unicodeChars);
-		_stringLength += unicodeChars;
+		u32 size = text.getByteCount();
+		
+		memcpy(newText + insertPoint, text.getCharArray(), size);
+		_stringLength += text.getLength();
 
 		// Copy the end of the existing text the the newly allocated string
 		if (_dataLength > insertPoint) memcpy(newText + insertPoint + size, _text + insertPoint, _dataLength - insertPoint);
@@ -484,38 +485,38 @@ u32 WoopsiString::getCodePoint(const char* string, u8* numChars) const {
 
 const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
 	
-	numBytes = 0;
+	*numBytes = 0;
 	
-	if (codepoint<0x80) {
-		(*numBytes)=1;
+	if (codepoint < 0x80) {
+		*numBytes = 1;
 		char* buffer = new char[1];
-		buffer[0]=codepoint;
+		buffer[0] = codepoint;
 		return buffer;
 	}
 
-	if (codepoint<0x0800) {
-		(*numBytes) = 2;
+	if (codepoint < 0x0800) {
+		*numBytes = 2;
 		char* buffer = new char[2];
-		buffer[0] = (codepoint>>6) + 0xC0;
+		buffer[0] = (codepoint >> 6) + 0xC0;
 		buffer[1] = (codepoint & 0x1F) + 0x80;
 		return buffer;
 	}
 
-	if (codepoint<0x10000) {
-		(*numBytes) = 3;
+	if (codepoint < 0x10000) {
+		*numBytes = 3;
 		char* buffer = new char[3];
-		buffer[0] = (codepoint>>12) + 0xE0;
-		buffer[1] = ((codepoint>>6) & 0x3F) + 0x80;
+		buffer[0] = (codepoint >> 12) + 0xE0;
+		buffer[1] = ((codepoint >> 6) & 0x3F) + 0x80;
 		buffer[2] = (codepoint & 0x3F) + 0x80;
 		return buffer;
 	}
 	
-	if (codepoint<0x10FFFF) {
-		(*numBytes) = 4;
+	if (codepoint < 0x10FFFF) {
+		*numBytes = 4;
 		char* buffer = new char[4];
-		buffer[0] = (codepoint>>18) + 0xF0;
-		buffer[1] = ((codepoint>>12) & 0x3F) + 0x80;
-		buffer[2] = ((codepoint>>6) & 0x3F) + 0x80;
+		buffer[0] = (codepoint >> 18) + 0xF0;
+		buffer[1] = ((codepoint >> 12) & 0x3F) + 0x80;
+		buffer[2] = ((codepoint >> 6) & 0x3F) + 0x80;
 		buffer[3] = (codepoint & 0x3F) + 0x80;
 		return buffer;
 	}

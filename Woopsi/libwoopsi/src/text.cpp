@@ -134,7 +134,7 @@ void Text::wrap(u32 charIndex) {
 		}
 
 		// Remove any wrapping data from after this line index onwards
-		while ((_linePositions.size() > 0) && (_linePositions[_linePositions.size() - 1] > lineIndex)) {
+		while ((_linePositions.size() > 0) && (_linePositions.size() - 1 > (s32)lineIndex)) {
 			_linePositions.pop_back();
 		}
 
@@ -207,22 +207,24 @@ void Text::wrap(u32 charIndex) {
 		} else {
 			endReached = true;
 		}
-
-		// Process any found data
-		if (iterator->getIndex() > pos) {
+		
+		if ((!endReached) && (iterator->getIndex() > pos)) {
+			
+			// Process any found data
 
 			// If we didn't find a breakpoint split at the current position
 			if (breakIndex == 0) breakIndex = iterator->getIndex() - 1;
 
 			// Trim blank space from the start of the next line
 			StringIterator* breakIterator = newStringIterator();
-			breakIterator->moveTo(breakIndex + 1);
-
-			while (breakIterator->getCodePoint() == ' ') {
-				if (breakIterator->moveToNext()) {
-					breakIndex++;
-				} else {
-					break;
+			
+			if (breakIterator->moveTo(breakIndex + 1)) {
+				while (breakIterator->getCodePoint() == ' ') {
+					if (breakIterator->moveToNext()) {
+						breakIndex++;
+					} else {
+						break;
+					}
 				}
 			}
 
@@ -245,20 +247,27 @@ void Text::wrap(u32 charIndex) {
 				line.width = lineWidth;
 				_longestLines.push_back(line);
 			}
-		} else {
+		} else if (!endReached) {
 
 			// Add a blank row if we're not at the end of the string
-			if (iterator->getIndex() < getLength()) {
-				pos++;
-				_linePositions.push_back(pos);
-			}
+			pos++;
+			_linePositions.push_back(pos);
 		}
+	}
+	
+	// Add marker indicating end of text
+	// If we reached the end of the text, append the stopping point
+	if (_linePositions[_linePositions.size() - 1] != getLength() + 1) {
+		_linePositions.push_back(getLength());
 	}
 
 	delete iterator;
 
 	// Calculate the total height of the text
 	_textPixelHeight = getLineCount() * (_font->getHeight() + _lineSpacing);
+	
+	// Ensure height is always at least one row
+	if (_textPixelHeight == 0) _textPixelHeight = _font->getHeight() + _lineSpacing;
 }
 
 void Text::setFont(FontBase* font) {
@@ -283,10 +292,12 @@ void Text::stripTopLines(const s32 lines) {
 
 const u32 Text::getLineContainingCharIndex(const u32 index) const {
 	
-	// Early exit if the index is past the end of the current line position data
+	// Early exit if there is no existing line data
 	if (_linePositions.size() == 0) return 0;
-	if (index > _linePositions[_linePositions.size() - 1]) return 0;
-
+	
+	// Early exit if the character is in the last row
+	if (index >= _linePositions[_linePositions.size() - 2]) return _linePositions.size() - 2;
+	
 	// Binary search the line vector for the line containing the supplied index
 	u32 bottom = 0;
 	u32 top = _linePositions.size() - 1;

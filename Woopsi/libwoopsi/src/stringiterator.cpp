@@ -31,11 +31,8 @@ void StringIterator::moveToLast() {
 	_currentChar = _string->getCharArray() + _string->getByteCount();
 	_currentIndex = _string->getLength();
 
-	// If the current byte does not represent a full character,
-	// locate the start of the character
-	if (!getCodePoint()) {
-		moveToPrevious();
-	}
+	// Locate the start of the character
+	moveToPrevious();
 }
 
 bool StringIterator::moveToNext() {

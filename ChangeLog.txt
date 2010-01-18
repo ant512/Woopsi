@@ -34,6 +34,20 @@ Change Log
     - Fixed a crash in GraphicsPort::drawText() when trying to draw text outside
       the clipRect with a PackedFont1 font; should provide a minor speedup.
     - ScrollingPanel draws its border correctly.
+    - Removed Text::getLinePointer().
+    - MultiLineTextBox::drawCursor() uses a StringIterator to locate the cursor
+      position.
+    - MultiLineTextBox::drawCursor() does not read past the end of the string
+      when the cursor is positioned beyond the string.
+    - Text::wrap() does not perform an invalid comparison between line index and
+      char index when truncating the line positions array.
+    - Text::wrap() correctly appends the string end position in all scenarios.
+    - Text::wrap() always assumes text height is at least one row.
+    - Text::getLineContainingCharIndex() returns the correct value if the
+      character is in the last row.
+    - WoopsiString::insert() explicitly calls its own setText() and append()
+      methods to prevent the Text class from wrapping twice.
+    - Added WoopsiString::encodeCodePoint().
     
   New Features:
     - Added FontBase::getCharHeight().

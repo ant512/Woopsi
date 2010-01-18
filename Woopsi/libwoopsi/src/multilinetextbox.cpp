@@ -3,6 +3,7 @@
 #include "text.h"
 #include "graphicsport.h"
 #include "woopsifuncs.h"
+#include "stringiterator.h"
 
 using namespace WoopsiUI;
 
@@ -142,14 +143,16 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 			// Cursor line offset gives us the distance of the cursor from the start of the line
 			u8 cursorLineOffset = _cursorPos - _text->getLineStartIndex(cursorRow);
 			
-			// Grab a pointer to the start of the current line of text for ease of
-			// processing later
-			const char* lineData = _text->getLinePointer(cursorRow);
+			StringIterator* iterator = _text->newStringIterator();
+			iterator->moveTo(_text->getLineStartIndex(cursorRow));
 			
 			// Sum the width of each char in the row to find the x co-ord 
-			for (s32 i = 0; i < cursorLineOffset; i++) {
-				cursorX += getFont()->getCharWidth(lineData[i]);
+			for (s32 i = 0; i < cursorLineOffset; ++i) {
+				cursorX += getFont()->getCharWidth(iterator->getCodePoint());
+				iterator->moveToNext();
 			}
+			
+			delete iterator;
 		}
 
 		// Add offset of row (taking into account canvas co-ord and text alignment)
@@ -160,7 +163,11 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 		cursorY = getRowY(cursorRow) + _canvasY;
 
 		// Draw cursor
-		port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(_text->getCharAt(_cursorPos)), getFont()->getHeight());
+		if ((u32)_cursorPos < _text->getLength()) {
+			port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(_text->getCharAt(_cursorPos)), getFont()->getHeight());
+		} else {
+			port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(' '), getFont()->getHeight());
+		}
 	}
 
 	delete port;
@@ -210,6 +217,9 @@ s16 MultiLineTextBox::getRowY(s32 row) {
 
             // Get the number of rows of text
             textRows = _text->getLineCount();
+			
+			// Ensure there's always one row
+			if (textRows == 0) textRows = 1;
 
             // Calculate the start position of the block of text
             startPos = ((canvasRows - textRows) * _text->getLineHeight()) >> 1;

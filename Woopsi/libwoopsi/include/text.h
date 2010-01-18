@@ -190,13 +190,6 @@ namespace WoopsiUI {
 		 */
 		const u32 getLineStartIndex(const u32 line) const { return _linePositions[line]; };
 
-		/**
-		 * Get a pointer to the specified line.
-		 * @param lineNumber The line to get a pointer to.
-		 * @return A pointer to the line.
-		 */
-		inline const char* getLinePointer(const s32 lineNumber) const { return getToken(_linePositions[lineNumber]); };
-
 	private:
 		/**
 		 * Struct defining the position and length of a longest line within the _linePositions
