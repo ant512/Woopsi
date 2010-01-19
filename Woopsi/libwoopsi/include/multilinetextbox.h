@@ -6,8 +6,12 @@
 #include "gadgetstyle.h"
 #include "woopsistring.h"
 #include "text.h"
+#include "gadgeteventhandler.h"
+#include "gadgeteventargs.h"
 
 namespace WoopsiUI {
+	
+	class WoopsiTimer;
 
 	/**
 	 * Textbox that offers multiple lines of text.  Has scrolling
@@ -16,7 +20,7 @@ namespace WoopsiUI {
 	 * rows of text than it can display, and these additional
 	 * rows can be scrolled through.
 	 */
-	class MultiLineTextBox : public ScrollingPanel {
+	class MultiLineTextBox : public ScrollingPanel, public GadgetEventHandler {
 	public:
 
 		/**
@@ -200,6 +204,19 @@ namespace WoopsiUI {
 		 */
 		virtual bool keyPress(KeyCode keyCode);
 
+		/**
+		 * Send a key release to the gadget.
+		 * @param keyCode The keycode to send to the gadget.
+		 * @return True if the key release was processed.
+		 */
+		virtual bool keyRelease(KeyCode keyCode);
+
+		/**
+		 * Handle a gadget action event.
+		 * @param e The event data.
+		 */
+		virtual void handleActionEvent(const GadgetEventArgs& e);
+
 	protected:
 		Text* _text;						/**< Text object that manipulates and wraps the raw text string */
 		u8 _visibleRows;					/**< Total number of rows that the textbox can display at once */
@@ -210,6 +227,10 @@ namespace WoopsiUI {
 		TextAlignmentVert _vAlignment;		/**< Vertical alignment of the text */
 		s32 _cursorPos;						/**< Position of the cursor within the string */
 		bool _showCursor;					/**< Set to true to make cursor visible */
+		WoopsiTimer* _timer;				/**< Timer for handling dpad repeats. */
+		u32 _initialRepeatTime;				/**< Time until held dpad starts to repeat. */
+		u32 _secondaryRepeatTime;			/**< Time until dpad already repeating repeats again. */
+		KeyCode _heldDirection;				/**< Currently held dpad direction. */
 
 		/**
 		 * Gets the x position of a row of text based on the width of the row and the

@@ -50,6 +50,7 @@ Change Log
     - Added WoopsiString::encodeCodePoint().
     - PackedFontBase::isCharBlank() returns correct value if character not
       present in font (fixes horizontal alignment in MulitLineTextBox).
+    - Key repeat values stored in defines.h.
     
   New Features:
     - Added FontBase::getCharHeight().
@@ -69,6 +70,9 @@ Change Log
     - Added WoopsiString::indexOf().
     - TextBox implements key repeats when left or right d-pad is held down;
       cursor moves repeatedly until end of string reached or d-pad released.
+    - MultiLineTextBox implements key repeats when left or right d-pad is held
+      down; cursor moves repeatedly until end of string reached or d-pad
+      released.
 	
   V0.43 (20091223)
   

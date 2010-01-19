@@ -12,8 +12,8 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, 
 	moveCursorToPosition(_text.getLength());
 
 	// Create the timer
-	_initialRepeatTime = 25;
-	_secondaryRepeatTime = 5;
+	_initialRepeatTime = KEY_INITIAL_REPEAT_TIME;
+	_secondaryRepeatTime = KEY_SECONDARY_REPEAT_TIME;
 	_timer = new WoopsiTimer(_initialRepeatTime, true);
 	_timer->addGadgetEventHandler(this);
 	addGadget(_timer);

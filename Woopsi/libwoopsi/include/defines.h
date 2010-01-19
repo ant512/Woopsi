@@ -42,6 +42,16 @@
 #define DOUBLE_CLICK_BOUNDS 10
 
 /**
+ * Time taken before a key (either d-pad or keyboard) starts repeating.
+ */
+#define KEY_INITIAL_REPEAT_TIME 25
+
+/**
+ * Time taken before a repeating key repeats again.
+ */
+#define KEY_SECONDARY_REPEAT_TIME 5
+
+/**
  * Woopsi version number.
  */
 #define WOOPSI_VERSION "0.44 Alpha"

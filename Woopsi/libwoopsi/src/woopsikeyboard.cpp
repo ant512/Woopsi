@@ -107,8 +107,8 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const Woopsi
 	addGadget(new WoopsiKey(buttonX + (11 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "\\", "|", "\\", "|", "\\", "\\"));
 
 	// Create the timer
-	_initialRepeatTime = 25;
-	_secondaryRepeatTime = 5;
+	_initialRepeatTime = KEY_INITIAL_REPEAT_TIME;
+	_secondaryRepeatTime = KEY_SECONDARY_REPEAT_TIME;
 	_timer = new WoopsiTimer(_initialRepeatTime, true);
 	addGadget(_timer);
 

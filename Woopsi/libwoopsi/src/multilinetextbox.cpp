@@ -4,6 +4,7 @@
 #include "graphicsport.h"
 #include "woopsifuncs.h"
 #include "stringiterator.h"
+#include "woopsitimer.h"
 
 using namespace WoopsiUI;
 
@@ -32,6 +33,13 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 
 	_cursorPos = 0;
 	_showCursor = false;
+	
+	// Create the timer
+	_initialRepeatTime = KEY_INITIAL_REPEAT_TIME;
+	_secondaryRepeatTime = KEY_SECONDARY_REPEAT_TIME;
+	_timer = new WoopsiTimer(_initialRepeatTime, true);
+	_timer->addGadgetEventHandler(this);
+	addGadget(_timer);
 
 	setText(text);
 }
@@ -527,9 +535,21 @@ bool MultiLineTextBox::keyPress(KeyCode keyCode) {
 		if (keyCode == KEY_CODE_LEFT) {
 			if (_cursorPos > 0) {
 				moveCursorToPosition(_cursorPos - 1);
+				_heldDirection = KEY_CODE_LEFT;
+
+				// Start the timer
+				_timer->setTimeout(_initialRepeatTime);
+				_timer->start();
 			}
 		} else if (keyCode == KEY_CODE_RIGHT) {
-			moveCursorToPosition(_cursorPos + 1);
+			if (_cursorPos < (s32)_text->getLength()) {
+				moveCursorToPosition(_cursorPos + 1);
+				_heldDirection = KEY_CODE_RIGHT;
+
+				// Start the timer
+				_timer->setTimeout(_initialRepeatTime);
+				_timer->start();
+			}
 		}
 
 		return true;
@@ -537,3 +557,45 @@ bool MultiLineTextBox::keyPress(KeyCode keyCode) {
 
 	return false;
 }
+
+bool MultiLineTextBox::keyRelease(KeyCode keyCode) {
+	if (Gadget::keyRelease(keyCode)) {
+		if (_heldDirection == keyCode) {
+
+			// Forget the previously-held key
+			_heldDirection = KEY_CODE_NONE;
+			_timer->stop();
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+void MultiLineTextBox::handleActionEvent(const GadgetEventArgs& e) {
+
+	if (e.getSource() != NULL) {
+
+		// Check if the event was fired by the timer (key repeat)
+		if (e.getSource() == _timer) {
+
+			// Event is a key repeat - move the cursor
+			if (_heldDirection == KEY_CODE_LEFT) {
+				if (_cursorPos > 0) {
+					moveCursorToPosition(_cursorPos - 1);
+				}
+			} else if (_heldDirection == KEY_CODE_RIGHT) {
+				if (_cursorPos < (s32)_text->getLength()) {
+					moveCursorToPosition(_cursorPos + 1);
+				}
+			}
+			
+			// Ensure that subsequent repeats are faster
+			_timer->setTimeout(_secondaryRepeatTime);
+
+			return;
+		}
+	}
+}
+
