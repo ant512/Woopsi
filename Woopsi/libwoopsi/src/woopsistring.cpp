@@ -177,6 +177,8 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 
 	// Reallocate memory if the existing memory isn't large enough
 	if (_allocatedSize < newSize) {
+		
+		newSize += _growAmount;
 
 		// Allocate new string large enough to contain additional data
 		char* newText = new char[newSize];
@@ -209,9 +211,10 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 		}
 
 		// Insert the additional text into the new string
-		u32 unicodeChars = 0;
-		_dataLength += filterString(_text + insertPoint, text.getCharArray(), text.getLength(), &unicodeChars);
-		_stringLength += unicodeChars;
+		memcpy(_text + insertPoint, text.getCharArray(), text.getByteCount());
+
+		_dataLength += text.getByteCount();
+		_stringLength += text.getLength();
 	}
 }
 

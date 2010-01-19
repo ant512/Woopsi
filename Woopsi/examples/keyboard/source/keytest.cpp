@@ -16,7 +16,7 @@ void KeyTest::startup() {
 	outScreen->flipToTopScreen();
 
 	// Add output window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", Gadget::GADGET_DRAGGABLE, 0);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	outScreen->addGadget(window);
 
 	// Get available area within window
@@ -34,7 +34,7 @@ void KeyTest::startup() {
 	woopsiApplication->addGadget(inScreen);
 
 	// Create keyboard
-	_keyboard = new WoopsiKeyboard(0, 0, 256, 192, "Keyboard", Gadget::GADGET_DRAGGABLE, 0);
+	_keyboard = new WoopsiKeyboard(0, 13, 256, 179, "Keyboard", Gadget::GADGET_DRAGGABLE, 0);
 	_keyboard->addKeyboardEventHandler(this);
 	inScreen->addGadget(_keyboard);
 	
