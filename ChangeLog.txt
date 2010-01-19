@@ -51,6 +51,8 @@ Change Log
     - PackedFontBase::isCharBlank() returns correct value if character not
       present in font (fixes horizontal alignment in MulitLineTextBox).
     - Key repeat values stored in defines.h.
+    - FileListBox does not show "." directory.
+    - Minor optimisation when building the FileListBox contents.
     
   New Features:
     - Added FontBase::getCharHeight().

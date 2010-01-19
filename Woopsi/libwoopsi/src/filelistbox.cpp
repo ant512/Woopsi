@@ -125,6 +125,7 @@ void FileListBox::readDirectory() {
 		// Directory 1
 
 		// Directories
+		_listbox->addOption(new FileListBoxDataItem("..", 0, getShineColour(), getBackColour(), getShineColour(), getHighlightColour(), true));
 		_listbox->addOption(new FileListBoxDataItem("Subdir1", 0, getShineColour(), getBackColour(), getShineColour(), getHighlightColour(), true));
 		_listbox->addOption(new FileListBoxDataItem("Subdir2", 0, getShineColour(), getBackColour(), getShineColour(), getHighlightColour(), true));
 
@@ -152,6 +153,9 @@ void FileListBox::readDirectory() {
 	struct dirent* ent;
 
 	while ((ent = readdir(dir)) != 0) {
+		
+		// Bypass "." directory
+		if (strcmp(ent->d_name, ".") == 0) continue;
 
 		char* newPath = new char[strlen(ent->d_name) + _path->getPath().getLength() + 2];
 		_path->getPath().copyToCharArray(newPath);
@@ -163,24 +167,16 @@ void FileListBox::readDirectory() {
 			continue;
 		}
 
-		// Create memory to store the filename in the array
-		// TODO: Can we just pass ent->d_name to the FileListBoxDataItem
-		// constructor, and let the WoopsiString handle the copying?
-		char* storedFilename = new char[strlen(ent->d_name) + 1];
-		strcpy(storedFilename, ent->d_name);
-
 		// st.st_mode & S_IFDIR indicates a directory
 		if (st.st_mode & S_IFDIR) {
 
 			// Directory
-			_listbox->addOption(new FileListBoxDataItem(storedFilename, 0, getShineColour(), getBackColour(), getShineColour(), getHighlightColour(), true));
+			_listbox->addOption(new FileListBoxDataItem(ent->d_name, 0, getShineColour(), getBackColour(), getShineColour(), getHighlightColour(), true));
 		} else {
 
 			// File
-			_listbox->addOption(new FileListBoxDataItem(storedFilename, 0, getShadowColour(), getBackColour(), getShadowColour(), getHighlightColour(), false));
+			_listbox->addOption(new FileListBoxDataItem(ent->d_name, 0, getShadowColour(), getBackColour(), getShadowColour(), getHighlightColour(), false));
 		}
-
-		delete storedFilename;
 	}
 
 	// Close the directory
