@@ -128,17 +128,14 @@ Gadget::~Gadget() {
 	}
 
 	// Delete children
-	for (s32 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->destroy();
+	while (_gadgets.size() > 0) {
+		_gadgets[0]->destroy();
 	}
 
 	// Delete shelved children
-	for (s32 i = 0; i < _shelvedGadgets.size(); i++) {
-		_shelvedGadgets[i]->destroy();
+	while (_shelvedGadgets.size() > 0) {
+		_shelvedGadgets[0]->destroy();
 	}
-
-	_gadgets.clear();
-	_shelvedGadgets.clear();
 
 	delete _rectCache;
 	delete _style;
@@ -439,6 +436,12 @@ void Gadget::close() {
 
 		_flags.deleted = true;
 		_flags.drawingEnabled = false;
+		
+		// Unset clicked gadget if necessary
+		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+		if (clickedGadget == this) {
+			release(clickedGadget->getX(), clickedGadget->getY());
+		}
 
 		// Ensure the gadget isn't running modally
 		stopModal();
@@ -616,17 +619,14 @@ void Gadget::shelveChild(Gadget* gadget) {
 // Close a child
 void Gadget::closeChild(Gadget* gadget) {
 	if (gadget != NULL) {
-
+		
+		// Decrease decoration count if necessary
+		if (gadget->isDecoration()) {
+			_decorationCount--;
+		}
+		
 		// Ensure gadget knows it is being closed
-		if (!gadget->isDeleted()) {
-			gadget->close();
-		}
-
-		// Unset clicked gadget if necessary
-		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
-		if (clickedGadget == gadget) {
-			clickedGadget->release(clickedGadget->getX(), clickedGadget->getY());
-		}
+		gadget->close();
 
 		// Do we need to make another gadget active?
 		if (_focusedGadget == gadget) {
@@ -641,11 +641,6 @@ void Gadget::closeChild(Gadget* gadget) {
 			}
 		}
 
-		// Decrease decoration count if necessary
-		if (gadget->isDecoration()) {
-			_decorationCount--;
-		}
-
 		// Where should the focus go?
 		if (_focusedGadget != NULL) {
 			// Send focus to the new active gadget
@@ -655,7 +650,6 @@ void Gadget::closeChild(Gadget* gadget) {
 			setFocusedGadget(NULL);
 		}
 
-		// Ensure that gadget is no longer receiving VBL events
 		if (woopsiApplication != NULL) {
 
 			// Close the context menu if we're closing the gadget that opened it

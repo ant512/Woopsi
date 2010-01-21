@@ -57,6 +57,7 @@ Change Log
       methods.
     - TextBox switches to left-aligned automatically if contents exceeds size
       of box.
+    - Fixed memory leak and logic problems when deleting gadgets.
     
   New Features:
     - Added FontBase::getCharHeight().
