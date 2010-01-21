@@ -20,6 +20,8 @@ namespace WoopsiUI {
 		 * @param normalBackColour Colour to draw the background with when not selected.
 		 * @param selectedTextColour Colour to draw the text with when selected.
 		 * @param selectedBackColour Colour to draw the background with when selected.
+		 * @param isDirectory True indicates that the item is a directory; false
+		 * @param indicates that it is a file.
 		 */
 		FileListBoxDataItem(const char* text, const u32 value,
 			const u16 normalTextColour,

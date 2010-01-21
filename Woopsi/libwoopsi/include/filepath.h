@@ -5,6 +5,14 @@
 
 namespace WoopsiUI {
 
+	/**
+	 * Class designed to simplify parsing path strings.  If told to append the
+	 * current directory to its current path, the path will not change.  If told
+	 * to append the parent directory, the current directory is stripped from
+	 * the path.  The path string is therefore always as short as possible.
+	 *
+	 * Used by the FileListBox.
+	 */
 	class FilePath {
 	public:
 		
@@ -39,7 +47,7 @@ namespace WoopsiUI {
 		void appendPath(const WoopsiString& path);
 
 	private:
-		WoopsiString _path;
+		WoopsiString _path;			/** String containing the path. */
 	};
 }
 
