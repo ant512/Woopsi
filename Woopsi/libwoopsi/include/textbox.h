@@ -13,8 +13,12 @@ namespace WoopsiUI {
 	class WoopsiTimer;
 
 	/**
-	 * Single-line textbox gadget.  Can align text both vertically and horizontally in
-	 * different ways.
+	 * Single-line textbox gadget.  Can align text both vertically and
+	 * horizontally in different ways.  The gadget gains this functionality by
+	 * inheriting from the Label class.  However, if the amount of text exceeds
+	 * the dimensions of the gadget, the gadget will ignore its horizontal
+	 * alignment settings and switch to left-aligned instead.  This ensures that
+	 * moving the cursor over the text will scroll through it correctly.
 	 */
 	class TextBox : public Label, public GadgetEventHandler {
 	public:
@@ -34,8 +38,7 @@ namespace WoopsiUI {
 		TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
 		
 		/**
-		 * Draw the region of the textbox within the clipping rect. Should not be called
-		 * directly.
+		 * Draw the region of the textbox within the clipping rect.
 		 * @param clipRect The clipping rect to limit drawing to.
 		 */
 		virtual void draw(Rect clipRect);
@@ -57,7 +60,8 @@ namespace WoopsiUI {
 		virtual void setText(const WoopsiString& text);
 		
 		/**
-		 * Append new text to the end of the current text displayed in the label.
+		 * Append new text to the end of the current text displayed in the
+		 * label.
 		 * @param text String to append.
 		 */
 		virtual void appendText(const WoopsiString& text);
@@ -76,9 +80,9 @@ namespace WoopsiUI {
 		virtual void insertTextAtCursor(const WoopsiString& text);
 
 		/**
-		 * Move the cursor to the text position specified.  0 indicates the start
-		 * of the string.  If position is greater than the length of the string,
-		 * the cursor is moved to the end of the string.
+		 * Move the cursor to the text position specified.  0 indicates the
+		 * start of the string.  If position is greater than the length of the
+		 * string, the cursor is moved to the end of the string.
 		 * @param position The new cursor position.
 		 */
 		virtual void moveCursorToPosition(const u32 position);
@@ -91,8 +95,8 @@ namespace WoopsiUI {
 		virtual inline const u32 getCursorPosition() const { return _cursorPos; };
 
 		/**
-		 * Insert the properties of the space within this gadget that is available
-		 * for children into the rect passed in as a parameter.
+		 * Insert the properties of the space within this gadget that is
+		 * available for children into the rect passed in as a parameter.
 		 * All co-ordinates are relative to this gadget.
 		 * @param rect Reference to a rect to populate with data.
 		 */
@@ -127,18 +131,31 @@ namespace WoopsiUI {
 		virtual void handleActionEvent(const GadgetEventArgs& e);
 
 	protected:
-		u32 _cursorPos;							/**< Position of the cursor within the string. */
-		bool _showCursor;						/**< Set to true to make cursor visible. */
-		WoopsiTimer* _timer;					/**< Timer for handling dpad repeats. */
-		u32 _initialRepeatTime;					/**< Time until held dpad starts to repeat. */
-		u32 _secondaryRepeatTime;				/**< Time until dpad already repeating repeats again. */
-		KeyCode _heldDirection;					/**< Currently held dpad direction. */
+		u32 _cursorPos;					/**< Position of the cursor within the string. */
+		bool _showCursor;				/**< Set to true to make cursor visible. */
+		WoopsiTimer* _timer;			/**< Timer for handling dpad repeats. */
+		u32 _initialRepeatTime;			/**< Time until held dpad starts to repeat. */
+		u32 _secondaryRepeatTime;		/**< Time until dpad already repeating repeats again. */
+		KeyCode _heldDirection;			/**< Currently held dpad direction. */
+		u32 _firstCharIndex;			/**< Index of the first visible character. */
 
 		/**
 		 * Get the x co-ordinate of the cursor in pixels.
 		 * @return The x co-ordinate of the cursor in pixels.
 		 */
 		virtual const u16 getCursorXPos() const;
+		
+		/**
+		 * Calculate the horizontal position of the string based on its length
+		 * and the alignment options.
+		 */
+		virtual void calculateTextPositionHorizontal();
+		
+		/**
+		 * Calculate the first visible character in the textbox.  Ensures that
+		 * the cursor is never scrolled out of view.
+		 */
+		virtual void calculateFirstCharIndex();
 
 		/**
 		 * Copy constructor is protected to prevent usage.

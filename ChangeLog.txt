@@ -53,6 +53,10 @@ Change Log
     - Key repeat values stored in defines.h.
     - FileListBox does not show "." directory.
     - Minor optimisation when building the FileListBox contents.
+    - Split Label::calculateTextPosition() split into horizontal and vertical
+      methods.
+    - TextBox switches to left-aligned automatically if contents exceeds size
+      of box.
     
   New Features:
     - Added FontBase::getCharHeight().
@@ -75,6 +79,7 @@ Change Log
     - MultiLineTextBox implements key repeats when left or right d-pad is held
       down; cursor moves repeatedly until end of string reached or d-pad
       released.
+    - Textbox contents scrolls horizontally as cursor is moved.
 	
   V0.43 (20091223)
   

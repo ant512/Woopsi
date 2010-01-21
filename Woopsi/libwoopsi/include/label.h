@@ -122,9 +122,16 @@ namespace WoopsiUI {
 		TextAlignmentVert _vAlignment;			/**< Vertical alignment of the text */
 
 		/**
-		 * Calculate the position of the string based on its length and the alignment options.
+		 * Calculate the vertical position of the string based on the font
+		 * height and the alignment options.
 		 */
-		virtual void calculateTextPosition();
+		virtual void calculateTextPositionVertical();
+		
+		/**
+		 * Calculate the position of the string based on its length and the
+		 * alignment options.
+		 */
+		virtual void calculateTextPositionHorizontal();
 
 		/**
 		 * Destructor.

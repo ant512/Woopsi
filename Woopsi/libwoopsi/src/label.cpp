@@ -12,7 +12,8 @@ Label::Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, Gadg
 
 	setText(text);
 
-	calculateTextPosition();
+	calculateTextPositionHorizontal();
+	calculateTextPositionVertical();
 }
 
 void Label::draw(Rect clipRect) {
@@ -33,10 +34,8 @@ void Label::draw(Rect clipRect) {
 	delete port;
 }
 
-// Calculate values for centralised text
-void Label::calculateTextPosition() {
+void Label::calculateTextPositionVertical() {
 
-	// Calculate vertical position
 	switch (_vAlignment) {
 		case TEXT_ALIGNMENT_VERT_CENTRE:
 			_textY = (_height - getFont()->getHeight()) >> 1;
@@ -48,8 +47,10 @@ void Label::calculateTextPosition() {
 			_textY = _height - getFont()->getHeight() - _padding;
 			break;
 	}
+}
 
-	// Calculate horizontal position
+void Label::calculateTextPositionHorizontal() {
+	
 	switch (_hAlignment) {
 		case TEXT_ALIGNMENT_HORIZ_CENTRE:
 			_textX = (_width - getFont()->getStringWidth(_text)) >> 1;
@@ -65,35 +66,38 @@ void Label::calculateTextPosition() {
 
 void Label::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
 	_hAlignment = alignment;
-	calculateTextPosition();
+	calculateTextPositionHorizontal();
 
 	redraw();
 }
 
 void Label::setTextAlignmentVert(TextAlignmentVert alignment) {
 	_vAlignment = alignment;
-	calculateTextPosition();
+	calculateTextPositionVertical();
 
 	redraw();
 }
 
 void Label::setText(const WoopsiString& text) {
 	_text = text;
-	calculateTextPosition();
+	calculateTextPositionHorizontal();
+	calculateTextPositionVertical();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::appendText(const WoopsiString& text) {
 	_text.append(text);
-	calculateTextPosition();
+	calculateTextPositionHorizontal();
+	calculateTextPositionVertical();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::insertText(const WoopsiString& text, const u32 index) {
 	_text.insert(text, index);
-	calculateTextPosition();
+	calculateTextPositionHorizontal();
+	calculateTextPositionVertical();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -110,7 +114,8 @@ bool Label::resize(u16 width, u16 height) {
 
 	// Attempt to resize
 	if (Gadget::resize(width, height)) {
-		calculateTextPosition();
+		calculateTextPositionHorizontal();
+		calculateTextPositionVertical();
 
 		resized = true;
 	}
@@ -134,7 +139,8 @@ void Label::setFont(FontBase* font) {
 	_style->font = font;
 
 	// Need to recalculate the text position as the font may have changed size
-	calculateTextPosition();
+	calculateTextPositionHorizontal();
+	calculateTextPositionVertical();
 
 	redraw();
 }
