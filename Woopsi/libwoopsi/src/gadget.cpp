@@ -1064,6 +1064,23 @@ bool Gadget::keyPress(KeyCode keyCode) {
 	return false;
 }
 
+bool Gadget::keyRepeat(KeyCode keyCode) {
+	if (isEnabled()) {
+		
+		// Raise key repeat for this gadget
+		_gadgetEventHandlers->raiseKeyRepeatEvent(keyCode);
+
+		// Handle active child
+		if (_focusedGadget != NULL) {
+			_focusedGadget->keyRepeat(keyCode);
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
 bool Gadget::keyRelease(KeyCode keyCode) {
 	if (isEnabled()) {
 

@@ -103,6 +103,16 @@ void GadgetEventHandlerList::raiseKeyPressEvent(KeyCode keyCode) {
 	}
 }
 
+void GadgetEventHandlerList::raiseKeyRepeatEvent(KeyCode keyCode) {
+	if (isEnabled()) {
+		GadgetEventArgs e(_gadget, 0, 0, 0, 0, keyCode);
+
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleKeyRepeatEvent(e);
+		}
+	}
+}
+
 void GadgetEventHandlerList::raiseKeyReleaseEvent(KeyCode keyCode) {
 	if (isEnabled()) {
 		GadgetEventArgs e(_gadget, 0, 0, 0, 0, keyCode);

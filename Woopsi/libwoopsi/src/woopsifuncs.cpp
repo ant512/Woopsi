@@ -76,6 +76,19 @@ void woopsiVblFunc() {
 	}
 
 	Stylus.Released = false;
+	
+	if (Pad.Held.Left) Pad.HeldTime.Left++;
+	if (Pad.Held.Right) Pad.HeldTime.Right++;
+	if (Pad.Held.Up) Pad.HeldTime.Up++;
+	if (Pad.Held.Down) Pad.HeldTime.Down++;
+	if (Pad.Held.A) Pad.HeldTime.A++;
+	if (Pad.Held.B) Pad.HeldTime.B++;
+	if (Pad.Held.X) Pad.HeldTime.X++;
+	if (Pad.Held.Y) Pad.HeldTime.Y++;
+	if (Pad.Held.Start) Pad.HeldTime.Start++;
+	if (Pad.Held.Select) Pad.HeldTime.Select++;
+	if (Pad.Held.L) Pad.HeldTime.L++;
+	if (Pad.Held.R) Pad.HeldTime.R++;
 
 	if (Pad.Newpress.Left) Pad.Held.Left = true;
 	if (Pad.Newpress.Right) Pad.Held.Right = true;
@@ -153,6 +166,7 @@ void woopsiVblFunc() {
 		Pad.Released.Up = true;
 		Pad.Held.Up = false;
 		Pad.Newpress.Up = false;
+		Pad.HeldTime.Up = 0;
 	}
 	
 	// Down
@@ -162,6 +176,7 @@ void woopsiVblFunc() {
 		Pad.Released.Down = true;
 		Pad.Held.Down = false;
 		Pad.Newpress.Down = false;
+		Pad.HeldTime.Down = 0;
 	}
 	
 	// Left
@@ -171,6 +186,7 @@ void woopsiVblFunc() {
 		Pad.Released.Left = true;
 		Pad.Held.Left = false;
 		Pad.Newpress.Left = false;
+		Pad.HeldTime.Left = 0;
 	}
 	
 	// Right
@@ -180,6 +196,7 @@ void woopsiVblFunc() {
 		Pad.Released.Right = true;
 		Pad.Held.Right = false;
 		Pad.Newpress.Right = false;
+		Pad.HeldTime.Right = 0;
 	}	
 
 	// A (assigned as Z on keyboard)
@@ -189,6 +206,7 @@ void woopsiVblFunc() {
 		Pad.Released.A = true;
 		Pad.Held.A = false;
 		Pad.Newpress.A = false;
+		Pad.HeldTime.A = 0;
 	}
 	
 	// B (assigned as X on keyboard)
@@ -198,6 +216,7 @@ void woopsiVblFunc() {
 		Pad.Released.B = true;
 		Pad.Held.B = false;
 		Pad.Newpress.B = false;
+		Pad.HeldTime.B = 0;
 	}
 	
 	// X (assigned as C on keyboard)
@@ -207,6 +226,7 @@ void woopsiVblFunc() {
 		Pad.Released.X = true;
 		Pad.Held.X = false;
 		Pad.Newpress.X = false;
+		Pad.HeldTime.X = 0;
 	}
 	
 	// Y (assigned as V on keyboard)
@@ -216,6 +236,7 @@ void woopsiVblFunc() {
 		Pad.Released.Y = true;
 		Pad.Held.Y = false;
 		Pad.Newpress.Y = false;
+		Pad.HeldTime.Y = 0;
 	}
 	
 	// L (assigned as A on keyboard)
@@ -225,6 +246,7 @@ void woopsiVblFunc() {
 		Pad.Released.L = true;
 		Pad.Held.L = false;
 		Pad.Newpress.L = false;
+		Pad.HeldTime.L = 0;
 	}
 	
 	// R (assigned as S on keyboard)
@@ -234,6 +256,7 @@ void woopsiVblFunc() {
 		Pad.Released.R = true;
 		Pad.Held.R = false;
 		Pad.Newpress.R = false;
+		Pad.HeldTime.R = 0;
 	}
 	
 	// Start (assigned as D on keyboard)
@@ -243,6 +266,7 @@ void woopsiVblFunc() {
 		Pad.Released.Start = true;
 		Pad.Held.Start = false;
 		Pad.Newpress.Start = false;
+		Pad.HeldTime.Start = 0;
 	}
 
 	// Select (assigned as F on keyboard)
@@ -252,6 +276,7 @@ void woopsiVblFunc() {
 		Pad.Released.Select = true;
 		Pad.Held.Select = false;
 		Pad.Newpress.Select = false;
+		Pad.HeldTime.Select = 0;
 	}
 
 	// Exit (assigned as Esc on keyboard)
@@ -378,12 +403,40 @@ bool woopsiLidClosed() {
 void woopsiUpdateInput() {
 
 	touchPosition touch;
-
+	
+	// Update held timers
+	if (Pad.Held.Left) Pad.HeldTime.Left++;
+	if (Pad.Held.Right) Pad.HeldTime.Right++;
+	if (Pad.Held.Up) Pad.HeldTime.Up++;
+	if (Pad.Held.Down) Pad.HeldTime.Down++;
+	if (Pad.Held.A) Pad.HeldTime.A++;
+	if (Pad.Held.B) Pad.HeldTime.B++;
+	if (Pad.Held.X) Pad.HeldTime.X++;
+	if (Pad.Held.Y) Pad.HeldTime.Y++;
+	if (Pad.Held.Start) Pad.HeldTime.Start++;
+	if (Pad.Held.Select) Pad.HeldTime.Select++;
+	if (Pad.Held.L) Pad.HeldTime.L++;
+	if (Pad.Held.R) Pad.HeldTime.R++;
+	
 	// Get the state of the keys
 	scanKeys();
 	Pad.Newpress.AllKeys = keysDown();
 	Pad.Held.AllKeys = keysHeld();
 	Pad.Released.AllKeys = keysUp();
+	
+	// Update held timers
+	if (!Pad.Held.Left) Pad.HeldTime.Left = 0;
+	if (!Pad.Held.Right) Pad.HeldTime.Right = 0;
+	if (!Pad.Held.Up) Pad.HeldTime.Up = 0;
+	if (!Pad.Held.Down) Pad.HeldTime.Down = 0;
+	if (!Pad.Held.A) Pad.HeldTime.A = 0;
+	if (!Pad.Held.B) Pad.HeldTime.B = 0;
+	if (!Pad.Held.X) Pad.HeldTime.X = 0;
+	if (!Pad.Held.Y) Pad.HeldTime.Y = 0;
+	if (!Pad.Held.Start) Pad.HeldTime.Start = 0;
+	if (!Pad.Held.Select) Pad.HeldTime.Select = 0;
+	if (!Pad.Held.L) Pad.HeldTime.L = 0;
+	if (!Pad.Held.R) Pad.HeldTime.R = 0;
 
 	// Deal with the Stylus.
 	touchRead(&touch);

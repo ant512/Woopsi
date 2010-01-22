@@ -277,11 +277,25 @@ void Woopsi::handleKeys() {
 		} else if (Pad.Released.A) {
 			_focusedGadget->keyRelease(KEY_CODE_A);
 		}
+		
+		if (Pad.HeldTime.A == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_A);
+		} else if (Pad.HeldTime.A == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_A);
+			Pad.HeldTime.A = KEY_INITIAL_REPEAT_TIME;
+		}
 
 		if (Pad.Newpress.B) {
 			_focusedGadget->keyPress(KEY_CODE_B);
 		} else if (Pad.Released.B) {
 			_focusedGadget->keyRelease(KEY_CODE_B);
+		}
+		
+		if (Pad.HeldTime.B == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_B);
+		} else if (Pad.HeldTime.B == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_B);
+			Pad.HeldTime.B = KEY_INITIAL_REPEAT_TIME;
 		}
 
 		if (Pad.Newpress.X) {
@@ -289,11 +303,25 @@ void Woopsi::handleKeys() {
 		} else if (Pad.Released.X) {
 			_focusedGadget->keyRelease(KEY_CODE_X);
 		}
+		
+		if (Pad.HeldTime.X == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_X);
+		} else if (Pad.HeldTime.X == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_X);
+			Pad.HeldTime.X = KEY_INITIAL_REPEAT_TIME;
+		}
 
 		if (Pad.Newpress.Y) {
 			_focusedGadget->keyPress(KEY_CODE_Y);
 		} else if (Pad.Released.Y) {
 			_focusedGadget->keyRelease(KEY_CODE_Y);
+		}
+		
+		if (Pad.HeldTime.Y == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_Y);
+		} else if (Pad.HeldTime.Y == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_Y);
+			Pad.HeldTime.Y = KEY_INITIAL_REPEAT_TIME;
 		}
 
 		if (Pad.Newpress.L) {
@@ -301,11 +329,25 @@ void Woopsi::handleKeys() {
 		} else if (Pad.Released.L) {
 			_focusedGadget->keyRelease(KEY_CODE_L);
 		}
+		
+		if (Pad.HeldTime.L == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_L);
+		} else if (Pad.HeldTime.L == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_L);
+			Pad.HeldTime.L = KEY_INITIAL_REPEAT_TIME;
+		}
 
 		if (Pad.Newpress.R) {
 			_focusedGadget->keyPress(KEY_CODE_R);
 		} else if (Pad.Released.R) {
 			_focusedGadget->keyRelease(KEY_CODE_R);
+		}
+		
+		if (Pad.HeldTime.R == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_R);
+		} else if (Pad.HeldTime.R == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_R);
+			Pad.HeldTime.R = KEY_INITIAL_REPEAT_TIME;
 		}
 
 		if (Pad.Newpress.Up) {
@@ -313,11 +355,25 @@ void Woopsi::handleKeys() {
 		} else if (Pad.Released.Up) {
 			_focusedGadget->keyRelease(KEY_CODE_UP);
 		}
+		
+		if (Pad.HeldTime.Up == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_UP);
+		} else if (Pad.HeldTime.Up == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_UP);
+			Pad.HeldTime.Up = KEY_INITIAL_REPEAT_TIME;
+		}
 
 		if (Pad.Newpress.Down) {
 			_focusedGadget->keyPress(KEY_CODE_DOWN);
 		} else if (Pad.Released.Down) {
 			_focusedGadget->keyRelease(KEY_CODE_DOWN);
+		}
+		
+		if (Pad.HeldTime.Down == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_DOWN);
+		} else if (Pad.HeldTime.Down == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_DOWN);
+			Pad.HeldTime.Down = KEY_INITIAL_REPEAT_TIME;
 		}
 
 		if (Pad.Newpress.Left) {
@@ -325,11 +381,25 @@ void Woopsi::handleKeys() {
 		} else if (Pad.Released.Left) {
 			_focusedGadget->keyRelease(KEY_CODE_LEFT);
 		}
+		
+		if (Pad.HeldTime.Left == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_LEFT);
+		} else if (Pad.HeldTime.Left == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_LEFT);
+			Pad.HeldTime.Left = KEY_INITIAL_REPEAT_TIME;
+		}
 
 		if (Pad.Newpress.Right) {
 			_focusedGadget->keyPress(KEY_CODE_RIGHT);
 		} else if (Pad.Released.Right) {
 			_focusedGadget->keyRelease(KEY_CODE_RIGHT);
+		}
+		
+		if (Pad.HeldTime.Right == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_RIGHT);
+		} else if (Pad.HeldTime.Right == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_RIGHT);
+			Pad.HeldTime.Right = KEY_INITIAL_REPEAT_TIME;
 		}
 
 		if (Pad.Newpress.Start) {
@@ -337,11 +407,25 @@ void Woopsi::handleKeys() {
 		} else if (Pad.Released.Start) {
 			_focusedGadget->keyRelease(KEY_CODE_START);
 		}
+		
+		if (Pad.HeldTime.Start == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_START);
+		} else if (Pad.HeldTime.Start == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_START);
+			Pad.HeldTime.Start = KEY_INITIAL_REPEAT_TIME;
+		}
 
 		if (Pad.Newpress.Select) {
 			_focusedGadget->keyPress(KEY_CODE_SELECT);
 		} else if (Pad.Released.Select) {
 			_focusedGadget->keyRelease(KEY_CODE_SELECT);
+		}
+		
+		if (Pad.HeldTime.Select == KEY_INITIAL_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_SELECT);
+		} else if (Pad.HeldTime.Select == KEY_SECONDARY_REPEAT_TIME) {
+			_focusedGadget->keyRepeat(KEY_CODE_SELECT);
+			Pad.HeldTime.Select = KEY_INITIAL_REPEAT_TIME;
 		}
 	}
 }

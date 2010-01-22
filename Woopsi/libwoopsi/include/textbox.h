@@ -5,8 +5,6 @@
 #include "label.h"
 #include "woopsistring.h"
 #include "gadgetstyle.h"
-#include "gadgeteventhandler.h"
-#include "gadgeteventargs.h"
 
 namespace WoopsiUI {
 
@@ -20,7 +18,7 @@ namespace WoopsiUI {
 	 * alignment settings and switch to left-aligned instead.  This ensures that
 	 * moving the cursor over the text will scroll through it correctly.
 	 */
-	class TextBox : public Label, public GadgetEventHandler {
+	class TextBox : public Label {
 	public:
 
 		/**
@@ -116,27 +114,17 @@ namespace WoopsiUI {
 		 * @return True if the keypress was processed.
 		 */
 		virtual bool keyPress(KeyCode keyCode);
-
+		
 		/**
-		 * Send a key release to the gadget.
+		 * Send a key repeat to the gadget.
 		 * @param keyCode The keycode to send to the gadget.
-		 * @return True if the key release was processed.
+		 * @return True if the key repeat was processed.
 		 */
-		virtual bool keyRelease(KeyCode keyCode);
-
-		/**
-		 * Handle a gadget action event.
-		 * @param e The event data.
-		 */
-		virtual void handleActionEvent(const GadgetEventArgs& e);
+		virtual bool keyRepeat(KeyCode keyCode);
 
 	protected:
 		u32 _cursorPos;					/**< Position of the cursor within the string. */
 		bool _showCursor;				/**< Set to true to make cursor visible. */
-		WoopsiTimer* _timer;			/**< Timer for handling dpad repeats. */
-		u32 _initialRepeatTime;			/**< Time until held dpad starts to repeat. */
-		u32 _secondaryRepeatTime;		/**< Time until dpad already repeating repeats again. */
-		KeyCode _heldDirection;			/**< Currently held dpad direction. */
 		u32 _firstCharIndex;			/**< Index of the first visible character. */
 
 		/**

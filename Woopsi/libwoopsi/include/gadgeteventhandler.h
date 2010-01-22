@@ -58,6 +58,12 @@ namespace WoopsiUI {
 		virtual void handleKeyPressEvent(const GadgetEventArgs& e) { };
 
 		/**
+		 * Handle a key repeat event.
+		 * @param e The event data.
+		 */
+		virtual void handleKeyRepeatEvent(const GadgetEventArgs& e) { };
+
+		/**
 		 * Handle a key release event.
 		 * @param e The event data.
 		 */

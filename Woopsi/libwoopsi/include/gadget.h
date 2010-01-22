@@ -611,6 +611,13 @@ namespace WoopsiUI {
 		 * @return True if the keypress was processed.
 		 */
 		virtual bool keyPress(KeyCode keyCode);
+		
+		/**
+		 * Send a key repeat to the gadget.
+		 * @param keyCode The keycode to send to the gadget.
+		 * @return True if the key repeat was processed.
+		 */
+		virtual bool keyRepeat(KeyCode keyCode);
 
 		/**
 		 * Send a key release to the gadget.

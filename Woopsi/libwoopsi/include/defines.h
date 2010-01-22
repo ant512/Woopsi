@@ -49,7 +49,7 @@
 /**
  * Time taken before a repeating key repeats again.
  */
-#define KEY_SECONDARY_REPEAT_TIME 5
+#define KEY_SECONDARY_REPEAT_TIME 30
 
 /**
  * Woopsi version number.

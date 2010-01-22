@@ -30,12 +30,9 @@
 /**
  * Structure to hold the status of the DS' control buttons.
  */
-typedef struct PAD
-{
-	union
-	{
-		struct
-		{
+typedef struct PAD {
+	union {
+		struct {
 			u16 A:1;			/**< A button */
 			u16 B:1;			/**< B button */
 			u16 Select:1;		/**< Select button */
@@ -56,12 +53,31 @@ typedef struct PAD
 } _pad;
 
 /**
+ * Struct containing the length of time that each button has been held down.
+ */
+typedef struct PadHeldTimeStruct {
+	u32 A;
+	u32 B;
+	u32 Select;
+	u32 Start;
+	u32 Right;
+	u32 Left;
+	u32 Up;
+	u32 Down;
+	u32 R;
+	u32 L;
+	u32 X;
+	u32 Y;
+} PadHeldTime;
+
+/**
  * Structure holding a pad struct for each possible button state.
  */
 typedef struct PADS {
    _pad Held;					/**< Each value set to 1 represents a held button */
    _pad Released;				/**< Inverse of held */
    _pad Newpress;				/**< Each value set to 1 represents a newly pressed button */
+	PadHeldTime HeldTime;		/**< Length of time each button has been held */
 } _pads;
 
 /**

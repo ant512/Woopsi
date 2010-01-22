@@ -127,6 +127,12 @@ namespace WoopsiUI {
 		 * @param keyCode The code of the key that caused the event.
 		 */
 		void raiseKeyPressEvent(KeyCode keyCode);
+		
+		/**
+		 * Raise a key repeat event to the event handler.
+		 * @param keyCode The code of the key that caused the event.
+		 */
+		void raiseKeyRepeatEvent(KeyCode keyCode);
 
 		/**
 		 * Raise a key release event to the event handler.

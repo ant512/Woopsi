@@ -11,15 +11,6 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, 
 	_showCursor = true;
 	setOutlineType(OUTLINE_OUT_IN);
 	moveCursorToPosition(_text.getLength());
-
-	// Create the timer
-	_initialRepeatTime = KEY_INITIAL_REPEAT_TIME;
-	_secondaryRepeatTime = KEY_SECONDARY_REPEAT_TIME;
-	_timer = new WoopsiTimer(_initialRepeatTime, true);
-	_timer->addGadgetEventHandler(this);
-	addGadget(_timer);
-
-	_heldDirection = KEY_CODE_NONE;
 }
 
 void TextBox::draw(Rect clipRect) {
@@ -239,22 +230,10 @@ bool TextBox::keyPress(KeyCode keyCode) {
 		if (keyCode == KEY_CODE_LEFT) {
 			if (_cursorPos > 0) {
 				moveCursorToPosition(_cursorPos - 1);
-				
-				_heldDirection = KEY_CODE_LEFT;
-
-				// Start the timer
-				_timer->setTimeout(_initialRepeatTime);
-				_timer->start();
 			}
 		} else if (keyCode == KEY_CODE_RIGHT) {
 			if (_cursorPos < _text.getLength()) {
 				moveCursorToPosition(_cursorPos + 1);
-				
-				_heldDirection = KEY_CODE_RIGHT;
-
-				// Start the timer
-				_timer->setTimeout(_initialRepeatTime);
-				_timer->start();
 			}
 		}
 
@@ -264,45 +243,22 @@ bool TextBox::keyPress(KeyCode keyCode) {
 	return false;
 }
 
-bool TextBox::keyRelease(KeyCode keyCode) {
-	if (Gadget::keyRelease(keyCode)) {
-		if (_heldDirection == keyCode) {
-
-			// Forget the previously-held key
-			_heldDirection = KEY_CODE_NONE;
-			_timer->stop();
+bool TextBox::keyRepeat(KeyCode keyCode) {
+	if (Gadget::keyRepeat(keyCode)) {
+		if (keyCode == KEY_CODE_LEFT) {
+			if (_cursorPos > 0) {
+				moveCursorToPosition(_cursorPos - 1);
+			}
+		} else if (keyCode == KEY_CODE_RIGHT) {
+			if (_cursorPos < _text.getLength()) {
+				moveCursorToPosition(_cursorPos + 1);
+			}
 		}
 
 		return true;
 	}
 
 	return false;
-}
-
-void TextBox::handleActionEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() != NULL) {
-
-		// Check if the event was fired by the timer (key repeat)
-		if (e.getSource() == _timer) {
-
-			// Event is a key repeat - move the cursor
-			if (_heldDirection == KEY_CODE_LEFT) {
-				if (_cursorPos > 0) {
-					moveCursorToPosition(_cursorPos - 1);
-				}
-			} else if (_heldDirection == KEY_CODE_RIGHT) {
-				if (_cursorPos < _text.getLength()) {
-					moveCursorToPosition(_cursorPos + 1);
-				}
-			}
-			
-			// Ensure that subsequent repeats are faster
-			_timer->setTimeout(_secondaryRepeatTime);
-
-			return;
-		}
-	}
 }
 
 void TextBox::calculateTextPositionHorizontal() {

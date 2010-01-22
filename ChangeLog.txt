@@ -81,6 +81,7 @@ Change Log
       down; cursor moves repeatedly until end of string reached or d-pad
       released.
     - Textbox contents scrolls horizontally as cursor is moved.
+    - Added key repeat event handling to the entire system.
 	
   V0.43 (20091223)
   
