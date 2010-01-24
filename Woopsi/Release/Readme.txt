@@ -1,4 +1,4 @@
-* Copyright (c) 2007-2009, Antony Dzeryn
+* Copyright (c) 2007-2010, Antony Dzeryn
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -47,7 +47,8 @@ Credits and Acknowlegements
   - Coding and design                                - Antony Dzeryn
   - Testing, technical advice, other contributions   - Jeff Laing
   - PALib independence                               - Steve
-  - More testing and suggestions						- John Buxton
+  - More testing and suggestions                     - John Buxton
+  - Unicode work                                     - Olivier Binda
   - Simian Zombie logo                               - John Clay
   - Thanks to                                        - The devKitPro team
                                                      - The PALib team
