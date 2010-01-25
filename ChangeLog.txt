@@ -1,7 +1,15 @@
 Change Log
 ----------
 
-  V0.44
+  V0.45
+  
+  Fixes:
+    - Fixed error when subclassing MultiLineTextBox.
+
+  New Features:
+  
+
+  V0.44 (20100124)
   
   Fixes:
     - Moved fatInitDefault() SDL function into woopsifuncs.cpp (Quirky).

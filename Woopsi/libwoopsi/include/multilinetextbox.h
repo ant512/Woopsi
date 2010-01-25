@@ -264,7 +264,10 @@ namespace WoopsiUI {
 		/**
 		 * Destructor.
 		 */
-		inline virtual ~MultiLineTextBox();
+		inline virtual ~MultiLineTextBox() {
+			delete _text;
+			_text = NULL;
+		}
 
 		/**
 		 * Copy constructor is protected to prevent usage.

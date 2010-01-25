@@ -37,11 +37,6 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	setText(text);
 }
 
-MultiLineTextBox::~MultiLineTextBox() {
-	delete _text;
-	_text = NULL;
-}
-
 void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 
 	// Early exit checks
