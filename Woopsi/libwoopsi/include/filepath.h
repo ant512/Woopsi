@@ -46,6 +46,16 @@ namespace WoopsiUI {
 		 */
 		void appendPath(const WoopsiString& path);
 
+		/**
+		 * Move from the current directory to its parent, if possible.
+		 */
+		void goToParent();
+
+		/**
+		 * Go to the root of the filesystem.
+		 */
+		void goToRoot();
+
 	private:
 		WoopsiString _path;			/** String containing the path. */
 	};

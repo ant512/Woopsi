@@ -7,7 +7,7 @@ Change Log
     - Fixed error when subclassing MultiLineTextBox.
 
   New Features:
-  
+    - Added goToParent() and goToRoot() to FilePath class.
 
   V0.44 (20100124)
   
