@@ -33,6 +33,13 @@ void BitmapDrawing::startup() {
 	// Get a pointer to the superbitmap's graphics object that we can draw
 	_graphics = _superBitmap->getGraphics();
 	
+	Rect clipRect;
+	clipRect.x = 10;
+	clipRect.y = 10;
+	clipRect.width = rect.width - 20;
+	clipRect.height = rect.height - 20;
+	_graphics->setClipRect(clipRect);
+	
 	// Add timer to the window set up to trigger an Action event every VBL
 	WoopsiTimer* timer = new WoopsiTimer(1, true);
 	window->addGadget(timer);

@@ -92,7 +92,6 @@ Change Log
       itself.
     - GraphicsPort::getClipRect() returns a rect relative to the GraphicsPort.
     - Screen::onDrag() uses woopsiApplication's GraphicsPort instead of its own.
-    - Graphics class includes scroll() and drawBevelledRect() methods.
 
   New Features:
     - Added goToParent() and goToRoot() to FilePath class.
@@ -159,7 +158,9 @@ Change Log
     - Added CalendarDayButton gadget.
     - Graphics class implements clipping and no longer inherits from
       GraphicsUnclipped.
-
+    - Added cliprect to the bitmapdrawing demo.
+    - Graphics class includes scroll() and drawBevelledRect() methods.
+    - Graphics::floodFill() is clipped.
 
   V0.44 (20100124)
   

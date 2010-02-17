@@ -366,12 +366,10 @@ void Graphics::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height) {
 }
 
 // Scanline floodfill algorithm
-// TODO: Clip this
 void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 
-	// Clip to bitmap
-	if ((x < 0) || (y < 0)) return;
-	if ((x >= _width) || (y >= _height)) return;
+	// Attempt to clip
+	if (!clipCoordinates(&x, &y, &x, &y, _clipRect)) return;
 
 	// Get current colour
 	u16 oldColour = getPixel(x, y);
@@ -396,7 +394,7 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 		x1 = x;
 
 		// Locate leftmost column on screen in this row containing old colour
-		while ((x1 >= 0) && (_bitmap->getPixel(x1, y) == oldColour)) {
+		while ((x1 >= _clipRect.x) && (_bitmap->getPixel(x1, y) == oldColour)) {
 			x1--;
 		}
 
@@ -409,21 +407,21 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 		spanUp = spanDown = 0;
 
 		// Scan right, filling each column of old colour
-		while ((x1 < _width) && (_bitmap->getPixel(x1, y) == oldColour)) {
+		while ((x1 < _clipRect.width) && (_bitmap->getPixel(x1, y) == oldColour)) {
 
 			// Check pixel above
-			if ((!spanUp) && (y > 0) && (_bitmap->getPixel(x1, y - 1) == oldColour)) {
+			if ((!spanUp) && (y > _clipRect.y) && (_bitmap->getPixel(x1, y - 1) == oldColour)) {
 				pushStack(x1, y - 1, stack);
 				spanUp = 1;
-			} else if ((spanUp) && (y > 0) && (_bitmap->getPixel(x1, y - 1) != oldColour)) {
+			} else if ((spanUp) && (_clipRect.y > 0) && (_bitmap->getPixel(x1, y - 1) != oldColour)) {
 				spanUp = 0;
 			}
 
 			// Check pixel below
-			if ((!spanDown) && (y < _height - 1) && (_bitmap->getPixel(x1, y + 1) == oldColour)) {
+			if ((!spanDown) && (_clipRect.y < _clipRect.height - 1) && (_bitmap->getPixel(x1, y + 1) == oldColour)) {
 				pushStack(x1, y + 1, stack);
 				spanDown = 1;
-			} else if ((spanDown) && (y < _height - 1) && (_bitmap->getPixel(x1, y + 1) != oldColour)) {
+			} else if ((spanDown) && (_clipRect.y < _clipRect.height - 1) && (_bitmap->getPixel(x1, y + 1) != oldColour)) {
 				spanDown = 0;
 			}
 
