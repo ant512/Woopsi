@@ -1,6 +1,7 @@
 #include "bitmap.h"
 #include "woopsifuncs.h"
 #include "graphics.h"
+#include "rect.h"
 
 using namespace WoopsiUI;
 
@@ -49,7 +50,12 @@ const u16* Bitmap::getData(s16 x, s16 y) const {
 }
 
 Graphics* Bitmap::newGraphics() {
-	return new Graphics(this);
+	Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.width = _width;
+	rect.height = _height;
+	return new Graphics(this, rect);
 }
 
 void Bitmap::blit(const s16 x, const s16 y, const u16* data, const u32 size) {

@@ -30,21 +30,36 @@ namespace WoopsiUI {
 		 */
 		DecorationGlyphButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, GadgetStyle* style = NULL);
 
-		/**
-		 * Draw the region of the button that falls within the clipRect.
-		 * @param clipRect The clipping region to draw within.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Give the gadget focus.
-		 * @return True if the gadget received focus correctly.
-		 */
-		virtual bool focus();
-
 	protected:
 		char _normalGlyph;						/**< Character to display when unclicked */
 		char _clickedGlyph;						/**< Character to display when clicked */
+
+		/**
+		 * Draws the outline of the button.
+		 * @param port Graphics port to draw to.
+		 */
+		virtual void drawOutline(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Redraws the button.
+		 */
+		virtual void onFocus();
 
 		/**
 		 * Destructor.

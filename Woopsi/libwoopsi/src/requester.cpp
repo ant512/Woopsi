@@ -5,51 +5,86 @@ using namespace WoopsiUI;
 
 Requester::Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, style) {
 
-	_flags.shiftClickChildren = false;
-
-	// Padding around the gadgets
-	u8 padding = 2;
+	// Increase the size of the border to leave space between gadgets and the 
+	// border decorations
+	_borderSize.top += 2;
+	_borderSize.right += 2;
+	_borderSize.bottom += 2;
+	_borderSize.left += 2;
 
 	Rect rect;
 	getClientRect(rect);
 
-	// Calculate list box
-	Rect listboxRect;
-	listboxRect.width = rect.width - (padding << 1);
-	listboxRect.height = rect.height - (padding * 5) - getFont()->getHeight();
-	listboxRect.x = rect.x + padding;
-	listboxRect.y = rect.y + padding;
+	// Create OK button
+	_okButton = new Button(0, 0, 0, 0, "OK");
 
-	// Create list box
-	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, _style);
-	_listbox->addGadgetEventHandler(this);
-	_listbox->setOutlineType(OUTLINE_OUT);
-	addGadget(_listbox);
+	Rect buttonRect;
+	_okButton->getPreferredDimensions(buttonRect);
 
 	// Calculate OK button dimensions
-	Rect buttonRect;
-	buttonRect.width = (rect.width - (padding * 3)) >> 1;
-	buttonRect.height = getFont()->getHeight() + (padding << 1);
-	buttonRect.x = rect.x + padding;
-	buttonRect.y = (rect.y + rect.height) - (buttonRect.height + padding);
+	buttonRect.width = (rect.width >> 1) - 1;
+	buttonRect.x = rect.x;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
 
-	// Create OK button
-	_okButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "OK");
+	_okButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
+
 	_okButton->addGadgetEventHandler(this);
 	addGadget(_okButton);
 
 	// Calculate cancel button dimensions
-	buttonRect.x = rect.x + (padding << 1) + buttonRect.width;
-	buttonRect.y = (rect.y + rect.height) - (buttonRect.height + padding);
+	buttonRect.x = rect.x + rect.width - buttonRect.width;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
 
 	// Create cancel button
 	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
 	_cancelButton->addGadgetEventHandler(this);
 	addGadget(_cancelButton);
+
+	// Calculate list box
+	Rect listboxRect;
+	listboxRect.width = rect.width;
+	listboxRect.height = rect.height - buttonRect.height - 2;
+	listboxRect.x = rect.x;
+	listboxRect.y = rect.y;
+
+	// Create list box
+	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, &_style);
+	_listbox->addGadgetEventHandler(this);
+	addGadget(_listbox);
 }
 
-bool Requester::resize(u16 width, u16 height) {
-	return false;
+void Requester::onResize(u16 width, u16 height) {
+
+	// Call base class' method to ensure the basic window resizes correctly
+	AmigaWindow::onResize(width, height);
+
+	Rect rect;
+	getClientRect(rect);
+
+	// Calculate OK button dimensions
+	Rect buttonRect;
+	_okButton->getPreferredDimensions(buttonRect);
+
+	buttonRect.width = (rect.width >> 1) - 1;
+	buttonRect.x = rect.x;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
+
+	_okButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
+
+	// Calculate cancel button dimensions
+	buttonRect.x = rect.x + rect.width - buttonRect.width;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
+
+	_cancelButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
+
+	// Calculate list box dimensions
+	Rect listboxRect;
+	listboxRect.width = rect.width;
+	listboxRect.height = rect.height - buttonRect.height - 2;
+	listboxRect.x = rect.x;
+	listboxRect.y = rect.y;
+
+	_listbox->changeDimensions(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height);
 }
 
 void Requester::handleReleaseEvent(const GadgetEventArgs& e) {

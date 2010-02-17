@@ -8,68 +8,111 @@
 
 using namespace WoopsiUI;
 
-GraphicsPort::GraphicsPort(Gadget* const gadget, const s16 x, const s16 y, const u16 width, const u16 height, FrameBuffer* bitmap, const WoopsiArray<Rect>* clipRectList, const Rect* clipRect) : GraphicsUnclipped(bitmap) {
-	_gadget = gadget;
+GraphicsPort::GraphicsPort(const s16 x, const s16 y, const u16 width, const u16 height, const bool isEnabled, FrameBuffer* bitmap, const WoopsiArray<Rect>* clipRectList, const Rect* clipRect) {
 	_rect.x = x;
 	_rect.y = y;
 	_rect.width = width;
 	_rect.height = height;
+	_isEnabled = isEnabled;
+
+	_graphics = bitmap->newGraphics();
 	
 	// Set up clip rect
 	if (clipRect != NULL) {
-		_clipRect = new Rect;
-		_clipRect->height = clipRect->height;
-		_clipRect->width = clipRect->width;
-		_clipRect->x = clipRect->x;
-		_clipRect->y = clipRect->y;
+		setClipRect(*clipRect);
 	} else {
-		_clipRect = NULL;
 
 		// Set up clip rect list
 		if (clipRectList != NULL) {
-			_clipRectList = clipRectList;
-		} else {
-			_clipRectList = NULL;
+			for (s32 i = 0; i < clipRectList->size(); ++i) {
+				addClipRect(clipRectList->at(i));
+			}
 		}
 	}
 }
 
-// Clip filled rectangle
-void GraphicsPort::clipFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour, const Rect& clipRect) {
+void GraphicsPort::addClipRect(const Rect& clipRect) {
+
+	// Clip rect is clipped to the dimensions of the
+	// GraphicsPort before it is stored.  This means
+	// we eliminate a lot of complexity when drawing - 
+	// we clip to rects, which are guaranteed to be
+	// accurate - rather than trying to clip to both
+	// the rects and the dimensions of the port.  It
+	// also means we can ignore any cliprects that get
+	// totally clipped out before they even get into
+	// the port.
+	s16 minX = clipRect.x;
+	s16 minY = clipRect.y;
+	s16 maxX = clipRect.x + clipRect.width - 1;
+	s16 maxY = clipRect.y + clipRect.height - 1;
 	
-	// Get end point of rect to draw
-	s16 x2 = x + width - 1;
-	s16 y2 = y + height - 1;
+	// Get start and point co-ords of graphics port
+	s16 portX1 = _rect.x;
+	s16 portY1 = _rect.y;
+	s16 portX2 = _rect.x + _rect.width - 1;
+	s16 portY2 = _rect.y + _rect.height - 1;
 	
-	// Attempt to clip
-	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
-		
-		// Calculate new width/height
-		width = x2 - x + 1;
-		height = y2 - y + 1;
-		
-		// Draw the rectangle
-		GraphicsUnclipped::drawFilledRect(x, y, width, height, colour);
-	}
+	// Choose larger start point values
+	minX = minX > portX1 ? minX : portX1;
+	minY = minY > portY1 ? minY : portY1;
+	
+	// Choose smaller end point values
+	maxX = maxX < portX2 ? maxX : portX2;
+	maxY = maxY < portY2 ? maxY : portY2;
+	
+	// Return false if no box to draw
+	if ((maxX < minX) || (maxY < minY)) return;
+
+	Rect rect;
+	rect.x = minX;
+	rect.y = minY;
+	rect.width = maxX - minX + 1;
+	rect.height = maxY - minY + 1;
+	
+	_clipRectList.push_back(rect);
+}
+
+void GraphicsPort::setClipRect(const Rect& clipRect) {
+	_clipRectList.clear();
+	addClipRect(clipRect);
+}
+
+void GraphicsPort::getClipRect(Rect& rect) const {
+
+	// The rect is adjusted such that its co-ordinates are relative to the
+	// GraphicsPort before it is returned.  This makes using the rect
+	// to optimise drawing easier.
+	rect.x = _clipRectList[0].x - getX();
+	rect.y = _clipRectList[0].y - getY();
+	rect.width = _clipRectList[0].width;
+	rect.height = _clipRectList[0].height;
 }
 
 // Print a string in a specific colour
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rects
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipText(x, y, font, string, startIndex, length, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipText(x, y, font, string, startIndex, length, *_clipRect);
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawText(x, y, font, string, startIndex, length);
 	}
 }
 
@@ -80,8 +123,8 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 // Print a string in a specific colour
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 
 	// Store current font colour
 	bool isMonochrome = font->isMonochrome();
@@ -101,1118 +144,640 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 	}
 }
 
-// Clip and draw text
-void GraphicsPort::clipText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, const Rect& clipRect) {
-	s16 clipX1 = clipRect.x;
-	s16 clipY1 = clipRect.y;
-	s16 clipX2 = clipRect.x + clipRect.width - 1;
-	s16 clipY2 = clipRect.y + clipRect.height - 1;
-	
-	// Attempt to clip and draw
-	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
-		// Compensate for top screen offset
-		if (y >= TOP_SCREEN_Y_OFFSET) {
-			y -= TOP_SCREEN_Y_OFFSET;
-		}
-
-		// Abort if trying to draw the characters offscreen
-		if (x > clipX2) return;
-		if (y > clipY2) return;
-		if (y < clipY1 - font->getHeight()) return;
-		
-		// Draw the string char by char
-		StringIterator* iterator = string.newStringIterator();
-		
-		if (iterator->moveTo(startIndex)) {
-			do {
-				x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, clipX1, clipY1, clipX2, clipY2);
-
-				// Abort if x pos outside clipping region
-				if (x > clipX2) break;
-			} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
-		}
-
-		delete iterator;
-	}
-}
-
-// Clip vertical line
-void GraphicsPort::clipVertLine(s16 x, s16 y, s16 height, u16 colour, const Rect& clipRect) {
-	
-	// Get end point of rect to draw
-	s16 x2 = x;
-	s16 y2 = y + height - 1;
-	
-	// Attempt to clip
-	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
-		
-		// Calculate new height
-		height = y2 - y + 1;
-		
-		// Draw the line
-		GraphicsUnclipped::drawVertLine(x, y, height, colour);
-	}
-}
-
-// Clip horizontal line
-void GraphicsPort::clipHorizLine(s16 x, s16 y, s16 width, u16 colour, const Rect& clipRect) {
-	
-	// Get end point of rect to draw
-	s16 x2 = x + width - 1;
-	s16 y2 = y;
-	
-	// Attempt to clip
-	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
-		
-		// Calculate new width
-		width = x2 - x + 1;
-		
-		// Draw the line
-		GraphicsUnclipped::drawHorizLine(x, y, width, colour);
-	}
-}
-
-// Clip XORed horizontal line
-void GraphicsPort::clipXORHorizLine(s16 x, s16 y, s16 width, const Rect& clipRect) {
-	
-	// Get end point of rect to draw
-	s16 x2 = x + width - 1;
-	s16 y2 = y;
-	
-	// Attempt to clip
-	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
-		
-		// Calculate new width
-		width = x2 - x + 1;
-		
-		// Draw the line
-		for (u16 i = 0; i < width; i++) {
-			GraphicsUnclipped::drawXORPixel(x + i, y);
-		}
-	}
-}
-
-// Clip XORed vertical line
-void GraphicsPort::clipXORVertLine(s16 x, s16 y, s16 height, const Rect& clipRect) {
-	
-	// Get end point of rect to draw
-	s16 x2 = x;
-	s16 y2 = y + height - 1;
-	
-	// Attempt to clip
-	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
-		
-		// Calculate new height
-		height = y2 - y + 1;
-		
-		// Draw the line
-		for (u16 i = 0; i < height; i++) {
-			GraphicsUnclipped::drawXORPixel(x, y + i);
-		}
-	}
-}
-
 // Draw horizontal line - external function
 void GraphicsPort::drawHorizLine(s16 x, s16 y, s16 width, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
-	if (_clipRect == NULL) {
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
 		
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipHorizLine(x, y, width, colour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipHorizLine(x, y, width, colour, *_clipRect);
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawHorizLine(x, y, width, colour);
 	}
 }
 
 // Draw vertical line - external function
 void GraphicsPort::drawVertLine(s16 x, s16 y, s16 height, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipVertLine(x, y, height, colour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipVertLine(x, y, height, colour, *_clipRect);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawVertLine(x, y, height, colour);
 	}
 }
 
 // Draw filled rectangle - external function
 void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipFilledRect(x, y, width, height, colour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipFilledRect(x, y, width, height, colour, *_clipRect);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawFilledRect(x, y, width, height, colour);
 	}
 }
 
 void GraphicsPort::drawCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x0, &y0);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipCircle(x0, y0, radius, colour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipCircle(x0, y0, radius, colour, *_clipRect);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawCircle(x0, y0, radius, colour);
 	}
 }
 
 void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x0, &y0);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipFilledCircle(x0, y0, radius, colour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipFilledCircle(x0, y0, radius, colour, *_clipRect);
-	}
-}
-
-void GraphicsPort::clipCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect) {
-	s16 f = 1 - radius;
-	s16 ddF_x = 0;
-	s16 ddF_y = -2 * radius;
-	s16 x = 0;
-	s16 y = radius;
-
-	clipPixel(x0, y0 + radius, colour, clipRect);
-	clipPixel(x0, y0 - radius, colour, clipRect);
-	clipPixel(x0 + radius, y0, colour, clipRect);
-	clipPixel(x0 - radius, y0, colour, clipRect);
-
-	while(x < y) {
-		if (f >= 0) {
-			y--;
-			ddF_y += 2;
-			f += ddF_y;
-		}
-		x++;
-		ddF_x += 2;
-		f += ddF_x + 1;    
-		clipPixel(x0 + x, y0 + y, colour, clipRect);
-		clipPixel(x0 - x, y0 + y, colour, clipRect);
-		clipPixel(x0 + x, y0 - y, colour, clipRect);
-		clipPixel(x0 - x, y0 - y, colour, clipRect);
-		clipPixel(x0 + y, y0 + x, colour, clipRect);
-		clipPixel(x0 - y, y0 + x, colour, clipRect);
-		clipPixel(x0 + y, y0 - x, colour, clipRect);
-		clipPixel(x0 - y, y0 - x, colour, clipRect);
-	}
-}
-
-void GraphicsPort::clipFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour, const Rect& clipRect) {
-	s16 f = 1 - radius;
-	s16 ddF_x = 0;
-	s16 ddF_y = -2 * radius;
-	s16 x = 0;
-	s16 y = radius;
-	
-	// Draw central line
-	clipHorizLine(x0 - radius, y0, (radius << 1) + 1, colour, clipRect);
-	
-	while(x < y) {
-		if (f >= 0) {
-			y--;
-			ddF_y += 2;
-			f += ddF_y;
-		}
-		x++;
-		ddF_x += 2;
-		f += ddF_x + 1;
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
 		
-		clipHorizLine(x0 - x, y0 + y, (x << 1) + 1, colour, clipRect);
-		clipHorizLine(x0 - x, y0 - y, (x << 1) + 1, colour, clipRect);
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
 		
-		clipHorizLine(x0 - y, y0 + x, (y << 1) + 1, colour, clipRect);
-		clipHorizLine(x0 - y, y0 - x, (y << 1) + 1, colour, clipRect);
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawFilledCircle(x0, y0, radius, colour);
 	}
 }
 
-// Draw rectangle - external function
+
+void GraphicsPort::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
+	
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
+	
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&xCentre, &yCentre);
+	
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
+	}
+}
+
+
+void GraphicsPort::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
+	
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
+	
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&xCentre, &yCentre);
+	
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawFilledEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
+	}
+}
+
 void GraphicsPort::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipHorizLine(x, y, width, colour, _clipRectList->at(i));						// Top
-			clipHorizLine(x, y + height - 1, width, colour, _clipRectList->at(i));			// Bottom
-			clipVertLine(x, y + 1, height - 2, colour, _clipRectList->at(i));				// Left
-			clipVertLine(x + width - 1, y + 1, height - 2, colour, _clipRectList->at(i));	// Right
-		}
-	} else {
-		// Draw single rectangle
-		clipHorizLine(x, y, width, colour, *_clipRect);						// Top
-		clipHorizLine(x, y + height - 1, width, colour, *_clipRect);		// Bottom
-		clipVertLine(x, y + 1, height - 2, colour, *_clipRect);				// Left
-		clipVertLine(x + width - 1, y + 1, height - 2, colour, *_clipRect);	// Right
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawRect(x, y, width, height, colour);
 	}
 }
 
-// Draw bevelled rectangle based on gadget border - external function
-void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height) {
-	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
-	// Ignore command if gadget is borderless
-	if (_gadget->isBorderless()) return;
-	
-	// Work out which colours to use
-	u16 col1;
-	u16 col2;
-	
-	// Bevel in or out?
-	if ((_gadget->isClicked() && (_gadget->getOutlineType() == Gadget::OUTLINE_CLICK_DEPENDENT)) || (_gadget->getOutlineType() == Gadget::OUTLINE_IN)) {
-		// Bevelled into the screen
-		col1 = _gadget->getShadowColour();
-		col2 = _gadget->getShineColour();
-	} else {
-		// Bevelled out of the screen
-		col1 = _gadget->getShineColour();
-		col2 = _gadget->getShadowColour();
-	}
-	
-	drawBevelledRect(x, y, width, height, col1, col2);
-	
-	// Draw the secondary border if the gadget is bevelled out and in
-	if (_gadget->getOutlineType() == Gadget::OUTLINE_OUT_IN) {
-		drawBevelledRect(x + 1, y + 1, width - 2, height - 2, col2, col1);
-	}
-}
-
-// Draw bevelled rectangle - external function
 void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shineColour, u16 shadowColour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipHorizLine(x, y, width, shineColour, _clipRectList->at(i));							// Top
-			clipHorizLine(x, y + height - 1, width, shadowColour, _clipRectList->at(i));			// Bottom
-			clipVertLine(x, y + 1, height - 2, shineColour, _clipRectList->at(i));					// Left
-			clipVertLine(x + width - 1, y + 1, height - 2, shadowColour, _clipRectList->at(i));		// Right
-		}
-	} else {
-		// Draw single rectangle
-		clipHorizLine(x, y, width, shineColour, *_clipRect);						// Top
-		clipHorizLine(x, y + height - 1, width, shadowColour, *_clipRect);			// Bottom
-		clipVertLine(x, y + 1, height - 2, shineColour, *_clipRect);				// Left
-		clipVertLine(x + width - 1, y + 1, height - 2, shadowColour, *_clipRect);	// Right
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawBevelledRect(x, y, width, height, shineColour, shadowColour);
 	}
 }
 
-// Draw filled XORed rectangle - external function
+void GraphicsPort::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
+	
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
+	
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawFilledXORRect(x, y, width, height, colour);
+	}
+}
+
 void GraphicsPort::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height) {
-	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
-	// Adjust from port-space to screen-space
-	convertPortToScreenSpace(&x, &y);
-	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			
-			// Draw all rows of rectangle
-			for (s32 j = 0; j < height; j++) {
-				clipXORHorizLine(x, y + j, width, _clipRectList->at(i));
-			}
-		}
-	} else {
-		// Draw single rectangle row by row
-		for (s32 j = 0; j < height; j++) {
-			clipXORHorizLine(x, y + j, width, *_clipRect);	
-		}
-	}
+	drawFilledXORRect(x, y, width, height, 0xffff);
 }
 
-// Draw XORed rectangle - external function
 void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height) {
+	drawXORRect(x, y, width, height, 0xffff);
+}
+
+void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipXORHorizLine(x, y, width, _clipRectList->at(i));						// Top
-			clipXORHorizLine(x, y + height - 1, width, _clipRectList->at(i));			// Bottom
-			clipXORVertLine(x, y + 1, height - 2, _clipRectList->at(i));				// Left
-			clipXORVertLine(x + width - 1, y + 1, height - 2, _clipRectList->at(i));	// Right
-		}
-	} else {
-		// Draw single rectangle
-		clipXORHorizLine(x, y, width, *_clipRect);						// Top
-		clipXORHorizLine(x, y + height - 1, width, *_clipRect);			// Bottom
-		clipXORVertLine(x, y + 1, height - 2, *_clipRect);				// Left
-		clipXORVertLine(x + width - 1, y + 1, height - 2, *_clipRect);	// Right
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawXORRect(x, y, width, height, colour);
 	}
 }
 
 //Draw bitmap - external function
 void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
-	u16 bitmapWidth = bitmap->getWidth();
-	u16 bitmapHeight = bitmap->getHeight();
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
-	// Ensure width of rect being drawn into does not exceed size of bitmap
-	if (bitmapWidth - bitmapX < width) {
-		width = bitmapWidth - bitmapX;
-	}
+	Rect rect;
 	
-	if (bitmapHeight - bitmapY < height) {
-		height = bitmapHeight - bitmapY;
-	}
-	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, *_clipRect);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY);
 	}
 }
 
 //Draw bitmap with transparency - external function
 void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY, u16 transparentColour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-
-	u16 bitmapWidth = bitmap->getWidth();
-	u16 bitmapHeight = bitmap->getHeight();
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
-	// Ensure width of rect being drawn into does not exceed size of bitmap
-	if (bitmapWidth - bitmapX < width) {
-		width = bitmapWidth - bitmapX;
-	}
+	Rect rect;
 	
-	if (bitmapHeight - bitmapY < height) {
-		height = bitmapHeight - bitmapY;
-	}
-	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, transparentColour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, transparentColour, *_clipRect);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, transparentColour);
 	}
 }
 
 void GraphicsPort::drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
-	u16 bitmapWidth = bitmap->getWidth();
-	u16 bitmapHeight = bitmap->getHeight();
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	// Ensure width of rect being drawn into does not exceed size of bitmap
-	if (bitmapWidth - bitmapX < width) {
-		width = bitmapWidth - bitmapX;
-	}
-	
-	if (bitmapHeight - bitmapY < height) {
-		height = bitmapHeight - bitmapY;
-	}
-	
-	if (_clipRect == NULL) {
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipBitmapGreyScale(x, y, width, height, bitmap, bitmapX, bitmapY, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipBitmapGreyScale(x, y, width, height, bitmap, bitmapX, bitmapY, *_clipRect);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawBitmapGreyScale(x, y, width, height, bitmap, bitmapX, bitmapY);
 	}
 }
 
-// Draw XORed horizontal line - external function
-void GraphicsPort::drawXORHorizLine(s16 x, s16 y, s16 width) {
+void GraphicsPort::drawXORHorizLine(s16 x, s16 y, u16 width) {
+	drawXORHorizLine(x, y, width, 0xffff);
+}
+
+void GraphicsPort::drawXORHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
 		
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipXORHorizLine(x, y, width, _clipRectList->at(i));
-		}
-	} else {
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
 		
-		// Draw single rectangle
-		clipXORHorizLine(x, y, width, *_clipRect);
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawXORHorizLine(x, y, width, colour);
 	}
 }
 
-// Draw XORed vertical line - external function
-void GraphicsPort::drawXORVertLine(s16 x, s16 y, s16 height) {
+void GraphicsPort::drawXORVertLine(s16 x, s16 y, u16 height, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	if (_clipRect == NULL) {
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
 		
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipXORVertLine(x, y, height, _clipRectList->at(i));
-		}
-	} else {
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
 		
-		// Draw single rectangle
-		clipXORVertLine(x, y, height, *_clipRect);
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawXORVertLine(x, y, height, colour);
 	}
 }
 
-void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, const Rect& clipRect) {
-	
-	// Get co-ords of screen section we're drawing to
-	s16 minX = x;
-	s16 minY = y;
-	s16 maxX = x + width - 1;
-	s16 maxY = y + height - 1;
-	
-	// Attempt to clip
-	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
-		
-		// Calculate new width and height
-		width = maxX - minX + 1;
-		height = maxY - minY + 1;
-		
-		//Adjust bitmap co-ordinates to allow for clipping changes to visible section
-		if (minX > x) {
-			bitmapX += minX - x;
-		}
-		if (y < TOP_SCREEN_Y_OFFSET) {
-			if (minY > y) {
-				bitmapY += minY - y;
-			}
-		} else {
-			if (minY + TOP_SCREEN_Y_OFFSET > y) {
-				bitmapY += (minY + TOP_SCREEN_Y_OFFSET) - y;
-			}
-		}
-		
-		// Draw the bitmap
-		GraphicsUnclipped::drawBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY);
-	}
-}
-
-void GraphicsPort::clipBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour, const Rect& clipRect) {
-
-	// Get co-ords of screen section we're drawing to
-	s16 minX = x;
-	s16 minY = y;
-	s16 maxX = x + width - 1;
-	s16 maxY = y + height - 1;
-	
-	// Attempt to clip
-	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
-		
-		// Calculate new width and height
-		width = maxX - minX + 1;
-		height = maxY - minY + 1;
-		
-		//Adjust bitmap co-ordinates to allow for clipping changes to visible section
-		if (minX > x) {
-			bitmapX += minX - x;
-		}
-		if (y < TOP_SCREEN_Y_OFFSET) {
-			if (minY > y) {
-				bitmapY += minY - y;
-			}
-		} else {
-			if (minY + TOP_SCREEN_Y_OFFSET > y) {
-				bitmapY += (minY + TOP_SCREEN_Y_OFFSET) - y;
-			}
-		}
-		
-		// Draw the bitmap
-		GraphicsUnclipped::drawBitmap(minX, minY, width, height, bitmap, bitmapX, bitmapY, transparentColour);
-	}
-}
-
-void GraphicsPort::clipBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, const Rect& clipRect) {
-	
-	// Get co-ords of screen section we're drawing to
-	s16 minX = x;
-	s16 minY = y;
-	s16 maxX = x + width - 1;
-	s16 maxY = y + height - 1;
-	
-	// Attempt to clip
-	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
-		
-		// Calculate new width and height
-		width = maxX - minX + 1;
-		height = maxY - minY + 1;
-		
-		//Adjust bitmap co-ordinates to allow for clipping changes to visible section
-		if (minX > x) {
-			bitmapX += minX - x;
-		}
-		if (y < TOP_SCREEN_Y_OFFSET) {
-			if (minY > y) {
-				bitmapY += minY - y;
-			}
-		} else {
-			if (minY + TOP_SCREEN_Y_OFFSET > y) {
-				bitmapY += (minY + TOP_SCREEN_Y_OFFSET) - y;
-			}
-		}
-		
-		// Draw the bitmap
-		GraphicsUnclipped::drawBitmapGreyScale(minX, minY, width, height, bitmap, bitmapX, bitmapY);
-	}
-}
-
-// Erase by redrawing gadget
-void GraphicsPort::clear() {
-	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
-	
-	_gadget->redraw();
+void GraphicsPort::drawXORVertLine(s16 x, s16 y, u16 height) {
+	drawXORVertLine(x, y, height, 0xffff);
 }
 
 // Adjust co-ords from port-space to screen-space
 void GraphicsPort::convertPortToScreenSpace(s16* x, s16* y) {
-	*x += _rect.x + _gadget->getX();
-	*y += _rect.y + _gadget->getY();
-}
+	*x += getX();
+	*y += getY();
 
-// Clip co-ordinates
-bool GraphicsPort::clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Rect& clipRect) {
-	// Get co-ords of clipping rect
-	s16 minX = clipRect.x;
-	s16 minY = clipRect.y;
-	s16 maxX = clipRect.x + clipRect.width - 1;
-	s16 maxY = clipRect.y + clipRect.height - 1;
-	
-	// Get start and point co-ords of graphics port
-	s16 portX1 = getX();
-	s16 portY1 = getY();
-	s16 portX2 = getX() + _rect.width - 1;
-	s16 portY2 = getY() + _rect.height - 1;
-	
-	// Choose larger start point values
-	minX = minX > portX1 ? minX : portX1;
-	minY = minY > portY1 ? minY : portY1;
-	
-	// Choose smaller end point values
-	maxX = maxX < portX2 ? maxX : portX2;
-	maxY = maxY < portY2 ? maxY : portY2;
-	
-	// Ensure values don't exceed clipping rectangle
-	*x1 = *x1 > minX ? *x1 : minX;
-	*y1 = *y1 > minY ? *y1 : minY;
-	*x2 = *x2 < maxX ? *x2 : maxX;
-	*y2 = *y2 < maxY ? *y2 : maxY;
-	
 	// Compensate for top screen offset
-	if (*y1 >= TOP_SCREEN_Y_OFFSET) {
-		*y1 -= TOP_SCREEN_Y_OFFSET;
-		*y2 -= TOP_SCREEN_Y_OFFSET;
+	if (*y >= TOP_SCREEN_Y_OFFSET) {
+		*y -= TOP_SCREEN_Y_OFFSET;
 	}
-	
-	// Ensure Y values don't exceed screen dimensions
-	if (*y1 > SCREEN_HEIGHT) {
-		return false;
-	}
-	if (*y2 >= SCREEN_HEIGHT) {
-		*y2 = SCREEN_HEIGHT - 1;
-	}
-	
-	// Return false if no box to draw
-	if ((*x2 < *x1) || (*y2 < *y1)) {
-		return false;
-	}
-	
-	// Return true as box can be drawn
-	return true;
 }
 
 void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
 	
-	if (_clipRect == NULL) {
-		// Draw all visible rects
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipPixel(x, y, colour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipPixel(x, y, colour, *_clipRect);
-	}
-}
-
-// Clip and draw pixel
-void GraphicsPort::clipPixel(s16 x, s16 y, u16 colour, const Rect& clipRect) {
-	s16 clipX1 = x;
-	s16 clipY1 = y;
-	s16 clipX2 = x;
-	s16 clipY2 = y;
+	Rect rect;
 	
-	// Attempt to clip and draw
-	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
-		GraphicsUnclipped::drawPixel(clipX1, clipY1, colour);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawPixel(x, y, colour);
 	}
 }
 
 void GraphicsPort::drawXORPixel(s16 x, s16 y) {
+	drawXORPixel(x, y, 0xffff);
+}
+
+void GraphicsPort::drawXORPixel(s16 x, s16 y, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
-	
-	if (_clipRect == NULL) {
-		// Draw all visible rects
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipXORPixel(x, y, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipXORPixel(x, y, *_clipRect);
-	}
-}
 
-void GraphicsPort::clipXORPixel(s16 x, s16 y, const Rect& clipRect) {
-	s16 clipX1 = x;
-	s16 clipY1 = y;
-	s16 clipX2 = x;
-	s16 clipY2 = y;
+	Rect rect;
 	
-	// Attempt to clip and draw
-	if (clipCoordinates(&clipX1, &clipY1, &clipX2, &clipY2, clipRect)) {
-		GraphicsUnclipped::drawXORPixel(clipX1, clipY1);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawXORPixel(x, y, colour);
 	}
 }
 
 void GraphicsPort::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x1, &y1);
 	convertPortToScreenSpace(&x2, &y2);
-	
-	if (_clipRect == NULL) {
-		// Draw all visible rects
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipLine(x1, y1, x2, y2, colour, _clipRectList->at(i));
-		}
-	} else {
-		// Draw single rectangle
-		clipLine(x1, y1, x2, y2, colour, *_clipRect);
-	}
-}
 
-u8 GraphicsPort::getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax) {
-	u8 code = 0;
+	Rect rect;
 	
-	if (y > yMax) code |= 1;
-	if (y < yMin) code |= 2;
-	if (x > xMax) code |= 4;
-	if (x < xMin) code |= 8;
-	
-	return code;
-}
-
-void GraphicsPort::clipLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour, const Rect& clipRect) {
-	
-	// Extract data from cliprect
-	s16 minX = clipRect.x;
-	s16 minY = clipRect.y;
-	s16 maxX = clipRect.x + clipRect.width - 1;
-	s16 maxY = clipRect.y + clipRect.height - 1;
-	
-	if (clipCoordinates(&minX, &minY, &maxX, &maxY, clipRect)) {
-	
-		// Compensate for top screen offset
-		if (y1 >= TOP_SCREEN_Y_OFFSET) {
-			y1 -= TOP_SCREEN_Y_OFFSET;
-			y2 -= TOP_SCREEN_Y_OFFSET;
-		}
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
 		
-		// Get outcodes for each point
-		u8 code1 = getClipLineOutCode(x1, y1, minX, minY, maxX, maxY);
-		u8 code2 = getClipLineOutCode(x2, y2, minX, minY, maxX, maxY);
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
 		
-		// Clip
-		while (1) {
-			// Check for trivial cases
-			if (!(code1 | code2)) {
-				
-				// Line entirely within visible region
-				// Draw the line
-				GraphicsUnclipped::drawLine(x1, y1, x2, y2, colour);
-				return;
-			} else if (code1 & code2) {
-				
-				// Both end points fall within the same off-screen region
-				return;
-			} else {
-				
-				// No trivial accept
-				s16 x = 0;
-				s16 y = 0;
-				s32 t = 0;
-				u8 codeout;
-				
-				// Choose one of the end points to manipulate (only choose
-				// the end point that is still off screen)
-				codeout = code1 ? code1 : code2;
-				
-				// Check each region
-				if (codeout & 1) {
-					
-					// Check top value
-					t = ((maxY - y1) << 8) / (y2 - y1);
-					x = x1 + ((t * (x2 - x1)) >> 8);
-					y = maxY;
-				} else if (codeout & 2) {
-					
-					// Check bottom value
-					t = ((minY - y1) << 8) / (y2 - y1);
-					x = x1 + ((t * (x2 - x1)) >> 8);
-					y = minY;
-				} else if (codeout & 4) {
-					
-					// Check right value
-					t = ((maxX - x1) << 8) / (x2 - x1);
-					y = y1 + ((t * (y2 - y1)) >> 8);
-					x = maxX;
-				} else if (codeout & 8) {
-					
-					// Check left value
-					t = ((minX - x1) << 8) / (x2 - x1);
-					y = y1 + ((t * (y2 - y1)) >> 8);
-					x = minX;
-				}
-				
-				// Check to see which endpoint we clipped
-				if (codeout == code1) {
-					// First endpoint clipped; update first point
-					x1 = x;
-					y1 = y;
-					
-					// Clip again
-					code1 = getClipLineOutCode(x1, y1, minX, minY, maxX, maxY);
-				} else {
-					// Second endpoint clipped; update second point
-					x2 = x;
-					y2 = y;
-					
-					// Clip again
-					code2 = getClipLineOutCode(x2, y2, minX, minY, maxX, maxY);
-				}
-			}
-		}
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawLine(x1, y1, x2, y2, colour);
 	}
 }
 
 void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u16 height) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 
-	GraphicsUnclipped::copy(sourceX, sourceY, destX, destY, width, height);
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&sourceX, &sourceY);
+	convertPortToScreenSpace(&destX, &destY);
+
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->copy(sourceX, sourceY, destX, destY, width, height);
+	}
 }
 
 void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Rect>* revealedRects) {
 	
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
-	
-	// Scroll the region
-	if (_clipRect == NULL) {
-			
-		// Scroll all visible rects
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipScroll(x, y, xDistance, yDistance, width, height, _clipRectList->at(i), revealedRects);
-		}
-	} else {
 
-		// Scroll single rectangle
-		clipScroll(x, y, xDistance, yDistance, width, height, *_clipRect, revealedRects);
-	}
-}
-
-void GraphicsPort::clipScroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, const Rect& clipRect, WoopsiArray<Rect>* revealedRects) {
+	Rect rect;
 	
-	// Calculate the dimensions of the area being scrolled
-	s16 regionX1 = x;
-	s16 regionY1 = y;
-	s16 regionX2 = x + width - 1;
-	s16 regionY2 = y + height - 1;
-	
-	// Clip the dimensions so that they fit within the clip rect
-	if (clipCoordinates(&regionX1, &regionY1, &regionX2, &regionY2, clipRect)) {
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
 		
-		// Calculate co-ordinates of source rect
-		s16 sourceX1 = regionX1;
-		s16 sourceY1 = regionY1;
-		s16 sourceX2 = regionX2;
-		s16 sourceY2 = regionY2;
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
 		
-		// Adjust source to compensate for the fact that we are scrolling, not
-		// copying - we are overwriting part of the source with itself
-		if (xDistance < 0) sourceX1 -= xDistance;
-		if (xDistance > 0) sourceX2 -= xDistance;
-		if (yDistance < 0) sourceY1 -= yDistance;
-		if (yDistance > 0) sourceY2 -= yDistance;
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
-		// Check if the destination does not overlap the source - in that case,
-		// we're scrolling the visible portion totally off-screen.  We just
-		// need to push the entire region (clipped) to the redraw array
-		// so that the current display is overwritten with totally new content.
-		//
-		// If the source rect has a negative width or height, the two rects
-		// do not overlap
-		if ((sourceX2 < sourceX1) || (sourceY2 < sourceY1)) {
-			Rect rect;
-			rect.x = regionX1;
-			rect.y = regionY1;
-			rect.width = regionX2 + 1;
-			rect.height = regionY2 + 1;
-			revealedRects->push_back(rect);
-			
-			return;
-		}
-		
-		// Get co-ords of destination rectangle
-		s16 destX1 = sourceX1 + xDistance;
-		s16 destY1 = sourceY1 + yDistance;
-		s16 destX2 = sourceX2 + xDistance;
-		s16 destY2 = sourceY2 + yDistance;
-		
-		// Get the dimensions of the source and destination regions
-		s16 widthSource = (sourceX2 - sourceX1) + 1;
-		s16 heightSource = (sourceY2 - sourceY1) + 1;
-		
-		// Post-clipping regions overlap and are the same size, so copy the source to the dest
-		GraphicsUnclipped::copy(sourceX1, sourceY1, destX1, destY1, widthSource, heightSource);
-		
-		// Work out the dimensions of the non-overlapped areas
-		s16 clippedWidth = (regionX2 - regionX1) + 1;
-		s16 clippedHeight = (regionY2 - regionY1) + 1;
-		
-		// Horizontal area
-		if (sourceX1 < destX1) {
-			
-			// Revealed area on the left of the destination
-			Rect rect;
-			rect.x = sourceX1;
-			rect.y = sourceY1 < destY1 ? sourceY1 : destY1;
-			rect.width = (destX1 - sourceX1);
-			rect.height = clippedHeight;
-			
-			if ((rect.height > 0) && (rect.width > 0)) {
-				revealedRects->push_back(rect);
-			}
-			
-		} else if (sourceX1 > destX1) {
-			
-			// Revealed area on the right of the destination
-			Rect rect;
-			rect.x = destX2 + 1;
-			rect.y = sourceY1 < destY1 ? sourceY1 : destY1;
-			rect.width = (sourceX1 - destX1);
-			rect.height = clippedHeight;
-			
-			if ((rect.height > 0) && (rect.width > 0)) {
-				revealedRects->push_back(rect);
-			}
-		}
-		
-		if (sourceY1 < destY1) {
-			
-			// Vertical movement only - revealed area above the destination
-			Rect rect;
-			rect.x = sourceX1 < destX1 ? sourceX1 : destX1;
-			rect.y = sourceY1;
-			rect.width = clippedWidth;
-			rect.height = (destY1 - sourceY1);
-			
-			if ((rect.height > 0) && (rect.width > 0)) {
-				revealedRects->push_back(rect);
-			}
-			
-		} else if (sourceY1 > destY1) {
-			
-			// Vertical movement only - revealed area below the destination
-			Rect rect;
-			rect.x = sourceX1 < destX1 ? sourceX1 : destX1;
-			rect.y = destY2 + 1;
-			rect.width = clippedWidth;
-			rect.height = (sourceY1 - destY1);
-			
-			if ((rect.height > 0) && (rect.width > 0)) {
-				revealedRects->push_back(rect);
-			}
-		}
+		_graphics->setClipRect(rect);
+		_graphics->scroll(x, y, xDistance, yDistance, width, height, revealedRects);
 	}
 }
 
 void GraphicsPort::dim(s16 x, s16 y, u16 width, u16 height) {
 
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	// Dim the region
-	if (_clipRect == NULL) {
-			
-		// Dim all visible rects
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipDim(x, y, width, height, _clipRectList->at(i));
-		}
-	} else {
-
-		// Dim single rectangle
-		clipDim(x, y, width, height, *_clipRect);
-	}
-}
-
-void GraphicsPort::clipDim(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect) {
-	
-	s16 x2 = x + width - 1;
-	s16 y2 = y + height - 1;
-
-	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
-
-		width = (x2 - x) + 1;
-		height = (y2 - y) + 1;
-
-		GraphicsUnclipped::dim(x, y, width, height);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->dim(x, y, width, height);
 	}
 }
 
 void GraphicsPort::greyScale(s16 x, s16 y, u16 width, u16 height) {
 
-	// Ignore command if gadget deleted or invisible
-	if (!_gadget->isDrawingEnabled()) return;
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
 	
 	// Adjust from port-space to screen-space
 	convertPortToScreenSpace(&x, &y);
+
+	Rect rect;
 	
-	// Change the region
-	if (_clipRect == NULL) {
-			
-		// Change all visible rects
-		for (s32 i = 0; i < _clipRectList->size(); i++) {
-			clipGreyScale(x, y, width, height, _clipRectList->at(i));
-		}
-	} else {
-
-		// Change single rectangle
-		clipGreyScale(x, y, width, height, *_clipRect);
-	}
-}
-
-void GraphicsPort::clipGreyScale(s16 x, s16 y, u16 width, u16 height, const Rect& clipRect) {
-	
-	s16 x2 = x + width - 1;
-	s16 y2 = y + height - 1;
-
-	if (clipCoordinates(&x, &y, &x2, &y2, clipRect)) {
-
-		width = (x2 - x) + 1;
-		height = (y2 - y) + 1;
-
-		GraphicsUnclipped::greyScale(x, y, width, height);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		rect.x = _clipRectList.at(i).x;
+		rect.y = _clipRectList.at(i).y;
+		rect.width = _clipRectList.at(i).width;
+		rect.height = _clipRectList.at(i).height;
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->greyScale(x, y, width, height);
 	}
 }

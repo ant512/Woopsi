@@ -15,8 +15,6 @@ SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u
 	_bitmapX = 0;
 	_bitmapY = 0;
 
-	_outline = OUTLINE_OUT;
-
 	_flags.decoration = isDecoration;
 
 	if (isDecoration) {
@@ -38,49 +36,42 @@ void SuperBitmap::clearBitmap() {
 	_graphics->drawFilledRect(0, 0, _bitmap->getWidth(), _bitmap->getHeight(), getBackColour());
 }
 
-void SuperBitmap::draw(Rect clipRect) {
+void SuperBitmap::drawContents(GraphicsPort* port) {
 
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+	Rect rect;
+	getClientRect(rect);
 
-	s16 x = !_flags.borderless;
-	s16 y = x;
-
-	port->drawBitmap(x, y, _width, _height, _bitmap, _bitmapX, _bitmapY);
-
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
-	
-	delete port;
+	port->drawBitmap(0, 0, rect.width, rect.height, _bitmap, _bitmapX, _bitmapY);
 }
 
-bool SuperBitmap::drag(s16 x, s16 y, s16 vX, s16 vY) {
+void SuperBitmap::drawBorder(GraphicsPort* port) {
+	port->drawRect(0, 0, _width, _height, getShadowColour());
+}
 
-	if ((isEnabled()) && (_flags.dragging)) {
-		_bitmapX -= vX;
-		_bitmapY -= vY;
+void SuperBitmap::onClick(s16 x, s16 y) {
+	startDragging(x, y);
+}
 
-		// Prevent scrolling outside boundaries of bitmap
-		if (_bitmapX < 0) {
-			_bitmapX = 0;
-		} else if (_bitmapX > _bitmap->getWidth() - _width) {
-			_bitmapX = _bitmap->getWidth() - _width;
-		}
+void SuperBitmap::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 
-		if (_bitmapY < 0) {
-			_bitmapY = 0;
-		} else if (_bitmapY > _bitmap->getHeight() - _height) {
-			_bitmapY = _bitmap->getHeight() - _height;
-		}
+	_bitmapX -= vX;
+	_bitmapY -= vY;
 
-		// Redraw the gadget
-		redraw();
-
-		_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
-
-		return true;
+	// Prevent scrolling outside boundaries of bitmap
+	if (_bitmapX < 0) {
+		_bitmapX = 0;
+	} else if (_bitmapX > _bitmap->getWidth() - _width) {
+		_bitmapX = _bitmap->getWidth() - _width;
 	}
 
-	return false;
+	if (_bitmapY < 0) {
+		_bitmapY = 0;
+	} else if (_bitmapY > _bitmap->getHeight() - _height) {
+		_bitmapY = _bitmap->getHeight() - _height;
+	}
+
+	// Redraw the gadget
+	redraw();
 }
 
 Bitmap* SuperBitmap::getBitmap() {

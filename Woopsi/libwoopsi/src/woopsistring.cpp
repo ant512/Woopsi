@@ -245,15 +245,24 @@ void WoopsiString::remove(const u32 startIndex, const u32 count) {
 	if (startIndex >= _stringLength) return;
 	if (_dataLength == 0) return;
 
+	// Use alternative remove method if end point matches or exceeds the
+	// size of the string.  The other method is much faster
+	if (startIndex + count >= _stringLength) {
+		remove(startIndex);
+		return;
+	}
+
 	// Find the utf-8 token corresponding to startIndex
 	char* startPos = getToken(startIndex);
+
+	// Abort if unable to start point
+	if (startPos == NULL) return;
 
 	// Find the utf-8 token corresponding to startIndex + count
 	char* endPos = getToken(startIndex + count);
 
-	// Abort if unable to find start/end points
-	if (startPos == NULL) return;
-	if (endPos == NULL) return;
+	// Abort if unable to find end point
+	if (endPos == NULL) while(1) { };//return;
 
 	// Copy characters from a point after the area to be deleted into the space created
 	// by the deletion

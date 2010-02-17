@@ -4,7 +4,6 @@
 using namespace WoopsiUI;
 
 ProgressBar::ProgressBar(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, 0) {
-	_outline = OUTLINE_IN;
 	_minimumValue = 0;
 	_maximumValue = 0;
 	_value = 0;
@@ -23,8 +22,7 @@ void ProgressBar::setValue(const s16 value) {
 	redraw();
 }
 
-void ProgressBar::draw(Rect clipRect) {
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+void ProgressBar::drawContents(GraphicsPort* port) {
 
 	// Calculate the size of the progress bar's filled and unfilled rects
 	// Convert the value to co-ordinates using fixed-point fractional values
@@ -45,15 +43,18 @@ void ProgressBar::draw(Rect clipRect) {
 	pixelValue >>= 8;
 
 	// Draw filled region
-	port->drawFilledRect(rect.x, rect.y, pixelValue, rect.height, getHighlightColour());
+	port->drawFilledRect(0, 0, pixelValue, rect.height, getHighlightColour());
 	
 	// Draw unfilled background
 	if (pixelValue < rect.width) {
-		port->drawFilledRect(rect.x + pixelValue, rect.y, rect.width - pixelValue, rect.height, getBackColour());
+		port->drawFilledRect(pixelValue, 0, rect.width - pixelValue, rect.height, getBackColour());
 	}
+}
 
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
+void ProgressBar::drawBorder(GraphicsPort* port) {
 
-	delete port;
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+
+	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
 }

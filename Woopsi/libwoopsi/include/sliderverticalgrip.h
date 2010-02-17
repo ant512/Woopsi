@@ -23,40 +23,53 @@ namespace WoopsiUI {
 		 */
 		SliderVerticalGrip(s16 x, s16 y, u16 width, u16 height);
 
-		/**
-		 * Draw the region of the slider that falls within the
-		 * clipping rect.  Use draw() instead in most circumstances.
-		 * @param clipRect The clipping region.
-		 */
-		virtual void draw(Rect clipRect);
+	protected:
 
 		/**
-		 * Click the grip at the specified co-ordinates.
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Starts dragging the grip and redraws it.
 		 * @param x The x co-ordinate of the click.
 		 * @param y The y co-ordinate of the click.
-		 * @return True if the click was processed by the slider.
 		 */
-		virtual bool click(s16 x, s16 y);
-
+		virtual void onClick(s16 x, s16 y);
+		
 		/**
-		 * Release this gadget at the supplied co-ordinates
-		 * @param x X co-ordinate of the release.
-		 * @param y Y co-ordinate of the release.
-		 * @return True if the release was successful.
-		 */
-		virtual bool release(s16 x, s16 y);
-
-		/**
-		 * Drag the gadget to the supplied co-ordinates.
+		 * Redraws the grip.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
-		 * @param vX The horizontal distance that the stylus was dragged.
-		 * @param vY The vertical distance that the stylus was dragged.
-		 * @return True if the drag was successful.
 		 */
-		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
-
-	protected:
+		virtual void onRelease(s16 x, s16 y);
+		
+		/**
+		 * Redraws the grip.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 */
+		virtual void onReleaseOutside(s16 x, s16 y);
+		
+		/**
+		 * Moves the grip to follow the stylus.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 * @param vX The horizontal distance of the drag.
+		 * @param vY The vertical distance of the drag.
+		 */
+		virtual void onDrag(s16 x, s16 y, s16 vX, s16 vY);
 
 		/**
 		 * Destructor.

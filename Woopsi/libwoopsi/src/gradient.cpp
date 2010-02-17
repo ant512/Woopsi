@@ -77,49 +77,27 @@ void Gradient::cacheRowColours() {
 	}
 }
 
-// Draw the gradient
-void Gradient::draw(Rect clipRect) {
-	GraphicsPort *port = newInternalGraphicsPort(clipRect);
-	if (port) {
-		
-		// Adjust from screen space (rect) back to gadget space (colour cache)
-		u16 row = clipRect.y - getY();
+void Gradient::drawContents(GraphicsPort* port) {
 
-		// Loop through all lines within this clipping region
-		u16 y = 0;		
-		while (y < clipRect.height) {
-		
-			// Draw line (y value adjusted back to gadget space from screen space)
-			port->drawHorizLine(clipRect.x, row, clipRect.width, _rowColour[row]);
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
-			row++;
-			y++;
-		}
-		delete port;
+	Rect rect;
+	port->getClipRect(rect);
+		
+	u16 row = rect.y;
+
+	// Loop through all lines within this clipping region
+	u16 y = 0;		
+	while (y < rect.height) {
+	
+		// Draw line (y value adjusted back to gadget space from screen space)
+		port->drawHorizLine(rect.x, row, rect.width, _rowColour[row]);
+
+		row++;
+		y++;
 	}
 }
 
-// Resize the gradient gadget
-bool Gradient::resize(u16 width, u16 height) {
-	if ((_width != width) || (_height != height)) {
-		erase();
-		
-		u16 oldHeight = _height;
-
-		_width = width;
-		_height = height;
-		
-		// Recalculate to new dimensions if height has changed
-		if (oldHeight != height) {
-			calculate();
-		}
-
-		redraw();
-
-		_gadgetEventHandlers->raiseResizeEvent(width, height);
-
-		return true;
-	}
-
-	return false;
+void Gradient::onResize(u16 width, u16 height) {
+	calculate();
 }

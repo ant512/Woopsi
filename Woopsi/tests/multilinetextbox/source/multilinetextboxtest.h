@@ -53,6 +53,9 @@ private:
 	Button* _enable;
 	Button* _disable;
 	Button* _dimensions;
+	Button* _appendText;
+	Button* _insertText;
+	Button* _removeText;
 	MultiLineTextBox* _textbox;
 };
 

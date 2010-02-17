@@ -30,8 +30,10 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
-		 * @param x The x co-ordinate of the radio button, relative to its parent.
-		 * @param y The y co-ordinate of the radio button, relative to its parent.
+		 * @param x The x co-ordinate of the radio button, relative to its
+		 * parent.
+		 * @param y The y co-ordinate of the radio button, relative to its
+		 * parent.
 		 * @param width The width of the radio button.
 		 * @param height The height of the radio button.
 		 * @param style The style that the gadget should use.  If this is not
@@ -40,22 +42,6 @@ namespace WoopsiUI {
 		 * the style into its own internal style object.
 		 */
 		RadioButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
-
-		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool click(s16 x, s16 y);
 
 		/**
 		 * Get the current state of the radio button.
@@ -70,7 +56,22 @@ namespace WoopsiUI {
 		virtual void setState(RadioButtonState state);
 
 	protected:
-		RadioButtonState _state;				/**< The state of the radio button */
+		RadioButtonState _state;		/**< The state of the radio button */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Sets the radiobutton's state to "on".
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
 
 		/**
 		 * Destructor.

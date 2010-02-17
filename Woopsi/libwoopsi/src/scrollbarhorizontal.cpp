@@ -14,13 +14,21 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Ga
 	_slider = new SliderHorizontal(0, 0, width - (_buttonWidth << 1), height);
 	_slider->addGadgetEventHandler(this);
 
-	_leftButton = new Button(width - (_buttonWidth << 1), 0, _buttonWidth, height, GLYPH_ARROW_LEFT, _style);
-	_leftButton->addGadgetEventHandler(this);
-	_leftButton->setFont(_style->glyphFont);
+	GadgetBorderSize borderSize;
+	borderSize.top = 1;
+	borderSize.right = 1;
+	borderSize.bottom = 1;
+	borderSize.left = 1;
 
-	_rightButton = new Button(width - _buttonWidth, 0, _buttonWidth, height, GLYPH_ARROW_RIGHT, _style);
+	_leftButton = new Button(width - (_buttonWidth << 1), 0, _buttonWidth, height, GLYPH_ARROW_LEFT, &_style);
+	_leftButton->addGadgetEventHandler(this);
+	_leftButton->setFont(getGlyphFont());
+	_leftButton->setBorderSize(borderSize);
+
+	_rightButton = new Button(width - _buttonWidth, 0, _buttonWidth, height, GLYPH_ARROW_RIGHT, &_style);
 	_rightButton->addGadgetEventHandler(this);
-	_rightButton->setFont(_style->glyphFont);
+	_rightButton->setFont(getGlyphFont());
+	_rightButton->setBorderSize(borderSize);
 
 	// Create timer
 	_scrollTimeout = 10;
@@ -64,9 +72,6 @@ void ScrollbarHorizontal::setValue(const s16 value) {
 
 void ScrollbarHorizontal::setPageSize(s16 pageSize) {
 	_slider->setPageSize(pageSize);
-}
-
-void ScrollbarHorizontal::draw(Rect clipRect) {
 }
 
 void ScrollbarHorizontal::handleActionEvent(const GadgetEventArgs& e) {
@@ -135,40 +140,23 @@ void ScrollbarHorizontal::jumpGrip(u8 direction) {
 	_slider->jumpGrip(direction);
 }
 
-bool ScrollbarHorizontal::resize(u16 width, u16 height) {
+void ScrollbarHorizontal::onResize(u16 width, u16 height) {
 
 	// Remember current values
 	s16 value = getValue();
-	bool resized = false;
 	bool events = raisesEvents();
-	bool drawing = _flags.drawingEnabled;
-
-	// Hide and disable drawing
-	erase();
-	_flags.drawingEnabled = false;
 
 	// Disable event raising
 	setRaisesEvents(false);
 
-	if (Gadget::resize(width, height)) {
+	// Resize and move children
+	_slider->resize(width - (_buttonWidth << 1), height);
+	_leftButton->moveTo(_slider->getWidth(), 0);
+	_rightButton->moveTo(_slider->getWidth() + _buttonWidth, 0);
 
-		// Resize and move children
-		_slider->resize(width - (_buttonWidth << 1), height);
-		_leftButton->moveTo(_slider->getWidth(), 0);
-		_rightButton->moveTo(_slider->getWidth() + _buttonWidth, 0);
-
-		// Set back to current value
-		setValue(value);
-
-		resized = true;
-	}
-
-	// Show and reset drawing
-	_flags.drawingEnabled = drawing;
-	redraw();
+	// Set back to current value
+	setValue(value);
 
 	// Reset event raising
 	setRaisesEvents(events);
-
-	return resized;
 }

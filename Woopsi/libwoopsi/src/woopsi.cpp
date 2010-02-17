@@ -6,6 +6,11 @@
 #include "contextmenu.h"
 #include "gadgetstyle.h"
 #include "woopsitimer.h"
+#include "graphicsport.h"
+#include "woopsikeyboardscreen.h"
+#include "woopsikeyboard.h"
+#include "keyboardeventhandler.h"
+#include "screen.h"
 
 using namespace WoopsiUI;
 
@@ -25,50 +30,62 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 	_lidClosed = false;
 	_flags.modal = true;
 	_clickedGadget = NULL;
+	_keyboardScreen = NULL;
 
 	// Set up singleton pointer
 	singleton = this;
 
 	// Set up DS display hardware
 	initWoopsiGfxMode();
-
+	
 	// Do we need to fetch the default style?
+	// We need to do this again here because the gadget's constructor will be
+	// run before the initWoopsiGfxMode() call, which means that we've got a
+	// NULL font pointer
 	if (style == NULL) {
-
+		
 		// Use default style
 		if (defaultGadgetStyle != NULL) {
-			_style->colours.back = defaultGadgetStyle->colours.back;
-			_style->colours.shine = defaultGadgetStyle->colours.shine;
-			_style->colours.highlight = defaultGadgetStyle->colours.highlight;
-			_style->colours.shadow = defaultGadgetStyle->colours.shadow;
-			_style->colours.fill = defaultGadgetStyle->colours.fill;
-			_style->colours.dark = defaultGadgetStyle->colours.dark;
-			_style->font = defaultGadgetStyle->font;
+			_style.colours.back = defaultGadgetStyle->colours.back;
+			_style.colours.shine = defaultGadgetStyle->colours.shine;
+			_style.colours.highlight = defaultGadgetStyle->colours.highlight;
+			_style.colours.shadow = defaultGadgetStyle->colours.shadow;
+			_style.colours.fill = defaultGadgetStyle->colours.fill;
+			_style.colours.dark = defaultGadgetStyle->colours.dark;
+			_style.font = defaultGadgetStyle->font;
+			_style.glyphFont = defaultGadgetStyle->glyphFont;
 		}
 	} else {
-
+		
 		// Use specified style
-		_style->colours.back = style->colours.back;
-		_style->colours.shine = style->colours.shine;
-		_style->colours.highlight = style->colours.highlight;
-		_style->colours.shadow = style->colours.shadow;
-		_style->colours.fill = style->colours.fill;
-		_style->colours.dark = style->colours.dark;
-		_style->font = style->font;
+		_style.colours.back = style->colours.back;
+		_style.colours.shine = style->colours.shine;
+		_style.colours.highlight = style->colours.highlight;
+		_style.colours.shadow = style->colours.shadow;
+		_style.colours.fill = style->colours.fill;
+		_style.colours.dark = style->colours.dark;
+		_style.font = style->font;
+		_style.glyphFont = style->glyphFont;
 	}
 
 	// Create context menu
-	_contextMenu = new ContextMenu(_style);
+	_contextMenu = new ContextMenu(style);
 	addGadget(_contextMenu);
 	_contextMenu->shelve();
+
+	// Create background screens that will sit behind all other screens
+	Screen* screen = new Screen("", GADGET_DECORATION);
+	addGadget(screen);
+	screen->flipToTopScreen();
+
+	screen = new Screen("", GADGET_DECORATION);
+	addGadget(screen);
 }
 
 Woopsi::~Woopsi() {
 	stopModal();
 	singleton = NULL;
 	_contextMenu = NULL;
-
-	delete _style;
 
 	woopsiFreeFrameBuffers();
 	woopsiFreeDefaultGadgetStyle();
@@ -129,304 +146,111 @@ void Woopsi::handleVBL() {
 	}
 }
 
-void Woopsi::draw(Rect clipRect) {
-	clear(clipRect);
-}
-
 // Process all stylus input
 void Woopsi::handleStylus(Gadget* gadget) {
 
 	// All gadgets
 	if (Stylus.Newpress) {
 		if (Pad.Held.L || Pad.Held.R) {
-
-			// Working with a modal gadget or the whole structure?
-			if (gadget == NULL) {
-
-				// All gadgets
-				shiftClick(Stylus.X, Stylus.Y);
-			} else {
-
-				// One gadget
-				shiftClick(Stylus.X, Stylus.Y, gadget);
-			}
+			handleShiftClick(Stylus.X, Stylus.Y, gadget);
 		} else {
-
-			// Working with a modal gadget or the whole structure?
-			if (gadget == NULL) {
-
-				// All gadgets
-				click(Stylus.X, Stylus.Y);
-			} else {
-
-				// One gadget
-				click(Stylus.X, Stylus.Y, gadget);
-			}
+			handleClick(Stylus.X, Stylus.Y, gadget);
 		}
 	} else if (Stylus.Held) {
-		drag(Stylus.X, Stylus.Y, Stylus.Vx, Stylus.Vy);
-	} else if (_flags.clicked) {
-		release(Stylus.X, Stylus.Y);
+		if (_clickedGadget != NULL) {
+			_clickedGadget->drag(Stylus.X, Stylus.Y, Stylus.Vx, Stylus.Vy);
+		}
+	} else if (_clickedGadget != NULL) {
+		_clickedGadget->release(Stylus.X, Stylus.Y);
 	}
 }
 
-bool Woopsi::click(s16 x, s16 y) {
+void Woopsi::handleShiftClick(s16 x, s16 y, Gadget* gadget) {
 
-	_flags.clicked = true;
+	// Shelve the existing context menu to ensure that if
+	// the click does not result in the menu being redisplayed
+	// it is correctly hidden
+	shelveContextMenu();
 
-	// Work out which gadget was clicked
-	for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-		if (_gadgets[i]->click(x, y)) {
+	// Working with a modal gadget or the whole structure?
+	if (gadget == NULL) {
+
+		// All gadgets
+		shiftClick(Stylus.X, Stylus.Y);
+	} else {
+
+		// One gadget
+		gadget->shiftClick(Stylus.X, Stylus.Y);
+	}
+}
+
+void Woopsi::handleClick(s16 x, s16 y, Gadget* gadget) {
+
+	// Working with a modal gadget or the whole structure?
+	if (gadget == NULL) {
+
+		// All gadgets
+		for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+			if (_gadgets[i]->click(x, y)) {
+
+				// Do we need to close the context menu?
+				if (_gadgets[i] != _contextMenu) {
+					shelveContextMenu();
+				}
+
+				return;
+			}
+		}
+	} else {
+
+		// One gadget
+		if (gadget->click(x, y)) {
 
 			// Do we need to close the context menu?
-			if (_gadgets[i] != _contextMenu) {
+			if (gadget != _contextMenu) {
 				shelveContextMenu();
 			}
-
-			return true;
 		}
 	}
-
-	return false;
 }
 
-bool Woopsi::click(s16 x, s16 y, Gadget* gadget) {
+void Woopsi::handleKey(bool newPress, bool released, u32& heldTime, KeyCode keyCode) {
 
-	_flags.clicked = true;
+	// We do not reset the repeat timers to 0 - instead we reset it back to the initial repeat time.
+	// This prevents the secondary repeat firing before the first repeat without us needing to
+	// track whether or not the initial repeat has fired.
+	// Thus, the secondary repeat time is found by adding both values together.
+	u32 secondaryRepeatTime = KEY_INITIAL_REPEAT_TIME + KEY_SECONDARY_REPEAT_TIME;
 
-	// Work out which gadget was clicked
-	if (gadget->click(x, y)) {
-
-		// Do we need to close the context menu?
-		if (gadget != _contextMenu) {
-			shelveContextMenu();
-		}
-
-		return true;
+	if (newPress) {
+		_focusedGadget->keyPress(keyCode);
+	} else if (released) {
+		_focusedGadget->keyRelease(keyCode);
 	}
-
-	return false;
-}
-
-bool Woopsi::shiftClick(s16 x, s16 y) {
-
-	_flags.clicked = true;
-
-	// Shelve the existing context menu
-	shelveContextMenu();
-
-	// Work out which gadget was clicked
-	for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-		if (_gadgets[i]->shiftClick(x, y)) {
-			return true;
-		}
+		
+	if (heldTime == KEY_INITIAL_REPEAT_TIME) {
+		_focusedGadget->keyRepeat(keyCode);
+	} else if (heldTime == secondaryRepeatTime) {
+		_focusedGadget->keyRepeat(keyCode);
+		heldTime = KEY_INITIAL_REPEAT_TIME;
 	}
-
-	return false;
-}
-
-bool Woopsi::shiftClick(s16 x, s16 y, Gadget* gadget) {
-
-	_flags.clicked = true;
-
-	// Shelve the existing context menu
-	shelveContextMenu();
-
-	// Work out which gadget was clicked
-	if (gadget->shiftClick(x, y)) {
-		return true;
-	}
-
-	return false;
-}
-
-bool Woopsi::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	if (_clickedGadget != NULL) {
-		_clickedGadget->drag(x, y, vX, vY);
-
-		return true;
-	}
-
-	return false;
-}
-
-bool Woopsi::release(s16 x, s16 y) {
-
-	if (_flags.clicked) {
-
-		// Avoid using the unreliable "Stylus.Released" variable
-		_flags.clicked = false;
-
-		// Release clicked gadget
-		if (_clickedGadget != NULL) {
-			_clickedGadget->release(x, y);
-			_clickedGadget = NULL;
-		}
-
-		return true;
-	}
-
-	return false;
 }
 
 // Process all key input
 void Woopsi::handleKeys() {
 	if (_focusedGadget != NULL) {
-		if (Pad.Newpress.A) {
-			_focusedGadget->keyPress(KEY_CODE_A);
-		} else if (Pad.Released.A) {
-			_focusedGadget->keyRelease(KEY_CODE_A);
-		}
-		
-		if (Pad.HeldTime.A == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_A);
-		} else if (Pad.HeldTime.A == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_A);
-			Pad.HeldTime.A = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.B) {
-			_focusedGadget->keyPress(KEY_CODE_B);
-		} else if (Pad.Released.B) {
-			_focusedGadget->keyRelease(KEY_CODE_B);
-		}
-		
-		if (Pad.HeldTime.B == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_B);
-		} else if (Pad.HeldTime.B == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_B);
-			Pad.HeldTime.B = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.X) {
-			_focusedGadget->keyPress(KEY_CODE_X);
-		} else if (Pad.Released.X) {
-			_focusedGadget->keyRelease(KEY_CODE_X);
-		}
-		
-		if (Pad.HeldTime.X == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_X);
-		} else if (Pad.HeldTime.X == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_X);
-			Pad.HeldTime.X = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.Y) {
-			_focusedGadget->keyPress(KEY_CODE_Y);
-		} else if (Pad.Released.Y) {
-			_focusedGadget->keyRelease(KEY_CODE_Y);
-		}
-		
-		if (Pad.HeldTime.Y == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_Y);
-		} else if (Pad.HeldTime.Y == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_Y);
-			Pad.HeldTime.Y = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.L) {
-			_focusedGadget->keyPress(KEY_CODE_L);
-		} else if (Pad.Released.L) {
-			_focusedGadget->keyRelease(KEY_CODE_L);
-		}
-		
-		if (Pad.HeldTime.L == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_L);
-		} else if (Pad.HeldTime.L == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_L);
-			Pad.HeldTime.L = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.R) {
-			_focusedGadget->keyPress(KEY_CODE_R);
-		} else if (Pad.Released.R) {
-			_focusedGadget->keyRelease(KEY_CODE_R);
-		}
-		
-		if (Pad.HeldTime.R == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_R);
-		} else if (Pad.HeldTime.R == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_R);
-			Pad.HeldTime.R = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.Up) {
-			_focusedGadget->keyPress(KEY_CODE_UP);
-		} else if (Pad.Released.Up) {
-			_focusedGadget->keyRelease(KEY_CODE_UP);
-		}
-		
-		if (Pad.HeldTime.Up == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_UP);
-		} else if (Pad.HeldTime.Up == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_UP);
-			Pad.HeldTime.Up = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.Down) {
-			_focusedGadget->keyPress(KEY_CODE_DOWN);
-		} else if (Pad.Released.Down) {
-			_focusedGadget->keyRelease(KEY_CODE_DOWN);
-		}
-		
-		if (Pad.HeldTime.Down == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_DOWN);
-		} else if (Pad.HeldTime.Down == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_DOWN);
-			Pad.HeldTime.Down = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.Left) {
-			_focusedGadget->keyPress(KEY_CODE_LEFT);
-		} else if (Pad.Released.Left) {
-			_focusedGadget->keyRelease(KEY_CODE_LEFT);
-		}
-		
-		if (Pad.HeldTime.Left == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_LEFT);
-		} else if (Pad.HeldTime.Left == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_LEFT);
-			Pad.HeldTime.Left = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.Right) {
-			_focusedGadget->keyPress(KEY_CODE_RIGHT);
-		} else if (Pad.Released.Right) {
-			_focusedGadget->keyRelease(KEY_CODE_RIGHT);
-		}
-		
-		if (Pad.HeldTime.Right == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_RIGHT);
-		} else if (Pad.HeldTime.Right == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_RIGHT);
-			Pad.HeldTime.Right = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.Start) {
-			_focusedGadget->keyPress(KEY_CODE_START);
-		} else if (Pad.Released.Start) {
-			_focusedGadget->keyRelease(KEY_CODE_START);
-		}
-		
-		if (Pad.HeldTime.Start == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_START);
-		} else if (Pad.HeldTime.Start == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_START);
-			Pad.HeldTime.Start = KEY_INITIAL_REPEAT_TIME;
-		}
-
-		if (Pad.Newpress.Select) {
-			_focusedGadget->keyPress(KEY_CODE_SELECT);
-		} else if (Pad.Released.Select) {
-			_focusedGadget->keyRelease(KEY_CODE_SELECT);
-		}
-		
-		if (Pad.HeldTime.Select == KEY_INITIAL_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_SELECT);
-		} else if (Pad.HeldTime.Select == KEY_SECONDARY_REPEAT_TIME) {
-			_focusedGadget->keyRepeat(KEY_CODE_SELECT);
-			Pad.HeldTime.Select = KEY_INITIAL_REPEAT_TIME;
-		}
+		handleKey(Pad.Newpress.A, Pad.Released.A, Pad.HeldTime.A, KEY_CODE_A);
+		handleKey(Pad.Newpress.B, Pad.Released.B, Pad.HeldTime.B, KEY_CODE_B);
+		handleKey(Pad.Newpress.X, Pad.Released.X, Pad.HeldTime.X, KEY_CODE_X);
+		handleKey(Pad.Newpress.Y, Pad.Released.Y, Pad.HeldTime.Y, KEY_CODE_Y);
+		handleKey(Pad.Newpress.L, Pad.Released.L, Pad.HeldTime.L, KEY_CODE_L);
+		handleKey(Pad.Newpress.R, Pad.Released.R, Pad.HeldTime.R, KEY_CODE_R);
+		handleKey(Pad.Newpress.Up, Pad.Released.Up, Pad.HeldTime.Up, KEY_CODE_UP);
+		handleKey(Pad.Newpress.Down, Pad.Released.Down, Pad.HeldTime.Down, KEY_CODE_DOWN);
+		handleKey(Pad.Newpress.Left, Pad.Released.Left, Pad.HeldTime.Left, KEY_CODE_LEFT);
+		handleKey(Pad.Newpress.Right, Pad.Released.Right, Pad.HeldTime.Right, KEY_CODE_RIGHT);
+		handleKey(Pad.Newpress.Start, Pad.Released.Start, Pad.HeldTime.Start, KEY_CODE_START);
+		handleKey(Pad.Newpress.Select, Pad.Released.Select, Pad.HeldTime.Select, KEY_CODE_SELECT);
 	}
 }
 
@@ -504,7 +328,7 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 		Gadget* topGadget = NULL;
 
 		for (s32 i = 0; i < _gadgets.size(); i++) {
-			if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted())) {
+			if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted()) && (!_gadgets[i]->isDecoration())) {
 				if (_gadgets[i]->getPhysicalScreenNumber() == 1) {
 					topGadget = _gadgets[i];
 					break;
@@ -520,7 +344,7 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 				// Get a pointer to the highest gadget in the bottom screen
 				// that isn't the top gadget
 				for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-					if (gadget != _gadgets[i]) {
+					if ((gadget != _gadgets[i]) && (_gadgets[i]->isDecoration())) {
 						gadget = _gadgets[i];
 						break;
 					}
@@ -562,15 +386,6 @@ void Woopsi::eraseRect(Rect rect) {
 		for (s32 i = _gadgets.size() - 1; i > -1 ; i--) {
 			if (invalidRectangles->size() > 0) {
 				_gadgets[i]->redrawDirty(invalidRectangles, NULL);
-			} else {
-				break;
-			}
-		}
-
-		// Refresh screen
-		for (s32 i = 0; i < invalidRectangles->size(); i++) {
-			if (invalidRectangles->size() > 0) {
-				clear(invalidRectangles->at(i));
 			} else {
 				break;
 			}
@@ -623,65 +438,73 @@ void Woopsi::addToDeleteQueue(Gadget* gadget) {
 	_deleteQueue.push_back(gadget);
 }
 
-// Close a child
-void Woopsi::closeChild(Gadget* gadget) {
-	if (gadget != NULL) {
-
-		// Ensure gadget knows it is being closed
-		if (!gadget->isDeleted()) {
-			gadget->close();
-		}
-
-		// Do we need to make another gadget active?
-		if (_focusedGadget == gadget) {
-			_focusedGadget = NULL;
-		}
-
-		// Unset clicked gadget if necessary
-		if (_clickedGadget == gadget) {
-			_clickedGadget = NULL;
-		}
-
-		// Decrease decoration count if necessary
-		if (gadget->isDecoration()) {
-			_decorationCount--;
-		}
-
-		moveChildToDeleteQueue(gadget);
-	}
-}
-
-// Shelve a child
-void Woopsi::shelveChild(Gadget* gadget) {
-	if (gadget != NULL) {
-
-		// Ensure gadget knows it is being shelved
-		if (!gadget->isShelved()) {
-			gadget->shelve();
-		}
-
-		// Do we need to make another gadget active?
-		if (_focusedGadget == gadget) {
-			_focusedGadget = NULL;
-		}
-
-		// Unset clicked gadget if necessary
-		if (_clickedGadget == gadget) {
-			_clickedGadget = NULL;
-		}
-
-		// Decrease decoration count if necessary
-		if (gadget->isDecoration()) {
-			_decorationCount--;
-		}
-
-		moveChildToShelvedList(gadget);
-	}
-}
-
 void Woopsi::shelveContextMenu() {
 	if (!_contextMenu->isShelved()) {
 		_contextMenu->shelve();
 		_contextMenu->reset();
+	}
+}
+
+void Woopsi::setClickedGadget(Gadget* gadget) {
+
+	// Do we have a clicked gadget already?
+	if (_clickedGadget != NULL) {
+
+		// Ensure that the existing clicked gadget is released *outside* its bounds
+		_clickedGadget->release(_clickedGadget->getX() - 10, 0);
+	}
+	
+	// Update the pointer
+	_clickedGadget = gadget;
+}
+
+void Woopsi::showKeyboard(KeyboardEventHandler* opener) {
+
+	if (_keyboardScreen == NULL) {
+		_keyboardScreen = new WoopsiKeyboardScreen(opener);
+	}
+
+	if (_gadgets.size() > 0) {
+
+		// Locate the topmost bottom screen
+		Screen* bottomScreen = NULL;
+		for (s32 i = _gadgets.size() - 1; i > -1; --i) {
+			if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted()) && (!_gadgets[i]->isDecoration())) {
+				if (_gadgets[i]->getPhysicalScreenNumber() == 0) {
+					bottomScreen = (Screen*)_gadgets[i];
+					break;
+				}
+			}
+		}
+
+		// Flip the screen to the top display
+		bottomScreen->flipToTopScreen();
+	}
+
+	// Append the keyboard screen
+	addGadget(_keyboardScreen);
+}
+
+void Woopsi::hideKeyboard() {
+	if (_keyboardScreen == NULL) return;
+
+	_keyboardScreen->close();
+	_keyboardScreen = NULL;
+
+	if (_gadgets.size() > 0) {
+
+		// Locate the topmost top screen
+		Screen* topScreen = NULL;
+		for (s32 i = _gadgets.size() - 1; i > -1; --i) {
+			if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted()) && (!_gadgets[i]->isDecoration())) {
+				if (_gadgets[i]->getPhysicalScreenNumber() == 1) {
+					topScreen = (Screen*)_gadgets[i];
+					break;
+				}
+			}
+		}
+
+		// Flip the screen to the bottom display
+		topScreen->flipToBottomScreen();
 	}
 }

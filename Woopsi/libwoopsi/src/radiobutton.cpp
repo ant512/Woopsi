@@ -7,7 +7,10 @@ using namespace WoopsiUI;
 RadioButton::RadioButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Button(x, y, width, height, GLYPH_SCREEN_DEPTH_UP, style) {
 	_state = RADIO_BUTTON_STATE_OFF;
 	_flags.borderless = true;
-	setFont(_style->glyphFont);
+
+	// Use the glyph font as the primary font so that the alignment functions
+	// produce correct results
+	setFont(getGlyphFont());
 }
 
 void RadioButton::setState(RadioButton::RadioButtonState state) {
@@ -24,15 +27,10 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 	}
 }
 
-void RadioButton::draw(Rect clipRect) {
-
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+void RadioButton::drawContents(GraphicsPort* port) {
 
 	// Clear the background
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
 
 	// Work out which glyph to draw
 	char glyph = GLYPH_RADIO_BUTTON_ON;
@@ -55,19 +53,8 @@ void RadioButton::draw(Rect clipRect) {
 	} else {
 		port->drawText(_textX, _textY, getFont(), glyph, 0, 1, getDarkColour());
 	}
-
-	delete port;
 }
 
-bool RadioButton::click(s16 x, s16 y) {
-	if (Button::click(x, y)) {
-
-		if (isEnabled()) {
-			setState(RADIO_BUTTON_STATE_ON);
-		}
-
-		return true;
-	}
-
-	return false;
+void RadioButton::onClick(s16 x, s16 y) {
+	setState(RADIO_BUTTON_STATE_ON);
 }

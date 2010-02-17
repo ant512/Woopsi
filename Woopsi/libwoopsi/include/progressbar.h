@@ -58,17 +58,26 @@ namespace WoopsiUI {
 		 */
 		void setValue(const s16 value);
 
-		/**
-		 * Draw the region of the progress bar that falls within the
-		 * clipping rect.  Use draw() instead in most circumstances.
-		 * @param clipRect The clipping region.
-		 */
-		virtual void draw(Rect clipRect);
-
 	protected:
-		s16 _minimumValue;							/**< Minimum value that the grip can represent */
-		s16 _maximumValue;							/**< Maximum value that the grip can represent */
-		s16 _value;									/**< Value of the progress bar */
+		s16 _minimumValue;	/**< Minimum value that the grip can represent */
+		s16 _maximumValue;	/**< Maximum value that the grip can represent */
+		s16 _value;			/**< Value of the progress bar */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
 
 		/**
 		 * Destructor.

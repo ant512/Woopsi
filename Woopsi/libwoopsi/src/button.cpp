@@ -5,78 +5,69 @@
 using namespace WoopsiUI;
 
 Button::Button(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Label(x, y, width, height, text, style) {
-	_outline = OUTLINE_CLICK_DEPENDENT;
 }
 
-void Button::draw(Rect clipRect) {
-		
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+void Button::drawContents(GraphicsPort* port) {
+
+	u16 textColour;
 
 	if (!isEnabled()) {
-
-		// Draw disabled state
-		port->drawFilledRect(0, 0, _width, _height, getBackColour());
-
-		port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), getDarkColour());
+		textColour = getDarkColour();
 	} else if (!isClicked()) {
-
-		// Draw normal state
-		port->drawFilledRect(0, 0, _width, _height, getBackColour());
-
-		port->drawText(_textX, _textY, getFont(), _text);
+		textColour = getShadowColour();
 	} else {
-
-		// Draw clicked state
-		port->drawFilledRect(0, 0, _width, _height, getDarkColour());
-
-		port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), getShineColour());
+		textColour = getShineColour();
 	}
 
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
-
-	delete port;
+	port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), textColour);
 }
 
-bool Button::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
+void Button::drawBorder(GraphicsPort* port) {
 
-		if (isEnabled()) {
-	 		redraw();
-		}
-
-		return true;
+	// Determine the background colour
+	u16 colour;
+	if (isClicked()) {
+		colour = getDarkColour();
+	} else {
+		colour = getBackColour();
 	}
 
-	return false;
+	port->drawFilledRect(0, 0, _width, _height, colour);
+
+	drawOutline(port);
 }
 
-bool Button::release(s16 x, s16 y) {
+void Button::drawOutline(GraphicsPort* port) {
 
-	if (_flags.clicked) {
-		_flags.clicked = false;
-		_flags.dragging = false;
-
-		if (woopsiApplication->getClickedGadget() == this) {
-			woopsiApplication->setClickedGadget(NULL);
-		}
-
-		// Determine which release event to fire
-		if (checkCollision(x, y)) {
-			// Release occurred within gadget; raise release
-			_gadgetEventHandlers->raiseReleaseEvent(x, y);
-
-			// Also raise "action" event
-			_gadgetEventHandlers->raiseActionEvent(x, y, 0, 0, KEY_CODE_NONE);
-		} else {
-			// Release occurred outside gadget; raise release
-			_gadgetEventHandlers->raiseReleaseOutsideEvent(x, y);
-		}
-
-		redraw();
-
-		return true;
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+	
+	// Work out which colours to use
+	u16 col1;
+	u16 col2;
+	
+	if (isClicked()) {
+		// Bevelled into the screen
+		col1 = getShadowColour();
+		col2 = getShineColour();
+	} else {
+		// Bevelled out of the screen
+		col1 = getShineColour();
+		col2 = getShadowColour();
 	}
+	
+	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
+}
 
-	return false;
+void Button::onClick(s16 x, s16 y) {
+	redraw();
+}
+
+void Button::onRelease(s16 x, s16 y) {
+	_gadgetEventHandlers->raiseActionEvent();
+	redraw();
+}
+
+void Button::onReleaseOutside(s16 x, s16 y) {
+	redraw();
 }

@@ -9,8 +9,8 @@ namespace WoopsiUI {
 	class ListData;
 
 	/**
-	 * Base ListDataEventHandler class, intended to be subclassed.  Any class that needs to listen for
-	 * ListData events should inherit from this class.
+	 * Base ListDataEventHandler class, intended to be subclassed.  Any class
+	 * that needs to listen for ListData events should inherit from this class.
 	 */
 	class ListDataEventHandler {
 	public:

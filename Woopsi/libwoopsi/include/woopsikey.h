@@ -108,6 +108,13 @@ namespace WoopsiUI {
 		 */
 		const char getValue() const;
 
+		/**
+		 * Sets the key's stuck down state.  If this is true, the key has a inwards-bevelled
+		 * border when drawn.  If it is false, the key has an outwards-bevelled border.
+		 * @param isStuckDown The new stuck down state.
+		 */
+		inline void setStuckDown(bool isStuckDown) { _isStuckDown = isStuckDown; };
+
 	protected:
 		KeyType _keyType;					/**< Type of key represented by this object */
 		WoopsiString _normalText;			/**< Text displayed when in normal mode */
@@ -117,6 +124,14 @@ namespace WoopsiUI {
 		WoopsiString _capsLockText;			/**< Text displayed when in caps lock mode */
 		WoopsiString _controlCapsLockText;	/**< Text displayed when in control/caps lock mode */
 		KeyMode _keyMode;					/**< Current mode */
+		bool _isStuckDown;					/**< True if the key is stuck down (ie. is Ctrl key and is active) */
+
+		/**
+		 * Draws the outline of the button.  Whether it is bevelled in or out depends
+		 * on the gadget's stuck down state.
+		 * @param port Graphics port to draw to.
+		 */
+		virtual void drawOutline(GraphicsPort* port);
 
 		/**
 		 * Destructor.

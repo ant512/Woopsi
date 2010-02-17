@@ -42,8 +42,15 @@ namespace WoopsiUI {
 		virtual void handleReleaseEvent(const GadgetEventArgs& e);
 
 	protected:
-		Button* _button;					/**< Pointer to the OK button */
-		MultiLineTextBox* _textBox;			/**< Pointer to the alert message box */
+		Button* _button;					/**< Pointer to the OK button. */
+		MultiLineTextBox* _textBox;			/**< Pointer to the alert message box. */
+		
+		/**
+		 * Resize the requester to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
 
 		/**
 		 * Destructor.

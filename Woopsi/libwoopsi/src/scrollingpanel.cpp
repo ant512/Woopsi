@@ -18,19 +18,18 @@ ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, G
 	setAllowsHorizontalScroll(true);
 
 	_flags.permeable = true;
-
-	_outline = OUTLINE_OUT;
 }
 
-void ScrollingPanel::draw(Rect clipRect) {
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	// Clear
+void ScrollingPanel::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+}
 
-	// Draw border
-	port->drawBevelledRect(0, 0, _width, _height);
-	delete port;
+void ScrollingPanel::drawBorder(GraphicsPort* port) {
+
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+
+	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
 }
 
 void ScrollingPanel::jump(s32 x, s32 y) {
@@ -73,16 +72,31 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 		_canvasY += dy;
 		_canvasX += dx;
 
-		// Draw revealed sections
-		for (s32 i = 0; i < revealedRects.size(); ++i) {
-			draw(revealedRects.at(i));
+		if (revealedRects.size() > 0) {
+
+			// Create internal and standard graphics ports
+			GraphicsPort* internalPort = newInternalGraphicsPort(revealedRects.at(0));
+			GraphicsPort* port = newGraphicsPort(revealedRects.at(0));
+
+			// Draw revealed sections
+			for (s32 i = 0; i < revealedRects.size(); ++i) {
+
+				internalPort->setClipRect(revealedRects.at(i));
+				port->setClipRect(revealedRects.at(i));
+
+				drawBorder(internalPort);
+				drawContents(port);
+			}
+
+			delete internalPort;
+			delete port;
 		}
 
 		// Scroll all child gadgets
 		scrollChildren(dx, dy);
 
-		// Notify event handler
-		raiseScrollEvent();
+		// Notify event handlers
+		_gadgetEventHandlers->raiseScrollEvent(dx, dy);
 	}
 }
 
@@ -98,25 +112,12 @@ void ScrollingPanel::scrollChildren(s32 dx, s32 dy) {
 	}
 }
 
-bool ScrollingPanel::drag(s16 x, s16 y, s16 vX, s16 vY) {
+void ScrollingPanel::onClick(s16 x, s16 y) {
+	startDragging(x, y);
+}
 
-	if (isEnabled()) {
-		if (_flags.dragging) {
-
-			// Only run drag code if stylus has moved
-			if ((vX != 0) || (vY != 0)) {
-
-				// Perform scroll
-				scroll(vX, vY);
-
-				_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
-
-				return true;
-			}
-		}
-	}
-
-	return false;
+void ScrollingPanel::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
+	scroll(vX, vY);
 }
 
 // Ensure clipping rect falls within the client region of the gadget
@@ -176,14 +177,4 @@ bool ScrollingPanel::clipToClientRect(Rect& clipRect) {
 	}
 
 	return true;
-}
-
-void ScrollingPanel::raiseScrollEvent() {
-	if (_gadgetEventHandlers->isEnabled()) {
-		GadgetEventArgs e(this, 0, 0, 0, 0, KEY_CODE_NONE);
-	
-		for (int i = 0; i < _gadgetEventHandlers->size(); ++i) {
-			_gadgetEventHandlers->at(i)->handleScrollEvent(e);
-		}
-	}
 }

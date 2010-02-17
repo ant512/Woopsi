@@ -23,10 +23,12 @@ namespace WoopsiUI {
 		 */
 		TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
 		
+	protected:
+		
 		/**
 		 * Draw the test panel.
-		 * @param clipRect Region to draw within.
+		 * @param port GraphicsPort to draw to.
 		 */
-		void draw(Rect clipRect);
+		void drawContents(GraphicsPort* port);
 	};
 }

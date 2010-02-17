@@ -32,13 +32,6 @@ namespace WoopsiUI {
 		CycleButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 
 		/**
-		 * Draw the region of the textbox within the clipping rect. Should not be called
-		 * directly.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
 		 * Add a new option to the gadget.
 		 * @param text The text of the option.
 		 * @param value The value of the option.
@@ -99,14 +92,6 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Release this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the release.
-		 * @param y Y co-ordinate of the release.
-		 * @return True if the release was successful.
-		 */
-		virtual bool release(s16 x, s16 y);
-
-		/**
 		 * Sort the options alphabetically by the text of the options.
 		 */
 		virtual void sort();
@@ -149,7 +134,51 @@ namespace WoopsiUI {
 		virtual void getPreferredDimensions(Rect& rect) const;
 
 	protected:
-		 ListData _options;							/**< Option storage. */
+		ListData _options;							/**< Option storage. */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Draws the outline of the button.
+		 * @param port Graphics port to draw to.
+		 */
+		virtual void drawOutline(GraphicsPort* port);
+
+		/**
+		 * Selects the next option in the list and redraws the button.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 */
+		virtual void onRelease(s16 x, s16 y);
+		
+		/**
+		 * Redraws the button.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 */
+		virtual void onReleaseOutside(s16 x, s16 y);
+
+		/**
+		 * Prevents the Button onResize() method from recalculating the text
+		 * positions by overriding it.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual inline void onResize(u16 width, u16 height) { };
 
 		/**
 		 * Override method in Label class to prevent recalculation of text positions.

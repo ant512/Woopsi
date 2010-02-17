@@ -15,24 +15,13 @@ using namespace WoopsiUI;
 
 FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 
-	_flags.shiftClickChildren = false;
-
 	_path = NULL;
 
-	Rect rect;
-	getClientRect(rect);
-
-	// Calculate list box
-	Rect listboxRect;
-	listboxRect.width = rect.width;
-	listboxRect.height = rect.height;
-	listboxRect.x = rect.x;
-	listboxRect.y = rect.y;
+	setBorderless(true);
 
 	// Create list box
-	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, _style);
+	_listbox = new ScrollingListBox(0, 0, _width, _height, &_style);
 	_listbox->addGadgetEventHandler(this);
-	_listbox->setOutlineType(OUTLINE_OUT);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setSortInsertedItems(true);
 	addGadget(_listbox);
@@ -42,14 +31,12 @@ FileListBox::~FileListBox() {
 	if (_path) delete _path;
 }
 
-bool FileListBox::resize(u16 width, u16 height) {
-	return false;
+void FileListBox::onResize(u16 width, u16 height) {
+	_listbox->resize(width, height);
 }
 
-void FileListBox::draw(Rect clipRect) {
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+void FileListBox::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-	delete port;
 }
 
 void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {

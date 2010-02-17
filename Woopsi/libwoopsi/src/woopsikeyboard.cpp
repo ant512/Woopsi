@@ -8,17 +8,25 @@
 
 using namespace WoopsiUI;
 
-WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, u32 windowFlags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, windowFlags, style) {
+WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u32 flags, GadgetStyle* style) : Gadget(x, y, 251, 154, flags, style) {
+
+	_flags.canReceiveFocus = false;
+
+	_borderSize.top = 0;
+	_borderSize.right = 0;
+	_borderSize.bottom = 0;
+	_borderSize.left = 0;
+	_flags.borderless = true;
 
 	// Get available window region
 	Rect rect;
 	getClientRect(rect);
 
 	// Create buttons
-	u8 buttonWidth = 19;
-	u8 buttonHeight = 20;
-	u8 buttonX = rect.x + 4;
-	u8 buttonY = rect.y + 1;
+	u8 buttonWidth = (rect.width - 11) / 12;		// Width of each button is an equal portion of total width minus spacing
+	u8 buttonHeight = (rect.height - 4) / 5;		// Ditto for height
+	u8 buttonX = rect.x;
+	u8 buttonY = rect.y;
 
 	// 1234567890-=
 	addGadget(new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, "1", "!", "1", "!", "1", "1"));
@@ -49,14 +57,14 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const Woopsi
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (9 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "p", "P", "p", "P", "P", "P"));
 
 	WoopsiKey* backspaceKey = new WoopsiKey(buttonX + (buttonWidth / 2) + (10 * (1 + buttonWidth)), buttonY, 1 + (buttonWidth * 2) - (buttonWidth / 2), buttonHeight, GLYPH_BACKSPACE, WoopsiKey::KEY_BACKSPACE);
-	backspaceKey->setFont(_style->glyphFont);
+	backspaceKey->setFont(getGlyphFont());
 	addGadget(backspaceKey);
 
 	buttonY += buttonHeight + 1;
 
 	// Caps ASDFGHJKL Return
 	_capsLockKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, GLYPH_CAPS_LOCK, WoopsiKey::KEY_CAPS_LOCK);
-	_capsLockKey->setFont(_style->glyphFont);
+	_capsLockKey->setFont(getGlyphFont());
 	addGadget(_capsLockKey);
 
 	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "a", "A", "a", "A", "A", "A"));
@@ -70,14 +78,14 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const Woopsi
 	addGadget(new WoopsiKey(buttonX + (9 * (1 + buttonWidth)), buttonY, buttonWidth, buttonHeight, "l", "L", "l", "L", "L", "L"));
 
 	WoopsiKey* returnKey = new WoopsiKey(buttonX + (10 * (1 + buttonWidth)), buttonY, 1 + (buttonWidth * 2), buttonHeight, GLYPH_RETURN, WoopsiKey::KEY_RETURN);
-	returnKey->setFont(_style->glyphFont);
+	returnKey->setFont(getGlyphFont());
 	addGadget(returnKey);
 
 	buttonY += buttonHeight + 1;
 
 	// Shift ZXCVBNM,./
 	_shiftKey = new WoopsiKey(buttonX, buttonY, (buttonWidth * 2) - (buttonWidth / 2) - 1, buttonHeight, GLYPH_SHIFT, WoopsiKey::KEY_SHIFT);
-	_shiftKey->setFont(_style->glyphFont);
+	_shiftKey->setFont(getGlyphFont());
 	addGadget(_shiftKey);
 
 	addGadget(new WoopsiKey(buttonX + (buttonWidth / 2) + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "z", "Z", "z", "Z", "Z", "Z"));
@@ -95,7 +103,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const Woopsi
 
 	// Ctrl ;'# Space [] backslash
 	_controlKey = new WoopsiKey(buttonX, buttonY, buttonWidth, buttonHeight, GLYPH_CONTROL, WoopsiKey::KEY_CONTROL);
-	_controlKey->setFont(_style->glyphFont);
+	_controlKey->setFont(getGlyphFont());
 	addGadget(_controlKey);
 
 	addGadget(new WoopsiKey(buttonX + (1 + buttonWidth), buttonY, buttonWidth, buttonHeight, "`", "~", "`", "~", "`", "`"));
@@ -123,6 +131,10 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const Woopsi
 	_isControlDown = false;
 }
 
+void WoopsiKeyboard::drawBorder(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+}
+
 void WoopsiKeyboard::handleActionEvent(const GadgetEventArgs& e) {
 
 	if (e.getSource() != NULL) {
@@ -139,8 +151,6 @@ void WoopsiKeyboard::handleActionEvent(const GadgetEventArgs& e) {
 			return;
 		}
 	}
-
-	AmigaWindow::handleActionEvent(e);
 }
 
 void WoopsiKeyboard::processKeyRelease(WoopsiKey* key) {
@@ -162,14 +172,14 @@ void WoopsiKeyboard::processKeyRelease(WoopsiKey* key) {
 				// Reset shift key
 				if (_isShiftDown) {
 					_isShiftDown = false;
-					_shiftKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+					_shiftKey->setStuckDown(false);
 					_shiftKey->redraw();
 				}
 
 				// Reset control key
 				if (_isControlDown) {
 					_isControlDown = false;
-					_controlKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+					_controlKey->setStuckDown(false);
 					_controlKey->redraw();
 				}
 
@@ -201,8 +211,6 @@ void WoopsiKeyboard::handleReleaseEvent(const GadgetEventArgs& e) {
 			return;
 		}
 	}
-
-	AmigaWindow::handleReleaseEvent(e);
 }
 
 void WoopsiKeyboard::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
@@ -223,8 +231,6 @@ void WoopsiKeyboard::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 			return;
 		}
 	}
-
-	AmigaWindow::handleReleaseOutsideEvent(e);
 }
 
 void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
@@ -248,9 +254,9 @@ void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
 					// Set the outline type so the key is obviously stuck down,
 					// or reset it if the key is being clicked for the second time
 					if (_isCapsLockDown) {
-						_capsLockKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+						_capsLockKey->setStuckDown(false);
 					} else {
-						_capsLockKey->setOutlineType(Gadget::OUTLINE_IN);
+						_capsLockKey->setStuckDown(true);
 					}
 
 					// Remember the key's state
@@ -264,9 +270,9 @@ void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
 					// Set the outline type so the key is obviously stuck down,
 					// or reset it if the key is being clicked for the second time
 					if (_isControlDown) {
-						_controlKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+						_controlKey->setStuckDown(false);
 					} else {
-						_controlKey->setOutlineType(Gadget::OUTLINE_IN);
+						_controlKey->setStuckDown(true);
 					}
 
 					// Remember the key's state
@@ -280,9 +286,9 @@ void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
 					// Set the outline type so the key is obviously stuck down,
 					// or reset it if the key is being clicked for the second time
 					if (_isShiftDown) {
-						_shiftKey->setOutlineType(Gadget::OUTLINE_CLICK_DEPENDENT);
+						_shiftKey->setStuckDown(false);
 					} else {
-						_shiftKey->setOutlineType(Gadget::OUTLINE_IN);
+						_shiftKey->setStuckDown(true);
 					}
 
 					// Remember the key's state
@@ -302,8 +308,6 @@ void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
 			return;
 		}
 	}
-
-	AmigaWindow::handleClickEvent(e);
 }
 
 void WoopsiKeyboard::showCorrectKeys() {

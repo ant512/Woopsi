@@ -35,7 +35,7 @@ void KeyTest::startup() {
 
 	// Create keyboard
 	_keyboard = new WoopsiKeyboard(0, 13, 256, 179, "Keyboard", Gadget::GADGET_DRAGGABLE, 0);
-	_keyboard->addKeyboardEventHandler(this);
+	_keyboard->addKeyboardEventHandler(_output);
 	inScreen->addGadget(_keyboard);
 	
 	// Ensure Woopsi can draw itself
@@ -49,23 +49,4 @@ void KeyTest::shutdown() {
 
 	// Call base shutdown method
 	Woopsi::shutdown();
-}
-
-void KeyTest::handleKeyboardPressEvent(const KeyboardEventArgs& e) {
-	processKey(e.getKey());
-}
-
-void KeyTest::handleKeyboardRepeatEvent(const KeyboardEventArgs& e) {
-	processKey(e.getKey());
-}
-
-void KeyTest::processKey(const WoopsiKey* key) {
-	// Append key value to output box if the last key was not a modifier
-	if (key->getValue() != '\0') {
-		// Not modifier; append value
-		_output->insertTextAtCursor(key->getValue());
-	} else if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
-		// Delete last character
-		_output->removeText(_output->getTextLength() - 1);
-	}
 }

@@ -1,23 +1,21 @@
 #include "scrollinglistbox.h"
 #include "scrollbarvertical.h"
-#include "debug.h"
+#include "graphicsport.h"
 
 using namespace WoopsiUI;
 
 ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
-	_scrollbarWidth = 9;
+	_scrollbarWidth = 10;
 
 	setBorderless(true);
 
-	_flags.shiftClickChildren = false;
-
-	_listbox = new ListBox(0, 0, width - _scrollbarWidth, height, _style);
+	_listbox = new ListBox(0, 0, width - _scrollbarWidth, height, &_style);
 	_listbox->addGadgetEventHandler(this);
 
 	// Create scrollbar
 	Rect rect;
 	_listbox->getClientRect(rect);
-	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, _style);
+	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, &_style);
 	_scrollbar->setMinimumValue(0);
 	_scrollbar->setMaximumValue(0);
 	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
@@ -28,8 +26,8 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetSt
 	addGadget(_scrollbar);
 }
 
-void ScrollingListBox::draw(Rect clipRect) {
-	clear(clipRect);
+void ScrollingListBox::drawContents(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 }
 
 void ScrollingListBox::handleValueChangeEvent(const GadgetEventArgs& e) {
@@ -53,7 +51,15 @@ void ScrollingListBox::handleScrollEvent(const GadgetEventArgs& e) {
 
 			if (_scrollbar != NULL) {
 				_scrollbar->setRaisesEvents(false);
-				_scrollbar->setValue((0 - _listbox->getCanvasY()) / _listbox->getOptionHeight());
+
+				s32 value = ((0 - _listbox->getCanvasY()) << 16) / _listbox->getOptionHeight();
+
+				// Round up
+				value += value & 0x8000;
+				
+				value >>= 16;
+
+				_scrollbar->setValue(value);
 				_scrollbar->setRaisesEvents(true);
 			}
 		}
@@ -71,17 +77,7 @@ void ScrollingListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-bool ScrollingListBox::resize(u16 width, u16 height) {
-
-	// Prevent drawing
-	bool drawing = _flags.drawingEnabled;
-	_flags.drawingEnabled = false;
-
-	// Ensure children are free to adjust
-	setPermeable(true);
-
-	// Resize the gadget
-	Gadget::resize(width, height);
+void ScrollingListBox::onResize(u16 width, u16 height) {
 
 	// Resize the children
 	_listbox->resize(width - _scrollbarWidth, height);
@@ -94,20 +90,10 @@ bool ScrollingListBox::resize(u16 width, u16 height) {
 
 	// Move the scrollbar
 	_scrollbar->moveTo(width - _scrollbarWidth, 0);
-
-	// Reset permeable
-	setPermeable(false);
-
-	// Reset drawing
-	_flags.drawingEnabled = drawing;
-
-	redraw();
-
-	return true;
 }
 
 void ScrollingListBox::setFont(FontBase* font) {
-	_style->font = font;
+	_style.font = font;
 	_listbox->setFont(font);
 	_scrollbar->setFont(font);
 }

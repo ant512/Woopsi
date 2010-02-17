@@ -26,16 +26,6 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Enum describing the types of border around a gadget.
-		 */
-		enum OutlineType {
-			OUTLINE_CLICK_DEPENDENT = 0,		/**< Border depends on current click status */
-			OUTLINE_OUT = 1,					/**< Border is bevelled "out" */
-			OUTLINE_IN = 2,						/**< Border is bevelled *in* */
-			OUTLINE_OUT_IN = 3					/**< Border is bevelled out and then in */
-		};
-
-		/**
 		 * Enum describing the way other gadgets should behave when they try to close this gadget.
 		 */
 		enum CloseType {
@@ -52,9 +42,8 @@ namespace WoopsiUI {
 			GADGET_DRAGGABLE = 0x0002,					/**< Gadget can be dragged by the user */
 			GADGET_PERMEABLE = 0x0004,					/**< Gadget's children can exceed this gadget's edges */
 			GADGET_DOUBLE_CLICKABLE = 0x0008,			/**< Gadget can be double-clicked */
-			GADGET_NO_SHIFT_CLICK_CHILDREN = 0x0010,	/**< Gadget does not send shift clicks to children */
-			GADGET_NO_RAISE_EVENTS = 0x0020,			/**< Gadget does not raise events */
-			GADGET_DECORATION = 0x0040					/**< Gadget is a decoration */
+			GADGET_NO_RAISE_EVENTS = 0x0010,			/**< Gadget does not raise events */
+			GADGET_DECORATION = 0x0020					/**< Gadget is a decoration */
 		};
 
 		/**
@@ -73,20 +62,30 @@ namespace WoopsiUI {
 			u8 decoration : 1;					/**< True if the gadget is a decoration. */
 			u8 permeable : 1;					/**< True if the gadget's children can exceed its dimensions. */
 			u8 erased : 1;						/**< True if the gadget is currently erased from the frame buffer. */
-			u8 shiftClickChildren : 1;			/**< True if the gadget sends shift clicks to its children. */
 			u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid. */
 			u8 hidden : 1;						/**< True if the gadget is hidden. */
 			u8 doubleClickable : 1;				/**< True if the gadget can be double-clicked. */
 			u8 modal : 1;						/**< True if the gadget is modal. */
+			u8 canReceiveFocus : 1;				/**< True if the gadget can receive focus. */
 		} Flags;
 
 		/**
 		 * Struct describing a name/value pair.
 		 */
 		typedef struct {
-			u32 value;								/**< Value associated with the name */
-			WoopsiString name;						/**< Name associated with the value */
+			u32 value;							/**< Value associated with the name. */
+			WoopsiString name;					/**< Name associated with the value. */
 		} NameValuePair;
+
+		/**
+		 * Struct describing the size of all four borders of a gadget.
+		 */
+		typedef struct {
+			u8 top;								/**< Height of the top border. */
+			u8 right;							/**< Width of the right border. */
+			u8 bottom;							/**< Height of the bottom border. */
+			u8 left;							/**< Width of the left border. */
+		} GadgetBorderSize;
 
 		/**
 		 * Constructor.
@@ -216,18 +215,12 @@ namespace WoopsiUI {
 		 * @return True if the gadget is modal.
 		 */
 		const bool isModal() const;
-
+		
 		/**
-		 * Does the gadget shift-click its children?
-		 * @return True if the gadget shift-clicks its children.
+		 * Check if the gadget can receive focus or not.
+		 * @return True if the gadget can receive focus.
 		 */
-		inline const bool getShiftClickChildren() const { return _flags.shiftClickChildren; };
-
-		/**
-		 * Does the gadget shift-click its children?
-		 * @return True if the gadget shift-clicks its children.
-		 */
-		inline void setShiftClickChildren(const u32 shiftClickChildren) { _flags.shiftClickChildren = shiftClickChildren; };
+		const bool canReceiveFocus() const;
 
 		/**
 		 * Get the width of the gadget.
@@ -279,7 +272,7 @@ namespace WoopsiUI {
 		 * All co-ordinates are relative to this gadget.
 		 * @param rect Reference to a rect to populate with data.
 		 */
-		virtual void getClientRect(Rect& rect) const;
+		void getClientRect(Rect& rect) const;
 
 		/**
 		 * Clips the supplied rect to the boundaries defined by this gadget and
@@ -297,7 +290,7 @@ namespace WoopsiUI {
 		 * clipping list (not including that overlapped by children).
 		 * @return A pointer to a new GraphicsPort object.
 		 */
-		virtual GraphicsPort* newGraphicsPort(bool isForeground);
+		GraphicsPort* newGraphicsPort(bool isForeground);
 
 		/**
 		 * Gets a pointer to a new instance of the GraphicsPort class to allow
@@ -311,7 +304,7 @@ namespace WoopsiUI {
 		 * @param clipRect The region to clip to.
 		 * @return A pointer to a new GraphicsPort object.
 		 */
-		virtual GraphicsPort* newGraphicsPort(Rect clipRect);
+		GraphicsPort* newGraphicsPort(Rect clipRect);
 
 		/**
 		 * Gets a pointer to the vector of all of the visible regions of this gadget,
@@ -321,59 +314,52 @@ namespace WoopsiUI {
 		WoopsiArray<Rect>* getForegroundRegions();
 
 		/**
-		 * Gets a pointer to the vector of all of the visible regions of this gadget,
-		 * not including any covered by children.
-		 * @return A pointer to a vector of all visible regions not covered by children.
-		 */
-		WoopsiArray<Rect>* getBackgroundRegions();
-
-		/**
 		 * Gets a pointer to the gadget's font.
 		 * @return A pointer to the gadget's font.
 		 */
-		virtual FontBase* getFont() const;
+		FontBase* getFont() const;
+		
+		/**
+		 * Gets a pointer to the gadget's glyph font.
+		 * @return A pointer to the gadget's glyph font.
+		 */
+		FontBase* getGlyphFont() const;
 
 		/**
 		 * Gets the colour used as the background fill.
 		 * @return Background fill colour.
 		 */
-		inline const u16 getBackColour() const { return _style->colours.back; };
+		inline const u16 getBackColour() const { return _style.colours.back; };
 
 		/**
 		 * Gets the colour used as the light edge in bevelled boxes.
 		 * @return Shine colour.
 		 */
-		inline const u16 getShineColour() const { return _style->colours.shine; };
+		inline const u16 getShineColour() const { return _style.colours.shine; };
 
 		/**
 		 * Gets the colour used as the fill in focused window borders.
 		 * @return Highlight colour.
 		 */
-		inline const u16 getHighlightColour() const { return _style->colours.highlight; };
+		inline const u16 getHighlightColour() const { return _style.colours.highlight; };
 
 		/**
 		 * Gets the colour used as the dark edge in bevelled boxes.
 		 * @return Shadow colour.
 		 */
-		inline const u16 getShadowColour() const { return _style->colours.shadow; };
+		inline const u16 getShadowColour() const { return _style.colours.shadow; };
 
 		/**
 		 * Gets the colour used as the fill in unfocused window borders.
 		 * @return Fill colour.
 		 */
-		inline const u16 getFillColour() const { return _style->colours.fill; };
+		inline const u16 getFillColour() const { return _style.colours.fill; };
 
 		/**
 		 * Gets the colour used as the fill in scrollbar gutters.
 		 * @return Dark colour.
 		 */
-		inline const u16 getDarkColour() const { return _style->colours.dark; };
-
-		/**
-		 * Gets the type of outline used in this gadget.
-		 * @return Outline type.
-		 */
-		inline const OutlineType getOutlineType() const { return _outline; };
+		inline const u16 getDarkColour() const { return _style.colours.dark; };
 
 		/**
 		 * Sets this gadget's reference constant.  This should be unique,
@@ -405,12 +391,6 @@ namespace WoopsiUI {
 		 * @param isDoubleClickable The double-clickable state.
 		 */
 		inline void setDoubleClickable(const bool isDoubleClickable) { _flags.doubleClickable = isDoubleClickable; };
-
-		/**
-		 * Sets the outline type to use when drawing the gadget's border.
-		 * @param outline The outline type.
-		 */
-		inline void setOutlineType(const OutlineType outline) { _outline = outline; };
 
 		/**
 		 * Adds a gadget event handler.  The event handler will receive
@@ -448,37 +428,37 @@ namespace WoopsiUI {
 		 * Sets the background colour.
 		 * @param colour The new background colour.
 		 */
-		inline void setBackColour(const u16 colour) { _style->colours.back = colour; };
+		inline void setBackColour(const u16 colour) { _style.colours.back = colour; };
 
 		/**
 		 * Sets the shine colour.
 		 * @param colour The new shine colour.
 		 */
-		inline void setShineColour(const u16 colour) { _style->colours.shine = colour; };
+		inline void setShineColour(const u16 colour) { _style.colours.shine = colour; };
 
 		/**
 		 * Sets the highlight colour.
 		 * @param colour The new highlight colour.
 		 */
-		inline void setHighlightColour(const u16 colour) { _style->colours.highlight = colour; };
+		inline void setHighlightColour(const u16 colour) { _style.colours.highlight = colour; };
 
 		/**
 		 * Sets the shadow colour.
 		 * @param colour The new shadow colour.
 		 */
-		inline void setShadowColour(const u16 colour) { _style->colours.shadow = colour; };
+		inline void setShadowColour(const u16 colour) { _style.colours.shadow = colour; };
 
 		/**
 		 * Sets the fill colour.
 		 * @param colour The new fill colour.
 		 */
-		inline void setFillColour(const u16 colour) { _style->colours.fill = colour; };
+		inline void setFillColour(const u16 colour) { _style.colours.fill = colour; };
 
 		/**
 		 * Sets the dark colour.
 		 * @param colour The new dark colour.
 		 */
-		inline void setDarkColour(const u16 colour) { _style->colours.dark = colour; };
+		inline void setDarkColour(const u16 colour) { _style.colours.dark = colour; };
 
 		/**
 		 * Sets the close type other gadgets should use when closing this gadget.
@@ -491,36 +471,42 @@ namespace WoopsiUI {
 		 * @param font A pointer to the font to use.
 		 */
 		virtual void setFont(FontBase* font);
+		
+		/**
+		 * Sets the glyph font.
+		 * @param font A pointer to the font to use.
+		 */
+		virtual void setGlyphFont(FontBase* font);
 
 		/**
 		 * Draws the visible regions of the gadget and the gadget's child gadgets.
 		 */
-		virtual void redraw();
+		void redraw();
 
 		/**
 		 * Erases the visible regions of the gadget by redrawing the gadgets
 		 * behind it.
 		 */
-		virtual void erase();
+		void erase();
 
 		/**
 		 * Enables the gadget.
 		 * @return True if the gadget was enabled.
 		 */
-		virtual bool enable();
+		bool enable();
 
 		/**
 		 * Disabled the gadget.
 		 * @return True if the gadget was disabled.
 		 */
-		virtual bool disable();
+		bool disable();
 
 		/**
 		 * Erases the gadget, marks it as deleted, and moves it to Woopsi's
 		 * deletion queue.  Gadgets are automatically deleted by the framework and
 		 * should not be deleted externally.
 		 */
-		virtual void close();
+		void close();
 
 		/**
 		 * Erases the gadget, removes it from the main hierarchy and sets it to
@@ -529,7 +515,7 @@ namespace WoopsiUI {
 		 * @return True if the gadget was shelved.
 		 * @see unshelve()
 		 */
-		virtual bool shelve();
+		bool shelve();
 
 		/**
 		 * Moves the gadget back into the hierarchy and redraws it.  Gadgets shown
@@ -537,7 +523,7 @@ namespace WoopsiUI {
 		 * @return True if the gadget was unshelved.
 		 * @see shelve()
 		 */
-		virtual bool unshelve();
+		bool unshelve();
 
 		/**
 		 * Draws the gadget and makes it visible.
@@ -545,7 +531,7 @@ namespace WoopsiUI {
 		 * @return True if the gadget was shown.
 		 * @see hide()
 		 */
-		virtual bool show();
+		bool show();
 
 		/**
 		 * Erases the gadget and makes it invisible.
@@ -553,18 +539,21 @@ namespace WoopsiUI {
 		 * @return True if the gadget was hidden.
 		 * @see show()
 		 */
-		virtual bool hide();
+		bool hide();
 
 		/**
-		 * Click this gadget at the supplied co-ordinates.
+		 * Click this gadget at the supplied co-ordinates.  This should only be
+		 * overridden in subclasses if the default click behaviour needs to be changed.
+		 * If the subclassed gadget should just respond to a standard click,
+		 * the onClick() method should be overridden instead.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if the click was successful.
 		 */
-		virtual bool click(s16 x, s16 y);
+		bool click(s16 x, s16 y);
 
 		/**
-		 * Check if the click is a double-click
+		 * Check if the click is a double-click.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if the click is a double-click.
@@ -572,28 +561,40 @@ namespace WoopsiUI {
 		virtual bool isDoubleClick(s16 x, s16 y);
 
 		/**
-		 * Double-click this gadget at the supplied co-ordinates.
+		 * Double-click this gadget at the supplied co-ordinates.  This
+		 * should only be overridden in subclasses if the default
+		 * double-click behaviour needs to be changed.  If the subclassed
+		 * gadget should just respond to a standard double-click, the
+		 * onDoubleClick() method should be overridden instead.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if the click was successful.
 		 */
-		virtual bool doubleClick(s16 x, s16 y);
+		bool doubleClick(s16 x, s16 y);
 
 		/**
-		 * Shift-click this gadget at the supplied co-ordinates.
+		 * Shift-click this gadget at the supplied co-ordinates.  This
+		 * should only be overridden in subclasses if the default
+		 * shift-click behaviour needs to be changed.  If the subclassed
+		 * gadget should just respond to a standard shift-click, the
+		 * onShiftClick() method should be overridden instead.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if the click was successful.
 		 */
-		virtual bool shiftClick(s16 x, s16 y);
+		bool shiftClick(s16 x, s16 y);
 
 		/**
-		 * Release this gadget at the supplied co-ordinates
+		 * Release this gadget at the supplied co-ordinates.  This
+		 * should only be overridden in subclasses if the default
+		 * release behaviour needs to be changed.  If the subclassed
+		 * gadget should just respond to a standard release, the
+		 * onRelease() method should be overridden instead.
 		 * @param x X co-ordinate of the release.
 		 * @param y Y co-ordinate of the release.
 		 * @return True if the release was successful.
 		 */
-		virtual bool release(s16 x, s16 y);
+		bool release(s16 x, s16 y);
 
 		/**
 		 * Drag the gadget to the supplied co-ordinates.
@@ -603,52 +604,52 @@ namespace WoopsiUI {
 		 * @param vY The vertical distance that the stylus was dragged.
 		 * @return True if the drag was successful.
 		 */
-		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
+		bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 		/**
 		 * Send a keypress to the gadget.
 		 * @param keyCode The keycode to send to the gadget.
 		 * @return True if the keypress was processed.
 		 */
-		virtual bool keyPress(KeyCode keyCode);
+		bool keyPress(KeyCode keyCode);
 		
 		/**
 		 * Send a key repeat to the gadget.
 		 * @param keyCode The keycode to send to the gadget.
 		 * @return True if the key repeat was processed.
 		 */
-		virtual bool keyRepeat(KeyCode keyCode);
+		bool keyRepeat(KeyCode keyCode);
 
 		/**
 		 * Send a key release to the gadget.
 		 * @param keyCode The keycode to send to the gadget.
 		 * @return True if the key release was processed.
 		 */
-		virtual bool keyRelease(KeyCode keyCode);
+		bool keyRelease(KeyCode keyCode);
 
 		/**
 		 * Inform the gadget that the lid has closed.
 		 * @see lidOpened()
 		 */
-		virtual void lidClose();
+		void lidClose();
 
 		/**
 		 * Inform the gadget that the lid has opened.
 		 * @see lidClosed()
 		 */
-		virtual void lidOpen();
+		void lidOpen();
 
 		/**
 		 * Give the gadget focus.
 		 * @return True if the gadget received focus correctly.
 		 */
-		virtual bool focus();
+		bool focus();
 
 		/**
 		 * Remove focus from the gadget.
 		 * @return True if the gadget lost focus correctly.
 		 */
-		virtual bool blur();
+		bool blur();
 
 		/**
 		 * Move the gadget to the new co-ordinates.
@@ -657,7 +658,7 @@ namespace WoopsiUI {
 		 * @param y The new y co-ordinate.
 		 * @return True if the move was successful.
 		 */
-		virtual bool moveTo(s16 x, s16 y);
+		bool moveTo(s16 x, s16 y);
 
 		/**
 		 * Resize the gadget to the new dimensions.
@@ -665,7 +666,7 @@ namespace WoopsiUI {
 		 * @param height The new height.
 		 * @return True if the resize was successful.
 		 */
-		virtual bool resize(u16 width, u16 height);
+		bool resize(u16 width, u16 height);
 
 		/**
 		 * Resize and move the gadget in one operation.
@@ -677,19 +678,19 @@ namespace WoopsiUI {
 		 * @param height The new height.
 		 * @return True if the gadget was adjusted successfully.
 		 */
-		virtual bool changeDimensions(s16 x, s16 y, u16 width, u16 height);
+		bool changeDimensions(s16 x, s16 y, u16 width, u16 height);
 
 		/**
 		 * Raises the gadget to the top of its parent's gadget stack.
 		 * @return True if the raise was successful.
 		 */
-		virtual bool raiseToTop();
+		bool raiseToTop();
 
 		/**
 		 * Lowers the gadget to the bottom of its parent's gadget stack.
 		 * @return True if the lower was successful.
 		 */
-		virtual bool lowerToBottom();
+		bool lowerToBottom();
 
 		/**
 		 * Raises the supplied gadget to the top of this gadget's child stack.
@@ -697,7 +698,7 @@ namespace WoopsiUI {
 		 * @param gadget A pointer to the child gadget to raise.
 		 * @return True if the raise was successful.
 		 */
-		virtual bool raiseGadgetToTop(Gadget* gadget);
+		bool raiseGadgetToTop(Gadget* gadget);
 
 		/**
 		 * Lowers the supplied gadget to the bottom of this gadget's child stack.
@@ -705,7 +706,7 @@ namespace WoopsiUI {
 		 * @param gadget A pointer to the child gadget to lower.
 		 * @return True if the lower was successful.
 		 */
-		virtual bool lowerGadgetToBottom(Gadget* gadget);
+		bool lowerGadgetToBottom(Gadget* gadget);
 
 		/**
 		 * Moves the supplied child gadget to the deletion queue.
@@ -741,7 +742,7 @@ namespace WoopsiUI {
 		 * @param gadget A pointer to the child gadget.
 		 * @see getFocusedGadget()
 		 */
-		virtual void setFocusedGadget(Gadget* gadget);
+		void setFocusedGadget(Gadget* gadget);
 
 		/**
 		 * Checks if the supplied co-ordinates collide with this gadget.
@@ -802,16 +803,9 @@ namespace WoopsiUI {
 		inline void setParent(Gadget* parent) { _parent = parent; };
 
 		/**
-		 * Notify this gadget that it is being dragged, and set its drag point.
-		 * @param x The x co-ordinate of the drag position relative to this gadget.
-		 * @param y The y co-ordinate of the drag position relative to this gadget.
-		 */
-		virtual void setDragging(u16 x, u16 y);
-
-		/**
 		 * Rebuild the list of this gadget's visible regions
 		 */
-		void cacheVisibleRects();
+		void cacheVisibleRects() const;
 
 		/**
 		 * Mark this gadget's visible region cache as invalid, and do the same
@@ -820,25 +814,17 @@ namespace WoopsiUI {
 		void invalidateVisibleRectCache();
 
 		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual inline void draw(Rect clipRect) { };
-
-		/**
 		 * Erase a child gadget by drawing the gadgets behind it.
 		 * @param gadget The child gadget to erase.
 		 */
-		virtual void eraseGadget(Gadget* gadget);
+		void eraseGadget(Gadget* gadget);
 
 		/**
 		 * Redraw any visible regions of this gadget that have become corrupted.
 		 * @param invalidRects A list of corrupt regions.
 		 * @param sender A pointer to the gadget that corrupted the regions.
 		 */
-		virtual void redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender);
+		void redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender);
 
 		/**
 		 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
@@ -896,7 +882,7 @@ namespace WoopsiUI {
 		 * @param x The x co-ordinate of the context menu, relative to the screen.
 		 * @param y The y co-ordinate of the context menu, relative to the screen.
 		 */
-		virtual void showContextMenu(s16 x, s16 y);
+		void showContextMenu(s16 x, s16 y);
 
 		/**
 		 * Handle a context menu selection.  Just raises the event to its own handlers.
@@ -946,56 +932,90 @@ namespace WoopsiUI {
 		 */
 		inline RectCache* getRectCache() const { return _rectCache; };
 
+		/**
+		 * Sets the border size.  The border cannot be drawn over in the
+		 * drawContents() method.
+		 * @param borderSize The new border size.
+		 */
+		void setBorderSize(const GadgetBorderSize& borderSize);
+
 	protected:
-		s16 _x;									/**< X co-ordinate of the gadget, relative to parent */
-		s16 _y;									/**< Y co-ordinate of the gadget, relative to parent */
-		u16 _width;								/**< Width of the gadget */
-		u16 _height;							/**< Height of the gadget */
-		u32 _refcon;							/**< Identifying number of the gadget */
+		s16 _x;									/**< X co-ordinate of the gadget, relative to parent. */
+		s16 _y;									/**< Y co-ordinate of the gadget, relative to parent. */
+		u16 _width;								/**< Width of the gadget. */
+		u16 _height;							/**< Height of the gadget. */
+		u32 _refcon;							/**< Identifying number of the gadget. */
 
 		// Dragging variables
-		s16 _grabPointX;						/**< Physical space x co-ordinate where dragging began */
-		s16 _grabPointY;						/**< Physical space y co-ordinate where dragging began */
-		s16 _newX;								/**< Physical x co-ordinate where gadget is being dragged to */
-		s16 _newY;								/**< Physical y co-ordinate where gadget is being dragged to */
+		s16 _grabPointX;						/**< Physical space x co-ordinate where dragging began. */
+		s16 _grabPointY;						/**< Physical space y co-ordinate where dragging began. */
+		s16 _newX;								/**< Physical x co-ordinate where gadget is being dragged to. */
+		s16 _newY;								/**< Physical y co-ordinate where gadget is being dragged to. */
 
 		// Style
-		GadgetStyle* _style;					/**< All style information used by a gadget */
+		GadgetStyle _style;						/**< All style information used by a gadget. */
 
 		// Status
-		Flags _flags;							/**< Flags struct */
+		Flags _flags;							/**< Flags struct. */
 
 		// Event handling
-		GadgetEventHandlerList* _gadgetEventHandlers;		/**< List of event handlers */
+		GadgetEventHandlerList* _gadgetEventHandlers;		/**< List of event handlers. */
 
 		// Double-clicking
-		u32 _lastClickTime;						/**< VBL count when last clicked */
-		s16 _lastClickX;						/**< X co-ordinate of last click */
-		s16 _lastClickY;						/**< Y co-ordinate of last click */
-		s16 _doubleClickBounds;					/**< Area in which a click is assumed to be a double-click */
+		u32 _lastClickTime;						/**< VBL count when last clicked. */
+		s16 _lastClickX;						/**< X co-ordinate of last click. */
+		s16 _lastClickY;						/**< Y co-ordinate of last click. */
+		s16 _doubleClickBounds;					/**< Area in which a click is assumed to be a double-click. */
 
 		// Hierarchy control
-		Gadget* _parent;						/**< Pointer to the gadget's parent */
-		Gadget* _focusedGadget;					/**< Pointer to the child gadget that has focus */
-		WoopsiArray<Gadget*> _gadgets;			/**< List of child gadgets */
-		WoopsiArray<Gadget*> _shelvedGadgets;	/**< List of shelved child gadgets */
+		Gadget* _parent;						/**< Pointer to the gadget's parent. */
+		Gadget* _focusedGadget;					/**< Pointer to the child gadget that has focus. */
+		WoopsiArray<Gadget*> _gadgets;			/**< List of child gadgets. */
+		WoopsiArray<Gadget*> _shelvedGadgets;	/**< List of shelved child gadgets. */
 
 		// Decorations
-		u8 _decorationCount;					/**< Total number of decoration child gadgets */
+		u8 _decorationCount;					/**< Total number of decoration child gadgets. */
 
 		// Visible regions
-		RectCache* _rectCache;					/**< List of the gadget's visible regions */
+		RectCache* _rectCache;					/**< List of the gadget's visible regions. */
 
-		OutlineType _outline;					/**< Type of outline the gadget uses */
-		CloseType _closeType;					/**< Type of close method that should be called for the gadget */
+		CloseType _closeType;					/**< Type of close method that should be called for the gadget. */
+
+		GadgetBorderSize _borderSize;			/**< Size of the gadget borders. */
 
 		// Context menu item definitions
-		WoopsiArray<NameValuePair> _contextMenuItems;	/**< List of all context menu name/value pairs */
+		WoopsiArray<NameValuePair> _contextMenuItems;	/**< List of all context menu name/value pairs. */
 
 		/**
 		 * Destructor.
 		 */
 		virtual ~Gadget();
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw().
+		 */
+		virtual inline void drawContents(GraphicsPort* port) { };
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw().
+		 */
+		virtual void drawBorder(GraphicsPort* port) { };
+
+		/**
+		 * Checks if the supplied co-ordinates collide with a portion of this gadget
+		 * that is not obscured by its siblings, but that may be obscured by
+		 * its children.
+		 * @param x X co-ordinate of the click.
+		 * @param y Y co-ordinate of the click.
+		 * @return True if a collision occurred; false if not.
+		 */
+		bool checkCollisionWithForegroundRects(s16 x, s16 y) const;
 
 		/**
 		 * Get the current physical display co-ordinate for the supplied y co-ordinate.
@@ -1023,19 +1043,6 @@ namespace WoopsiUI {
 		 * @see calculatePhysicalScreenY
 		 */
 		const u8 calculatePhysicalScreenNumber(s16 y) const;
-
-		/**
-		 * Clear a region by drawing a filled rect in the background colour.
-		 * @param clipRect The region to clear.
-		 */
-		void clear(Rect clipRect);
-
-		/**
-		 * Clear all visible regions of the gadget by drawing a filled rect
-		 * in the background colour.
-		 */
-		void clear();
-
 		/**
 		 * Draw all visible regions of this gadget's children.
 		 */
@@ -1047,7 +1054,7 @@ namespace WoopsiUI {
 		 * @param gadget The gadget to close.
 		 * @see close().
 		 */
-		virtual void closeChild(Gadget* gadget);
+		void closeChild(Gadget* gadget);
 
 		/**
 		 * Erase the supplied child gadget and move it out of the main child
@@ -1055,7 +1062,7 @@ namespace WoopsiUI {
 		 * be restored by calling "unshelve()" on the gadget.
 		 * @param gadget The gadget to hide.
 		 */
-		virtual void shelveChild(Gadget* gadget);
+		void shelveChild(Gadget* gadget);
 
 		/**
 		 * Redraws all regions of child gadgets that fall within the invalidRects
@@ -1063,20 +1070,7 @@ namespace WoopsiUI {
 		 * @param invalidRects List of invalid regions that need to be redrawn.
 		 * @param sender Pointer to the gadget that initiated the redraw.
 		 */
-		virtual void redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender);
-
-		/**
-		 * Get a graphics port that can draw within this gadget's region.
-		 * The graphics port's drawing routines are automatically clipped to the
-		 * visible areas of this gadget.  Allows drawing over all regions of
-		 * the gadget, including the border.  The port must be deleted when
-		 * it is no longer required.
-		 * @param isForeground True to use the foreground clipping list (draw
-		 * over all space, including that overlapped by children) or background
-		 * clipping list (not including that overlapped by children).
-		 * @return A new graphics port object.
-		 */
-		virtual GraphicsPort* newInternalGraphicsPort(bool isForeground);
+		void redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender);
 
 		/**
 		 * Get a graphics port that can draw within the region of the supplied
@@ -1085,7 +1079,7 @@ namespace WoopsiUI {
 		 * region before creating the graphics port.
 		 * @return A new graphics port object.
 		 */
-		virtual GraphicsPort* newInternalGraphicsPort(Rect clipRect);
+		GraphicsPort* newInternalGraphicsPort(Rect clipRect);
 
 		/**
 		 * Get the index of the next visible gadget higher up the z-order.
@@ -1100,11 +1094,170 @@ namespace WoopsiUI {
 		 * @return The index of the next lowest visible gadget.
 		 */
 		const s32 getLowerVisibleGadget(const s32 startIndex) const;
+		
+		/**
+		 * Notify this gadget that it is being dragged, and set its drag point.
+		 * @param x The x co-ordinate of the drag position relative to this gadget.
+		 * @param y The y co-ordinate of the drag position relative to this gadget.
+		 */
+		void startDragging(u16 x, u16 y);
+		
+		/**
+		 * Notify this gadget that it is no longer being dragged.
+		 */
+		void stopDragging();
 
 		/**
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline Gadget(const Gadget& gadget) { };
+
+		/**
+		 * Called when the gadget is clicked.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when it is
+		 * clicked.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual inline void onClick(s16 x, s16 y) { };
+		
+		/**
+		 * Called when the gadget is double-clicked.  Override this when
+		 * creating new gadgets if the gadget should exhibit additional
+		 * behaviour when it is double-clicked.  To change the conditions that
+		 * apply in detecting a double-click, override the isDoubleClicked()
+		 * method.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual inline void onDoubleClick(s16 x, s16 y) { };
+		
+		/**
+		 * Called when the gadget is shift-clicked.  Override this when
+		 * creating new gadgets if the gadget should exhibit additional
+		 * behaviour when it is shift-clicked.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual inline void onShiftClick(s16 x, s16 y) { };
+		
+		/**
+		 * Called when the gadget is released.  Override this when
+		 * creating new gadgets if the gadget should exhibit additional
+		 * behaviour when it is released.
+		 * @param x The x co-ordinate of the stylus when released.
+		 * @param y The y co-ordinate of the stylus when released.
+		 */
+		virtual inline void onRelease(s16 x, s16 y) { };
+		
+		/**
+		 * Called when the gadget is released outside of its boundaries.
+		 * Override this when creating new gadgets if the gadget should exhibit
+		 * additional behaviour when it is released outside of its boundaries.
+		 * @param x The x co-ordinate of the stylus when released.
+		 * @param y The y co-ordinate of the stylus when released.
+		 */
+		virtual inline void onReleaseOutside(s16 x, s16 y) { };
+		
+		/**
+		 * Called when the gadget is dragged.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when it is
+		 * dragged.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 * @param vX X distance dragged.
+		 * @param vY Y distance dragged.
+		 */
+		virtual inline void onDrag(s16 x, s16 y, s16 vX, s16 vY) { };
+		
+		/**
+		 * Called when the gadget starts being dragged.  Override this when
+		 * creating new gadgets if the gadget should exhibit additional
+		 * behaviour when dragging starts.
+		 */
+		virtual inline void onDragStart() { };
+		
+		/**
+		 * Called when the gadget stops being dragged.  Override this when
+		 * creating new gadgets if the gadget should exhibit additional
+		 * behaviour when dragging stops.
+		 */
+		virtual inline void onDragStop() { };
+		
+		/**
+		 * Called when the a key (d-pad or physical button) is pressed.
+		 * Override this when creating new gadgets if the gadget should exhibit
+		 * additional behaviour when a key is pressed.
+		 * @param keyCode The key that was pressed.
+		 */
+		virtual inline void onKeyPress(KeyCode keyCode) { };
+		
+		/**
+		 * Called when a key (d-pad or physical button) is released.  Override
+		 * this when creating new gadgets if the gadget should exhibit
+		 * additional behaviour when a key is released.
+		 * @param keyCode The key that was released.
+		 */
+		virtual inline void onKeyRelease(KeyCode keyCode) { };
+		
+		/**
+		 * Called when a key (d-pad or physical button) is pressed and repeats.
+		 * Override this when creating new gadgets if the gadget should exhibit
+		 * additional behaviour when a key repeats.
+		 * @param keyCode The key that repeated.
+		 */
+		virtual inline void onKeyRepeat(KeyCode keyCode) { };
+		
+		/**
+		 * Called when the gadget gains focus.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when
+		 * gaining focus.
+		 */
+		virtual inline void onFocus() { };
+		
+		/**
+		 * Called when the gadget loses focus.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when
+		 * losing focus.
+		 */
+		virtual inline void onBlur() { };
+		
+		/**
+		 * Called when the lid is opened.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when the
+		 * lid is opened.
+		 */
+		virtual inline void onLidOpen() { };
+		
+		/**
+		 * Called when the lid is closed.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when the
+		 * lid is closed.
+		 */
+		virtual inline void onLidClose() { };
+		
+		/**
+		 * Called when the gadget is enabled.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when
+		 * enabled.
+		 */
+		virtual inline void onEnable() { };
+		
+		/**
+		 * Called when the gadget is disabled.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when
+		 * disabled.
+		 */
+		virtual inline void onDisable() { };
+		
+		/**
+		 * Called when the gadget is resized.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when
+		 * resized.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual inline void onResize(u16 width, u16 height) { };
 	};
 }
 

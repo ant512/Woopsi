@@ -105,14 +105,13 @@ Features
       - Region scrolling;
       - Region copying;
       - Region dimming.
-    - Linked list, dynamic array and hashmap template container classes and
-      iterator classes.
+    - Dynamic array container class and associated iterator class.
     - Date class.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
   - Non pre-emptive, FIFO multitasking - each gadget runs simultaneously;
   - Uses 16-bit framebuffer display mode;
-  - Unicode strings using UTF-8 encoding.
+  - Unicode strings using UTF-8 encoding with iterator class.
   - Multiple build options:
     - Standard libnds build;
     - SDL layer to facilitate native compilation on non-DS platforms and
@@ -169,7 +168,7 @@ Credits and Acknowlegements
 
   - Coding and design                                - Antony Dzeryn
   - Testing, technical advice, other contributions   - Jeff Laing
-  - PALib independence                               - Steve
+  - PALib independence                               - Steven Harrison
   - More testing and suggestions                     - John Buxton
   - Unicode work                                     - Olivier Binda
   - Simian Zombie logo                               - John Clay
@@ -177,6 +176,9 @@ Credits and Acknowlegements
                                                      - The PALib team
                                                      - Nintendo
                                                      - R. J. Michal
+
+  Woopsi uses the FreeType library for advanced font support.  See
+  http://www.freetype.org for more information.
 
 
 Links

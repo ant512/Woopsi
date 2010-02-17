@@ -5,6 +5,7 @@
 #include "gadget.h"
 #include "gadgetstyle.h"
 #include "gadgeteventhandler.h"
+#include "calendardaybutton.h"
 
 #define CALENDAR_ROWS 8
 #define CALENDAR_COLS 7
@@ -47,13 +48,6 @@ namespace WoopsiUI {
 		virtual void handleReleaseEvent(const GadgetEventArgs& e);
 
 		/**
-		 * Draw the region of the calendar within the clipping rect. Should not be called
-		 * directly.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
 		 * Set the date displayed in the calendar.
 		 * @param day The new day.
 		 * @param month The new month.
@@ -80,14 +74,6 @@ namespace WoopsiUI {
 		const u16 getYear() const;
 
 		/**
-		 * Resize the calendar to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		bool resize(u16 width, u16 height);
-
-		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
 		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
 		 * parent.
@@ -96,12 +82,35 @@ namespace WoopsiUI {
 		virtual void getPreferredDimensions(Rect& rect) const;
 
 	protected:
-		Date* _date;						/**< Calendar working date */
-		Date* _visibleDate;					/**< Date displayed in the UI */
-		Button* _selectedDayButton;			/**< Pointer to the selected day button */
-		Button* _leftArrow;					/**< Pointer to the left arrow */
-		Button* _rightArrow;				/**< Pointer to the right arrow */
-		Label* _monthLabel;					/**< Pointer to the month label */
+		Date* _date;							/**< Calendar working date */
+		Date* _visibleDate;						/**< Date displayed in the UI */
+		CalendarDayButton* _selectedDayButton;	/**< Pointer to the selected day button */
+		Button* _leftArrow;						/**< Pointer to the left arrow */
+		Button* _rightArrow;					/**< Pointer to the right arrow */
+		Label* _monthLabel;						/**< Pointer to the month label */
+		
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Resize the calendar to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		void onResize(u16 width, u16 height);
 
 		/**
 		 * Destructor.

@@ -2,7 +2,6 @@
 #define _WOOPSI_H_
 
 #include <nds.h>
-#include <vector>
 #include "gadget.h"
 #include "gadgetstyle.h"
 
@@ -11,6 +10,8 @@ namespace WoopsiUI {
 	class Screen;
 	class ContextMenu;
 	class WoopsiTimer;
+	class WoopsiKeyboardScreen;
+	class KeyboardEventHandler;
 
 	/**
 	 * Class providing a top-level gadget and an interface to the Woopsi gadget hierarchy.
@@ -75,48 +76,6 @@ namespace WoopsiUI {
 		 * this parameter to run the whole system.
 		 */
 		virtual void processOneVBL(Gadget* gadget = NULL);
-		
-		/**
-		 * Draw a specific rectangle of the GUI.
-		 * The supplied region will be drawn with no further clipping checks.
-		 * For use only within Woopsi gadgets.
-		 * @param clipRect The region to draw.
-		 */
-		virtual void draw(Rect clipRect);
-		
-		/**
-		 * Receive stylus clicks and process them.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 * @return True if clicked.
-		 */
-		virtual bool click(s16 x, s16 y);
-
-		/**
-		 * Receive stylus shift clicks and process them.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 * @return True if clicked.
-		 */
-		virtual bool shiftClick(s16 x, s16 y);
-
-		/**
-		 * Receive stylus releases and process them.
-		 * @param x The x co-ordinate of the release.
-		 * @param y The y co-ordinate of the release.
-		 * @return True if released.
-		 */
-		virtual bool release(s16 x, s16 y);
-
-		/**
-		 * Receive stylus drags and process them.
-		 * @param x The current x co-ordinate of the stylus.
-		 * @param y The current y co-ordinate of the stylus.
-		 * @param vX The horizontal distance dragged.
-		 * @param vY The vertical distance dragged.
-		 * @return True if dragged.
-		 */
-		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 		/**
 		 * Swaps the depth of the supplied gadget.
@@ -198,18 +157,7 @@ namespace WoopsiUI {
 		 * called by code other than within the Woopsi library itself.
 		 * @param gadget The new clicked gadget.
 		 */
-		inline void setClickedGadget(Gadget* gadget) {
-
-			// Do we have a clicked gadget already?
-			if (_clickedGadget != NULL) {
-
-				// Ensure that the existing clicked gadget is released *outside* its bounds
-				_clickedGadget->release(_clickedGadget->getX() - 10, 0);
-			}
-			
-			// Update the pointer
-			_clickedGadget = gadget;
-		};
+		void setClickedGadget(Gadget* gadget);
 
 		/**
 		 * Get the clicked gadget pointer.  
@@ -217,26 +165,51 @@ namespace WoopsiUI {
 		 */
 		inline Gadget* getClickedGadget() { return _clickedGadget; };
 
-	protected:
-		bool _lidClosed;									/**< Remembers the current state of the lid */
+		/**
+		 * Creates a keyboard screen.  Opens it on the bottom display and flips
+		 * the screen currently on the bottom display up to the top screen.
+		 * Automatically sets opener to be an event handler of the keyboard.
+		 * @param opener The keyboard event handler that called the method.
+		 */
+		void showKeyboard(KeyboardEventHandler* opener);
 		
-		static WoopsiArray<WoopsiTimer*> _vblListeners;		/**< Array of timers that receive VBL events */
-		static WoopsiArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion */
-		static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run */
-		ContextMenu* _contextMenu;							/**< Pointer to the context menu */
-		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked */
+		/**
+		 * Closes the keyboard screen.  Flips the screen that was flipped to the
+		 * top display by the call to showKeyboard() back down to the bottom
+		 * display.
+		 */
+		void hideKeyboard();
+
+	protected:
+		bool _lidClosed;									/**< Remembers the current state of the lid. */
+		
+		static WoopsiArray<WoopsiTimer*> _vblListeners;		/**< Array of timers that receive VBL events. */
+		static WoopsiArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion. */
+		static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run. */
+		ContextMenu* _contextMenu;							/**< Pointer to the context menu. */
+		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked. */
+		WoopsiKeyboardScreen* _keyboardScreen;				/**< Screen containing the popup keyboard. */
 
 		/**
-		 * Closes a child gadget.
-		 * @param gadget The child gadget to close.
+		 * Pass clicks to the gadget hierarchy.  Closes the context menu if
+		 * the clicked gadget is not the context menu.  If a single gadget
+		 * is supplied, only that gadget is sent the click.  That gadget
+		 * should be running modally.
+		 * @param x Stylus x co-ordinate.
+		 * @param y Stylus y co-ordinate.
+		 * @param gadget Pointer to a modally-running gadget or NULL.
 		 */
-		virtual void closeChild(Gadget* gadget);
-		
+		void handleClick(s16 x, s16 y, Gadget* gadget);
+
 		/**
-		 * Shelves a child gadget.
-		 * @param gadget The child gadget to shelve.
+		 * Pass shift-clicks to the gadget hierarchy.  If a single gadget
+		 * is supplied, only that gadget is sent the click.  That gadget
+		 * should be running modally.
+		 * @param x Stylus x co-ordinate.
+		 * @param y Stylus y co-ordinate.
+		 * @param gadget Pointer to a modally-running gadget or NULL.
 		 */
-		virtual void shelveChild(Gadget* gadget);
+		void handleShiftClick(s16 x, s16 y, Gadget* gadget);
 
 		/**
 		 * Delete any gadgets in the deletion queue.
@@ -256,6 +229,17 @@ namespace WoopsiUI {
 		virtual void handleKeys();
 
 		/**
+		 * Processes a single keypad event and sends it throughout the
+		 * hierarchy.  Called by handleKeys().
+		 * @param newPress Indicates whether or not this is a new press.
+		 * @param released Indicates whether or not the keypad has been
+		 * released.
+		 * @param heldTime The number of frames that the key has been held down.
+		 * @param keyCode The code of the button that has been pressed.
+		 */
+		void handleKey(bool newPress, bool released, u32& heldTime, KeyCode keyCode);
+
+		/**
 		 * Process lid events and send throughout the hierarchy.
 		 */
 		virtual void handleLid();
@@ -264,24 +248,6 @@ namespace WoopsiUI {
 		 * Process VBLs and send to all registered gadgets.
 		 */
 		virtual void handleVBL();
-
-		/**
-		 * Click the specified gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @param gadget Pointer to the gadget to click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool click(s16 x, s16 y, Gadget* gadget);
-
-		/**
-		 * Shift-click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
- 		 * @param gadget Pointer to the gadget to click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool shiftClick(s16 x, s16 y, Gadget* gadget);
 
 		/**
 		 * Copy constructor is protected to prevent usage.

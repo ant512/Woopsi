@@ -2,9 +2,11 @@
 #define _WOOPSI_KEYBOARD_H_
 
 #include <nds.h>
-#include "amigawindow.h"
 #include "woopsiarray.h"
 #include "gadgetstyle.h"
+#include "gadget.h"
+#include "gadgeteventhandler.h"
+#include "graphicsport.h"
 
 namespace WoopsiUI {
 
@@ -16,24 +18,20 @@ namespace WoopsiUI {
 	 * Class providing a window containing a multitude of buttons arranged like a keyboard.
 	 * When any key is released the keyboard fires an EVENT_ACTION event.
 	 */
-	class WoopsiKeyboard : public AmigaWindow {
+	class WoopsiKeyboard : public Gadget, public GadgetEventHandler {
 	public:
 
 		/**
 		 * Constructor.
 		 * @param x The x co-ordinate of the window.
 		 * @param y The y co-ordinate of the window.
-		 * @param width The width of the window.
-		 * @param height The height of the window.
-		 * @param title The title of the window.
 		 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the Amiga borders.
-		 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		WoopsiKeyboard(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, u32 windowFlags, GadgetStyle* style = NULL);
+		WoopsiKeyboard(s16 x, s16 y, u32 flags, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
@@ -109,6 +107,14 @@ namespace WoopsiUI {
 		WoopsiArray<KeyboardEventHandler*> _keyboardEventHandlers;	/**< List of keyboard event handlers */
 
 		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
 		 * Swap the keyboard layout to the correct display based on current modifier keys.
 		 */
 		void showCorrectKeys();
@@ -151,7 +157,7 @@ namespace WoopsiUI {
 		/**
 		 * Copy constructor is protected to prevent usage.
 		 */
-		inline WoopsiKeyboard(const WoopsiKeyboard& keyboard) : AmigaWindow(keyboard) { };
+		inline WoopsiKeyboard(const WoopsiKeyboard& keyboard) : Gadget(keyboard) { };
 
 		/**
 		 * Raise a press event.  Raised when a key is pressed.

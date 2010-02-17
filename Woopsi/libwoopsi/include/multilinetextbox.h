@@ -6,10 +6,12 @@
 #include "gadgetstyle.h"
 #include "woopsistring.h"
 #include "text.h"
+#include "keyboardeventhandler.h"
 
 namespace WoopsiUI {
 	
 	class WoopsiTimer;
+	class WoopsiKey;
 
 	/**
 	 * Textbox that offers multiple lines of text.  Has scrolling
@@ -18,7 +20,7 @@ namespace WoopsiUI {
 	 * rows of text than it can display, and these additional
 	 * rows can be scrolled through.
 	 */
-	class MultiLineTextBox : public ScrollingPanel {
+	class MultiLineTextBox : public ScrollingPanel, public KeyboardEventHandler  {
 	public:
 
 		/**
@@ -58,13 +60,6 @@ namespace WoopsiUI {
 		 * the style into its own internal style object.
 		 */
 		MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows = 0, GadgetStyle* style = NULL);
-
-		/**
-		 * Draw the region of the textbox within the clipping rect.
-		 * Should not be called directly.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
 
 		/**
 		 * Set the horizontal alignment of text within the textbox.
@@ -136,14 +131,6 @@ namespace WoopsiUI {
 		virtual void setFont(FontBase* font);
 
 		/**
-		 * Resize the textbox to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
 		 * Get the length of the text string.
 		 * @return The length of the text string.
 		 */
@@ -188,26 +175,16 @@ namespace WoopsiUI {
 		virtual void insertTextAtCursor(const WoopsiString& text);
 
 		/**
-		 * Click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @return True if the click was successful.
+		 * Handle a keyboard press event.
+		 * @param e The event data.
 		 */
-		virtual bool click(s16 x, s16 y);
+		virtual void handleKeyboardPressEvent(const KeyboardEventArgs& e);
 
 		/**
-		 * Send a keypress to the gadget.
-		 * @param keyCode The keycode to send to the gadget.
-		 * @return True if the keypress was processed.
+		 * Handle a keyboard repeat event.
+		 * @param e The event data.
 		 */
-		virtual bool keyPress(KeyCode keyCode);
-
-		/**
-		 * Send a key repeat to the gadget.
-		 * @param keyCode The keycode to send to the gadget.
-		 * @return True if the key repeat was processed.
-		 */
-		virtual bool keyRepeat(KeyCode keyCode);
+		virtual void handleKeyboardRepeatEvent(const KeyboardEventArgs& e);
 
 	protected:
 		Text* _text;						/**< Text object that manipulates and wraps the raw text string */
@@ -219,6 +196,54 @@ namespace WoopsiUI {
 		TextAlignmentVert _vAlignment;		/**< Vertical alignment of the text */
 		s32 _cursorPos;						/**< Position of the cursor within the string */
 		bool _showCursor;					/**< Set to true to make cursor visible */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Resize the textbox to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
+		/**
+		 * Starts the dragging system.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
+		
+		/**
+		 * Moves the cursor.
+		 * @param keyCode The key that was pressed.
+		 */
+		virtual void onKeyPress(KeyCode keyCode);
+		
+		/**
+		 * Moves the cursor.
+		 * @param keyCode The key that repeated.
+		 */
+		virtual void onKeyRepeat(KeyCode keyCode);
+
+		/**
+		 * Handles keyboard key presses and key repeats.
+		 * @param key Key that raised the event.
+		 */
+		virtual void processKey(const WoopsiKey* key);
 
 		/**
 		 * Gets the x position of a row of text based on the width of the row and the
@@ -243,23 +268,23 @@ namespace WoopsiUI {
 
 		/**
 		 * Clips text output for vertical top-aligned text and calls drawText().
-		 * @param clipRect The rect to draw to.
+		 * @param port The GraphicsPort to draw to.
 		 */
-		void drawTextTop(Rect clipRect);
+		void drawTextTop(GraphicsPort* port);
 
 		/**
 		 * Draws text previously clipped by one of the drawTextXXX functions.
-		 * @param clipRect The rect to draw to.
+		 * @param port The GraphicsPort to draw to.
 		 * @param topRow The index of top row of text to draw.
 		 * @param bottomRow The index of the bottom row of text to draw.
 		 */
-		void drawText(Rect clipRect, s32 topRow, s32 bottomRow);
+		void drawText(GraphicsPort* port, s32 topRow, s32 bottomRow);
 
 		/**
 		 * Draws the cursor.
-		 * @param clipRect The rect to draw to.
+		 * @param port The GraphicsPort to draw to.
 		 */
-		void drawCursor(Rect clipRect);
+		void drawCursor(GraphicsPort* port);
 
 		/**
 		 * Destructor.

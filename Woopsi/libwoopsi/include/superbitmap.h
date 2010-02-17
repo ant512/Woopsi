@@ -50,33 +50,48 @@ namespace WoopsiUI {
 		 */
 		Graphics* getGraphics();
 
-
-		/**
-		 * Draws the region of the gadget that falls within the clipping region.  Should not
-		 * be called.
-		 * @param clipRect The rectangle to clip to.
-		 */
-		virtual void draw(Rect clipRect);
-
 		/**
 		 * Erases the internal bitmap by filling it with the gadget's back colour.
 		 */
 		virtual void clearBitmap();
-
-		/**
-		 * Drag the gadget.
-		 * @param x The x co-ordinate of the drag.
-		 * @param y The y co-ordinate of the drag.
-		 * @param vX The horizontal drag distance.
-		 * @param vY The vertical drag distance.
-		 */
-		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 	protected:
 		s32 _bitmapX;									/**< X co-ordinate of the bitmap relative to the gadget */
 		s32 _bitmapY;									/**< Y co-ordinate of the bitmap relative to the gadget */
 		Bitmap* _bitmap;								/**< Bitmap */
 		Graphics* _graphics;							/**< Graphics object for drawing to bitmap */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Scrolls the bitmap.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 * @param vX The horizontal drag distance.
+		 * @param vY The vertical drag distance.
+		 */
+		virtual void onDrag(s16 x, s16 y, s16 vX, s16 vY);
+		
+		/**
+		 * Starts the dragging system.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
 
 		/**
 		 * Destructor.

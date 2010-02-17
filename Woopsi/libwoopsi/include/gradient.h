@@ -28,20 +28,6 @@ namespace WoopsiUI {
 		 */
 		Gradient(s16 x, s16 y, u16 width, u16 height, u16 fromColour, u16 toColour);
 
-		/**
-		 * Draw the region of the gadget that falls within the clipping rectangle.  Should not
-		 * be called.
-		 * @param clipRect The clipping region to draw within.
-		 */
-		virtual void draw(Rect clipRect);
-		
-		/**
-		 * Resize the gadget and recalculate the gradient.
-		 * @param width The new gadget width.
-		 * @param height The new gadget height.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
 	protected:
 		u16 _fromColour;			/**< Initial gradient colour */
 		u16 _toColour;				/**< Final gradient colour */
@@ -52,6 +38,21 @@ namespace WoopsiUI {
 		s16 _deltaG;				/**< Value that green component is incremented at each new gradient step */
 		s16 _deltaB;				/**< Value that blue component is incremented at each new gradient step */
 		s16* _rowColour;			/**< Array of precalculated gradient colours for each step */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Resize the gadget and recalculate the gradient.
+		 * @param width The new gadget width.
+		 * @param height The new gadget height.
+		 */
+		virtual void onResize(u16 width, u16 height);
 		
 		/**
 		 * Precalculates the properties of the gradient to save processing time later.

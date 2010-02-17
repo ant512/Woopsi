@@ -11,7 +11,6 @@ namespace WoopsiUI {
 	 * window bottom border.  Forms part of the AmigaWindow gadget.
 	 */
 	class WindowBorderBottom : public Gadget {
-
 	public:
 
 		/**
@@ -25,28 +24,16 @@ namespace WoopsiUI {
 		 */
 		WindowBorderBottom(s16 x, s16 y, u16 width, u16 height, u8 sideBorderSize);
 
-		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Give the gadget focus.
-		 * @return True if the gadget received focus correctly.
-		 */
-		virtual bool focus();
-
-		/**
-		 * Remove focus from the gadget.
-		 * @return True if the gadget lost focus correctly.
-		 */
-		virtual bool blur();
-
 	protected:
 		u8 _sideBorderSize;								/**< Width of the windw's side border */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
 
 		/**
 		 * Destructor.

@@ -13,8 +13,8 @@ namespace WoopsiUI {
 
 	/**
 	 * Gadget containing a MultiLineTextBox and a vertical scrollbar.  Exposed
-	 * methods are more or less identical to the methods exposed by the MultiLineTextBox
-	 * to ensure that the two are interchangeable.
+	 * methods are more or less identical to the methods exposed by the
+	 * MultiLineTextBox to ensure that the two are interchangeable.
 	 */
 	class ScrollingTextBox : public Gadget, public GadgetEventHandler {
 	public:
@@ -87,6 +87,20 @@ namespace WoopsiUI {
 		 * @param text String to append.
 		 */
 		virtual void appendText(const WoopsiString& text);
+		
+		/**
+		 * Remove all characters from the string from the start index onwards.
+		 * @param startIndex Index to remove from.
+		 */
+		virtual void removeText(const u32 startIndex);
+
+		/**
+		 * Remove specified number of characters from the string from the
+		 * start index onwards.
+		 * @param startIndex Index to remove from.
+		 * @param count Number of characters to remove.
+		 */
+		virtual void removeText(const u32 startIndex, const u32 count);
 
 		/**
 		 * Set the font used in the textbox.
@@ -95,12 +109,48 @@ namespace WoopsiUI {
 		virtual void setFont(FontBase* font);
 
 		/**
-		 * Resize the textbox to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
+		 * Get the length of the text string.
+		 * @return The length of the text string.
 		 */
-		virtual bool resize(u16 width, u16 height);
+		virtual const u32 getTextLength() const;
+
+		/**
+		 * Shows the cursor.
+		 */
+		virtual void showCursor();
+
+		/**
+		 * Hides the cursor.
+		 */
+		virtual void hideCursor();
+		
+		/**
+		 * Move the cursor to the text position specified.  0 indicates the start
+		 * of the string.  If position is greater than the length of the string,
+		 * the cursor is moved to the end of the string.
+		 * @param position The new cursor position.
+		 */
+		virtual void moveCursorToPosition(const s32 position);
+
+		/**
+		 * Get the cursor position.  This is the index within the string that
+		 * the cursor is currently positioned over.
+		 * @return position The cursor position.
+		 */
+		virtual const s32 getCursorPosition() const;
+
+		/**
+		 * Insert text at the specified index.
+		 * @param text The text to insert.
+		 * @param index Index at which to insert the text.
+		 */
+		virtual void insertText(const WoopsiString& text, const u32 index);
+		
+		/**
+		 * Insert text at the current cursor position.
+		 * @param text The text to insert.
+		 */
+		virtual void insertTextAtCursor(const WoopsiString& text);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
@@ -114,18 +164,26 @@ namespace WoopsiUI {
 		 */
 		virtual void handleScrollEvent(const GadgetEventArgs& e);
 
-		/**
-		 * Draw the region of the textbox within the clipping rect.
-		 * Should not be called directly.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
-
 	protected:
 		MultiLineTextBox* _textbox;						/**< Pointer to the textbox */
 		ScrollbarVertical* _scrollbar;					/**< Pointer to the scrollbar */
 		u8 _scrollbarWidth;								/**< Width of the scrollbar */
 
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Resize the textbox to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Destructor.
 		 */

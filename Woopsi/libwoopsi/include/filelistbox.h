@@ -137,14 +137,6 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Resize the textbox to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
 		 * Set the displayed path.
 		 * @param path The new path.
 		 */
@@ -156,18 +148,25 @@ namespace WoopsiUI {
 		 */
 		virtual void appendPath(const WoopsiString& path);
 
-		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
 	protected:
 		ScrollingListBox* _listbox;			/**< Pointer to the list box */
 		FilePath* _path;					/**< Path currently displayed */
 
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Resize the textbox to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Destructor.
 		 */

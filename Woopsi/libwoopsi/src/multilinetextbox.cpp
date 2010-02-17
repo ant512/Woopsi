@@ -5,12 +5,11 @@
 #include "woopsifuncs.h"
 #include "stringiterator.h"
 #include "woopsitimer.h"
+#include "woopsikey.h"
 
 using namespace WoopsiUI;
 
 MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows, GadgetStyle* style) : ScrollingPanel(x, y, width, height, flags, style) {
-
-	_outline = OUTLINE_IN;
 
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
@@ -37,7 +36,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	setText(text);
 }
 
-void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
+void MultiLineTextBox::drawText(GraphicsPort* port, s32 topRow, s32 bottomRow) {
 
 	// Early exit checks
 	if ((topRow < 0) && (bottomRow < 0)) return;
@@ -46,10 +45,6 @@ void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 	// Prevent overflows
 	if (topRow < 0) topRow = 0;
 	if (bottomRow >= _text->getLineCount()) bottomRow = _text->getLineCount() - 1;
-
-	// Create a graphics port to draw the text - we use a non-internal port
-	// to ensure that we clip within the border we've just drawn
-	GraphicsPort* port = newGraphicsPort(clipRect);
 
 	// Draw lines of text
 	s16 textX;
@@ -73,55 +68,52 @@ void MultiLineTextBox::drawText(Rect clipRect, s32 topRow, s32 bottomRow) {
 
 		currentRow++;
 	}
-
-	delete port;
 }
 
-void MultiLineTextBox::drawTextTop(Rect clipRect) {
+void MultiLineTextBox::drawTextTop(GraphicsPort* port) {
+
+	Rect rect;
+	port->getClipRect(rect);
 
 	// Early exit if there is no text to display
 	if (_text->getLineCount() == 0) return;
 
 	// Calculate various values needed to output text for this cliprect
 	u8 lineHeight = _text->getLineHeight();
-	s16 offsetY = clipRect.y - getY();					// Translate the physical y co-ords back to gadget space
-	s32 regionY = -_canvasY + offsetY;					// Y co-ord of the visible region of this canvas
+	s32 regionY = -_canvasY + rect.y;						// Y co-ord of the visible region of this canvas
 
-	s32 topRow = (regionY / lineHeight) - 1;			// Calculate the top line of text in this region
-	s32 bottomRow = ((regionY + clipRect.height) / lineHeight);	// Calculate bottom line of text
+	s32 topRow = (regionY / lineHeight) - 1;				// Calculate the top line of text in this region
+	s32 bottomRow = ((regionY + rect.height) / lineHeight);	// Calculate bottom line of text
 
 	// Draw lines of text
-	drawText(clipRect, topRow, bottomRow);	
+	drawText(port, topRow, bottomRow);	
 }
 
-void MultiLineTextBox::draw(Rect clipRect) {
+void MultiLineTextBox::drawContents(GraphicsPort* port) {
 
-	// Create a graphics port to draw the border
- 	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	// Clear
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
-
-	delete port;
 
 	// Always use top alignment if the number of rows of text exceeds or is
 	// equal to the number of visible rows
 	if (_visibleRows <= _text->getLineCount()) {
-		drawTextTop(clipRect);
+		drawTextTop(port);
 	} else {
-		drawText(clipRect, 0, _text->getLineCount());
+		drawText(port, 0, _text->getLineCount());
 	}
 
 	// Draw the cursor
-	drawCursor(clipRect);
+	drawCursor(port);
 }
 
-void MultiLineTextBox::drawCursor(Rect clipRect) {
+void MultiLineTextBox::drawBorder(GraphicsPort* port) {
 
-	GraphicsPort* port = newGraphicsPort(clipRect);
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+
+	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+}
+
+void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 
 	// Get the cursor co-ords
 	if (_showCursor) {
@@ -165,8 +157,6 @@ void MultiLineTextBox::drawCursor(Rect clipRect) {
 			port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(' '), getFont()->getHeight());
 		}
 	}
-
-	delete port;
 }
 
 // Calculate values for centralised text
@@ -340,9 +330,8 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-
 void MultiLineTextBox::setFont(FontBase* font) {
-	_style->font = font;
+	_style.font = font;
 	_text->setFont(font);
 
 	// Ensure that we have the correct number of rows
@@ -396,30 +385,26 @@ const u16 MultiLineTextBox::getCurrentPage() const {
 	}
 }
 
-bool MultiLineTextBox::resize(u16 width, u16 height) {
+void MultiLineTextBox::onResize(u16 width, u16 height) {
 
-	// Ensure drawing is disabled before we start
-	bool drawing = _flags.drawingEnabled;
-	_flags.drawingEnabled = false;
-
-	bool raiseEvent = false;
-
-	// Resize the gadget
-	Gadget::resize(width, height);
+	// Ensure the base class resize method is called
+	ScrollingPanel::onResize(width, height);
 
 	// Resize the canvas' width
 	Rect rect;
 	getClientRect(rect);
 	_canvasWidth = rect.width;
+	_canvasHeight = rect.height;
+	_canvasX = 0;
+	_canvasY = 0;
 
 	calculateVisibleRows();
-
-	// Restore the gadget's drawing flag to its original state
-	_flags.drawingEnabled = drawing;
 
 	// Re-wrap the text
 	_text->setWidth(_width);
 	_text->wrap();
+	
+	bool raiseEvent = false;
 
 	// Ensure that we have the correct number of rows
 	if (_text->getLineCount() > _maxRows) {
@@ -432,16 +417,9 @@ bool MultiLineTextBox::resize(u16 width, u16 height) {
 	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {
 		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
-
-		// Jump to bottom of new text
-		jump(0, -(_canvasHeight - _height));
 	}
 
-	redraw();
-
 	if (raiseEvent) _gadgetEventHandlers->raiseValueChangeEvent();
-
-	return true;
 }
 
 const u32 MultiLineTextBox::getTextLength() const {
@@ -505,51 +483,51 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
-bool MultiLineTextBox::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
-
-		if (isEnabled()) {
-			redraw();
-		}
-
-		return true;
-	}
-
-	return false;
+void MultiLineTextBox::onClick(s16 x, s16 y) {
+	startDragging(x, y);
 }
 
-bool MultiLineTextBox::keyPress(KeyCode keyCode) {
-	if (Gadget::keyPress(keyCode)) {
-		if (keyCode == KEY_CODE_LEFT) {
-			if (_cursorPos > 0) {
-				moveCursorToPosition(_cursorPos - 1);
-			}
-		} else if (keyCode == KEY_CODE_RIGHT) {
-			if (_cursorPos < (s32)_text->getLength()) {
-				moveCursorToPosition(_cursorPos + 1);
-			}
+void MultiLineTextBox::onKeyPress(KeyCode keyCode) {
+	if (keyCode == KEY_CODE_LEFT) {
+		if (_cursorPos > 0) {
+			moveCursorToPosition(_cursorPos - 1);
 		}
-
-		return true;
+	} else if (keyCode == KEY_CODE_RIGHT) {
+		if (_cursorPos < (s32)_text->getLength()) {
+			moveCursorToPosition(_cursorPos + 1);
+		}
 	}
-
-	return false;
 }
 
-bool MultiLineTextBox::keyRepeat(KeyCode keyCode) {
-	if (Gadget::keyRepeat(keyCode)) {
-		if (keyCode == KEY_CODE_LEFT) {
-			if (_cursorPos > 0) {
-				moveCursorToPosition(_cursorPos - 1);
-			}
-		} else if (keyCode == KEY_CODE_RIGHT) {
-			if (_cursorPos < (s32)_text->getLength()) {
-				moveCursorToPosition(_cursorPos + 1);
-			}
+void MultiLineTextBox::onKeyRepeat(KeyCode keyCode) {
+	if (keyCode == KEY_CODE_LEFT) {
+		if (_cursorPos > 0) {
+			moveCursorToPosition(_cursorPos - 1);
 		}
-
-		return true;
+	} else if (keyCode == KEY_CODE_RIGHT) {
+		if (_cursorPos < (s32)_text->getLength()) {
+			moveCursorToPosition(_cursorPos + 1);
+		}
 	}
+}
 
-	return false;
+void MultiLineTextBox::handleKeyboardPressEvent(const KeyboardEventArgs& e) {
+	processKey(e.getKey());
+}
+
+void MultiLineTextBox::handleKeyboardRepeatEvent(const KeyboardEventArgs& e) {
+	processKey(e.getKey());
+}
+
+void MultiLineTextBox::processKey(const WoopsiKey* key) {
+
+	if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
+
+		// Delete character in front of cursor
+		if (_cursorPos > 0) removeText(_cursorPos - 1, 1);
+	} else if (key->getValue() != '\0') {
+
+		// Not modifier; append value
+		insertTextAtCursor(key->getValue());
+	} 
 }

@@ -22,31 +22,19 @@ namespace WoopsiUI {
 		 */
 		WindowBorderSide(s16 x, s16 y, u16 width, u16 height);
 
-		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Give the gadget focus.
-		 * @return True if the gadget received focus correctly.
-		 */
-		virtual bool focus();
-
-		/**
-		 * Remove focus from the gadget.
-		 * @return True if the gadget lost focus correctly.
-		 */
-		virtual bool blur();
-
 	protected:
 		/**
 		 * Destructor.
 		 */
 		virtual inline ~WindowBorderSide() { };
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
 		
 		/**
 		 * Copy constructor is protected to prevent usage.

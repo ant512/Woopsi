@@ -6,90 +6,83 @@ Window::Window(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u
 	_title = title;
 }
 
-bool Window::release(s16 x, s16 y) {
+void Window::onDragStop() {
 
-	if (_flags.dragging) {
+	// Get a graphics port from the parent screen
+	GraphicsPort* port = _parent->newGraphicsPort(true);
+
+	// Since we're drawing to the parent gadget's graphics port,
+	// we need to ensure that we subtract the parent's client rect
+	// offset from our drawing co-ordinates
+	Rect rect;
+	_parent->getClientRect(rect);
+
+	// Draw rect
+	port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+
+	delete port;
+
+	moveTo(_newX, _newY);
+}
+
+void Window::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
+
+	// Work out where we're moving to
+	s16 destX = x - _grabPointX - _parent->getX();
+	s16 destY = y - _grabPointY - _parent->getY();
+
+	// Do we need to move?
+	if ((destX != _x) || (destY != _y)) {
+
+		// Prevent window from moving outside screen
+		if (!_parent->isPermeable()) {
+
+			Rect rect;
+			_parent->getClientRect(rect);
+
+			if (destX < rect.x) {
+				destX = rect.x;
+			} else if (destX + _width > rect.x + rect.width) {
+				destX = rect.x + rect.width - _width;
+			}
+
+			if (destY < rect.y) {
+				destY = rect.y;
+			} else if (destY + _height > rect.y + rect.height) {
+				destY = rect.y + rect.height - _height;
+			}
+		}
+
+		// Prevent window from leaving top of screen
+		if (destY < 0) {
+			destY = 0;
+		}
 
 		// Get a graphics port from the parent screen
 		GraphicsPort* port = _parent->newGraphicsPort(true);
 
+		// Since we're drawing to the parent gadget's graphics port,
+		// we need to ensure that we subtract the parent's client rect
+		// offset from our drawing co-ordinates
+		Rect rect;
+		_parent->getClientRect(rect);
+
 		// Erase the old rect
-		port->drawXORRect(_newX, _newY, _width, _height);
+		port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+
+		// Perform move
+		_newX = destX;
+		_newY = destY;
+
+		// Draw the new rect
+		port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+
 		delete port;
-
-		moveTo(_newX, _newY);
-
-		Gadget::release(x, y);
-
-		return true;
-	} else if (_flags.clicked) {
-
-		// Handle release on window
-		Gadget::release(x, y);
-
-		return true;
 	}
-
-	return false;
 }
 
-bool Window::drag(s16 x, s16 y, s16 vX, s16 vY) {
-
-	if (isEnabled()) {
-		if (_flags.dragging) {
-
-			// Work out where we're moving to
-			s16 destX = x - _grabPointX - _parent->getX();
-			s16 destY = y - _grabPointY - _parent->getY();
-
-			// Do we need to move?
-			if ((destX != _x) || (destY != _y)) {
-
-				// Prevent window from moving outside screen
-				if (!_parent->isPermeable()) {
-					if (destX < 0) {
-						destX = 0;
-					} else if (destX + _width > _parent->getWidth()) {
-						destX = _parent->getWidth() - _width;
-					}
-
-					if (destY + _height > _parent->getHeight()) {
-						destY = _parent->getHeight() - _height;
-					}
-				}
-
-				// Prevent window from leaving top of screen
-				if (destY < 0) {
-					destY = 0;
-				}
-
-				// Get a graphics port from the parent screen
-				GraphicsPort* port = _parent->newGraphicsPort(true);
-
-				// Erase the old rect
-				port->drawXORRect(_newX, _newY, _width, _height);
-
-				// Perform move
-				_newX = destX;
-				_newY = destY;
-
-				// Draw the new rect
-				port->drawXORRect(_newX, _newY, _width, _height);
-
-				delete port;
-			}
-
-			_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
-
-			return true;
-		}
-	}
-	
-	return false;
-}
-
-void Window::draw(Rect clipRect) {
-	clear(clipRect);
+void Window::drawBorder(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 }
 
 void Window::setTitle(const WoopsiString& title) {
@@ -98,24 +91,21 @@ void Window::setTitle(const WoopsiString& title) {
 	redraw();
 }
 
-// Set the drag point and tell that gadget that it is being dragged
-void Window::setDragging(u16 x, u16 y) {
-	if (_flags.draggable) {
-		_flags.dragging = true;
-		_flags.clicked = true;
-		_grabPointX = x - getX();
-		_grabPointY = y - getY();
-		_newX = _x;
-		_newY = _y;
+void Window::onDragStart() {
 
-		// Draw XOR rect
+	// Draw XOR rect
 
-		// Get a graphics port from the parent screen
-		GraphicsPort* port = _parent->newGraphicsPort(true);
+	// Get a graphics port from the parent screen
+	GraphicsPort* port = _parent->newGraphicsPort(true);
 
-		// Draw rect
-		port->drawXORRect(_newX, _newY, _width, _height);
+	// Since we're drawing to the parent gadget's graphics port,
+	// we need to ensure that we subtract the parent's client rect
+	// offset from our drawing co-ordinates
+	Rect rect;
+	_parent->getClientRect(rect);
 
-		delete port;
-	}
+	// Draw rect
+	port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+
+	delete port;
 }

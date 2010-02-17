@@ -10,8 +10,8 @@ namespace WoopsiUI {
 	class Gadget;
 
 	/**
-	 * Base GadgetEventHandler class, intended to be subclassed.  Any class that needs to listen for
-	 * gadget events should inherit from this class.
+	 * Base GadgetEventHandler class, intended to be subclassed.  Any class that
+	 * needs to listen for gadget events should inherit from this class.
 	 */
 	class GadgetEventHandler {
 	public:

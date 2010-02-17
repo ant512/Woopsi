@@ -17,8 +17,8 @@ TARGET		:=	libwoopsi
 BUILD		:=	build
 RELEASE     :=  lib
 SOURCES		:=	src src/fonts
-INCLUDES	:=	include include/fonts build
-LIBDIRS		:=	$(DEVKITPRO)/libnds
+INCLUDES	:=	include include/fonts build 
+LIBDIRS		:=	$(DEVKITPRO)/libnds $(DEVKITPRO)/libfreetype
 
 #-------------------------------------------------------------------------------
 # options for code generation

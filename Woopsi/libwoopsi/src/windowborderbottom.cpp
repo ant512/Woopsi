@@ -7,18 +7,16 @@ WindowBorderBottom::WindowBorderBottom(s16 x, s16 y, u16 width, u16 height, u8 s
 
 	_sideBorderSize = sideBorderSize;
 	_flags.decoration = true;
+	_flags.canReceiveFocus = false;
 }
 
-void WindowBorderBottom::draw(Rect clipRect) {
+void WindowBorderBottom::drawContents(GraphicsPort* port) {
 
 	// Choose a colour depending on parent's active state
 	u16 colour = getFillColour();
 	if (_parent != NULL) {
 		colour = _parent->hasFocus() ? getHighlightColour() : getFillColour();
 	}
-
-	// Get a new graphics port
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Background
 	port->drawFilledRect(1, 0, _width - 2, _height - 1, colour);
@@ -34,15 +32,4 @@ void WindowBorderBottom::draw(Rect clipRect) {
 
 	// Bottom of window
 	port->drawHorizLine(0, _height - 1, _width, getShadowColour());
-
-	// Tidy up
-	delete port;
-}
-
-bool WindowBorderBottom::focus() {
-	return true;
-}
-
-bool WindowBorderBottom::blur() {
-	return true;
 }

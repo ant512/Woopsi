@@ -69,6 +69,18 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\src\freetypecache.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\freetypefacemanager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\freetypefont.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\src\monofont.cpp"
 						>
 					</File>
@@ -132,10 +144,6 @@
 						RelativePath=".\libwoopsi\src\graphicsport.cpp"
 						>
 					</File>
-					<File
-						RelativePath=".\libwoopsi\src\graphicsunclipped.cpp"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Gadgets"
@@ -177,10 +185,6 @@
 			<Filter
 				Name="Gadgets"
 				>
-				<File
-					RelativePath=".\libwoopsi\src\calendar.cpp"
-					>
-				</File>
 				<File
 					RelativePath=".\libwoopsi\src\checkbox.cpp"
 					>
@@ -296,16 +300,16 @@
 						RelativePath=".\libwoopsi\src\woopsikeyboard.cpp"
 						>
 					</File>
+					<File
+						RelativePath=".\libwoopsi\src\woopsikeyboardscreen.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="ContextMenu"
 					>
 					<File
 						RelativePath=".\libwoopsi\src\contextmenu.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\src\contextmenuitem.cpp"
 						>
 					</File>
 				</Filter>
@@ -406,6 +410,18 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\src\filerequester.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Calendar"
+					>
+					<File
+						RelativePath=".\libwoopsi\src\calendar.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\calendardaybutton.cpp"
 						>
 					</File>
 				</Filter>
@@ -683,6 +699,18 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\include\freetypecache.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\freetypefacemanager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\freetypefont.h"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\include\glyphs.h"
 						>
 					</File>
@@ -740,10 +768,6 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\graphicsport.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\graphicsunclipped.h"
 						>
 					</File>
 				</Filter>
@@ -839,10 +863,6 @@
 			<Filter
 				Name="Gadgets"
 				>
-				<File
-					RelativePath=".\libwoopsi\include\calendar.h"
-					>
-				</File>
 				<File
 					RelativePath=".\libwoopsi\include\checkbox.h"
 					>
@@ -986,6 +1006,10 @@
 						RelativePath=".\libwoopsi\include\woopsikeyboard.h"
 						>
 					</File>
+					<File
+						RelativePath=".\libwoopsi\include\woopsikeyboardscreen.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Text"
@@ -1084,6 +1108,18 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\filerequester.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Calendar"
+					>
+					<File
+						RelativePath=".\libwoopsi\include\calendar.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\calendardaybutton.h"
 						>
 					</File>
 				</Filter>

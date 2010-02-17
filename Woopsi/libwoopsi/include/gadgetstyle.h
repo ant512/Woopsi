@@ -12,19 +12,21 @@ namespace WoopsiUI {
 	 */
 	class GadgetColours {
 	public:
-		u16 back;							/**< Colour used as background */
-		u16 shine;							/**< Colour used as light bevel edge */
-		u16 highlight;						/**< Colour used as highlighted elements */
-		u16 shadow;							/**< Colour used as dark bevel edge */
-		u16 fill;							/**< Colour used as foreground fill */
-		u16 dark;							/**< Colour used as scrollbar gutters etc */
+		u16 back;					/**< Colour used as background */
+		u16 shine;					/**< Colour used as light bevel edge */
+		u16 highlight;				/**< Colour used as highlighted elements */
+		u16 shadow;					/**< Colour used as dark bevel edge */
+		u16 fill;					/**< Colour used as foreground fill */
+		u16 dark;					/**< Colour used as scrollbar gutters etc */
 	};
 
 	/**
-	 * Class providing the default colours and fonts for all gadgets.  This information is copied
-	 * into the gadgets when they are constructed, so you will need to change these values *before*
-	 * creating any gadgets if you want those gadgets to use the altered colours.
-	 * If the font object is set, Woopsi will use it in preference to the default system font.
+	 * Class providing the default colours and fonts for all gadgets.  This
+	 * information is copied into the gadgets when they are constructed, so you
+	 * will need to change these values *before* creating any gadgets if you
+	 * want those gadgets to use the altered colours.
+	 * If the font objects are set, Woopsi will use them in preference to the
+	 * default system fonts.
 	 */
 	class GadgetStyle {
 	public:

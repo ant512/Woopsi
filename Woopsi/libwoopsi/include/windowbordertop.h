@@ -14,7 +14,6 @@ namespace WoopsiUI {
 	 * window title bar.  Forms part of the AmigaWindow gadget.
 	 */
 	class WindowBorderTop : public Gadget {
-
 	public:
 		/**
 		 * Constructor.
@@ -29,28 +28,23 @@ namespace WoopsiUI {
 		 */
 		WindowBorderTop(s16 x, u16 width, u16 height, Window* window, GadgetStyle* style = NULL);
 
-		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Give the gadget focus.
-		 * @return True if the gadget received focus correctly.
-		 */
-		virtual bool focus();
-
-		/**
-		 * Remove focus from the gadget.
-		 * @return True if the gadget lost focus correctly.
-		 */
-		virtual bool blur();
-
 	protected:
 		Window* _window;							/**< Pointer to the containing window */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Starts the dragging system.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
 
 		/**
 		 * Destructor.

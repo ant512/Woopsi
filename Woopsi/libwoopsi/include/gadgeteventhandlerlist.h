@@ -223,21 +223,20 @@ namespace WoopsiUI {
 		void raiseContextMenuSelectionEvent(const ListDataItem* contextMenuItem);
 
 		/**
-		 * Raise an action event to the event handler.  This should be called when
-		 * a gadget's purpose has been fulfilled.  For example, in the case of a
-		 * button, this event is raised when the button is released within its
-		 * boundaries.  The button has produced a valid click, and thus fulfilled
-		 * its purpose, so it needs to raise an "action" event.
-		 * Not all parameters are valid for every event, but since each gadget will
-		 * raise an action event specific to its own behaviour this function allows
-		 * all EventArgs values to be set.
-		 * @param x The x co-ordinate of the event.
-		 * @param y The y co-ordinate of the event.
-		 * @param vX Horizontal difference involved in the event.
-		 * @param vY Vertical difference involved in the event.
-		 * @param keyCode Keycode of the event.
+		 * Raise an action event to the event handler.  This should be called
+		 * when a gadget's purpose has been fulfilled.  For example, in the case
+		 * of a button, this event is raised when the button is released within
+		 * its boundaries.  The button has produced a valid click, and thus
+		 * fulfilled its purpose, so it needs to raise an "action" event.
 		 */
-		void raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode);
+		void raiseActionEvent();
+
+		/**
+		 * Raises a scroll event.  Fired when the panel scrolls.
+		 * @param vX Horizontal distance scrolled.
+		 * @param vY Vertical distance scrolled.
+		 */
+		void raiseScrollEvent(s16 vX, s16 vY);
 
 	protected:
 		WoopsiArray<GadgetEventHandler*> _gadgetEventHandlers;		/**< List of event handlers */

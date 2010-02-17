@@ -6,80 +6,61 @@ using namespace WoopsiUI;
 SliderVerticalGrip::SliderVerticalGrip(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 }
 
-void SliderVerticalGrip::draw(Rect clipRect) {
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	// Draw background
+void SliderVerticalGrip::drawContents(GraphicsPort* port) {
 	if (!_flags.clicked) {
 		port->drawFilledRect(0, 0, _width, _height, getFillColour());
 	} else {
 		port->drawFilledRect(0, 0, _width, _height, getHighlightColour());
 	}
-
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
-
-	delete port;
 }
 
-bool SliderVerticalGrip::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
+void SliderVerticalGrip::drawBorder(GraphicsPort* port) {
 
-		if (isEnabled()) {
-			setDragging(x, y);
-			redraw();
-		}
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
 
-		return true;
+	if (isClicked()) {
+		port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+	} else {
+		port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
 	}
-
-	return false;
 }
 
-bool SliderVerticalGrip::release(s16 x, s16 y) {
-	if (Gadget::release(x, y)) {
-
-		_flags.dragging = false;
-
-		redraw();
-		return true;
-	}
-
-	return false;
+void SliderVerticalGrip::onClick(s16 x, s16 y) {
+	startDragging(x, y);
+	redraw();
 }
 
-bool SliderVerticalGrip::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	if (isEnabled()) {
-		if (_flags.dragging) {
+void SliderVerticalGrip::onRelease(s16 x, s16 y) {
+	redraw();
+}
 
-			// Work out where we're moving to
-			s16 destY = y - _grabPointY - _parent->getY();
+void SliderVerticalGrip::onReleaseOutside(s16 x, s16 y) {
+	redraw();
+}
 
-			// Do we need to move?
-			if (destY != _y) {
+void SliderVerticalGrip::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 
-				// Get parent rect
-				Rect rect;
-				_parent->getClientRect(rect);
+	// Work out where we're moving to
+	s16 destY = y - _grabPointY - _parent->getY();
 
-				// Prevent grip from moving outside parent
-				if (destY < rect.y) {
-					destY = rect.y;
-				} else {
-					if (destY + _height > rect.height + rect.y) {
-						destY = (rect.height + rect.y) - _height;
-					}
-				}
+	// Do we need to move?
+	if (destY != _y) {
 
-				// Move to new location
-				moveTo(rect.x, destY);
+		// Get parent rect
+		Rect rect;
+		_parent->getClientRect(rect);
+
+		// Prevent grip from moving outside parent
+		if (destY < rect.y) {
+			destY = rect.y;
+		} else {
+			if (destY + _height > rect.height + rect.y) {
+				destY = (rect.height + rect.y) - _height;
 			}
-
-			_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
-
-			return true;
 		}
+
+		// Move to new location
+		moveTo(rect.x, destY);
 	}
-	
-	return false;
 }

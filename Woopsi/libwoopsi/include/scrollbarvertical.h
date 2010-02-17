@@ -96,13 +96,6 @@ namespace WoopsiUI {
 		 */
 		void jumpGrip(u8 direction);
 
-		/**
-		 * Draw the region of the slider that falls within the
-		 * clipping rect.  Use draw() instead in most circumstances.
-		 * @param clipRect The clipping region.
-		 */
-		virtual void draw(Rect clipRect);
-
 		/**	
 		 * Process events fired by the grip.
 		 * @param e The event details.
@@ -133,14 +126,6 @@ namespace WoopsiUI {
 		 */
 		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
 
-		/**
-		 * Resize the scrollbar to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
 	protected:
 		SliderVertical* _slider;					/**< Pointer to the slider gadget */
 		Button* _upButton;							/**< Pointer to the up button */
@@ -149,6 +134,13 @@ namespace WoopsiUI {
 		u8 _scrollTimeout;							/**< VBLs needed until a button triggers another grip movement */
 		WoopsiTimer* _timer;						/**< Controls slider button repeats */
 
+		/**
+		 * Resize the scrollbar to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Destructor.
 		 */

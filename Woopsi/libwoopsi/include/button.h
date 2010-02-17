@@ -27,30 +27,50 @@ namespace WoopsiUI {
 		 */
 		Button(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
 
-		/**
-		 * Draw the region of the textbox within the clipping rect. Should not be called
-		 * directly.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
+	protected:
 
 		/**
-		 * Click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @return True if the click was successful.
+		 * Draws the outline of the button.
+		 * @param port Graphics port to draw to.
 		 */
-		virtual bool click(s16 x, s16 y);
+		virtual void drawOutline(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Redraws the button.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
 		
 		/**
-		 * Release this gadget at the supplied co-ordinates
-		 * @param x X co-ordinate of the release.
-		 * @param y Y co-ordinate of the release.
-		 * @return True if the release was successful.
+		 * Raises an action event and redraws the button.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
 		 */
-		virtual bool release(s16 x, s16 y);
-
-	protected:
+		virtual void onRelease(s16 x, s16 y);
+		
+		/**
+		 * Redraws the button.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 */
+		virtual void onReleaseOutside(s16 x, s16 y);
 
 		/**
 		 * Destructor.

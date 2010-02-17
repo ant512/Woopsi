@@ -8,7 +8,8 @@ namespace WoopsiUI {
 	class ListData;
 
 	/**
-	 * Event arguments passed to listeners when a ListData object raises an event.
+	 * Event arguments passed to listeners when a ListData object raises an
+	 * event.
 	 */
 	class ListDataEventArgs : public EventArgs<ListData*> {
 	public:

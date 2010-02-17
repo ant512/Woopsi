@@ -65,37 +65,12 @@ void Demo::startup() {
 	superBitmap->getGraphics()->drawBitmap(0, 0, 164, 191, superBitmapBitmap, 0, 0);
 	superBitmapWindow->addGadget(superBitmap);
 
-	// TODO: Change this to use standard screen/window gadgets
-	/*
-
-	// Anim button test
-	SkinnedWindow* ikWindow = new SkinnedWindow(30, 30, 121, 71, "IK", Gadget::GADGET_DRAGGABLE, SkinnedWindow::SKINNED_WINDOW_SHOW_CLOSE | SkinnedWindow::SKINNED_WINDOW_SHOW_DEPTH, windowSkin);
-	sknScreen->addGadget(ikWindow);
-	ikWindow->getClientRect(rect);
-
-	AnimButton* butt = new AnimButton(rect.x, rect.y, 111, 53, 0, 0);
-	butt->getNormalAnimation()->addFrame(ik6_Bitmap, 111, 53, 0);
-	butt->getNormalAnimation()->addFrame(ik7_Bitmap, 111, 53, 0);
-	butt->getNormalAnimation()->addFrame(ik8_Bitmap, 111, 53, 0);
-	butt->getNormalAnimation()->addFrame(ik9_Bitmap, 111, 53, 0);
-	butt->getNormalAnimation()->addFrame(ik10_Bitmap, 111, 53, 0);
-	butt->getClickedAnimation()->addFrame(ik1_Bitmap, 111, 53, 0);
-	butt->getClickedAnimation()->addFrame(ik2_Bitmap, 111, 53, 0);
-	butt->getClickedAnimation()->addFrame(ik3_Bitmap, 111, 53, 0);
-	butt->getClickedAnimation()->addFrame(ik4_Bitmap, 111, 53, 0);
-	butt->getClickedAnimation()->addFrame(ik5_Bitmap, 111, 53, 0);
-	butt->getNormalAnimation()->setSpeed(4);
-	butt->getClickedAnimation()->setSpeed(4);
-	butt->setBorderless(true);
-	ikWindow->addGadget(butt);
-	*/
-
 	// Create screens
 	AmigaScreen* newScreen = new AmigaScreen(DEMO_VERSION, Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
-	newScreen->addGadget(new WoopsiKeyboard(0, 0, 256, 192, "Keyboard", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH));
+	newScreen->addGadget(new WoopsiKeyboard(2, 13, Gadget::GADGET_DRAGGABLE));
 
 	AmigaScreen* newScreen2 = new AmigaScreen("Another screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(newScreen2);

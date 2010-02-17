@@ -22,33 +22,32 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_y = y;
 	_width = width;
 	_height = height;
-	_style = new GadgetStyle();
 
 	// Do we need to fetch the default style?
 	if (style == NULL) {
 
 		// Use default style
 		if (defaultGadgetStyle != NULL) {
-			_style->colours.back = defaultGadgetStyle->colours.back;
-			_style->colours.shine = defaultGadgetStyle->colours.shine;
-			_style->colours.highlight = defaultGadgetStyle->colours.highlight;
-			_style->colours.shadow = defaultGadgetStyle->colours.shadow;
-			_style->colours.fill = defaultGadgetStyle->colours.fill;
-			_style->colours.dark = defaultGadgetStyle->colours.dark;
-			_style->font = defaultGadgetStyle->font;
-			_style->glyphFont = defaultGadgetStyle->glyphFont;
+			_style.colours.back = defaultGadgetStyle->colours.back;
+			_style.colours.shine = defaultGadgetStyle->colours.shine;
+			_style.colours.highlight = defaultGadgetStyle->colours.highlight;
+			_style.colours.shadow = defaultGadgetStyle->colours.shadow;
+			_style.colours.fill = defaultGadgetStyle->colours.fill;
+			_style.colours.dark = defaultGadgetStyle->colours.dark;
+			_style.font = defaultGadgetStyle->font;
+			_style.glyphFont = defaultGadgetStyle->glyphFont;
 		}
 	} else {
 
 		// Use specified style
-		_style->colours.back = style->colours.back;
-		_style->colours.shine = style->colours.shine;
-		_style->colours.highlight = style->colours.highlight;
-		_style->colours.shadow = style->colours.shadow;
-		_style->colours.fill = style->colours.fill;
-		_style->colours.dark = style->colours.dark;
-		_style->font = style->font;
-		_style->glyphFont = style->glyphFont;
+		_style.colours.back = style->colours.back;
+		_style.colours.shine = style->colours.shine;
+		_style.colours.highlight = style->colours.highlight;
+		_style.colours.shadow = style->colours.shadow;
+		_style.colours.fill = style->colours.fill;
+		_style.colours.dark = style->colours.dark;
+		_style.font = style->font;
+		_style.glyphFont = style->glyphFont;
 	}
 
 	// Mask flags against bitmasks and logical NOT twice to obtain boolean values
@@ -57,9 +56,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_flags.permeable = (!(!(flags & GADGET_PERMEABLE)));
 	_flags.doubleClickable = (!(!(flags & GADGET_DOUBLE_CLICKABLE)));
 	_flags.decoration = (!(!(flags & GADGET_DECORATION)));
-
-	// Following flags are set to true if not passed in flags parameter
-	_flags.shiftClickChildren = (!(flags & GADGET_NO_SHIFT_CLICK_CHILDREN));
 
 	// Dragging values
 	_grabPointX = 0;
@@ -79,6 +75,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_flags.visibleRegionCacheInvalid = true;
 	_flags.hidden = false;
 	_flags.modal = false;
+	_flags.canReceiveFocus = true;
 
 	// Set hierarchy pointers
 	_parent = NULL;
@@ -93,8 +90,13 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	// Set other default values
 	_decorationCount = 0;
 	_refcon = 0;
+
+	// Set border sizes
+	_borderSize.top = 1;
+	_borderSize.right = 1;
+	_borderSize.bottom = 1;
+	_borderSize.left = 1;
 	
-	_outline = OUTLINE_CLICK_DEPENDENT;
 	_closeType = CLOSE_TYPE_CLOSE;
 
 	_rectCache = new RectCache(this);
@@ -138,7 +140,6 @@ Gadget::~Gadget() {
 	}
 
 	delete _rectCache;
-	delete _style;
 	delete _gadgetEventHandlers;
 }
 
@@ -172,10 +173,10 @@ const bool Gadget::isDrawingEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isDrawingEnabled()) {
 			// Drawing is enabled if the gadget is drawable, not deleted, and not shelved
-			return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
+			return (_flags.drawingEnabled && (!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 		}
 	} else {
-		return (_flags.drawingEnabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
+		return (_flags.drawingEnabled && (!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 	}
 
 	return false;
@@ -185,10 +186,10 @@ const bool Gadget::isHidden() const {
 	if (_parent != NULL) {
 		if (!_parent->isHidden()) {
 			// Hidden if the gadget is deleted, shelved or hidden
-			return (_flags.deleted | _flags.shelved | _flags.hidden);
+			return (_flags.deleted || _flags.shelved || _flags.hidden);
 		}
 	} else {
-		return (_flags.deleted | _flags.shelved | _flags.hidden);
+		return (_flags.deleted || _flags.shelved || _flags.hidden);
 	}
 
 	return true;
@@ -198,10 +199,10 @@ const bool Gadget::isEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isEnabled()) {
 			// Enabled if the gadget is enabled, not deleted, not shelved and not hidden
-			return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
+			return (_flags.enabled && (!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 		}
 	} else {
-		return (_flags.enabled & (!_flags.deleted) & (!_flags.shelved) & (!_flags.hidden));
+		return (_flags.enabled && (!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 	}
 
 	return false;
@@ -213,6 +214,10 @@ const bool Gadget::isModal() const {
 	}
 
 	return _flags.modal;
+}
+
+const bool Gadget::canReceiveFocus() const {
+	return (isEnabled() & _flags.canReceiveFocus & (!_flags.decoration));
 }
 
 void Gadget::setBorderless(bool isBorderless) {
@@ -255,18 +260,6 @@ const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
 	return y;
 }
 
-void Gadget::clear(Rect clipRect) {
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-	delete port;
-}
-
-void Gadget::clear() {
-	GraphicsPort* port = newInternalGraphicsPort(true);
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-	delete port;
-}
-
 // Check for single-point collisions
 bool Gadget::checkCollision(s16 x, s16 y) const {
 
@@ -277,6 +270,25 @@ bool Gadget::checkCollision(s16 x, s16 y) const {
 		getRectClippedToHierarchy(rect);
 
 		if ((x >= rect.x) && (y >= rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Gadget::checkCollisionWithForegroundRects(s16 x, s16 y) const {
+
+	if (isHidden()) return false;
+
+	cacheVisibleRects();
+
+	Rect* rect;
+
+	for (s32 i = 0; i < _rectCache->getForegroundRegions()->size(); ++i) {
+		rect = &(_rectCache->getForegroundRegions()->at(i));
+
+		if ((x >= rect->x) && (y >= rect->y) && (x < rect->x + rect->width) && (y < rect->y + rect->height)) {
 			return true;
 		}
 	}
@@ -321,9 +333,24 @@ void Gadget::redraw() {
 	if (isDrawingEnabled()) {
 		cacheVisibleRects();
 
-		// Draw all visible rectangles
-		for (s32 i = 0; i < _rectCache->getBackgroundRegions()->size(); i++) {
-			draw(_rectCache->getBackgroundRegions()->at(i));
+		if (_rectCache->getBackgroundRegions()->size() > 0) {
+
+			// Create internal and standard graphics ports
+			GraphicsPort* internalPort = newInternalGraphicsPort(_rectCache->getBackgroundRegions()->at(0));
+			GraphicsPort* port = newGraphicsPort(_rectCache->getBackgroundRegions()->at(0));
+
+			// Draw all visible rectangles
+			for (s32 i = 0; i < _rectCache->getBackgroundRegions()->size(); i++) {
+
+				internalPort->setClipRect(_rectCache->getBackgroundRegions()->at(i));
+				port->setClipRect(_rectCache->getBackgroundRegions()->at(i));
+
+				drawBorder(internalPort);
+				drawContents(port);
+			}
+
+			delete internalPort;
+			delete port;
 		}
 
 		// Remember that the gadget is no longer erased
@@ -359,8 +386,22 @@ void Gadget::redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender) {
 		_rectCache->splitRectangles(overlappingRects, rectsToDraw, sender);
 		
 		// Draw the dirty rects
-		for (s32 i = 0; i < rectsToDraw->size(); i++) {
-			draw(rectsToDraw->at(i));
+		if (rectsToDraw->size() > 0) {
+
+			GraphicsPort* internalPort = newInternalGraphicsPort(rectsToDraw->at(0));
+			GraphicsPort* port = newGraphicsPort(rectsToDraw->at(0));
+
+			for (s32 i = 0; i < rectsToDraw->size(); i++) {
+
+				internalPort->setClipRect(rectsToDraw->at(i));
+				port->setClipRect(rectsToDraw->at(i));
+
+				drawBorder(internalPort);
+				drawContents(port);
+			}
+
+			delete internalPort;
+			delete port;
 		}
 		
 		// Copy all of the overlapping rects we didn't draw back to the main
@@ -461,16 +502,22 @@ void Gadget::close() {
 bool Gadget::shelve() {
 
 	if (!_flags.shelved) {
-
 		_gadgetEventHandlers->raiseShelveEvent();
-
-		erase();
+		_gadgetEventHandlers->disable();
 
 		_flags.shelved = true;
 		_flags.drawingEnabled = false;
 
+		// Unset clicked gadget if necessary
+		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+		if (clickedGadget == this) {
+			release(clickedGadget->getX(), clickedGadget->getY());
+		}
+
 		// Ensure the gadget isn't running modally
 		stopModal();
+
+		erase();
 
 		if (_parent != NULL) {
 			_parent->shelveChild(this);
@@ -487,6 +534,7 @@ bool Gadget::unshelve() {
 
 	if (_flags.shelved) {
 
+		_gadgetEventHandlers->enable();
 		_gadgetEventHandlers->raiseUnshelveEvent();
 
 		_flags.drawingEnabled = true;
@@ -572,35 +620,26 @@ bool Gadget::moveShelvedToChildList(Gadget* gadget) {
 
 // Shelve a child
 void Gadget::shelveChild(Gadget* gadget) {
-	if (gadget != NULL) {
+	if (gadget == NULL) return;
 
-		// Ensure gadget knows it is being closed
-		if (!gadget->isShelved()) {
-			gadget->shelve();
-		}
+	// Decrease decoration count if necessary
+	if (gadget->isDecoration()) {
+		_decorationCount--;
+	}
 
-		// Unset clicked gadget if necessary
-		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
-		if (clickedGadget == gadget) {
-			clickedGadget->release(clickedGadget->getX(), clickedGadget->getY());
-		}
+	// Ensure gadget knows it is being shelved
+	gadget->shelve();
 
-		// Do we need to give another gadget focus?
-		if (_focusedGadget == gadget) {
+	// Do we need to give another gadget focus?
+	if (_focusedGadget == gadget) {
 
-			_focusedGadget = NULL;
+		_focusedGadget = NULL;
 
-			// Try to choose highest gadget
-			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-				if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
-					_focusedGadget = _gadgets[i];
-				}
+		// Try to choose highest gadget
+		for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+			if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
+				_focusedGadget = _gadgets[i];
 			}
-		}
-
-		// Decrease decoration count if necessary
-		if (gadget->isDecoration()) {
-			_decorationCount--;
 		}
 
 		// Where should the focus go?
@@ -611,33 +650,40 @@ void Gadget::shelveChild(Gadget* gadget) {
 			// Give focus to this
 			setFocusedGadget(NULL);
 		}
-
-		moveChildToShelvedList(gadget);
 	}
+
+	if (woopsiApplication != NULL) {
+
+		// Close the context menu if we're closing the gadget that opened it
+		if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
+			woopsiApplication->shelveContextMenu();
+		}
+	}
+
+	moveChildToShelvedList(gadget);
 }
 
 // Close a child
 void Gadget::closeChild(Gadget* gadget) {
-	if (gadget != NULL) {
+	if (gadget == NULL) return;
+	
+	// Decrease decoration count if necessary
+	if (gadget->isDecoration()) {
+		_decorationCount--;
+	}
 		
-		// Decrease decoration count if necessary
-		if (gadget->isDecoration()) {
-			_decorationCount--;
-		}
-		
-		// Ensure gadget knows it is being closed
-		gadget->close();
+	// Ensure gadget knows it is being closed
+	gadget->close();
 
-		// Do we need to make another gadget active?
-		if (_focusedGadget == gadget) {
+	// Do we need to make another gadget active?
+	if (_focusedGadget == gadget) {
 
-			_focusedGadget = NULL;
+		_focusedGadget = NULL;
 
-			// Try to choose highest gadget
-			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-				if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
-					_focusedGadget = _gadgets[i];
-				}
+		// Try to choose highest gadget
+		for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+			if ((_gadgets[i] != gadget) && (!_gadgets[i]->isHidden())) {
+				_focusedGadget = _gadgets[i];
 			}
 		}
 
@@ -649,17 +695,17 @@ void Gadget::closeChild(Gadget* gadget) {
 			// Give focus to this
 			setFocusedGadget(NULL);
 		}
-
-		if (woopsiApplication != NULL) {
-
-			// Close the context menu if we're closing the gadget that opened it
-			if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
-				woopsiApplication->shelveContextMenu();
-			}
-		}
-
-		moveChildToDeleteQueue(gadget);
 	}
+
+	if (woopsiApplication != NULL) {
+
+		// Close the context menu if we're closing the gadget that opened it
+		if (woopsiApplication->getContextMenu()->getOpener() == gadget) {
+			woopsiApplication->shelveContextMenu();
+		}
+	}
+
+	moveChildToDeleteQueue(gadget);
 }
 
 bool Gadget::swapGadgetDepth(Gadget* gadget) {
@@ -723,6 +769,8 @@ bool Gadget::swapDepth() {
 bool Gadget::enable() {
 	if (!_flags.enabled) {
 		_flags.enabled = true;
+		
+		onEnable();
 
 		redraw();
 
@@ -737,6 +785,8 @@ bool Gadget::enable() {
 bool Gadget::disable() {
 	if (_flags.enabled) {
 		_flags.enabled = false;
+		
+		onDisable();
 
 		redraw();
 
@@ -824,18 +874,29 @@ bool Gadget::resize(u16 width, u16 height) {
 
 			// Check width
 			if (_x + width > parentRect.x + parentRect.width) {
-				width = parentRect.width - _x;
+				width = parentRect.x + parentRect.width - _x;
 			}
 
 			// Check height
 			if (_y + height > parentRect.y + parentRect.height) {
-				height = parentRect.height - _y;
+				height = parentRect.y + parentRect.height - _y;
 			}
 		}
 	}
 
 	if ((_width != width) || (_height != height)) {
+	
+		// Remember if the gadget is permeable
+		bool wasPermeable = _flags.permeable;
+
+		// Remember if gadget was drawing
+		bool wasDrawEnabled = _flags.drawingEnabled;
+
+		_flags.permeable = true;
+	
 		erase();
+		
+		disableDrawing();
 
 		_width = width;
 		_height = height;
@@ -844,6 +905,14 @@ bool Gadget::resize(u16 width, u16 height) {
 		if (_parent != NULL) {
 			_parent->invalidateLowerGadgetsVisibleRectCache(this);
 		}
+
+		onResize(width, height);
+		
+		// Reset the permeable value
+		_flags.permeable = wasPermeable;
+
+		// Reset drawing value
+		_flags.drawingEnabled = wasDrawEnabled;
 
 		redraw();
 
@@ -866,7 +935,7 @@ bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
 bool Gadget::isDoubleClick(s16 x, s16 y) {
 
 	// Check for a double-click
-	if ((_flags.doubleClickable) && hasFocus() && (woopsiApplication != NULL) && (Stylus.DblClick)) {
+	if (_flags.doubleClickable && hasFocus() && (woopsiApplication != NULL) && Stylus.DblClick) {
 
 		// Within the allowed region?
 		if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
@@ -881,163 +950,173 @@ bool Gadget::isDoubleClick(s16 x, s16 y) {
 
 bool Gadget::click(s16 x, s16 y) {
 
+	if (!isEnabled()) return false;
+	if (!checkCollision(x, y)) return false;
+
 	// Check for a double-click
-	if (isDoubleClick(x, y)) {
+	if (isDoubleClick(x, y)) return doubleClick(x, y);
 
-		// Process click as a double-click
-		return doubleClick(x, y);
+	// Work out which child was clicked
+	for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+		if (_gadgets[i]->click(x, y)) {
+			return true;
+		}
 	}
 
-	if (checkCollision(x, y)) {
+	// Ensure that the click has occurred on a region of this gadget
+	// not obscured by its siblings
+	if (!checkCollisionWithForegroundRects(x, y)) return false;
 
-		// Work out which child was clicked
-		for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-			if (_gadgets[i]->click(x, y)) {
-				return true;
-			}
-		}
+	// Handle clicks on this
+	_flags.clicked = true;
 
-		if (isEnabled()) {
-
-			// Handle clicks on this
-			_flags.clicked = true;
-
-			// Record data for double-click
-			if (woopsiApplication != NULL) {
-				_lastClickTime = woopsiApplication->getVBLCount();
-			} else {
-				_lastClickTime = 0;
-			}
-
-			_lastClickX = x;
-			_lastClickY = y;
-
-			// Take focus away from child gadgets
-			setFocusedGadget(NULL);
-
-			// Tell Woopsi that the clicked gadget has changed
-			if (woopsiApplication != NULL) {
-				woopsiApplication->setClickedGadget(this);
-			}
-
-			// Enable dragging
-			setDragging(x, y);
-
-			_gadgetEventHandlers->raiseClickEvent(x, y);
-		}
-
-		return true;
+	// Record data for double-click
+	if (woopsiApplication != NULL) {
+		_lastClickTime = woopsiApplication->getVBLCount();
+	} else {
+		_lastClickTime = 0;
 	}
 
-	return false;
+	_lastClickX = x;
+	_lastClickY = y;
+
+	// Take focus away from child gadgets
+	setFocusedGadget(NULL);
+
+	// Tell Woopsi that the clicked gadget has changed
+	if (woopsiApplication != NULL) {
+		woopsiApplication->setClickedGadget(this);
+	}
+
+	// Run any code in the inherited class
+	onClick(x, y);
+
+	_gadgetEventHandlers->raiseClickEvent(x, y);
+
+	return true;
 }
 
 bool Gadget::doubleClick(s16 x, s16 y) {
 
-	if (isEnabled()) {
-		if (checkCollision(x, y)) {
+	if (!isEnabled()) return false;
+	if (!checkCollision(x, y)) return false;
 
-			// Work out which child was clicked.  Allow the
-			// child to determine if it has been double-clicked or not
-			// in case the second click has fallen on a different
-			// child to the first.
-			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					return true;
-				}
-			}
-
-			_flags.clicked = true;
-
-			// Record data for double-click
-			if (woopsiApplication != NULL) {
-				_lastClickTime = woopsiApplication->getVBLCount();
-			} else {
-				_lastClickTime = 0;
-			}
-
-			_lastClickX = x;
-			_lastClickY = y;
-
-			// Take focus away from child gadgets
-			setFocusedGadget(NULL);
-
-			// Tell Woopsi that the clicked gadget has changed
-			if (woopsiApplication != NULL) {
-				woopsiApplication->setClickedGadget(this);
-			}
-
-			// Enable dragging
-			setDragging(x, y);
-
-			_gadgetEventHandlers->raiseDoubleClickEvent(x, y);
-
+	// Work out which child was clicked.  Allow the
+	// child to determine if it has been double-clicked or not
+	// in case the second click has fallen on a different
+	// child to the first.
+	for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+		if (_gadgets[i]->click(x, y)) {
 			return true;
 		}
 	}
 
-	return false;
+	// Ensure that the click has occurred on a region of this gadget
+	// not obscured by its siblings
+	if (!checkCollisionWithForegroundRects(x, y)) return false;
+
+	_flags.clicked = true;
+
+	// Record data for double-click
+	if (woopsiApplication != NULL) {
+		_lastClickTime = woopsiApplication->getVBLCount();
+	} else {
+		_lastClickTime = 0;
+	}
+
+	_lastClickX = x;
+	_lastClickY = y;
+
+	// Take focus away from child gadgets
+	setFocusedGadget(NULL);
+
+	// Tell Woopsi that the clicked gadget has changed
+	if (woopsiApplication != NULL) {
+		woopsiApplication->setClickedGadget(this);
+	}
+
+	onDoubleClick(x, y);
+
+	_gadgetEventHandlers->raiseDoubleClickEvent(x, y);
+
+	return true;
 }
 
 bool Gadget::shiftClick(s16 x, s16 y) {
 
-	if (isEnabled()) {
-		if (checkCollision(x, y)) {
+	if (!isEnabled()) return false;
+	if (!checkCollision(x, y)) return false;
 
-			// Work out which child was clicked
-			if (_flags.shiftClickChildren) {
-				for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-					if (_gadgets[i]->shiftClick(x, y)) {
-						return true;
-					}
-				}
-			}
-
-			// Handle clicks on this
-
-			// Take focus away from child gadgets
-			setFocusedGadget(NULL);
-
-			// Set up the context menu
-			showContextMenu(x, y);
-
-			_gadgetEventHandlers->raiseShiftClickEvent(x, y);
-
+	// Work out which child was clicked
+	for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+		if (_gadgets[i]->shiftClick(x, y)) {
 			return true;
 		}
 	}
 
-	return false;
+	// Do not handle shift clicks if this gadget does not define a
+	// context menu
+	if (_contextMenuItems.size() == 0) return false;
+
+	// Ensure that the click has occurred on a region of this gadget
+	// not obscured by its siblings
+	if (!checkCollisionWithForegroundRects(x, y)) return false;
+
+	// Take focus away from child gadgets
+	setFocusedGadget(NULL);
+
+	// Set up the context menu
+	showContextMenu(x, y);
+
+	onShiftClick(x, y);
+
+	_gadgetEventHandlers->raiseShiftClickEvent(x, y);
+
+	return true;
 }
 
 bool Gadget::release(s16 x, s16 y) {
 
-	if (_flags.clicked) {
-		_flags.clicked = false;
-		_flags.dragging = false;
+	if (!_flags.clicked) return false;
 
-		if (woopsiApplication->getClickedGadget() == this) {
-			woopsiApplication->setClickedGadget(NULL);
-		}
+	_flags.clicked = false;
 
-		// Determine which release event to fire
-		if (checkCollision(x, y)) {
-			// Release occurred within gadget; raise release
-			_gadgetEventHandlers->raiseReleaseEvent(x, y);
-		} else {
-			// Release occurred outside gadget; raise release
-			_gadgetEventHandlers->raiseReleaseOutsideEvent(x, y);
-		}
+	stopDragging();
 
-		return true;
+	if (woopsiApplication->getClickedGadget() == this) {
+		woopsiApplication->setClickedGadget(NULL);
 	}
 
-	return false;
+	// Determine which release event to fire
+	if (checkCollision(x, y)) {
+
+		onRelease(x, y);
+
+		// Release occurred within gadget; raise release
+		_gadgetEventHandlers->raiseReleaseEvent(x, y);
+	} else {
+
+		onReleaseOutside(x, y);
+
+		// Release occurred outside gadget; raise release
+		_gadgetEventHandlers->raiseReleaseOutsideEvent(x, y);
+	}
+
+	return true;
 }
 
 bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
+
+#ifdef USING_SDL
+	// Abort dragging if not dragging the bottom screen; will only be an issue in SDL code
+	if (calculatePhysicalScreenNumber(y) != 0) return false;
+#endif
+
 	if ((isEnabled()) && (_flags.dragging)) {
 		if ((vX != 0) || (vY != 0)) {
+
+			onDrag(x, y, vX, vY);
+
 			_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
 		}
 
@@ -1048,57 +1127,57 @@ bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 }
 
 bool Gadget::keyPress(KeyCode keyCode) {
-	if (isEnabled()) {
+	if (!isEnabled()) return false;
 		
-		// Raise keypress for this gadget
-		_gadgetEventHandlers->raiseKeyPressEvent(keyCode);
+	onKeyPress(keyCode);
+	
+	// Raise keypress for this gadget
+	_gadgetEventHandlers->raiseKeyPressEvent(keyCode);
 
-		// Handle active child
-		if (_focusedGadget != NULL) {
-			_focusedGadget->keyPress(keyCode);
-		}
-
-		return true;
+	// Handle active child
+	if (_focusedGadget != NULL) {
+		_focusedGadget->keyPress(keyCode);
 	}
 
-	return false;
+	return true;
 }
 
 bool Gadget::keyRepeat(KeyCode keyCode) {
-	if (isEnabled()) {
+	if (!isEnabled()) return false;
 		
-		// Raise key repeat for this gadget
-		_gadgetEventHandlers->raiseKeyRepeatEvent(keyCode);
+	onKeyRepeat(keyCode);
+	
+	// Raise key repeat for this gadget
+	_gadgetEventHandlers->raiseKeyRepeatEvent(keyCode);
 
-		// Handle active child
-		if (_focusedGadget != NULL) {
-			_focusedGadget->keyRepeat(keyCode);
-		}
-
-		return true;
+	// Handle active child
+	if (_focusedGadget != NULL) {
+		_focusedGadget->keyRepeat(keyCode);
 	}
 
-	return false;
+	return true;
 }
 
 bool Gadget::keyRelease(KeyCode keyCode) {
-	if (isEnabled()) {
+	if (!isEnabled()) return false;
+		
+	onKeyRelease(keyCode);
 
-		// Raise key release for this gadget
-		_gadgetEventHandlers->raiseKeyReleaseEvent(keyCode);
+	// Raise key release for this gadget
+	_gadgetEventHandlers->raiseKeyReleaseEvent(keyCode);
 
-		// Handle active child
-		if (_focusedGadget != NULL) {
-			_focusedGadget->keyRelease(keyCode);
-		}
-
-		return true;
+	// Handle active child
+	if (_focusedGadget != NULL) {
+		_focusedGadget->keyRelease(keyCode);
 	}
 
-	return false;
+	return true;
 }
 
 void Gadget::lidClose() {
+	
+	onLidClose();
+	
 	_gadgetEventHandlers->raiseLidCloseEvent();
 
 	// Run lid closed on all gadgets
@@ -1108,6 +1187,9 @@ void Gadget::lidClose() {
 }
 
 void Gadget::lidOpen() {
+	
+	onLidOpen();
+	
 	_gadgetEventHandlers->raiseLidOpenEvent();
 
 	// Run lid opened on all gadgets
@@ -1117,23 +1199,24 @@ void Gadget::lidOpen() {
 }
 
 bool Gadget::focus() {
-	if (isEnabled()) {
+	if (!canReceiveFocus()) return false;
 
-		// Remember if the gadget has focus
-		bool hadFocus = _flags.hasFocus;
+	// Remember if the gadget has focus
+	bool hadFocus = _flags.hasFocus;
 
-		_flags.hasFocus = true;
+	_flags.hasFocus = true;
 
-		// Notify parent that this gadget has focus
-		if (_parent != NULL) {
-			_parent->setFocusedGadget(this);
-		}
+	// Notify parent that this gadget has focus
+	if (_parent != NULL) {
+		_parent->setFocusedGadget(this);
+	}
 
-		// Raise an event only if the gadget did not have focus
-		if (!hadFocus) {
-			_gadgetEventHandlers->raiseFocusEvent();
-			return true;
-		}
+	// Raise an event only if the gadget did not have focus
+	if (!hadFocus) {
+		onFocus();
+		
+		_gadgetEventHandlers->raiseFocusEvent();
+		return true;
 	}
 
 	return false;
@@ -1154,6 +1237,8 @@ bool Gadget::blur() {
 
 	// Raise an event only if the gadget had focus
 	if (hadFocus) {
+		onBlur();
+		
 		_gadgetEventHandlers->raiseBlurEvent();
 		return true;
 	}
@@ -1330,14 +1415,20 @@ void Gadget::getPreferredDimensions(Rect& rect) const {
 
 // Insert the available space for child gadgets into the rect
 void Gadget::getClientRect(Rect& rect) const {
-	rect.x = !_flags.borderless;
-	rect.y = rect.x;
-	rect.width = ((s16)_width) - (rect.x * 2);
-	rect.height = ((s16)_height) - (rect.y * 2);
+	if (_flags.borderless) {
+		rect.x = 0;
+		rect.y = 0;
+		rect.width = (s16)_width;
+		rect.height = (s16)_height;
+	} else {
+		rect.x = _borderSize.left;
+		rect.y = _borderSize.top;
+		rect.width = ((s16)_width) - (_borderSize.left + _borderSize.right);
+		rect.height = ((s16)_height) - (_borderSize.top + _borderSize.bottom);
+	}
 }
 
-// Set the drag point and tell that gadget that it is being dragged
-void Gadget::setDragging(u16 x, u16 y) {
+void Gadget::startDragging(u16 x, u16 y) {
 	if (_flags.draggable) {
 		_flags.dragging = true;
 		_flags.clicked = true;
@@ -1345,10 +1436,19 @@ void Gadget::setDragging(u16 x, u16 y) {
 		_grabPointY = y - getY();
 		_newX = _x;
 		_newY = _y;
+
+		onDragStart();
 	}
 }
 
-void Gadget::cacheVisibleRects() {
+void Gadget::stopDragging() {
+	if (_flags.dragging) {
+		onDragStop();
+		_flags.dragging = false;
+	}
+}
+
+void Gadget::cacheVisibleRects() const {
 	_rectCache->cache();
 }
 
@@ -1375,7 +1475,7 @@ GraphicsPort* Gadget::newGraphicsPort(bool isForeground) {
 	// Choose the rect cache to use as the clipping rect list
 	WoopsiArray<Rect>* clipList = isForeground ? _rectCache->getForegroundRegions() : _rectCache->getBackgroundRegions();
 
-	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, clipList, NULL);
+	return new GraphicsPort(rect.x + getX(), rect.y + getY(), rect.width, rect.height, isDrawingEnabled(), bitmap, clipList, NULL);
 }
 
 // Return the client graphics port for a specific clipping rect
@@ -1389,21 +1489,7 @@ GraphicsPort* Gadget::newGraphicsPort(Rect clipRect) {
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
 
-	return new GraphicsPort(this, rect.x, rect.y, rect.width, rect.height, bitmap, NULL, &clipRect);
-}
-
-// Return the internal graphics port - allows drawing over entire gadget space
-GraphicsPort* Gadget::newInternalGraphicsPort(bool isForeground) {
-
-	FrameBuffer* bitmap = frameBuffer[getPhysicalScreenNumber()];
-
-	// Ensure visible region cache is up to date
-	cacheVisibleRects();
-
-	// Choose the rect cache to use as the clipping rect list
-	WoopsiArray<Rect>* clipList = isForeground ? _rectCache->getForegroundRegions() : _rectCache->getBackgroundRegions();
-	
-	return new GraphicsPort(this, 0, 0, _width, _height, bitmap, clipList, NULL);
+	return new GraphicsPort(rect.x + getX(), rect.y + getY(), rect.width, rect.height, isDrawingEnabled(), bitmap, NULL, &clipRect);
 }
 
 // Return the internal graphics port for a specific clipping rect
@@ -1412,20 +1498,14 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
 
-	// Remaining code OK
 	FrameBuffer* bitmap = frameBuffer[getPhysicalScreenNumber()];
 
-	return new GraphicsPort(this, 0, 0, _width, _height, bitmap, NULL, &clipRect);
+	return new GraphicsPort(getX(), getY(), _width, _height, isDrawingEnabled(), bitmap, NULL, &clipRect);
 }
 
 // Return vector of visible rects, including any covered by children
 WoopsiArray<Rect>* Gadget::getForegroundRegions() {
 	return _rectCache->getForegroundRegions();
-}
-
-// Return vector of visible rects, not including any covered by children
-WoopsiArray<Rect>* Gadget::getBackgroundRegions() {
-	return _rectCache->getBackgroundRegions();
 }
 
 // Move up hierarchy, clipping rect to each ancestor
@@ -1496,11 +1576,19 @@ void Gadget::getRectClippedToHierarchy(Rect& rect) const {
 }
 
 FontBase* Gadget::getFont() const {
-	return _style->font;
+	return _style.font;
 }
 
 void Gadget::setFont(FontBase* font) {
-	_style->font = font;
+	_style.font = font;
+}
+
+FontBase* Gadget::getGlyphFont() const {
+	return _style.glyphFont;
+}
+
+void Gadget::setGlyphFont(FontBase* font) {
+	_style.glyphFont = font;
 }
 
 bool Gadget::remove() {
@@ -1669,3 +1757,40 @@ void Gadget::goModal() {
 		woopsiApplication->processOneVBL(this);
 	}
 }
+
+void Gadget::setBorderSize(const GadgetBorderSize& borderSize) {
+	_borderSize.top = borderSize.top;
+	_borderSize.right = borderSize.right;
+	_borderSize.bottom = borderSize.bottom;
+	_borderSize.left = borderSize.left;
+}
+
+/*
+void Gadget::drawOutline(GraphicsPort* port) {
+
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+	
+	// Work out which colours to use
+	u16 col1;
+	u16 col2;
+	
+	// Bevel in or out?
+	if ((isClicked() && (getOutlineType() == OUTLINE_CLICK_DEPENDENT)) || (getOutlineType() == OUTLINE_IN)) {
+		// Bevelled into the screen
+		col1 = getShadowColour();
+		col2 = getShineColour();
+	} else {
+		// Bevelled out of the screen
+		col1 = getShineColour();
+		col2 = getShadowColour();
+	}
+	
+	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
+	
+	// Draw the secondary border if the gadget is bevelled out and in
+	if (getOutlineType() == Gadget::OUTLINE_OUT_IN) {
+		port->drawBevelledRect(1, 1, _width - 2, _height - 2, col2, col1);
+	}
+}
+*/

@@ -124,7 +124,6 @@ void PacMan::initGUI() {
 	// Create window
 	_window = new AmigaWindow(0, 13, 103, 150, "PacMan", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	_screen->addGadget(_window);
-	_window->setShiftClickChildren(false);
 	_window->addContextMenuItem("Reset", 1);
 	_window->addContextMenuItem("Quit", 2);
 

@@ -28,6 +28,8 @@ void MultiLineTextBoxTest::startup() {
 	_autosize = new Button(110, 110, 100, 20, "Auto size");
 	_enable = new Button(110, 130, 100, 20, "Enable");
 	_disable = new Button(110, 150, 100, 20, "Disable");
+	_appendText = new Button(110, 170, 100, 20, "AppendText");
+	_removeText = new Button(110, 170, 100, 20, "RemoveText");
 	
 	_shelve->setRefcon(2);
 	_unshelve->setRefcon(3);
@@ -39,6 +41,8 @@ void MultiLineTextBoxTest::startup() {
 	_enable->setRefcon(9);
 	_disable->setRefcon(10);
 	_dimensions->setRefcon(11);
+	_appendText->setRefcon(12);
+	_removeText->setRefcon(13);
 	
 	window->addGadget(_shelve);
 	window->addGadget(_unshelve);
@@ -50,6 +54,8 @@ void MultiLineTextBoxTest::startup() {
 	window->addGadget(_enable);
 	window->addGadget(_disable);
 	window->addGadget(_dimensions);
+	window->addGadget(_appendText);
+	window->addGadget(_removeText);
 	
 	_shelve->addGadgetEventHandler(this);
 	_unshelve->addGadgetEventHandler(this);
@@ -61,8 +67,10 @@ void MultiLineTextBoxTest::startup() {
 	_enable->addGadgetEventHandler(this);
 	_disable->addGadgetEventHandler(this);
 	_dimensions->addGadgetEventHandler(this);
+	_appendText->addGadgetEventHandler(this);
+	_removeText->addGadgetEventHandler(this);
 
-	// Add cycle button
+	// Add textbox button
 	_textbox = new MultiLineTextBox(30, 30, 160, 105, "This is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text", 0);
 	window->addGadget(_textbox);
 	_textbox->addGadgetEventHandler(this);
@@ -334,6 +342,12 @@ void MultiLineTextBoxTest::handleActionEvent(const GadgetEventArgs& e) {
 				_textbox->changeDimensions(newPos, newPos, newPos, newPos);
 				break;
 			}
+		case 12:
+			_textbox->appendText("This is some more text.\n");
+			break;
+		case 13:
+			_textbox->removeText(13);
+			break;
 	}
 }
 

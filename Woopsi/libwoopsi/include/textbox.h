@@ -5,10 +5,13 @@
 #include "label.h"
 #include "woopsistring.h"
 #include "gadgetstyle.h"
+#include "keyboardeventhandler.h"
+#include "gadgeteventargs.h"
 
 namespace WoopsiUI {
 
 	class WoopsiTimer;
+	class WoopsiKey;
 
 	/**
 	 * Single-line textbox gadget.  Can align text both vertically and
@@ -18,7 +21,7 @@ namespace WoopsiUI {
 	 * alignment settings and switch to left-aligned instead.  This ensures that
 	 * moving the cursor over the text will scroll through it correctly.
 	 */
-	class TextBox : public Label {
+	class TextBox : public Label, public KeyboardEventHandler {
 	public:
 
 		/**
@@ -34,12 +37,6 @@ namespace WoopsiUI {
 		 * the style into its own internal style object.
 		 */
 		TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
-		
-		/**
-		 * Draw the region of the textbox within the clipping rect.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
 
 		/**
 		 * Shows the cursor.
@@ -63,6 +60,20 @@ namespace WoopsiUI {
 		 * @param text String to append.
 		 */
 		virtual void appendText(const WoopsiString& text);
+
+		/**
+		 * Remove all characters from the string from the start index onwards.
+		 * @param startIndex Index to remove from.
+		 */
+		virtual void removeText(const u32 startIndex);
+
+		/**
+		 * Remove specified number of characters from the string from the
+		 * start index onwards.
+		 * @param startIndex Index to remove from.
+		 * @param count Number of characters to remove.
+		 */
+		virtual void removeText(const u32 startIndex, const u32 count);
 
 		/**
 		 * Insert text at the specified index.
@@ -93,57 +104,118 @@ namespace WoopsiUI {
 		virtual inline const u32 getCursorPosition() const { return _cursorPos; };
 
 		/**
-		 * Insert the properties of the space within this gadget that is
-		 * available for children into the rect passed in as a parameter.
-		 * All co-ordinates are relative to this gadget.
-		 * @param rect Reference to a rect to populate with data.
+		 * Handle a keyboard press event.
+		 * @param e The event data.
 		 */
-		virtual void getClientRect(Rect& rect) const;
+		virtual void handleKeyboardPressEvent(const KeyboardEventArgs& e);
 
 		/**
-		 * Click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @return True if the click was successful.
+		 * Handle a keyboard repeat event.
+		 * @param e The event data.
 		 */
-		virtual bool click(s16 x, s16 y);
+		virtual void handleKeyboardRepeatEvent(const KeyboardEventArgs& e);
 
 		/**
-		 * Send a keypress to the gadget.
-		 * @param keyCode The keycode to send to the gadget.
-		 * @return True if the keypress was processed.
+		 * Handle a key press event.
+		 * @param e The event data.
 		 */
-		virtual bool keyPress(KeyCode keyCode);
-		
+		virtual void handleKeyPressEvent(const GadgetEventArgs& e);
+
 		/**
-		 * Send a key repeat to the gadget.
-		 * @param keyCode The keycode to send to the gadget.
-		 * @return True if the key repeat was processed.
+		 * Handle a key repeat event.
+		 * @param e The event data.
 		 */
-		virtual bool keyRepeat(KeyCode keyCode);
+		virtual void handleKeyRepeatEvent(const GadgetEventArgs& e);
 
 	protected:
 		u32 _cursorPos;					/**< Position of the cursor within the string. */
 		bool _showCursor;				/**< Set to true to make cursor visible. */
-		u32 _firstCharIndex;			/**< Index of the first visible character. */
 
 		/**
-		 * Get the x co-ordinate of the cursor in pixels.
+		 * Redraws the gadget
+		 */
+		inline void onBlur();
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Moves the cursor without redrawing.
+		 * @param position New cursor position.
+		 */
+		virtual void repositionCursor(const u32 position);
+
+		/**
+		 * Move the cursor to the specified co-ordinates.  The co-ordinates
+		 * are expected to be the result of a click, and therefore in
+		 * world-space rather than gadget-space.
+		 */
+		void moveCursorToClickLocation(s16 x, s16 y);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Moves the cursor to the clicked co-ordinates.
+		 * @param x The x co-ordinates of the click.
+		 * @param y The y co-ordinates of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
+
+		/**
+		 * Opens the keyboard on the bottom display.
+		 * @param x The x co-ordinates of the click.
+		 * @param y The y co-ordinates of the click.
+		 */
+		virtual void onDoubleClick(s16 x, s16 y);
+
+		/**
+		 * Moves the cursor left or right.
+		 * @param keyCode The key that was pressed.
+		 */
+		virtual void onKeyPress(KeyCode keyCode);
+		
+		/**
+		 * Moves the cursor left or right.
+		 * @param keyCode The key that repeated.
+		 */
+		virtual void onKeyRepeat(KeyCode keyCode);
+
+		/**
+		 * Handles keyboard key presses and key repeats.
+		 * @param key Key that raised the event.
+		 */
+		virtual void processKey(const WoopsiKey* key);
+
+		/**
+		 * Get the x co-ordinate of the cursor in pixels relative
+		 * to the left-hand edge of the client rect.
 		 * @return The x co-ordinate of the cursor in pixels.
 		 */
 		virtual const u16 getCursorXPos() const;
+
+		/**
+		 * Get the width of the cursor in pixels.
+		 * @return The width of the cursor in pixels.
+		 */
+		virtual const u16 getCursorWidth() const;
 		
 		/**
 		 * Calculate the horizontal position of the string based on its length
-		 * and the alignment options.
+		 * and the alignment options.  Alignment options are overridden if the
+		 * width of the string exceeds the width of the textbox.
 		 */
 		virtual void calculateTextPositionHorizontal();
-		
-		/**
-		 * Calculate the first visible character in the textbox.  Ensures that
-		 * the cursor is never scrolled out of view.
-		 */
-		virtual void calculateFirstCharIndex();
 
 		/**
 		 * Copy constructor is protected to prevent usage.

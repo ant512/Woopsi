@@ -37,32 +37,6 @@ namespace WoopsiUI {
 		Window(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, GadgetStyle* style = NULL);
 
 		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Release this gadget at the supplied co-ordinates
-		 * @param x X co-ordinate of the release.
-		 * @param y Y co-ordinate of the release.
-		 * @return True if the release was successful.
-		 */
-		virtual bool release(s16 x, s16 y);
-
-		/**
-		 * Drag the gadget to the supplied co-ordinates.
-		 * @param x The x co-ordinate of the stylus.
-		 * @param y The y co-ordinate of the stylus.
-		 * @param vX The horizontal distance that the stylus was dragged.
-		 * @param vY The vertical distance that the stylus was dragged.
-		 * @return True if the drag was successful.
-		 */
-		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
-
-		/**
 		 * Set the title of the window.
 		 * @param title The new title.
 		 */
@@ -74,15 +48,35 @@ namespace WoopsiUI {
 		 */
 		const WoopsiString& getTitle() { return _title; };
 
-		/**
-		 * Notify this gadget that it is being dragged, and set its drag point.
-		 * @param x The x co-ordinate of the drag position relative to this gadget.
-		 * @param y The y co-ordinate of the drag position relative to this gadget.
-		 */
-		virtual void setDragging(u16 x, u16 y);
-
 	protected:
 		WoopsiString _title;							/**< Title of the window */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Draws a XOR rect around the window.
+		 */
+		virtual void onDragStart();
+		
+		/**
+		 * Draws the dragging XOR rect at the new co-ordinates.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 * @param vX The horizontal distance dragged.
+		 * @param vY The vertical distance dragged.
+		 */
+		virtual void onDrag(s16 x, s16 y, s16 vX, s16 vY);
+		
+		/**
+		 * Erases the XOR rect and moves the window to the new co-ordinates.
+		 */
+		virtual void onDragStop();
 
 		/**
 		 * Destructor.

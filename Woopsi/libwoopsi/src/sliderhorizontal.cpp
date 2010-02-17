@@ -5,10 +5,9 @@
 using namespace WoopsiUI;
 
 SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
-	_outline = OUTLINE_IN;
 	_minimumValue = 0;
 	_maximumValue = 0;
-	_minimumGripWidth = 5;
+	_minimumGripWidth = 10;
 	_pageSize = 1;
 
 	_flags.permeable = true;
@@ -34,16 +33,16 @@ const s16 SliderHorizontal::getValue() const {
 	if (rect.width > _grip->getWidth()) {
 	
 		// Calculate ratio
-		u32 ratio = ((_maximumValue - _minimumValue) << 8) / _gutterWidth;
+		u32 ratio = ((_maximumValue - _minimumValue) << 16) / _gutterWidth;
 		
 		// Calculate value
 		u32 val = ((_grip->getX() - getX()) - rect.x) * ratio;
 
 		// Round up
-		val += val & 128;
+		val += val & 0x8000;
 
 		// Right shift to erase fractional part and return
-		return val >> 8;
+		return val >> 16;
 	} else {
 		// Just return the minimum value
 		return _minimumValue;
@@ -66,17 +65,17 @@ void SliderHorizontal::setValue(const s16 value) {
 	// Can the grip move?
 	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
 	
-		// Calculate ratio (max fractional value of 255)
-		u32 ratio = (_gutterWidth << 8) / (u32)(_maximumValue - _minimumValue);
+		// Calculate ratio
+		u32 ratio = (_gutterWidth << 16) / (u32)(_maximumValue - _minimumValue);
 
 		// Convert value using ratio
 		s32 newGripX = (newValue * ratio);
 
 		// Round up
-		newGripX += newGripX & 128;
+		newGripX += newGripX & 0x8000;
 
 		// Bitshift down
-		newGripX >>= 8;
+		newGripX >>= 16;
 
 		// Add containing client co-ords
 		newGripX += rect.x;
@@ -91,44 +90,28 @@ void SliderHorizontal::setValue(const s16 value) {
 	}
 }
 
-void SliderHorizontal::draw(Rect clipRect) {
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	// Draw background
+void SliderHorizontal::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, _width, _height, getDarkColour());
-
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
-
-	delete port;
 }
 
-bool SliderHorizontal::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
+void SliderHorizontal::drawBorder(GraphicsPort* port) {
 
-		if (isEnabled()) {
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
 
-			// TODO: Why are we checking _flags.clicked here?
-			// Did we click a gadget?
-			if (_flags.clicked) {
+	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+}
 
-				// Which way should the grip move?
-				if (x > _grip->getX()) {
-					// Move grip right
-					setValue(getValue() + _pageSize);
-					//jumpGrip(1);
-				} else {
-					// Move grip left
-					setValue(getValue() - _pageSize);
-					//jumpGrip(0);
-				}
-			}
-		}
+void SliderHorizontal::onClick(s16 x, s16 y) {
 
-		return true;
+	// Which way should the grip move?
+	if (x > _grip->getX()) {
+		// Move grip right
+		setValue(getValue() + _pageSize);
+	} else {
+		// Move grip left
+		setValue(getValue() - _pageSize);
 	}
-
-	return false;
 }
 
 void SliderHorizontal::handleDragEvent(const GadgetEventArgs& e) {
@@ -167,17 +150,17 @@ void SliderHorizontal::resizeGrip() {
 	if (overspill > 0) {
 	
 		// Calculate the ratio of content to gutter
-		u32 ratio = (rect.width << 8) / (u32)(_maximumValue - _minimumValue);
+		u32 ratio = (rect.width << 16) / (u32)(_maximumValue - _minimumValue);
 		
 		// New width is equivalent to the width of the gutter minus
 		// the ratio-converted overflow width
-		newWidth = (rect.width << 8) - (overspill * ratio);
+		newWidth = (rect.width << 16) - (overspill * ratio);
 
 		// Round up
-		newWidth += newWidth & 128;
+		newWidth += newWidth & 0x8000;
 
 		// Bitshift to remove fraction
-		newWidth >>= 8;
+		newWidth >>= 16;
 
 		// Calculate width of the gutter for use in ratio calculations
 		_gutterWidth = rect.width;
@@ -230,38 +213,22 @@ void SliderHorizontal::jumpGrip(u8 direction) {
 	_grip->moveTo(newGripX, rect.y);
 }
 
-bool SliderHorizontal::resize(u16 width, u16 height) {
+void SliderHorizontal::onResize(u16 width, u16 height) {
 
 	// Remember current values
 	s16 value = getValue();
-	bool resized = false;
 	bool events = raisesEvents();
-	bool drawing = _flags.drawingEnabled;
 
 	// Disable event raising
 	setRaisesEvents(false);
 
-	// Hide and disable drawing
-	erase();
-	_flags.drawingEnabled = false;
+	resizeGrip();
 
-	if (Gadget::resize(width, height)) {
-		resizeGrip();
-
-		// Set back to current value
-		setValue(value);
-
-		resized = true;
-	}
-
-	// Show and reset drawing
-	_flags.drawingEnabled = drawing;
-	redraw();
+	// Set back to current value
+	setValue(value);
 
 	// Reset event raising
 	setRaisesEvents(events);
-
-	return resized;
 }
 
 s16 SliderHorizontal::getValuesPerPixel() const {

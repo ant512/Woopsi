@@ -11,17 +11,17 @@ namespace WoopsiUI {
 
 	/**
 	 * Container class that holds radio button gadgets and tracks their status.
-	 * The group provides an easy way to determine which radio button is selected.
-	 * Note that, in order to set the "mu" state for a radio button, it is necessary
-	 * to set the state via the radio button, not the group.
+	 * The group provides an easy way to determine which radio button is
+	 * selected.  Note that, in order to set the "mu" state for a radio button,
+	 * it is necessary to set the state via the radio button, not the group.
 	 */
 	class RadioButtonGroup : public Gadget {
 
 	public:
 
 		/**
-		 * Constructor.  Note that the group determines its width and height from
-		 * the position and dimensions of its children.
+		 * Constructor.  Note that the group determines its width and height
+		 * from the position and dimensions of its children.
 		 * @param x The x co-ordinate of the group.
 		 * @param y The y co-ordinate of the group.
 		 * @param style The style that the gadget should use.  If this is not
@@ -35,8 +35,10 @@ namespace WoopsiUI {
 		 * Simple method for adding a new radio button to the group.
 		 * This should be used in preference to the usual addGadget() method,
 		 * as this method automatically resizes the group.
-		 * @param x The x co-ordinate of the new button, relative to this gadget.
-		 * @param y The y co-ordinate of the new button, relative to this gadget.
+		 * @param x The x co-ordinate of the new button, relative to this
+		 * gadget.
+		 * @param y The y co-ordinate of the new button, relative to this
+		 * gadget.
 		 * @param width The width of the new button.
 		 * @param height The height of the new button.
 		 */
@@ -67,32 +69,25 @@ namespace WoopsiUI {
 		virtual void setSelectedIndex(s32 index);
 
 		/**
-		 * Resize the gadget to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.  Value is based on the length of the largest string in the
-		 * set of options.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.  Value is based on the length of the largest string
+		 * in the set of options.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
 
 	protected:
-		RadioButton* _selectedGadget;				/**< Pointer to the currently selected radio button */
+		RadioButton* _selectedGadget;		/**< Pointer to the currently
+												 selected radio button */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
 
 		/**
 		 * Destructor.

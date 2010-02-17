@@ -53,6 +53,9 @@ private:
 	Button* _enable;
 	Button* _disable;
 	Button* _dimensions;
+	Button* _append;
+	Button* _insert;
+	Button* _remove;
 	TextBox* _textbox;
 };
 

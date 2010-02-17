@@ -62,9 +62,9 @@ namespace WoopsiUI {
 		virtual s8 compareTo(const ListDataItem* item) const;
 
 	private:
-		WoopsiString _text;						/**< Text to display for option. */
-		u32 _value;								/**< Option value. */
-		bool _isSelected;						/**< True if the option is selected. */
+		WoopsiString _text;				/**< Text to display for option. */
+		u32 _value;						/**< Option value. */
+		bool _isSelected;				/**< True if the option is selected. */
 	};
 }
 

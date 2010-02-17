@@ -103,12 +103,6 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Draw the region of the menu within the clipping rect.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
 		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
 		 * option is selected, the index of the first selected option is returned.
 		 * @return The selected index.
@@ -200,26 +194,10 @@ namespace WoopsiUI {
 		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
 
 		/**
-		 * Resize the textbox to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
 		 * Set the font used in the textbox.
 		 * @param font Pointer to the new font.
 		 */
 		virtual void setFont(FontBase* font);
-
-		/**
-		 * Sets the outline type of the list box.
-		 * @param outline The outline type.
-		 */
-		inline void setOutlineType(const OutlineType outline) {
-			_listbox->setOutlineType(outline);
-		};
 
 		/**
 		 * Sets whether or not items added to the list are automatically sorted on insert or not.
@@ -241,6 +219,21 @@ namespace WoopsiUI {
 		ScrollbarVertical* _scrollbar;						/**< Pointer to the scrollbar */
 		u8 _scrollbarWidth;									/**< Width of the scrollbar */
 
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Resize the listbox to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Destructor.
 		 */

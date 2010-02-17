@@ -36,20 +36,6 @@ namespace WoopsiUI {
 		virtual void addOption(const WoopsiString& text, u32 value);
 
 		/**
-		 * Draw the region of the menu within the clipping rect.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Resize the gadget to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
 		 * Clear all items from the menu and reset it.
 		 */
 		virtual void reset();
@@ -65,18 +51,6 @@ namespace WoopsiUI {
 		 * @return Pointer to the gadget that opened the menu.
 		 */
 		inline Gadget* getOpener() { return _opener; };
-
-		/**
-		 * Give the gadget focus.
-		 * @return True if the gadget received focus correctly.
-		 */
-		virtual inline bool focus() { return false; };
-
-		/**
-		 * Remove focus from the gadget.
-		 * @return True if the gadget lost focus correctly.
-		 */
-		virtual inline bool blur() { return false; };
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
@@ -103,6 +77,29 @@ namespace WoopsiUI {
 		Gadget* _opener;				/**< Pointer to the gadget that opened the menu */
 		ListBox* _listbox;				/**< Pointer to the list box */
 
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Resize the gadget to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Destructor.
 		 */

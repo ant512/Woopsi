@@ -147,14 +147,6 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Resize the textbox to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
 		 * Set the displayed path.
 		 * @param path The new path.
 		 */
@@ -171,6 +163,13 @@ namespace WoopsiUI {
 		Button* _cancelButton;				/**< Pointer to the cancel button */
 		FileListBox* _listbox;				/**< Pointer to the list box */
 
+		/**
+		 * Resize the textbox to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Destructor.
 		 */

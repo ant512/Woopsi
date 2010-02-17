@@ -12,8 +12,6 @@ using namespace WoopsiUI;
 Calendar::Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
 	_date = NULL;
 	_visibleDate = NULL;
-
-	setOutlineType(OUTLINE_OUT);
 	_selectedDayButton = NULL;
 
 	buildGUI();
@@ -25,16 +23,16 @@ Calendar::~Calendar() {
 	delete _date;
 }
 
-void Calendar::draw(Rect clipRect) {
-
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
+void Calendar::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+}
 
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
+void Calendar::drawBorder(GraphicsPort* port) {
 
-	delete port;
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+
+	port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
 }
 
 void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
@@ -72,16 +70,19 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 				_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
 				// Select the new gadget and deselect the old
-				e.getSource()->setOutlineType(OUTLINE_IN);
+				CalendarDayButton* dayButton = (CalendarDayButton*)e.getSource();
+				dayButton->setStuckDown(true);
+				dayButton->redraw();
+
 				if (_selectedDayButton != NULL) {
-					_selectedDayButton->setOutlineType(OUTLINE_CLICK_DEPENDENT);
+					_selectedDayButton->setStuckDown(false);
 					_selectedDayButton->redraw();
 				}
 
-				_selectedDayButton = (Button*)e.getSource();
+				_selectedDayButton = dayButton;
 
 				// Raise an action event
-				_gadgetEventHandlers->raiseActionEvent(0, 0, 0, 0, KEY_CODE_NONE);
+				_gadgetEventHandlers->raiseActionEvent();
 			}
 
 			delete newDate;
@@ -118,7 +119,7 @@ void Calendar::populateGUI() {
 	_monthLabel->appendText(buffer);
 
 	u8 buttonIndex = 0;
-	Button* button;
+	CalendarDayButton* button;
 
 	// Reset the selected day button
 	_selectedDayButton = NULL;
@@ -153,9 +154,9 @@ void Calendar::populateGUI() {
 		
 			sprintf(buffer, "%d", startDay);
 
-			button = (Button*)_gadgets[buttonIndex];
+			button = (CalendarDayButton*)_gadgets[buttonIndex];
 			button->disable();
-			button->setOutlineType(OUTLINE_CLICK_DEPENDENT);
+			button->setStuckDown(false);
 			button->setText(buffer);
 
 			startDay++;
@@ -173,15 +174,15 @@ void Calendar::populateGUI() {
 	while (startDay <= thisMonth->getMonthDays()) {
 		sprintf(buffer, "%d", startDay);
 
-		button = (Button*)_gadgets[buttonIndex];
+		button = (CalendarDayButton*)_gadgets[buttonIndex];
 		button->enable();
-		button->setOutlineType(OUTLINE_CLICK_DEPENDENT);
+		button->setStuckDown(false);
 
 		// Select the day if necessary
 		if (_visibleDate->getYear() == _date->getYear()) {
 			if (_visibleDate->getMonth() == _date->getMonth()) {
 				if (_date->getDay() == startDay) {
-					button->setOutlineType(OUTLINE_IN);
+					button->setStuckDown(true);
 					_selectedDayButton = button;
 				}
 			}
@@ -199,9 +200,9 @@ void Calendar::populateGUI() {
 	while (updatedDays < maxDays) {
 		sprintf(buffer, "%d", startDay);
 
-		button = (Button*)_gadgets[buttonIndex];
+		button = (CalendarDayButton*)_gadgets[buttonIndex];
 		button->disable();
-		button->setOutlineType(OUTLINE_CLICK_DEPENDENT);
+		button->setStuckDown(false);
 		button->setText(buffer);
 
 		startDay++;
@@ -263,12 +264,12 @@ void Calendar::buildGUI() {
 
 	// Add arrows and month label
 	_leftArrow = new Button(rect.x, rect.y, columnWidths[0], columnHeights[0], GLYPH_ARROW_LEFT);
-	_leftArrow->setFont(_style->glyphFont);
+	_leftArrow->setFont(getGlyphFont());
 	_leftArrow->addGadgetEventHandler(this);
 	addGadget(_leftArrow);
 
 	_rightArrow = new Button((rect.width - columnWidths[CALENDAR_COLS - 1]) + 1, rect.y, columnWidths[CALENDAR_COLS - 1], columnHeights[0], GLYPH_ARROW_RIGHT);
-	_rightArrow->setFont(_style->glyphFont);
+	_rightArrow->setFont(getGlyphFont());
 	_rightArrow->addGadgetEventHandler(this);
 	addGadget(_rightArrow);
 
@@ -295,12 +296,12 @@ void Calendar::buildGUI() {
 	u8 maxDays = CALENDAR_BODY_ROWS * CALENDAR_COLS;
 
 	// Create all boxes for this month
-	Button* button;
+	CalendarDayButton* button;
 	u16 buttonX = rect.x;
 	u16 buttonY = rect.y + columnHeights[0] + columnHeights[1];
 	u8 buttonRow = 2;
 	while (allocatedDays < maxDays) {
-		button = new Button(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow], "");
+		button = new CalendarDayButton(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow], "");
 		button->addGadgetEventHandler(this);
 		button->setRefcon(allocatedDays + 1);
 
@@ -325,123 +326,78 @@ const u8 Calendar::getMonth() const { return _date->getMonth(); }
 
 const u16 Calendar::getYear() const { return _date->getYear(); }
 
-bool Calendar::resize(u16 width, u16 height) {
+void Calendar::onResize(u16 width, u16 height) {
 
-	// Enforce gadget to stay within parent confines if necessary
-	if (_parent != NULL) {
-		if (!_parent->isPermeable()) {
+	// Get a rect describing the gadget
+	Rect rect;
+	getClientRect(rect);
 
-			Rect parentRect;
-			_parent->getClientRect(parentRect);
+	// Get the sizes of the columns
+	u8 columnWidths[CALENDAR_COLS];
+	u8 columnHeights[CALENDAR_ROWS];
+	calculateColumnWidths(rect.width, columnWidths);
+	calculateColumnHeights(rect.height, columnHeights);
 
-			// Check width
-			if (_x + width > parentRect.width) {
-				width = parentRect.width - _x;
-			}
+	// Resize arrows
+	_leftArrow->changeDimensions(rect.x, rect.y, columnWidths[0], columnHeights[0]);
+	_rightArrow->changeDimensions((rect.width - columnWidths[CALENDAR_COLS - 1]) + 1, rect.y, columnWidths[CALENDAR_COLS - 1], columnHeights[0]);
 
-			// Check height
-			if (_y + height > parentRect.height) {
-				height = parentRect.height - _y;
-			}
-		}
+	// Resize month name
+	_monthLabel->changeDimensions(rect.x + columnWidths[0], rect.y, rect.width - (columnWidths[0] + columnWidths[CALENDAR_COLS - 1]), columnHeights[0]);
+
+	// Resize day labels
+
+	// Locate first day label - work on the assumption that this will always
+	// be the first gadget after the month label
+	s32 gadgetIndex = getGadgetIndex(_monthLabel) + 1;
+	s16 labelX = rect.x;
+
+	for (u8 i = 0; i < CALENDAR_COLS; ++i) {
+		_gadgets[gadgetIndex]->changeDimensions(labelX, rect.y + columnHeights[0], columnWidths[i], columnHeights[1]);
+		gadgetIndex++;
+
+		labelX += columnWidths[i];
 	}
 
-	if ((_width != width) || (_height != height)) {
-	
-		// Remember if the gadget is permeable
-		bool wasPermeable = _flags.permeable;
+	// Resize day buttons
+	u8 allocatedDays = 0;
+	u8 maxDays = CALENDAR_BODY_ROWS * CALENDAR_COLS;
 
-		// Remember if gadget was drawing
-		bool wasDrawEnabled = _flags.drawingEnabled;
+	// Resize all boxes for this month
+	u16 buttonX = rect.x;
+	u16 buttonY = rect.y + columnHeights[0] + columnHeights[1];
+	u8 buttonRow = 2;
+	while (allocatedDays < maxDays) {
+		_gadgets[gadgetIndex]->changeDimensions(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow]);
 
-		_flags.permeable = true;
+		// Calculate x pos of next button
+		buttonX += columnWidths[allocatedDays % CALENDAR_COLS];
 
-		erase();
+		allocatedDays++;
 
-		disableDrawing();
-
-		_width = width;
-		_height = height;
-
-		// Resize children
-
-		// Get a rect describing the gadget
-		Rect rect;
-		getClientRect(rect);
-
-		// Get the sizes of the columns
-		u8 columnWidths[CALENDAR_COLS];
-		u8 columnHeights[CALENDAR_ROWS];
-		calculateColumnWidths(rect.width, columnWidths);
-		calculateColumnHeights(rect.height, columnHeights);
-
-		// Resize arrows
-		_leftArrow->changeDimensions(rect.x, rect.y, columnWidths[0], columnHeights[0]);
-		_rightArrow->changeDimensions((rect.width - columnWidths[CALENDAR_COLS - 1]) + 1, rect.y, columnWidths[CALENDAR_COLS - 1], columnHeights[0]);
-
-		// Resize month name
-		_monthLabel->changeDimensions(rect.x + columnWidths[0], rect.y, rect.width - (columnWidths[0] + columnWidths[CALENDAR_COLS - 1]), columnHeights[0]);
-
-		// Resize day labels
-
-		// Locate first day label - work on the assumption that this will always
-		// be the first gadget after the month label
-		s32 gadgetIndex = getGadgetIndex(_monthLabel) + 1;
-		s16 labelX = rect.x;
-	
-		for (u8 i = 0; i < CALENDAR_COLS; ++i) {
-			_gadgets[gadgetIndex]->changeDimensions(labelX, rect.y + columnHeights[0], columnWidths[i], columnHeights[1]);
-			gadgetIndex++;
-
-			labelX += columnWidths[i];
+		// Reset x pos of next button if moving to next row
+		if (allocatedDays % CALENDAR_COLS == 0) {
+			buttonX = rect.x;
+			buttonY += columnHeights[buttonRow];
+			buttonRow++;
 		}
 
-		// Resize day buttons
-		u8 allocatedDays = 0;
-		u8 maxDays = CALENDAR_BODY_ROWS * CALENDAR_COLS;
-
-		// Resize all boxes for this month
-		u16 buttonX = rect.x;
-		u16 buttonY = rect.y + columnHeights[0] + columnHeights[1];
-		u8 buttonRow = 2;
-		while (allocatedDays < maxDays) {
-			_gadgets[gadgetIndex]->changeDimensions(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow]);
-
-			// Calculate x pos of next button
-			buttonX += columnWidths[allocatedDays % CALENDAR_COLS];
-
-			allocatedDays++;
-
-			// Reset x pos of next button if moving to next row
-			if (allocatedDays % CALENDAR_COLS == 0) {
-				buttonX = rect.x;
-				buttonY += columnHeights[buttonRow];
-				buttonRow++;
-			}
-
-			gadgetIndex++;
-		}
-
-		// Reset the permeable value
-		_flags.permeable = wasPermeable;
-
-		// Reset drawing value
-		_flags.drawingEnabled = wasDrawEnabled;
-
-		redraw();
-
-		_gadgetEventHandlers->raiseResizeEvent(width, height);
-
-		return true;
+		gadgetIndex++;
 	}
-
-	return false;
 }
 
 // Get the preferred dimensions of the gadget
 void Calendar::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
-	rect.width = (!_flags.borderless << 1) + 160;
-	rect.height = (!_flags.borderless << 1) + 106;
+	rect.width = 0;
+	rect.height = 0;
+
+	if (!_flags.borderless) {
+		rect.width = _borderSize.left + _borderSize.right;
+		rect.height = _borderSize.top + _borderSize.bottom;
+	}
+
+	rect.width += 160;
+	rect.height += 106;
 }

@@ -11,28 +11,15 @@ Screen::Screen(const WoopsiString& title, u32 flags, GadgetStyle* style) : Gadge
 	_titleHeight = 0;
 	_title = title;
 	_flags.borderless = true;
+
+	_borderSize.top = 0;
+	_borderSize.right = 0;
+	_borderSize.bottom = 0;
+	_borderSize.left = 0;
 }
 
-bool Screen::focus() {
-	
-	if (isEnabled()) {
-		if (!_flags.hasFocus) {
-			_flags.hasFocus = true;
-			
-			raiseToTop();
-			
-			// Notify parent that this gadget has focus
-			if (_parent != NULL) {
-				_parent->setFocusedGadget(this);
-			}
-			
-			_gadgetEventHandlers->raiseFocusEvent();
-			
-			return true;
-		}
-	}
-	
-	return false;
+void Screen::onFocus() {
+	raiseToTop();
 }
 
 void Screen::flipToTopScreen() {
@@ -51,179 +38,110 @@ bool Screen::flipScreens() {
 	return false;
 }
 
-void Screen::draw(Rect clipRect) {
-	clear(clipRect);
+void Screen::drawContents(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 }
 
-bool Screen::click(s16 x, s16 y) {
+void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
+			
+	y = calculatePhysicalScreenY(y);
 	
-	if (checkCollision(x, y)) {
-			
-		// Work out which child was clicked
-		for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-			if (_gadgets[i]->click(x, y)) {
-				return true;
-			}
-		}
-
-		if (isEnabled()) {
-			
-			// Handle clicks on this
-			_flags.clicked = true;
-			
-			// Take focus away from child gadgets
-			setFocusedGadget(NULL);
-			
-			// Tell parent that the clicked gadget has changed
-			if (woopsiApplication != NULL) {
-				woopsiApplication->setClickedGadget(this);
-			}
-			
-			_gadgetEventHandlers->raiseClickEvent(x, y);
-		}
-			
-		return true;
+	// Work out where we're moving to
+	s16 destY = y - _grabPointY;
+	
+	// Prevent screen moving too far up
+	if (destY < 0) {
+		destY = 0;
 	}
-	
-	return false;
-}
-
-bool Screen::release(s16 x, s16 y) {
-	
-	// Release from dragging
-	if (_flags.dragging) {
-		_y = _newY;
 		
-		// Handle release on screen
-		Gadget::release(x, y);
+	// Do we need to move?
+	if (destY != _y) {
 		
-		return true;
-	} else if (_flags.clicked) {
-		// Handle release on screen
-		Gadget::release(x, y);
+		// Perform move
+		_newY = destY;
 		
-		return true;
-	}
-	
-	return false;
-}
-
-bool Screen::drag(s16 x, s16 y, s16 vX, s16 vY) {
-	
-	if (isEnabled()) {
-		if (_flags.dragging) {
+		// Ensure vY is valid
+		vY = _newY - _y;
+		
+		if (_newY != _y) {
 			
-#ifdef USING_SDL
-			// Abort dragging if not dragging the bottom screen; will only be an issue in SDL code
-			if (calculatePhysicalScreenNumber(y) != 0) return false;
-#endif
+			// Ensure cache is up to date before copying
+			_rectCache->cache();
 			
-			y = calculatePhysicalScreenY(y);
-			
-			// Work out where we're moving to
-			s16 destY = y - _grabPointY;
-			
-			// Prevent screen moving too far up
-			if (destY < 0) {
-				destY = 0;
-			}
-			
-			// Do we need to move?
-			if (destY != _y) {
+			// Copy the current screen display to its new location.  Only copy
+			// a single rect as screens have at most one rect visible
+			if (getRectCache()->getForegroundRegions()->size() == 1) {
 				
-				// Perform move
-				_newY = destY;
+				// Get dimensions of visible portion of screen
+				Rect rect = getRectCache()->getForegroundRegions()->at(0);
 				
-				// Ensure vY is valid
-				vY = _newY - _y;
+				// Clip to display
+				if (rect.y + rect.height > SCREEN_HEIGHT) {
+					rect.height = SCREEN_HEIGHT - rect.y;
+				}
 				
-				if (_newY != _y) {
-					
-					// Ensure cache is up to date before copying
-					_rectCache->cache();
-					
-					// Copy the current screen display to its new location.  Only copy
-					// a single rect as screens have at most one rect visible
-					if (getRectCache()->getForegroundRegions()->size() == 1) {
-						
-						// Get dimensions of visible portion of screen
-						Rect rect = getRectCache()->getForegroundRegions()->at(0);
-						
-						// Clip to display
-						if (rect.y + rect.height > SCREEN_HEIGHT) {
-							rect.height = SCREEN_HEIGHT - rect.y;
-						}
-						
-						// Calculate height to copy - this is reduced if screen dragged down
-						if (_newY > _y) rect.height -= _newY - _y;
-						
-						if (rect.height > 0) {
-							GraphicsPort* port = newGraphicsPort(true);
-							port->copy(rect.x, rect.y, rect.x, rect.y + vY, rect.width, rect.height);
-							delete port;
-						}
-					}
-					
-					// Work out the size of the rectangle we've cleared
-					Rect rect;
-					rect.x = getX();
-					rect.width = _width;
-					
-					if (_newY > _y) {
-						
-						// Moving down - we need to redraw the section we're
-						// exposing
-						rect.y = _y;
-						rect.height = _newY - _y;
-						
-					} else {
-						// Moving up - we need to redraw the new section at
-						// the bottom of the screen
-						
-						if (getRectCache()->getForegroundRegions()->size() > 0) {
-							
-							// Screen is visible - get data from visible rect
-							rect.y = getRectCache()->getForegroundRegions()->at(0).y;
-							rect.height = getRectCache()->getForegroundRegions()->at(0).height;
-							
-							// Clip to display
-							if (rect.y + rect.height > SCREEN_HEIGHT) {
-								rect.height = SCREEN_HEIGHT - rect.y;
-							}
-							
-							// Adjust so we only reference the newly-exposed area
-							rect.y += rect.height + vY;
-							rect.height = -(vY);
-							
-						} else {
-							
-							// Screen is not yet visible, so calculate based on screen values
-							rect.y = _newY;
-							rect.height = _y - _newY;
-						}
-					}
-					
-					_y = _newY;
-					
-					// Erase the screen from its old location
-					((Woopsi*)_parent)->eraseRect(rect);
-					
-					_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
-					
-					// Handle visible region caching
-					invalidateVisibleRectCache();
-					
-					if (_parent != NULL) {
-						_parent->invalidateLowerGadgetsVisibleRectCache(this);
-					}
+				// Calculate height to copy - this is reduced if screen dragged down
+				if (_newY > _y) rect.height -= _newY - _y;
+				
+				if (rect.height > 0) {
+					GraphicsPort* port = woopsiApplication->newGraphicsPort(true);
+					port->copy(rect.x, rect.y, rect.x, rect.y + vY, rect.width, rect.height);
+					delete port;
 				}
 			}
 			
-			return true;
+			// Work out the size of the rectangle we've cleared
+			Rect rect;
+			rect.x = getX();
+			rect.width = _width;
+			
+			if (_newY > _y) {
+				
+				// Moving down - we need to redraw the section we're
+				// exposing
+				rect.y = _y;
+				rect.height = _newY - _y;
+				
+			} else {
+				// Moving up - we need to redraw the new section at
+				// the bottom of the screen
+				
+				if (getRectCache()->getForegroundRegions()->size() > 0) {
+					
+					// Screen is visible - get data from visible rect
+					rect.y = getRectCache()->getForegroundRegions()->at(0).y;
+					rect.height = getRectCache()->getForegroundRegions()->at(0).height;
+					
+					// Clip to display
+					if (rect.y + rect.height > SCREEN_HEIGHT) {
+						rect.height = SCREEN_HEIGHT - rect.y;
+					}
+					
+					// Adjust so we only reference the newly-exposed area
+					rect.y += rect.height + vY;
+					rect.height = -(vY);
+					
+				} else {
+					
+					// Screen is not yet visible, so calculate based on screen values
+					rect.y = _newY;
+					rect.height = _y - _newY;
+				}
+			}
+			
+			_y = _newY;
+			
+			// Erase the screen from its old location
+			((Woopsi*)_parent)->eraseRect(rect);
+			
+			// Handle visible region caching
+			invalidateVisibleRectCache();
+			
+			if (_parent != NULL) {
+				_parent->invalidateLowerGadgetsVisibleRectCache(this);
+			}
 		}
 	}
-	
-	return false;
 }
 
 // Only allows non-decoration depths to be swapped
@@ -292,14 +210,6 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 	}
 	
 	return false;
-}
-
-// Insert the available space for child gadgets into the rect
-void Screen::getClientRect(Rect& rect) const {
-	rect.x = 0;
-	rect.y = 0;
-	rect.width = _width;
-	rect.height = _height;
 }
 
 void Screen::setTitle(const WoopsiString& title) {

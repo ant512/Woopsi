@@ -186,5 +186,10 @@ void FrameBuffer::blitFill(const s16 x, const s16 y, const u16 colour, const u32
 #endif
 
 Graphics* FrameBuffer::newGraphics() {
-	return new Graphics(this);
+	Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.width = _width;
+	rect.height = _height;
+	return new Graphics(this, rect);
 }

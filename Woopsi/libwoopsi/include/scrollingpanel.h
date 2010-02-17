@@ -30,22 +30,6 @@ namespace WoopsiUI {
 		 * the style into its own internal style object.
 		 */
 		ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
-		
-		/**
-		 * Draw a single region of the gadget.  Should not be called.
-		 * @param clipRect The region to draw.
-		 */
-		virtual void draw(Rect clipRect);
-		
-		/**
-		 * Drag the gadget at the specified co-ordinates.
-		 * @param x The x co-ordinate of the drag.
-		 * @param y The y co-ordinate of the drag.
-		 * @param vX The horizontal distance that the gadget was dragged.
-		 * @param vY The vertical distance that the gadget was dragged.
-		 * @return True if the drag was successful.
-		 */
-		virtual bool drag(s16 x, s16 y, s16 vX, s16 vY);
 
 		/**
 		 * Scroll the panel by the specified amounts.
@@ -62,6 +46,37 @@ namespace WoopsiUI {
 		virtual void jump(s32 x, s32 y);
 
 	protected:
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Scrolls the panel to match the drag.
+		 * @param x The x co-ordinate of the stylus.
+		 * @param y The y co-ordinate of the stylus.
+		 * @param vX The horizontal drag distance.
+		 * @param vY The vertical drag distance.
+		 */
+		virtual void onDrag(s16 x, s16 y, s16 vX, s16 vY);
+		
+		/**
+		 * Starts the dragging system.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
 
 		/**
 		 * Scroll all child gadgets by the specified amounts.  Actually uses the gadget's
@@ -83,11 +98,6 @@ namespace WoopsiUI {
 		 * @param clipRect The rect to clip.
 		 */
 		bool clipToClientRect(Rect& clipRect);
-
-		/**
-		 * Raises a scroll event.  Fired when the panel scrolls.
-		 */
-		void raiseScrollEvent();
 
 		/**
 		 * Destructor.

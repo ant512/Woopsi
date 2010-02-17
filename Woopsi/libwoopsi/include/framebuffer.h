@@ -114,12 +114,12 @@ namespace WoopsiUI {
 		
 #ifdef USING_SDL
 		// SDL version
-		SDL_Surface* _surface;			/**< Pointer to the SDL surface */
-		u16 _yOffset;					/**< Y offset from top of surface to draw */
-		u16* _dataBuffer;				/**< Buffer used when getData() is called */
+		SDL_Surface* _surface;	/**< Pointer to the SDL surface. */
+		u16 _yOffset;			/**< Y offset from top of surface to draw. */
+		u16* _dataBuffer;		/**< Buffer used when getData() is called. */
 #else
 		// DS version
-		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
+		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap. */
 #endif
 
 		/**

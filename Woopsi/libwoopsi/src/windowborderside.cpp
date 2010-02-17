@@ -7,18 +7,16 @@ WindowBorderSide::WindowBorderSide(s16 x, s16 y, u16 width, u16 height) : Gadget
 
 	_flags.hasFocus = true;
 	_flags.decoration = true;
+	_flags.canReceiveFocus = false;
 }
 
-void WindowBorderSide::draw(Rect clipRect) {
+void WindowBorderSide::drawContents(GraphicsPort* port) {
 
 	// Choose a colour depending on parent's active state
 	u16 colour = getFillColour();
 	if (_parent != NULL) {
 		colour = _parent->hasFocus() ? getHighlightColour() : getFillColour();
 	}
-
-	// Get a new graphics port
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
 
 	// Left bevel background
 	port->drawFilledRect(1, 0, _width - 1, _height, colour);
@@ -28,14 +26,4 @@ void WindowBorderSide::draw(Rect clipRect) {
 
 	// Right
 	port->drawVertLine(_width - 1, 0, _height, getShadowColour());
-
-	delete port;
-}
-
-bool WindowBorderSide::focus() {
-	return true;
-}
-
-bool WindowBorderSide::blur() {
-	return true;
 }

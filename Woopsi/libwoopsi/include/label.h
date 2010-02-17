@@ -9,8 +9,8 @@
 namespace WoopsiUI {
 
 	/**
-	 * Single-line label gadget.  Can align text both vertically and horizontally in
-	 * different ways.
+	 * Single-line label gadget.  Can align text both vertically and
+	 * horizontally in different ways.
 	 */
 	class Label : public Gadget {
 	public:
@@ -28,9 +28,9 @@ namespace WoopsiUI {
 		 * Enum of vertical alignment options.
 		 */
 		enum TextAlignmentVert {
-			TEXT_ALIGNMENT_VERT_CENTRE = 0,		/**< Align to centre of textbox */
-			TEXT_ALIGNMENT_VERT_TOP = 1,		/**< Align to top of textbox */
-			TEXT_ALIGNMENT_VERT_BOTTOM = 2		/**< Align to bottom of textbox */
+			TEXT_ALIGNMENT_VERT_CENTRE = 0,	/**< Align to centre of textbox */
+			TEXT_ALIGNMENT_VERT_TOP = 1,	/**< Align to top of textbox */
+			TEXT_ALIGNMENT_VERT_BOTTOM = 2	/**< Align to bottom of textbox */
 		};
 
 		/**
@@ -46,13 +46,6 @@ namespace WoopsiUI {
 		 * the style into its own internal style object.
 		 */
 		Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
-		
-		/**
-		 * Draw the region of the label within the clipping rect. Should not be called
-		 * directly.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
 
 		/**
 		 * Set the horizontal alignment of text within the label.
@@ -79,7 +72,8 @@ namespace WoopsiUI {
 		virtual void setText(const WoopsiString& text);
 		
 		/**
-		 * Append new text to the end of the current text displayed in the label.
+		 * Append new text to the end of the current text displayed in the
+		 * label.
 		 * @param text String to append.
 		 */
 		virtual void appendText(const WoopsiString& text);
@@ -92,17 +86,9 @@ namespace WoopsiUI {
 		virtual void insertText(const WoopsiString& text, const u32 index);
 
 		/**
-		 * Resize the gadget to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
@@ -115,12 +101,34 @@ namespace WoopsiUI {
 
 	protected:
 		WoopsiString _text;						/**< Text that the textbox will display */
-		u16 _textX;								/**< X co-ordinate of the text relative to the gadget */
-		u16 _textY;								/**< Y co-ordinate of the text relative to the gadget */
-		u8 _padding;							/**< Padding around the text in pixels */
+		s32 _textX;								/**< X co-ordinate of the text relative to the gadget */
+		s32 _textY;								/**< Y co-ordinate of the text relative to the gadget */
 		TextAlignmentHoriz _hAlignment;			/**< Horizontal alignment of the text */
 		TextAlignmentVert _vAlignment;			/**< Vertical alignment of the text */
 
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Resize the gadget to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Calculate the vertical position of the string based on the font
 		 * height and the alignment options.
@@ -132,6 +140,11 @@ namespace WoopsiUI {
 		 * alignment options.
 		 */
 		virtual void calculateTextPositionHorizontal();
+
+		/**
+		 * Updates the GUI after the text has changed.
+		 */
+		virtual void onTextChange();
 
 		/**
 		 * Destructor.

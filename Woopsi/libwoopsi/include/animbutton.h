@@ -30,12 +30,6 @@ namespace WoopsiUI {
 		AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY);
 
 		/**
-		 * Draw the region of the button that falls within the clipRect.
-		 * @param clipRect The clipping region to draw within.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
 		 * Get a pointer to the animation that plays when the button is not clicked.
 		 * @return Pointer to the normal animation.
 		 */
@@ -48,40 +42,12 @@ namespace WoopsiUI {
 		virtual Animation* const getClickedAnimation();
 		
 		/**
-		 * Click the button at the specified co-ordinates.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool click(s16 x, s16 y);
-		
-		/**
-		 * Click the button at the specified co-ordinates.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool release(s16 x, s16 y);
-
-		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
 		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
 		 * parent.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
-
-		/**
-		 * Disabled the gadget.
-		 * @return True if the gadget was disabled.
-		 */
-		virtual bool disable();
-
-		/**
-		 * Enables the gadget.
-		 * @return True if the gadget was enabled.
-		 */
-		virtual bool enable();
 
 	protected:
 		Animation* _animNormal;					/**< Animation played when button is not clicked */
@@ -94,6 +60,58 @@ namespace WoopsiUI {
 		static const int ANIM_BUTTON_DEFAULT_WIDTH;		/**< Default preferred width */
 		static const int ANIM_BUTTON_DEFAULT_HEIGHT;	/**< Default preferred height */
 
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Draws the outline of the button.
+		 * @param port Graphics port to draw to.
+		 */
+		virtual void drawOutline(GraphicsPort* port);
+
+		/**
+		 * Swaps from playing the standard animation to the clicked animtion.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
+		
+		/**
+		 * Swaps from playing the clicked animation to the standard animation.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onRelease(s16 x, s16 y);
+		
+		/**
+		 * Swaps from playing the clicked animation to the standard animation.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onReleaseOutside(s16 x, s16 y);
+		
+		/**
+		 * Pauses the current animation.
+		 */
+		virtual void onDisable();
+		
+		/**
+		 * Starts the current animation.
+		 */
+		virtual void onEnable();
 
 		/**
 		 * Destructor.

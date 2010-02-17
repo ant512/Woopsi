@@ -1,22 +1,21 @@
 #include "scrollingtextbox.h"
 #include "scrollbarvertical.h"
+#include "graphicsport.h"
 
 using namespace WoopsiUI;
 
 ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
-	_scrollbarWidth = 9;
+	_scrollbarWidth = 10;
 
 	setBorderless(true);
 
-	_flags.shiftClickChildren = false;
-
-	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, _style);
+	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, &_style);
 	_textbox->addGadgetEventHandler(this);
 	
 	// Create scrollbar
 	Rect rect;
 	_textbox->getClientRect(rect);
-	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, _style);
+	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, &_style);
 	_scrollbar->setMinimumValue(0);
 	_scrollbar->setMaximumValue(_textbox->getCanvasHeight());
 	_scrollbar->setPageSize(rect.height);
@@ -50,10 +49,51 @@ void ScrollingTextBox::appendText(const WoopsiString& text) {
 	_scrollbar->redraw();
 }
 
+void ScrollingTextBox::removeText(const u32 startIndex) {
+	_textbox->removeText(startIndex);
+	_scrollbar->redraw();
+}
+
+void ScrollingTextBox::removeText(const u32 startIndex, const u32 count) {
+	_textbox->removeText(startIndex, count);
+	_scrollbar->redraw();
+}
+
 void ScrollingTextBox::setFont(FontBase* font) {
-	_style->font = font;
+	_style.font = font;
 	_textbox->setFont(font);
 	_scrollbar->setFont(font);
+}
+
+const u32 ScrollingTextBox::getTextLength() const {
+	return _textbox->getTextLength();
+}
+
+void ScrollingTextBox::showCursor() {
+	_textbox->showCursor();
+}
+
+void ScrollingTextBox::hideCursor() {
+	_textbox->hideCursor();
+}
+
+void ScrollingTextBox::moveCursorToPosition(const s32 position) {
+	_textbox->moveCursorToPosition(position);
+	_scrollbar->redraw();
+}
+
+const s32 ScrollingTextBox::getCursorPosition() const {
+	return _textbox->getCursorPosition();
+}
+
+void ScrollingTextBox::insertText(const WoopsiString& text, const u32 index) {
+	_textbox->insertText(text, index);
+	_scrollbar->redraw();
+}
+		
+void ScrollingTextBox::insertTextAtCursor(const WoopsiString& text) {
+	_textbox->insertTextAtCursor(text);
+	_scrollbar->redraw();
 }
 
 const u16 ScrollingTextBox::getPageCount() const {
@@ -100,21 +140,11 @@ void ScrollingTextBox::handleScrollEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void ScrollingTextBox::draw(Rect clipRect) {
-	clear(clipRect);
+void ScrollingTextBox::drawContents(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 }
 
-bool ScrollingTextBox::resize(u16 width, u16 height) {
-
-	// Prevent drawing
-	bool drawing = _flags.drawingEnabled;
-	_flags.drawingEnabled = false;
-
-	// Ensure children are free to adjust
-	setPermeable(true);
-
-	// Resize the gadget
-	Gadget::resize(width, height);
+void ScrollingTextBox::onResize(u16 width, u16 height) {
 
 	// Resize the children
 	_textbox->resize(width - _scrollbarWidth, height);
@@ -122,14 +152,4 @@ bool ScrollingTextBox::resize(u16 width, u16 height) {
 
 	// Move the scrollbar
 	_scrollbar->moveTo(width - _scrollbarWidth, 0);
-
-	// Reset permeable
-	setPermeable(false);
-
-	// Reset drawing
-	_flags.drawingEnabled = drawing;
-
-	redraw();
-
-	return true;
 }

@@ -29,25 +29,28 @@ namespace WoopsiUI {
 		 */
 		DimmedScreen() : Screen("", 0) { };
 
+	protected:
+
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
 		 */
-		virtual void draw(Rect clipRect) {
+		virtual void drawContents(GraphicsPort* port) {
+
+			Rect rect;
+			port->getClipRect(rect);
 			
 			// Erase the gadget, thus redrawing everything underneath it
 			_flags.erased = false;
 			disableDrawing();
-			woopsiApplication->eraseRect(clipRect);
+			woopsiApplication->eraseRect(rect);
 			enableDrawing();
 			_flags.erased = false;
 			
 			// Dim the screen
-			GraphicsPort* port = newInternalGraphicsPort(clipRect);
-			port->dim(clipRect.x, clipRect.y, clipRect.width, clipRect.height);
-			delete port;
+			port->dim(rect.x, rect.y, rect.width, rect.height);
 		};
 		
 		/**

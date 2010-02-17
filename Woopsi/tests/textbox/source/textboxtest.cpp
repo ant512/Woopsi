@@ -18,16 +18,19 @@ void TextBoxTest::startup() {
 	screen->addGadget(window);
 	
 	// Add test buttons
-	_shelve = new Button(10, 70, 100, 20, "Shelve");
-	_unshelve = new Button(10, 90, 100, 20, "Unshelve");
-	_show = new Button(10, 110, 100, 20, "Show");
-	_hide = new Button(10, 130, 100, 20, "Hide");
-	_dimensions = new Button(10, 150, 100, 20, "Dimensions");
-	_move = new Button(110, 70, 100, 20, "Move");
-	_resize = new Button(110, 90, 100, 20, "Resize");
-	_autosize = new Button(110, 110, 100, 20, "Auto size");
-	_enable = new Button(110, 130, 100, 20, "Enable");
-	_disable = new Button(110, 150, 100, 20, "Disable");
+	_shelve = new Button(10, 14, 100, 20, "Shelve");
+	_unshelve = new Button(10, 34, 100, 20, "Unshelve");
+	_show = new Button(10, 54, 100, 20, "Show");
+	_hide = new Button(10, 74, 100, 20, "Hide");
+	_dimensions = new Button(10, 94, 100, 20, "Dimensions");
+	_move = new Button(10, 114, 100, 20, "Move");
+	_resize = new Button(10, 134, 100, 20, "Resize");
+	_autosize = new Button(110, 14, 100, 20, "Auto size");
+	_enable = new Button(110, 34, 100, 20, "Enable");
+	_disable = new Button(110, 54, 100, 20, "Disable");
+	_insert = new Button(110, 74, 100, 20, "Insert");
+	_append = new Button(110, 94, 100, 20, "Append");
+	_remove = new Button(110, 114, 100, 20, "Remove");
 	
 	_shelve->setRefcon(2);
 	_unshelve->setRefcon(3);
@@ -39,6 +42,9 @@ void TextBoxTest::startup() {
 	_enable->setRefcon(9);
 	_disable->setRefcon(10);
 	_dimensions->setRefcon(11);
+	_insert->setRefcon(12);
+	_append->setRefcon(13);
+	_remove->setRefcon(14);
 	
 	window->addGadget(_shelve);
 	window->addGadget(_unshelve);
@@ -50,6 +56,9 @@ void TextBoxTest::startup() {
 	window->addGadget(_enable);
 	window->addGadget(_disable);
 	window->addGadget(_dimensions);
+	window->addGadget(_insert);
+	window->addGadget(_append);
+	window->addGadget(_remove);
 	
 	_shelve->addGadgetEventHandler(this);
 	_unshelve->addGadgetEventHandler(this);
@@ -61,6 +70,9 @@ void TextBoxTest::startup() {
 	_enable->addGadgetEventHandler(this);
 	_disable->addGadgetEventHandler(this);
 	_dimensions->addGadgetEventHandler(this);
+	_insert->addGadgetEventHandler(this);
+	_append->addGadgetEventHandler(this);
+	_remove->addGadgetEventHandler(this);
 
 	// Add cycle button
 	_textbox = new TextBox(30, 30, 160, 105, "This is some text");
@@ -332,8 +344,20 @@ void TextBoxTest::handleActionEvent(const GadgetEventArgs& e) {
 					newPos = 10;
 				}
 				_textbox->changeDimensions(newPos, newPos, newPos, newPos);
-				break;
 			}
+			break;
+		case 12:
+			_textbox->insertTextAtCursor("IS");
+			break;
+		case 13:
+			_textbox->appendText("A");
+			break;
+		case 14:
+			if (_textbox->getCursorPosition() > 0) {
+				_textbox->removeText(_textbox->getCursorPosition() - 1, 1);
+			}
+			break;
+			
 	}
 }
 

@@ -32,6 +32,7 @@ DEFINES		:=
 #-------------------------------------------------------------------------------
 USE_WOOPSI		= 1
 USE_FAT			= 1
+#USE_FREETYPE	= 1
 
 # we do *not* do -o thing - WinterMute points out that this stops our
 # resultant .nds from working on some loaders.  By default, ndstool puts boot
@@ -158,6 +159,10 @@ ifneq ($(USE_WOOPSI),)
 LIBDIRS		+= $(DEVKITPRO)/libwoopsi
 endif
 
+ifneq ($(USE_FREETYPE),)
+LIBDIRS		+= $(DEVKITPRO)/libfreetype
+endif
+
 # add all directories specified in INCLUDES and SOURCES
 _INCS		+= $(foreach dir,$(INCLUDES),-I$(CURDIR)/../$(dir))
 _INCS		+= $(foreach dir,$(SOURCES),-I$(CURDIR)/../$(dir))
@@ -196,6 +201,12 @@ ifneq ($(USE_FAT),)
 _DEFS		+= -DUSE_FAT 
 _INCS		+= -I$(DEVKITPRO)/libfat/include
 _LIBS		+= -L$(DEVKITPRO)/libfat/lib -lfat 
+endif
+
+# use FreeType
+ifneq ($(USE_FREETYPE),)
+_INCS		+= -I$(DEVKITPRO)/libfreetype/include
+_LIBS		+= -L$(DEVKITPRO)/libfreetype/lib -lfreetype
 endif
 
 # and of course we need libnds

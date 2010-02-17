@@ -24,22 +24,11 @@ AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString
 	if (!(flags & GADGET_BORDERLESS)) {
 		createBorder();
 	}
-}
 
-const u8 AmigaWindow::getBorderSize() const {
-	if (!_flags.borderless) {
-		return WINDOW_BORDER_SIZE;
-	}
-
-	return 0;
-}
-
-const u8 AmigaWindow::getTitleHeight() const {
-	if (!_flags.borderless) {
-		return WINDOW_TITLE_HEIGHT;
-	}
-
-	return 0;
+	_borderSize.top = WINDOW_TITLE_HEIGHT;
+	_borderSize.right = WINDOW_BORDER_SIZE;
+	_borderSize.bottom = WINDOW_BORDER_SIZE;
+	_borderSize.left = WINDOW_BORDER_SIZE;
 }
 
 void AmigaWindow::setBorderless(bool isBorderless) {
@@ -99,7 +88,7 @@ void AmigaWindow::createBorder() {
 
 	// Add close button
 	if (_windowFlags.showCloseButton) {
-		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _style);
+		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, &_style);
 		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
 
@@ -109,7 +98,7 @@ void AmigaWindow::createBorder() {
 
 	// Add depth button
 	if (_windowFlags.showDepthButton) {
-		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _style);
+		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
 		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 
@@ -117,7 +106,7 @@ void AmigaWindow::createBorder() {
 	}
 
 	// Add borders
-	_windowBorderTop = new WindowBorderTop(topBorderX, topBorderWidth, WINDOW_TITLE_HEIGHT, this, _style);
+	_windowBorderTop = new WindowBorderTop(topBorderX, topBorderWidth, WINDOW_TITLE_HEIGHT, this, &_style);
 	_windowBorderLeft = new WindowBorderSide(0, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderRight = new WindowBorderSide(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT, WINDOW_BORDER_SIZE, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
 	_windowBorderBottom = new WindowBorderBottom(0, _height - WINDOW_BORDER_SIZE, _width, WINDOW_BORDER_SIZE, WINDOW_BORDER_SIZE);
@@ -133,162 +122,44 @@ void AmigaWindow::createBorder() {
 	insertGadget(_windowBorderTop);
 }
 
-bool AmigaWindow::click(s16 x, s16 y) {
-
-	if (checkCollision(x, y)) {
-		if (isEnabled()) {
-
-			raiseToTop();
-
-			// Try to click a child gadget
-			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-				if (_gadgets[i]->click(x, y)) {
-					return true;
-				}
-			}
-
-			// Handle click on window
-			_flags.clicked = true;
-
-			setFocusedGadget(NULL);
-
-			// Tell Woopsi that the clicked gadget has changed
-			if (woopsiApplication != NULL) {
-				woopsiApplication->setClickedGadget(this);
-			}
-
-			_gadgetEventHandlers->raiseClickEvent(x, y);
-		}
-
-		return true;
-	}
-
-	return false;
+void AmigaWindow::onFocus() {
+	raiseToTop();
+	redrawBorder();
 }
 
-bool AmigaWindow::focus() {
-
-	if (Gadget::focus()) {
-
-		// Run focus on borders
-		if (_windowBorderTop != NULL) {
-			_windowBorderBottom->redraw();
-			_windowBorderTop->redraw();
-			_windowBorderLeft->redraw();
-			_windowBorderRight->redraw();
-
-			if (_depthButton != NULL) _depthButton->redraw();
-			if (_closeButton != NULL) _closeButton->redraw();
-		}
-
-		return true;
-	}
-
-	return false;
+void AmigaWindow::onBlur() {
+	redrawBorder();
 }
 
-bool AmigaWindow::blur() {
+void AmigaWindow::redrawBorder() {
+	if (_windowBorderTop != NULL) {
+		_windowBorderBottom->redraw();
+		_windowBorderTop->redraw();
+		_windowBorderLeft->redraw();
+		_windowBorderRight->redraw();
 
-	if (Gadget::blur()) {
-
-		// Run blur on borders
-		if (_windowBorderTop != NULL) {
-			_windowBorderBottom->redraw();
-			_windowBorderTop->redraw();
-			_windowBorderLeft->redraw();
-			_windowBorderRight->redraw();
-			
-			if (_depthButton != NULL) _depthButton->redraw();
-			if (_closeButton != NULL) _closeButton->redraw();
-		}
-
-		// Take focus away from child gadgets
-		if (_focusedGadget != NULL) {
-			_focusedGadget->blur();
-			_focusedGadget = NULL;
-		}
-
-		return true;
+		if (_depthButton != NULL) _depthButton->redraw();
+		if (_closeButton != NULL) _closeButton->redraw();
 	}
-
-	return false;
 }
 
-bool AmigaWindow::resize(u16 width, u16 height) {
+void AmigaWindow::onResize(u16 width, u16 height) {
 
-	// Enforce gadget to stay within parent confines if necessary
-	if (_parent != NULL) {
-		if (!_parent->isPermeable()) {
+	// Calculate top border size
+	u16 topBorderWidth = _width;
+	if (_windowFlags.showCloseButton) topBorderWidth -= WINDOW_CLOSE_BUTTON_WIDTH;
+	if (_windowFlags.showDepthButton) topBorderWidth -= WINDOW_DEPTH_BUTTON_WIDTH;
 
-			Rect parentRect;
-			_parent->getClientRect(parentRect);
+	// Resize borders
+	_windowBorderTop->resize(topBorderWidth, WINDOW_TITLE_HEIGHT);
+	_windowBorderLeft->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
+	_windowBorderRight->moveTo(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT);
+	_windowBorderRight->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
+	_windowBorderBottom->resize(_width, WINDOW_BORDER_SIZE);
+	_windowBorderBottom->moveTo(0, _height - WINDOW_BORDER_SIZE);
 
-			// Check width
-			if (_x + width > parentRect.width) {
-				width = parentRect.width - _x;
-			}
-
-			// Check height
-			if (_y + height > parentRect.height) {
-				height = parentRect.height - _y;
-			}
-		}
-	}
-
-	if ((_width != width) || (_height != height)) {
-	
-		// Remember if the gadget is permeable
-		bool wasPermeable = _flags.permeable;
-
-		_flags.permeable = true;
-
-		erase();
-
-		_width = width;
-		_height = height;
-
-		// Calculate top border size
-		u16 topBorderWidth = _width;
-		if (_windowFlags.showCloseButton) topBorderWidth -= WINDOW_CLOSE_BUTTON_WIDTH;
-		if (_windowFlags.showCloseButton) topBorderWidth -= WINDOW_DEPTH_BUTTON_WIDTH;
-
-		// Resize borders
-		_windowBorderTop->resize(topBorderWidth, WINDOW_TITLE_HEIGHT);
-		_windowBorderLeft->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
-		_windowBorderRight->moveTo(_width - WINDOW_BORDER_SIZE, WINDOW_TITLE_HEIGHT);
-		_windowBorderRight->resize(WINDOW_BORDER_SIZE, height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT);
-		_windowBorderBottom->resize(_width, WINDOW_BORDER_SIZE);
-		_windowBorderBottom->moveTo(0, _height - WINDOW_BORDER_SIZE);
-
-		// Depth button
-		if (_windowFlags.showDepthButton)	_depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
-
-		// Reset the permeable value
-		_flags.permeable = wasPermeable;
-
-		redraw();
-
-		_gadgetEventHandlers->raiseResizeEvent(width, height);
-
-		return true;
-	}
-
-	return false;
-}
-
-// Insert the available space for child gadgets into the rect
-void AmigaWindow::getClientRect(Rect& rect) const {
-	if (!_flags.borderless) {
-		rect.x = _windowBorderLeft->getWidth();
-		rect.y = _windowBorderTop->getHeight();
-		rect.width = _width - _windowBorderLeft->getWidth() - _windowBorderRight->getWidth();
-		rect.height = _height - _windowBorderBottom->getHeight() - _windowBorderTop->getHeight();
-	} else {
-		rect.x = 0;
-		rect.y = 0;
-		rect.width = _width;
-		rect.height = _height;
-	}
+	// Depth button
+	if (_windowFlags.showDepthButton) _depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
 }
 
 void AmigaWindow::handleReleaseEvent(const GadgetEventArgs& e) {
@@ -332,7 +203,7 @@ void AmigaWindow::handleClickEvent(const GadgetEventArgs& e) {
 
 			// Top border - focus and drag
 			focus();
-			setDragging(e.getX(), e.getY());
+			startDragging(e.getX(), e.getY());
 
 		} else if ((e.getSource() == _windowBorderBottom) ||
 			(e.getSource() == _windowBorderLeft) ||
@@ -367,17 +238,11 @@ void AmigaWindow::showCloseButton() {
 		_windowFlags.showCloseButton = true;
 		
 		// Recreate close button
-		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, _style);
+		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, &_style);
 		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
 
-		// Resize and move the title bar
-		bool wasPermeable = isPermeable();
-		setPermeable(true);
-
-		_windowBorderTop->changeDimensions(WINDOW_CLOSE_BUTTON_WIDTH, 0, _windowBorderTop->getWidth() - WINDOW_CLOSE_BUTTON_WIDTH, _windowBorderTop->getHeight());
-
-		setPermeable(wasPermeable);
+		resizeTitleBarToFit();
 
 		_closeButton->redraw();
 	}
@@ -388,17 +253,11 @@ void AmigaWindow::showDepthButton() {
 		_windowFlags.showDepthButton = true;
 		
 		// Recreate depth button
-		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, _style);
+		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
 		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 
-		// Resize the title bar
-		bool wasPermeable = isPermeable();
-		setPermeable(true);
-
-		_windowBorderTop->resize(_windowBorderTop->getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, _windowBorderTop->getHeight());
-
-		setPermeable(wasPermeable);
+		resizeTitleBarToFit();
 
 		_depthButton->redraw();
 	}
@@ -412,13 +271,7 @@ void AmigaWindow::hideCloseButton() {
 		_closeButton->close();
 		_closeButton = NULL;
 
-		// Resize and move the title bar
-		bool wasPermeable = isPermeable();
-		setPermeable(true);
-
-		_windowBorderTop->changeDimensions(0, 0, _windowBorderTop->getWidth() + WINDOW_CLOSE_BUTTON_WIDTH, _windowBorderTop->getHeight());
-
-		setPermeable(wasPermeable);
+		resizeTitleBarToFit();
 	}
 }
 
@@ -426,16 +279,26 @@ void AmigaWindow::hideDepthButton() {
 	if ((!_flags.borderless) && (_windowFlags.showDepthButton)) {
 		_windowFlags.showDepthButton = false;
 		
-		// Delete close button
+		// Delete depth button
 		_depthButton->close();
 		_depthButton = NULL;
 
-		// Resize and move the title bar
-		bool wasPermeable = isPermeable();
-		setPermeable(true);
-
-		_windowBorderTop->resize(_windowBorderTop->getWidth() + WINDOW_CLOSE_BUTTON_WIDTH, _windowBorderTop->getHeight());
-
-		setPermeable(wasPermeable);
+		resizeTitleBarToFit();
 	}
+}
+
+void AmigaWindow::resizeTitleBarToFit() {
+	bool wasPermeable = isPermeable();
+	setPermeable(true);
+	
+	s16 newX = _closeButton == NULL ? 0 : _closeButton->getWidth();
+	s16 newY = 0;
+	u16 newWidth = getWidth();
+	u16 newHeight = _windowBorderTop->getHeight();
+	
+	if (_depthButton != NULL) newWidth -= _depthButton->getWidth();
+
+	_windowBorderTop->changeDimensions(newX, newY, newWidth, newHeight);
+
+	setPermeable(wasPermeable);
 }

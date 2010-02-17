@@ -96,21 +96,6 @@ namespace WoopsiUI {
 		void jumpGrip(u8 direction);
 
 		/**
-		 * Draw the region of the slider that falls within the
-		 * clipping rect.  Use draw() instead in most circumstances.
-		 * @param clipRect The clipping region.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
-		 * Click the slider at the specified co-ordinates.
-		 * @param x The x co-ordinate of the click.
-		 * @param y The y co-ordinate of the click.
-		 * @return True if the click was processed by the slider.
-		 */
-		virtual bool click(s16 x, s16 y);
-
-		/**
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
@@ -121,14 +106,6 @@ namespace WoopsiUI {
 		 * @param e The event details.
 		 */
 		virtual void handleMoveEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Resize the slider to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
 
 		/**
 		 * Get the value represented by each pixel in the gutter.
@@ -146,6 +123,36 @@ namespace WoopsiUI {
 		s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter */
 		s32 _gutterHeight;							/**< Height of the gutter, taking into account
 														 any adjustments made to the height of the grip */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Resize the slider to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+
+		/**
+		 * Moves the grip towards the stylus.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
 
 		/**
 		 * Destructor.

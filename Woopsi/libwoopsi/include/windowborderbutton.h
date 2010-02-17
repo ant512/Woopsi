@@ -11,7 +11,6 @@ namespace WoopsiUI {
 	 * Class representing a button that will appear in the window border.
 	 */
 	class WindowBorderButton : public DecorationGlyphButton {
-
 	public:
 
 		/**
@@ -29,19 +28,27 @@ namespace WoopsiUI {
 		 */
 		WindowBorderButton(s16 x, s16 y, u16 width, u16 height, char normalGlyph, char clickedGlyph, GadgetStyle* style = NULL);
 
-		/**
-		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the draw() function to draw all visible regions.
-		 * @param clipRect The clipping region to draw.
-		 * @see draw()
-		 */
-		virtual void draw(Rect clipRect);
-
 	protected:
 		/**
 		 * Destructor.
 		 */
 		virtual inline ~WindowBorderButton() { };
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
 
 		/**
 		 * Copy constructor is protected to prevent usage.

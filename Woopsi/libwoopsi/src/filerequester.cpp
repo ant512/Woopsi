@@ -7,20 +7,47 @@ using namespace WoopsiUI;
 
 FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& path, u32 flags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, AMIGA_WINDOW_SHOW_DEPTH, style) {
 
-	_flags.shiftClickChildren = false;
-
-	// Padding around the gadgets
-	u8 padding = 2;
+	// Increase the size of the border to leave space between gadgets and the 
+	// border decorations
+	_borderSize.top += 2;
+	_borderSize.right += 2;
+	_borderSize.bottom += 2;
+	_borderSize.left += 2;
 
 	Rect rect;
 	getClientRect(rect);
 
+	// Create OK button
+	_okButton = new Button(0, 0, 0, 0, "OK");
+
+	Rect buttonRect;
+	_okButton->getPreferredDimensions(buttonRect);
+
+	// Calculate OK button dimensions
+	buttonRect.width = (rect.width >> 1) - 1;
+	buttonRect.x = rect.x;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
+
+	_okButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
+
+	_okButton->addGadgetEventHandler(this);
+	addGadget(_okButton);
+
+	// Calculate cancel button dimensions
+	buttonRect.x = rect.x + rect.width - buttonRect.width;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
+
+	// Create cancel button
+	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
+	_cancelButton->addGadgetEventHandler(this);
+	addGadget(_cancelButton);
+
 	// Calculate list box
 	Rect listboxRect;
-	listboxRect.width = rect.width - (padding << 1);
-	listboxRect.height = rect.height - (padding * 5) - getFont()->getHeight();
-	listboxRect.x = rect.x + padding;
-	listboxRect.y = rect.y + padding;
+	listboxRect.width = rect.width;
+	listboxRect.height = rect.height - buttonRect.height - 2;
+	listboxRect.x = rect.x;
+	listboxRect.y = rect.y;
 
 	// Create list box
 	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, 0, style);
@@ -28,31 +55,40 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiSt
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setPath(path);
 	addGadget(_listbox);
+}
+
+void FileRequester::onResize(u16 width, u16 height) {
+
+	// Call base class' method to ensure the basic window resizes correctly
+	AmigaWindow::onResize(width, height);
+
+	Rect rect;
+	getClientRect(rect);
 
 	// Calculate OK button dimensions
 	Rect buttonRect;
-	buttonRect.width = (rect.width - (padding * 3)) >> 1;
-	buttonRect.height = getFont()->getHeight() + (padding << 1);
-	buttonRect.x = rect.x + padding;
-	buttonRect.y = (rect.y + rect.height) - (buttonRect.height + padding);
+	_okButton->getPreferredDimensions(buttonRect);
 
-	// Create OK button
-	_okButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "OK");
-	_okButton->addGadgetEventHandler(this);
-	addGadget(_okButton);
+	buttonRect.width = (rect.width >> 1) - 1;
+	buttonRect.x = rect.x;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
+
+	_okButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
 
 	// Calculate cancel button dimensions
-	buttonRect.x = rect.x + (padding << 1) + buttonRect.width;
-	buttonRect.y = (rect.y + rect.height) - (buttonRect.height + padding);
+	buttonRect.x = rect.x + rect.width - buttonRect.width;
+	buttonRect.y = (rect.y + rect.height) - buttonRect.height;
 
-	// Create cancel button
-	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
-	_cancelButton->addGadgetEventHandler(this);
-	addGadget(_cancelButton);
-}
+	_cancelButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
 
-bool FileRequester::resize(u16 width, u16 height) {
-	return false;
+	// Calculate list box dimensions
+	Rect listboxRect;
+	listboxRect.width = rect.width;
+	listboxRect.height = rect.height - buttonRect.height - 2;
+	listboxRect.x = rect.x;
+	listboxRect.y = rect.y;
+
+	_listbox->changeDimensions(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height);
 }
 
 void FileRequester::handleReleaseEvent(const GadgetEventArgs& e) {

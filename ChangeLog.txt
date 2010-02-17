@@ -5,9 +5,161 @@ Change Log
   
   Fixes:
     - Fixed error when subclassing MultiLineTextBox.
+    - Fixed keyboard secondary repeat timer - now uses correct time.
+    - Delete key deletes character in front of cursor in MultiLineTextBox, not
+      character at end of text.
+    - Moved raiseScrollEvent() out of ScrollingPanel and into
+      GadgetEventHandlerList.
+    - Removed parameters from GadgetEventHandlerList::raiseActionEvent().
+    - Renamed Gadget::setDragging() to Gadget::startDragging().
+    - Decorations cannot receive focus.
+    - Increased accuracy of slider calculations from 8-bit fractions to 16-bit
+      fractions.
+    - Requester resize implemented.
+    - Alert resize implemented.
+    - FileRequester resize implemented.
+    - Made various Gadget method non-virtual to prevent overriding.
+    - Gadget::resize() limits to parent dimensions correctly.
+    - Window drags correctly if it belongs to a gadget other than the screen.
+    - MultiLineTextBox resizing works correctly.
+    - Moved skins and bitmaploader examples and the bonus folder to a new
+      "extras" top-level repository.  They will no longer be included in the
+      main distro.
+    - Moved documentation folder into new extras directory.
+    - Fixed FileListBox resizing and initial child gadget dimensions.
+    - Removed Gadget::clear().
+    - Removed Gadget::clear(clipRect).
+    - Removed Gadget::newInternalGraphicsPort(isForeground).
+    - GraphicsPort no longer tries to delete null pointer if clipRect is not
+      initialised.
+    - Replaced Gadget::draw(rect) with Gadget::drawContents(port) and
+      Gadget::drawBorder(port).
+    - Fixed WoopsiString::remove(start, length).
+    - Removed AmigaWindow::getBorderSize().
+    - Removed Screen::getBorderSize().
+    - Removed TextBox::getBorderSize().
+    - Made Gadget::getClientRect() non-virtual.
+    - Gadget::getClientRect() uses new GadgetBorderSize struct to calculate size
+      of client rect.
+    - Removed Screen::getTitleHeight().
+    - Removed AmigaWindow::getTitleHeight().
+    - AnimButton, BitmapButton, CycleButton, ContextMenu, ListBox
+      RadioButtonGroup, Label and Calendar use new GadgetBorderSize struct to
+      calculate preferred dimensions.
+    - Removed Gadget::getBackgroundRegions().
+    - Removed redundant style initialisation from Woopsi class.
+    - Swapped Gadget::_style from pointer instantiation to standard
+      instantiation.
+    - Removed Woopsi::closeChild(), shelveChild(), release(), drag(), click(),
+      shiftClick() and shelve().
+    - Made Gadget::closeChild(), shelveChild(), release(), drag(), click() and
+      shiftClick() non-virtual.
+    - Renamed Woopsi::click() to handleClick().
+    - Renamed Woopsi::shiftClick() to handleShiftClick().
+    - Tidied up Gadget::shelve() and Gadget::shelveChild().
+    - Refactored various methods in Gadget class to use guards instead of nested
+      if statements.
+    - Gadget::closeChild() and Gadget::shelveChild() no longer cause focus to
+      jump around if the child does not have focus.
+    - Gadget::click(), Gadget::shiftClick() and Gadget::doubleClick() only
+      respond to clicks that occur within portions of themselves that are not
+      obscured by gadgets higher in the hierarchy than their children (prevents
+      context menus bleeding through from a lower screen/window to a higher
+      screen/window).
+    - Refactored Woopsi::handleKeys() into handleKeys() and handleKey().
+    - Removed _padding variable from Label, Requester, FileRequester and Alert
+      classes; switched to using border sizes instead.
+    - Tidied up CycleButton, BitmapButton, AnimButton, Button and TextBox
+      drawing methods.
+    - WoopsiKeyboard no longer inherits from AmigaWindow for greater
+      flexibility.
+    - Added two blank screens to Woopsi gadget to ensure that background always
+      draws correctly.
+    - Increased scrollbar width in ScrollingTextBox and ScrollingListBox.
+    - Increased minimum size of slider grips.
+    - Removed GraphicsPort::clear().
+    - GraphicsPort does not query Gadget for its x/y co-ordinates.
+    - GraphicsPort does not query Gadget for its enabled/disabled state.
+    - Removed GraphicsPort::drawBevelledRect() method that relied on gadget
+      state.
+    - Removed Gadget::OutlineType enum and related usage.
+    - Removed drawing from Woopsi::eraseRect() - new background screens make it
+      unnecessary.
+    - Removed drawing from Woopsi entirely for same reason.
+    - Deleted GraphicsUnclipped class.
+    - GraphicsPort is a wrapper around a Graphics object instead of a subclass.
+    - GraphicsPort drawing commands all accept values which are relative to
+      itself.
+    - GraphicsPort::getClipRect() returns a rect relative to the GraphicsPort.
+    - Screen::onDrag() uses woopsiApplication's GraphicsPort instead of its own.
+    - Graphics class includes scroll() and drawBevelledRect() methods.
 
   New Features:
     - Added goToParent() and goToRoot() to FilePath class.
+    - Added FreeType support.
+    - Added FreeType to template makefile.
+    - Added keyboard_textbox example.
+    - TextBox inherits from KeyboardEventHandler, so it can be connected
+      directly to a keyboard object without the need for an intermediary.
+    - Added fire example.
+    - MultiLineTextBox inherits from KeyboardEventHandler, so it can be
+      connected directly to a keyboard object without the need for an
+      intermediary.
+    - Added TextBox::removeText() methods.
+    - GadgetEventHandlerList::raiseScrollEvent() receives distance scrolled as
+      parameters.
+    - Added stub methods to remove the need to override critical Woopsi methods:
+      - onClick()
+      - onRelease()
+      - onReleaseOutside()
+      - onDoubleClick()
+      - onShiftClick()
+      - onDrag()
+      - onDragStart()
+      - onDragStop()
+      - onKeyPress()
+      - onKeyRepeat()
+      - onKeyRelease()
+      - onFocus()
+      - onBlur()
+      - onLidOpen()
+      - onLidClose()
+      - onEnable()
+      - onDisable()
+      - onResize()
+    - Swapped to using stub overrides in all gadgets.
+    - Added ListBox::isDoubleClick().
+    - Removed setDragging() from Gadget::click(); should be called by onClick()
+      in subclasses if required.
+    - Added canReceiveFocus flag to Gadget::Flags struct.
+    - Added canReceiveFocus() method to Gadget class.
+    - Split Gadget::release() into release() and stopDragging() methods.
+    - Added AmigaWindow::resizeTitleBarToFit().
+    - Added Gadget::getGlyphFont() and Gadget::setGlyphFont().
+    - Added AmigaWindow::redrawBorder().
+    - Expanded ScrollingTextBox functionality to match MultiLineTextBox.
+    - Removed shiftClickChildren concept from Gadget class; shift clicks are
+      only captured by a gadget if it defines any context menu items, so clicks
+      automatically get directed to the most relevant gadget.
+    - Added alert test.
+    - Added requester test.
+    - Added filerequester test.
+    - Added freetype example.
+    - Added GadgetBorderSize struct to contain sizes of the four borders around
+      a gadget.
+    - Added Gadget::checkCollisionWithForegroundRects().
+    - Added XOR drawing routines that accept a colour to XOR against.
+    - Added WoopsiKeyboardScreen.
+    - Double-clicking a textbox gadget causes the WoopsiKeyboardScreen to pop
+      into the bottom display.
+    - TextBox only draws cursor when it has focus.
+    - TextBox redraws when it loses focus.
+    - Added Gadget::setBorderSize().
+    - Added WoopsiKey::setStuckDown() to control border type.
+    - Added CalendarDayButton gadget.
+    - Graphics class implements clipping and no longer inherits from
+      GraphicsUnclipped.
+
 
   V0.44 (20100124)
   

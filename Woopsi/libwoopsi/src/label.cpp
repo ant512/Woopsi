@@ -4,11 +4,16 @@
 using namespace WoopsiUI;
 
 Label::Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
-	_outline = OUTLINE_IN;
-
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
-	_padding = 2;
+	
+	_borderSize.top = 3;
+	_borderSize.right = 3;
+	_borderSize.bottom = 3;
+	_borderSize.left = 3;
+
+	_textX = 0;
+	_textY = 0;
 
 	setText(text);
 
@@ -16,50 +21,55 @@ Label::Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, Gadg
 	calculateTextPositionVertical();
 }
 
-void Label::draw(Rect clipRect) {
-
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-
+void Label::drawContents(GraphicsPort* port) {
 	if (isEnabled()) {
 		port->drawText(_textX, _textY, getFont(), _text);
 	} else {
 		port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), getDarkColour());
 	}
+}
 
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
+void Label::drawBorder(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
-	delete port;
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+
+	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
 }
 
 void Label::calculateTextPositionVertical() {
 
+	Rect rect;
+	getClientRect(rect);
+
 	switch (_vAlignment) {
 		case TEXT_ALIGNMENT_VERT_CENTRE:
-			_textY = (_height - getFont()->getHeight()) >> 1;
+			_textY = (rect.height - getFont()->getHeight()) >> 1;
 			break;
 		case TEXT_ALIGNMENT_VERT_TOP:
-			_textY = _padding;
+			_textY = 0;
 			break;
 		case TEXT_ALIGNMENT_VERT_BOTTOM:
-			_textY = _height - getFont()->getHeight() - _padding;
+			_textY = rect.height - getFont()->getHeight();
 			break;
 	}
 }
 
 void Label::calculateTextPositionHorizontal() {
+
+	Rect rect;
+	getClientRect(rect);
 	
 	switch (_hAlignment) {
 		case TEXT_ALIGNMENT_HORIZ_CENTRE:
-			_textX = (_width - getFont()->getStringWidth(_text)) >> 1;
+			_textX = (rect.width - getFont()->getStringWidth(_text)) >> 1;
 			break;
 		case TEXT_ALIGNMENT_HORIZ_LEFT:
-			_textX = _padding;
+			_textX = 0;
 			break;
 		case TEXT_ALIGNMENT_HORIZ_RIGHT:
-			_textX = _width - getFont()->getStringWidth(_text) - _padding;
+			_textX = rect.width - getFont()->getStringWidth(_text);
 			break;
 	}
 }
@@ -80,63 +90,49 @@ void Label::setTextAlignmentVert(TextAlignmentVert alignment) {
 
 void Label::setText(const WoopsiString& text) {
 	_text = text;
-	calculateTextPositionHorizontal();
-	calculateTextPositionVertical();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	onTextChange();
 }
 
 void Label::appendText(const WoopsiString& text) {
 	_text.append(text);
-	calculateTextPositionHorizontal();
-	calculateTextPositionVertical();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	onTextChange();
 }
 
 void Label::insertText(const WoopsiString& text, const u32 index) {
 	_text.insert(text, index);
+	onTextChange();
+}
+
+void Label::onResize(u16 width, u16 height) {
+	calculateTextPositionHorizontal();
+	calculateTextPositionVertical();
+}
+
+void Label::onTextChange() {
 	calculateTextPositionHorizontal();
 	calculateTextPositionVertical();
 	redraw();
 	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-bool Label::resize(u16 width, u16 height) {
-
-	// Remember current values
-	bool resized = false;
-	bool drawing = _flags.drawingEnabled;
-
-	// Hide and disable drawing
-	erase();
-	_flags.drawingEnabled = false;
-
-	// Attempt to resize
-	if (Gadget::resize(width, height)) {
-		calculateTextPositionHorizontal();
-		calculateTextPositionVertical();
-
-		resized = true;
-	}
-
-	// Show and reset drawing
-	_flags.drawingEnabled = drawing;
-	redraw();
-	
-	return resized;
 }
 
 // Get the preferred dimensions of the gadget
 void Label::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
-	rect.width = ((!_flags.borderless + _padding) << 1) + getFont()->getStringWidth(_text);
-	rect.height = ((!_flags.borderless + _padding) << 1) + getFont()->getHeight();
+	rect.width = 0;
+	rect.height = 0;
+
+	if (!_flags.borderless) {
+		rect.width = _borderSize.left + _borderSize.right;
+		rect.height = _borderSize.top + _borderSize.bottom;
+	}
+
+	rect.width += getFont()->getStringWidth(_text);
+	rect.height += getFont()->getHeight();
 }
 
 void Label::setFont(FontBase* font) {
-	_style->font = font;
+	_style.font = font;
 
 	// Need to recalculate the text position as the font may have changed size
 	calculateTextPositionHorizontal();

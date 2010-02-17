@@ -95,12 +95,6 @@ namespace WoopsiUI {
 		virtual void deselectAllOptions();
 
 		/**
-		 * Draw the region of the menu within the clipping rect.
-		 * @param clipRect The clipping rect to limit drawing to.
-		 */
-		virtual void draw(Rect clipRect);
-
-		/**
 		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
 		 * option is selected, the index of the first selected option is returned.
 		 * @return The selected index.
@@ -120,22 +114,6 @@ namespace WoopsiUI {
 		 * @return The selected option.
 		 */
 		virtual const ListBoxDataItem* getSelectedOption() const;
-		
-		/**
-		 * Click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool click(s16 x, s16 y);
-
-		/**
-		 * Double-click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool doubleClick(s16 x, s16 y);
 		
 		/**
 		 * Sets whether multiple selections are possible or not.
@@ -210,10 +188,49 @@ namespace WoopsiUI {
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
 
+		/**
+		 * Check if the click is a double-click.
+		 * @param x X co-ordinate of the click.
+		 * @param y Y co-ordinate of the click.
+		 * @return True if the click is a double-click.
+		 */
+		virtual bool isDoubleClick(s16 x, s16 y);
+
 	protected:
 		ListData _options;							/**< Option storage. */
 		u8 _optionPadding;							/**< Padding between options. */
 		s32 _lastSelectedIndex;						/**< Index of the last option selected. */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawContents(GraphicsPort* port);
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Determines which item was clicked and selects or deselects it as
+		 * appropriate.  Also starts the dragging system.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
+		
+		/**
+		 * Selects the clicked item and deselects all others.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onDoubleClick(s16 x, s16 y);
 
 		/**
 		 * Destructor.

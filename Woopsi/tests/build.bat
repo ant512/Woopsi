@@ -1,6 +1,10 @@
 @echo off
 
-cd animbutton
+cd alert
+make clean
+make
+
+cd ../animbutton
 make clean
 make
 
@@ -20,6 +24,10 @@ cd ../cyclebutton
 make clean
 make
 
+cd ../filerequester
+make clean
+make
+
 cd ../label
 make clean
 make
@@ -33,6 +41,10 @@ make clean
 make
 
 cd ../radiobuttongroup
+make clean
+make
+
+cd ../requester
 make clean
 make
 

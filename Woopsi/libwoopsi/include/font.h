@@ -10,7 +10,8 @@ namespace WoopsiUI {
 	class BitmapBase;
 
 	/**
-	 * Fixed-width multicolour bitmap font that uses a 16-bit bitmap as its glyph data.
+	 * Fixed-width multicolour bitmap font that uses a 16-bit bitmap as its
+	 * glyph data.
 	 */
 	class Font : public FixedWidthFontBase {
 
@@ -31,7 +32,8 @@ namespace WoopsiUI {
 		inline ~Font() { };
 
 		/**
-		 * Get the colour of the pixel at the specified offset from the start of the bitmap.
+		 * Get the colour of the pixel at the specified offset from the start of
+		 * the bitmap.
 		 * @param x The x co-ordinate of the pixel.
 		 * @param y The y co-ordinate of the pixel.
 		 * @return The pixel colour.
@@ -53,11 +55,11 @@ namespace WoopsiUI {
 		s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
 	private:
-		const BitmapBase* _bitmap;				/**< Pointer to the bitmap containing the font glyphs */
+		const BitmapBase* _bitmap;				/**< Pointer to the bitmap containing the font glyphs. */
 		
 		/**
-		 * Scans the glyph bitmap at the specified co-ordinates to see if it contains data or
-		 * not.  Must be overridden.
+		 * Scans the glyph bitmap at the specified co-ordinates to see if it
+		 * contains data or not.
 		 * @param x The x co-ordinate of the start of the glyph.
 		 * @param y The y co-ordinate of the start of the glyph.
 		 * @return True if the glyph bitmap contains data for this glyph.

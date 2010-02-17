@@ -1,5 +1,6 @@
 #include "radiobuttongroup.h"
 #include "radiobutton.h"
+#include "graphicsport.h"
 
 using namespace WoopsiUI;
 
@@ -9,7 +10,7 @@ RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, GadgetStyle* style) : Gadget(x,
 
 RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 height) {
 	
-	RadioButton* newButton = new RadioButton(x, y, width, height, _style);
+	RadioButton* newButton = new RadioButton(x, y, width, height, &_style);
 	addGadget(newButton);
 
 	// Do we need to resize?
@@ -68,39 +69,21 @@ void RadioButtonGroup::setSelectedIndex(s32 index) {
 	}
 }
 
-void RadioButtonGroup::draw(Rect clipRect) {
-	clear(clipRect);
-}
-
-bool RadioButtonGroup::resize(u16 width, u16 height) {
-
-	// Remember current values
-	bool resized = false;
-	bool drawing = _flags.drawingEnabled;
-
-	if ((_width != width) || (_height != height)) {
-
-		// Hide and disable drawing
-		erase();
-		_flags.drawingEnabled = false;
-
-		// Attempt to resize
-		if (Gadget::resize(width, height)) {
-			resized = true;
-		}
-	}
-
-	// Show and reset drawing
-	_flags.drawingEnabled = drawing;
-	redraw();
-	
-	return resized;
+void RadioButtonGroup::drawContents(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 }
 
 // Get the preferred dimensions of the gadget
 void RadioButtonGroup::getPreferredDimensions(Rect& rect) const {
 	rect.x = _x;
 	rect.y = _y;
+	rect.width = 0;
+	rect.height = 0;
+
+	if (!_flags.borderless) {
+		rect.width = _borderSize.left + _borderSize.right;
+		rect.height = _borderSize.top + _borderSize.bottom;
+	}
 
 	s16 gadgetX = 0;
 	s16 gadgetY = 0;
@@ -117,7 +100,7 @@ void RadioButtonGroup::getPreferredDimensions(Rect& rect) const {
 		if (gadgetY > maxY) maxY = gadgetY;
 	}
 
-	rect.width = (!_flags.borderless << 1) + maxX - getX();
-	rect.height = (!_flags.borderless << 1) + maxY - getY();
+	rect.width += maxX - getX();
+	rect.height += maxY - getY();
 }
 

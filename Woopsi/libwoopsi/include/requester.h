@@ -131,19 +131,18 @@ namespace WoopsiUI {
 			return _listbox->getOptionCount();
 		};
 
+	protected:
+		Button* _okButton;					/**< Pointer to the OK button. */
+		Button* _cancelButton;				/**< Pointer to the cancel button. */
+		ScrollingListBox* _listbox;			/**< Pointer to the list box. */
+
 		/**
-		 * Resize the textbox to the new dimensions.
+		 * Resize the requester to the new dimensions.
 		 * @param width The new width.
 		 * @param height The new height.
-		 * @return True if the resize was successful.
 		 */
-		virtual bool resize(u16 width, u16 height);
-
-	protected:
-		Button* _okButton;					/**< Pointer to the OK button */
-		Button* _cancelButton;				/**< Pointer to the cancel button */
-		ScrollingListBox* _listbox;			/**< Pointer to the list box */
-
+		virtual void onResize(u16 width, u16 height);
+		
 		/**
 		 * Destructor.
 		 */

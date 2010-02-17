@@ -263,9 +263,9 @@ void GadgetEventHandlerList::raiseMoveEvent(s16 x, s16 y, s16 vX, s16 vY) {
 	}
 }
 
-void GadgetEventHandlerList::raiseActionEvent(s16 x, s16 y, s16 vX, s16 vY, KeyCode keyCode) {
+void GadgetEventHandlerList::raiseActionEvent() {
 	if (isEnabled()) {
-		GadgetEventArgs e(_gadget, x, y, vX, vY, keyCode);
+		GadgetEventArgs e(_gadget, 0, 0, 0, 0, KEY_CODE_NONE);
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleActionEvent(e);
@@ -279,6 +279,16 @@ void GadgetEventHandlerList::raiseContextMenuSelectionEvent(const ListDataItem* 
 
 		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
 			_gadgetEventHandlers.at(i)->handleContextMenuSelectionEvent(e);
+		}
+	}
+}
+
+void GadgetEventHandlerList::raiseScrollEvent(s16 vX, s16 vY) {
+	if (isEnabled()) {
+		GadgetEventArgs e(_gadget, 0, 0, vX, vY, KEY_CODE_NONE);
+	
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleScrollEvent(e);
 		}
 	}
 }

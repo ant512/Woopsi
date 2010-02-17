@@ -7,6 +7,8 @@ using namespace WoopsiUI;
 ContextMenu::ContextMenu(GadgetStyle* style) : Gadget(0, 0, 20, 20, 0, style) {
 	setBorderless(false);
 	_opener = NULL;
+	
+	_flags.canReceiveFocus = false;
 
 	_listbox = new ListBox(1, 1, 0, 0, style);
 	_listbox->addGadgetEventHandler(this);
@@ -55,46 +57,20 @@ void ContextMenu::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void ContextMenu::draw(Rect clipRect) {
-
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
+void ContextMenu::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, _width, _height, getShineColour());
-
-	// Draw outline
-	port->drawRect(0, 0, _width, _height, getShadowColour());
-
-	delete port;
 }
 
-bool ContextMenu::resize(u16 width, u16 height) {
+void ContextMenu::drawBorder(GraphicsPort* port) {
+	port->drawRect(0, 0, _width, _height, getShadowColour());
+}
 
-	if ((_width != width) || (_height != height)) {
+void ContextMenu::onResize(u16 width, u16 height) {
 
-		erase();
-		disableDrawing();
+	Rect clientRect;
+	getClientRect(clientRect);
 
-		_width = width;
-		_height = height;
-
-		setPermeable(true);
-
-		Rect clientRect;
-		getClientRect(clientRect);
-
-		_listbox->resize(clientRect.width, clientRect.height);
-
-		setPermeable(false);
-
-		enableDrawing();
-		redraw();
-
-		_gadgetEventHandlers->raiseResizeEvent(width, height);
-
-		return true;
-	}
-
-	return false;
+	_listbox->resize(clientRect.width, clientRect.height);
 }
 
 void ContextMenu::reset() {
@@ -116,15 +92,21 @@ void ContextMenu::getPreferredDimensions(Rect& rect) const {
 	// Get the listbox's preferred dimensions
 	_listbox->getPreferredDimensions(rect);
 
+	// Override the rect's height because we need to show all options
+	rect.height = 0;
+
 	// Adjust width to compensate for border
-	rect.width += ((!_flags.borderless) << 1);
+	if (!_flags.borderless) {
+		rect.width += _borderSize.left + _borderSize.right;
+		rect.height = _borderSize.top + _borderSize.bottom;
+	}
 
 	// Adjust x/y as the listbox has no border
 	rect.x = _x;
 	rect.y = _y;
 
 	// Adjust height so that the gadget shows all options
-	rect.height = ((!_flags.borderless) << 1) + (_listbox->getOptionHeight() * _listbox->getOptionCount());
+	rect.height += _listbox->getOptionHeight() * _listbox->getOptionCount();
 
 	// Adjust width/height if larger than screen
 	if (rect.width > SCREEN_WIDTH) rect.width = SCREEN_WIDTH;

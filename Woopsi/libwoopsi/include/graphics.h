@@ -5,7 +5,8 @@
 #include "woopsiarray.h"
 #include "bitmapbase.h"
 #include "mutablebitmapbase.h"
-#include "graphicsunclipped.h"
+#include "rect.h"
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
@@ -15,19 +16,34 @@ namespace WoopsiUI {
 	 * Class providing bitmap manipulation (drawing, etc) functions.  Functions
 	 * are all clipped to the size of the bitmap being drawn to.
 	 */
-	class Graphics : public GraphicsUnclipped {
+	class Graphics {
 	public:
 
 		/**
 		 * Constructor.
-		 * @param bitmap The bitmap that will be drawn to.
+		 * @param bitmap The bitmap that the port will draw to. 
+		 * @param clipRect The clipping region within which the class must draw.
 		 */
-		Graphics(MutableBitmapBase* bitmap);
+		Graphics(MutableBitmapBase* bitmap, const Rect& clipRect);
 
 		/**
 		 * Destructor.
 		 */
 		virtual inline ~Graphics() { };
+
+		/**
+		 * Sets the clip rect.  Attempts to draw outside of this region
+		 * will be clipped out.
+		 * @param clipRect The new clipping region.
+		 */
+		void setClipRect(const Rect& clipRect);
+
+		/**
+		 * Get the current clipping region.
+		 * @param rect A rect that will be populated with the current
+		 * clipping region.
+		 */
+		void getClipRect(Rect& rect) const;
 		
 		/**
 		 * Get the colour of the pixel at the specified co-ordinates
@@ -72,14 +88,75 @@ namespace WoopsiUI {
 		 * @param colour The colour of the line.
 		 */
 		virtual void drawVertLine(s16 x, s16 y, u16 height, u16 colour);
+		
+		/**
+		 * Draw an unfilled rectangle to the internal bitmap.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 * @param colour The colour of the rectangle.
+		 */
+		virtual void drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
 
+		/**
+		 * XOR the colour of the pixel at the specified co-ordinates against
+		 * the supplied colour.
+		 * @param x The x co-ordinate of the pixel.
+		 * @param y The y co-ordinate of the pixel.
+		 * @param colour The colour to XOR against.
+		 */
+		virtual void drawXORPixel(s16 x, s16 y, u16 colour);
+		
+		/**
+		 * XOR the colour of a horizontal line of pixels against the
+		 * supplied colour.
+		 * @param x The x co-ordinate of the line.
+		 * @param y The y co-ordinate of the line.
+		 * @param width The width of the line.
+		 * @param colour The colour to XOR against.
+		 */
+		virtual void drawXORHorizLine(s16 x, s16 y, u16 width, u16 colour);
+		
+		/**
+		 * XOR the colour of a vertical line of pixels against the
+		 * supplied colour.
+		 * @param x The x co-ordinate of the line.
+		 * @param y The y co-ordinate of the line.
+		 * @param height The height of the line.
+		 * @param colour The colour to XOR against.
+		 */
+		virtual void drawXORVertLine(s16 x, s16 y, u16 height, u16 colour);
+		
+		/**
+		 * XOR the colour of a filled rectangle of pixels against the
+		 * supplied colour.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 * @param colour The colour to XOR against.
+		 */
+		virtual void drawFilledXORRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
+		
+		/**
+		 * XOR the colour of an unfilled rectangle of pixels against the
+		 * supplied colour.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 * @param colour The colour to XOR against.
+		 */
+		virtual void drawXORRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
+		
 		/**
 		 * Invert the colour of the pixel at the specified co-ordinates.
 		 * @param x The x co-ordinate of the pixel.
 		 * @param y The y co-ordinate of the pixel.
 		 */
 		virtual void drawXORPixel(s16 x, s16 y);
-
+		
 		/**
 		 * Invert the colour of a horizontal line of pixels.
 		 * @param x The x co-ordinate of the line.
@@ -95,6 +172,24 @@ namespace WoopsiUI {
 		 * @param height The height of the line.
 		 */
 		virtual void drawXORVertLine(s16 x, s16 y, u16 height);
+		
+		/**
+		 * Invert the colour of an unfilled rectangle of pixels.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 */
+		virtual void drawXORRect(s16 x, s16 y, u16 width, u16 height);
+		
+		/**
+		 * Invert the colour of a filled rectangle of pixels.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 */
+		virtual void drawFilledXORRect(s16 x, s16 y, u16 width, u16 height);
 		
 		/**
 		 * Draw an external bitmap to the internal bitmap.
@@ -179,6 +274,46 @@ namespace WoopsiUI {
 		 * @param colour The colour of the line.
 		 */
 		virtual void drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
+		
+		/**
+		 * Draw an unfilled circle to the internal bitmap.  Faster than
+		 * drawEllipse() but limited to circles only.
+		 * @param x0 The x co-ordinate of the circle.
+		 * @param y0 The y co-ordinate of the circle.
+		 * @param radius The radius of the circle.
+		 * @param colour The colour of the circle.
+		 */
+		virtual void drawCircle(s16 x0, s16 y0, u16 radius, u16 colour);
+		
+		/**
+		 * Draw a filled circle to the internal bitmap.  Faster than
+		 * drawFilledEllipse() but limited to circles only.
+		 * @param x0 The x co-ordinate of the circle.
+		 * @param y0 The y co-ordinate of the circle.
+		 * @param radius The radius of the circle.
+		 * @param colour The colour of the circle.
+		 */
+		virtual void drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour);
+		
+		/**
+		 * Draw an unfilled ellipse to the bitmap.
+		 * @param xCentre The x co-ordinate of the ellipse's centre.
+		 * @param yCentre The y co-ordinate of the ellipse's centre.
+		 * @param horizRadius The size of the ellipse's horizontal radius.
+		 * @param vertRadius The size of the ellipse's vertical radius.
+		 * @param colour The colour of the ellipse.
+		 */
+		virtual void drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
+		
+		/**
+		 * Draw a filled ellipse to the bitmap.
+		 * @param xCentre The x co-ordinate of the ellipse's centre.
+		 * @param yCentre The y co-ordinate of the ellipse's centre.
+		 * @param horizRadius The size of the ellipse's horizontal radius.
+		 * @param vertRadius The size of the ellipse's vertical radius.
+		 * @param colour The colour of the ellipse.
+		 */
+		virtual void drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour);
 
 		/**
 		 * Convert the region to greyscale.
@@ -188,9 +323,74 @@ namespace WoopsiUI {
 		 * @param height Height of the region to change.
 		 */
 		void greyScale(s16 x, s16 y, u16 width, u16 height);
+		
+		/**
+		 * Draw a string to the internal bitmap.
+		 * @param x The x co-ordinate of the string.
+		 * @param y The y co-ordinate of the string.
+		 * @param font The font to draw with.
+		 * @param string The string to output.
+		 */
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string);
+
+		/**
+		 * Draw a particular length of a string to the bitmap in a specific
+		 * colour.
+		 * @param x The x co-ordinate of the string.
+		 * @param y The y co-ordinate of the string.
+		 * @param font The font to draw with.
+		 * @param string The string to output.
+		 * @param startIndex The start index within the string from which
+		 * drawing will commence.
+		 * @param length The number of characters to draw.
+		 * @param colour The colour of the string.
+		 */
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour);
+		
+		/**
+		 * Draw a string to the internal bitmap in a specific colour.
+		 * @param x The x co-ordinate of the string.
+		 * @param y The y co-ordinate of the string.
+		 * @param font The font to draw with.
+		 * @param string The string to output.
+		 * @param startIndex The start index within the string from which
+		 * drawing will commence.
+		 * @param length The number of characters to draw.
+		 */
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length);
+
+		/**
+		 * Scroll a region by a specified distance in two dimensions.  Performs
+		 * a clipped copy to achieve scroll effect.
+		 * @param x X co-ord of the area to scroll.
+		 * @param y Y co-ord of the area to scroll.
+		 * @param xDistance Horizontal distance to scroll.
+		 * @param yDistance Vertical distance to scroll.
+		 * @param width Width of the area to scroll.
+		 * @param height Height of the area to scroll.
+		 * @param revealedRects Populated with rects representing the region
+		 * uncovered by the scroll method.  This should be empty when passed,
+		 * and the regions should be drawn to once the scroll has finished.
+		 */
+		virtual void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Rect>* revealedRects);
+
+		/**
+		 * Draw a bevelled rectangle to the bitmap.
+		 * @param x The x co-ordinate of the rectangle.
+		 * @param y The y co-ordinate of the rectangle.
+		 * @param width The width of the rectangle.
+		 * @param height The height of the rectangle.
+		 * @param shineColour The colour of the top/left sides.
+		 * @param shadowColour The colour of the bottom/right sides.
+		 */
+		virtual void drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shineColour, u16 shadowColour);
 
 	protected:
-		
+		MutableBitmapBase* _bitmap;		/**< Bitmap */
+		u16 _width;						/**< Bitmap width */
+		u16 _height;					/**< Bitmap height */
+		Rect _clipRect;					/**< Clipping rect that the object must draw within. */
+
 		/**
 		 * Clip the supplied rectangular dimensions to the size of the internal bitmap.
 		 * @param x The x co-ordinate of the rectangle to clip (modified by the function).
@@ -230,9 +430,44 @@ namespace WoopsiUI {
 		u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);
 
 		/**
+		 * Draws a line.  The parameters must be pre-clipped by the drawLine() method.
+		 * @param x1 The x co-ord of the start of the line.
+		 * @param y1 The y co-ord of the start of the line.
+		 * @param x2 The x co-ord of the end of the line.
+		 * @param y2 The y co-ord of the end of the line.
+		 * @param colour The colour of the line.
+		 */
+		void drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
+
+		/**
+		 * Draws a bitmap in greyscale.  The parameters must be pre-clipped by the
+		 * drawBitmapGreyScale method.
+		 * @param x The x co-ordinate to draw the bitmap to.
+		 * @param y The y co-ordinate to draw the bitmap to.
+		 * @param width The width of the bitmap to draw.
+		 * @param height The height of the bitmap to draw.
+		 * @param bitmap Pointer to the bitmap to draw.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 */
+		void drawClippedBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY);
+
+		/**
+		 * Clips the supplied co-ordinates so that they fit within the supplied clipping
+		 * rectangle.  If the clipped area is empty, the method returns false to indicate
+		 * this.  Otherwise, it returns true.
+		 * @param x1 The top-left x co-ordinate.
+		 * @param y1 The top-left y co-ordinate.
+		 * @param x2 The bottom-right x co-ordinate.
+		 * @param y2 The bottom-right y co-ordinate.
+		 * @param clipRect A rect to clip to.
+		 */
+		bool clipCoordinates(s16* x1, s16* y1, s16* x2, s16* y2, const Rect& clipRect);
+
+		/**
 		 * Copy constructor is protected to prevent usage.
 		 */
-		inline Graphics(const Graphics& graphics) : GraphicsUnclipped(graphics) { };
+		inline Graphics(const Graphics& graphics) { };
 	};
 }
 

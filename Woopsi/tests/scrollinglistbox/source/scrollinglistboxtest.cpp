@@ -342,7 +342,7 @@ void ScrollingListBoxTest::handleActionEvent(const GadgetEventArgs& e) {
 				break;
 			}
 		case 7:
-			_listBox->resize(10, 10);
+			_listBox->resize(50, 30);
 			break;
 		case 8:
 			Rect rect;

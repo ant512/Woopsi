@@ -2,62 +2,68 @@
 #include "graphicsport.h"
 #include "woopsitimer.h"
 #include "stringiterator.h"
+#include "woopsikey.h"
+#include "woopsi.h"
 
 using namespace WoopsiUI;
 
 TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Label(x, y, width, height, text, style) {
 	_cursorPos = 0;
-	_firstCharIndex = 0;
 	_showCursor = true;
-	setOutlineType(OUTLINE_OUT_IN);
+	_flags.doubleClickable = true;
+
+	_borderSize.top = 4;
+	_borderSize.right = 4;
+	_borderSize.bottom = 4;
+	_borderSize.left = 4;
+
 	moveCursorToPosition(_text.getLength());
 }
 
-void TextBox::draw(Rect clipRect) {
+void TextBox::drawContents(GraphicsPort* port) {
 
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
-
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-
-	if (isEnabled()) {
-		port->drawText(_textX, _textY, getFont(), _text, _firstCharIndex, _text.getLength() - _firstCharIndex);
-	} else {
-		port->drawText(_textX, _textY, getFont(), _text, _firstCharIndex, _text.getLength() - _firstCharIndex, getDarkColour());
-	}
+	u16 textColour = isEnabled() ? getShadowColour() : getDarkColour();
+	port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), textColour);
 
 	// Draw cursor
-	if (_showCursor) {
-		if (_cursorPos < _text.getLength()) {
-
-			// Cursor within the string - draw over the character
-			port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(_text.getCharAt(_cursorPos)), getFont()->getHeight());
-		} else {
-
-			// Cursor past end of string - draw a space
-			port->drawFilledXORRect(getCursorXPos(), _textY, getFont()->getCharWidth(' '), getFont()->getHeight());
-		}
+	if (_showCursor && hasFocus()) {
+		port->drawFilledXORRect(getCursorXPos() + _textX, _textY, getCursorWidth(), getFont()->getHeight());
 	}
+}
 
-	// Draw outline
-	port->drawBevelledRect(0, 0, _width, _height);
+void TextBox::drawBorder(GraphicsPort* port) {
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
-	delete port;
+	// Stop drawing if the gadget indicates it should not have an outline
+	if (isBorderless()) return;
+
+	port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
+	port->drawBevelledRect(1, 1, _width - 2, _height - 2, getShadowColour(), getShineColour());
+}
+
+const u16 TextBox::getCursorWidth() const {
+	if (_cursorPos < _text.getLength()) {
+
+		// Cursor within the string - get the width of the character
+		return getFont()->getCharWidth(_text.getCharAt(_cursorPos));
+	} else {
+
+		// Cursor past end of string - get the width of a space
+		return getFont()->getCharWidth(' ');
+	}
 }
 
 const u16 TextBox::getCursorXPos() const {
 
 	// Calculate position of cursor
-	u16 cursorX = _textX;
+	u16 cursorX = 0;
 
 	StringIterator* iterator = _text.newStringIterator();
 	
-	if (iterator->moveTo(_firstCharIndex)) {
-	
-		for (u16 i = _firstCharIndex; i < _cursorPos; i++) {
-			cursorX += getFont()->getCharWidth(iterator->getCodePoint());
+	for (u16 i = 0; i < _cursorPos; i++) {
+		cursorX += getFont()->getCharWidth(iterator->getCodePoint());
 			
-			iterator->moveToNext();
-		}
+		iterator->moveToNext();
 	}
 	
 	delete iterator;
@@ -67,50 +73,46 @@ const u16 TextBox::getCursorXPos() const {
 
 void TextBox::setText(const WoopsiString& text) {
 	_text.setText(text);
-	moveCursorToPosition(_text.getLength());
-	calculateTextPositionHorizontal();
-	calculateTextPositionVertical();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	repositionCursor(_text.getLength());
+	onTextChange();
 }
 
 void TextBox::appendText(const WoopsiString& text) {
 	_text.append(text);
-	moveCursorToPosition(_text.getLength());
-	calculateTextPositionHorizontal();
-	calculateTextPositionVertical();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	repositionCursor(_text.getLength());
+	onTextChange();
+}
+
+void TextBox::removeText(const u32 startIndex) {
+	_text.remove(startIndex);
+	repositionCursor(startIndex);
+	onTextChange();
+}
+
+void TextBox::removeText(const u32 startIndex, const u32 count) {
+	_text.remove(startIndex, count);
+	repositionCursor(startIndex);
+	onTextChange();
 }
 
 void TextBox::insertText(const WoopsiString& text, const u32 index) {
-	// Get current text length - use this later to quickly get the length
-	// of the inserted string to shift the cursor around
-	u32 oldLen = _text.getLength();
-
 	_text.insert(text, index);
-	
-	// Get the new string length and use it to calculate the length
-	// of the inserted string
-	u32 insertLen = _text.getLength() - oldLen;
-
-	moveCursorToPosition(index + insertLen);
-	calculateTextPositionHorizontal();
-	calculateTextPositionVertical();
-	redraw();
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	repositionCursor(index + text.getLength());
+	onTextChange();
 }
 
 void TextBox::insertTextAtCursor(const WoopsiString& text) {
 	insertText(text, getCursorPosition());
 }
 
-void TextBox::moveCursorToPosition(const u32 position) {
+void TextBox::repositionCursor(const u32 position) {
 	u32 len = _text.getLength();
 	_cursorPos = len >= position ? position : len;
-	
-	calculateFirstCharIndex();
+}
 
+void TextBox::moveCursorToPosition(const u32 position) {
+	repositionCursor(position);
+	calculateTextPositionHorizontal();
 	redraw();
 }
 
@@ -128,137 +130,83 @@ void TextBox::hideCursor() {
 	}
 }
 
-void TextBox::calculateFirstCharIndex() {
-	
-	// Ensure firstCharIndex is not greater than the cursor pos.
-	// Can exit early if this occurs, as it means that the cursor has moved to
-	// the left
-	if (_cursorPos < _firstCharIndex) {
-		_firstCharIndex = _cursorPos;
-		return;
-	}
-	
-	// Calculate the available client space
-	Rect rect;
-	getClientRect(rect);
-	
-	// Calculate the width of the cursor
-	u16 cursorWidth = 0;
-	
-	if (_cursorPos >= _text.getLength()) {
-		cursorWidth = getFont()->getCharWidth(' ');
-	} else {
-		cursorWidth = getFont()->getCharWidth(_text.getCharAt(_cursorPos));
-	}
-	
-	// Calculate the width of the visible string up to the cursor
-	u16 stringToCursorWidth = getFont()->getStringWidth(_text, _firstCharIndex, _cursorPos - _firstCharIndex);
-	
-	// Early exit if cursor is on screen
-	if (stringToCursorWidth + cursorWidth < rect.width) return;
-	
-	StringIterator* iterator = _text.newStringIterator();
-	iterator->moveTo(_firstCharIndex);
-	
-	// Cursor is off right side of text box, so increase start character until 
-	// the cursor is back on screen
-	while (stringToCursorWidth + cursorWidth > rect.width) {
-		stringToCursorWidth -= getFont()->getCharWidth(iterator->getCodePoint());
-		_firstCharIndex++;
+void TextBox::moveCursorToClickLocation(s16 x, s16 y) {
+
+	// Work out where in the string the click co-ordinates represent
+	// and move the cursor to that location
+
+	if (_text.getLength() > 0) {
+
+		// Transform click co-ordinates to gadget-space co-ordinates
+		s16 clickX = x - getX() - _borderSize.left;
+
+		s16 charX = _textX;
+
+		// Locate the first character that comes after the clicked character
+		StringIterator* iterator = _text.newStringIterator();
+
+		while (charX < clickX) {
+			charX += getFont()->getCharWidth(iterator->getCodePoint());
+			
+			if (!iterator->moveToNext()) break;
+		}
 		
-		if (!iterator->moveToNext()) break;
-	}
-		
-	delete iterator;
-}
+		u32 index = iterator->getIndex();
 
-// Client rect is 1px smaller than usual as the border is 2 pixels thick
-void TextBox::getClientRect(Rect& rect) const {
-	if (!_flags.borderless) {
-		rect.x = 2;
-		rect.y = 2;
-		rect.width = _width - 4;
-		rect.height = _height - 4;
-	} else {
-		rect.x = 0;
-		rect.y = 0;
-		rect.width = _width;
-		rect.height = _height;
-	}
-}
-
-bool TextBox::click(s16 x, s16 y) {
-	if (Gadget::click(x, y)) {
-
-		if (isEnabled()) {
-			// Work out where in the string the textbox was clicked and move the cursor to that
-			// location
-
-			if (_text.getLength() > 0) {
-				s16 clickX = x - getX();
-				s16 charX = _textX;
-
-				// Locate the first character that comes after the clicked character
-				StringIterator* iterator = _text.newStringIterator();
-				iterator->moveTo(_firstCharIndex);
-
-				while (charX < clickX) {
-					charX += getFont()->getCharWidth(iterator->getCodePoint());
-					
-					if (!iterator->moveToNext()) break;
-				}
-
-				// Move back to the clicked character if we've moved past it
-				if (charX > clickX) {
-					iterator->moveToPrevious();
-				}
-
-				moveCursorToPosition(iterator->getIndex());
-
-				delete iterator;
-			}
+		// Move back to the clicked character if we've moved past it
+		if (charX > clickX) {
+			iterator->moveToPrevious();
+			index = iterator->getIndex();
+		} else if (charX < clickX) { 
+			
+			// Move past end of string if click is after the text
+			index++;
 		}
 
-		return true;
-	}
+		moveCursorToPosition(index);
 
-	return false;
+		delete iterator;
+	}
 }
 
-bool TextBox::keyPress(KeyCode keyCode) {
-	if (Gadget::keyPress(keyCode)) {
-		if (keyCode == KEY_CODE_LEFT) {
-			if (_cursorPos > 0) {
-				moveCursorToPosition(_cursorPos - 1);
-			}
-		} else if (keyCode == KEY_CODE_RIGHT) {
-			if (_cursorPos < _text.getLength()) {
-				moveCursorToPosition(_cursorPos + 1);
-			}
-		}
-
-		return true;
-	}
-
-	return false;
+void TextBox::onClick(s16 x, s16 y) {
+	moveCursorToClickLocation(x, y);
 }
 
-bool TextBox::keyRepeat(KeyCode keyCode) {
-	if (Gadget::keyRepeat(keyCode)) {
-		if (keyCode == KEY_CODE_LEFT) {
-			if (_cursorPos > 0) {
-				moveCursorToPosition(_cursorPos - 1);
-			}
-		} else if (keyCode == KEY_CODE_RIGHT) {
-			if (_cursorPos < _text.getLength()) {
-				moveCursorToPosition(_cursorPos + 1);
-			}
+void TextBox::onDoubleClick(s16 x, s16 y) {
+	woopsiApplication->showKeyboard(this);
+}
+
+void TextBox::onKeyPress(KeyCode keyCode) {
+	if (keyCode == KEY_CODE_LEFT) {
+		if (_cursorPos > 0) {
+			moveCursorToPosition(_cursorPos - 1);
 		}
-
-		return true;
+	} else if (keyCode == KEY_CODE_RIGHT) {
+		if (_cursorPos < _text.getLength()) {
+			moveCursorToPosition(_cursorPos + 1);
+		}
 	}
+}
 
-	return false;
+void TextBox::onKeyRepeat(KeyCode keyCode) {
+	if (keyCode == KEY_CODE_LEFT) {
+		if (_cursorPos > 0) {
+			moveCursorToPosition(_cursorPos - 1);
+		}
+	} else if (keyCode == KEY_CODE_RIGHT) {
+		if (_cursorPos < _text.getLength()) {
+			moveCursorToPosition(_cursorPos + 1);
+		}
+	}
+}
+
+void TextBox::handleKeyPressEvent(const GadgetEventArgs& e) {
+	onKeyPress(e.getKeyCode());
+}
+
+void TextBox::handleKeyRepeatEvent(const GadgetEventArgs& e) {
+	onKeyRepeat(e.getKeyCode());
 }
 
 void TextBox::calculateTextPositionHorizontal() {
@@ -267,24 +215,91 @@ void TextBox::calculateTextPositionHorizontal() {
 	// ignore alignment and align left
 	u16 stringWidth = getFont()->getStringWidth(_text);
 	
+	// Add the width of a blank space to the width to ensure that we can
+	// see the cursor
+	if (_showCursor) {
+		stringWidth += getFont()->getCharWidth(' ');
+	}
+	
 	Rect rect;
 	getClientRect(rect);
 	
-	if (stringWidth > rect.width) {
-		_textX = _padding;
+	// Use alignment options if cursor is hidden or string is smaller
+	// than textbox
+	if ((stringWidth < rect.width) || (!_showCursor)) {
+
+		// Text not wider than box, so apply alignment options
+		switch (_hAlignment) {
+			case TEXT_ALIGNMENT_HORIZ_CENTRE:
+				_textX = (rect.width - stringWidth) >> 1;
+				break;
+			case TEXT_ALIGNMENT_HORIZ_LEFT:
+				_textX = rect.x;
+				break;
+			case TEXT_ALIGNMENT_HORIZ_RIGHT:
+				_textX = rect.width - stringWidth;
+				break;
+		}
+
 		return;
 	}
-	
-	// Text not wider than box, so apply alignment options
-	switch (_hAlignment) {
-		case TEXT_ALIGNMENT_HORIZ_CENTRE:
-			_textX = (_width - stringWidth) >> 1;
-			break;
-		case TEXT_ALIGNMENT_HORIZ_LEFT:
-			_textX = _padding;
-			break;
-		case TEXT_ALIGNMENT_HORIZ_RIGHT:
-			_textX = _width - stringWidth - _padding;
-			break;
+
+	// Text is wider than box - view needs to follow the cursor
+
+	// If cursor is at the end of the text, we can just right-align
+	if (_cursorPos == _text.getLength()) {
+		_textX = rect.width - stringWidth;
+		return;
 	}
+
+	// Work out the co-ordinates of the left edge of the cursor
+	s32 cursorX1 = getCursorXPos();
+
+	// Work out the co-ordinates of the right edge of the cursor
+	s32 cursorX2 = cursorX1 + getCursorWidth();
+
+	// Ensure that the cursor is on-screen
+	if (cursorX1 + _textX < 0) {
+
+		// Cursor is off left side of screen, so adjust _textX
+		_textX = 0 - cursorX1;
+	} else if (cursorX2 + _textX > rect.width) {
+
+		// Cursor is off right side of screen, so adjust _textX
+		_textX = rect.width - cursorX2;
+	}
+}
+
+void TextBox::handleKeyboardPressEvent(const KeyboardEventArgs& e) {
+	processKey(e.getKey());
+}
+
+void TextBox::handleKeyboardRepeatEvent(const KeyboardEventArgs& e) {
+	processKey(e.getKey());
+}
+
+void TextBox::processKey(const WoopsiKey* key) {
+
+	if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
+
+		if (_cursorPos == 0) return;
+
+		// Delete the character in front of the cursor
+		removeText(_cursorPos - 1, 1);
+	} else if (key->getKeyType() == WoopsiKey::KEY_RETURN) {
+
+		// Close the keyboard
+		woopsiApplication->hideKeyboard();
+
+		// Fire an action event
+		_gadgetEventHandlers->raiseActionEvent();
+	} else if (key->getValue() != '\0') {
+
+		// Not modifier; append value
+		insertTextAtCursor(key->getValue());
+	} 
+}
+
+void TextBox::onBlur() {
+	redraw();
 }

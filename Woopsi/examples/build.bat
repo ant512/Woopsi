@@ -4,10 +4,6 @@ cd bitmapdrawing
 make clean
 make
 
-cd ../bitmaploader
-make clean
-make
-
 cd ../calendar
 make clean
 make
@@ -32,6 +28,14 @@ cd ../filerequester
 make clean
 make
 
+cd ../fire
+make clean
+make
+
+cd ../freetype
+make clean
+make
+
 cd ../gadgetdrawing
 make clean
 make
@@ -48,6 +52,10 @@ cd ../keyboard
 make clean
 make
 
+cd ../keyboard_textbox
+make clean
+make
+
 cd ../packedfonts
 make clean
 make
@@ -57,10 +65,6 @@ make clean
 make
 
 cd ../scrolltest
-make clean
-make
-
-cd ../skins
 make clean
 make
 

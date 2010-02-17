@@ -47,7 +47,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Return the list of foreground regions.  These are regions that represent the entire
-		 * visible surface of the gadget, including any regions that are actually overlapped by
+		 * visible surface of the gadget - that is, any regions not overlapped by ancestors or
+		 * sublings of the gadget - including any regions that are actually overlapped by
 		 * child gadgets.
 		 * @return The list of foreground regions.
 		 */

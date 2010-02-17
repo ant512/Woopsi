@@ -62,54 +62,6 @@ namespace WoopsiUI {
 		virtual void setBorderless(bool isBorderless);
 
 		/**
-		 * Gets the size of the left, right and bottom borders.
-		 * @return The size of the borders.
-		 */
-		virtual const u8 getBorderSize() const;
-
-		/**
-		 * Gets the height of the title bar.
-		 * @return The height of the title bar.
-		 */
-		virtual const u8 getTitleHeight() const;
-
-		/**
-		 * Insert the properties of the space within this gadget that is available
-		 * for children into the rect passed in as a parameter.
-		 * All co-ordinates are relative to this gadget.
-		 * @param rect Reference to a rect to populate with data.
-		 */
-		virtual void getClientRect(Rect& rect) const;
-
-		/**
-		 * Click this gadget at the supplied co-ordinates.
-		 * @param x X co-ordinate of the click.
-		 * @param y Y co-ordinate of the click.
-		 * @return True if the click was successful.
-		 */
-		virtual bool click(s16 x, s16 y);
-
-		/**
-		 * Give the gadget focus.
-		 * @return True if the gadget received focus correctly.
-		 */
-		virtual bool focus();
-
-		/**
-		 * Remove focus from the gadget.
-		 * @return True if the gadget lost focus correctly.
-		 */
-		virtual bool blur();
-
-		/**
-		 * Resize the gadget to the new dimensions.
-		 * @param width The new width.
-		 * @param height The new height.
-		 * @return True if the resize was successful.
-		 */
-		virtual bool resize(u16 width, u16 height);
-
-		/**
 		 * Handle events fired by decoration gadgets.
 		 * @param e Event arguments to process.
 		 */
@@ -180,9 +132,36 @@ namespace WoopsiUI {
 		WindowBorderButton* _depthButton;				/**< Pointer to the depth button */
 
 		/**
+		 * Resize the gadget to the new dimensions.
+		 * @param width The new width.
+		 * @param height The new height.
+		 */
+		virtual void onResize(u16 width, u16 height);
+		
+		/**
+		 * Raises the window to the top of the stack and redraws its borders.
+		 */
+		virtual void onFocus();
+		
+		/**
+		 * Redraws the borders.
+		 */
+		virtual void onBlur();
+
+		/**
 		 * Create the window's border.
 		 */
 		virtual void createBorder();
+		
+		/**
+		 * Redraw the borders.
+		 */
+		virtual void redrawBorder();
+		
+		/**
+		 * Resize the title bar to fit the current window state.
+		 */
+		virtual void resizeTitleBarToFit();
 
 		/**
 		 * Destructor.

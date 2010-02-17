@@ -14,10 +14,7 @@ TestPanel::TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle
 	_flags.draggable = true;
 };
 		
-void TestPanel::draw(Rect clipRect) {
-
-	// Create graphics port to draw to
-	GraphicsPort* port = newInternalGraphicsPort(clipRect);
+void TestPanel::drawContents(GraphicsPort* port) {
 
 	// Draw background
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
@@ -26,10 +23,4 @@ void TestPanel::draw(Rect clipRect) {
 	// x and y co-ordinates
 	port->drawText(30 + getCanvasX(), 60 + getCanvasY(), getFont(), "Scrolling Panel Test", 0, 20, woopsiRGB(0, 0, 15));
 	port->drawFilledRect(200 + getCanvasX(), 90 + getCanvasY(), 100, 100, woopsiRGB(15, 0, 0));
-	
-	// Draw border
-	port->drawBevelledRect(0, 0, _width, _height);
-	
-	// Clean up
-	delete port;
 };
