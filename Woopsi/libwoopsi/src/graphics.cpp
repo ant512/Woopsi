@@ -451,7 +451,7 @@ bool Graphics::popStack(s16* x, s16* y, WoopsiArray<s32>* stack) {
 
 void Graphics::pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) {
 	stack->push_back(x + (y * _width));
-} 
+}
 
 //Draw bitmap to the internal bitmap
 void Graphics::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY) {
