@@ -13,12 +13,17 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
-	_padding = 2;
 	_topRow = 0;
+
+	_borderSize.top = 3;
+	_borderSize.right = 3;
+	_borderSize.bottom = 3;
+	_borderSize.left = 3;
 
 	Rect rect;
 	getClientRect(rect);
-	_text = new Text(getFont(), "", rect.width - (_padding << 1));
+	_text = new Text(getFont(), "", rect.width);
+	_canvasWidth = rect.width;
 
 	_flags.draggable = true;
 	_maxRows = maxRows;
@@ -91,8 +96,6 @@ void MultiLineTextBox::drawTextTop(GraphicsPort* port) {
 
 void MultiLineTextBox::drawContents(GraphicsPort* port) {
 
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
-
 	// Always use top alignment if the number of rows of text exceeds or is
 	// equal to the number of visible rows
 	if (_visibleRows <= _text->getLineCount()) {
@@ -106,6 +109,8 @@ void MultiLineTextBox::drawContents(GraphicsPort* port) {
 }
 
 void MultiLineTextBox::drawBorder(GraphicsPort* port) {
+
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
@@ -171,11 +176,11 @@ u8 MultiLineTextBox::getRowX(s32 row) {
 	// Calculate horizontal position
 	switch (_hAlignment) {
 		case TEXT_ALIGNMENT_HORIZ_CENTRE:
-			return ((rect.width - (_padding << 1)) - rowPixelWidth) >> 1;
+			return (rect.width - rowPixelWidth) >> 1;
 		case TEXT_ALIGNMENT_HORIZ_LEFT:
-			return _padding;
+			return rect.x;
 		case TEXT_ALIGNMENT_HORIZ_RIGHT:
-			return rect.width - rowPixelWidth - _padding;
+			return rect.width - rowPixelWidth;
 	}
 
 	// Will never be reached
@@ -214,10 +219,10 @@ s16 MultiLineTextBox::getRowY(s32 row) {
 			textY = startPos + textY;
 			break;
 		case TEXT_ALIGNMENT_VERT_TOP:
-			textY = _padding + (row * _text->getLineHeight());
+			textY = rect.x + (row * _text->getLineHeight());
 			break;
 		case TEXT_ALIGNMENT_VERT_BOTTOM:
-			textY = rect.height - (((_text->getLineCount() - row) * _text->getLineHeight())) - _padding;
+			textY = rect.height - (((_text->getLineCount() - row) * _text->getLineHeight()));
 			break;
 	}
 
@@ -229,7 +234,7 @@ void MultiLineTextBox::calculateVisibleRows() {
 	Rect rect;
 	getClientRect(rect);
 
-	_visibleRows = (rect.height - (_padding << 1)) / _text->getLineHeight();
+	_visibleRows = rect.height / _text->getLineHeight();
 }
 
 void MultiLineTextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
@@ -254,12 +259,12 @@ void MultiLineTextBox::setText(const WoopsiString& text) {
 	if (_text->getLineCount() > _maxRows) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
 
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 	}
 
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 
 		// Scroll to bottom of new text
 		jump(0, -(_canvasHeight - _height));
@@ -278,12 +283,12 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 	if (_text->getLineCount() > _maxRows) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
 
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 	}
 
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 
 		// Scroll to bottom of new text
 		jump(0, -(_canvasHeight - _height));
@@ -301,7 +306,7 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 
 		// Scroll to bottom of new text
 		jump(0, -(_canvasHeight - _height));
@@ -319,7 +324,7 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 
 		// Scroll to bottom of new text
 		jump(0, -(_canvasHeight - _height));
@@ -338,12 +343,12 @@ void MultiLineTextBox::setFont(FontBase* font) {
 	if (_text->getLineCount() > _maxRows) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
 
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 	}
 
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 
 		// Scroll to bottom of new text
 		jump(0, -(_canvasHeight - _height));
@@ -410,13 +415,13 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 	if (_text->getLineCount() > _maxRows) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
 
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 		raiseEvent = true;
 	}
 
 	// Update canvas height
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 	}
 
 	if (raiseEvent) _gadgetEventHandlers->raiseValueChangeEvent();
@@ -472,7 +477,7 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 
 	// Update max scroll value
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight() + (_padding << 1);
+		_canvasHeight = _text->getPixelHeight();
 
 		// Scroll to bottom of new text
 		jump(0, -(_canvasHeight - _height));

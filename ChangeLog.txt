@@ -67,8 +67,8 @@ Change Log
       context menus bleeding through from a lower screen/window to a higher
       screen/window).
     - Refactored Woopsi::handleKeys() into handleKeys() and handleKey().
-    - Removed _padding variable from Label, Requester, FileRequester and Alert
-      classes; switched to using border sizes instead.
+    - Removed _padding variable from Label, Requester, FileRequester, Alert and
+      MultiLineTextBox classes; switched to using border sizes instead.
     - Tidied up CycleButton, BitmapButton, AnimButton, Button and TextBox
       drawing methods.
     - WoopsiKeyboard no longer inherits from AmigaWindow for greater

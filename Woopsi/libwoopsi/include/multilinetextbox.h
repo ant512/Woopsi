@@ -191,7 +191,6 @@ namespace WoopsiUI {
 		u8 _visibleRows;					/**< Total number of rows that the textbox can display at once */
 		s16 _maxRows;						/**< Maximum number of rows that the textbox should buffer */
 		u32 _topRow;						/**< Index of the top row of text currently displayed */
-		u8 _padding;						/**< Padding around the text in pixels */
 		TextAlignmentHoriz _hAlignment;		/**< Horizontal alignment of the text */
 		TextAlignmentVert _vAlignment;		/**< Vertical alignment of the text */
 		s32 _cursorPos;						/**< Position of the cursor within the string */
