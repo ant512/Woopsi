@@ -178,7 +178,7 @@ u8 MultiLineTextBox::getRowX(s32 row) {
 		case TEXT_ALIGNMENT_HORIZ_CENTRE:
 			return (rect.width - rowPixelWidth) >> 1;
 		case TEXT_ALIGNMENT_HORIZ_LEFT:
-			return rect.x;
+			return 0;
 		case TEXT_ALIGNMENT_HORIZ_RIGHT:
 			return rect.width - rowPixelWidth;
 	}

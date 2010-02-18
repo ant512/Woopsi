@@ -92,6 +92,8 @@ Change Log
       itself.
     - GraphicsPort::getClipRect() returns a rect relative to the GraphicsPort.
     - Screen::onDrag() uses woopsiApplication's GraphicsPort instead of its own.
+    - MultiLineTextBox rendering problems when padding (now bordersize) greater
+      than 2 fixed.
 
   New Features:
     - Added goToParent() and goToRoot() to FilePath class.
