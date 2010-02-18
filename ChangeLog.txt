@@ -94,6 +94,7 @@ Change Log
     - Screen::onDrag() uses woopsiApplication's GraphicsPort instead of its own.
     - MultiLineTextBox rendering problems when padding (now bordersize) greater
       than 2 fixed.
+    - MultiLineTextBox top vertical alignment works correctly.
 
   New Features:
     - Added goToParent() and goToRoot() to FilePath class.

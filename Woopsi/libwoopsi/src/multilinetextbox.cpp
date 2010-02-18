@@ -219,7 +219,7 @@ s16 MultiLineTextBox::getRowY(s32 row) {
 			textY = startPos + textY;
 			break;
 		case TEXT_ALIGNMENT_VERT_TOP:
-			textY = rect.x + (row * _text->getLineHeight());
+			textY = row * _text->getLineHeight();
 			break;
 		case TEXT_ALIGNMENT_VERT_BOTTOM:
 			textY = rect.height - (((_text->getLineCount() - row) * _text->getLineHeight()));

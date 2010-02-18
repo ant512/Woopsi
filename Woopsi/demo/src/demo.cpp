@@ -135,7 +135,7 @@ void Demo::startup() {
 	//ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "1\n2\n3\n4\n5", Gadget::GADGET_DRAGGABLE, 0);
 
 	scrollingBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
-	//scrollingBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_BOTTOM);
+	//scrollingBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 	textWindow->addGadget(scrollingBox);
 
 	scrollingBox->addContextMenuItem("Context Menu 2", 0);
