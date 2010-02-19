@@ -32,15 +32,6 @@ Woopsi
   their applications, decreasing the tedious amount of GUI code that they have
   to write.
   
-  The system itself is loosely based on the Commodore Amiga's "Intuition"
-  windowing system.  The look-and-feel of the system intentionally resembles the
-  old Amiga system.
-  
-  The windowing system is *not* intended to be a complete desktop environment.
-  It is *not* going to be a DS version of GNOME, KDE or Windows Explorer.  It
-  will simply provide a system for rapidly building window and gadget-based
-  interfaces.
-  
 
 Features
 --------
@@ -71,28 +62,26 @@ Features
     - File requesters;
     - Cycle buttons;
     - Keyboard;
-    - Calendar.
-  - Skinnable screens and windows;
+    - Calendar;
+    - Timer, for VBL-driven effects;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
   - Built-in debug console;
   - All gadgets can become modal;
   - Intelligent, optimised gadget drawing and erasing;
   - Event system;
-  - Depth sorting;
   - Automatic gadget garbage collection;
   - Complete API for constructing new gadgets:
     - Extensible font system that supports:
       - Fixed-width, bit-packed monochrome fonts;
       - Fixed-width, 16-bit colour bitmap fonts;
-      - Compressed proportional fonts (monochrome and 16-bit).
+      - Compressed proportional fonts (monochrome and 16-bit);
+      - FreeType library integration for TTF/OTF/etc fonts with antialiasing.
     - Text manipulation, including wrapping functions and width calculation;
     - Animation class with support for variable framerates and standard/pingpong
       looping;
     - Bitmap class for 16-bit bitmap image manipulation;
-    - Loading and saving of 24-bit BMP images;
-    - GraphicsPort class providing depth-sorted, clipped, hardware-accelerated
-      drawing functions:
+    - Graphics class providing clipped, DMA-accelerated drawing functions:
       - Pixel plotting;
       - Optimised horizontal/vertical lines;
       - Bresenham omni-directional lines;
@@ -100,25 +89,27 @@ Features
       - Filled and unfilled circles;
       - Bitmap blitting;
       - Bitmap blitting with transparent colour key;
-      - XOR horizontal/vertical lines and pixel plotting;
+      - Bitmap blitting in greyscale;
+      - XOR horizontal/vertical lines, pixels, rectangles and filled rectangles;
       - Flood fill;
       - Region scrolling;
       - Region copying;
-      - Region dimming.
+      - Region dimming;
+      - Region conversion to greyscale;
+      - Text rendering.
     - Dynamic array container class and associated iterator class.
     - Date class.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
   - Non pre-emptive, FIFO multitasking - each gadget runs simultaneously;
-  - Uses 16-bit framebuffer display mode;
-  - Unicode strings using UTF-8 encoding with iterator class.
-  - Multiple build options:
-    - Standard libnds build;
+  - Unicode strings encoded with UTF-8;
+  - Two build options:
+    - Standard libwoopsi.a library for use with DS projects;
     - SDL layer to facilitate native compilation on non-DS platforms and
-      aid porting;
-    - libwoopsi.a library.
+      aid porting/debugging.
   - Suite of supporting Windows tools:
     - bmp2font, to convert BMPs to Woopsi fonts;
+    - font2bmp, to convert Windows fonts to BMP images;
     - bmp2bmp, to convert BMPs to Woopsi bitmaps;
     - font2font, to convert Windows fonts to Woopsi fonts.
 
@@ -133,15 +124,6 @@ Requirements
   Express project, but the Woopsi library and all examples and tests are built
   from the command line.
    
-  Woopsi was developed using:
-  
-  - devkitARM
-  - VC++ 2005 Express
-  - VC++ 2008 Express
-  - PALib
-  - Xcode
-  - SDL
-  
 
 SDL Compatibility
 -----------------
@@ -155,15 +137,22 @@ SDL Compatibility
   - Copy the "libwoopsi" source folder into your SDL project;
   - Copy the contents of the "sdl" folder from this archive into your copy of
      the "libwoopsi/src" folder.
-     
-  Assuming you set up the initial project correctly, you can now develop Woopsi
-  applications using SDL.
+
+  To use the FreeType integration of Woopsi with SDL, you will need to download,
+  compile and install FreeType for your chosen platform.  See the "Credits and
+  Acknowledgements" section below for the URL.
   
+  If you do not want to download FreeType, or cannot compile it for your
+  platform (I confess that I have not tried this), delete any .h and .cpp files
+  from the libwoopsi/src and libwoopsi/include folders that begin with
+  the word "freetype".  This will prevent you from using TTF/OTF/etc fonts, but
+  will allow you to develop the core of your GUI using SDL.
+     
   Note that you should not use the Woopsi makefiles, as these are only relevant
   to DS builds of Woopsi.
   
   
-Credits and Acknowlegements
+Credits and Acknowledgements
 ---------------------------
 
   - Coding and design                                - Antony Dzeryn
