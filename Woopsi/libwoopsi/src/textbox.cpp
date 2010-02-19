@@ -268,6 +268,13 @@ void TextBox::calculateTextPositionHorizontal() {
 		// Cursor is off right side of screen, so adjust _textX
 		_textX = rect.width - cursorX2;
 	}
+
+	// We need to ensure that the text cannot be positioned in
+	// such a way that there is a gap between the end of the
+	// text and the right edge of the textbox
+	if (stringWidth + _textX < rect.width) {
+		_textX = rect.width - stringWidth;
+	}
 }
 
 void TextBox::handleKeyboardPressEvent(const KeyboardEventArgs& e) {
