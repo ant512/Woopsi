@@ -9,6 +9,12 @@ Installation
       devkitPro folder.  In Windows, assuming all of the defaults were chosen at
       install time, this will be "C:\devkitPro"
 
+  3.  Copy the folder "Woopsi/libs/libfreetype" from this directory to the root
+      of the devkitPro folder.
+
+      Your devkitPro folder should now contain a "libwoopsi" folder and a
+      "libfreetype" folder.
+
   All done!
   
   
@@ -20,4 +26,4 @@ Installation
   2.  Type "make".
   
   3.  Open the "Woopsi/template/Release/template.nds" ROM file in a DS
-      emulator or copy it to your flash cart.
+      emulator or copy it to your flash cart and load it up.
