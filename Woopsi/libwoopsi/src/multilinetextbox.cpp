@@ -139,7 +139,7 @@ void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 			StringIterator* iterator = _text->newStringIterator();
 			iterator->moveTo(_text->getLineStartIndex(cursorRow));
 			
-			// Sum the width of each char in the row to find the x co-ord 
+			// Sum the width of each char in the row to find the x co-ord
 			for (s32 i = 0; i < cursorLineOffset; ++i) {
 				cursorX += getFont()->getCharWidth(iterator->getCodePoint());
 				iterator->moveToNext();

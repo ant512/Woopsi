@@ -56,18 +56,18 @@ typedef struct PAD {
  * Struct containing the length of time that each button has been held down.
  */
 typedef struct PadHeldTimeStruct {
-	u32 A;
-	u32 B;
-	u32 Select;
-	u32 Start;
-	u32 Right;
-	u32 Left;
-	u32 Up;
-	u32 Down;
-	u32 R;
-	u32 L;
-	u32 X;
-	u32 Y;
+	u32 A;			/**< A button */
+	u32 B;			/**< B button */
+	u32 Select;		/**< Select button */
+	u32 Start;		/**< Start button */
+	u32 Right;		/**< Right button */
+	u32 Left;		/**< Left button */
+	u32 Up;			/**< Up button */
+	u32 Down;		/**< Down button */
+	u32 R;			/**< R button */
+	u32 L;			/**< L button */
+	u32 X;			/**< X button */
+	u32 Y;			/**< Y button */
 } PadHeldTime;
 
 /**

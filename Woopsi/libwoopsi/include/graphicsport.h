@@ -17,39 +17,17 @@ namespace WoopsiUI {
 	 * provides drawing tools that are clipped to the visible regions of a
 	 * gadget.
 	 *
-	 * All drawing co-ordinates are in GraphicsPort space.  GraphicsPort space
-	 * is as the region within the x, y, width and height parameters given to
-	 * the GraphicsPort via its constructor.  These values should be relative to
-	 * the gadget.  The getClipRect() method returns the rect in GraphicsPort
+	 * All drawing co-ordinates should be submitted in GraphicsPort space.
+	 * GraphicsPort space is relative to the x and y co-ordinates given to an
+	 * instance of the GraphicsPort class via its constructor.  The  width and
+	 * height parameters define the size of that space.  The x and y
+	 * co-ordinates submitted to the constructor should be relative to the
+	 * gadget.  The getClipRect() method returns the rect in GraphicsPort
 	 * space.
 	 *
 	 * Internally, all co-ordinates are converted to Woopsi-space for
-	 * manipulation.  In Woopsi-space, the top-left pixel of the bottom physical
-	 * screen has the co-ordinate (0,0).  Its bottom-right pixel has the
-	 * co-ordinate (255,191).  The top display has the co-ordinates (0,512) to
-	 * (255,703).
-	 *
-	 * Graphically:
-	 *              
-	 * |----------| 0     The bottom display is considered to be the main screen
-	 * | Bottom   |       which is why co-ords start at (0,0) for this screen.
-	 * | Display  |
-	 * |----------| 192   The deadzone exists to enable screens to be dragged
-	 * | Deadzone |       downwards without overlapping gadgets in the bottom
-	 * |          |       screen.
-	 * |          |
-	 * |          |
-	 * |          |
-	 * |----------| 512   The top display starts at 512 so that it is aligned to
-	 * | Top      |       a y co-ordinate that is a power of 2.
-	 * | Display  |
-	 * |----------| 704   There is no second deadzone as there are no more
-	 *                    lower screens.
-	 *
-	 * However, when drawing all co-ordinates are converted from Woopsi-space to
-	 * framebuffer-space.  In this co-ordinate system, (0,0) is the top-left
-	 * pixel of the framebuffer and (255,191) is the bottom-right pixel.  This
-	 * co-ordinate system is used for both the top and bottom framebuffers.
+	 * manipulation. However, when drawing all co-ordinates are converted from
+	 * Woopsi-space to framebuffer-space.
 	 *
 	 * This class can only draw to one of the DS' framebuffers.  This means that
 	 * a gadget cannot span both of the DS' screens.  If a gadget attempts to
