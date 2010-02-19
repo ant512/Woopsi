@@ -55,6 +55,9 @@ Credits and Acknowlegements
                                                      - Nintendo
                                                      - R. J. Michal
 
+  Woopsi uses the FreeType library for advanced font support.  See
+  http://www.freetype.org for more information.
+
 
 Links
 -----
@@ -62,7 +65,6 @@ Links
   - http://ant.simianzombie.com                      - DS development blog
   - http://ant.simianzombie.com/forum                - Woopsi forum
   - http://www.sourceforge.net/projects/woopsi       - Woopsi SourceForge page
-  - http://woopsi.sourceforge.net                    - Woopsi documentation
 
 
 Email
