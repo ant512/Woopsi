@@ -370,26 +370,14 @@ void MultiLineTextBox::setFont(FontBase* font) {
 }
 
 const u16 MultiLineTextBox::getPageCount() const {
-
-	// Get client rect
-	Rect clientRect;
-	getClientRect(clientRect);
-
-	// Return number of screens of text
 	if (_visibleRows > 0) {
-		u16 pages = _text->getLineCount() / _visibleRows;
-
-		return pages + 1;
+		return (_text->getLineCount() / _visibleRows) + 1;
 	} else {
 		return 1;
 	}
 }
 
 const u16 MultiLineTextBox::getCurrentPage() const {
-
-	// Get client rect
-	Rect clientRect;
-	getClientRect(clientRect);
 
 	// Calculate the top line of text
 	s32 topRow = (-_canvasY / _text->getLineHeight());
@@ -511,36 +499,14 @@ void MultiLineTextBox::onClick(s16 x, s16 y) {
 }
 
 void MultiLineTextBox::onKeyPress(KeyCode keyCode) {
-	if (keyCode == KEY_CODE_LEFT) {
-		if (_cursorPos > 0) {
-			moveCursorToPosition(_cursorPos - 1);
-		}
-	} else if (keyCode == KEY_CODE_RIGHT) {
-		if (_cursorPos < (s32)_text->getLength()) {
-			moveCursorToPosition(_cursorPos + 1);
-		}
-	} else if (keyCode == KEY_CODE_UP) {
-		s16 cursorX = 0;
-		s16 cursorY = 0;
-
-		getCursorCoordinates(cursorX, cursorY);
-
-		s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
-
-		moveCursorToPosition(index);
-	} else if (keyCode == KEY_CODE_DOWN) {
-		s16 cursorX = 0;
-		s16 cursorY = 0;
-
-		getCursorCoordinates(cursorX, cursorY);
-
-		s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
-
-		moveCursorToPosition(index);
-	}
+	processPhysicalKey(keyCode);
 }
 
 void MultiLineTextBox::onKeyRepeat(KeyCode keyCode) {
+	processPhysicalKey(keyCode);
+}
+
+void MultiLineTextBox::processPhysicalKey(KeyCode keyCode) {
 	if (keyCode == KEY_CODE_LEFT) {
 		if (_cursorPos > 0) {
 			moveCursorToPosition(_cursorPos - 1);
@@ -624,14 +590,12 @@ s32 MultiLineTextBox::getRowContainingCoordinate(s16 y) const {
 	return row;
 }
 
-u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
-	
-	s32 row = getRowContainingCoordinate(y);
+u32 MultiLineTextBox::getCharIndexAtCoordinate(s16 x, s32 rowIndex) const {
 
 	// Locate the character within the row
-	s32 startIndex = _text->getLineStartIndex(row);
-	s32 stopIndex = _text->getLineLength(row);
-	s32 width = getRowX(row);
+	s32 startIndex = _text->getLineStartIndex(rowIndex);
+	s32 stopIndex = _text->getLineLength(rowIndex);
+	s32 width = getRowX(rowIndex);
 	s32 index = -1;
 
 	StringIterator* iterator = _text->newStringIterator();
@@ -668,7 +632,7 @@ u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
 	// We need to set it to the last character
 	if (index == -1) {
 		
-		if (row == _text->getLineCount() - 1) {
+		if (rowIndex == _text->getLineCount() - 1) {
 
 			// Index past the end point of the text, so return an index
 			// just past the text
@@ -683,4 +647,9 @@ u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
 	}
 
 	return index;
+}
+
+u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
+	s32 rowIndex = getRowContainingCoordinate(y);
+	return getCharIndexAtCoordinate(x, rowIndex);
 }

@@ -197,11 +197,20 @@ namespace WoopsiUI {
 		bool _showCursor;					/**< Set to true to make cursor visible */
 
 		/**
-		 * Get the co-ordinates of the cursor relative to the gadget.
+		 * Get the co-ordinates of the cursor relative to the text.
 		 * @param x Will be populated with the x co-ordinate of the cursor.
 		 * @param y Will be populated with the y co-ordinate of the cursor.
 		 */
 		virtual void getCursorCoordinates(s16& x, s16& y) const;
+
+		/**
+		 * Gets the index of the character at the specified x co-ordinate in the
+		 * specified row.
+		 * @param x X co-ordinate of the character.
+		 * @param rowIndex Index of the row containing the character.
+ 		 * @return The index of the character at the specified co-ordinate.
+		 */
+		virtual u32 getCharIndexAtCoordinate(s16 x, s32 rowIndex) const;
 
 		/**
 		 * Get the index of the character at the specified co-ordinates.
@@ -259,6 +268,13 @@ namespace WoopsiUI {
 		 * @param keyCode The key that repeated.
 		 */
 		virtual void onKeyRepeat(KeyCode keyCode);
+
+		/**
+		 * Handles physical button presses.  Moves the cursor
+		 * in the direction pressed.
+		 * @param KeyCode keyCode The key that was pressed.
+		 */
+		void processPhysicalKey(KeyCode keyCode);
 
 		/**
 		 * Handles keyboard key presses and key repeats.
