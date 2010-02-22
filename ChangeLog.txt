@@ -1,7 +1,15 @@
 Change Log
 ----------
 
-  V0.45
+  V0.46
+  
+  Fixes:
+  
+  
+  New Features:
+    - Cursor jumps to click point when MultiLineTextBox is clicked.
+
+  V0.45 (20100219)
   
   Fixes:
     - Fixed error when subclassing MultiLineTextBox.

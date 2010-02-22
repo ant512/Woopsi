@@ -136,6 +136,7 @@ void Demo::startup() {
 
 	scrollingBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
 	//scrollingBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
+	scrollingBox->showCursor();
 	textWindow->addGadget(scrollingBox);
 
 	scrollingBox->addContextMenuItem("Context Menu 2", 0);

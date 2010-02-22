@@ -165,7 +165,7 @@ void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 }
 
 // Calculate values for centralised text
-u8 MultiLineTextBox::getRowX(s32 row) {
+u8 MultiLineTextBox::getRowX(s32 row) const {
 
 	Rect rect;
 	getClientRect(rect);
@@ -187,7 +187,7 @@ u8 MultiLineTextBox::getRowX(s32 row) {
 	return 0;
 }
 
-s16 MultiLineTextBox::getRowY(s32 row) {
+s16 MultiLineTextBox::getRowY(s32 row) const {
 
 	s16 textY = 0;
 	s16 startPos = 0;
@@ -490,6 +490,12 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 
 void MultiLineTextBox::onClick(s16 x, s16 y) {
 	startDragging(x, y);
+
+	// Adjust x and y from screen co-ords to gadget co-ords
+	Rect rect;
+	getClientRect(rect);
+
+	moveCursorToPosition(getCharIndexAtCoordinates(x - getX() - rect.x - _canvasX, y - getY() - rect.y - _canvasY));
 }
 
 void MultiLineTextBox::onKeyPress(KeyCode keyCode) {
@@ -535,4 +541,95 @@ void MultiLineTextBox::processKey(const WoopsiKey* key) {
 		// Not modifier; append value
 		insertTextAtCursor(key->getValue());
 	} 
+}
+
+u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
+	
+	s32 row = -1;
+
+	// Locate the row containing the character
+	for (s32 i = 0; i < _text->getLineCount(); ++i) {
+
+		// Abort search if we've found the row below the y co-ordinate
+		if (getRowY(i) > y) {
+
+			if (i == 0) {
+
+				// If the co-ordinate is above the text, we return the top
+				// row
+				row = 0;
+			} else {
+
+				// Row within the text, so return the previous row - this is
+				// the row that contains the co-ordinate.
+				row = i - 1;
+			}
+
+			break;
+		}
+	}
+
+	// If the co-ordinate is below the text, row will still be -1.
+	// We need to set it to the last row
+	if (row == -1) row = _text->getLineCount() - 1;
+
+	// Locate the character within the row
+	s32 startIndex = _text->getLineStartIndex(row);
+	s32 stopIndex = _text->getLineLength(row);
+	s32 width = 0;
+	s32 index = -1;
+
+	// Ensure that we subtract the start position of the line from the x co-ord.
+	// This enables us to disregard the horizontal alignment option used.
+	x -= getRowX(row);
+
+	StringIterator* iterator = _text->newStringIterator();
+	iterator->moveTo(startIndex);
+
+	width = _text->getFont()->getCharWidth(iterator->getCodePoint());
+
+	for (s32 i = 0; i < stopIndex; ++i) {
+		if (width > x) {
+
+			if (i == 0) {
+
+				// If the co-ordinate is on the left of the text, we add nothing
+				// to the index
+				index = startIndex;
+			} else {
+
+				// Character within the row.
+				// This is the character that contains the co-ordinate.
+				index = startIndex + i;
+			}
+
+			break;
+		}
+
+		width += _text->getFont()->getCharWidth(iterator->getCodePoint());
+
+		iterator->moveToNext();
+	}
+
+	delete iterator;
+
+	// If the co-ordinate is past the last character, index will still be -1.
+	// We need to set it to the last character
+	if (index == -1) {
+		
+		if (row == _text->getLineCount() - 1) {
+
+			// Index past the end point of the text, so return an index
+			// just past the text
+			index = startIndex + stopIndex;
+		} else {
+
+			// Index at the end of a row, so return the last index of the
+			// row
+			index = startIndex + stopIndex - 1;
+		}
+
+	}
+
+	return index;
 }

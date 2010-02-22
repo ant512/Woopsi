@@ -74,7 +74,7 @@ void MultiLineTextBoxTest::startup() {
 	_textbox = new MultiLineTextBox(30, 30, 160, 105, "This is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text\nThis is some text", 0);
 	window->addGadget(_textbox);
 	_textbox->addGadgetEventHandler(this);
-	_textbox->setDoubleClickable(true);
+	//_textbox->setDoubleClickable(true);
 	_textbox->setRefcon(1);
 	_textbox->showCursor();
 

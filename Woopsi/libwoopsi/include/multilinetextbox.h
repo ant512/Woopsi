@@ -197,6 +197,14 @@ namespace WoopsiUI {
 		bool _showCursor;					/**< Set to true to make cursor visible */
 
 		/**
+		 * Get the index of the character at the specified co-ordinates.
+		 * @param x X co-ordinate of the character.
+		 * @param y Y co-ordinate of the character.
+		 * @return The index of the character at the specified co-ordinates.
+		 */
+		virtual u32 getCharIndexAtCoordinates(s16 x, s16 y) const;
+
+		/**
 		 * Draw the area of this gadget that falls within the clipping region.
 		 * Called by the redraw() function to draw all visible regions.
 		 * @param port The GraphicsPort to draw to.
@@ -250,7 +258,7 @@ namespace WoopsiUI {
 		 * @param row The index of the row.
 		 * @return The x co-ordinate of the row.
 		 */
-		u8 getRowX(s32 row);
+		u8 getRowX(s32 row) const;
 
 		/**
 		 * Gets the y position of the specified row of text based on the type of
@@ -258,7 +266,7 @@ namespace WoopsiUI {
 		 * @param row The row number to find the y co-ordinate of.
 		 * @return The y co-ordinate of the specified row of text.
 		 */
-		s16 getRowY(s32 row);
+		s16 getRowY(s32 row) const;
 
 		/**
 		 * Works out the number of visible rows within the textbox.
