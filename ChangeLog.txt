@@ -8,6 +8,7 @@ Change Log
   
   New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.
+    - D-pad up/down move cursor up/down in MultiLineTextBox.
 
   V0.45 (20100219)
   

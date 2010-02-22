@@ -197,12 +197,26 @@ namespace WoopsiUI {
 		bool _showCursor;					/**< Set to true to make cursor visible */
 
 		/**
+		 * Get the co-ordinates of the cursor relative to the gadget.
+		 * @param x Will be populated with the x co-ordinate of the cursor.
+		 * @param y Will be populated with the y co-ordinate of the cursor.
+		 */
+		virtual void getCursorCoordinates(s16& x, s16& y) const;
+
+		/**
 		 * Get the index of the character at the specified co-ordinates.
 		 * @param x X co-ordinate of the character.
 		 * @param y Y co-ordinate of the character.
 		 * @return The index of the character at the specified co-ordinates.
 		 */
 		virtual u32 getCharIndexAtCoordinates(s16 x, s16 y) const;
+
+		/**
+		 * Get the row containing the specified Y co-ordinate.
+		 * @param y Y co-ordinate to locate.
+		 * @return The index of the row containing the specified Y co-ordinate.
+		 */
+		s32 getRowContainingCoordinate(s16 y) const;
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

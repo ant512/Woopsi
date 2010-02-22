@@ -118,42 +118,54 @@ void MultiLineTextBox::drawBorder(GraphicsPort* port) {
 	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
 }
 
+void MultiLineTextBox::getCursorCoordinates(s16& x, s16& y) const {
+
+	u32 cursorRow = 0;
+
+	x = 0;
+	y = 0;
+
+	// Only calculate the cursor position if the cursor isn't at the start of the text
+	if (_cursorPos > 0) {
+
+		// Calculate the row in which the cursor appears
+		cursorRow = _text->getLineContainingCharIndex(_cursorPos);
+
+		// Cursor line offset gives us the distance of the cursor from the start of the line
+		u8 cursorLineOffset = _cursorPos - _text->getLineStartIndex(cursorRow);
+			
+		StringIterator* iterator = _text->newStringIterator();
+		iterator->moveTo(_text->getLineStartIndex(cursorRow));
+			
+		// Sum the width of each char in the row to find the x co-ord
+		for (s32 i = 0; i < cursorLineOffset; ++i) {
+			x += getFont()->getCharWidth(iterator->getCodePoint());
+			iterator->moveToNext();
+		}
+			
+		delete iterator;
+	}
+
+	// Add offset of row to calculated value
+	x += getRowX(cursorRow);
+
+	// Calculate y co-ord of the cursor
+	y = getRowY(cursorRow);
+}
+
 void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 
 	// Get the cursor co-ords
 	if (_showCursor) {
-		u32 cursorRow = 0;
 
-		u16 cursorX = 0;
+		s16 cursorX = 0;
 		s16 cursorY = 0;
 
-		// Only calculate the cursor position if the cursor isn't at the start of the text
-		if (_cursorPos > 0) {
+		getCursorCoordinates(cursorX, cursorY);
 
-			// Calculate the row in which the cursor appears
-			cursorRow = _text->getLineContainingCharIndex(_cursorPos);
-
-			// Cursor line offset gives us the distance of the cursor from the start of the line
-			u8 cursorLineOffset = _cursorPos - _text->getLineStartIndex(cursorRow);
-			
-			StringIterator* iterator = _text->newStringIterator();
-			iterator->moveTo(_text->getLineStartIndex(cursorRow));
-			
-			// Sum the width of each char in the row to find the x co-ord
-			for (s32 i = 0; i < cursorLineOffset; ++i) {
-				cursorX += getFont()->getCharWidth(iterator->getCodePoint());
-				iterator->moveToNext();
-			}
-			
-			delete iterator;
-		}
-
-		// Add offset of row (taking into account canvas co-ord and text alignment)
-		// to calculated value
-		cursorX += getRowX(cursorRow) + _canvasX;
-
-		// Calculate y co-ord of the cursor
-		cursorY = getRowY(cursorRow) + _canvasY;
+		// Adjust for canvas offsets
+		cursorX += _canvasX;
+		cursorY += _canvasY;
 
 		// Draw cursor
 		if ((u32)_cursorPos < _text->getLength()) {
@@ -507,6 +519,24 @@ void MultiLineTextBox::onKeyPress(KeyCode keyCode) {
 		if (_cursorPos < (s32)_text->getLength()) {
 			moveCursorToPosition(_cursorPos + 1);
 		}
+	} else if (keyCode == KEY_CODE_UP) {
+		s16 cursorX = 0;
+		s16 cursorY = 0;
+
+		getCursorCoordinates(cursorX, cursorY);
+
+		s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
+
+		moveCursorToPosition(index);
+	} else if (keyCode == KEY_CODE_DOWN) {
+		s16 cursorX = 0;
+		s16 cursorY = 0;
+
+		getCursorCoordinates(cursorX, cursorY);
+
+		s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
+
+		moveCursorToPosition(index);
 	}
 }
 
@@ -519,6 +549,24 @@ void MultiLineTextBox::onKeyRepeat(KeyCode keyCode) {
 		if (_cursorPos < (s32)_text->getLength()) {
 			moveCursorToPosition(_cursorPos + 1);
 		}
+	} else if (keyCode == KEY_CODE_UP) {
+		s16 cursorX = 0;
+		s16 cursorY = 0;
+
+		getCursorCoordinates(cursorX, cursorY);
+
+		s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
+
+		moveCursorToPosition(index);
+	} else if (keyCode == KEY_CODE_DOWN) {
+		s16 cursorX = 0;
+		s16 cursorY = 0;
+
+		getCursorCoordinates(cursorX, cursorY);
+
+		s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
+
+		moveCursorToPosition(index);
 	}
 }
 
@@ -543,8 +591,8 @@ void MultiLineTextBox::processKey(const WoopsiKey* key) {
 	} 
 }
 
-u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
-	
+s32 MultiLineTextBox::getRowContainingCoordinate(s16 y) const {
+
 	s32 row = -1;
 
 	// Locate the row containing the character
@@ -573,20 +621,23 @@ u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
 	// We need to set it to the last row
 	if (row == -1) row = _text->getLineCount() - 1;
 
+	return row;
+}
+
+u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
+	
+	s32 row = getRowContainingCoordinate(y);
+
 	// Locate the character within the row
 	s32 startIndex = _text->getLineStartIndex(row);
 	s32 stopIndex = _text->getLineLength(row);
-	s32 width = 0;
+	s32 width = getRowX(row);
 	s32 index = -1;
-
-	// Ensure that we subtract the start position of the line from the x co-ord.
-	// This enables us to disregard the horizontal alignment option used.
-	x -= getRowX(row);
 
 	StringIterator* iterator = _text->newStringIterator();
 	iterator->moveTo(startIndex);
 
-	width = _text->getFont()->getCharWidth(iterator->getCodePoint());
+	width += _text->getFont()->getCharWidth(iterator->getCodePoint());
 
 	for (s32 i = 0; i < stopIndex; ++i) {
 		if (width > x) {
@@ -606,9 +657,9 @@ u32 MultiLineTextBox::getCharIndexAtCoordinates(s16 x, s16 y) const {
 			break;
 		}
 
-		width += _text->getFont()->getCharWidth(iterator->getCodePoint());
-
 		iterator->moveToNext();
+
+		width += _text->getFont()->getCharWidth(iterator->getCodePoint());
 	}
 
 	delete iterator;
