@@ -95,7 +95,7 @@ namespace WoopsiUI {
 		 * not be altered.
 		 * @return Pointer to the Text object.
 		 */
-		virtual const Text* getText() const;
+		virtual inline const Text* getText() const { return _text; };
 
 		/**
 		 * Set the text displayed in the textbox.
@@ -301,6 +301,13 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the click.
 		 */
 		virtual void onClick(s16 x, s16 y);
+
+		/**
+		 * Opens the keyboard on the bottom display.
+		 * @param x The x co-ordinates of the click.
+		 * @param y The y co-ordinates of the click.
+		 */
+		virtual void onDoubleClick(s16 x, s16 y);
 		
 		/**
 		 * Moves the cursor.

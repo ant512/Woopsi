@@ -6,10 +6,13 @@ Change Log
   Fixes:
     - MultiLineTextBox jumps to bottom of text correctly when required to do so.
     - MultiLineTextBox extensively refactored.
+    - MultiLineTextBox top-aligns when text exceeds size of gadget.
+    - MultiLineTextBox alignment options all work.
   
   New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.
     - D-pad up/down move cursor up/down in MultiLineTextBox.
+    - MultiLineTextBox shows keyboard when double-clicked.
 
   V0.45 (20100219)
   

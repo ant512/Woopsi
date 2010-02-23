@@ -6,6 +6,7 @@
 #include "stringiterator.h"
 #include "woopsitimer.h"
 #include "woopsikey.h"
+#include "woopsi.h"
 
 using namespace WoopsiUI;
 
@@ -26,6 +27,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	_canvasWidth = rect.width;
 
 	_flags.draggable = true;
+	_flags.doubleClickable = true;
 	_maxRows = maxRows;
 
 	calculateVisibleRows();
@@ -201,6 +203,15 @@ u8 MultiLineTextBox::getRowX(s32 row) const {
 
 s16 MultiLineTextBox::getRowY(s32 row) const {
 
+	// If the amount of text exceeds the size of the gadget, force
+	// the text to be top-aligned
+	if (_visibleRows <= _text->getLineCount()) {
+		return row * _text->getLineHeight();
+	}
+
+	// All text falls within the textbox, so obey the alignment
+	// options
+
 	s16 textY = 0;
 	s16 startPos = 0;
 
@@ -257,10 +268,6 @@ void MultiLineTextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
 void MultiLineTextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
 	_vAlignment = alignment;
 	redraw();
-}
-
-const Text* MultiLineTextBox::getText() const {
-	return _text;
 }
 
 bool MultiLineTextBox::cullTopLines() {
@@ -472,6 +479,10 @@ void MultiLineTextBox::onClick(s16 x, s16 y) {
 	s16 canvasRelativeY = y - getY() - rect.y - _canvasY;
 
 	moveCursorToPosition(getCharIndexAtCoordinates(canvasRelativeX, canvasRelativeY));
+}
+
+void MultiLineTextBox::onDoubleClick(s16 x, s16 y) {
+	woopsiApplication->showKeyboard(this);
 }
 
 void MultiLineTextBox::onKeyPress(KeyCode keyCode) {

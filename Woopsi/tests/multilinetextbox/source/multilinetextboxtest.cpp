@@ -76,6 +76,8 @@ void MultiLineTextBoxTest::startup() {
 	_textbox->addGadgetEventHandler(this);
 	//_textbox->setDoubleClickable(true);
 	_textbox->setRefcon(1);
+	_textbox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_BOTTOM);
+	_textbox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_RIGHT);
 	_textbox->showCursor();
 
 	// Get preferred dimensions for cycle button and resize
