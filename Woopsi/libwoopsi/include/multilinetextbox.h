@@ -244,6 +244,51 @@ namespace WoopsiUI {
 		virtual void drawBorder(GraphicsPort* port);
 
 		/**
+		 * Move cursor one character to the left.
+		 */
+		virtual void moveCursorLeft();
+
+		/**
+		 * Move cursor one character to the right.
+		 */
+		virtual void moveCursorRight();
+
+		/**
+		 * Move cursor one row upwards.
+		 */
+		virtual void moveCursorUp();
+
+		/**
+		 * Move cursor one row downwards.
+		 */
+		virtual void moveCursorDown();
+
+		/**
+		 * Ensures that the textbox only contains the maximum allowed
+		 * number of rows by culling any excess rows from the top of
+		 * the text.
+		 * @return True if lines were removed from the text; false if not.
+		 */
+		virtual bool cullTopLines();
+
+		/**
+		 * Ensures that the canvas height is the height of the gadget,
+		 * if the gadget exceeds the size of the text, or the height of
+		 * the text if the text exceeds the size of the gadget.
+		 */
+		virtual void limitCanvasHeight();
+
+		/**
+		 * Ensures that the canvas cannot scroll beyond its height.
+		 */
+		virtual void limitCanvasX();
+
+		/**
+		 * Jumps to the bottom of the text.
+		 */
+		void jumpToTextBottom();
+
+		/**
 		 * Resize the textbox to the new dimensions.
 		 * @param width The new width.
 		 * @param height The new height.

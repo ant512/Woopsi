@@ -4,7 +4,8 @@ Change Log
   V0.46
   
   Fixes:
-  
+    - MultiLineTextBox jumps to bottom of text correctly when required to do so.
+    - MultiLineTextBox extensively refactored.
   
   New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.

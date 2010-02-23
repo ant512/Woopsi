@@ -263,24 +263,54 @@ const Text* MultiLineTextBox::getText() const {
 	return _text;
 }
 
-void MultiLineTextBox::setText(const WoopsiString& text) {
-
-	_text->setText(text);
+bool MultiLineTextBox::cullTopLines() {
 
 	// Ensure that we have the correct number of rows
 	if (_text->getLineCount() > _maxRows) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
-
-		_canvasHeight = _text->getPixelHeight();
+		return true;
 	}
 
-	// Update max scroll value
+	return false;
+}
+
+void MultiLineTextBox::limitCanvasHeight() {
+
 	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
 
-		// Scroll to bottom of new text
-		jump(0, -(_canvasHeight - _height));
+		// There are more rows of text than there are visible rows, so ensure
+		// that the canvas encompasses all rows
+		_canvasHeight = _text->getPixelHeight();
+	} else {
+
+		// All rows are visible, so the canvas height should match the
+		// gadget client height
+
+		Rect rect;
+		getClientRect(rect);
+
+		_canvasHeight = rect.height;
 	}
+}
+
+void MultiLineTextBox::limitCanvasX() {
+	if (_canvasX + _canvasHeight < 0) {
+		jumpToTextBottom();
+	}
+}
+
+void MultiLineTextBox::jumpToTextBottom() {
+	Rect rect;
+	getClientRect(rect);
+	jump(0, -(_canvasHeight - rect.height));
+}
+
+void MultiLineTextBox::setText(const WoopsiString& text) {
+	_text->setText(text);
+
+	cullTopLines();
+	limitCanvasHeight();
+	jumpToTextBottom();
 
 	redraw();
 
@@ -288,23 +318,11 @@ void MultiLineTextBox::setText(const WoopsiString& text) {
 }
 
 void MultiLineTextBox::appendText(const WoopsiString& text) {
-
 	_text->append(text);
 
-	// Ensure that we have the correct number of rows
-	if (_text->getLineCount() > _maxRows) {
-		_text->stripTopLines(_text->getLineCount() - _maxRows);
-
-		_canvasHeight = _text->getPixelHeight();
-	}
-
-	// Update max scroll value
-	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
-
-		// Scroll to bottom of new text
-		jump(0, -(_canvasHeight - _height));
-	}
+	cullTopLines();
+	limitCanvasHeight();
+	jumpToTextBottom();
 
 	redraw();
 
@@ -313,16 +331,10 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 
 void MultiLineTextBox::removeText(const u32 startIndex) {
 	_text->remove(startIndex);
-
 	moveCursorToPosition(startIndex);
 
-	// Update max scroll value
-	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
-
-		// Scroll to bottom of new text
-		jump(0, -(_canvasHeight - _height));
-	}
+	limitCanvasHeight();
+	limitCanvasX();
 
 	redraw();
 
@@ -331,16 +343,22 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 	_text->remove(startIndex, count);
-
 	moveCursorToPosition(startIndex);
 
-	// Update max scroll value
-	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
+	limitCanvasHeight();
+	limitCanvasX();
 
-		// Scroll to bottom of new text
-		jump(0, -(_canvasHeight - _height));
-	}
+	redraw();
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
+}
+
+void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
+	_text->insert(text, index);
+	moveCursorToPosition(index + text.getLength());
+
+	cullTopLines();
+	limitCanvasHeight();
 
 	redraw();
 
@@ -351,22 +369,13 @@ void MultiLineTextBox::setFont(FontBase* font) {
 	_style.font = font;
 	_text->setFont(font);
 
-	// Ensure that we have the correct number of rows
-	if (_text->getLineCount() > _maxRows) {
-		_text->stripTopLines(_text->getLineCount() - _maxRows);
-
-		_canvasHeight = _text->getPixelHeight();
-	}
-
-	// Update max scroll value
-	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
-
-		// Scroll to bottom of new text
-		jump(0, -(_canvasHeight - _height));
-	}
+	cullTopLines();
+	limitCanvasHeight();
+	limitCanvasX();
 
 	redraw();
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 const u16 MultiLineTextBox::getPageCount() const {
@@ -380,7 +389,7 @@ const u16 MultiLineTextBox::getPageCount() const {
 const u16 MultiLineTextBox::getCurrentPage() const {
 
 	// Calculate the top line of text
-	s32 topRow = (-_canvasY / _text->getLineHeight());
+	s32 topRow = -_canvasY / _text->getLineHeight();
 
 	// Return the page on which the top row falls
 	if (_visibleRows > 0) {
@@ -408,21 +417,10 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 	// Re-wrap the text
 	_text->setWidth(_width);
 	_text->wrap();
-	
-	bool raiseEvent = false;
 
-	// Ensure that we have the correct number of rows
-	if (_text->getLineCount() > _maxRows) {
-		_text->stripTopLines(_text->getLineCount() - _maxRows);
-
-		_canvasHeight = _text->getPixelHeight();
-		raiseEvent = true;
-	}
-
-	// Update canvas height
-	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
-	}
+	bool raiseEvent = cullTopLines();
+	limitCanvasHeight();
+	limitCanvasX();
 
 	if (raiseEvent) _gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -462,40 +460,18 @@ void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 	redraw();
 }
 
-void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
-	// Get current text length - use this later to quickly get the length
-	// of the inserted string to shift the cursor around
-	u32 oldLen = _text->getLength();
-
-	_text->insert(text, index);
-	
-	// Get the new string length and use it to calculate the length
-	// of the inserted string
-	u32 insertLen = _text->getLength() - oldLen;
-
-	moveCursorToPosition(index + insertLen);
-
-	// Update max scroll value
-	if (_text->getLineCount() > _visibleRows) {
-		_canvasHeight = _text->getPixelHeight();
-
-		// Scroll to bottom of new text
-		jump(0, -(_canvasHeight - _height));
-	}
-
-	redraw();
-
-	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
 void MultiLineTextBox::onClick(s16 x, s16 y) {
 	startDragging(x, y);
 
-	// Adjust x and y from screen co-ords to gadget co-ords
+	// Move cursor to clicked co-ords
 	Rect rect;
 	getClientRect(rect);
 
-	moveCursorToPosition(getCharIndexAtCoordinates(x - getX() - rect.x - _canvasX, y - getY() - rect.y - _canvasY));
+	// Adjust x and y from screen co-ords to canvas co-ords
+	s16 canvasRelativeX = x - getX() - rect.x - _canvasX;
+	s16 canvasRelativeY = y - getY() - rect.y - _canvasY;
+
+	moveCursorToPosition(getCharIndexAtCoordinates(canvasRelativeX, canvasRelativeY));
 }
 
 void MultiLineTextBox::onKeyPress(KeyCode keyCode) {
@@ -506,33 +482,57 @@ void MultiLineTextBox::onKeyRepeat(KeyCode keyCode) {
 	processPhysicalKey(keyCode);
 }
 
+void MultiLineTextBox::moveCursorUp() {
+	s16 cursorX = 0;
+	s16 cursorY = 0;
+
+	getCursorCoordinates(cursorX, cursorY);
+
+	s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
+
+	moveCursorToPosition(index);
+}
+
+void MultiLineTextBox::moveCursorDown() {
+	s16 cursorX = 0;
+	s16 cursorY = 0;
+
+	getCursorCoordinates(cursorX, cursorY);
+
+	s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
+
+	moveCursorToPosition(index);
+}
+
+void MultiLineTextBox::moveCursorLeft() {
+	if (_cursorPos > 0) {
+		moveCursorToPosition(_cursorPos - 1);
+	}
+}
+
+void MultiLineTextBox::moveCursorRight() {
+	if (_cursorPos < (s32)_text->getLength()) {
+		moveCursorToPosition(_cursorPos + 1);
+	}
+}
+
 void MultiLineTextBox::processPhysicalKey(KeyCode keyCode) {
-	if (keyCode == KEY_CODE_LEFT) {
-		if (_cursorPos > 0) {
-			moveCursorToPosition(_cursorPos - 1);
-		}
-	} else if (keyCode == KEY_CODE_RIGHT) {
-		if (_cursorPos < (s32)_text->getLength()) {
-			moveCursorToPosition(_cursorPos + 1);
-		}
-	} else if (keyCode == KEY_CODE_UP) {
-		s16 cursorX = 0;
-		s16 cursorY = 0;
-
-		getCursorCoordinates(cursorX, cursorY);
-
-		s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
-
-		moveCursorToPosition(index);
-	} else if (keyCode == KEY_CODE_DOWN) {
-		s16 cursorX = 0;
-		s16 cursorY = 0;
-
-		getCursorCoordinates(cursorX, cursorY);
-
-		s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
-
-		moveCursorToPosition(index);
+	switch (keyCode) {
+		case KEY_CODE_LEFT:
+			moveCursorLeft();
+			break;
+		case KEY_CODE_RIGHT:
+			moveCursorRight();
+			break;
+		case KEY_CODE_UP:
+			moveCursorDown();
+			break;
+		case KEY_CODE_DOWN:
+			moveCursorUp();
+			break;
+		default:
+			// Not interested in other keys
+			break;
 	}
 }
 
