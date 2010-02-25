@@ -43,7 +43,19 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	setText(text);
 }
 
-void MultiLineTextBox::drawText(GraphicsPort* port, s32 topRow, s32 bottomRow) {
+void MultiLineTextBox::drawText(GraphicsPort* port) {
+
+	// Early exit if there is no text to display
+	if (_text->getLineCount() == 0) return;
+
+	// Determine the top and bottom rows within the graphicsport's clip rect.
+	// We only draw these rows in order to increase the speed of the routine.
+	Rect rect;
+	port->getClipRect(rect);
+
+	s32 regionY = -_canvasY + rect.y;						// Y co-ord of the visible region of this canvas
+	s32 topRow = getRowContainingCoordinate(regionY);
+	s32 bottomRow = getRowContainingCoordinate(regionY + rect.height);
 
 	// Early exit checks
 	if ((topRow < 0) && (bottomRow < 0)) return;
@@ -54,57 +66,31 @@ void MultiLineTextBox::drawText(GraphicsPort* port, s32 topRow, s32 bottomRow) {
 	if (bottomRow >= _text->getLineCount()) bottomRow = _text->getLineCount() - 1;
 
 	// Draw lines of text
-	s16 textX;
-	s16 textY;
 	s32 currentRow = topRow;
-	u8 rowLength = 0;
 
 	// Draw all rows in this region
 	while (currentRow <= bottomRow) {
-
-		rowLength = _text->getLineTrimmedLength(currentRow);
-
-		textX = getRowX(currentRow) + _canvasX;
-		textY = getRowY(currentRow) + _canvasY;
-		
-		if (isEnabled()) {
-			port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(currentRow), rowLength);
-		} else {
-			port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(currentRow), rowLength, getDarkColour());
-		}
-
+		drawRow(port, currentRow);
 		currentRow++;
 	}
 }
 
-void MultiLineTextBox::drawTextTop(GraphicsPort* port) {
+void MultiLineTextBox::drawRow(GraphicsPort* port, s32 row) {
 
-	Rect rect;
-	port->getClipRect(rect);
-
-	// Early exit if there is no text to display
-	if (_text->getLineCount() == 0) return;
-
-	// Calculate various values needed to output text for this cliprect
-	u8 lineHeight = _text->getLineHeight();
-	s32 regionY = -_canvasY + rect.y;						// Y co-ord of the visible region of this canvas
-
-	s32 topRow = (regionY / lineHeight) - 1;				// Calculate the top line of text in this region
-	s32 bottomRow = ((regionY + rect.height) / lineHeight);	// Calculate bottom line of text
-
-	// Draw lines of text
-	drawText(port, topRow, bottomRow);	
+	u8 rowLength = _text->getLineTrimmedLength(row);
+	s16 textX = getRowX(row) + _canvasX;
+	s16 textY = getRowY(row) + _canvasY;
+	
+	if (isEnabled()) {
+		port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(row), rowLength);
+	} else {
+		port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(row), rowLength, getDarkColour());
+	}
 }
 
 void MultiLineTextBox::drawContents(GraphicsPort* port) {
 
-	// Always use top alignment if the number of rows of text exceeds or is
-	// equal to the number of visible rows
-	if (_visibleRows <= _text->getLineCount()) {
-		drawTextTop(port);
-	} else {
-		drawText(port, 0, _text->getLineCount());
-	}
+	drawText(port);
 
 	// Draw the cursor
 	drawCursor(port);
@@ -170,11 +156,15 @@ void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 		cursorY += _canvasY;
 
 		// Draw cursor
-		if ((u32)_cursorPos < _text->getLength()) {
-			port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(_text->getCharAt(_cursorPos)), getFont()->getHeight());
-		} else {
-			port->drawFilledXORRect(cursorX, cursorY, getFont()->getCharWidth(' '), getFont()->getHeight());
-		}
+		port->drawFilledXORRect(cursorX, cursorY, _text->getFont()->getCharWidth(getCursorCodePoint()), _text->getFont()->getHeight());
+	}
+}
+
+u32 MultiLineTextBox::getCursorCodePoint() const {
+	if ((u32)_cursorPos < _text->getLength()) {
+		return _text->getCharAt(_cursorPos);
+	} else {
+		return ' ';
 	}
 }
 
@@ -226,12 +216,12 @@ s16 MultiLineTextBox::getRowY(s32 row) const {
 		case TEXT_ALIGNMENT_VERT_CENTRE:
 
 			// Calculate the maximum number of rows
-            canvasRows = _canvasHeight / _text->getLineHeight();
+			canvasRows = _canvasHeight / _text->getLineHeight();
 			textY = row * _text->getLineHeight();
 
-            // Get the number of rows of text
-            textRows = _text->getLineCount();
-			
+			// Get the number of rows of text
+			textRows = _text->getLineCount();
+
 			// Ensure there's always one row
 			if (textRows == 0) textRows = 1;
 

@@ -356,29 +356,34 @@ namespace WoopsiUI {
 		s16 getRowY(s32 row) const;
 
 		/**
+		 * Gets the character under the cursor.
+		 * @return The character under the cursor.
+		 */
+		u32 getCursorCodePoint() const;
+
+		/**
 		 * Works out the number of visible rows within the textbox.
 		 */
 		void calculateVisibleRows();
 
 		/**
-		 * Clips text output for vertical top-aligned text and calls drawText().
+		 * Draws text.
 		 * @param port The GraphicsPort to draw to.
 		 */
-		void drawTextTop(GraphicsPort* port);
-
-		/**
-		 * Draws text previously clipped by one of the drawTextXXX functions.
-		 * @param port The GraphicsPort to draw to.
-		 * @param topRow The index of top row of text to draw.
-		 * @param bottomRow The index of the bottom row of text to draw.
-		 */
-		void drawText(GraphicsPort* port, s32 topRow, s32 bottomRow);
+		void drawText(GraphicsPort* port);
 
 		/**
 		 * Draws the cursor.
 		 * @param port The GraphicsPort to draw to.
 		 */
 		void drawCursor(GraphicsPort* port);
+
+		/**
+		 * Draws a single line of text.
+		 * @param port The GraphicsPort to draw to.
+		 * @param row The index of the row to draw.
+		 */
+		void drawRow(GraphicsPort* port, s32 row);
 
 		/**
 		 * Destructor.
