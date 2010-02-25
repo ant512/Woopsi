@@ -554,6 +554,13 @@ void MultiLineTextBox::moveCursorUp() {
 
 	getCursorCoordinates(cursorX, cursorY);
 
+	// Get the midpoint of the cursor.  We use the midpoint to ensure that
+	// the cursor does not drift off to the left as it moves up the text, which
+	// is a problem when we use the left edge as the reference point when the
+	// font is proportional
+	cursorX += _text->getFont()->getCharWidth(_text->getCharAt(_cursorPos)) >> 1;
+
+	// Locate the character above the midpoint
 	s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
 
 	moveCursorToPosition(index);
@@ -566,6 +573,13 @@ void MultiLineTextBox::moveCursorDown() {
 
 	getCursorCoordinates(cursorX, cursorY);
 
+	// Get the midpoint of the cursor.  We use the midpoint to ensure that
+	// the cursor does not drift off to the left as it moves up the text, which
+	// is a problem when we use the left edge as the reference point when the
+	// font is proportional
+	cursorX += _text->getFont()->getCharWidth(_text->getCharAt(_cursorPos)) >> 1;
+
+	// Locate the character above the midpoint
 	s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
 
 	moveCursorToPosition(index);
