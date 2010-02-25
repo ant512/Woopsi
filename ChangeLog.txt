@@ -13,6 +13,7 @@ Change Log
     - Cursor jumps to click point when MultiLineTextBox is clicked.
     - D-pad up/down move cursor up/down in MultiLineTextBox.
     - MultiLineTextBox shows keyboard when double-clicked.
+    - MultiLineTextBox scrolls to follow cursor when moved with the d-pad.
 
   V0.45 (20100219)
   

@@ -281,7 +281,12 @@ namespace WoopsiUI {
 		/**
 		 * Ensures that the canvas cannot scroll beyond its height.
 		 */
-		virtual void limitCanvasX();
+		virtual void limitCanvasY();
+
+		/**
+		 * Jumps to the cursor co-ordinates of the text.
+		 */
+		void jumpToCursor();
 
 		/**
 		 * Jumps to the bottom of the text.

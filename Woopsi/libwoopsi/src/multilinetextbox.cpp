@@ -283,25 +283,20 @@ bool MultiLineTextBox::cullTopLines() {
 
 void MultiLineTextBox::limitCanvasHeight() {
 
-	if (_text->getLineCount() > _visibleRows) {
+	_canvasHeight = _text->getPixelHeight();
 
-		// There are more rows of text than there are visible rows, so ensure
-		// that the canvas encompasses all rows
-		_canvasHeight = _text->getPixelHeight();
-	} else {
-
-		// All rows are visible, so the canvas height should match the
-		// gadget client height
-
-		Rect rect;
-		getClientRect(rect);
-
-		_canvasHeight = rect.height;
-	}
+	Rect rect;
+	getClientRect(rect);
+	if (_canvasHeight < rect.height) _canvasHeight = rect.height;
 }
 
-void MultiLineTextBox::limitCanvasX() {
-	if (_canvasX + _canvasHeight < 0) {
+void MultiLineTextBox::limitCanvasY() {
+	Rect rect;
+	getClientRect(rect);
+
+	// Ensure that the visible portion of the canvas is not less than the
+	// height of the viewer window
+	if (_canvasY + _canvasHeight < rect.height) {
 		jumpToTextBottom();
 	}
 }
@@ -312,12 +307,48 @@ void MultiLineTextBox::jumpToTextBottom() {
 	jump(0, -(_canvasHeight - rect.height));
 }
 
+void MultiLineTextBox::jumpToCursor() {
+
+	// Get the co-odinates of the cursor
+	s16 cursorX;
+	s16 cursorY;
+
+	getCursorCoordinates(cursorX, cursorY);
+
+	// Work out which row the cursor falls within
+	s32 cursorRow = _text->getLineContainingCharIndex(_cursorPos);
+	s16 rowY = getRowY(cursorRow);
+
+	// If the cursor is outside the visible portion of the canvas, jump to it
+	Rect rect;
+	getClientRect(rect);
+
+	if (rowY + _text->getLineHeight() + _canvasY > rect.height) {
+
+		// Cursor is below the visible portion of the canvas, so
+		// jump down so that the cursor's row is the bottom row of
+		// text
+		jump(0, -(rowY + _text->getLineHeight() - rect.height));
+	} else if (rowY + _canvasY < 0) {
+
+		// Cursor is above the visible portion of the canvas, so
+		// jump up so that the cursor's row is the top row of text
+		jump(0, -cursorY);
+	}
+}
+
 void MultiLineTextBox::setText(const WoopsiString& text) {
+
+	bool drawingEnabled = isDrawingEnabled();
+	disableDrawing();
+
 	_text->setText(text);
 
 	cullTopLines();
 	limitCanvasHeight();
 	jumpToTextBottom();
+
+	if (drawingEnabled) enableDrawing();
 
 	redraw();
 
@@ -325,11 +356,17 @@ void MultiLineTextBox::setText(const WoopsiString& text) {
 }
 
 void MultiLineTextBox::appendText(const WoopsiString& text) {
+
+	bool drawingEnabled = isDrawingEnabled();
+	disableDrawing();
+
 	_text->append(text);
 
 	cullTopLines();
 	limitCanvasHeight();
 	jumpToTextBottom();
+
+	if (drawingEnabled) enableDrawing();
 
 	redraw();
 
@@ -337,23 +374,22 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex) {
-	_text->remove(startIndex);
-	moveCursorToPosition(startIndex);
-
-	limitCanvasHeight();
-	limitCanvasX();
-
-	redraw();
-
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	removeText(startIndex, _text->getLength() - startIndex);
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
+
+	bool drawingEnabled = isDrawingEnabled();
+	disableDrawing();
+
 	_text->remove(startIndex, count);
-	moveCursorToPosition(startIndex);
 
 	limitCanvasHeight();
-	limitCanvasX();
+	limitCanvasY();
+
+	moveCursorToPosition(startIndex);
+
+	if (drawingEnabled) enableDrawing();
 
 	redraw();
 
@@ -361,11 +397,18 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 }
 
 void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
+
+	bool drawingEnabled = isDrawingEnabled();
+	disableDrawing();
+
 	_text->insert(text, index);
-	moveCursorToPosition(index + text.getLength());
 
 	cullTopLines();
 	limitCanvasHeight();
+
+	moveCursorToPosition(index + text.getLength());
+
+	if (drawingEnabled) enableDrawing();
 
 	redraw();
 
@@ -373,12 +416,18 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 }
 
 void MultiLineTextBox::setFont(FontBase* font) {
+
+	bool drawingEnabled = isDrawingEnabled();
+	disableDrawing();
+
 	_style.font = font;
 	_text->setFont(font);
 
 	cullTopLines();
 	limitCanvasHeight();
-	limitCanvasX();
+	limitCanvasY();
+
+	if (drawingEnabled) enableDrawing();
 
 	redraw();
 
@@ -427,7 +476,7 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 
 	bool raiseEvent = cullTopLines();
 	limitCanvasHeight();
-	limitCanvasX();
+	limitCanvasY();
 
 	if (raiseEvent) _gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -456,6 +505,11 @@ void MultiLineTextBox::insertTextAtCursor(const WoopsiString& text) {
 
 void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 
+	GraphicsPort* port = newGraphicsPort(false);
+
+	// Erase existing cursor
+	drawCursor(port);
+
 	// Force position to within confines of string
 	if (position < 0) {
 		_cursorPos = 0;
@@ -464,7 +518,8 @@ void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 		_cursorPos = len > position ? position : len;
 	}
 
-	redraw();
+	// Draw cursor in new position
+	drawCursor(port);
 }
 
 void MultiLineTextBox::onClick(s16 x, s16 y) {
@@ -502,6 +557,7 @@ void MultiLineTextBox::moveCursorUp() {
 	s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
 
 	moveCursorToPosition(index);
+	jumpToCursor();
 }
 
 void MultiLineTextBox::moveCursorDown() {
@@ -513,18 +569,23 @@ void MultiLineTextBox::moveCursorDown() {
 	s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
 
 	moveCursorToPosition(index);
+	jumpToCursor();
 }
 
 void MultiLineTextBox::moveCursorLeft() {
 	if (_cursorPos > 0) {
 		moveCursorToPosition(_cursorPos - 1);
 	}
+
+	jumpToCursor();
 }
 
 void MultiLineTextBox::moveCursorRight() {
 	if (_cursorPos < (s32)_text->getLength()) {
 		moveCursorToPosition(_cursorPos + 1);
 	}
+
+	jumpToCursor();
 }
 
 void MultiLineTextBox::processPhysicalKey(KeyCode keyCode) {
