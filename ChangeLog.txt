@@ -8,6 +8,7 @@ Change Log
     - MultiLineTextBox extensively refactored.
     - MultiLineTextBox top-aligns when text exceeds size of gadget.
     - MultiLineTextBox alignment options all work.
+    - Removed ScrollingPanel::clipToClientRect().
   
   New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.

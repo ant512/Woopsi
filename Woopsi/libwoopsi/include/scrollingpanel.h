@@ -93,13 +93,6 @@ namespace WoopsiUI {
 		void drawChildren(Rect clipRect);
 
 		/**
-		 * Clips the properties of the supplied rect so that it fits within the panel's
-		 * client region.
-		 * @param clipRect The rect to clip.
-		 */
-		bool clipToClientRect(Rect& clipRect);
-
-		/**
 		 * Destructor.
 		 */
 		virtual ~ScrollingPanel() { };
