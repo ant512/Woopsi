@@ -5,9 +5,6 @@
 
 void DateTest::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-
 	Date* date = new Date(6, 10, 2008);
 	for (u8 i = 0; i < 20; i++) {
 		date->addDays(-1);

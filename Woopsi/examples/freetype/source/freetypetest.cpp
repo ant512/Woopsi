@@ -11,9 +11,6 @@ using namespace WoopsiUI;
 
 void FreeTypeTest::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-
 	// Create screens
 	Screen* topScreen = new Screen("Top screen", Gadget::GADGET_BORDERLESS);
 	Screen* bottomScreen = new Screen("Bottom screen", Gadget::GADGET_BORDERLESS);

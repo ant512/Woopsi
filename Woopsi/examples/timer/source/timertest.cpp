@@ -3,9 +3,6 @@
 #include "woopsiheaders.h"
 
 void TimerTest::startup() {
-
-	// Call base startup method
-	Woopsi::startup();
 	
 	/* Code below creates the output screen and associated gadgets */
 	// Create screen

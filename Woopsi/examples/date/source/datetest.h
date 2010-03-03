@@ -6,7 +6,7 @@
 using namespace WoopsiUI;
 
 class DateTest : public Woopsi {
-public:
+private:
 	void startup();
 	void shutdown();
 };

@@ -7,9 +7,6 @@
 #include "fonts/garamond10.h"
 
 void DefaultStyleDemo::startup() {
-
-	// Call base startup method
-	Woopsi::startup();
 	
 	// Change default style so that all gadgets are created with non-standard
 	// colours, etc

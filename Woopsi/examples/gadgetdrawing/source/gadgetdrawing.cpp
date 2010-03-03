@@ -9,9 +9,6 @@
 
 void GadgetDrawing::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-
 	// Create screen to host our application
 	AmigaScreen* screen = new AmigaScreen("Drawing Screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(screen);

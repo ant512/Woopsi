@@ -44,10 +44,6 @@ cd ../helloworld
 make clean
 make
 
-cd ../helloworld_alternative
-make clean
-make
-
 cd ../keyboard
 make clean
 make

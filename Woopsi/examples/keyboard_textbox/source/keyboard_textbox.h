@@ -8,14 +8,13 @@
 using namespace WoopsiUI;
 
 class KeyboardTextBox : public Woopsi {
-public:
-	void startup();
-	void shutdown();
-	
 private:
 	WoopsiKeyboard* _keyboard;
 	TextBox* _output;
 	WoopsiTimer* _timer;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

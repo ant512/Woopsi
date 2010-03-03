@@ -12,6 +12,7 @@ Change Log
     - Made Woopsi::startup() pure virtual; no longer needs to be called as the
       first instruction in user override.
     - Woopsi::startup() and Woopsi::shutdown() are protected, not public.
+    - Deleted helloworld_alternative example.
   
   New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.

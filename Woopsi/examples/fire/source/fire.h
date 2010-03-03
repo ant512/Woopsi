@@ -11,9 +11,6 @@ using namespace WoopsiUI;
 
 class Fire : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-	
 	void handleActionEvent(const GadgetEventArgs& e);
 
 private:
@@ -27,6 +24,9 @@ private:
 	u16 _fireColours;
 	u16 _intensity;
 	u16 _scale;
+	
+	void startup();
+	void shutdown();
 	
 	void handleTimer();
 };

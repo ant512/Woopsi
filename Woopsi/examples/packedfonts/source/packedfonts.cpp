@@ -60,9 +60,6 @@
 
 void PackedFonts::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-	
 	_fonts = new WoopsiArray<FontDefinition*>();
 	
 	// Create list of fonts

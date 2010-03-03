@@ -6,7 +6,7 @@
 using namespace WoopsiUI;
 
 class HelloWorld : public Woopsi {
-public:
+protected:
 	void startup();
 	void shutdown();
 };

@@ -13,9 +13,6 @@ using namespace WoopsiUI;
 
 class PackedFonts : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-
 	void handleReleaseEvent(const GadgetEventArgs& e);
 private:
 	class FontDefinition {
@@ -45,6 +42,9 @@ private:
 	WoopsiArray<FontDefinition*>* _fonts;
 	MultiLineTextBox* _textbox;
 	CycleButton* _cycleButton;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

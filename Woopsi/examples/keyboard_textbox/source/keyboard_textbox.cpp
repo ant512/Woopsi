@@ -4,9 +4,6 @@
 
 void KeyboardTextBox::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-	
 	/* Code below creates the output screen and associated gadgets */
 	// Create screen
 	AmigaScreen* outScreen = new AmigaScreen("Ouput Screen", Gadget::GADGET_PERMEABLE, AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);

@@ -37,9 +37,6 @@ public:
 		DRAW_MODE_DIM
 	};
 
-	void startup();
-	void shutdown();
-	
 	void handleActionEvent(const GadgetEventArgs& e);
 
 private:
@@ -47,6 +44,9 @@ private:
 	Graphics* _graphics;
 	DrawMode _mode;
 	Bitmap* _bitmap;
+	
+	void startup();
+	void shutdown();
 	
 	void handleTimer();
 	

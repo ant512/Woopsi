@@ -6,9 +6,6 @@
 
 void WPaint::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-
 	// Create screen
 	Screen* screen = new Screen("WPaint Screen", 0);
 	woopsiApplication->addGadget(screen);

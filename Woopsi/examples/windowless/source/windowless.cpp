@@ -6,9 +6,6 @@
 
 void Windowless::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-
 	// Create screen
 	Screen* screen = new Screen("Windowless Screen", Gadget::GADGET_DRAGGABLE);
 	woopsiApplication->addGadget(screen);

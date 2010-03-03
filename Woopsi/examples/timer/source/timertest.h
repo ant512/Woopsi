@@ -10,14 +10,15 @@ using namespace WoopsiUI;
 
 class TimerTest : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
 	void handleActionEvent(const GadgetEventArgs& e);
 	
 private:
 	TextBox* _output;
 	WoopsiTimer* _timer;
 	unsigned char _text;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

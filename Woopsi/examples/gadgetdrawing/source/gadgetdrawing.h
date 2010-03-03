@@ -34,9 +34,6 @@ public:
 		DRAW_MODE_BITMAP_TRANSPARENT,
 		DRAW_MODE_DIM
 	};
-
-	void startup();
-	void shutdown();
 	
 	void handleActionEvent(const GadgetEventArgs& e);
 
@@ -44,6 +41,9 @@ private:
 	AmigaWindow* _window;
 	DrawMode _mode;
 	Bitmap* _bitmap;
+	
+	void startup();
+	void shutdown();
 	
 	void handleTimer();
 	
