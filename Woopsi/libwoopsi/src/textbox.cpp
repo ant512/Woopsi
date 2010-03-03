@@ -11,6 +11,7 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, 
 	_cursorPos = 0;
 	_showCursor = true;
 	_flags.doubleClickable = true;
+	_opensKeyboard = true;
 
 	_borderSize.top = 4;
 	_borderSize.right = 4;
@@ -174,7 +175,7 @@ void TextBox::onClick(s16 x, s16 y) {
 }
 
 void TextBox::onDoubleClick(s16 x, s16 y) {
-	woopsiApplication->showKeyboard(this);
+	if (_opensKeyboard) woopsiApplication->showKeyboard(this);
 }
 
 void TextBox::onKeyPress(KeyCode keyCode) {

@@ -28,6 +28,7 @@ void Calculator::initGUI() {
 	// Controls
 	_output = new TextBox(rect.x, rect.y, 52, 16, "0");
 	_output->setTextAlignmentHoriz(TextBox::TEXT_ALIGNMENT_HORIZ_RIGHT);
+	_output->disableKeyboardPopup();
 	_window->addGadget(_output);
 
 	WoopsiArray<Button*> buttons;

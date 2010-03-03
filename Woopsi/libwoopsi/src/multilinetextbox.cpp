@@ -15,6 +15,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
 	_topRow = 0;
+	_opensKeyboard = true;
 
 	_borderSize.top = 3;
 	_borderSize.right = 3;
@@ -527,7 +528,7 @@ void MultiLineTextBox::onClick(s16 x, s16 y) {
 }
 
 void MultiLineTextBox::onDoubleClick(s16 x, s16 y) {
-	woopsiApplication->showKeyboard(this);
+	if (_opensKeyboard) woopsiApplication->showKeyboard(this);
 }
 
 void MultiLineTextBox::onKeyPress(KeyCode keyCode) {

@@ -127,9 +127,26 @@ namespace WoopsiUI {
 		 */
 		virtual void handleKeyRepeatEvent(const GadgetEventArgs& e);
 
+		/**
+		 * Check if the textbox opens the keyboard popup when double-clicked.
+		 * @return True if the keyboard pops up; false if not.
+		 */
+		inline bool opensKeyboard() const { return _opensKeyboard; };
+
+		/**
+		 * Disables the keyboard popup when double-clicked.
+		 */
+		inline void disableKeyboardPopup() { _opensKeyboard = false; };
+
+		/**
+		 * Enables the keyboard popup when double-clicked.
+		 */
+		inline void enableKeyboardPopup() { _opensKeyboard = true; };
+
 	protected:
 		u32 _cursorPos;					/**< Position of the cursor within the string. */
 		bool _showCursor;				/**< Set to true to make cursor visible. */
+		bool _opensKeyboard;			/**< Set to false to disable keyboard popup when double-clicked. */
 
 		/**
 		 * Redraws the gadget

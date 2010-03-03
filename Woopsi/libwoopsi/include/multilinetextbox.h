@@ -186,15 +186,32 @@ namespace WoopsiUI {
 		 */
 		virtual void handleKeyboardRepeatEvent(const KeyboardEventArgs& e);
 
+		/**
+		 * Check if the textbox opens the keyboard popup when double-clicked.
+		 * @return True if the keyboard pops up; false if not.
+		 */
+		inline bool opensKeyboard() const { return _opensKeyboard; };
+
+		/**
+		 * Disables the keyboard popup when double-clicked.
+		 */
+		inline void disableKeyboardPopup() { _opensKeyboard = false; };
+
+		/**
+		 * Enables the keyboard popup when double-clicked.
+		 */
+		inline void enableKeyboardPopup() { _opensKeyboard = true; };
+
 	protected:
-		Text* _text;						/**< Text object that manipulates and wraps the raw text string */
-		u8 _visibleRows;					/**< Total number of rows that the textbox can display at once */
-		s16 _maxRows;						/**< Maximum number of rows that the textbox should buffer */
-		u32 _topRow;						/**< Index of the top row of text currently displayed */
-		TextAlignmentHoriz _hAlignment;		/**< Horizontal alignment of the text */
-		TextAlignmentVert _vAlignment;		/**< Vertical alignment of the text */
-		s32 _cursorPos;						/**< Position of the cursor within the string */
-		bool _showCursor;					/**< Set to true to make cursor visible */
+		Text* _text;					/**< Text object that manipulates and wraps the raw text string. */
+		u8 _visibleRows;				/**< Total number of rows that the textbox can display at once. */
+		s16 _maxRows;					/**< Maximum number of rows that the textbox should buffer. */
+		u32 _topRow;					/**< Index of the top row of text currently displayed. */
+		TextAlignmentHoriz _hAlignment;	/**< Horizontal alignment of the text. */
+		TextAlignmentVert _vAlignment;	/**< Vertical alignment of the text. */
+		s32 _cursorPos;					/**< Position of the cursor within the string. */
+		bool _showCursor;				/**< Set to true to make cursor visible. */
+		bool _opensKeyboard;			/**< Set to false to disable keyboard popup when double-clicked. */
 
 		/**
 		 * Get the co-ordinates of the cursor relative to the text.
