@@ -11,9 +11,6 @@ using namespace WoopsiUI;
 
 class MultiLineTextBoxTest : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-	
 	void handleClickEvent(const GadgetEventArgs& e);
 	void handleDragEvent(const GadgetEventArgs& e);
 	void handleReleaseEvent(const GadgetEventArgs& e);
@@ -57,6 +54,9 @@ private:
 	Button* _insertText;
 	Button* _removeText;
 	MultiLineTextBox* _textbox;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

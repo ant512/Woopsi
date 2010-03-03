@@ -9,6 +9,9 @@ Change Log
     - MultiLineTextBox top-aligns when text exceeds size of gadget.
     - MultiLineTextBox alignment options all work.
     - Removed ScrollingPanel::clipToClientRect().
+    - Made Woopsi::startup() pure virtual; no longer needs to be called as the
+      first instruction in user override.
+    - Woopsi::startup() and Woopsi::shutdown() are protected, not public.
   
   New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.

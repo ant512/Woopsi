@@ -21,8 +21,6 @@
 
 void Demo::startup() {
 
-	Woopsi::startup();
-
 	Rect rect;
 
 	// Create SuperBitmap test screen

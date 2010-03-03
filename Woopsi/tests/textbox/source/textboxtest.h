@@ -11,9 +11,6 @@ using namespace WoopsiUI;
 
 class TextBoxTest : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-	
 	void handleClickEvent(const GadgetEventArgs& e);
 	void handleDragEvent(const GadgetEventArgs& e);
 	void handleReleaseEvent(const GadgetEventArgs& e);
@@ -57,6 +54,9 @@ private:
 	Button* _insert;
 	Button* _remove;
 	TextBox* _textbox;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

@@ -12,9 +12,6 @@ using namespace WoopsiUI;
 
 class AnimButtonTest : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-	
 	void handleClickEvent(const GadgetEventArgs& e);
 	void handleDragEvent(const GadgetEventArgs& e);
 	void handleReleaseEvent(const GadgetEventArgs& e);
@@ -56,6 +53,9 @@ private:
 	Button* _dimensions;
 	AnimButton* _button;
 	BitmapWrapper** _bitmaps;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

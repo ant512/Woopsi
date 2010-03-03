@@ -7,9 +7,6 @@
 
 void BitmapButtonTest::startup() {
 
-	// Call base startup method
-	Woopsi::startup();
-
 	// Create screen
 	AmigaScreen* screen = new AmigaScreen("Test Screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(screen);

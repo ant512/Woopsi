@@ -11,9 +11,6 @@ using namespace WoopsiUI;
 
 class CycleTest : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-	
 	void handleClickEvent(const GadgetEventArgs& e);
 	void handleDragEvent(const GadgetEventArgs& e);
 	void handleReleaseEvent(const GadgetEventArgs& e);
@@ -54,6 +51,9 @@ private:
 	Button* _disable;
 	Button* _dimensions;
 	CycleButton* _cycleButton;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

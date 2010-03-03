@@ -10,9 +10,6 @@ using namespace WoopsiUI;
 
 class ButtonTest : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-	
 	void handleClickEvent(const GadgetEventArgs& e);
 	void handleDragEvent(const GadgetEventArgs& e);
 	void handleReleaseEvent(const GadgetEventArgs& e);
@@ -53,6 +50,9 @@ private:
 	Button* _disable;
 	Button* _dimensions;
 	Button* _button;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif

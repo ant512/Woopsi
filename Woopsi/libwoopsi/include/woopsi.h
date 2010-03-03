@@ -41,33 +41,10 @@ namespace WoopsiUI {
 		virtual ~Woopsi();
 
 		/**
-		 * Initialise the application.  All initial GUI creation, hardware setup, etc, should
-		 * be done in an override of this method.  The base method should be called as the
-		 * first instruction in the overridden function.
-		 * This method must call enableDrawing() and draw() at some point or nothing will
-		 * be visible.
-		 */
-		virtual inline void startup() { };
-
-		/**
 		 * Run the gadget modally.  This will run the Woopsi application until stopModal()
 		 * is called.
 		 */
 		void goModal();
-
-		/**
-		 * Shut down the application.  All non-gadget objects should be deleted in an override
-		 * of this function, and all hardware should be shut down, etc.
-		 * This base method will shut down the SDL system, so it must be called as the last
-		 * function if overridden in an SDL application.  If you don't want to let Woopsi
-		 * shut down SDL (if you have another chunk of code to run later, for example),
-		 * you will need to shut down SDL yourself.
-		 */
-		virtual inline void shutdown() {
-	#ifdef USING_SDL
-			SDL_Quit();
-	#endif
-		};
 
 		/**
 		 * Run all code that needs to take place once a frame.
@@ -189,6 +166,28 @@ namespace WoopsiUI {
 		ContextMenu* _contextMenu;							/**< Pointer to the context menu. */
 		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked. */
 		WoopsiKeyboardScreen* _keyboardScreen;				/**< Screen containing the popup keyboard. */
+
+		/**
+		 * Initialise the application.  All initial GUI creation, hardware setup, etc, should
+		 * be done in an override of this method.
+		 * This method must call enableDrawing() and draw() at some point or nothing will
+		 * be visible.
+		 */
+		virtual void startup() = 0;
+
+		/**
+		 * Shut down the application.  All non-gadget objects should be deleted in an override
+		 * of this function, and all hardware should be shut down, etc.
+		 * This base method will shut down the SDL system, so it must be called as the last
+		 * function if overridden in an SDL application.  If you don't want to let Woopsi
+		 * shut down SDL (if you have another chunk of code to run later, for example),
+		 * you will need to shut down SDL yourself.
+		 */
+		virtual inline void shutdown() {
+	#ifdef USING_SDL
+			SDL_Quit();
+	#endif
+		};
 
 		/**
 		 * Pass clicks to the gadget hierarchy.  Closes the context menu if

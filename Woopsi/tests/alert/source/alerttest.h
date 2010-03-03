@@ -11,9 +11,6 @@ using namespace WoopsiUI;
 
 class AlertTest : public Woopsi, public GadgetEventHandler {
 public:
-	void startup();
-	void shutdown();
-	
 	void handleClickEvent(const GadgetEventArgs& e);
 	void handleDragEvent(const GadgetEventArgs& e);
 	void handleReleaseEvent(const GadgetEventArgs& e);
@@ -54,6 +51,9 @@ private:
 	Button* _disable;
 	Button* _dimensions;
 	Alert* _alert;
+	
+	void startup();
+	void shutdown();
 };
 
 #endif
