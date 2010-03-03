@@ -346,7 +346,7 @@ namespace WoopsiUI {
 		/**
 		 * Handles physical button presses.  Moves the cursor
 		 * in the direction pressed.
-		 * @param KeyCode keyCode The key that was pressed.
+		 * @param keyCode keyCode The key that was pressed.
 		 */
 		void processPhysicalKey(KeyCode keyCode);
 

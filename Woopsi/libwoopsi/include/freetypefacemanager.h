@@ -42,9 +42,7 @@ namespace WoopsiUI {
 	class FreeTypeFaceManager {
 	public: 
 		/**
-		 * Constructor
-		 * @param size is the number of fonts that will be managed by the
-		 * fontManager (default is 1).
+		 * Constructor.
 		 */
 		 FreeTypeFaceManager() { _root = NULL; };
 

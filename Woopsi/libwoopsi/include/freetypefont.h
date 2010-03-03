@@ -24,7 +24,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
-		 * @param fontId Index of a managed font.
+		 * @param fontCache Cache for the font to use.
+		 * @param faceID Index of a managed font.
 		 * @param width The width of a single glyph.
 		 * @param height The height of a single glyph.
 		 */
@@ -36,15 +37,14 @@ namespace WoopsiUI {
 		inline ~FreeTypeFont() {};
 		
 		/**
-		 * loads a small bitmap (with metrics) of a Glyph
-		 * @param codepoint the Unicode codepoint of a glyph
+		 * Loads a small bitmap (with metrics) of a glyph.
+		 * @param codepoint the Unicode codepoint of a glyph.
 		 */
 		void getSbit(const u32 codepoint) const;
 		
-		
 		/**
 		 * Get the width of an individual character.
-		 * @param letter The character to get the width of.
+		 * @param codepoint The character to get the width of.
 		 * @return The width of the character in pixels.
 		 */
 		inline u16 getCharWidth(const u32 codepoint) const { 
@@ -72,7 +72,7 @@ namespace WoopsiUI {
 
 		/**
 		 * Checks if supplied character is blank in the current font.
-		 * @param letter The character to check.
+		 * @param codepoint The character to check.
 		 * @return True if the glyph contains any pixels to be drawn.  False if
 		 * the glyph is blank.
 		 */
