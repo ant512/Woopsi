@@ -28,6 +28,7 @@ namespace WoopsiUI {
 		 * @param faceID Index of a managed font.
 		 * @param width The width of a single glyph.
 		 * @param height The height of a single glyph.
+		 * @param colour The colour of the font.
 		 */
 		FreeTypeFont(const FreeTypeCache* fontCache, const FaceID* faceID, const u8 width, const u8 height, const u16 colour);
 		
