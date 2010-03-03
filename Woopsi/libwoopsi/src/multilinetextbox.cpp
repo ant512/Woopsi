@@ -50,7 +50,7 @@ void MultiLineTextBox::drawText(GraphicsPort* port) {
 
 	// Determine the top and bottom rows within the graphicsport's clip rect.
 	// We only draw these rows in order to increase the speed of the routine.
-	Rect rect;
+	Rect rect;\
 	port->getClipRect(rect);
 
 	s32 regionY = -_canvasY + rect.y;						// Y co-ord of the visible region of this canvas
@@ -329,7 +329,7 @@ void MultiLineTextBox::jumpToCursor() {
 
 void MultiLineTextBox::setText(const WoopsiString& text) {
 
-	bool drawingEnabled = isDrawingEnabled();
+	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
 	_text->setText(text);
@@ -347,7 +347,7 @@ void MultiLineTextBox::setText(const WoopsiString& text) {
 
 void MultiLineTextBox::appendText(const WoopsiString& text) {
 
-	bool drawingEnabled = isDrawingEnabled();
+	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
 	_text->append(text);
@@ -369,7 +369,7 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
-	bool drawingEnabled = isDrawingEnabled();
+	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
 	_text->remove(startIndex, count);
@@ -388,7 +388,7 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
 void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 
-	bool drawingEnabled = isDrawingEnabled();
+	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
 	_text->insert(text, index);
@@ -407,7 +407,7 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 
 void MultiLineTextBox::setFont(FontBase* font) {
 
-	bool drawingEnabled = isDrawingEnabled();
+	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
 	_style.font = font;

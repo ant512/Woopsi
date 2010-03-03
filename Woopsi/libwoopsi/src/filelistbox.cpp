@@ -73,7 +73,7 @@ void FileListBox::readDirectory() {
 	// Add "Loading..." option to display whilst directory is enumerated
 	_listbox->addOption("Loading...", 0);
 
-	bool drawingEnabled = isDrawingEnabled();
+	bool drawingEnabled = _flags.drawingEnabled;
 
 	// Disable drawing for speed
 	disableDrawing();

@@ -4,7 +4,6 @@
 #include "date.h"
 #include "button.h"
 #include "graphicsport.h"
-#include "debug.h"
 #include "label.h"
 
 using namespace WoopsiUI;
