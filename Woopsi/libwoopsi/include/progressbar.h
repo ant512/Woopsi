@@ -58,10 +58,27 @@ namespace WoopsiUI {
 		 */
 		void setValue(const s16 value);
 
+		/**
+		 * Shows the percentage text over the bar.
+		 */
+		inline void showPercentageText() {
+			_showPercentageText = true;
+			redraw();
+		};
+
+		/**
+		 * Hides the percentage text over the bar.
+		 */
+		inline void hidePercentageText() {
+			_showPercentageText = false;
+			redraw();
+		};
+
 	protected:
-		s16 _minimumValue;	/**< Minimum value that the grip can represent */
-		s16 _maximumValue;	/**< Maximum value that the grip can represent */
-		s16 _value;			/**< Value of the progress bar */
+		s16 _minimumValue;			/**< Minimum value that the grip can represent. */
+		s16 _maximumValue;			/**< Maximum value that the grip can represent. */
+		s16 _value;					/**< Value of the progress bar. */
+		bool _showPercentageText;	/**< If true, completion percentage is drawn over the bar. */
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

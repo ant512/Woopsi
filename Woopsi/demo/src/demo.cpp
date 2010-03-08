@@ -76,6 +76,7 @@ void Demo::startup() {
 	// Add progress bar
 	ProgressBar* progressBar = new ProgressBar(20, 20, 100, 20);
 	progressBar->setMaximumValue(100);
+	progressBar->setValue(50);
 	newScreen2->addGadget(progressBar);
 
 	Gradient* gradient = new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
