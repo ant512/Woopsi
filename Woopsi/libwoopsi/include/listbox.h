@@ -6,6 +6,7 @@
 #include "listdata.h"
 #include "listboxdataitem.h"
 #include "gadgetstyle.h"
+#include "listboxbase.h"
 
 namespace WoopsiUI {
 
@@ -17,7 +18,7 @@ namespace WoopsiUI {
 	 * The options themselves have user-definable text and background colours for their selected
 	 * and unselected states.
 	 */
-	class ListBox : public ScrollingPanel, public ListDataEventHandler {
+	class ListBox : public ListBoxBase, public ScrollingPanel, public ListDataEventHandler {
 	public:
 		
 		/**

@@ -27,6 +27,8 @@ Change Log
       implement the same methods.
     - Added SliderBase interface to ensure that all Slider-style classes
       implement the same methods.
+    - Added ListBoxBase interface to ensure that all ListBox-style classes
+      implement the same methods.
 
   V0.45 (20100219)
   

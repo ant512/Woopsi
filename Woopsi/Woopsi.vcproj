@@ -1091,6 +1091,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\include\listboxbase.h"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\include\listboxdataitem.h"
 						>
 					</File>

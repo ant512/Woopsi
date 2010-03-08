@@ -7,6 +7,7 @@
 #include "listdata.h"
 #include "listboxdataitem.h"
 #include "gadgetstyle.h"
+#include "listboxbase.h"
 
 namespace WoopsiUI {
 
@@ -17,7 +18,7 @@ namespace WoopsiUI {
 	 * methods are more or less identical to the methods exposed by the ListBox
 	 * to ensure that the two are interchangeable.
 	 */
-	class ScrollingListBox : public Gadget, public GadgetEventHandler {
+	class ScrollingListBox : public ListBoxBase, public Gadget, public GadgetEventHandler {
 	public:
 
 		/**
@@ -138,11 +139,27 @@ namespace WoopsiUI {
 		};
 
 		/**
+		 * Sets whether multiple selections are possible or not.
+		 * @return True if multiple selections are allowed.
+		 */
+		virtual inline const bool allowsMultipleSelections() const {
+			return _listbox->allowsMultipleSelections();
+		};
+
+		/**
 		 * Resize the scrolling canvas to encompass all options.
 		 */
 		virtual inline void resizeCanvas() {
 			_listbox->resizeCanvas();
-		}
+		};
+
+		/**
+		 * Get the specified option.
+		 * @return The specified option.
+		 */
+		virtual inline const ListBoxDataItem* getOption(const s32 index) {
+			return _listbox->getOption(index);
+		};
 
 		/**
 		 * Get the selected index.  Returns -1 if nothing is selected.
