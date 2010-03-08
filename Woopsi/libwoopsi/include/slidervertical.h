@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "gadget.h"
 #include "gadgeteventhandler.h"
+#include "sliderbase.h"
 
 namespace WoopsiUI {
 
@@ -14,7 +15,7 @@ namespace WoopsiUI {
 	 * down the "gutter".  Essentially a scrollbar, but more
 	 * generic.
 	 */
-	class SliderVertical : public Gadget, public GadgetEventHandler {
+	class SliderVertical : public SliderBase, public Gadget, public GadgetEventHandler {
 
 	public:
 

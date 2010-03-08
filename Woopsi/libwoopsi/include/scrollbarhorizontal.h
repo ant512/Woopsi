@@ -5,6 +5,7 @@
 #include "gadget.h"
 #include "gadgeteventhandler.h"
 #include "gadgetstyle.h"
+#include "sliderbase.h"
 
 namespace WoopsiUI {
 
@@ -20,7 +21,7 @@ namespace WoopsiUI {
 	 * to this gadget's event handler, meaning its events are also identical
 	 * to the SliderHorizontal's.
 	 */
-	class ScrollbarHorizontal : public Gadget, public GadgetEventHandler {
+	class ScrollbarHorizontal : public SliderBase, public Gadget, public GadgetEventHandler {
 
 	public:
 
@@ -125,6 +126,14 @@ namespace WoopsiUI {
 		 * @param e The event details.
 		 */
 		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Get the value represented by each pixel in the gutter.
+		 * Note that this is an integer value; the actual value
+		 * most likely contains a fractional part.
+		 * @return The value represented by each pixel in the gutter.
+		 */
+		s16 getValuesPerPixel() const;
 
 	protected:
 		SliderHorizontal* _slider;					/**< Pointer to the slider gadget */

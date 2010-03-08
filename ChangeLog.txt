@@ -25,6 +25,8 @@ Change Log
     - Built with devkitARM r28.
     - Added TextBoxBase interface to ensure that all TextBox-style classes
       implement the same methods.
+    - Added SliderBase interface to ensure that all Slider-style classes
+      implement the same methods.
 
   V0.45 (20100219)
   

@@ -167,3 +167,8 @@ void ScrollbarVertical::onResize(u16 width, u16 height) {
 	// Reset event raising
 	setRaisesEvents(events);
 }
+
+s16 ScrollbarVertical::getValuesPerPixel() const {
+	return _slider->getValuesPerPixel();
+}
+

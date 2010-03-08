@@ -1051,6 +1051,10 @@
 					Name="Slider"
 					>
 					<File
+						RelativePath=".\libwoopsi\include\sliderbase.h"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\include\sliderhorizontal.h"
 						>
 					</File>
