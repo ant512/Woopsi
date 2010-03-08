@@ -77,13 +77,13 @@ void WoopsiString::setText(const WoopsiString& text) {
 
 void WoopsiString::setText(const char* text) {
 
-	u32 length = strlen(text);
+	s32 length = strlen(text);
 
 	// Ensure we've got enough memory available
 	allocateMemory(length, false);
 
 	// Copy/filter the valid UTF-8 tokens into _text and cache the length
-	u32 unicodeChars = 0;
+	s32 unicodeChars = 0;
 	_dataLength = filterString(_text, text, length, &unicodeChars);
 	_stringLength = unicodeChars;
 }
@@ -126,7 +126,7 @@ void WoopsiString::append(const WoopsiString& text) {
 	_stringLength += text.getLength();
 }
 
-char* WoopsiString::getToken(u32 index) const {
+char* WoopsiString::getToken(s32 index) const {
         
 	// Early exit if the string is empty
 	if (!hasData()) return NULL;
@@ -155,7 +155,7 @@ char* WoopsiString::getToken(u32 index) const {
 	return NULL;
 }
 
-void WoopsiString::insert(const WoopsiString& text, u32 index) { 
+void WoopsiString::insert(const WoopsiString& text, s32 index) { 
 
 	// Early exit if the string is empty
 	if (!hasData()) {
@@ -170,10 +170,10 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 	}
 
 	// Locate the point at which we can cut the existing string 
-	u32 insertPoint = getToken(index) - _text;
+	s32 insertPoint = getToken(index) - _text;
 
 	// Get the total size of the string that we need
-	u32 newSize = _dataLength + text.getByteCount();
+	s32 newSize = _dataLength + text.getByteCount();
 
 	// Reallocate memory if the existing memory isn't large enough
 	if (_allocatedSize < newSize) {
@@ -206,7 +206,7 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 	} else {
 
 		// Existing size large enough, so make space in string for insert
-		for (u32 i = 0; i < _dataLength - insertPoint; ++i) {
+		for (s32 i = 0; i < _dataLength - insertPoint; ++i) {
 			_text[newSize - i - 1] = _text[_dataLength - i - 1];
 		}
 
@@ -218,7 +218,7 @@ void WoopsiString::insert(const WoopsiString& text, u32 index) {
 	}
 }
 
-void WoopsiString::remove(const u32 startIndex) {
+void WoopsiString::remove(const s32 startIndex) {
 
 	// Reject if requested operation makes no sense
 	if (!hasData()) return;
@@ -238,7 +238,7 @@ void WoopsiString::remove(const u32 startIndex) {
 	_stringLength -= (_stringLength - startIndex);
 }
 
-void WoopsiString::remove(const u32 startIndex, const u32 count) {
+void WoopsiString::remove(const s32 startIndex, const s32 count) {
 
 	// Reject if requested operation makes no sense
 	if (!hasData()) return;
@@ -274,7 +274,7 @@ void WoopsiString::remove(const u32 startIndex, const u32 count) {
 	_stringLength -= count;
 }
 
-const u32 WoopsiString::getCharAt(u32 index) const {
+const u32 WoopsiString::getCharAt(s32 index) const {
 	const char* token = getToken(index);
 	return getCodePoint(token, NULL);
 }
@@ -283,17 +283,17 @@ const s32 WoopsiString::indexOf(u32 letter) const {
 	return indexOf(letter, 0, getLength());
 }
 
-const s32 WoopsiString::indexOf(u32 letter, u32 startIndex) const {
+const s32 WoopsiString::indexOf(u32 letter, s32 startIndex) const {
 	return indexOf(letter, startIndex, getLength() - startIndex);
 }
 
-const s32 WoopsiString::indexOf(u32 letter, u32 startIndex, u32 count) const {
+const s32 WoopsiString::indexOf(u32 letter, s32 startIndex, s32 count) const {
 
 	// Exit if no data available
 	if (!hasData()) return -1;
 
 	s32 index = -1;
-	u32 charsExamined = 0;
+	s32 charsExamined = 0;
 
 	StringIterator* iterator = newStringIterator();
 	if (!iterator->moveTo(startIndex)) return -1;
@@ -316,17 +316,17 @@ const s32 WoopsiString::lastIndexOf(u32 letter) const {
 	return lastIndexOf(letter, getLength() - 1, getLength());
 }
 
-const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex) const {
+const s32 WoopsiString::lastIndexOf(u32 letter, s32 startIndex) const {
 	return lastIndexOf(letter, startIndex, getLength() - (getLength() - startIndex));
 }
 
-const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex, u32 count) const {
+const s32 WoopsiString::lastIndexOf(u32 letter, s32 startIndex, s32 count) const {
 
 	// Exit if no data available
 	if (!hasData()) return -1;
 
 	s32 index = -1;
-	u32 charsExamined = 0;
+	s32 charsExamined = 0;
 
 	StringIterator* iterator = newStringIterator();
 	if (!iterator->moveTo(startIndex)) return -1;
@@ -345,11 +345,11 @@ const s32 WoopsiString::lastIndexOf(u32 letter, u32 startIndex, u32 count) const
 	return index;
 }
 
-WoopsiString* WoopsiString::subString(u32 startIndex) const {
+WoopsiString* WoopsiString::subString(s32 startIndex) const {
 	return subString(startIndex, getLength() - startIndex);
 }
 
-WoopsiString* WoopsiString::subString(u32 startIndex, u32 length) const {
+WoopsiString* WoopsiString::subString(s32 startIndex, s32 length) const {
 	WoopsiString* subString = new WoopsiString();
 	StringIterator* iterator = newStringIterator();
 	if (!iterator->moveTo(startIndex)) return NULL;
@@ -361,7 +361,7 @@ WoopsiString* WoopsiString::subString(u32 startIndex, u32 length) const {
 	// two-pass algorithm that firstly gets the number of bytes in the
 	// substring, then performs the memcpy().  However, the method used
 	// here is probably just as fast, as the string always over-allocates.
-	u32 count = 0;
+	s32 count = 0;
 	while (count < length) {
 		subString->append(iterator->getCodePoint());
 		iterator->moveToNext();
@@ -373,7 +373,7 @@ WoopsiString* WoopsiString::subString(u32 startIndex, u32 length) const {
 	return subString;
 }
 
-void WoopsiString::allocateMemory(u32 chars, bool preserve) {
+void WoopsiString::allocateMemory(s32 chars, bool preserve) {
 
 	// Do we already have enough memory allocated to contain this new size?
 	// If so, we can avoid deallocating and allocating new memory by re-using the old
@@ -405,9 +405,9 @@ void WoopsiString::copyToCharArray(char* buffer) const {
 	buffer[_dataLength] = '\0';
 }
 
-u32 WoopsiString::filterString(char* dest, const char* src, u32 sourceBytes, u32* totalUnicodeChars) const {
+s32 WoopsiString::filterString(char* dest, const char* src, s32 sourceBytes, s32* totalUnicodeChars) const {
 	u8 bytes;
-	u32 totalBytes = 0;
+	s32 totalBytes = 0;
 
 	while (totalBytes < sourceBytes) {
 		getCodePoint(src, &bytes);

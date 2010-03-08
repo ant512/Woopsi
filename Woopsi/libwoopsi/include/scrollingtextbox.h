@@ -16,7 +16,7 @@ namespace WoopsiUI {
 	 * methods are more or less identical to the methods exposed by the
 	 * MultiLineTextBox to ensure that the two are interchangeable.
 	 */
-	class ScrollingTextBox : public Gadget, public GadgetEventHandler {
+	class ScrollingTextBox : public TextBoxBase, public Gadget, public GadgetEventHandler {
 	public:
 
 		/**
@@ -163,6 +163,22 @@ namespace WoopsiUI {
 		 * @param e Event arguments.
 		 */
 		virtual void handleScrollEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Check if the textbox opens the keyboard popup when double-clicked.
+		 * @return True if the keyboard pops up; false if not.
+		 */
+		bool opensKeyboard() const { return _textbox->opensKeyboard(); };
+
+		/**
+		 * Disables the keyboard popup when double-clicked.
+		 */
+		void disableKeyboardPopup() { _textbox->disableKeyboardPopup(); };
+
+		/**
+		 * Enables the keyboard popup when double-clicked.
+		 */
+		void enableKeyboardPopup() { _textbox->enableKeyboardPopup(); };
 
 	protected:
 		MultiLineTextBox* _textbox;						/**< Pointer to the textbox */

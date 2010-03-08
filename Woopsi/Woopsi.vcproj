@@ -1030,6 +1030,10 @@
 						RelativePath=".\libwoopsi\include\textbox.h"
 						>
 					</File>
+					<File
+						RelativePath=".\libwoopsi\include\textboxbase.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="RadioButton"

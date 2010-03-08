@@ -7,6 +7,7 @@
 #include "woopsistring.h"
 #include "text.h"
 #include "keyboardeventhandler.h"
+#include "textboxbase.h"
 
 namespace WoopsiUI {
 	
@@ -20,7 +21,7 @@ namespace WoopsiUI {
 	 * rows of text than it can display, and these additional
 	 * rows can be scrolled through.
 	 */
-	class MultiLineTextBox : public ScrollingPanel, public KeyboardEventHandler  {
+	class MultiLineTextBox : public TextBoxBase, public ScrollingPanel, public KeyboardEventHandler  {
 	public:
 
 		/**

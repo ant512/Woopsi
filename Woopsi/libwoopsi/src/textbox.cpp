@@ -106,12 +106,12 @@ void TextBox::insertTextAtCursor(const WoopsiString& text) {
 	insertText(text, getCursorPosition());
 }
 
-void TextBox::repositionCursor(const u32 position) {
+void TextBox::repositionCursor(const s32 position) {
 	u32 len = _text.getLength();
 	_cursorPos = len >= position ? position : len;
 }
 
-void TextBox::moveCursorToPosition(const u32 position) {
+void TextBox::moveCursorToPosition(const s32 position) {
 	repositionCursor(position);
 	calculateTextPositionHorizontal();
 	redraw();

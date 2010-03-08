@@ -7,6 +7,7 @@
 #include "gadgetstyle.h"
 #include "keyboardeventhandler.h"
 #include "gadgeteventargs.h"
+#include "textboxbase.h"
 
 namespace WoopsiUI {
 
@@ -21,7 +22,7 @@ namespace WoopsiUI {
 	 * alignment settings and switch to left-aligned instead.  This ensures that
 	 * moving the cursor over the text will scroll through it correctly.
 	 */
-	class TextBox : public Label, public KeyboardEventHandler {
+	class TextBox : public TextBoxBase, public Label, public KeyboardEventHandler {
 	public:
 
 		/**
@@ -94,14 +95,14 @@ namespace WoopsiUI {
 		 * string, the cursor is moved to the end of the string.
 		 * @param position The new cursor position.
 		 */
-		virtual void moveCursorToPosition(const u32 position);
+		virtual void moveCursorToPosition(const s32 position);
 
 		/**
 		 * Get the cursor position.  This is the index within the string that
 		 * the cursor is currently positioned over.
 		 * @return position The cursor position.
 		 */
-		virtual inline const u32 getCursorPosition() const { return _cursorPos; };
+		virtual inline const s32 getCursorPosition() const { return _cursorPos; };
 
 		/**
 		 * Handle a keyboard press event.
@@ -144,7 +145,7 @@ namespace WoopsiUI {
 		inline void enableKeyboardPopup() { _opensKeyboard = true; };
 
 	protected:
-		u32 _cursorPos;					/**< Position of the cursor within the string. */
+		s32 _cursorPos;					/**< Position of the cursor within the string. */
 		bool _showCursor;				/**< Set to true to make cursor visible. */
 		bool _opensKeyboard;			/**< Set to false to disable keyboard popup when double-clicked. */
 
@@ -165,7 +166,7 @@ namespace WoopsiUI {
 		 * Moves the cursor without redrawing.
 		 * @param position New cursor position.
 		 */
-		virtual void repositionCursor(const u32 position);
+		virtual void repositionCursor(const s32 position);
 
 		/**
 		 * Move the cursor to the specified co-ordinates.  The co-ordinates

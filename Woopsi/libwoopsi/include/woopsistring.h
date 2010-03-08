@@ -109,13 +109,13 @@ namespace WoopsiUI {
 		 * @param text The text to insert.
 		 * @param index The index at which to insert the text.
 		 */
-		virtual void insert(const WoopsiString& text, const u32 index);
+		virtual void insert(const WoopsiString& text, const s32 index);
 
 		/**
 		 * Remove all characters from the string from the start index onwards.
 		 * @param startIndex Index to remove from.
 		 */
-		virtual void remove(const u32 startIndex);
+		virtual void remove(const s32 startIndex);
 
 		/**
 		 * Remove specified number of characters from the string from the
@@ -123,19 +123,19 @@ namespace WoopsiUI {
 		 * @param startIndex Index to remove from.
 		 * @param count Number of characters to remove.
 		 */
-		virtual void remove(const u32 startIndex, const u32 count);
+		virtual void remove(const s32 startIndex, const s32 count);
 
 		/**
 		 * Get the of number of UTF-8 tokens (ie. the length) of the string.
 		 * @return The length of the string.
 		 */
-		virtual const u32 getLength() const { return _stringLength; };
+		virtual const s32 getLength() const { return _stringLength; };
 
 		/**
 		 * Get the of number of bytes in the string.
 		 * @return The number of bytes of the string.
 		 */
-		virtual const u32 getByteCount() const { return _dataLength; };
+		virtual const s32 getByteCount() const { return _dataLength; };
 
 		/**
 		 * Get the character at the specified index.  This function is useful
@@ -146,7 +146,7 @@ namespace WoopsiUI {
 		 * @param index The index of the character to retrieve.
 		 * @return The character at the specified index.
 		 */
-		virtual const u32 getCharAt(u32 index) const;
+		virtual const u32 getCharAt(s32 index) const;
 
 		/**
 		 * Returns the first index of the specified letter within the string.
@@ -164,7 +164,7 @@ namespace WoopsiUI {
 		 * @param startIndex The index to start searching from.
 		 * @return The index of the letter.
 		 */
-		const s32 indexOf(u32 letter, u32 startIndex) const;
+		const s32 indexOf(u32 letter, s32 startIndex) const;
 
 		/**
 		 * Returns the first index of the specified letter within the string.
@@ -176,7 +176,7 @@ namespace WoopsiUI {
 		 * @param count The number of characters to examine.
 		 * @return The index of the letter.
 		 */
-		virtual const s32 indexOf(u32 letter, u32 startIndex, u32 count) const;
+		virtual const s32 indexOf(u32 letter, s32 startIndex, s32 count) const;
 
 		/**
 		 * Returns the last index of the specified letter within the string.
@@ -195,7 +195,7 @@ namespace WoopsiUI {
 		 * @param startIndex The index to start searching from.
 		 * @return The index of the letter.
 		 */
-		const s32 lastIndexOf(u32 letter, u32 startIndex) const;
+		const s32 lastIndexOf(u32 letter, s32 startIndex) const;
 
 		/**
 		 * Returns the last index of the specified letter within the string.
@@ -207,7 +207,7 @@ namespace WoopsiUI {
 		 * @param count The number of characters to examine.
 		 * @return The index of the letter.
 		 */
-		virtual const s32 lastIndexOf(u32 letter, u32 startIndex, u32 count) const;
+		virtual const s32 lastIndexOf(u32 letter, s32 startIndex, s32 count) const;
 
 		/**
 		 * Get a substring from this string.  It is the responsibility of the
@@ -216,7 +216,7 @@ namespace WoopsiUI {
 		 * @return A pointer to a new WoopsiString object containing the
 		 * substring.
 		 */
-		WoopsiString* subString(u32 startIndex) const;
+		WoopsiString* subString(s32 startIndex) const;
 
 		/**
 		 * Get a substring from this string.  It is the responsibility of the
@@ -226,7 +226,7 @@ namespace WoopsiUI {
 		 * @return A pointer to a new WoopsiString object containing the
 		 * substring.
 		 */
-		WoopsiString* subString(u32 startIndex, u32 length) const;
+		WoopsiString* subString(s32 startIndex, s32 length) const;
 		
 		/**
 		 * Overloaded assignment operator.  Copies the data within the argument
@@ -273,7 +273,7 @@ namespace WoopsiUI {
 		 * @param preserve If true, the data in the existing memory will be
 		 * preserved if new memory must be allocated
 		 */
-		virtual void allocateMemory(u32 chars, bool preserve);
+		virtual void allocateMemory(s32 chars, bool preserve);
 
 		/**
 		 * Check if we've got any string data stored or not.
@@ -286,7 +286,7 @@ namespace WoopsiUI {
 		 * Get the amount of allocated memory.
 		 * @return The number of chars allocated in RAM.
 		 */
-		virtual inline u32 getAllocatedSize() const { return _allocatedSize; };
+		virtual inline s32 getAllocatedSize() const { return _allocatedSize; };
 
 		/**
 		 * Copies the valid utf-8 tokens of the string src into string dest 
@@ -298,7 +298,7 @@ namespace WoopsiUI {
 		 * number of unicode characters in the filtered string.
 		 * @return The number of bytes in the filtered string.
 		 */
-		u32 filterString(char* dest, const char* src, u32 sourceBytes, u32* totalUnicodeChars) const;
+		s32 filterString(char* dest, const char* src, s32 sourceBytes, s32* totalUnicodeChars) const;
 
 		/**
 		 * Returns a pointer to the raw char array data.
@@ -310,7 +310,7 @@ namespace WoopsiUI {
 		 * Return a pointer to the specified UTF-8 token.
 		 * @param index Index of the UTF-8 token to retrieve.
 		 */
-		virtual char* getToken(const u32 index) const;
+		virtual char* getToken(const s32 index) const;
 
 		/**
 		 * Get the number of chars read in the UTF-8 token and its codepoint.
@@ -325,10 +325,10 @@ namespace WoopsiUI {
 	private:
 		friend class StringIterator;
 		
-		u32 _dataLength;		/**< Length of char data in the string */
-		u32 _stringLength;		/*< Number of unicode tokens in the string */
-		u32 _allocatedSize;		/**< Number of bytes allocated for this string */
-		u32 _growAmount;		/**< Number of chars that the string grows by
+		s32 _dataLength;		/**< Length of char data in the string */
+		s32 _stringLength;		/*< Number of unicode tokens in the string */
+		s32 _allocatedSize;		/**< Number of bytes allocated for this string */
+		s32 _growAmount;		/**< Number of chars that the string grows by
 									 whenever it needs to get larger */
 									 
 		/**

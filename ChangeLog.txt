@@ -13,6 +13,7 @@ Change Log
       first instruction in user override.
     - Woopsi::startup() and Woopsi::shutdown() are protected, not public.
     - Deleted helloworld_alternative example.
+    - Switched various string methods from using u32 to s32 types.
   
   New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.
@@ -22,6 +23,8 @@ Change Log
     - TextBox and MultiLineTextBox keyboard popup can be enabled/disabled using
       enableKeyboardPopup() and disableKeyboardPopup().
     - Built with devkitARM r28.
+    - Added TextBoxBase interface to ensure that all TextBox-style classes
+      implement the same methods.
 
   V0.45 (20100219)
   
