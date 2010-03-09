@@ -1,9 +1,15 @@
 Change Log
 ----------
 
-  V0.46
+  V0.47
   
-  Fixes:
+  
+
+  V0.46 (20100308)
+  
+  - First beta release.
+  
+  - Fixes:
     - MultiLineTextBox jumps to bottom of text correctly when required to do so.
     - MultiLineTextBox extensively refactored.
     - MultiLineTextBox top-aligns when text exceeds size of gadget.
@@ -15,7 +21,7 @@ Change Log
     - Deleted helloworld_alternative example.
     - Switched various string methods from using u32 to s32 types.
   
-  New Features:
+  - New Features:
     - Cursor jumps to click point when MultiLineTextBox is clicked.
     - D-pad up/down move cursor up/down in MultiLineTextBox.
     - MultiLineTextBox shows keyboard when double-clicked.
@@ -33,7 +39,7 @@ Change Log
 
   V0.45 (20100219)
   
-  Fixes:
+  - Fixes:
     - Fixed error when subclassing MultiLineTextBox.
     - Fixed keyboard secondary repeat timer - now uses correct time.
     - Delete key deletes character in front of cursor in MultiLineTextBox, not
@@ -126,7 +132,7 @@ Change Log
       than 2 fixed.
     - MultiLineTextBox top vertical alignment works correctly.
 
-  New Features:
+  - New Features:
     - Added goToParent() and goToRoot() to FilePath class.
     - Added FreeType support.
     - Added FreeType to template makefile.
@@ -197,7 +203,7 @@ Change Log
 
   V0.44 (20100124)
   
-  Fixes:
+  - Fixes:
     - Moved fatInitDefault() SDL function into woopsifuncs.cpp (Quirky).
     - ScrollingPanel::raiseScrollEvent() only fires if events are enabled.
     - Gadget::raisesEvents() retrieves its value from the GadgetEventHandlerList
@@ -253,7 +259,7 @@ Change Log
       of box.
     - Fixed memory leak and logic problems when deleting gadgets.
     
-  New Features:
+  - New Features:
     - Added FontBase::getCharHeight().
     - WoopsiString supports UTF-8 (Lakedaemon).
     - Split glyphs into separate GlyphFont.
