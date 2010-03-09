@@ -31,7 +31,7 @@ void KeyTest::startup() {
 	woopsiApplication->addGadget(inScreen);
 
 	// Create keyboard
-	_keyboard = new WoopsiKeyboard(0, 13, 256, 179, "Keyboard", Gadget::GADGET_DRAGGABLE, 0);
+	_keyboard = new WoopsiKeyboard(0, 13, 0);
 	_keyboard->addKeyboardEventHandler(_output);
 	inScreen->addGadget(_keyboard);
 	
