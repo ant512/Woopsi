@@ -71,17 +71,17 @@ void Text::append(const WoopsiString& text) {
 	wrap(getLength() - 1);
 }
 
-void Text::insert(const WoopsiString& text, const u32 index) {
+void Text::insert(const WoopsiString& text, const s32 index) {
 	WoopsiString::insert(text, index);
 	wrap(index);
 }
 
-void Text::remove(const u32 startIndex) {
+void Text::remove(const s32 startIndex) {
 	WoopsiString::remove(startIndex);
 	wrap(startIndex);
 }
 
-void Text::remove(const u32 startIndex, const u32 count) {
+void Text::remove(const s32 startIndex, const s32 count) {
 	WoopsiString::remove(startIndex, count);
 	wrap(startIndex);
 }
@@ -100,12 +100,12 @@ void Text::wrap() {
 	wrap(0);
 }
 
-void Text::wrap(u32 charIndex) {
+void Text::wrap(s32 charIndex) {
 	
 	// Declare vars in advance of loop
-	u32 pos = 0;
-	u32 lineWidth;
-	u32 breakIndex;
+	s32 pos = 0;
+	s32 lineWidth;
+	s32 breakIndex;
 	bool endReached = false;
 	
 	if (_linePositions.size() == 0) charIndex = 0;
@@ -117,7 +117,7 @@ void Text::wrap(u32 charIndex) {
 		// Remove wrapping data past this point
 		
 		// Get the index of the line in which the char index appears
-		u32 lineIndex = getLineContainingCharIndex(charIndex);
+		s32 lineIndex = getLineContainingCharIndex(charIndex);
 		
 		// Remove any longest line records that occur from the line index onwards
 		while ((_longestLines.size() > 0) && (_longestLines[_longestLines.size() - 1].index >= lineIndex)) {
@@ -290,7 +290,7 @@ void Text::stripTopLines(const s32 lines) {
 	wrap();
 }
 
-const u32 Text::getLineContainingCharIndex(const u32 index) const {
+const s32 Text::getLineContainingCharIndex(const s32 index) const {
 	
 	// Early exit if there is no existing line data
 	if (_linePositions.size() == 0) return 0;
@@ -299,9 +299,9 @@ const u32 Text::getLineContainingCharIndex(const u32 index) const {
 	if (index >= _linePositions[_linePositions.size() - 2]) return _linePositions.size() - 2;
 	
 	// Binary search the line vector for the line containing the supplied index
-	u32 bottom = 0;
-	u32 top = _linePositions.size() - 1;
-	u32 mid;
+	s32 bottom = 0;
+	s32 top = _linePositions.size() - 1;
+	s32 mid;
 	
 	while (bottom <= top) {
 		

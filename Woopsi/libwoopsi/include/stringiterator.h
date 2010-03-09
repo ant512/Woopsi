@@ -55,13 +55,13 @@ namespace WoopsiUI {
 		 * @param index The index to move to.
 		 * @return True if the iterator moved; false if not (indicates end of string).
 		 */
-		bool moveTo(u32 index);
+		bool moveTo(s32 index);
 		
 		/**
 		 * Get the current position of the iterator within the string.
 		 * @return The current character index of the iterator.
 		 */
-		inline u32 getIndex() const { return _currentIndex; };
+		inline s32 getIndex() const { return _currentIndex; };
 
 		/**
 		 * Get the codepoint in the string at the iterator's current point.
@@ -81,18 +81,18 @@ namespace WoopsiUI {
 		 * Move forwards from the current index to the specified index.
 		 * @param index The index to move to.
 		 */
-		void iterateForwardsTo(u32 index);
+		void iterateForwardsTo(s32 index);
 
 		/**
 		 * Move backwards from the current index to the specified index.
 		 * @param index The index to move to.
 		 */
-		void iterateBackwardsTo(u32 index);
+		void iterateBackwardsTo(s32 index);
 		
 	private:
 		const WoopsiString* _string;		/**< String being iterated over. */
 		const char* _currentChar;			/**< Pointer to the current position of the iterator. */
-		u32 _currentIndex;					/**< Iterator's current index within the string. */
+		s32 _currentIndex;					/**< Iterator's current index within the string. */
 	};
 }
 

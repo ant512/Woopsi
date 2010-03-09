@@ -54,20 +54,20 @@ namespace WoopsiUI {
 		 * @param text The text to insert.
 		 * @param index The char index to insert at.
 		 */
-		virtual void insert(const WoopsiString& text, const u32 index);
+		virtual void insert(const WoopsiString& text, const s32 index);
 
 		/**
 		 * Remove all characters from the string from the start index onwards.
 		 * @param startIndex The char index to start removing from.
 		 */
-		virtual void remove(const u32 startIndex);
+		virtual void remove(const s32 startIndex);
 
 		/**
 		 * Remove all characters from the string from the start index onwards.
 		 * @param startIndex The char index to start removing from.
 		 * @param count The number of chars to remove.
 		 */
-		virtual void remove(const u32 startIndex, const u32 count);
+		virtual void remove(const s32 startIndex, const s32 count);
 		
 		/**
 		 * Set the vertical spacing between rows of text.
@@ -171,7 +171,7 @@ namespace WoopsiUI {
 		 * @param charIndex The index of the char to start wrapping from; note
 		 * that the wrapping function will re-wrap that entire line of text.
 		 */
-		void wrap(u32 charIndex);
+		void wrap(s32 charIndex);
 
 		/**
 		 * Get the index of the line of text that contains the specified index
@@ -180,7 +180,7 @@ namespace WoopsiUI {
 		 * @return The number of the line of wrapped text that contains the
 		 * specified index.
 		 */
-		const u32 getLineContainingCharIndex(const u32 index) const;
+		const s32 getLineContainingCharIndex(const s32 index) const;
 
 		/**
 		 * Gets the index within the char array that represents the start of the line of
@@ -188,7 +188,7 @@ namespace WoopsiUI {
 		 * @param line The line number to locate within the char array.
 		 * @return The index within the char array of the start of the supplied line.
 		 */
-		const u32 getLineStartIndex(const u32 line) const { return _linePositions[line]; };
+		const s32 getLineStartIndex(const s32 line) const { return _linePositions[line]; };
 
 	private:
 		/**
@@ -196,12 +196,12 @@ namespace WoopsiUI {
 		 * array.
 		 */
 		typedef struct {
-			u32 index;
+			s32 index;
 			u8 width;
 		} LongestLine;
 		
 		FontBase* _font;							/**< Font to be used for output */
-		WoopsiArray<u32> _linePositions;			/**< Array containing start indexes of each wrapped line */
+		WoopsiArray<s32> _linePositions;			/**< Array containing start indexes of each wrapped line */
 		WoopsiArray<LongestLine> _longestLines;	/**< Array containing data describing successively longer wrapped lines */
 		u8 _lineSpacing;							/**< Spacing between lines of text */
 		s32 _textPixelHeight;						/**<Total height of the wrapped text in pixels */

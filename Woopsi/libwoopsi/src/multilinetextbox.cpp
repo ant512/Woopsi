@@ -162,7 +162,7 @@ void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 }
 
 u32 MultiLineTextBox::getCursorCodePoint() const {
-	if ((u32)_cursorPos < _text->getLength()) {
+	if (_cursorPos < _text->getLength()) {
 		return _text->getCharAt(_cursorPos);
 	} else {
 		return ' ';

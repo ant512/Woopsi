@@ -345,7 +345,7 @@ namespace WoopsiUI {
 		 * @param length The number of characters to draw.
 		 * @param colour The colour of the string.
 		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour);
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour);
 		
 		/**
 		 * Draw a string to the internal bitmap in a specific colour.
@@ -357,7 +357,7 @@ namespace WoopsiUI {
 		 * drawing will commence.
 		 * @param length The number of characters to draw.
 		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length);
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);
 
 		/**
 		 * Scroll a region by a specified distance in two dimensions.  Performs

@@ -50,7 +50,7 @@ u16 FreeTypeFont::getStringWidth(const WoopsiString& text) const {
 	return width;
 }
 
-u16 FreeTypeFont::getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const { 
+u16 FreeTypeFont::getStringWidth(const WoopsiString& text, s32 startIndex, s32 length) const { 
 	StringIterator* iterator = text.newStringIterator();
 	if ((!iterator->moveTo(startIndex)) || (length == 0)) {
 		delete iterator;

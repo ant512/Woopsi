@@ -90,7 +90,7 @@ void GraphicsPort::getClipRect(Rect& rect) const {
 }
 
 // Print a string in a specific colour
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length) {
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
 	
 	// Ignore command if drawing is disabled
 	if (!_isEnabled) return;
@@ -121,7 +121,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 }
 
 // Print a string in a specific colour
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour) {
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
 	
 	// Ignore command if drawing is disabled
 	if (!_isEnabled) return;

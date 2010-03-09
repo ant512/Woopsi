@@ -107,7 +107,7 @@ void TextBox::insertTextAtCursor(const WoopsiString& text) {
 }
 
 void TextBox::repositionCursor(const s32 position) {
-	u32 len = _text.getLength();
+	s32 len = _text.getLength();
 	_cursorPos = len >= position ? position : len;
 }
 

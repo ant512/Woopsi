@@ -21,7 +21,7 @@ u16 PackedFontBase::getStringWidth(const WoopsiString& text) const {
 	return getStringWidth(text, 0, text.getLength());
 }
 
-u16 PackedFontBase::getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const {
+u16 PackedFontBase::getStringWidth(const WoopsiString& text, s32 startIndex, s32 length) const {
 	if (_fontWidth) return _fontWidth * length;
 
 	u16 total = 0;

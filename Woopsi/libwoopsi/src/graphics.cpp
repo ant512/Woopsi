@@ -223,7 +223,7 @@ void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string
 	drawText(x, y, font, string, 0, string.getLength());
 }
 
-void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length) {
+void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
 
 	s16 clipX1 = _clipRect.x;
 	s16 clipY1 = _clipRect.y;
@@ -259,7 +259,7 @@ void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string
 }
 
 // Print a string in a specific colour
-void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, u32 startIndex, u32 length, u16 colour) {
+void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
 
 	// Store current font colour
 	bool isMonochrome = font->isMonochrome();

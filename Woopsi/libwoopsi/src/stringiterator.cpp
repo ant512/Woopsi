@@ -69,19 +69,19 @@ bool StringIterator::moveToPrevious() {
 	return true;
 }
 
-void StringIterator::iterateForwardsTo(u32 index) {
+void StringIterator::iterateForwardsTo(s32 index) {
 	do {
 		moveToNext();
 	} while (index > _currentIndex);
 }
 
-void StringIterator::iterateBackwardsTo(u32 index) {
+void StringIterator::iterateBackwardsTo(s32 index) {
 	do {
 		moveToPrevious();
 	} while (_currentIndex > index);
 }
 
-bool StringIterator::moveTo(u32 index) {
+bool StringIterator::moveTo(s32 index) {
 	
 	// Abort if index exceeds the size of the string
 	if (index >= _string->getLength()) return false;

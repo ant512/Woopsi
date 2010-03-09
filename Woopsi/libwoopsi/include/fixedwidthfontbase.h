@@ -77,7 +77,7 @@ namespace WoopsiUI {
 		 * @param length The length of the substring in chars.
 		 * @return The width of the substring in pixels.
 		 */
-		inline u16 getStringWidth(const WoopsiString& text, u32 startIndex, u32 length) const { return length * getWidth(); };
+		inline u16 getStringWidth(const WoopsiString& text, s32 startIndex, s32 length) const { return length * getWidth(); };
 
 		/**
 		 * Get the width of an individual character.
