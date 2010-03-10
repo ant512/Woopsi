@@ -6,5 +6,3 @@ xcopy icon C:\devkitpro\libwoopsi\icon\
 xcopy include C:\devkitpro\libwoopsi\include\
 xcopy include\fonts C:\devkitpro\libwoopsi\include\fonts\
 xcopy lib C:\devkitpro\libwoopsi\lib\
-xcopy src C:\devkitpro\libwoopsi\src\
-xcopy makefile C:\devkitpro\libwoopsi
