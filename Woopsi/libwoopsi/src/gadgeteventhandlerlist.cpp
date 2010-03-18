@@ -73,6 +73,16 @@ void GadgetEventHandlerList::raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY) {
 	}
 }
 
+void GadgetEventHandlerList::raiseDropEvent(s16 x, s16 y) {
+	if (isEnabled()) {
+		GadgetEventArgs e(_gadget, x, y, 0, 0, KEY_CODE_NONE);
+
+		for (int i = 0; i < _gadgetEventHandlers.size(); ++i) {
+			_gadgetEventHandlers.at(i)->handleDropEvent(e);
+		}
+	}
+}
+
 void GadgetEventHandlerList::raiseMoveForwardEvent() {
 	if (isEnabled()) {
 		GadgetEventArgs e(_gadget, 0, 0, 0, 0, KEY_CODE_NONE);

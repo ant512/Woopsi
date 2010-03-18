@@ -1081,7 +1081,7 @@ bool Gadget::release(s16 x, s16 y) {
 
 	_flags.clicked = false;
 
-	stopDragging();
+	stopDragging(x, y);
 
 	if (woopsiApplication->getClickedGadget() == this) {
 		woopsiApplication->setClickedGadget(NULL);
@@ -1428,7 +1428,7 @@ void Gadget::getClientRect(Rect& rect) const {
 	}
 }
 
-void Gadget::startDragging(u16 x, u16 y) {
+void Gadget::startDragging(s16 x, s16 y) {
 	if (_flags.draggable) {
 		_flags.dragging = true;
 		_flags.clicked = true;
@@ -1441,10 +1441,12 @@ void Gadget::startDragging(u16 x, u16 y) {
 	}
 }
 
-void Gadget::stopDragging() {
+void Gadget::stopDragging(s16 x, s16 y) {
 	if (_flags.dragging) {
 		onDragStop();
 		_flags.dragging = false;
+
+		_gadgetEventHandlers->raiseDropEvent(x, y);
 	}
 }
 

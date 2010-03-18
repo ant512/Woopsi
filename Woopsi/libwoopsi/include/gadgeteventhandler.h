@@ -38,6 +38,12 @@ namespace WoopsiUI {
 		virtual void handleDragEvent(const GadgetEventArgs& e) { };
 
 		/**
+		 * Handle a drop event, triggered when the gadget has been dragged-and-dropped.
+		 * @param e The event data.
+		 */
+		virtual void handleDropEvent(const GadgetEventArgs& e) { };
+
+		/**
 		 * Handle a stylus release event that occurred within the bounds of
 		 * the source gadget.
 		 * @param e The event data.

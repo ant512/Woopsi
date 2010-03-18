@@ -113,6 +113,13 @@ namespace WoopsiUI {
 		void raiseDragEvent(s16 x, s16 y, s16 vX, s16 vY);
 
 		/**
+		 * Raise a gadget drop event to the event handler.
+		 * @param x The x co-ordinate of the stylus when the drop occurred.
+		 * @param y The y co-ordinate of the stylus when the drop occurred.
+		 */
+		void raiseDropEvent(s16 x, s16 y);
+
+		/**
 		 * Raise a move forward event to the event handler.
 		 */
 		void raiseMoveForwardEvent();

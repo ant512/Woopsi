@@ -1100,12 +1100,12 @@ namespace WoopsiUI {
 		 * @param x The x co-ordinate of the drag position relative to this gadget.
 		 * @param y The y co-ordinate of the drag position relative to this gadget.
 		 */
-		void startDragging(u16 x, u16 y);
+		void startDragging(s16 x, s16 y);
 		
 		/**
 		 * Notify this gadget that it is no longer being dragged.
 		 */
-		void stopDragging();
+		void stopDragging(s16 x, s16 y);
 
 		/**
 		 * Copy constructor is protected to prevent usage.

@@ -3,7 +3,12 @@ Change Log
 
   V0.47
   
-  
+  - Fixes:
+    - Removed Woopsi::startup() call from template.
+
+  - New Features:
+    - Added x and y parameters to Gadget::stopDragging();
+    - Added drop event (drag-and-drop).
 
   V0.46 (20100308)
   
