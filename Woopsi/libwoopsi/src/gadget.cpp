@@ -305,7 +305,7 @@ bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) const {
 		Rect rect;
 		getRectClippedToHierarchy(rect);
 
-		if ((x + width >= rect.x) && (y + height >= rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
+		if ((x + width > rect.x) && (y + height > rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
 			return true;
 		}
 	}

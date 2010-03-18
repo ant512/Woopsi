@@ -5,6 +5,7 @@ Change Log
   
   - Fixes:
     - Removed Woopsi::startup() call from template.
+    - Fixed bug in Gadget::checkCollision(x,y,width,height);
 
   - New Features:
     - Added x and y parameters to Gadget::stopDragging();
