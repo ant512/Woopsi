@@ -205,6 +205,12 @@ namespace WoopsiUI {
 		inline const bool isClicked() const { return _flags.clicked; };
 
 		/**
+		 * Is the gadget being dragged?
+		 * @return True if the gadget is currently being dragged.
+		 */
+		inline const bool isBeingDragged() const { return _flags.dragging; };
+
+		/**
 		 * Is the gadget shelved?
 		 * @return True if the gadget is shelved.
 		 */

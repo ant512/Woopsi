@@ -10,6 +10,7 @@ Change Log
   - New Features:
     - Added x and y parameters to Gadget::stopDragging();
     - Added drop event (drag-and-drop).
+    - Added Gadget::isBeingDragged().
 
   V0.46 (20100308)
   
