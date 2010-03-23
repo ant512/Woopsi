@@ -11,6 +11,7 @@ Change Log
     - Added x and y parameters to Gadget::stopDragging();
     - Added drop event (drag-and-drop).
     - Added Gadget::isBeingDragged().
+    - Added PipeDream demo.
 
   V0.46 (20100308)
   
