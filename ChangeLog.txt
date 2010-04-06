@@ -5,14 +5,23 @@ Change Log
   
   - Fixes:
     - Removed Woopsi::startup() call from template.
-    - Fixed bug in Gadget::checkCollision(x,y,width,height);
+    - Fixed bug in Gadget::checkCollision(x,y,width,height).
+    - Renamed CalendarDayButton to StickyButton.
+    - WoopsiKey inherits from StickyButton instead of Button.
+    - ScrollableBase no longer contains implemented methods or data; all moved
+      to ScrollingPanel.
+    - Child gadgets of ScrollingPanel no longer get drawn to wrong screen if
+      scrolled out of top of panel; Gadget::getPhysicalScreenNumber() is more
+      intelligent.
+    - Graphics::scroll() returns correctly-sized rects in revealed rects array.
 
   - New Features:
-    - Added x and y parameters to Gadget::stopDragging();
+    - Added x and y parameters to Gadget::stopDragging().
     - Added drop event (drag-and-drop).
     - Added Gadget::isBeingDragged().
     - Added PipeDream demo.
     - Built with devkitARM r30.
+    - Added ScrollbarPanel gadget.
 
   V0.46 (20100308)
   

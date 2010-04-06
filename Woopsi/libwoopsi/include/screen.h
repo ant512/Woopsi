@@ -71,6 +71,12 @@ namespace WoopsiUI {
 		 */
 		void setTitle(const WoopsiString& title);
 
+		/**
+		 * Get the number of the screen that this gadget is currently displayed on.
+		 * @return 0 for the touch screen, 1 for the top screen.
+		 */
+		virtual inline const u8 getPhysicalScreenNumber() const { return calculatePhysicalScreenNumber(getY()); };
+
 	protected:
 		u8 _titleHeight;						/**< Height of the title bar */
 		WoopsiString _title;					/**< Title of the screen */

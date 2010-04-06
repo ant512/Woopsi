@@ -1,9 +1,9 @@
-#include "calendardaybutton.h"
+#include "stickybutton.h"
 #include "graphicsport.h"
 
 using namespace WoopsiUI;
 
-CalendarDayButton::CalendarDayButton(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Button(x, y, width, height, text, style) {
+StickyButton::StickyButton(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Button(x, y, width, height, text, style) {
 	_borderSize.top = 1;
 	_borderSize.right = 1;
 	_borderSize.bottom = 1;
@@ -12,7 +12,7 @@ CalendarDayButton::CalendarDayButton(s16 x, s16 y, u16 width, u16 height, const 
 	_isStuckDown = false;
 }
 
-void CalendarDayButton::drawOutline(GraphicsPort* port) {
+void StickyButton::drawOutline(GraphicsPort* port) {
 
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;

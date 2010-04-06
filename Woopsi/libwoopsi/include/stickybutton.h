@@ -1,5 +1,5 @@
-#ifndef _CALENDAR_DAY_BUTTON_H_
-#define _CALENDAR_DAY_BUTTON_H_
+#ifndef _STICKY_BUTTON_H_
+#define _STICKY_BUTTON_H_
 
 #include <nds.h>
 #include "button.h"
@@ -8,9 +8,9 @@
 namespace WoopsiUI {
 
 	/**
-	 * Button used by the Calendar gadget to represent the days.
+	 * Button that sticks down when clicked.
 	 */
-	class CalendarDayButton : public Button {
+	class StickyButton : public Button {
 	public:
 
 		/**
@@ -25,7 +25,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The button will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		CalendarDayButton(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
+		StickyButton(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
 
 		/**
 		 * Sets the key's stuck down state.  If this is true, the key has a inwards-bevelled
@@ -46,12 +46,12 @@ namespace WoopsiUI {
 		/**
 		 * Destructor.
 		 */
-		virtual inline ~CalendarDayButton() { };
+		virtual inline ~StickyButton() { };
 
 		/**
 		 * Copy constructor is protected to prevent usage.
 		 */
-		inline CalendarDayButton(const CalendarDayButton& button) : Button(button) { };
+		inline StickyButton(const StickyButton& button) : Button(button) { };
 	};
 }
 

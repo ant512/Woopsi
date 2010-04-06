@@ -1188,8 +1188,8 @@ void Graphics::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16
 		Rect rect;
 		rect.x = regionX1;
 		rect.y = regionY1;
-		rect.width = regionX2 + 1;
-		rect.height = regionY2 + 1;
+		rect.width = regionX2 - regionX1 + 1;
+		rect.height = regionY2 - regionY1 + 1;
 		revealedRects->push_back(rect);
 		
 		return;

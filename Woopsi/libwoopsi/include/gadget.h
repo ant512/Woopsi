@@ -256,7 +256,7 @@ namespace WoopsiUI {
 		 * Get the number of the screen that this gadget is currently displayed on.
 		 * @return 0 for the touch screen, 1 for the top screen.
 		 */
-		inline const u8 getPhysicalScreenNumber() const { return calculatePhysicalScreenNumber(getY()); };
+		virtual const u8 getPhysicalScreenNumber() const;
 
 		/**
 		 * Check if this gadget raises events or not.
@@ -1049,6 +1049,7 @@ namespace WoopsiUI {
 		 * @see calculatePhysicalScreenY
 		 */
 		const u8 calculatePhysicalScreenNumber(s16 y) const;
+
 		/**
 		 * Draw all visible regions of this gadget's children.
 		 */

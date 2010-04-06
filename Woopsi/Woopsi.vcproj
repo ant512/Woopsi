@@ -202,6 +202,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\libwoopsi\src\scrollbarpanel.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\libwoopsi\src\scrollingpanel.cpp"
 					>
 				</File>
@@ -234,6 +238,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\src\decorationglyphbutton.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\stickybutton.cpp"
 						>
 					</File>
 				</Filter>
@@ -418,10 +426,6 @@
 					>
 					<File
 						RelativePath=".\libwoopsi\src\calendar.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\src\calendardaybutton.cpp"
 						>
 					</File>
 				</Filter>
@@ -884,6 +888,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\libwoopsi\include\scrollbarpanel.h"
+					>
+				</File>
+				<File
 					RelativePath=".\libwoopsi\include\scrollingpanel.h"
 					>
 				</File>
@@ -972,6 +980,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\decorationglyphbutton.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\stickybutton.h"
 						>
 					</File>
 				</Filter>
@@ -1128,10 +1140,6 @@
 					>
 					<File
 						RelativePath=".\libwoopsi\include\calendar.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\calendardaybutton.h"
 						>
 					</File>
 				</Filter>

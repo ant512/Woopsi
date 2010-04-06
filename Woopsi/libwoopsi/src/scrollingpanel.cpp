@@ -100,15 +100,21 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 	}
 }
 
-// Reposition child gadgets without redrawing
 void ScrollingPanel::scrollChildren(s32 dx, s32 dy) {
 	s16 gadgetX = 0;
 	s16 gadgetY = 0;
-	for (s32 i = 0; i < _gadgets.size(); i++) {
-		gadgetX = (_gadgets[i]->getX() - getX()) + dx;
-		gadgetY = (_gadgets[i]->getY() - getY()) + dy;
+	s16 thisX = getX();
+	s16 thisY = getY();
+	Gadget* gadget = NULL;
 
-		_gadgets[i]->moveTo(gadgetX, gadgetY);
+	for (s32 i = 0; i < _gadgets.size(); i++) {
+
+		gadget = _gadgets[i];
+
+		gadgetX = (gadget->getX() - thisX) + dx;
+		gadgetY = (gadget->getY() - thisY) + dy;
+
+		gadget->moveTo(gadgetX, gadgetY);
 	}
 }
 

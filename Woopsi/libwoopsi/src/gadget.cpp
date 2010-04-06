@@ -1767,32 +1767,10 @@ void Gadget::setBorderSize(const GadgetBorderSize& borderSize) {
 	_borderSize.left = borderSize.left;
 }
 
-/*
-void Gadget::drawOutline(GraphicsPort* port) {
-
-	// Stop drawing if the gadget indicates it should not have an outline
-	if (isBorderless()) return;
-	
-	// Work out which colours to use
-	u16 col1;
-	u16 col2;
-	
-	// Bevel in or out?
-	if ((isClicked() && (getOutlineType() == OUTLINE_CLICK_DEPENDENT)) || (getOutlineType() == OUTLINE_IN)) {
-		// Bevelled into the screen
-		col1 = getShadowColour();
-		col2 = getShineColour();
-	} else {
-		// Bevelled out of the screen
-		col1 = getShineColour();
-		col2 = getShadowColour();
-	}
-	
-	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
-	
-	// Draw the secondary border if the gadget is bevelled out and in
-	if (getOutlineType() == Gadget::OUTLINE_OUT_IN) {
-		port->drawBevelledRect(1, 1, _width - 2, _height - 2, col2, col1);
+const u8 Gadget::getPhysicalScreenNumber() const {
+	if (_parent != NULL) {
+		return _parent->getPhysicalScreenNumber();
+	} else{
+		return calculatePhysicalScreenNumber(getY());
 	}
 }
-*/

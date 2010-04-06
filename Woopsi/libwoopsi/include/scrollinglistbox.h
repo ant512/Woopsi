@@ -232,9 +232,9 @@ namespace WoopsiUI {
 		virtual void getPreferredDimensions(Rect& rect) const;
 
 	protected:
-		ListBox* _listbox;									/**< Pointer to the list box */
-		ScrollbarVertical* _scrollbar;						/**< Pointer to the scrollbar */
-		u8 _scrollbarWidth;									/**< Width of the scrollbar */
+		ListBox* _listbox;									/**< Pointer to the list box. */
+		ScrollbarVertical* _scrollbar;						/**< Pointer to the scrollbar. */
+		u8 _scrollbarWidth;									/**< Width of the scrollbar. */
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

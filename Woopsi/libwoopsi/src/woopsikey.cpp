@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, const KeyType keyType, GadgetStyle* style) : Button(x, y, width, height, text, style) {
+WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, const KeyType keyType, GadgetStyle* style) : StickyButton(x, y, width, height, text, style) {
 	_keyType = keyType;
 	_keyMode = KEY_MODE_NORMAL;
 
@@ -15,12 +15,10 @@ WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& te
 	_capsLockText = text;
 	_controlCapsLockText = text;
 
-	_isStuckDown = false;
-
 	setText(text);
 }
 
-WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& normalText, const WoopsiString& shiftText, const WoopsiString& controlText, const WoopsiString& shiftControlText, const WoopsiString& capsLockText, const WoopsiString& controlCapsLockText, const KeyType keyType, GadgetStyle* style) : Button(x, y, width, height, normalText, style) {
+WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& normalText, const WoopsiString& shiftText, const WoopsiString& controlText, const WoopsiString& shiftControlText, const WoopsiString& capsLockText, const WoopsiString& controlCapsLockText, const KeyType keyType, GadgetStyle* style) : StickyButton(x, y, width, height, normalText, style) {
 	_keyType = keyType;
 	_keyMode = KEY_MODE_NORMAL;
 
@@ -31,8 +29,6 @@ WoopsiKey::WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& no
 	_shiftControlText = shiftControlText;
 	_capsLockText = capsLockText;
 	_controlCapsLockText = controlCapsLockText;
-
-	_isStuckDown = false;
 
 	setText(_normalText);
 }
@@ -92,26 +88,4 @@ const char WoopsiKey::getValue() const {
 			// Return null chars for modifier keys
 			return '\0';
 	}
-}
-
-void WoopsiKey::drawOutline(GraphicsPort* port) {
-
-	// Stop drawing if the gadget indicates it should not have an outline
-	if (isBorderless()) return;
-	
-	// Work out which colours to use
-	u16 col1;
-	u16 col2;
-	
-	if (isClicked() || _isStuckDown) {
-		// Bevelled into the screen
-		col1 = getShadowColour();
-		col2 = getShineColour();
-	} else {
-		// Bevelled out of the screen
-		col1 = getShineColour();
-		col2 = getShadowColour();
-	}
-	
-	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
 }

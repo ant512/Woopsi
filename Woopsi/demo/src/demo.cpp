@@ -19,6 +19,8 @@
 #include "bittest6.h"
 #include "woopsistring.h"
 
+#include "scrollbarpanel.h"
+
 void Demo::startup() {
 
 	Rect rect;
@@ -154,6 +156,13 @@ void Demo::startup() {
 	// Add screen background
 	//SuperBitmap* demoBackground = demoScreen->newSuperBitmap(0, 0, 256, 179, (u16*)background_Bitmap, 256, 192, true);
 	demoScreen->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
+
+	ScrollbarPanel* panel = new ScrollbarPanel(0, 0, 256, 192, 0);
+	demoScreen->addGadget(panel);
+	panel->getPanel()->addGadget(new Button(50, 50, 40, 40, "button"));
+
+	panel->setCanvasWidth(500);
+	panel->setCanvasHeight(500);
 
 	// Create calculator app
 	_calculator = new Calculator(demoScreen);

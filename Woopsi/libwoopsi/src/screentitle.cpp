@@ -1,7 +1,6 @@
 #include "screentitle.h"
 #include "graphicsport.h"
 #include "screen.h"
-#include <string.h>
 
 using namespace WoopsiUI;
 

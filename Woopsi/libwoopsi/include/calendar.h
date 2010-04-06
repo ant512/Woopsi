@@ -5,7 +5,7 @@
 #include "gadget.h"
 #include "gadgetstyle.h"
 #include "gadgeteventhandler.h"
-#include "calendardaybutton.h"
+#include "stickybutton.h"
 
 #define CALENDAR_ROWS 8
 #define CALENDAR_COLS 7
@@ -84,7 +84,7 @@ namespace WoopsiUI {
 	protected:
 		Date* _date;							/**< Calendar working date */
 		Date* _visibleDate;						/**< Date displayed in the UI */
-		CalendarDayButton* _selectedDayButton;	/**< Pointer to the selected day button */
+		StickyButton* _selectedDayButton;		/**< Pointer to the selected day button */
 		Button* _leftArrow;						/**< Pointer to the left arrow */
 		Button* _rightArrow;					/**< Pointer to the right arrow */
 		Label* _monthLabel;						/**< Pointer to the month label */

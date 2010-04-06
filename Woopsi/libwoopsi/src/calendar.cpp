@@ -69,7 +69,7 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 				_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
 				// Select the new gadget and deselect the old
-				CalendarDayButton* dayButton = (CalendarDayButton*)e.getSource();
+				StickyButton* dayButton = (StickyButton*)e.getSource();
 				dayButton->setStuckDown(true);
 				dayButton->redraw();
 
@@ -118,7 +118,7 @@ void Calendar::populateGUI() {
 	_monthLabel->appendText(buffer);
 
 	u8 buttonIndex = 0;
-	CalendarDayButton* button;
+	StickyButton* button;
 
 	// Reset the selected day button
 	_selectedDayButton = NULL;
@@ -153,7 +153,7 @@ void Calendar::populateGUI() {
 		
 			sprintf(buffer, "%d", startDay);
 
-			button = (CalendarDayButton*)_gadgets[buttonIndex];
+			button = (StickyButton*)_gadgets[buttonIndex];
 			button->disable();
 			button->setStuckDown(false);
 			button->setText(buffer);
@@ -173,7 +173,7 @@ void Calendar::populateGUI() {
 	while (startDay <= thisMonth->getMonthDays()) {
 		sprintf(buffer, "%d", startDay);
 
-		button = (CalendarDayButton*)_gadgets[buttonIndex];
+		button = (StickyButton*)_gadgets[buttonIndex];
 		button->enable();
 		button->setStuckDown(false);
 
@@ -199,7 +199,7 @@ void Calendar::populateGUI() {
 	while (updatedDays < maxDays) {
 		sprintf(buffer, "%d", startDay);
 
-		button = (CalendarDayButton*)_gadgets[buttonIndex];
+		button = (StickyButton*)_gadgets[buttonIndex];
 		button->disable();
 		button->setStuckDown(false);
 		button->setText(buffer);
@@ -295,12 +295,12 @@ void Calendar::buildGUI() {
 	u8 maxDays = CALENDAR_BODY_ROWS * CALENDAR_COLS;
 
 	// Create all boxes for this month
-	CalendarDayButton* button;
+	StickyButton* button;
 	u16 buttonX = rect.x;
 	u16 buttonY = rect.y + columnHeights[0] + columnHeights[1];
 	u8 buttonRow = 2;
 	while (allocatedDays < maxDays) {
-		button = new CalendarDayButton(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow], "");
+		button = new StickyButton(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow], "");
 		button->addGadgetEventHandler(this);
 		button->setRefcon(allocatedDays + 1);
 
