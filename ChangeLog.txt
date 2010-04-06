@@ -12,6 +12,7 @@ Change Log
     - Added drop event (drag-and-drop).
     - Added Gadget::isBeingDragged().
     - Added PipeDream demo.
+    - Built with devkitARM r30.
 
   V0.46 (20100308)
   
