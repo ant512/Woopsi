@@ -1,6 +1,6 @@
 #include "amigascreen.h"
 #include "decorationglyphbutton.h"
-#include "screentitle.h"
+#include "graphicsport.h"
 
 using namespace WoopsiUI;
 
@@ -8,7 +8,6 @@ AmigaScreen::AmigaScreen(const WoopsiString& title, u32 flags, u32 screenFlags, 
 
 	_titleHeight = SCREEN_TITLE_HEIGHT;
 
-	_screenTitle = NULL;
 	_depthButton = NULL;
 	_flipButton = NULL;
 
@@ -26,21 +25,15 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 		if (isBorderless) {
 
 			// Remove borders
-			_screenTitle->close();
 			if (_depthButton != NULL) _depthButton->close();
 			if (_flipButton != NULL) _flipButton->close();
 
-			_screenTitle = NULL;
 			_depthButton = NULL;
 			_flipButton = NULL;
 
 			_flags.borderless = true;
 		} else {
 			// Add borders
-			_screenTitle = new ScreenTitle(_titleHeight, this, &_style);
-			_screenTitle->addGadgetEventHandler(this);
-			insertGadget(_screenTitle);
-
 			s16 buttonX = _width;
 
 			// Create depth button
@@ -82,33 +75,14 @@ void AmigaScreen::handleReleaseEvent(const GadgetEventArgs& e) {
 			// Depth swap to bottom of stack
 			lowerToBottom();
 			blur();
-		} else if (e.getSource() == _screenTitle) {
-
-			release(e.getX(), e.getY());
 		}
 	}
 }
 
-void AmigaScreen::handleClickEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _screenTitle) {
-			startDragging(e.getX(), e.getY());
-		}
-	}
-}
-
-void AmigaScreen::handleDragEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _screenTitle) {
-			drag(e.getX(), e.getY(), e.getVX(), e.getVY());
-		}
-	}
-}
-
-void AmigaScreen::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _screenTitle) {
-			release(e.getX(), e.getY());
+void AmigaScreen::onClick(s16 x, s16 y) {
+	if (!isBorderless()) {
+		if (y - getY() < SCREEN_TITLE_HEIGHT) {
+			startDragging(x, y);
 		}
 	}
 }
@@ -170,5 +144,18 @@ void AmigaScreen::hideDepthButton() {
 		if (_screenFlags.showFlipButton) {
 			_flipButton->moveTo(_width - SCREEN_FLIP_BUTTON_WIDTH, 0);
 		}
+	}
+}
+
+void AmigaScreen::drawBorder(GraphicsPort* port) {
+
+	// Background
+	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+
+	// Title bar
+	if (!isBorderless()) {
+		port->drawFilledRect(0, 0, _width, _titleHeight - 1, getShineColour());	// Background
+		port->drawHorizLine(0, _titleHeight - 1, _width, getShadowColour());	// Bottom
+		port->drawText(2, 1, getFont(), getTitle());							// Title text
 	}
 }

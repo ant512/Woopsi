@@ -81,7 +81,7 @@ void Demo::startup() {
 	progressBar->setValue(50);
 	newScreen2->addGadget(progressBar);
 
-	Gradient* gradient = new Gradient(0, 0, 256, 192, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
+	Gradient* gradient = new Gradient(0, SCREEN_TITLE_HEIGHT, 256, 192 - SCREEN_TITLE_HEIGHT, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
 	newScreen2->insertGadget(gradient);
 
 	gradient->addContextMenuItem("Context Menu", 0);
@@ -155,7 +155,7 @@ void Demo::startup() {
 
 	// Add screen background
 	//SuperBitmap* demoBackground = demoScreen->newSuperBitmap(0, 0, 256, 179, (u16*)background_Bitmap, 256, 192, true);
-	demoScreen->insertGadget(new Gradient(0, 0, 256, 192, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
+	demoScreen->insertGadget(new Gradient(0, SCREEN_TITLE_HEIGHT, 256, 192 - SCREEN_TITLE_HEIGHT, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
 
 	ScrollbarPanel* panel = new ScrollbarPanel(0, 0, 256, 192, 0);
 	demoScreen->addGadget(panel);

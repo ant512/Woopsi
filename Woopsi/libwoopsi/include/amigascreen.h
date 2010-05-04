@@ -11,7 +11,6 @@ namespace WoopsiUI {
 
 	class DecorationGlyphButton;
 	class ScreenFlipButton;
-	class ScreenTitle;
 
 	/**
 	 * Class providing a screen with an Amiga-style title bar.  Unlike the AmigaWindow class,
@@ -64,25 +63,7 @@ namespace WoopsiUI {
 		 * Handle events fired by decoration gadgets.
 		 * @param e Event arguments to process.
 		 */
-		virtual void handleClickEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Handle events fired by decoration gadgets.
-		 * @param e Event arguments to process.
-		 */
-		virtual void handleDragEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Handle events fired by decoration gadgets.
-		 * @param e Event arguments to process.
-		 */
 		virtual void handleReleaseEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Handle events fired by decoration gadgets.
-		 * @param e Event arguments to process.
-		 */
-		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Shows the flip button if it is hidden.  Has no effect
@@ -121,10 +102,24 @@ namespace WoopsiUI {
 		virtual inline const bool hasDepthButton() const { return _screenFlags.showDepthButton; };
 
 	protected:
-		ScreenTitle* _screenTitle;						/**< Title of the screen */
 		DecorationGlyphButton* _depthButton;			/**< Pointer to the screen's depth button */
 		DecorationGlyphButton* _flipButton;				/**< Pointer to the screen's flip button */
 		AmigaScreenFlags _screenFlags;					/**< AmigaScreen-specific flags */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
+
+		/**
+		 * Starts the dragging system.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
 
 		/**
 		 * Destructor.

@@ -256,10 +256,6 @@
 						RelativePath=".\libwoopsi\src\screen.cpp"
 						>
 					</File>
-					<File
-						RelativePath=".\libwoopsi\src\screentitle.cpp"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="Window"
@@ -281,19 +277,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\src\windowborderbottom.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\src\windowborderbutton.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\src\windowborderside.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\src\windowbordertop.cpp"
 						>
 					</File>
 				</Filter>
@@ -923,19 +907,7 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\include\windowborderbottom.h"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\include\windowborderbutton.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\windowborderside.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\windowbordertop.h"
 						>
 					</File>
 				</Filter>
@@ -952,10 +924,6 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\screen.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\screentitle.h"
 						>
 					</File>
 				</Filter>

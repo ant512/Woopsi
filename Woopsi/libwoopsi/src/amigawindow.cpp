@@ -1,7 +1,4 @@
 #include "amigawindow.h"	
-#include "windowbordertop.h"
-#include "windowborderside.h"
-#include "windowborderbottom.h"
 #include "windowborderbutton.h"
 #include "woopsi.h"
 

@@ -38,7 +38,7 @@ bool Screen::flipScreens() {
 	return false;
 }
 
-void Screen::drawContents(GraphicsPort* port) {
+void Screen::drawBorder(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, _width, _height, getBackColour());
 }
 

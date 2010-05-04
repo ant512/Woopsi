@@ -87,7 +87,7 @@ namespace WoopsiUI {
 		 * @param port The GraphicsPort to draw to.
 		 * @see redraw()
 		 */
-		virtual void drawContents(GraphicsPort* port);
+		virtual void drawBorder(GraphicsPort* port);
 
 		/**
 		 * Moves the screen vertically to follow the stylus.
