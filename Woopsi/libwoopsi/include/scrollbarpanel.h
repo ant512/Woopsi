@@ -106,20 +106,37 @@ namespace WoopsiUI {
 		 */
 		virtual const s32 getCanvasHeight() const;
 
+		/**
+		 * Handle a gadget scroll event.
+		 * @param e The event data.
+		 */
 		void handleScrollEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle a gadget value change event.
+		 * @param e The event data.
+		 */
 		void handleValueChangeEvent(const GadgetEventArgs& e);
 
+		/**
+		 * Gets a pointer to the ScrollingPanel gadget contained within
+		 * this gadget.
+		 * @return A pointer to the ScrollingPanel gadget.
+		 */
 		inline ScrollingPanel* getPanel() { return _panel; };
 
 	protected:
-		ScrollingPanel* _panel;
-		ScrollbarHorizontal* _scrollbarHorizontal;
-		ScrollbarVertical* _scrollbarVertical;
-		u8 _scrollbarWidth;									/**< Width of the vertical scrollbar. */
-		u8 _scrollbarHeight;								/**< Height of the horizontal scrollbar. */
-		bool _hasVerticalScrollbar;
-		bool _hasHorizontalScrollbar;
+		ScrollingPanel* _panel;							/**< Internal panel that contains children. */
+		ScrollbarHorizontal* _scrollbarHorizontal;		/**< Horizontal scrollbar. */
+		ScrollbarVertical* _scrollbarVertical;			/**< Vertical scrollbar. */
+		u8 _scrollbarWidth;								/**< Width of the vertical scrollbar. */
+		u8 _scrollbarHeight;							/**< Height of the horizontal scrollbar. */
+		bool _hasVerticalScrollbar;						/**< Indicates the presence of a vertical scrollbar. */
+		bool _hasHorizontalScrollbar;					/**< Indicates the presence of a horizontal scrollbar. */
 
+		/**
+		 * Creates the child gadgets.
+		 */
 		void buildUI();
 
 		/**
