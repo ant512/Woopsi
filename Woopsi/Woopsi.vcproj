@@ -202,14 +202,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\scrollbarpanel.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\src\scrollingpanel.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\superbitmap.cpp"
 					>
 				</File>
@@ -410,6 +402,18 @@
 					>
 					<File
 						RelativePath=".\libwoopsi\src\calendar.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ScrollingPanel"
+					>
+					<File
+						RelativePath=".\libwoopsi\src\scrollbarpanel.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\scrollingpanel.cpp"
 						>
 					</File>
 				</Filter>
@@ -868,18 +872,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\include\scrollablebase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\scrollbarpanel.h"
-					>
-				</File>
-				<File
-					RelativePath=".\libwoopsi\include\scrollingpanel.h"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\include\superbitmap.h"
 					>
 				</File>
@@ -1108,6 +1100,22 @@
 					>
 					<File
 						RelativePath=".\libwoopsi\include\calendar.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ScrollingPanel"
+					>
+					<File
+						RelativePath=".\libwoopsi\include\scrollablebase.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\scrollbarpanel.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\scrollingpanel.h"
 						>
 					</File>
 				</Filter>
