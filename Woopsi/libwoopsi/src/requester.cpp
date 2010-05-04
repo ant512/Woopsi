@@ -5,15 +5,14 @@ using namespace WoopsiUI;
 
 Requester::Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, AMIGA_WINDOW_SHOW_DEPTH, style) {
 
-	// Increase the size of the border to leave space between gadgets and the 
-	// border decorations
-	_borderSize.top += 2;
-	_borderSize.right += 2;
-	_borderSize.bottom += 2;
-	_borderSize.left += 2;
-
 	Rect rect;
 	getClientRect(rect);
+
+	// Adjust rect to leave 2px padding around children
+	rect.x += 2;
+	rect.y += 2;
+	rect.width -= 4;
+	rect.height -= 4;
 
 	// Create OK button
 	_okButton = new Button(0, 0, 0, 0, "OK");
@@ -60,6 +59,12 @@ void Requester::onResize(u16 width, u16 height) {
 
 	Rect rect;
 	getClientRect(rect);
+
+	// Adjust rect to leave 2px padding around children
+	rect.x += 2;
+	rect.y += 2;
+	rect.width -= 4;
+	rect.height -= 4;
 
 	// Calculate OK button dimensions
 	Rect buttonRect;

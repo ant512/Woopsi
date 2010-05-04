@@ -14,6 +14,8 @@ Change Log
       scrolled out of top of panel; Gadget::getPhysicalScreenNumber() is more
       intelligent.
     - Graphics::scroll() returns correctly-sized rects in revealed rects array.
+    - Replaced WindowBorderBottom, WindowBorderTop and WindowBorderSide classes
+      with more elaborate drawing code in AmigaWindow class.
 
   - New Features:
     - Added x and y parameters to Gadget::stopDragging().

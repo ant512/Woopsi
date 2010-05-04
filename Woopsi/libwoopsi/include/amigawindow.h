@@ -9,9 +9,6 @@
 
 namespace WoopsiUI {
 
-	class WindowBorderTop;
-	class WindowBorderSide;
-	class WindowBorderBottom;
 	class WindowBorderButton;
 
 	/**
@@ -65,25 +62,7 @@ namespace WoopsiUI {
 		 * Handle events fired by decoration gadgets.
 		 * @param e Event arguments to process.
 		 */
-		virtual void handleClickEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Handle events fired by decoration gadgets.
-		 * @param e Event arguments to process.
-		 */
-		virtual void handleDragEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Handle events fired by decoration gadgets.
-		 * @param e Event arguments to process.
-		 */
 		virtual void handleReleaseEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Handle events fired by decoration gadgets.
-		 * @param e Event arguments to process.
-		 */
-		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Shows the close button if it is hidden.  Has no effect
@@ -124,12 +103,16 @@ namespace WoopsiUI {
 	protected:
 		AmigaWindowFlags _windowFlags;					/**< AmigaWindow-specific flags */
 
-		WindowBorderTop* _windowBorderTop;				/**< Pointer to the top border */
-		WindowBorderSide* _windowBorderLeft;			/**< Pointer to the left border */
-		WindowBorderSide* _windowBorderRight;			/**< Pointer to the right border */
-		WindowBorderBottom* _windowBorderBottom;		/**< Pointer to the bottom border */
 		WindowBorderButton* _closeButton;				/**< Pointer to the close button */
 		WindowBorderButton* _depthButton;				/**< Pointer to the depth button */
+
+		/**
+		 * Draw the area of this gadget that falls within the clipping region.
+		 * Called by the redraw() function to draw all visible regions.
+		 * @param port The GraphicsPort to draw to.
+		 * @see redraw()
+		 */
+		virtual void drawBorder(GraphicsPort* port);
 
 		/**
 		 * Resize the gadget to the new dimensions.
@@ -149,6 +132,15 @@ namespace WoopsiUI {
 		virtual void onBlur();
 
 		/**
+		 * Called when the gadget is clicked.  Override this when creating new
+		 * gadgets if the gadget should exhibit additional behaviour when it is
+		 * clicked.
+		 * @param x The x co-ordinate of the click.
+		 * @param y The y co-ordinate of the click.
+		 */
+		virtual void onClick(s16 x, s16 y);
+
+		/**
 		 * Create the window's border.
 		 */
 		virtual void createBorder();
@@ -158,11 +150,6 @@ namespace WoopsiUI {
 		 */
 		virtual void redrawBorder();
 		
-		/**
-		 * Resize the title bar to fit the current window state.
-		 */
-		virtual void resizeTitleBarToFit();
-
 		/**
 		 * Destructor.
 		 */
