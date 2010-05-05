@@ -27,6 +27,7 @@ Change Log
     - Built with devkitARM r30.
     - Added ScrollbarPanel gadget.
     - Added ColourPicker gadget (contributed by Mark Adamson).
+    - Added ColourPicker test.
 
   V0.46 (20100308)
   

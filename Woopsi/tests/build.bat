@@ -20,6 +20,10 @@ cd ../calendar
 make clean
 make
 
+cd ../colourpicker
+make clean
+make
+
 cd ../cyclebutton
 make clean
 make
