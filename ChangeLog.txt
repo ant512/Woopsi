@@ -26,6 +26,7 @@ Change Log
     - Added PipeDream demo.
     - Built with devkitARM r30.
     - Added ScrollbarPanel gadget.
+    - Added ColourPicker gadget (contributed by Mark Adamson).
 
   V0.46 (20100308)
   

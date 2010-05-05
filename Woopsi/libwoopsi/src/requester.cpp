@@ -101,8 +101,9 @@ void Requester::handleReleaseEvent(const GadgetEventArgs& e) {
 			close();
 		} else if (e.getSource() == _okButton) {
 
-			// Raise value changed event to event handler
+			// Raise events to event handler
 			_gadgetEventHandlers->raiseValueChangeEvent();
+			_gadgetEventHandlers->raiseActionEvent();
 
 			// Close the window
 			close();

@@ -19,6 +19,7 @@
 #include "bittest6.h"
 #include "woopsistring.h"
 
+#include "colourpicker.h"
 #include "scrollbarpanel.h"
 
 void Demo::startup() {
@@ -80,6 +81,8 @@ void Demo::startup() {
 	progressBar->setMaximumValue(100);
 	progressBar->setValue(50);
 	newScreen2->addGadget(progressBar);
+
+	newScreen2->addGadget(new ColourPicker(0, 0, 150, 100, "Colour Picker", 0, Gadget::GADGET_DRAGGABLE));
 
 	Gradient* gradient = new Gradient(0, SCREEN_TITLE_HEIGHT, 256, 192 - SCREEN_TITLE_HEIGHT, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
 	newScreen2->insertGadget(gradient);

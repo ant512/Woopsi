@@ -261,6 +261,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\src\colourpicker.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\src\requester.cpp"
 						>
 					</File>
@@ -888,6 +892,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\amigawindow.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\colourpicker.h"
 						>
 					</File>
 					<File
