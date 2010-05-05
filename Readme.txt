@@ -64,6 +64,7 @@ Features
     - Keyboard;
     - Calendar;
     - Timer, for VBL-driven effects;
+    - Colour picker;
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
   - Built-in debug console;
