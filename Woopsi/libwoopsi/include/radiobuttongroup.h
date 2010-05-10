@@ -4,6 +4,7 @@
 #include <nds.h>
 #include "gadget.h"
 #include "gadgetstyle.h"
+#include "gadgeteventhandler.h"
 
 namespace WoopsiUI {
 
@@ -15,7 +16,7 @@ namespace WoopsiUI {
 	 * selected.  Note that, in order to set the "mu" state for a radio button,
 	 * it is necessary to set the state via the radio button, not the group.
 	 */
-	class RadioButtonGroup : public Gadget {
+	class RadioButtonGroup : public Gadget, public GadgetEventHandler  {
 
 	public:
 
@@ -76,6 +77,32 @@ namespace WoopsiUI {
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
+
+		/**
+		 * Handle a stylus click event.
+		 * @param e The event data.
+		 */
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle a gadget double-click event.
+		 * @param e The event data.
+		 */
+		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle a stylus release event that occurred within the bounds of
+		 * the source gadget.
+		 * @param e The event data.
+		 */
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle a stylus release event that occurred outside the bounds of
+		 * the source gadget.
+		 * @param e The event data.
+		 */
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 	protected:
 		RadioButton* _selectedGadget;		/**< Pointer to the currently

@@ -22,6 +22,8 @@ Change Log
       virtual functions.
     - ScrollingListBox raises value changed, action, click, release, release
       outside and double-click events correctly.
+    - RadioButtonGroup raises value click, release, release outside and
+      double-click events correctly.
 
   - New Features:
     - Added x and y parameters to Gadget::stopDragging().

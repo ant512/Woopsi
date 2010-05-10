@@ -11,6 +11,7 @@ RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, GadgetStyle* style) : Gadget(x,
 RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 height) {
 	
 	RadioButton* newButton = new RadioButton(x, y, width, height, &_style);
+	newButton->addGadgetEventHandler(this);
 	addGadget(newButton);
 
 	// Do we need to resize?
@@ -104,3 +105,25 @@ void RadioButtonGroup::getPreferredDimensions(Rect& rect) const {
 	rect.height += maxY - getY();
 }
 
+void RadioButtonGroup::handleDoubleClickEvent(const GadgetEventArgs& e) {
+	_gadgetEventHandlers->raiseDoubleClickEvent(e.getX(), e.getY());
+}
+
+void RadioButtonGroup::handleClickEvent(const GadgetEventArgs& e) {
+	_gadgetEventHandlers->raiseClickEvent(e.getX(), e.getY());
+}
+
+void RadioButtonGroup::handleReleaseEvent(const GadgetEventArgs& e) {
+	_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
+}
+
+void RadioButtonGroup::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+
+	// Child raised a release outside event, but we need to raise a different
+	// event if the release occurred within the bounds of this parent gadget
+	if (checkCollision(e.getX(), e.getY())) {
+		_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
+	} else {
+		_gadgetEventHandlers->raiseReleaseOutsideEvent(e.getX(), e.getY());
+	}
+}
