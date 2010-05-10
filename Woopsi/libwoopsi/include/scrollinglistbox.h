@@ -199,6 +199,12 @@ namespace WoopsiUI {
 		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
 
 		/**
+		 * Handle a gadget action event.
+		 * @param e The event data.
+		 */
+		virtual void handleActionEvent(const GadgetEventArgs& e);
+
+		/**
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event arguments.
 		 */

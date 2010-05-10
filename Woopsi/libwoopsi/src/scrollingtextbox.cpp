@@ -153,3 +153,51 @@ void ScrollingTextBox::onResize(u16 width, u16 height) {
 	// Move the scrollbar
 	_scrollbar->moveTo(width - _scrollbarWidth, 0);
 }
+
+const s32 ScrollingTextBox::getCanvasX() const {
+	return _textbox->getCanvasX();
+}
+
+const s32 ScrollingTextBox::getCanvasY() const {
+	return _textbox->getCanvasY();
+}
+
+const s32 ScrollingTextBox::getCanvasWidth() const {
+	return _textbox->getCanvasWidth();
+}
+
+const s32 ScrollingTextBox::getCanvasHeight() const {
+	return _textbox->getCanvasHeight();
+}
+
+void ScrollingTextBox::scroll(s32 dx, s32 dy) {
+	_textbox->scroll(dx, dy);
+}
+
+void ScrollingTextBox::jump(s32 x, s32 y) {
+	_textbox->jump(x, y);
+}
+
+void ScrollingTextBox::setAllowsVerticalScroll(bool allow) {
+	_textbox->setAllowsVerticalScroll(allow);
+}
+
+void ScrollingTextBox::setAllowsHorizontalScroll(bool allow) {
+	// NOP
+}
+
+void ScrollingTextBox::setCanvasWidth(const s32 width) {
+	// NOP
+}
+
+void ScrollingTextBox::setCanvasHeight(const s32 height) {
+	// NOP
+}
+
+bool ScrollingTextBox::allowsVerticalScroll() const {
+	return _textbox->allowsVerticalScroll();
+}
+
+bool ScrollingTextBox::allowsHorizontalScroll() const {
+	return _textbox->allowsHorizontalScroll();
+}

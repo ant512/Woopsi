@@ -18,6 +18,9 @@ Change Log
       with more elaborate drawing code in AmigaWindow class.
     - Replaced ScreenTitle class with more elaborate drawing code in AmigaScreen
       class.
+    - Made ScrollableBase a base class of ScrollingTextBox; implemented all pure
+      virtual functions.
+    - ScrollingListBox raises value changed and action events correctly.
 
   - New Features:
     - Added x and y parameters to Gadget::stopDragging().

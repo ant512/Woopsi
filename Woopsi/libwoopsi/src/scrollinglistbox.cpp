@@ -40,6 +40,8 @@ void ScrollingListBox::handleValueChangeEvent(const GadgetEventArgs& e) {
 				_listbox->jump(0, 0 - (_scrollbar->getValue() * _listbox->getOptionHeight()));
 				_listbox->setRaisesEvents(true);
 			}
+		} else if (e.getSource() == _listbox) {
+			_gadgetEventHandlers->raiseValueChangeEvent();
 		}
 	}
 }
@@ -73,6 +75,16 @@ void ScrollingListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
 
 			// Raise double-click events from list box to event handler
 			_gadgetEventHandlers->raiseDoubleClickEvent(e.getX(), e.getY());
+		}
+	}
+}
+
+void ScrollingListBox::handleActionEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _listbox) {
+
+			// Raise action events from list box to event handler
+			_gadgetEventHandlers->raiseActionEvent();
 		}
 	}
 }

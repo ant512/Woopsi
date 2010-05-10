@@ -6,6 +6,7 @@
 #include "gadgeteventhandler.h"
 #include "gadgetstyle.h"
 #include "woopsistring.h"
+#include "scrollablebase.h"
 
 namespace WoopsiUI {
 
@@ -16,7 +17,7 @@ namespace WoopsiUI {
 	 * methods are more or less identical to the methods exposed by the
 	 * MultiLineTextBox to ensure that the two are interchangeable.
 	 */
-	class ScrollingTextBox : public TextBoxBase, public Gadget, public GadgetEventHandler {
+	class ScrollingTextBox : public TextBoxBase, public Gadget, public ScrollableBase, public GadgetEventHandler {
 	public:
 
 		/**
@@ -179,6 +180,80 @@ namespace WoopsiUI {
 		 * Enables the keyboard popup when double-clicked.
 		 */
 		void enableKeyboardPopup() { _textbox->enableKeyboardPopup(); };
+
+		/**
+		 * Gets the x co-ordinate of the virtual canvas.
+		 * @return The x co-ordinate of the virtual canvas.
+		 */
+		virtual const s32 getCanvasX() const;
+		
+		/**
+		 * Gets the y co-ordinate of the virtual canvas.
+		 * @return The y co-ordinate of the virtual canvas.
+		 */
+		virtual const s32 getCanvasY() const;
+
+		/**
+		 * Gets the width of the virtual canvas.
+		 * @return The width of the virtual canvas.
+		 */
+		virtual const s32 getCanvasWidth() const;
+		
+		/**
+		 * Gets the height of the virtual canvas.
+		 * @return The height of the virtual canvas.
+		 */
+		virtual const s32 getCanvasHeight() const;
+
+		/**
+		 * Scroll the panel by the specified amounts.
+		 * @param dx The horizontal distance to scroll.
+		 * @param dy The vertical distance to scroll.
+		 */
+		virtual void scroll(s32 dx, s32 dy);
+		
+		/**
+		 * Reposition the panel's scrolling region to the specified co-ordinates.
+		 * @param x The new x co-ordinate of the scrolling region.
+		 * @param y The new y co-ordinate of the scrolling region.
+		 */
+		virtual void jump(s32 x, s32 y);
+
+		/**
+		 * Set whether or not horizontal scrolling is allowed.
+		 * @param allow True to allow horizontal scrolling; false to deny it.
+		 */
+		virtual void setAllowsVerticalScroll(bool allow);
+
+		/**
+		 * Set whether or not horizontal scrolling is allowed.
+		 * @param allow True to allow horizontal scrolling; false to deny it.
+		 */
+		virtual void setAllowsHorizontalScroll(bool allow);
+
+		/**
+		 * Sets the width of the virtual canvas.
+		 * @param width The width of the virtual canvas.
+		 */
+		virtual void setCanvasWidth(const s32 width);
+		
+		/**
+		 * Sets the height of the virtual canvas.
+		 * @param height The height of the virtual canvas.
+		 */
+		virtual void setCanvasHeight(const s32 height);
+
+		/**
+		 * Returns true if vertical scrolling is allowed.
+		 * @return True if vertical scrolling is allowed.
+		 */
+		virtual bool allowsVerticalScroll() const;
+
+		/**
+		 * Returns true if horizontal scrolling is allowed.
+		 * @return True if horizontal scrolling is allowed.
+		 */
+		virtual bool allowsHorizontalScroll() const;
 
 	protected:
 		MultiLineTextBox* _textbox;						/**< Pointer to the textbox */
