@@ -79,6 +79,25 @@ void ScrollingListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
+void ScrollingListBox::handleClickEvent(const GadgetEventArgs& e) {
+	_gadgetEventHandlers->raiseClickEvent(e.getX(), e.getY());
+}
+
+void ScrollingListBox::handleReleaseEvent(const GadgetEventArgs& e) {
+	_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
+}
+
+void ScrollingListBox::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+
+	// Child raised a release outside event, but we need to raise a different
+	// event if the release occurred within the bounds of this parent gadget
+	if (checkCollision(e.getX(), e.getY())) {
+		_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
+	} else {
+		_gadgetEventHandlers->raiseReleaseOutsideEvent(e.getX(), e.getY());
+	}
+}
+
 void ScrollingListBox::handleActionEvent(const GadgetEventArgs& e) {
 	if (e.getSource() != NULL) {
 		if (e.getSource() == _listbox) {

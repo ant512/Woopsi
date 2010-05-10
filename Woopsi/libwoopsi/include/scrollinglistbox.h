@@ -211,10 +211,30 @@ namespace WoopsiUI {
 		virtual void handleScrollEvent(const GadgetEventArgs& e);
 
 		/**
+		 * Handle a stylus click event.
+		 * @param e The event data.
+		 */
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+
+		/**
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event arguments.
 		 */
 		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle a stylus release event that occurred within the bounds of
+		 * the source gadget.
+		 * @param e The event data.
+		 */
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle a stylus release event that occurred outside the bounds of
+		 * the source gadget.
+		 * @param e The event data.
+		 */
+		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
 
 		/**
 		 * Set the font used in the textbox.
