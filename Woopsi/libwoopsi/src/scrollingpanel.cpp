@@ -16,6 +16,7 @@ ScrollingPanel::ScrollingPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, G
 	
 	setAllowsVerticalScroll(true);
 	setAllowsHorizontalScroll(true);
+	setContentScrolled(true);
 
 	_flags.permeable = true;
 }
@@ -62,34 +63,43 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 	// Perform scroll if necessary
 	if ((dx != 0) || (dy != 0)) {
 
-		// Perform scroll
-		WoopsiArray<Rect> revealedRects;
-		GraphicsPort* port = newGraphicsPort(true);
-		port->scroll(0, 0, dx, dy, rect.width, rect.height, &revealedRects);
-		delete port;
+		// Only scroll if content scrolling is enabled
+		if (_isContentScrolled) {
 
-		// Adjust the scroll values
-		_canvasY += dy;
-		_canvasX += dx;
-
-		if (revealedRects.size() > 0) {
-
-			// Create internal and standard graphics ports
-			GraphicsPort* internalPort = newInternalGraphicsPort(revealedRects.at(0));
-			GraphicsPort* port = newGraphicsPort(revealedRects.at(0));
-
-			// Draw revealed sections
-			for (s32 i = 0; i < revealedRects.size(); ++i) {
-
-				internalPort->setClipRect(revealedRects.at(i));
-				port->setClipRect(revealedRects.at(i));
-
-				drawBorder(internalPort);
-				drawContents(port);
-			}
-
-			delete internalPort;
+			// Perform scroll
+			WoopsiArray<Rect> revealedRects;
+			GraphicsPort* port = newGraphicsPort(true);
+			port->scroll(0, 0, dx, dy, rect.width, rect.height, &revealedRects);
 			delete port;
+
+			// Adjust the scroll values
+			_canvasY += dy;
+			_canvasX += dx;
+
+			if (revealedRects.size() > 0) {
+
+				// Create internal and standard graphics ports
+				GraphicsPort* internalPort = newInternalGraphicsPort(revealedRects.at(0));
+				GraphicsPort* port = newGraphicsPort(revealedRects.at(0));
+
+				// Draw revealed sections
+				for (s32 i = 0; i < revealedRects.size(); ++i) {
+
+					internalPort->setClipRect(revealedRects.at(i));
+					port->setClipRect(revealedRects.at(i));
+
+					drawBorder(internalPort);
+					drawContents(port);
+				}
+
+				delete internalPort;
+				delete port;
+			}
+		} else {
+
+			// Adjust the scroll values
+			_canvasY += dy;
+			_canvasX += dx;
 		}
 
 		// Scroll all child gadgets

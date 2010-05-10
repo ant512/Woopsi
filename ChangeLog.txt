@@ -28,6 +28,9 @@ Change Log
     - Added ScrollbarPanel gadget.
     - Added ColourPicker gadget (contributed by Mark Adamson).
     - Added ColourPicker test.
+    - Added ScrollingPanel::isContentScrolled() and setContentScrolled() to
+      allow DMA copying of panel contents to be disabled if not needed.
+      
 
   V0.46 (20100308)
   

@@ -94,6 +94,24 @@ namespace WoopsiUI {
 		inline void setAllowsHorizontalScroll(bool allow) { _allowHorizontalScroll = allow; };
 
 		/**
+		 * Set whether or not the content of the panel is scrolled.
+		 * Content is anything drawn to the panel in the draw() method.
+		 * This property is disabled by default, which will result in
+		 * faster scrolling of child objects.
+		 * If the panel contains no child objects, just draw() method
+		 * content, consider using a SuperBitmap class instead.
+		 * @param scrolled True to enable content scrolling; false to disable it.
+		 */
+		inline void setContentScrolled(bool scrolled) { _isContentScrolled = scrolled; };
+
+		/**
+		 * Check if the content of the panel, drawn via the draw() method,
+		 * is scrolled.
+		 * @return True if the content is scrolled; false if not.
+		 */
+		inline bool IsContentScrolled() { return _isContentScrolled; };
+
+		/**
 		 * Sets the width of the virtual canvas.
 		 * @param width The width of the virtual canvas.
 		 */
@@ -112,6 +130,9 @@ namespace WoopsiUI {
 		s32 _canvasHeight;					/**< Height of the virtual canvas. */
 		bool _allowVerticalScroll;			/**< True if vertical scrolling is allowed. */
 		bool _allowHorizontalScroll;		/**< True if horizontal scrolling is allowed. */
+		bool _isContentScrolled;			/**< True if the content drawn to the panel is scrolled
+											     (ie. everything drawn in the draw() method);
+												 false if just child objects are scrolled. */
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

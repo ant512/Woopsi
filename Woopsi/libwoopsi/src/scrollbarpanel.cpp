@@ -39,6 +39,10 @@ void ScrollbarPanel::buildUI() {
 	Rect panelRect;
 	_panel->getClientRect(panelRect);
 
+	// Disable content scrolling by default, as the panel cannot be drawn to
+	// without some additional programmer effort
+	_panel->setContentScrolled(false);
+
 	// Adjust scrollbar dimensions based on scrollbar visibility
 	u16 verticalScrollHeight = rect.height;
 	u16 horizontalScrollWidth = rect.width;
