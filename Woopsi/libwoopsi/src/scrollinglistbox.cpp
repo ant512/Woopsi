@@ -69,14 +69,7 @@ void ScrollingListBox::handleScrollEvent(const GadgetEventArgs& e) {
 }
 
 void ScrollingListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
-
-			// Raise double-click events from list box to event handler
-			_gadgetEventHandlers->raiseDoubleClickEvent(e.getX(), e.getY());
-		}
-	}
+	_gadgetEventHandlers->raiseDoubleClickEvent(e.getX(), e.getY());
 }
 
 void ScrollingListBox::handleClickEvent(const GadgetEventArgs& e) {

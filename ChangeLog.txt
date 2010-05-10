@@ -20,8 +20,8 @@ Change Log
       class.
     - Made ScrollableBase a base class of ScrollingTextBox; implemented all pure
       virtual functions.
-    - ScrollingListBox raises value changed, action, click, release and release
-      outside events correctly.
+    - ScrollingListBox raises value changed, action, click, release, release
+      outside and double-click events correctly.
 
   - New Features:
     - Added x and y parameters to Gadget::stopDragging().
