@@ -44,6 +44,10 @@ cd ../multilinetextbox
 make clean
 make
 
+cd ../progressbar
+make clean
+make
+
 cd ../radiobuttongroup
 make clean
 make

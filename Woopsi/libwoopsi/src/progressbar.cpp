@@ -60,7 +60,11 @@ void ProgressBar::drawContents(GraphicsPort* port) {
 		s16 textX = (rect.width - getFont()->getStringWidth(text)) >> 1;
 		s16 textY = (rect.height - getFont()->getHeight()) >> 1;
 
-		port->drawText(textX, textY, getFont(), text);
+		if (isEnabled()) {
+			port->drawText(textX, textY, getFont(), text);
+		} else {
+			port->drawText(textX, textY, getFont(), text, 0, strlen(text), getDarkColour());
+		}
 	}
 }
 

@@ -1,7 +1,15 @@
 Change Log
 ----------
 
-  V0.47
+  V0.48
+  
+  - Fixes:
+    - ProgressBar text greyed out when disabled.
+
+  - New features:
+    - Added progressbar test.
+
+  V0.47 (20100510)
   
   - Fixes:
     - Removed Woopsi::startup() call from template.
@@ -36,7 +44,6 @@ Change Log
     - Added ColourPicker test.
     - Added ScrollingPanel::isContentScrolled() and setContentScrolled() to
       allow DMA copying of panel contents to be disabled if not needed.
-      
 
   V0.46 (20100308)
   
