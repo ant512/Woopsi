@@ -5,9 +5,15 @@ Change Log
   
   - Fixes:
     - ProgressBar text greyed out when disabled.
+    - SliderVertical and SliderHorizontal ignore double clicks by default.
+    - SliderVertical and SliderHorizontal only fire value changed event if value
+      has really changed.
+    - SliderVertical and SliderHorizontal getValue() methods are considerably
+      more efficient.
 
   - New features:
     - Added progressbar test.
+    - Added slidervertical test.
 
   V0.47 (20100510)
   

@@ -7,11 +7,13 @@ using namespace WoopsiUI;
 SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_minimumValue = 0;
 	_maximumValue = 0;
+	_value = 0;
 	_minimumGripHeight = 10;
 	_pageSize = 1;
 
 	_flags.permeable = true;
 	_flags.borderless = false;
+	_flags.doubleClickable = false;
 
 	// Create grip
 	Rect rect;
@@ -24,7 +26,8 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_gutterHeight = rect.height;
 }
 
-const s16 SliderVertical::getValue() const {
+const s16 SliderVertical::getGripValue() const {
+
 	// Calculate the current value represented by the top of the grip
 	Rect rect;
 	getClientRect(rect);
@@ -119,8 +122,13 @@ void SliderVertical::handleDragEvent(const GadgetEventArgs& e) {
 	// Handle grip events
 	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
 
+		s16 newValue = getGripValue();
+
 		// Grip has moved
-		_gadgetEventHandlers->raiseValueChangeEvent();
+		if (_value != newValue) {
+			_value = newValue;
+			_gadgetEventHandlers->raiseValueChangeEvent();
+		}
 	}
 }
 
@@ -129,8 +137,13 @@ void SliderVertical::handleMoveEvent(const GadgetEventArgs& e) {
 	// Handle grip events
 	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
 
+		s16 newValue = getGripValue();
+
 		// Grip has moved
-		_gadgetEventHandlers->raiseValueChangeEvent();
+		if (_value != newValue) {
+			_value = newValue;
+			_gadgetEventHandlers->raiseValueChangeEvent();
+		}
 	}
 }
 
