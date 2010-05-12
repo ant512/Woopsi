@@ -66,7 +66,7 @@ void SliderVerticalTest::startup() {
 	_slider->setDoubleClickable(true);
 	_slider->setRefcon(1);
 	_slider->setMinimumValue(0);
-	_slider->setMaximumValue(1);
+	_slider->setMaximumValue(2);
 	_slider->setPageSize(1);
 	
 	// Get preferred dimensions for label and resize
