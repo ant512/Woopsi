@@ -1,10 +1,10 @@
 // Includes
-#include "sliderverticaltest.h"
+#include "scrollbarverticaltest.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "debug.h"
 
-void SliderVerticalTest::startup() {
+void ScrollbarVerticalTest::startup() {
 
 	// Create screen
 	AmigaScreen* screen = new AmigaScreen("Test Screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
@@ -59,21 +59,21 @@ void SliderVerticalTest::startup() {
 	_disable->addGadgetEventHandler(this);
 	_dimensions->addGadgetEventHandler(this);
 
-	// Add button
-	_slider = new SliderVertical(30, 30, 60, 100);
-	window->addGadget(_slider);
-	_slider->addGadgetEventHandler(this);
-	_slider->setDoubleClickable(true);
-	_slider->setRefcon(1);
-	_slider->setMinimumValue(0);
-	_slider->setMaximumValue(2);
-	_slider->setPageSize(1);
+	// Add scrollbar
+	_scrollbar = new ScrollbarVertical(30, 30, 60, 100);
+	window->addGadget(_scrollbar);
+	_scrollbar->addGadgetEventHandler(this);
+	_scrollbar->setDoubleClickable(true);
+	_scrollbar->setRefcon(1);
+	_scrollbar->setMinimumValue(0);
+	_scrollbar->setMaximumValue(2);
+	_scrollbar->setPageSize(1);
 	
 	// Get preferred dimensions for label and resize
 	Debug::printf("getPreferredDimensions()");
 	Rect rect;
-	_slider->getPreferredDimensions(rect);
-	_slider->resize(rect.width, rect.height);
+	_scrollbar->getPreferredDimensions(rect);
+	_scrollbar->resize(rect.width, rect.height);
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
@@ -82,13 +82,13 @@ void SliderVerticalTest::startup() {
 	redraw();
 }
 
-void SliderVerticalTest::shutdown() {
+void ScrollbarVerticalTest::shutdown() {
 
 	// Call base shutdown method
 	Woopsi::shutdown();
 }
 
-void SliderVerticalTest::handleClickEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Clicked");
@@ -96,7 +96,7 @@ void SliderVerticalTest::handleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleDragEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleDragEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Dragged");
@@ -104,7 +104,7 @@ void SliderVerticalTest::handleDragEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleReleaseEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleReleaseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Released");
@@ -112,7 +112,7 @@ void SliderVerticalTest::handleReleaseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Released outside");
@@ -120,7 +120,7 @@ void SliderVerticalTest::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleKeyPressEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleKeyPressEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Key pressed");
@@ -128,7 +128,7 @@ void SliderVerticalTest::handleKeyPressEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Key released");
@@ -136,7 +136,7 @@ void SliderVerticalTest::handleKeyReleaseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleLidOpenEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleLidOpenEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Lid opened");
@@ -144,7 +144,7 @@ void SliderVerticalTest::handleLidOpenEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleLidCloseEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleLidCloseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Lid closed");
@@ -152,7 +152,7 @@ void SliderVerticalTest::handleLidCloseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleFocusEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleFocusEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Focused");
@@ -160,7 +160,7 @@ void SliderVerticalTest::handleFocusEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleBlurEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleBlurEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Blurred");
@@ -168,7 +168,7 @@ void SliderVerticalTest::handleBlurEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleCloseEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleCloseEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Closed");
@@ -176,7 +176,7 @@ void SliderVerticalTest::handleCloseEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleHideEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleHideEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Hidden");
@@ -184,7 +184,7 @@ void SliderVerticalTest::handleHideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleShowEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleShowEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shown");
@@ -192,7 +192,7 @@ void SliderVerticalTest::handleShowEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleEnableEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleEnableEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Enabled");
@@ -200,7 +200,7 @@ void SliderVerticalTest::handleEnableEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleDisableEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleDisableEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Disabled");
@@ -208,15 +208,15 @@ void SliderVerticalTest::handleDisableEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleValueChangeEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleValueChangeEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
-			Debug::printf("Value changed %d", ((SliderVertical*)e.getSource())->getValue());
+			Debug::printf("Value changed %d", ((ScrollbarVertical*)e.getSource())->getValue());
 			break;
 	}
 }
 
-void SliderVerticalTest::handleResizeEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleResizeEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Resized");
@@ -224,7 +224,7 @@ void SliderVerticalTest::handleResizeEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleMoveEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleMoveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved");
@@ -232,7 +232,7 @@ void SliderVerticalTest::handleMoveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleScrollEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleScrollEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Scrolled");
@@ -240,7 +240,7 @@ void SliderVerticalTest::handleScrollEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleShiftClickEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleShiftClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shift clicked");
@@ -248,7 +248,7 @@ void SliderVerticalTest::handleShiftClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
+void ScrollbarVerticalTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Context menu selected");
@@ -256,7 +256,7 @@ void SliderVerticalTest::handleContextMenuSelectionEvent(const ContextMenuEventA
 	}
 }
 
-void SliderVerticalTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Double clicked");
@@ -264,7 +264,7 @@ void SliderVerticalTest::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleShelveEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleShelveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Shelved");
@@ -272,7 +272,7 @@ void SliderVerticalTest::handleShelveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleUnshelveEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleUnshelveEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Unshelved");
@@ -280,63 +280,63 @@ void SliderVerticalTest::handleUnshelveEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleActionEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleActionEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Action");
 			break;
 		case 2:
-			_slider->shelve();
+			_scrollbar->shelve();
 			break;
 		case 3:
-			_slider->unshelve();
+			_scrollbar->unshelve();
 			break;
 		case 4:
-			_slider->show();
+			_scrollbar->show();
 			break;
 		case 5:
-			_slider->hide();
+			_scrollbar->hide();
 			break;
 		case 6:
 			{
 				u16 newPos;
-				if (_slider->getX() == 10) {
+				if (_scrollbar->getX() == 10) {
 					newPos = 30;
 				} else {
 					newPos = 10;
 				}
-				_slider->moveTo(newPos, newPos);
+				_scrollbar->moveTo(newPos, newPos);
 				break;
 			}
 		case 7:
-			_slider->resize(10, 10);
+			_scrollbar->resize(10, 10);
 			break;
 		case 8:
 			Rect rect;
-			_slider->getPreferredDimensions(rect);
-			_slider->resize(rect.width, rect.height);
+			_scrollbar->getPreferredDimensions(rect);
+			_scrollbar->resize(rect.width, rect.height);
 			break;
 		case 9:
-			_slider->enable();
+			_scrollbar->enable();
 			break;
 		case 10:
-			_slider->disable();
+			_scrollbar->disable();
 			break;
 		case 11:
 			{
 				u16 newPos;
-				if (_slider->getX() == 10) {
+				if (_scrollbar->getX() == 10) {
 					newPos = 30;
 				} else {
 					newPos = 10;
 				}
-				_slider->changeDimensions(newPos, newPos, newPos, newPos);
+				_scrollbar->changeDimensions(newPos, newPos, newPos, newPos);
 				break;
 			}
 	}
 }
 
-void SliderVerticalTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved forwards");
@@ -344,7 +344,7 @@ void SliderVerticalTest::handleMoveForwardEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void SliderVerticalTest::handleMoveBackwardEvent(const GadgetEventArgs& e) {
+void ScrollbarVerticalTest::handleMoveBackwardEvent(const GadgetEventArgs& e) {
 	switch (e.getSource()->getRefcon()) {
 		case 1:
 			Debug::printf("Moved backwards");

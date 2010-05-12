@@ -15,6 +15,7 @@ Change Log
     - Added progressbar test.
     - Added slidervertical test.
     - Added sliderhorizontal test.
+    - Added scrollbarvertical test.
 
   V0.47 (20100510)
   

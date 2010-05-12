@@ -56,6 +56,10 @@ cd ../requester
 make clean
 make
 
+cd ../scrollbarvertical
+make clean
+make
+
 cd ../scrollinglistbox
 make clean
 make
