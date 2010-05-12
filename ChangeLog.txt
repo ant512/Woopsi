@@ -14,6 +14,7 @@ Change Log
   - New features:
     - Added progressbar test.
     - Added slidervertical test.
+    - Added sliderhorizontal test.
 
   V0.47 (20100510)
   

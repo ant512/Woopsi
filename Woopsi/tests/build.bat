@@ -60,6 +60,14 @@ cd ../scrollinglistbox
 make clean
 make
 
+cd ../sliderhorizontal
+make clean
+make
+
+cd ../slidervertical
+make clean
+make
+
 cd ../textbox
 make clean
 make
