@@ -46,9 +46,10 @@ Credits and Acknowlegements
 
   - Coding and design                                - Antony Dzeryn
   - Testing, technical advice, other contributions   - Jeff Laing
-  - PALib independence                               - Steve
+  - PALib independence                               - Steven Harrison
   - More testing and suggestions                     - John Buxton
   - Unicode work                                     - Olivier Binda
+  - Testing and gadget contributions                 - Mark Adamson
   - Simian Zombie logo                               - John Clay
   - Thanks to                                        - The devKitPro team
                                                      - The PALib team
