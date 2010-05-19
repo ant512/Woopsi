@@ -10,6 +10,7 @@ Change Log
       has really changed.
     - SliderVertical and SliderHorizontal getValue() methods are considerably
       more efficient.
+    - Added libfreetype.a file to libs/libfreetype/lib folder.
 
   - New features:
     - Added progressbar test.
