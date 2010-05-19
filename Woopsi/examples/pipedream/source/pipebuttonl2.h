@@ -55,7 +55,7 @@ protected:
 				port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, ((rect.height - FLOW_SIZE) / 2) + 1, ((rect.width - FLOW_SIZE) / 2) + 1, FLOW_SIZE, woopsiRGB(0, 0, 20));
 				
 				// Draw part of vertical section
-				port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, (rect.height - FLOW_SIZE) / 2, FLOW_SIZE, (rect.height - FLOW_SIZE) / 2 + FLOW_SIZE, woopsiRGB(0, 0, 20));a
+				port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, (rect.height - FLOW_SIZE) / 2, FLOW_SIZE, (rect.height - FLOW_SIZE) / 2 + FLOW_SIZE, woopsiRGB(0, 0, 20));
 			} else {
 			
 				// Draw part of horizontal section
