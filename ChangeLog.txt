@@ -17,6 +17,7 @@ Change Log
     - Added sliderhorizontal test.
     - Added scrollbarvertical test.
     - Added scrollbarhorizontal test.
+    - Added superbitmap test.
 
   V0.47 (20100510)
   
