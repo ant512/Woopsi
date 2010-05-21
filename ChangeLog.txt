@@ -4,9 +4,7 @@ Change Log
   V0.99.1
   
   - Fixes:
-    - SliderVertical and SliderHorizontal respect their full range of values and
-      no longer ignore the maximum value.
-    - ScrollingListBox scrollbar correctly matches state of the list.
+    - Rewrote SliderVertical again.
 
   V0.99 (20100520)
   

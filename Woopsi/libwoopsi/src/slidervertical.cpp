@@ -31,25 +31,12 @@ const s16 SliderVertical::getGripValue() const {
 	// Calculate the current value represented by the top of the grip
 	Rect rect;
 	getClientRect(rect);
-	
-	// Is the grip smaller than the gutter?
-	if (rect.height > _grip->getHeight()) {
-	
-		// Calculate ratio
-		u32 ratio = ((_maximumValue - _minimumValue + 1) << 16) / _gutterHeight;
-		
-		// Calculate value
-		u32 val = ((_grip->getY() - getY()) - rect.y) * ratio;
 
-		// Round up
-		val += val & 0x8000;
-
-		// Right shift to erase fractional part and return
-		return val >> 16;
-	} else {
-		// Just return the minimum value
-		return _minimumValue;
-	}
+	u32 gripPos = ((_grip->getY() - getY()) - rect.y);
+	u32 scrollRatio = (gripPos << 16) / _gutterHeight;
+	s32 value = (scrollRatio * (_maximumValue - _minimumValue + 1));
+	//value += value & 0x8000;
+	return value >> 16;
 }
 
 void SliderVertical::setValue(const s16 value) {
@@ -68,27 +55,13 @@ void SliderVertical::setValue(const s16 value) {
 	// Can the grip move?
 	if ((rect.height > _grip->getHeight()) && (_maximumValue != _minimumValue)) {
 	
-		// Calculate ratio
-		u32 ratio = (_gutterHeight << 16) / (u32)(_maximumValue - _minimumValue + 1);
-		
-		// Convert value using ratio
-		s32 newGripY = (newValue * ratio);
-
-		// Round up
-		newGripY += newGripY & 0x8000;
-
-		// Bitshift down
+		u32 scrollRatio = (newValue << 16) / (u32)(_maximumValue - _minimumValue + 1);
+		s32 newGripY = _gutterHeight * scrollRatio;
+		//newGripY += newGripY & 0x8000;
 		newGripY >>= 16;
 
-		// Add containing client co-ords
 		newGripY += rect.y;
-		
-		// Adjust new y so that it fits within gutter
-		if (newGripY + _grip->getHeight() > rect.y + rect.height) {
-			newGripY = (rect.y + rect.height) - _grip->getHeight();
-		}
 
-		// Move the grip
 		_grip->moveTo(rect.x, newGripY);
 	}
 }
@@ -153,49 +126,20 @@ void SliderVertical::resizeGrip() {
 	Rect rect;
 	getClientRect(rect);
 
-	// Calculate new height
-	s32 newHeight = rect.height;
+	s32 gripRatio = (_pageSize << 16) / ((s32)(_maximumValue - _minimumValue + 1));
+
+	s32 gripSize = (rect.height * gripRatio);
+	//gripSize += gripSize & 0x8000;
+	gripSize >>= 16;
 	
-	// Calculate the height of the content that has overflowed the viewport
-	s32 overspill = ((s32)(_maximumValue - _minimumValue + 1)) - _pageSize;
-	
-	// Is there any overflow?
-	if (overspill > 0) {
-	
-		// Calculate the ratio of content to gutter
-		u32 ratio = (rect.height << 16) / (u32)(_maximumValue - _minimumValue + 1);
-		
-		// New height is equivalent to the height of the gutter minus
-		// the ratio-converted overflow height
-		newHeight = (rect.height << 16) - (overspill * ratio);
+	_gutterHeight = rect.height;
 
-		// Round up
-		newHeight += newHeight & 0x8000;
-
-		// Bitshift to remove fraction
-		newHeight >>= 16;
-
-		// Calculate height of the gutter for use in ratio calculations
-		_gutterHeight = rect.height;
-
-		// Ensure height is within acceptable boundaries
-		if (newHeight < _minimumGripHeight) {
-
-			// Adjust calculated height of gutter to take into account
-			// adjusted grip height.  Since we limit the height of the grip
-			// to ensure it doesn't get too small, we must treat the gutter
-			// as if it shrinks by the amount that the grip has been enlarged
-			_gutterHeight -= _minimumGripHeight - newHeight;
-
-			// Limit height of grip
-			newHeight = _minimumGripHeight;
-		}
-
-		if (newHeight > rect.height) newHeight = rect.height;
+	if (gripSize < _minimumGripHeight) {
+		_gutterHeight -= _minimumGripHeight - gripSize;
+		gripSize = _minimumGripHeight;
 	}
-
-	// Perform resize
-	_grip->resize(rect.width, newHeight);
+	
+	_grip->resize(rect.width, gripSize);
 }
 
 void SliderVertical::jumpGrip(u8 direction) {
