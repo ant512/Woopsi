@@ -3,6 +3,9 @@
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "debug.h"
+#include "scrollbarvertical.h"
+#include "slidervertical.h"
+#include "sliderverticalgrip.h"
 
 void ScrollingListBoxTest::startup() {
 
@@ -60,7 +63,7 @@ void ScrollingListBoxTest::startup() {
 	_dimensions->addGadgetEventHandler(this);
 
 	// Add cycle button
-	_listBox = new ScrollingListBox(30, 30, 100, 20);
+	_listBox = new ScrollingListBox(30, 30, 100, 100);
 	
 	for (u8 i = 0; i < 20; ++i) {
 	_listBox->addOption("Option 1", 1);
@@ -101,15 +104,42 @@ void ScrollingListBoxTest::startup() {
 
 	// Get preferred dimensions for cycle button and resize
 	Debug::printf("getPreferredDimensions()");
-	Rect rect;
-	_listBox->getPreferredDimensions(rect);
-	_listBox->resize(rect.width, rect.height);
+	//Rect rect;
+	//_listBox->getPreferredDimensions(rect);
+	//_listBox->resize(rect.width, rect.height);
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
 	
 	// Draw GUI
 	redraw();
+	
+	ScrollbarVertical* scrollbar = ((ScrollbarVertical*)(_listBox->getChild(1)));
+	
+	Debug::printf("Scrollbar");
+	Debug::printf("Height:        %d", scrollbar->getHeight());
+	
+	Debug::printf("Max val:       %d", scrollbar->getMaximumValue());
+	Debug::printf("Min val:       %d", scrollbar->getMinimumValue());
+	Debug::printf("Value:         %d", scrollbar->getValue());
+	Debug::printf("Vals per px:   %d", scrollbar->getValuesPerPixel());
+	
+	Debug::printf("");
+	Debug::printf("Slider");
+	SliderVertical* slider = (SliderVertical*)scrollbar->getChild(0);
+	
+	Rect rect;
+	slider->getClientRect(rect);
+	
+	Debug::printf("Client height: %d", rect.height);
+	
+	
+	Debug::printf("");
+	Debug::printf("Grip");
+	SliderVerticalGrip* grip = (SliderVerticalGrip*)slider->getChild(0);
+
+	Debug::printf("Height:        %d", grip->getHeight());
+
 }
 
 void ScrollingListBoxTest::shutdown() {

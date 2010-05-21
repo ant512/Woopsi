@@ -245,5 +245,5 @@ void SliderVertical::onResize(u16 width, u16 height) {
 }
 
 s16 SliderVertical::getValuesPerPixel() const {
-	return ((_maximumValue - _minimumValue) / _gutterHeight) + 1;
+	return ((_maximumValue - _minimumValue + 1) / _gutterHeight) + 1;
 }

@@ -124,22 +124,22 @@ void ScrollingListBox::setFont(FontBase* font) {
 
 void ScrollingListBox::addOption(ListBoxDataItem* item) {
 	_listbox->addOption(item);
-	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
 }
 
 void ScrollingListBox::addOption(const WoopsiString& text, const u32 value) {
 	_listbox->addOption(text, value);
-	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
 }
 
 void ScrollingListBox::addOption(const WoopsiString& text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 	_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
-	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
 }
 
 void ScrollingListBox::removeOption(const s32 index) {
 	_listbox->removeOption(index);
-	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
 
 	// Reposition grip if necessary
 	if (_scrollbar->getValue() > _listbox->getOptionCount()) _scrollbar->setValue(0);
