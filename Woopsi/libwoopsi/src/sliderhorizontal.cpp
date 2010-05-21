@@ -36,7 +36,7 @@ const s16 SliderHorizontal::getGripValue() const {
 	if (rect.width > _grip->getWidth()) {
 	
 		// Calculate ratio
-		u32 ratio = ((_maximumValue - _minimumValue) << 16) / _gutterWidth;
+		u32 ratio = ((_maximumValue - _minimumValue + 1) << 16) / _gutterWidth;
 		
 		// Calculate value
 		u32 val = ((_grip->getX() - getX()) - rect.x) * ratio;
@@ -69,7 +69,7 @@ void SliderHorizontal::setValue(const s16 value) {
 	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
 	
 		// Calculate ratio
-		u32 ratio = (_gutterWidth << 16) / (u32)(_maximumValue - _minimumValue);
+		u32 ratio = (_gutterWidth << 16) / (u32)(_maximumValue - _minimumValue + 1);
 
 		// Convert value using ratio
 		s32 newGripX = (newValue * ratio);
@@ -157,13 +157,13 @@ void SliderHorizontal::resizeGrip() {
 	s32 newWidth = rect.width;
 	
 	// Calculate the width of the content that has overflowed the viewport
-	s32 overspill = ((s32)(_maximumValue - _minimumValue)) - _pageSize;
+	s32 overspill = ((s32)(_maximumValue - _minimumValue + 1)) - _pageSize;
 	
 	// Is there any overflow?
 	if (overspill > 0) {
 	
 		// Calculate the ratio of content to gutter
-		u32 ratio = (rect.width << 16) / (u32)(_maximumValue - _minimumValue);
+		u32 ratio = (rect.width << 16) / (u32)(_maximumValue - _minimumValue + 1);
 		
 		// New width is equivalent to the width of the gutter minus
 		// the ratio-converted overflow width

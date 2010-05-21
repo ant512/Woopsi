@@ -1,7 +1,13 @@
 Change Log
 ----------
 
-  V0.99
+  V0.99.1
+  
+  - Fixes:
+    - SliderVertical and SliderHorizontal respect their full range of values and
+      no longer ignore the maximum value.
+
+  V0.99 (20100520)
   
   - Fixes:
     - ProgressBar text greyed out when disabled.

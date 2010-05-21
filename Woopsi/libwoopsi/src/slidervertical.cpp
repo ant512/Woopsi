@@ -36,7 +36,7 @@ const s16 SliderVertical::getGripValue() const {
 	if (rect.height > _grip->getHeight()) {
 	
 		// Calculate ratio
-		u32 ratio = ((_maximumValue - _minimumValue) << 16) / _gutterHeight;
+		u32 ratio = ((_maximumValue - _minimumValue + 1) << 16) / _gutterHeight;
 		
 		// Calculate value
 		u32 val = ((_grip->getY() - getY()) - rect.y) * ratio;
@@ -69,7 +69,7 @@ void SliderVertical::setValue(const s16 value) {
 	if ((rect.height > _grip->getHeight()) && (_maximumValue != _minimumValue)) {
 	
 		// Calculate ratio
-		u32 ratio = (_gutterHeight << 16) / (u32)(_maximumValue - _minimumValue);
+		u32 ratio = (_gutterHeight << 16) / (u32)(_maximumValue - _minimumValue + 1);
 		
 		// Convert value using ratio
 		s32 newGripY = (newValue * ratio);
@@ -157,13 +157,13 @@ void SliderVertical::resizeGrip() {
 	s32 newHeight = rect.height;
 	
 	// Calculate the height of the content that has overflowed the viewport
-	s32 overspill = ((s32)(_maximumValue - _minimumValue)) - _pageSize;
+	s32 overspill = ((s32)(_maximumValue - _minimumValue + 1)) - _pageSize;
 	
 	// Is there any overflow?
 	if (overspill > 0) {
 	
 		// Calculate the ratio of content to gutter
-		u32 ratio = (rect.height << 16) / (u32)(_maximumValue - _minimumValue);
+		u32 ratio = (rect.height << 16) / (u32)(_maximumValue - _minimumValue + 1);
 		
 		// New height is equivalent to the height of the gutter minus
 		// the ratio-converted overflow height
