@@ -7,6 +7,7 @@ using namespace WoopsiUI;
 SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_minimumValue = 0;
 	_maximumValue = 0;
+	_contentSize = 0;
 	_value = 0;
 	_minimumGripHeight = 10;
 	_pageSize = 1;
@@ -34,8 +35,8 @@ const s16 SliderVertical::getGripValue() const {
 
 	u32 gripPos = ((_grip->getY() - getY()) - rect.y);
 	u32 scrollRatio = (gripPos << 16) / _gutterHeight;
-	s32 value = (scrollRatio * (_maximumValue - _minimumValue + 1));
-	//value += value & 0x8000;
+	s32 value = (scrollRatio * _contentSize);
+
 	return value >> 16;
 }
 
@@ -55,9 +56,9 @@ void SliderVertical::setValue(const s16 value) {
 	// Can the grip move?
 	if ((rect.height > _grip->getHeight()) && (_maximumValue != _minimumValue)) {
 	
-		u32 scrollRatio = (newValue << 16) / (u32)(_maximumValue - _minimumValue + 1);
+		u32 scrollRatio = (newValue << 16) / _contentSize;
 		s32 newGripY = _gutterHeight * scrollRatio;
-		//newGripY += newGripY & 0x8000;
+
 		newGripY >>= 16;
 
 		newGripY += rect.y;
@@ -126,10 +127,10 @@ void SliderVertical::resizeGrip() {
 	Rect rect;
 	getClientRect(rect);
 
-	s32 gripRatio = (_pageSize << 16) / ((s32)(_maximumValue - _minimumValue + 1));
+	s32 gripRatio = (_pageSize << 16) / _contentSize;
 
-	s32 gripSize = (rect.height * gripRatio);
-	//gripSize += gripSize & 0x8000;
+	s32 gripSize = rect.height * gripRatio;
+
 	gripSize >>= 16;
 	
 	_gutterHeight = rect.height;
@@ -140,34 +141,6 @@ void SliderVertical::resizeGrip() {
 	}
 	
 	_grip->resize(rect.width, gripSize);
-}
-
-void SliderVertical::jumpGrip(u8 direction) {
-
-	s32 newGripY;
-
-	// Which way should the grip move?
-	if (direction == 1) {
-		// Move grip down
-		newGripY = (_grip->getY() - getY()) + _grip->getHeight();
-	} else {
-		// Move grip up
-		newGripY = (_grip->getY() - getY()) - _grip->getHeight();
-	}
-
-	// Get client rect for this gadget
-	Rect rect;
-	getClientRect(rect);
-
-	// Adjust y value so that it does not exceed boundaries of gutter
-	if (newGripY < rect.y) {
-		newGripY = rect.y;
-	} else if (newGripY + _grip->getHeight() > rect.y + rect.height) {
-		newGripY = (rect.height - _grip->getHeight()) + 1;
-	}
-
-	// Move the grip
-	_grip->moveTo(rect.x, newGripY);
 }
 
 void SliderVertical::onResize(u16 width, u16 height) {
@@ -189,5 +162,5 @@ void SliderVertical::onResize(u16 width, u16 height) {
 }
 
 s16 SliderVertical::getValuesPerPixel() const {
-	return ((_maximumValue - _minimumValue + 1) / _gutterHeight) + 1;
+	return (_contentSize / _gutterHeight) + 1;
 }

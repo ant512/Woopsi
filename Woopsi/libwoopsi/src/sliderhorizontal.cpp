@@ -198,34 +198,6 @@ void SliderHorizontal::resizeGrip() {
 	_grip->resize(newWidth, rect.height);
 }
 
-void SliderHorizontal::jumpGrip(u8 direction) {
-
-	s32 newGripX;
-
-	// Which way should the grip move?
-	if (direction == 1) {
-		// Move grip right
-		newGripX = (_grip->getX() - getX()) + _grip->getWidth();
-	} else {
-		// Move grip left
-		newGripX = (_grip->getX() - getX()) - _grip->getWidth();
-	}
-
-	// Get client rect for this gadget
-	Rect rect;
-	getClientRect(rect);
-
-	// Adjust x value so that it does not exceed boundaries of gutter
-	if (newGripX < rect.x) {
-		newGripX = rect.x;
-	} else if (newGripX + _grip->getWidth() > rect.x + rect.width) {
-		newGripX = (rect.width - _grip->getWidth()) + 1;
-	}
-
-	// Move the grip
-	_grip->moveTo(newGripX, rect.y);
-}
-
 void SliderHorizontal::onResize(u16 width, u16 height) {
 
 	// Remember current values

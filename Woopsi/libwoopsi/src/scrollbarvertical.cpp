@@ -143,10 +143,6 @@ void ScrollbarVertical::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void ScrollbarVertical::jumpGrip(u8 direction) {
-	_slider->jumpGrip(direction);
-}
-
 void ScrollbarVertical::onResize(u16 width, u16 height) {
 
 	// Remember current values

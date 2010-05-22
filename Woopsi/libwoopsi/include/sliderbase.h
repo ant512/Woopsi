@@ -66,12 +66,6 @@ namespace WoopsiUI {
 		virtual void setPageSize(const s16 pageSize) = 0;
 
 		/**
-		 * Make the grip jump left or right along the gutter.
-		 * @param direction 0 to jump left, 1 to jump right.
-		 */
-		virtual void jumpGrip(u8 direction) = 0;
-
-		/**
 		 * Get the value represented by each pixel in the gutter.
 		 * Note that this is an integer value; the actual value
 		 * most likely contains a fractional part.

@@ -136,10 +136,6 @@ void ScrollbarHorizontal::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void ScrollbarHorizontal::jumpGrip(u8 direction) {
-	_slider->jumpGrip(direction);
-}
-
 void ScrollbarHorizontal::onResize(u16 width, u16 height) {
 
 	// Remember current values

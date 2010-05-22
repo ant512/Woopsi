@@ -61,6 +61,7 @@ namespace WoopsiUI {
 		 */
 		inline void setMinimumValue(const s16 value) {
 			_minimumValue = value;
+			_contentSize = _maximumValue - _minimumValue + 1;
 			resizeGrip();
 		};
 
@@ -70,6 +71,7 @@ namespace WoopsiUI {
 		 */
 		inline void setMaximumValue(const s16 value) {
 			_maximumValue = value;
+			_contentSize = _maximumValue - _minimumValue + 1;
 			resizeGrip();
 		};
 
@@ -89,12 +91,6 @@ namespace WoopsiUI {
 			_pageSize = pageSize;
 			resizeGrip();
 		};
-
-		/**
-		 * Make the grip jump up or down the gutter.
-		 * @param direction 0 to jump up, 1 to jump down.
-		 */
-		void jumpGrip(u8 direction);
 
 		/**
 		 * Process events fired by the grip.
@@ -125,6 +121,7 @@ namespace WoopsiUI {
 		s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter */
 		s32 _gutterHeight;							/**< Height of the gutter, taking into account
 														 any adjustments made to the height of the grip. */
+		u32 _contentSize;							/**< Number of values in the min/max range. */
 
 		/**
 		 * Get the value represented by the top of the grip.

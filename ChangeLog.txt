@@ -5,6 +5,7 @@ Change Log
   
   - Fixes:
     - Rewrote SliderVertical again.
+    - Removed jumpGrip from all slider gagdets.
 
   V0.99 (20100520)
   

@@ -91,12 +91,6 @@ namespace WoopsiUI {
 		 */
 		void setPageSize(const s16 pageSize);
 
-		/**
-		 * Make the grip jump up or down the gutter.
-		 * @param direction 0 to jump up, 1 to jump down.
-		 */
-		void jumpGrip(u8 direction);
-
 		/**	
 		 * Process events fired by the grip.
 		 * @param e The event details.

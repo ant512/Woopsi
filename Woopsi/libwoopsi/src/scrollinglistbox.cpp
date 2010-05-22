@@ -54,12 +54,7 @@ void ScrollingListBox::handleScrollEvent(const GadgetEventArgs& e) {
 			if (_scrollbar != NULL) {
 				_scrollbar->setRaisesEvents(false);
 
-				s32 value = ((0 - _listbox->getCanvasY()) << 16) / _listbox->getOptionHeight();
-
-				// Round up
-				value += value & 0x8000;
-				
-				value >>= 16;
+				s32 value = (0 - _listbox->getCanvasY()) / _listbox->getOptionHeight();
 
 				_scrollbar->setValue(value);
 				_scrollbar->setRaisesEvents(true);

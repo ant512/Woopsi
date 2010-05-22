@@ -91,12 +91,6 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Make the grip jump left or right along the gutter.
-		 * @param direction 0 to jump left, 1 to jump right.
-		 */
-		void jumpGrip(u8 direction);
-
-		/**
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
