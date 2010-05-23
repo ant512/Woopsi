@@ -71,6 +71,10 @@ void ScrollbarVertical::setValue(const s16 value) {
 	_slider->setValue(value);
 }
 
+void ScrollbarVertical::setValueWithBitshift(const s32 value) {
+	_slider->setValueWithBitshift(value);
+}
+
 void ScrollbarVertical::setPageSize(s16 pageSize) {
 	_slider->setPageSize(pageSize);
 }

@@ -12,7 +12,7 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_minimumGripHeight = 10;
 	_pageSize = 1;
 
-	_flags.permeable = true;
+	_flags.permeable = false;
 	_flags.borderless = false;
 	_flags.doubleClickable = false;
 
@@ -38,6 +38,31 @@ const s16 SliderVertical::getGripValue() const {
 	s32 value = (scrollRatio * _contentSize);
 
 	return value >> 16;
+}
+
+void SliderVertical::setValueWithBitshift(const s32 value) {
+
+	Rect rect;
+	getClientRect(rect);
+	
+	s32 newValue = value;
+	
+	// Limit to max/min values
+	if (newValue >> 16 > _maximumValue) newValue = _maximumValue << 16;
+	if (newValue >> 16 < _minimumValue) newValue = _minimumValue << 16;
+	
+	// Can the grip move?
+	if ((rect.height > _grip->getHeight()) && (_maximumValue != _minimumValue)) {
+		
+		u32 scrollRatio = newValue / _contentSize;
+		s32 newGripY = _gutterHeight * scrollRatio;
+		newGripY += newGripY & 0x8000;
+		newGripY >>= 16;
+		
+		newGripY += rect.y;
+		
+		_grip->moveTo(rect.x, newGripY);
+	}
 }
 
 void SliderVertical::setValue(const s16 value) {
