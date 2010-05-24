@@ -87,11 +87,11 @@ void ScrollbarHorizontal::handleActionEvent(const GadgetEventArgs& e) {
 		if (_leftButton->isClicked()) {
 
 			// Move the grip left
-			_slider->setValue(_slider->getValue() - _slider->getValuesPerPixel());
+			_slider->setValue(_slider->getValue() - _slider->getMinimumStep());
 		} else if (_rightButton->isClicked()) {
 
 			// Move the grip right
-			_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
+			_slider->setValue(_slider->getValue() + _slider->getMinimumStep());
 		}
 	}
 }
@@ -110,7 +110,7 @@ void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
 		_timer->start();
 
 		// Move the grip left
-		_slider->setValue(_slider->getValue() - _slider->getValuesPerPixel());
+		_slider->setValue(_slider->getValue() - _slider->getMinimumStep());
 
 	} else if (e.getSource() == _rightButton) {
 
@@ -118,7 +118,7 @@ void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
 		_timer->start();
 
 		// Move the grip right
-		_slider->setValue(_slider->getValue() + _slider->getValuesPerPixel());
+		_slider->setValue(_slider->getValue() + _slider->getMinimumStep());
 	}
 }
 
@@ -159,8 +159,4 @@ void ScrollbarHorizontal::onResize(u16 width, u16 height) {
 
 	// Reset event raising
 	setRaisesEvents(events);
-}
-
-s16 ScrollbarHorizontal::getValuesPerPixel() const {
-	return _slider->getValuesPerPixel();
 }

@@ -130,14 +130,6 @@ namespace WoopsiUI {
 		 */
 		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
 
-		/**
-		 * Get the value represented by each pixel in the gutter.
-		 * Note that this is an integer value; the actual value
-		 * most likely contains a fractional part.
-		 * @return The value represented by each pixel in the gutter.
-		 */
-		s16 getValuesPerPixel() const;
-
 	protected:
 		SliderVertical* _slider;					/**< Pointer to the slider gadget */
 		Button* _upButton;							/**< Pointer to the up button */

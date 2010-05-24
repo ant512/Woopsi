@@ -108,18 +108,12 @@ namespace WoopsiUI {
 		virtual void handleDragEvent(const GadgetEventArgs& e);
 
 		/**
-		 * Process events fired by the grip.
-		 * @param e The event details.
+		 * Get the smallest value that the slider can move through when
+		 * dragged.
+		 * @return The smallest value that the slider can move through when
+		 * dragged.
 		 */
-		virtual void handleMoveEvent(const GadgetEventArgs& e);
-
-		/**
-		 * Get the value represented by each pixel in the gutter.
-		 * Note that this is an integer value; the actual value
-		 * most likely contains a fractional part.
-		 * @return The value represented by each pixel in the gutter.
-		 */
-		s16 getValuesPerPixel() const;
+		s16 getMinimumStep() const;
 
 	protected:
 		SliderHorizontalGrip* _grip;				/**< Pointer to the grip. */
@@ -133,8 +127,18 @@ namespace WoopsiUI {
 		u32 _contentSize;
 		
 		/**
-		 * Get the value represented by the left of the grip.
-		 * return The value represented by the left of the grip.
+		 * Get the maximum possible value that the slider can represent.  Useful when
+		 * using the slider as a scrollbar, as the height of the grip prevents the full
+		 * range of values being accessed (intentionally).
+		 * The returned value is bitshfted left 16 places for more accuracy in fixed-point
+		 * calculations.
+		 * @return The maximum possible value that the slider can represent.
+		 */
+		s32 getPhysicalMaximumValueWithBitshift() const;
+
+		/**
+		 * Get the value represented by the top of the grip.
+		 * return The value represented by the top of the grip.
 		 */
 		const s16 getGripValue() const;
 

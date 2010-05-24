@@ -65,7 +65,7 @@ void ScrollingListBoxTest::startup() {
 	// Add cycle button
 	_listBox = new ScrollingListBox(30, 30, 100, 100);
 	
-	//for (u8 i = 0; i < 20; ++i) {
+	for (u8 i = 0; i < 5; ++i) {
 	_listBox->addOption("Option 1", 1);
 	_listBox->addOption("Option 2", 2);
 	_listBox->addOption("Option 3", 3);
@@ -96,7 +96,7 @@ void ScrollingListBoxTest::startup() {
 	_listBox->addOption("Option 28", 28);
 	_listBox->addOption("Option 29", 29);
 	_listBox->addOption("Option 30", 30);
-	//}
+	}
 	window->addGadget(_listBox);
 	_listBox->addGadgetEventHandler(this);
 	_listBox->setDoubleClickable(true);
@@ -122,7 +122,6 @@ void ScrollingListBoxTest::startup() {
 	Debug::printf("Max val:       %d", scrollbar->getMaximumValue());
 	Debug::printf("Min val:       %d", scrollbar->getMinimumValue());
 	Debug::printf("Value:         %d", scrollbar->getValue());
-	Debug::printf("Vals per px:   %d", scrollbar->getValuesPerPixel());
 	
 	Debug::printf("");
 	Debug::printf("Slider");

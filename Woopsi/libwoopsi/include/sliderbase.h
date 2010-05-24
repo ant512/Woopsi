@@ -73,14 +73,6 @@ namespace WoopsiUI {
 		 * @see getPageSize().
 		 */
 		virtual void setPageSize(const s16 pageSize) = 0;
-
-		/**
-		 * Get the value represented by each pixel in the gutter.
-		 * Note that this is an integer value; the actual value
-		 * most likely contains a fractional part.
-		 * @return The value represented by each pixel in the gutter.
-		 */
-		virtual s16 getValuesPerPixel() const = 0;
 	};
 }
 

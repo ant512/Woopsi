@@ -45,14 +45,16 @@ void SliderHorizontal::setValueWithBitshift(const s32 value) {
 	Rect rect;
 	getClientRect(rect);
 	
-	s32 newValue = value;
-	
-	// Limit to max/min values
-	if (newValue >> 16 > _maximumValue) newValue = _maximumValue << 16;
-	if (newValue >> 16 < _minimumValue) newValue = _minimumValue << 16;
-	
 	// Can the grip move?
 	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
+
+		s32 newValue = value;
+
+		s32 maxValue = getPhysicalMaximumValueWithBitshift();
+		
+		// Limit to max/min values
+		if (newValue > maxValue) newValue = maxValue;
+		if (newValue >> 16 < _minimumValue) newValue = _minimumValue << 16;
 		
 		u32 scrollRatio = newValue / _contentSize;
 		s32 newGripX = _gutterWidth * scrollRatio;
@@ -62,34 +64,28 @@ void SliderHorizontal::setValueWithBitshift(const s32 value) {
 		newGripX += rect.x;
 		
 		_grip->moveTo(newGripX, rect.y);
+
+		// Update stored value if necessary
+		newValue >>= 16;
+
+		if (_value != newValue) {
+			_value = newValue;
+			_gadgetEventHandlers->raiseValueChangeEvent();
+		}
 	}
 }
 
 void SliderHorizontal::setValue(const s16 value) {
+	setValueWithBitshift(value << 16);
+}
 
-	// Convert the value to co-ordinates using fixed-point fractional values
-	// for accuracy
-	Rect rect;
-	getClientRect(rect);
+s32 SliderHorizontal::getPhysicalMaximumValueWithBitshift() const {
+	u32 maxX = _gutterWidth - _grip->getWidth();
 
-	s16 newValue = value;
+	u32 scrollRatio = (maxX << 16) / _gutterWidth;
+	s32 value = (scrollRatio * _contentSize);
 
-	// Limit to max/min values
-	if (newValue > _maximumValue) newValue = _maximumValue;
-	if (newValue < _minimumValue) newValue = _minimumValue;
-
-	// Can the grip move?
-	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
-		
-		u32 scrollRatio = (newValue << 16) / _contentSize;
-		s32 newGripX = _gutterWidth * scrollRatio;
-		newGripX += newGripX & 0x8000;
-		newGripX >>= 16;
-		
-		newGripX += rect.x;
-		
-		_grip->moveTo(newGripX, rect.y);
-	}
+	return value;
 }
 
 void SliderHorizontal::drawContents(GraphicsPort* port) {
@@ -117,21 +113,6 @@ void SliderHorizontal::onClick(s16 x, s16 y) {
 }
 
 void SliderHorizontal::handleDragEvent(const GadgetEventArgs& e) {
-
-	// Handle grip events
-	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
-
-		s16 newValue = getGripValue();
-
-		// Grip has moved
-		if (_value != newValue) {
-			_value = newValue;
-			_gadgetEventHandlers->raiseValueChangeEvent();
-		}
-	}
-}
-
-void SliderHorizontal::handleMoveEvent(const GadgetEventArgs& e) {
 
 	// Handle grip events
 	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
@@ -188,6 +169,15 @@ void SliderHorizontal::onResize(u16 width, u16 height) {
 	setRaisesEvents(events);
 }
 
-s16 SliderHorizontal::getValuesPerPixel() const {
-	return (_contentSize / _gutterWidth) + 1;
+s16 SliderHorizontal::getMinimumStep() const {
+
+	// If the ratio of content to gutter is greater than or equal to one,
+	// the minimum step that the slider can represent will be that ratio.
+	u32 gutterRatio = _contentSize << 16 / _gutterWidth;
+	gutterRatio += gutterRatio & 0x8000;
+	gutterRatio >>= 16;
+
+	if (gutterRatio > 0) return gutterRatio;
+
+	return 1;
 }
