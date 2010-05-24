@@ -44,7 +44,7 @@ namespace WoopsiUI {
 		 * Get the current value of the slider.
 		 * return The current slider value.
 		 */
-		inline const s16 getValue() const { return _value; };
+		inline const s16 getValue() const { return _value >> 16; };
 
 		/**
 		 * Get the value represented by the height of the grip.
@@ -119,7 +119,7 @@ namespace WoopsiUI {
 		SliderHorizontalGrip* _grip;				/**< Pointer to the grip. */
 		s16 _minimumValue;							/**< Minimum value that the grip can represent. */
 		s16 _maximumValue;							/**< Maximum value that the grip can represent. */
-		s16 _value;									/**< Current value of the slider. */
+		s32 _value;									/**< Current value of the slider. */
 		s16 _minimumGripWidth;						/**< Smallest width that the grip can become */
 		s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter. */
 		s32 _gutterWidth;							/**< Width of the gutter, taking into account
@@ -140,7 +140,7 @@ namespace WoopsiUI {
 		 * Get the value represented by the top of the grip.
 		 * return The value represented by the top of the grip.
 		 */
-		const s16 getGripValue() const;
+		const s32 getGripValue() const;
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

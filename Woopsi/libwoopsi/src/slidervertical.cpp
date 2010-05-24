@@ -27,7 +27,7 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_gutterHeight = rect.height;
 }
 
-const s16 SliderVertical::getGripValue() const {
+const s32 SliderVertical::getGripValue() const {
 
 	// Calculate the current value represented by the top of the grip
 	Rect rect;
@@ -37,7 +37,7 @@ const s16 SliderVertical::getGripValue() const {
 	u32 scrollRatio = (gripPos << 16) / _gutterHeight;
 	s32 value = (scrollRatio * _contentSize);
 
-	return value >> 16;
+	return value;
 }
 
 void SliderVertical::setValueWithBitshift(const s32 value) {
@@ -66,8 +66,6 @@ void SliderVertical::setValueWithBitshift(const s32 value) {
 		_grip->moveTo(rect.x, newGripY);
 
 		// Update stored value if necessary
-		newValue >>= 16;
-
 		if (_value != newValue) {
 			_value = newValue;
 			_gadgetEventHandlers->raiseValueChangeEvent();
@@ -105,10 +103,10 @@ void SliderVertical::onClick(s16 x, s16 y) {
 	// Which way should the grip move?
 	if (y > _grip->getY()) {
 		// Move grip down
-		setValue(getValue() + _pageSize);
+		setValueWithBitshift(_value + (_pageSize << 16));
 	} else {
 		// Move grip up
-		setValue(getValue() - _pageSize);
+		setValueWithBitshift(_value - (_pageSize << 16));
 	}
 }
 
@@ -117,11 +115,13 @@ void SliderVertical::handleDragEvent(const GadgetEventArgs& e) {
 	// Handle grip events
 	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
 
-		s16 newValue = getGripValue();
+		s32 newValue = getGripValue() >> 16;
 
-		// Grip has moved
-		if (_value != newValue) {
-			_value = newValue;
+		// Grip has moved - compare values and raise event if the
+		// value has changed.  Compare using integer values rather
+		// than fixed-point.
+		if (_value >> 16 != newValue) {
+			_value = newValue << 16;
 			_gadgetEventHandlers->raiseValueChangeEvent();
 		}
 	}
@@ -153,7 +153,7 @@ void SliderVertical::resizeGrip() {
 void SliderVertical::onResize(u16 width, u16 height) {
 
 	// Remember current values
-	s16 value = getValue();
+	s32 oldValue = _value;
 	bool events = raisesEvents();
 
 	// Disable event raising
@@ -162,7 +162,7 @@ void SliderVertical::onResize(u16 width, u16 height) {
 	resizeGrip();
 
 	// Set back to current value
-	setValue(value);
+	setValue(oldValue);
 
 	// Reset event raising
 	setRaisesEvents(events);
