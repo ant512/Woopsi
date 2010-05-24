@@ -7,11 +7,12 @@ using namespace WoopsiUI;
 SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_minimumValue = 0;
 	_maximumValue = 0;
+	_contentSize = 0;
 	_value = 0;
 	_minimumGripWidth = 10;
 	_pageSize = 1;
 
-	_flags.permeable = true;
+	_flags.permeable = false;
 	_flags.borderless = false;
 	_flags.doubleClickable = false;
 
@@ -28,27 +29,39 @@ SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget
 
 const s16 SliderHorizontal::getGripValue() const {
 
-	// Calculate the current value represented by the left edge of the grip
+	// Calculate the current value represented by the top of the grip
+	Rect rect;
+	getClientRect(rect);
+
+	u32 gripPos = ((_grip->getX() - getX()) - rect.x);
+	u32 scrollRatio = (gripPos << 16) / _gutterWidth;
+	s32 value = (scrollRatio * _contentSize);
+
+	return value >> 16;
+}
+
+void SliderHorizontal::setValueWithBitshift(const s32 value) {
+
 	Rect rect;
 	getClientRect(rect);
 	
-	// Is the grip smaller than the gutter?
-	if (rect.width > _grip->getWidth()) {
+	s32 newValue = value;
 	
-		// Calculate ratio
-		u32 ratio = ((_maximumValue - _minimumValue + 1) << 16) / _gutterWidth;
+	// Limit to max/min values
+	if (newValue >> 16 > _maximumValue) newValue = _maximumValue << 16;
+	if (newValue >> 16 < _minimumValue) newValue = _minimumValue << 16;
+	
+	// Can the grip move?
+	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
 		
-		// Calculate value
-		u32 val = ((_grip->getX() - getX()) - rect.x) * ratio;
-
-		// Round up
-		val += val & 0x8000;
-
-		// Right shift to erase fractional part and return
-		return val >> 16;
-	} else {
-		// Just return the minimum value
-		return _minimumValue;
+		u32 scrollRatio = newValue / _contentSize;
+		s32 newGripX = _gutterWidth * scrollRatio;
+		newGripX += newGripX & 0x8000;
+		newGripX >>= 16;
+		
+		newGripX += rect.x;
+		
+		_grip->moveTo(newGripX, rect.y);
 	}
 }
 
@@ -64,31 +77,17 @@ void SliderHorizontal::setValue(const s16 value) {
 	// Limit to max/min values
 	if (newValue > _maximumValue) newValue = _maximumValue;
 	if (newValue < _minimumValue) newValue = _minimumValue;
-	
+
 	// Can the grip move?
 	if ((rect.width > _grip->getWidth()) && (_maximumValue != _minimumValue)) {
-	
-		// Calculate ratio
-		u32 ratio = (_gutterWidth << 16) / (u32)(_maximumValue - _minimumValue + 1);
-
-		// Convert value using ratio
-		s32 newGripX = (newValue * ratio);
-
-		// Round up
+		
+		u32 scrollRatio = (newValue << 16) / _contentSize;
+		s32 newGripX = _gutterWidth * scrollRatio;
 		newGripX += newGripX & 0x8000;
-
-		// Bitshift down
 		newGripX >>= 16;
-
-		// Add containing client co-ords
+		
 		newGripX += rect.x;
-
-		// Adjust new x so that it fits within gutter
-		if (newGripX + _grip->getWidth() > rect.x + rect.width) {
-			newGripX = (rect.x + rect.width) - _grip->getWidth();
-		}
-
-		// Move the grip
+		
 		_grip->moveTo(newGripX, rect.y);
 	}
 }
@@ -153,49 +152,22 @@ void SliderHorizontal::resizeGrip() {
 	Rect rect;
 	getClientRect(rect);
 
-	// Calculate new width
-	s32 newWidth = rect.width;
+	s32 gripRatio = (_pageSize << 16) / _contentSize;
+
+	s32 gripSize = rect.width * gripRatio;
+
+	gripSize += gripSize & 0x8000;
+
+	gripSize >>= 16;
 	
-	// Calculate the width of the content that has overflowed the viewport
-	s32 overspill = ((s32)(_maximumValue - _minimumValue + 1)) - _pageSize;
-	
-	// Is there any overflow?
-	if (overspill > 0) {
-	
-		// Calculate the ratio of content to gutter
-		u32 ratio = (rect.width << 16) / (u32)(_maximumValue - _minimumValue + 1);
-		
-		// New width is equivalent to the width of the gutter minus
-		// the ratio-converted overflow width
-		newWidth = (rect.width << 16) - (overspill * ratio);
+	_gutterWidth = rect.width;
 
-		// Round up
-		newWidth += newWidth & 0x8000;
-
-		// Bitshift to remove fraction
-		newWidth >>= 16;
-
-		// Calculate width of the gutter for use in ratio calculations
-		_gutterWidth = rect.width;
-
-		// Ensure width is within acceptable boundaries
-		if (newWidth < _minimumGripWidth) {
-
-			// Adjust calculated width of gutter to take into account
-			// adjusted grip width.  Since we limit the width of the grip
-			// to ensure it doesn't get too small, we must treat the gutter
-			// as if it shrinks by the amount that the grip has been width
-			_gutterWidth -= _minimumGripWidth - newWidth;
-
-			// Limit width of grip
-			newWidth = _minimumGripWidth;
-		}
-
-		if (newWidth > rect.width) newWidth = rect.width;
+	if (gripSize < _minimumGripWidth) {
+		_gutterWidth -= _minimumGripWidth - gripSize;
+		gripSize = _minimumGripWidth;
 	}
-
-	// Perform resize
-	_grip->resize(newWidth, rect.height);
+	
+	_grip->resize(gripSize, rect.height);
 }
 
 void SliderHorizontal::onResize(u16 width, u16 height) {
@@ -217,5 +189,5 @@ void SliderHorizontal::onResize(u16 width, u16 height) {
 }
 
 s16 SliderHorizontal::getValuesPerPixel() const {
-	return ((_maximumValue - _minimumValue + 1) / _gutterWidth) + 1;
+	return (_contentSize / _gutterWidth) + 1;
 }

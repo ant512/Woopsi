@@ -61,6 +61,7 @@ namespace WoopsiUI {
 		 */
 		inline void setMinimumValue(const s16 value) {
 			_minimumValue = value;
+			_contentSize = _maximumValue - _minimumValue + 1;
 			resizeGrip();
 		};
 
@@ -70,6 +71,7 @@ namespace WoopsiUI {
 		 */
 		inline void setMaximumValue(const s16 value) {
 			_maximumValue = value;
+			_contentSize = _maximumValue - _minimumValue + 1;
 			resizeGrip();
 		};
 
@@ -79,6 +81,15 @@ namespace WoopsiUI {
 		 * @param value The new value.
 		 */
 		void setValue(const s16 value);
+
+		/**
+		 * Set the value that of the slider.  This will reposition and redraw
+		 * the grip.  The supplied value should be bitshifted left 16 places.
+		 * This ensures greater accuracy than the standard setValue() method if
+		 * the slider is being used as a scrollbar.
+		 * @param value The new value.
+		 */
+		void setValueWithBitshift(const s32 value);
 
 		/**
 		 * Set the page size represented by the grip.
@@ -119,6 +130,7 @@ namespace WoopsiUI {
 		s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter. */
 		s32 _gutterWidth;							/**< Width of the gutter, taking into account
 														 any adjustments made to the width of the grip. */
+		u32 _contentSize;
 		
 		/**
 		 * Get the value represented by the left of the grip.

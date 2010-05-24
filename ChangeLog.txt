@@ -4,8 +4,9 @@ Change Log
   V0.99.1
   
   - Fixes:
-    - Rewrote SliderVertical again.
+    - Rewrote SliderVertical and SliderHorizontal again to improve accuracy.
     - Removed jumpGrip from all slider gagdets.
+    - Added setValueWithBitshift to all slider gadgets.
 
   V0.99 (20100520)
   

@@ -83,7 +83,7 @@ void SliderVertical::setValue(const s16 value) {
 	
 		u32 scrollRatio = (newValue << 16) / _contentSize;
 		s32 newGripY = _gutterHeight * scrollRatio;
-
+		newGripY += newGripY & 0x8000;
 		newGripY >>= 16;
 
 		newGripY += rect.y;
@@ -155,6 +155,8 @@ void SliderVertical::resizeGrip() {
 	s32 gripRatio = (_pageSize << 16) / _contentSize;
 
 	s32 gripSize = rect.height * gripRatio;
+
+	gripSize += gripSize & 0x8000;
 
 	gripSize >>= 16;
 	

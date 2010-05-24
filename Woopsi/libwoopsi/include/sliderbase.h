@@ -59,6 +59,15 @@ namespace WoopsiUI {
 		virtual void setValue(const s16 value) = 0;
 
 		/**
+		 * Set the value that of the slider.  This will reposition and redraw
+		 * the grip.  The supplied value should be bitshifted left 16 places.
+		 * This ensures greater accuracy than the standard setValue() method if
+		 * the slider is being used as a scrollbar.
+		 * @param value The new value.
+		 */
+		virtual void setValueWithBitshift(const s32 value) = 0;
+
+		/**
 		 * Set the page size represented by the grip.
 		 * @param pageSize The page size.
 		 * @see getPageSize().
