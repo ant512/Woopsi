@@ -1,15 +1,16 @@
 Change Log
 ----------
 
-  V0.99.1
+  V0.99.2
+
+  V0.99.1 (20100524)
   
   - Fixes:
     - Rewrote SliderVertical and SliderHorizontal again to improve accuracy.
     - Removed jumpGrip() from all slider gagdets.
     - Added setValueWithBitshift() to all slider gadgets.
-	- Added getMinimumStep() to SliderVertical and SliderHorizontal.
-	- Removed getValuesPerPixel() from all slider gadgets.
-	
+    - Added getMinimumStep() to SliderVertical and SliderHorizontal.
+    - Removed getValuesPerPixel() from all slider gadgets.
 
   V0.99 (20100520)
   
