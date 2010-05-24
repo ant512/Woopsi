@@ -124,7 +124,7 @@ namespace WoopsiUI {
 		s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter. */
 		s32 _gutterWidth;							/**< Width of the gutter, taking into account
 														 any adjustments made to the width of the grip. */
-		u32 _contentSize;
+		u32 _contentSize;							/**< Number of values in the min/max range. */
 		
 		/**
 		 * Get the maximum possible value that the slider can represent.  Useful when
