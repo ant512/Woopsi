@@ -142,7 +142,7 @@ void SliderVertical::resizeGrip() {
 	_gutterHeight = rect.height;
 
 	if (gripSize < _minimumGripHeight) {
-		// Need to implement scaling here.  If we resize the grip to be artificially larger,
+		// TODO: Need to implement scaling here.  If we resize the grip to be artificially larger,
 		// we effectively reduce the scale (not just the height) of the gutter.  Each position
 		// in the gutter needs to be reduced in value.
 	}

@@ -137,15 +137,14 @@ void SliderHorizontal::resizeGrip() {
 
 	s32 gripSize = rect.width * gripRatio;
 
-	gripSize += gripSize & 0x8000;
-
 	gripSize >>= 16;
 	
 	_gutterWidth = rect.width;
 
 	if (gripSize < _minimumGripWidth) {
-		_gutterWidth -= _minimumGripWidth - gripSize;
-		gripSize = _minimumGripWidth;
+		// TODO: Need to implement scaling here.  If we resize the grip to be artificially larger,
+		// we effectively reduce the scale (not just the height) of the gutter.  Each position
+		// in the gutter needs to be reduced in value.
 	}
 	
 	_grip->resize(gripSize, rect.height);
