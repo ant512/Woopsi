@@ -2,6 +2,10 @@ Change Log
 ----------
 
   V0.99.2
+  
+  - Fixes:
+  - New Features:
+    - Added getPath() to FileRequester and FileListBox.
 
   V0.99.1 (20100524)
   

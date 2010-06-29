@@ -148,6 +148,11 @@ namespace WoopsiUI {
 		 */
 		virtual void appendPath(const WoopsiString& path);
 
+		/**
+		 * Get the current path.
+		 */
+		virtual const FilePath* getPath() const;
+
 	protected:
 		ScrollingListBox* _listbox;			/**< Pointer to the list box */
 		FilePath* _path;					/**< Path currently displayed */

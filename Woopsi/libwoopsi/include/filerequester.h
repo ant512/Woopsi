@@ -158,6 +158,11 @@ namespace WoopsiUI {
 		 */
 		virtual void appendPath(const char* path);
 
+		/**
+		 * Get the current path.
+		 */
+		virtual const FilePath* getPath() const;
+
 	protected:
 		Button* _okButton;					/**< Pointer to the OK button */
 		Button* _cancelButton;				/**< Pointer to the cancel button */

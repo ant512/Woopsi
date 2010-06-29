@@ -196,3 +196,7 @@ void FileListBox::appendPath(const WoopsiString& path) {
 	// Fetch new directory data
 	readDirectory();
 }
+
+const FilePath* FileListBox::getPath() const {
+	return _path;
+}

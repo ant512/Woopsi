@@ -132,3 +132,7 @@ void FileRequester::setPath(const char* path) {
 void FileRequester::appendPath(const char* path) {
 	_listbox->appendPath(path);
 }
+
+const FilePath* FileRequester::getPath() const {
+	return _listbox->getPath();
+}
