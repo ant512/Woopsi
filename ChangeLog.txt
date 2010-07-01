@@ -6,6 +6,7 @@ Change Log
   - Fixes:
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
+    - Converted Rect struct to class.
 
   V0.99.1 (20100524)
   

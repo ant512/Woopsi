@@ -153,6 +153,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\src\rect.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\src\rectcache.cpp"
 						>
 					</File>
