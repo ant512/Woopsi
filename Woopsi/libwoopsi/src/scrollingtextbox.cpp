@@ -141,7 +141,7 @@ void ScrollingTextBox::handleScrollEvent(const GadgetEventArgs& e) {
 }
 
 void ScrollingTextBox::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 void ScrollingTextBox::onResize(u16 width, u16 height) {

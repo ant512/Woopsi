@@ -99,12 +99,12 @@ void MultiLineTextBox::drawContents(GraphicsPort* port) {
 
 void MultiLineTextBox::drawBorder(GraphicsPort* port) {
 
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
 
-	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShadowColour(), getShineColour());
 }
 
 void MultiLineTextBox::getCursorCoordinates(s16& x, s16& y) const {
@@ -462,7 +462,7 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 	calculateVisibleRows();
 
 	// Re-wrap the text
-	_text->setWidth(_width);
+	_text->setWidth(getWidth());
 	_text->wrap();
 
 	bool raiseEvent = cullTopLines();

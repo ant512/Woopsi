@@ -53,12 +53,12 @@ void CheckBox::drawContents(GraphicsPort* port) {
 }
 
 void CheckBox::drawBorder(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
 
-	port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShineColour(), getShadowColour());
 }
 
 void CheckBox::onClick(s16 x, s16 y) {

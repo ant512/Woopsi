@@ -116,6 +116,18 @@ namespace WoopsiUI {
 		const s16 getY() const;
 
 		/**
+		 * Get the x co-ordinate of the gadget relative to its parent.
+		 * @return Parent-space x co-ordinate.
+		 */
+		const s16 getRelativeX() const;
+
+		/**
+		 * Get the y co-ordinate of the gadget relative to its parent.
+		 * @return Parent-space y co-ordinate.
+		 */
+		const s16 getRelativeY() const;
+
+		/**
 		 * Get the reference constant for this gadget.
 		 * @return The reference constant.
 		 */
@@ -232,13 +244,13 @@ namespace WoopsiUI {
 		 * Get the width of the gadget.
 		 * @return The gadget width.
 		 */
-		inline u16 getWidth() const { return _width; };
+		inline u16 getWidth() const { return _rect.getWidth(); };
 
 		/**
 		 * Get the height of the gadget.
 		 * @return The gadget height.
 		 */
-		inline u16 getHeight() const { return _height; };
+		inline u16 getHeight() const { return _rect.getHeight(); };
 
 		/**
 		 * Get a pointer to this gadget's parent.
@@ -946,10 +958,7 @@ namespace WoopsiUI {
 		void setBorderSize(const GadgetBorderSize& borderSize);
 
 	protected:
-		s16 _x;									/**< X co-ordinate of the gadget, relative to parent. */
-		s16 _y;									/**< Y co-ordinate of the gadget, relative to parent. */
-		u16 _width;								/**< Width of the gadget. */
-		u16 _height;							/**< Height of the gadget. */
+		Rect _rect;								/**< Rect describing the gadget. */
 		u32 _refcon;							/**< Identifying number of the gadget. */
 
 		// Dragging variables

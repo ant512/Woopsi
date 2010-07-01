@@ -30,7 +30,7 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 void RadioButton::drawContents(GraphicsPort* port) {
 
 	// Clear the background
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	// Work out which glyph to draw
 	char glyph = GLYPH_RADIO_BUTTON_ON;

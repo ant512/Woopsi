@@ -31,5 +31,5 @@ void StickyButton::drawOutline(GraphicsPort* port) {
 		col2 = getShadowColour();
 	}
 	
-	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), col1, col2);
 }

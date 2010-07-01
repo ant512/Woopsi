@@ -20,7 +20,7 @@ FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetS
 	setBorderless(true);
 
 	// Create list box
-	_listbox = new ScrollingListBox(0, 0, _width, _height, &_style);
+	_listbox = new ScrollingListBox(0, 0, getWidth(), getHeight(), &_style);
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setSortInsertedItems(true);
@@ -36,7 +36,7 @@ void FileListBox::onResize(u16 width, u16 height) {
 }
 
 void FileListBox::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {

@@ -27,7 +27,7 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetSt
 }
 
 void ScrollingListBox::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 void ScrollingListBox::handleValueChangeEvent(const GadgetEventArgs& e) {

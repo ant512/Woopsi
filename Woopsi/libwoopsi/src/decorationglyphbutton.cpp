@@ -29,7 +29,7 @@ void DecorationGlyphButton::drawContents(GraphicsPort* port) {
 }
 
 void DecorationGlyphButton::drawBorder(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	drawOutline(port);
 }
@@ -53,7 +53,7 @@ void DecorationGlyphButton::drawOutline(GraphicsPort* port) {
 		col2 = getShadowColour();
 	}
 	
-	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), col1, col2);
 }
 
 void DecorationGlyphButton::onFocus() {

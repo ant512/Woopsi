@@ -23,7 +23,7 @@ Calendar::~Calendar() {
 }
 
 void Calendar::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 void Calendar::drawBorder(GraphicsPort* port) {
@@ -31,7 +31,7 @@ void Calendar::drawBorder(GraphicsPort* port) {
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
 
-	port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShineColour(), getShadowColour());
 }
 
 void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
@@ -387,8 +387,8 @@ void Calendar::onResize(u16 width, u16 height) {
 
 // Get the preferred dimensions of the gadget
 void Calendar::getPreferredDimensions(Rect& rect) const {
-	rect.x = _x;
-	rect.y = _y;
+	rect.x = _rect.getX();
+	rect.y = _rect.getY();
 	rect.width = 0;
 	rect.height = 0;
 

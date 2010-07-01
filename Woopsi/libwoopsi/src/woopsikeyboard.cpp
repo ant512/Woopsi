@@ -132,7 +132,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u32 flags, GadgetStyle* style) : Ga
 }
 
 void WoopsiKeyboard::drawBorder(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 void WoopsiKeyboard::handleActionEvent(const GadgetEventArgs& e) {

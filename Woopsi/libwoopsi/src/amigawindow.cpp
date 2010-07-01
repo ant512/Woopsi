@@ -74,7 +74,7 @@ void AmigaWindow::createBorder() {
 
 	// Add depth button
 	if (_windowFlags.showDepthButton) {
-		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
+		_depthButton = new WindowBorderButton(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
 		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 	}
@@ -97,7 +97,7 @@ void AmigaWindow::redrawBorder() {
 void AmigaWindow::onResize(u16 width, u16 height) {
 
 	// Depth button
-	if (_windowFlags.showDepthButton) _depthButton->moveTo(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0);
+	if (_windowFlags.showDepthButton) _depthButton->moveTo(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0);
 }
 
 void AmigaWindow::handleReleaseEvent(const GadgetEventArgs& e) {
@@ -153,7 +153,7 @@ void AmigaWindow::showDepthButton() {
 		_windowFlags.showDepthButton = true;
 		
 		// Recreate depth button
-		_depthButton = new WindowBorderButton(_width - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
+		_depthButton = new WindowBorderButton(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
 		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
 
@@ -180,14 +180,14 @@ void AmigaWindow::hideDepthButton() {
 }
 
 void AmigaWindow::drawBorder(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());						// Background
-	port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());	// Outline
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());						// Background
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShineColour(), getShadowColour());	// Outline
 
 	// Choose a fill colour depending on active state
 	u16 colour = hasFocus() ? getHighlightColour() : getFillColour();
 
 	// Draw top border
-	port->drawFilledRect(1, 1, _width - 2, WINDOW_TITLE_HEIGHT - 2, colour);	// Background
+	port->drawFilledRect(1, 1, getWidth() - 2, WINDOW_TITLE_HEIGHT - 2, colour);	// Background
 
 	s16 textX = 4;
 
@@ -203,22 +203,22 @@ void AmigaWindow::drawBorder(GraphicsPort* port) {
 	if (hasDepthButton()) {
 
 		// Draw right edge
-		port->drawVertLine(_width - _depthButton->getWidth() - 1, 1, _borderSize.top - 2, getShadowColour());
+		port->drawVertLine(getWidth() - _depthButton->getWidth() - 1, 1, _borderSize.top - 2, getShadowColour());
 	}
 
 	// Line below title
-	port->drawHorizLine(1, _borderSize.top - 1, _width - 2, getShadowColour());
+	port->drawHorizLine(1, _borderSize.top - 1, getWidth() - 2, getShadowColour());
 
 	// Draw title text
 	port->drawText(textX, 1, getFont(), getTitle());
 
 	
 
-	port->drawFilledRect(1, _borderSize.top, _borderSize.left - 2, _height - _borderSize.top - _borderSize.bottom, colour);	// Left
-	port->drawFilledRect(_width - WINDOW_BORDER_SIZE + 1, 1, WINDOW_BORDER_SIZE - 2, _height - 2, colour);	// Right
-	port->drawFilledRect(1, _height - WINDOW_BORDER_SIZE + 1, _width - 2, WINDOW_BORDER_SIZE - 2, colour);	// Bottom
+	port->drawFilledRect(1, _borderSize.top, _borderSize.left - 2, getHeight() - _borderSize.top - _borderSize.bottom, colour);	// Left
+	port->drawFilledRect(getWidth() - WINDOW_BORDER_SIZE + 1, 1, WINDOW_BORDER_SIZE - 2, getHeight() - 2, colour);	// Right
+	port->drawFilledRect(1, getHeight() - WINDOW_BORDER_SIZE + 1, getWidth() - 2, WINDOW_BORDER_SIZE - 2, colour);	// Bottom
 
 
 
-	port->drawBevelledRect(WINDOW_BORDER_SIZE - 1, WINDOW_TITLE_HEIGHT - 1, _width - (WINDOW_BORDER_SIZE * 2) + 2, _height - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT + 2, getShadowColour(), getShineColour());	// Inner outline
+	port->drawBevelledRect(WINDOW_BORDER_SIZE - 1, WINDOW_TITLE_HEIGHT - 1, getWidth() - (WINDOW_BORDER_SIZE * 2) + 2, getHeight() - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT + 2, getShadowColour(), getShineColour());	// Inner outline
 }

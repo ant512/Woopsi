@@ -18,10 +18,10 @@ using namespace WoopsiUI;
 Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) {
 
 	// Set properties from parameters
-	_x = x;
-	_y = y;
-	_width = width;
-	_height = height;
+	_rect.setX(x);
+	_rect.setY(y);
+	_rect.setWidth(width);
+	_rect.setHeight(height);
 
 	// Do we need to fetch the default style?
 	if (style == NULL) {
@@ -145,18 +145,26 @@ Gadget::~Gadget() {
 
 const s16 Gadget::getX() const {
 	if (_parent != NULL) {
-		return _parent->getX() + _x;
+		return _parent->getX() + _rect.getX();
 	}
 
-	return _x;
+	return _rect.getX();
 }
 
 const s16 Gadget::getY() const {
 	if (_parent != NULL) {
-		return _parent->getY() + _y;
+		return _parent->getY() + _rect.getY();
 	}
 
-	return _y;
+	return _rect.getY();
+}
+
+const s16 Gadget::getRelativeX() const {
+	return _rect.getX();
+}
+
+const s16 Gadget::getRelativeY() const {
+	return _rect.getY();
 }
 
 const bool Gadget::isDeleted() const {
@@ -812,11 +820,11 @@ bool Gadget::moveTo(s16 x, s16 y) {
 				x = parentRect.x;
 
 				// Check width against new value
-				if (x + _width > parentRect.x + parentRect.width) {
+				if (x + getWidth() > parentRect.x + parentRect.width) {
 					return false;
 				}
-			} else if (x + _width > parentRect.x + parentRect.width) {
-				x = (parentRect.x + parentRect.x) - _width;
+			} else if (x + getWidth() > parentRect.x + parentRect.width) {
+				x = (parentRect.x + parentRect.x) - getWidth();
 
 				// Check new x value
 				if (x < parentRect.x) {
@@ -829,11 +837,11 @@ bool Gadget::moveTo(s16 x, s16 y) {
 				y = parentRect.y;
 
 				// Check height against new value
-				if (y + _height > parentRect.y + parentRect.height) {
+				if (y + getHeight() > parentRect.y + parentRect.height) {
 					return false;
 				}
-			} else if (y + _height > parentRect.y + parentRect.height) {
-				y = (parentRect.y + parentRect.y) - _height;
+			} else if (y + getHeight() > parentRect.y + parentRect.height) {
+				y = (parentRect.y + parentRect.y) - getHeight();
 
 				// Check new y value
 				if (y < parentRect.y) {
@@ -844,14 +852,14 @@ bool Gadget::moveTo(s16 x, s16 y) {
 	}
 			
 	// Perform move if necessary
-	if ((_x != x) || (_y != y)) {
+	if ((_rect.getX() != x) || (_rect.getY() != y)) {
 		erase();
 
-		s16 oldX = _x;
-		s16 oldY = _y;
+		s16 oldX = _rect.getX();
+		s16 oldY = _rect.getY();
 
-		_x = x;
-		_y = y;
+		_rect.setX(x);
+		_rect.setY(y);
 
 		redraw();
 
@@ -873,18 +881,18 @@ bool Gadget::resize(u16 width, u16 height) {
 			_parent->getClientRect(parentRect);
 
 			// Check width
-			if (_x + width > parentRect.x + parentRect.width) {
-				width = parentRect.x + parentRect.width - _x;
+			if (_rect.getX() + width > parentRect.x + parentRect.width) {
+				width = parentRect.x + parentRect.width - _rect.getX();
 			}
 
 			// Check height
-			if (_y + height > parentRect.y + parentRect.height) {
-				height = parentRect.y + parentRect.height - _y;
+			if (_rect.getY() + height > parentRect.y + parentRect.height) {
+				height = parentRect.y + parentRect.height - _rect.getY();
 			}
 		}
 	}
 
-	if ((_width != width) || (_height != height)) {
+	if ((getWidth() != width) || (getHeight() != height)) {
 	
 		// Remember if the gadget is permeable
 		bool wasPermeable = _flags.permeable;
@@ -898,8 +906,8 @@ bool Gadget::resize(u16 width, u16 height) {
 		
 		disableDrawing();
 
-		_width = width;
-		_height = height;
+		_rect.setWidth(width);
+		_rect.setHeight(height);
 
 		// Handle visible region caching
 		if (_parent != NULL) {
@@ -1407,10 +1415,10 @@ u32 Gadget::setRefcon(u32 refcon) {
 
 // Get the preferred dimensions of the gadget
 void Gadget::getPreferredDimensions(Rect& rect) const {
-	rect.x = _x;
-	rect.y = _y;
-	rect.width = _width;
-	rect.height = _height;
+	rect.x = _rect.getX();
+	rect.y = _rect.getY();
+	rect.width = _rect.getWidth();
+	rect.height = _rect.getHeight();
 }
 
 // Insert the available space for child gadgets into the rect
@@ -1418,13 +1426,13 @@ void Gadget::getClientRect(Rect& rect) const {
 	if (_flags.borderless) {
 		rect.x = 0;
 		rect.y = 0;
-		rect.width = (s16)_width;
-		rect.height = (s16)_height;
+		rect.width = getWidth();
+		rect.height = getHeight();
 	} else {
 		rect.x = _borderSize.left;
 		rect.y = _borderSize.top;
-		rect.width = ((s16)_width) - (_borderSize.left + _borderSize.right);
-		rect.height = ((s16)_height) - (_borderSize.top + _borderSize.bottom);
+		rect.width = getWidth() - (_borderSize.left + _borderSize.right);
+		rect.height = getHeight() - (_borderSize.top + _borderSize.bottom);
 	}
 }
 
@@ -1434,8 +1442,8 @@ void Gadget::startDragging(s16 x, s16 y) {
 		_flags.clicked = true;
 		_grabPointX = x - getX();
 		_grabPointY = y - getY();
-		_newX = _x;
-		_newY = _y;
+		_newX = _rect.getX();
+		_newY = _rect.getY();
 
 		onDragStart();
 	}
@@ -1502,7 +1510,7 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 
 	FrameBuffer* bitmap = frameBuffer[getPhysicalScreenNumber()];
 
-	return new GraphicsPort(getX(), getY(), _width, _height, isDrawingEnabled(), bitmap, NULL, &clipRect);
+	return new GraphicsPort(getX(), getY(), getWidth(), getHeight(), isDrawingEnabled(), bitmap, NULL, &clipRect);
 }
 
 // Return vector of visible rects, including any covered by children

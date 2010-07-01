@@ -33,13 +33,13 @@ void TextBox::drawContents(GraphicsPort* port) {
 }
 
 void TextBox::drawBorder(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
 
-	port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
-	port->drawBevelledRect(1, 1, _width - 2, _height - 2, getShadowColour(), getShineColour());
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShineColour(), getShadowColour());
+	port->drawBevelledRect(1, 1, getWidth() - 2, getHeight() - 2, getShadowColour(), getShineColour());
 }
 
 const u16 TextBox::getCursorWidth() const {

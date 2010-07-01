@@ -19,7 +19,7 @@ void WindowBorderButton::drawContents(GraphicsPort* port) {
 	}
 
 	// Clear the background
-	port->drawFilledRect(0, 0, _width, _height, colour);
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), colour);
 
 	// Draw the glyph
 	if (_flags.clicked) {

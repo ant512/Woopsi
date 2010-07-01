@@ -49,7 +49,7 @@ void BitmapButton::drawOutline(GraphicsPort* port) {
 		col2 = getShadowColour();
 	}
 	
-	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), col1, col2);
 }
 
 void BitmapButton::onClick(s16 x, s16 y) {
@@ -67,8 +67,8 @@ void BitmapButton::onReleaseOutside(s16 x, s16 y) {
 
 // Get the preferred dimensions of the gadget
 void BitmapButton::getPreferredDimensions(Rect& rect) const {
-	rect.x = _x;
-	rect.y = _y;
+	rect.x = _rect.getX();
+	rect.y = _rect.getY();
 	rect.width = 0;
 	rect.height = 0;
 

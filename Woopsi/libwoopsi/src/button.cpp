@@ -32,7 +32,7 @@ void Button::drawBorder(GraphicsPort* port) {
 		colour = getBackColour();
 	}
 
-	port->drawFilledRect(0, 0, _width, _height, colour);
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), colour);
 
 	drawOutline(port);
 }
@@ -56,7 +56,7 @@ void Button::drawOutline(GraphicsPort* port) {
 		col2 = getShadowColour();
 	}
 	
-	port->drawBevelledRect(0, 0, _width, _height, col1, col2);
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), col1, col2);
 }
 
 void Button::onClick(s16 x, s16 y) {

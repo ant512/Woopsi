@@ -15,8 +15,8 @@ RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 heigh
 	addGadget(newButton);
 
 	// Do we need to resize?
-	u16 newWidth = _width;
-	u16 newHeight = _height;
+	u16 newWidth = getWidth();
+	u16 newHeight = getHeight();
 
 	if (newWidth < x + width) {
 		newWidth = x + width;
@@ -71,13 +71,13 @@ void RadioButtonGroup::setSelectedIndex(s32 index) {
 }
 
 void RadioButtonGroup::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 // Get the preferred dimensions of the gadget
 void RadioButtonGroup::getPreferredDimensions(Rect& rect) const {
-	rect.x = _x;
-	rect.y = _y;
+	rect.x = _rect.getX();
+	rect.y = _rect.getY();
 	rect.width = 0;
 	rect.height = 0;
 

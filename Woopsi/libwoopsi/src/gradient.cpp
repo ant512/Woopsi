@@ -35,9 +35,9 @@ void Gradient::calculate() {
 
 	// Work out how many rows we need to draw in each color before
 	// incrementing that color component
-	_numberR = _height / (abs(toR - fromR) + 1);
-	_numberG = _height / (abs(toG - fromG) + 1);
-	_numberB = _height / (abs(toB - fromB) + 1);
+	_numberR = getHeight() / (abs(toR - fromR) + 1);
+	_numberG = getHeight() / (abs(toG - fromG) + 1);
+	_numberB = getHeight() / (abs(toB - fromB) + 1);
 
 	_deltaR = toR < fromR ? -1 : 1;
 	_deltaG = toG < fromG ? -(1 << 5) : 1 << 5;
@@ -53,7 +53,7 @@ void Gradient::cacheRowColours() {
 	if (_rowColour != NULL) { delete [] _rowColour; }
 	
 	// Allocate new cache
-	_rowColour = new s16[_height];
+	_rowColour = new s16[getHeight()];
 	
 	// Calculate the colours for each row
 	s16 colourR, colourG, colourB;
@@ -65,7 +65,7 @@ void Gradient::cacheRowColours() {
 	// Set initial row colour
 	_rowColour[0] = _fromColour;
 	
-	for (u16 y = 0; y < _height; y++) {
+	for (u16 y = 0; y < getHeight(); y++) {
 	
 		// Set the colour of this row equal to the colour of the last row
 		if (y > 0) { _rowColour[y] = _rowColour[y - 1]; }
@@ -79,7 +79,7 @@ void Gradient::cacheRowColours() {
 
 void Gradient::drawContents(GraphicsPort* port) {
 
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	Rect rect;
 	port->getClipRect(rect);

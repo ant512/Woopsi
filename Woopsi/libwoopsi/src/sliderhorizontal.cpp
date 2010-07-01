@@ -87,7 +87,7 @@ s32 SliderHorizontal::getPhysicalMaximumValueWithBitshift() const {
 }
 
 void SliderHorizontal::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getDarkColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getDarkColour());
 }
 
 void SliderHorizontal::drawBorder(GraphicsPort* port) {
@@ -95,7 +95,7 @@ void SliderHorizontal::drawBorder(GraphicsPort* port) {
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
 
-	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShadowColour(), getShineColour());
 }
 
 void SliderHorizontal::onClick(s16 x, s16 y) {

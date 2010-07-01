@@ -73,5 +73,5 @@ void ProgressBar::drawBorder(GraphicsPort* port) {
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
 
-	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShadowColour(), getShineColour());
 }

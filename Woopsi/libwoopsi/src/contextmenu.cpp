@@ -58,11 +58,11 @@ void ContextMenu::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
 }
 
 void ContextMenu::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getShineColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getShineColour());
 }
 
 void ContextMenu::drawBorder(GraphicsPort* port) {
-	port->drawRect(0, 0, _width, _height, getShadowColour());
+	port->drawRect(0, 0, getWidth(), getHeight(), getShadowColour());
 }
 
 void ContextMenu::onResize(u16 width, u16 height) {
@@ -80,10 +80,10 @@ void ContextMenu::reset() {
 	_opener = NULL;
 
 	// Reset dimensions
-	_x = 0;
-	_y = 0;
-	_width = 0;
-	_height = 0;
+	_rect.setX(0);
+	_rect.setY(0);
+	_rect.setWidth(0);
+	_rect.setHeight(0);
 }
 
 // Get the preferred dimensions of the gadget
@@ -102,8 +102,8 @@ void ContextMenu::getPreferredDimensions(Rect& rect) const {
 	}
 
 	// Adjust x/y as the listbox has no border
-	rect.x = _x;
-	rect.y = _y;
+	rect.x = _rect.getX();
+	rect.y = _rect.getY();
 
 	// Adjust height so that the gadget shows all options
 	rect.height += _listbox->getOptionHeight() * _listbox->getOptionCount();

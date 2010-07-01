@@ -39,7 +39,7 @@ bool Screen::flipScreens() {
 }
 
 void Screen::drawBorder(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
@@ -55,15 +55,15 @@ void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 	}
 		
 	// Do we need to move?
-	if (destY != _y) {
+	if (destY != _rect.getY()) {
 		
 		// Perform move
 		_newY = destY;
 		
 		// Ensure vY is valid
-		vY = _newY - _y;
+		vY = _newY - _rect.getY();
 		
-		if (_newY != _y) {
+		if (_newY != _rect.getY()) {
 			
 			// Ensure cache is up to date before copying
 			_rectCache->cache();
@@ -81,7 +81,7 @@ void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 				}
 				
 				// Calculate height to copy - this is reduced if screen dragged down
-				if (_newY > _y) rect.height -= _newY - _y;
+				if (_newY > _rect.getY()) rect.height -= _newY - _rect.getY();
 				
 				if (rect.height > 0) {
 					GraphicsPort* port = woopsiApplication->newGraphicsPort(true);
@@ -93,14 +93,14 @@ void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 			// Work out the size of the rectangle we've cleared
 			Rect rect;
 			rect.x = getX();
-			rect.width = _width;
+			rect.width = getWidth();
 			
-			if (_newY > _y) {
+			if (_newY > _rect.getY()) {
 				
 				// Moving down - we need to redraw the section we're
 				// exposing
-				rect.y = _y;
-				rect.height = _newY - _y;
+				rect.y = _rect.getY();
+				rect.height = _newY - _rect.getY();
 				
 			} else {
 				// Moving up - we need to redraw the new section at
@@ -125,11 +125,11 @@ void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 					
 					// Screen is not yet visible, so calculate based on screen values
 					rect.y = _newY;
-					rect.height = _y - _newY;
+					rect.height = _rect.getY() - _newY;
 				}
 			}
 			
-			_y = _newY;
+			_rect.setY(_newY);
 			
 			// Erase the screen from its old location
 			((Woopsi*)_parent)->eraseRect(rect);

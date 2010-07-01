@@ -45,7 +45,7 @@ void SuperBitmap::drawContents(GraphicsPort* port) {
 }
 
 void SuperBitmap::drawBorder(GraphicsPort* port) {
-	port->drawRect(0, 0, _width, _height, getShadowColour());
+	port->drawRect(0, 0, getWidth(), getHeight(), getShadowColour());
 }
 
 void SuperBitmap::onClick(s16 x, s16 y) {
@@ -60,14 +60,14 @@ void SuperBitmap::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 	// Prevent scrolling outside boundaries of bitmap
 	if (_bitmapX < 0) {
 		_bitmapX = 0;
-	} else if (_bitmapX > _bitmap->getWidth() - _width) {
-		_bitmapX = _bitmap->getWidth() - _width;
+	} else if (_bitmapX > _bitmap->getWidth() - getWidth()) {
+		_bitmapX = _bitmap->getWidth() - getWidth();
 	}
 
 	if (_bitmapY < 0) {
 		_bitmapY = 0;
-	} else if (_bitmapY > _bitmap->getHeight() - _height) {
-		_bitmapY = _bitmap->getHeight() - _height;
+	} else if (_bitmapY > _bitmap->getHeight() - getHeight()) {
+		_bitmapY = _bitmap->getHeight() - getHeight();
 	}
 
 	// Redraw the gadget

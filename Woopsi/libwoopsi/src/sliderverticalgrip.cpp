@@ -8,9 +8,9 @@ SliderVerticalGrip::SliderVerticalGrip(s16 x, s16 y, u16 width, u16 height) : Ga
 
 void SliderVerticalGrip::drawContents(GraphicsPort* port) {
 	if (!_flags.clicked) {
-		port->drawFilledRect(0, 0, _width, _height, getFillColour());
+		port->drawFilledRect(0, 0, getWidth(), getHeight(), getFillColour());
 	} else {
-		port->drawFilledRect(0, 0, _width, _height, getHighlightColour());
+		port->drawFilledRect(0, 0, getWidth(), getHeight(), getHighlightColour());
 	}
 }
 
@@ -20,9 +20,9 @@ void SliderVerticalGrip::drawBorder(GraphicsPort* port) {
 	if (isBorderless()) return;
 
 	if (isClicked()) {
-		port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+		port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShadowColour(), getShineColour());
 	} else {
-		port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
+		port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShineColour(), getShadowColour());
 	}
 }
 
@@ -45,7 +45,7 @@ void SliderVerticalGrip::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 	s16 destY = y - _grabPointY - _parent->getY();
 
 	// Do we need to move?
-	if (destY != _y) {
+	if (destY != _rect.getY()) {
 
 		// Get parent rect
 		Rect rect;
@@ -55,8 +55,8 @@ void SliderVerticalGrip::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 		if (destY < rect.y) {
 			destY = rect.y;
 		} else {
-			if (destY + _height > rect.height + rect.y) {
-				destY = (rect.height + rect.y) - _height;
+			if (destY + getHeight() > rect.height + rect.y) {
+				destY = (rect.height + rect.y) - getHeight();
 			}
 		}
 

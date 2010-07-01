@@ -175,5 +175,5 @@ void ScrollbarPanel::handleValueChangeEvent(const GadgetEventArgs& e) {
 }
 
 void ScrollbarPanel::drawContents(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }

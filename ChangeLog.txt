@@ -7,6 +7,8 @@ Change Log
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
     - Converted Rect struct to class.
+    - Added Gadget::getRelativeX() and getRelativeY().
+    - Replaced x, y, width and height members of Gadget class with a Rect.
 
   V0.99.1 (20100524)
   

@@ -18,7 +18,7 @@ void Window::onDragStop() {
 	_parent->getClientRect(rect);
 
 	// Draw rect
-	port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+	port->drawXORRect(_newX - rect.x, _newY - rect.y, getWidth(), getHeight());
 
 	delete port;
 
@@ -32,7 +32,7 @@ void Window::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 	s16 destY = y - _grabPointY - _parent->getY();
 
 	// Do we need to move?
-	if ((destX != _x) || (destY != _y)) {
+	if ((destX != _rect.getX()) || (destY != _rect.getY())) {
 
 		// Prevent window from moving outside screen
 		if (!_parent->isPermeable()) {
@@ -42,14 +42,14 @@ void Window::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 
 			if (destX < rect.x) {
 				destX = rect.x;
-			} else if (destX + _width > rect.x + rect.width) {
-				destX = rect.x + rect.width - _width;
+			} else if (destX + getWidth() > rect.x + rect.width) {
+				destX = rect.x + rect.width - getWidth();
 			}
 
 			if (destY < rect.y) {
 				destY = rect.y;
-			} else if (destY + _height > rect.y + rect.height) {
-				destY = rect.y + rect.height - _height;
+			} else if (destY + getHeight() > rect.y + rect.height) {
+				destY = rect.y + rect.height - getHeight();
 			}
 		}
 
@@ -68,21 +68,21 @@ void Window::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 		_parent->getClientRect(rect);
 
 		// Erase the old rect
-		port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+		port->drawXORRect(_newX - rect.x, _newY - rect.y, getWidth(), getHeight());
 
 		// Perform move
 		_newX = destX;
 		_newY = destY;
 
 		// Draw the new rect
-		port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+		port->drawXORRect(_newX - rect.x, _newY - rect.y, getWidth(), getHeight());
 
 		delete port;
 	}
 }
 
 void Window::drawBorder(GraphicsPort* port) {
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 void Window::setTitle(const WoopsiString& title) {
@@ -105,7 +105,7 @@ void Window::onDragStart() {
 	_parent->getClientRect(rect);
 
 	// Draw rect
-	port->drawXORRect(_newX - rect.x, _newY - rect.y, _width, _height);
+	port->drawXORRect(_newX - rect.x, _newY - rect.y, getWidth(), getHeight());
 
 	delete port;
 }

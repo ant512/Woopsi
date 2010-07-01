@@ -34,7 +34,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 			_flags.borderless = true;
 		} else {
 			// Add borders
-			s16 buttonX = _width;
+			s16 buttonX = _rect.getWidth();
 
 			// Create depth button
 			if (_screenFlags.showDepthButton) {
@@ -92,7 +92,7 @@ void AmigaScreen::showFlipButton() {
 		_screenFlags.showFlipButton = true;
 
 		// Adjust X co-ords to allow for existence/non-existence of depth button
-		s16 buttonX = _width - SCREEN_FLIP_BUTTON_WIDTH;
+		s16 buttonX = getWidth() - SCREEN_FLIP_BUTTON_WIDTH;
 		if (_screenFlags.showDepthButton) buttonX -= SCREEN_DEPTH_BUTTON_WIDTH;
 		
 		// Recreate flip button
@@ -109,13 +109,13 @@ void AmigaScreen::showDepthButton() {
 		_screenFlags.showDepthButton = true;
 		
 		// Recreate depth button
-		_depthButton = new DecorationGlyphButton(_width - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, &_style);
+		_depthButton = new DecorationGlyphButton(getWidth() - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, &_style);
 		_depthButton->addGadgetEventHandler(this);
 		addGadget(_depthButton);
 
 		// Move the flip button if necessary
 		if (_screenFlags.showFlipButton) {
-			_flipButton->moveTo(_width - SCREEN_DEPTH_BUTTON_WIDTH - SCREEN_FLIP_BUTTON_WIDTH, 0);
+			_flipButton->moveTo(getWidth() - SCREEN_DEPTH_BUTTON_WIDTH - SCREEN_FLIP_BUTTON_WIDTH, 0);
 		}
 		
 		_depthButton->redraw();
@@ -142,7 +142,7 @@ void AmigaScreen::hideDepthButton() {
 
 		// Move the flip button if necessary
 		if (_screenFlags.showFlipButton) {
-			_flipButton->moveTo(_width - SCREEN_FLIP_BUTTON_WIDTH, 0);
+			_flipButton->moveTo(getWidth() - SCREEN_FLIP_BUTTON_WIDTH, 0);
 		}
 	}
 }
@@ -150,12 +150,12 @@ void AmigaScreen::hideDepthButton() {
 void AmigaScreen::drawBorder(GraphicsPort* port) {
 
 	// Background
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	// Title bar
 	if (!isBorderless()) {
-		port->drawFilledRect(0, 0, _width, _titleHeight - 1, getShineColour());	// Background
-		port->drawHorizLine(0, _titleHeight - 1, _width, getShadowColour());	// Bottom
-		port->drawText(2, 1, getFont(), getTitle());							// Title text
+		port->drawFilledRect(0, 0, getWidth(), _titleHeight - 1, getShineColour());	// Background
+		port->drawHorizLine(0, _titleHeight - 1, getWidth(), getShadowColour());	// Bottom
+		port->drawText(2, 1, getFont(), getTitle());								// Title text
 	}
 }

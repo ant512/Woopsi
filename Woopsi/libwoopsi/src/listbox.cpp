@@ -40,7 +40,7 @@ void ListBox::removeOption(const s32 index) {
 void ListBox::drawContents(GraphicsPort* port) {
 
 	// Draw background
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	Rect rect;
 	port->getClipRect(rect);
@@ -84,7 +84,7 @@ void ListBox::drawContents(GraphicsPort* port) {
 			
 			// Draw background
 			if (item->getSelectedBackColour() != getBackColour()) {
-				port->drawFilledRect(0, y, _width, optionHeight, item->getSelectedBackColour());
+				port->drawFilledRect(0, y, getWidth(), optionHeight, item->getSelectedBackColour());
 			}
 		
 			// Draw text
@@ -97,7 +97,7 @@ void ListBox::drawContents(GraphicsPort* port) {
 			
 			// Draw background
 			if (item->getNormalBackColour() != getBackColour()) {
-				port->drawFilledRect(clipX, y, _width, optionHeight, item->getNormalBackColour());
+				port->drawFilledRect(clipX, y, getWidth(), optionHeight, item->getNormalBackColour());
 			}
 			
 			// Draw text
@@ -118,7 +118,7 @@ void ListBox::drawBorder(GraphicsPort* port) {
 	// Stop drawing if the gadget indicates it should not have an outline
 	if (isBorderless()) return;
 
-	port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShadowColour(), getShineColour());
 }
 
 void ListBox::setSelectedIndex(const s32 index) {
@@ -226,7 +226,7 @@ void ListBox::resizeCanvas() {
 	_canvasHeight = _canvasHeight < rect.height ? rect.height : _canvasHeight;
 
 	// If resize has left scroll position beyond end of canvas, adjust to compensate
-	if (_canvasY + (_canvasHeight - _height) < 0) scroll(0, -(oldCanvasHeight - (_canvasHeight - _height)));
+	if (_canvasY + (_canvasHeight - getHeight()) < 0) scroll(0, -(oldCanvasHeight - (_canvasHeight - getHeight())));
 }
 
 void ListBox::sort() {
@@ -253,8 +253,8 @@ void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
 
 // Get the preferred dimensions of the gadget
 void ListBox::getPreferredDimensions(Rect& rect) const {
-	rect.x = _x;
-	rect.y = _y;
+	rect.x = _rect.getX();
+	rect.y = _rect.getY();
 
 	rect.width = 0;
 	rect.height= 0;

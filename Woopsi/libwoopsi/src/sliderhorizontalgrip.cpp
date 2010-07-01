@@ -8,9 +8,9 @@ SliderHorizontalGrip::SliderHorizontalGrip(s16 x, s16 y, u16 width, u16 height) 
 
 void SliderHorizontalGrip::drawContents(GraphicsPort* port) {
 	if (!_flags.clicked) {
-		port->drawFilledRect(0, 0, _width, _height, getFillColour());
+		port->drawFilledRect(0, 0, getWidth(), getHeight(), getFillColour());
 	} else {
-		port->drawFilledRect(0, 0, _width, _height, getHighlightColour());
+		port->drawFilledRect(0, 0, getWidth(), getHeight(), getHighlightColour());
 	}
 }
 
@@ -20,9 +20,9 @@ void SliderHorizontalGrip::drawBorder(GraphicsPort* port) {
 	if (isBorderless()) return;
 
 	if (isClicked()) {
-		port->drawBevelledRect(0, 0, _width, _height, getShadowColour(), getShineColour());
+		port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShadowColour(), getShineColour());
 	} else {
-		port->drawBevelledRect(0, 0, _width, _height, getShineColour(), getShadowColour());
+		port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShineColour(), getShadowColour());
 	}
 }
 
@@ -45,7 +45,7 @@ void SliderHorizontalGrip::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 	s16 destX = x - _grabPointX - _parent->getX();
 
 	// Do we need to move?
-	if (destX != _x) {
+	if (destX != _rect.getX()) {
 
 		// Get parent rect
 		Rect rect;
@@ -55,8 +55,8 @@ void SliderHorizontalGrip::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 		if (destX < rect.x) {
 			destX = rect.x;
 		} else {
-			if (destX + _width > rect.width + rect.x) {
-				destX = (rect.width + rect.x) - _width ;
+			if (destX + getWidth() > rect.width + rect.x) {
+				destX = (rect.width + rect.x) - getWidth() ;
 			}
 		}
 
