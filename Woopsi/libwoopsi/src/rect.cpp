@@ -114,3 +114,15 @@ Rect Rect::operator+(const Rect& rect) {
 	getAddition(rect, dest);
 	return dest;
 }
+
+bool Rect::intersects(const Rect& rect) const {
+
+	if ((x + width > rect.getX()) &&
+		(y + height > rect.getY()) &&
+		(x < rect.getX() + rect.getWidth()) &&
+		(y < rect.getY() + rect.getHeight())) {
+		return true;
+	}
+
+	return false;
+}

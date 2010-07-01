@@ -17,6 +17,13 @@ namespace WoopsiUI {
 
 		Rect();
 		Rect(s16 x, s16 y, s32 width, s32 height);
+
+		/**
+		 * Copy constructor.
+		 * @param rect Rect to copy.
+		 */
+		Rect(const Rect& rect);
+
 		static Rect* fromDimensions(s16 x, s16 y, s32 width, s32 height);
 		static Rect* fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2);
 
@@ -89,6 +96,13 @@ namespace WoopsiUI {
 		void expandToInclude(const Rect& rect);
 
 		/**
+		 * Check if the supplied rect intersects this.
+		 * @param rect Rect to check for intersection with this.
+		 * @return True if the rect intersects this; false if not.
+		 */
+		bool intersects(const Rect& rect) const;
+
+		/**
 		 * Overloaded & operator.  Returns the intersect of this rectangle and the
 		 * rectangle passed as the "rect" argument".
 		 * @param rect The rectangle to intersect with this.
@@ -101,8 +115,6 @@ namespace WoopsiUI {
 		 * @param rect The rectangle to add to this.
 		 */
 		Rect operator+(const Rect& rect);
-
-		Rect(const Rect& rect);
 	};
 }
 
