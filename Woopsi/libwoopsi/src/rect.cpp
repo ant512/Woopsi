@@ -68,6 +68,12 @@ void Rect::add(const Rect& rect, Rect& dest) const {
 	dest.setY2(y2);
 }
 
+bool Rect::hasDimensions() const {
+	if (!width) return false;
+	if (!height) return false;
+	return true;
+}
+
 Rect Rect::operator&(const Rect& rect) {
 	Rect dest;
 	intersect(rect, dest);

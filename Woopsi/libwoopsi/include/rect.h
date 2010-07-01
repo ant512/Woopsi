@@ -63,6 +63,13 @@ namespace WoopsiUI {
 		};
 
 		/**
+		 * Determines if the rectangle has two dimensions; in other words, does it
+		 * have both height and width?
+		 * @return True if the rect has height and width; false if not.
+		 */
+		bool hasDimensions() const;
+
+		/**
 		 * Populates dest with a rectangle representating the intersection
 		 * of this rectangle and rect.
 		 * @param rect The rectangle to intersect with this.
@@ -78,7 +85,18 @@ namespace WoopsiUI {
 		 */
 		void add(const Rect& rect, Rect& dest) const;
 
+		/**
+		 * Overloaded & operator.  Returns the intersect of this rectangle and the
+		 * rectangle passed as the "rect" argument".
+		 * @param rect The rectangle to intersect with this.
+		 */
 		Rect operator&(const Rect& rect);
+
+		/**
+		 * Overloaded + operator.  Returns the smallest rectangle that can contain
+		 * this rectangle and the rectangle passed as the "rect" argument".
+		 * @param rect The rectangle to add to this.
+		 */
 		Rect operator+(const Rect& rect);
 	};
 }
