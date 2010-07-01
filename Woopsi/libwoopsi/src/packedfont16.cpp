@@ -13,6 +13,13 @@ void PackedFont16::renderChar(
 		s16 x, s16 y,
 		u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {
+
+	// Abort if there is nothing to render
+	if ((clipY2 < y) ||
+		(clipY1 > y + getHeight() - 1) ||
+		(x > clipX2) ||
+		(x + pixelsPerRow < clipX1)) return;
+
 	u16 colour = getColour();
 
 	// adjust clipY2 to be the last row+1 in the glyph

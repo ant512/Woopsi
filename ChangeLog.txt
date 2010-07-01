@@ -6,6 +6,8 @@ Change Log
   - Fixes:
     - Replaced clipping code in Gadget::clipRectToHierarchy() with call to new
       Rect functions.
+    - PackedFont16::renderChar() aborts correctly if there is nothing to render
+      (Lakedaemon).
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
     - Converted Rect struct to class.
