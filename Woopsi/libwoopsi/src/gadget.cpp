@@ -1545,27 +1545,7 @@ void Gadget::clipRectToHierarchy(Rect& rect) const {
 			thisRect.y += parent->getY();
 		}
 
-		// Clip horizontal position
-		if (rect.x < thisRect.x) {
-			rect.width -= (thisRect.x - rect.x);
-			rect.x = thisRect.x;
-		}
-
-		// Clip vertical position
-		if (rect.y < thisRect.y) {
-			rect.height -= (thisRect.y - rect.y);
-			rect.y = thisRect.y;
-		}
-
-		// Clip width
-		if (rect.x + rect.width > thisRect.x + thisRect.width) {
-			rect.width = (thisRect.x + thisRect.width) - rect.x;
-		}
-
-		// Clip height
-		if (rect.y + rect.height > thisRect.y + thisRect.height) {
-			rect.height = (thisRect.y + thisRect.height) - rect.y;
-		}
+		rect.clipToIntersect(thisRect);
 
 		// Send up to parent
 		gadget = parent;

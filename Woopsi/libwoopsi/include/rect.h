@@ -75,7 +75,7 @@ namespace WoopsiUI {
 		 * @param rect The rectangle to intersect with this.
 		 * @param dest The destination rectangle.
 		 */
-		void intersect(const Rect& rect, Rect& dest) const;
+		void getIntersect(const Rect& rect, Rect& dest) const;
 
 		/**
 		 * Populates dest with a rectangle representating the smallest
@@ -83,7 +83,10 @@ namespace WoopsiUI {
 		 * @param rect The rectangle to add to this.
 		 * @param dest The destination rectangle.
 		 */
-		void add(const Rect& rect, Rect& dest) const;
+		void getAddition(const Rect& rect, Rect& dest) const;
+
+		void clipToIntersect(const Rect& rect);
+		void expandToInclude(const Rect& rect);
 
 		/**
 		 * Overloaded & operator.  Returns the intersect of this rectangle and the
@@ -98,6 +101,8 @@ namespace WoopsiUI {
 		 * @param rect The rectangle to add to this.
 		 */
 		Rect operator+(const Rect& rect);
+
+		Rect(const Rect& rect);
 	};
 }
 

@@ -4,6 +4,8 @@ Change Log
   V0.99.2
   
   - Fixes:
+    - Replaced clipping code in Gadget::clipRectToHierarchy() with call to new
+      Rect functions.
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
     - Converted Rect struct to class.

@@ -16,6 +16,13 @@ Rect::Rect(s16 x, s16 y, s32 width, s32 height) {
 	this->height = height;
 }
 
+Rect::Rect(const Rect& rect) {
+	this->x = rect.getX();
+	this->y = rect.getY();
+	this->width = rect.getWidth();
+	this->height = rect.getHeight();
+}
+
 Rect* fromDimensions(s16 x, s16 y, s32 width, s32 height) {
 	return new Rect(x, y, width, height);
 }
@@ -42,7 +49,9 @@ Rect* fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2) {
 	return new Rect(x1, y1, width, height);
 }
 
-void Rect::intersect(const Rect& rect, Rect& dest) const {
+
+
+void Rect::getIntersect(const Rect& rect, Rect& dest) const {
 	s16 x1 = x > rect.getX() ? x : rect.getX();
 	s16 y1 = y > rect.getY() ? y : rect.getY();
 
@@ -55,7 +64,7 @@ void Rect::intersect(const Rect& rect, Rect& dest) const {
 	dest.setY2(y2);
 }
 
-void Rect::add(const Rect& rect, Rect& dest) const {
+void Rect::getAddition(const Rect& rect, Rect& dest) const {
 	s16 x1 = x < rect.getX() ? x : rect.getX();
 	s16 y1 = y < rect.getY() ? y : rect.getY();
 
@@ -68,6 +77,26 @@ void Rect::add(const Rect& rect, Rect& dest) const {
 	dest.setY2(y2);
 }
 
+void Rect::clipToIntersect(const Rect& rect) {
+	Rect clipped;
+	getIntersect(rect, clipped);
+
+	setX(clipped.getX());
+	setY(clipped.getY());
+	setWidth(clipped.getWidth());
+	setHeight(clipped.getHeight());
+}
+
+void Rect::expandToInclude(const Rect& rect) {
+	Rect addition;
+	getAddition(rect, addition);
+
+	setX(addition.getX());
+	setY(addition.getY());
+	setWidth(addition.getWidth());
+	setHeight(addition.getHeight());
+}
+
 bool Rect::hasDimensions() const {
 	if (!width) return false;
 	if (!height) return false;
@@ -76,12 +105,12 @@ bool Rect::hasDimensions() const {
 
 Rect Rect::operator&(const Rect& rect) {
 	Rect dest;
-	intersect(rect, dest);
+	getIntersect(rect, dest);
 	return dest;
 }
 
 Rect Rect::operator+(const Rect& rect) {
 	Rect dest;
-	add(rect, dest);
+	getAddition(rect, dest);
 	return dest;
 }
