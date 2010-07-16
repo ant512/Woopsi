@@ -59,7 +59,7 @@ namespace WoopsiUI {
 		 * @param y The y co-ord of the data.
 		 * @return Pointer to the internal bitmap data.
 		 */
-		inline const u16* getData(s16 x, s16 y) const;
+		const u16* getData(s16 x, s16 y) const;
 
 		/**
 		 * Get a new graphics object that can draw to this bitmap.
