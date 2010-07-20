@@ -13,7 +13,6 @@
 #include "fonts/courier.h"
 #include "fonts/courier12.h"
 #include "fonts/courier12b.h"
-#include "fonts/couriermono.h"
 #include "fonts/couriernew10.h"
 #include "fonts/couriernew12.h"
 #include "fonts/dotum13.h"
@@ -71,7 +70,6 @@ void PackedFonts::startup() {
 	_fonts->push_back(new FontDefinition("Courier", new Courier()));
 	_fonts->push_back(new FontDefinition("Courier 12", new Courier12()));
 	_fonts->push_back(new FontDefinition("Courier 12b", new Courier12b()));
-	_fonts->push_back(new FontDefinition("Courier Mono", new CourierMono()));
 	_fonts->push_back(new FontDefinition("Courier New 10", new CourierNew10()));
 	_fonts->push_back(new FontDefinition("Courier New 12", new CourierNew12()));
 	_fonts->push_back(new FontDefinition("Dotum 13", new Dotum13()));
