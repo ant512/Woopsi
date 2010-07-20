@@ -1,12 +1,12 @@
 #ifndef _GLYPHFONT_H_
 #define _GLYPHFONT_H_
 
-#include "packedfont16.h"
+#include "font.h"
 
 namespace WoopsiUI {
-	class GlyphFont : public PackedFont16 {
+	class GlyphFont : public Font {
 	public:
-		GlyphFont(u8 fixedWidth = 0);
+		GlyphFont();
 	};
 }
 
