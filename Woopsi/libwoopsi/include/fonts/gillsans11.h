@@ -1,18 +1,12 @@
-//
-// gillsans11.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/gillsans11.bmp
-//
+#ifndef _GILLSANS11_H_
+#define _GILLSANS11_H_
 
-#ifndef _GILLSANS_11_H_
-#define _GILLSANS_11_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class GillSans11: public PackedFont16 {
+	class GillSans11 : public PackedFont1 {
 	public:
-		GillSans11(u8 fixedWidth=0);
+		GillSans11(u8 fixedWidth = 0);
 	};
 }
 

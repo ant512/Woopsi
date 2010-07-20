@@ -1,18 +1,12 @@
-//
-// modern9.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/modern9.bmp
-//
+#ifndef _MODERN9_H_
+#define _MODERN9_H_
 
-#ifndef _MODERN_9_H_
-#define _MODERN_9_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Modern9: public PackedFont16 {
+	class Modern9 : public PackedFont1 {
 	public:
-		Modern9(u8 fixedWidth=0);
+		Modern9(u8 fixedWidth = 0);
 	};
 }
 

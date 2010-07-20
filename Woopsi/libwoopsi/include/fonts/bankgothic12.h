@@ -1,18 +1,12 @@
-//
-// bankgothic12.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/bankgothic12.bmp
-//
+#ifndef _BANKGOTHIC12_H_
+#define _BANKGOTHIC12_H_
 
-#ifndef _BANK_GOTHIC_12_H_
-#define _BANK_GOTHIC_12_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class BankGothic12: public PackedFont16 {
+	class BankGothic12 : public PackedFont1 {
 	public:
-		BankGothic12(u8 fixedWidth=0);
+		BankGothic12(u8 fixedWidth = 0);
 	};
 }
 

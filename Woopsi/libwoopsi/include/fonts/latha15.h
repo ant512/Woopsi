@@ -1,18 +1,12 @@
-//
-// latha15.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/latha15.bmp
-//
+#ifndef _LATHA15_H_
+#define _LATHA15_H_
 
-#ifndef _LATHA_15_H_
-#define _LATHA_15_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Latha15: public PackedFont16 {
+	class Latha15 : public PackedFont1 {
 	public:
-		Latha15(u8 fixedWidth=0);
+		Latha15(u8 fixedWidth = 0);
 	};
 }
 

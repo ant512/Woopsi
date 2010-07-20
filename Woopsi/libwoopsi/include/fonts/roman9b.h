@@ -1,18 +1,12 @@
-//
-// roman9b.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/roman9b.bmp
-//
+#ifndef _ROMAN9B_H_
+#define _ROMAN9B_H_
 
-#ifndef _ROMAN_9_H_
-#define _ROMAN_9_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Roman9b: public PackedFont16 {
+	class Roman9b : public PackedFont1 {
 	public:
-		Roman9b(u8 fixedWidth=0);
+		Roman9b(u8 fixedWidth = 0);
 	};
 }
 

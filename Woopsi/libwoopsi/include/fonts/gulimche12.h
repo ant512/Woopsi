@@ -1,18 +1,12 @@
-//
-// gulimche12.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/gulimche12.bmp
-//
+#ifndef _GULIMCHE12_H_
+#define _GULIMCHE12_H_
 
-#ifndef _GULIMCHE_12_H_
-#define _GULIMCHE_12_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Gulimche12: public PackedFont16 {
+	class Gulimche12 : public PackedFont1 {
 	public:
-		Gulimche12(u8 fixedWidth=0);
+		Gulimche12(u8 fixedWidth = 0);
 	};
 }
 

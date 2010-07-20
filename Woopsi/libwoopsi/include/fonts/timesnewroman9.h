@@ -1,18 +1,12 @@
-//
-// timesnewroman9.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/timesnewroman9.bmp
-//
+#ifndef _TIMESNEWROMAN9_H_
+#define _TIMESNEWROMAN9_H_
 
-#ifndef _TIMES_NEW_ROMAN_12_H_
-#define _TIMES_NEW_ROMAN_12_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class TimesNewRoman9: public PackedFont16 {
+	class TimesNewRoman9 : public PackedFont1 {
 	public:
-		TimesNewRoman9(u8 fixedWidth=0);
+		TimesNewRoman9(u8 fixedWidth = 0);
 	};
 }
 

@@ -12,6 +12,9 @@ Change Log
     - Renamed gunsuh15.bmp and gunsuhche15.bmp to gungsuh15.bmp and
       gungsuhche15.bmp respectively.
     - Deleted CourierMono as it was an exact duplicate of Courier.
+    - Converted most fonts from PackedFont16 to PackedFont1.
+    - bmp2font upgraded to latest version - no longer creates gigantic arrays in
+      PackedFont1 fonts.
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
     - Converted Rect struct to class.

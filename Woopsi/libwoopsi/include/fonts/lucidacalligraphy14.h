@@ -1,18 +1,12 @@
-//
-// lucidacalligraphy14.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/lucidacalligraphy14.bmp
-//
+#ifndef _LUCIDACALLIGRAPHY14_H_
+#define _LUCIDACALLIGRAPHY14_H_
 
-#ifndef _LUCIA_CALLIGRAPH_14_H_
-#define _LUCIA_CALLIGRAPH_14_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class LucidaCalligraphy14: public PackedFont16 {
+	class LucidaCalligraphy14 : public PackedFont1 {
 	public:
-		LucidaCalligraphy14(u8 fixedWidth=0);
+		LucidaCalligraphy14(u8 fixedWidth = 0);
 	};
 }
 

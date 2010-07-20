@@ -1,18 +1,12 @@
-//
-// gungsuh12.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/gungsuh12.bmp
-//
+#ifndef _GUNGSUH12_H_
+#define _GUNGSUH12_H_
 
-#ifndef _GUNGSUH_12_H_
-#define _GUNGSUH_12_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Gungsuh12: public PackedFont16 {
+	class Gungsuh12 : public PackedFont1 {
 	public:
-		Gungsuh12(u8 fixedWidth=0);
+		Gungsuh12(u8 fixedWidth = 0);
 	};
 }
 

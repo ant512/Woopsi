@@ -1,18 +1,12 @@
-//
-// garamond10.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/garamond10.bmp
-//
+#ifndef _GARAMOND10_H_
+#define _GARAMOND10_H_
 
-#ifndef _GARAMOND_10_H_
-#define _GARAMOND_10_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Garamond10: public PackedFont16 {
+	class Garamond10 : public PackedFont1 {
 	public:
-		Garamond10(u8 fixedWidth=0);
+		Garamond10(u8 fixedWidth = 0);
 	};
 }
 

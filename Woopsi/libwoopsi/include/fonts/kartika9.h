@@ -1,18 +1,12 @@
-//
-// kartika9.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/kartika9.bmp
-//
+#ifndef _KARTIKA9_H_
+#define _KARTIKA9_H_
 
-#ifndef _KARTIKA_9_H_
-#define _KARTIKA_9_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Kartika9: public PackedFont16 {
+	class Kartika9 : public PackedFont1 {
 	public:
-		Kartika9(u8 fixedWidth=0);
+		Kartika9(u8 fixedWidth = 0);
 	};
 }
 

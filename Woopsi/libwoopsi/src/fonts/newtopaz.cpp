@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-static const u16 NewTopaz_glyphdata[13333] = {
+static const u16 NewTopaz_glyphdata[373] = {
 /* '!' */	0x3FF3,0x0000,
 /* '"' */	0x06F6,0x0000,0x0000,0x0000,
 /* '#' */	0x00D9,0xB7F6,0xDFDB,0x3600,0x0000,

@@ -1,19 +1,12 @@
+#ifndef _POORRICHARD12_H_
+#define _POORRICHARD12_H_
 
-//
-// poorrichard12.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/poorrichard12.bmp
-//
-
-#ifndef _POOR_RICHARD_12_H_
-#define _POOR_RICHARD_12_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class PoorRichard12: public PackedFont16 {
+	class PoorRichard12 : public PackedFont1 {
 	public:
-		PoorRichard12(u8 fixedWidth=0);
+		PoorRichard12(u8 fixedWidth = 0);
 	};
 }
 

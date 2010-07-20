@@ -1,18 +1,12 @@
-//
-// msgothic9.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/msgothic9.bmp
-//
+#ifndef _MSGOTHIC9_H_
+#define _MSGOTHIC9_H_
 
-#ifndef _MS_GOTHIC_9_H_
-#define _MS_GOTHIC_9_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class MSGothic9: public PackedFont16 {
+	class MSGothic9 : public PackedFont1 {
 	public:
-		MSGothic9(u8 fixedWidth=0);
+		MSGothic9(u8 fixedWidth = 0);
 	};
 }
 

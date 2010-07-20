@@ -1,18 +1,12 @@
-//
-// mangal9.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/mangal9.bmp
-//
+#ifndef _MANGAL9_H_
+#define _MANGAL9_H_
 
-#ifndef _MANGAL_9_H_
-#define _MANGAL_9_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Mangal9: public PackedFont16 {
+	class Mangal9 : public PackedFont1 {
 	public:
-		Mangal9(u8 fixedWidth=0);
+		Mangal9(u8 fixedWidth = 0);
 	};
 }
 

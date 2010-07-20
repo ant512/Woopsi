@@ -1,18 +1,12 @@
-//
-// gungsuhche11.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/gungsuhche11.bmp
-//
+#ifndef _GUNGSUHCHE11_H_
+#define _GUNGSUHCHE11_H_
 
-#ifndef _GUNGSUHCHE_11_H_
-#define _GUNGSUHCHE_11_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Gungsuhche11: public PackedFont16 {
+	class Gungsuhche11 : public PackedFont1 {
 	public:
-		Gungsuhche11(u8 fixedWidth=0);
+		Gungsuhche11(u8 fixedWidth = 0);
 	};
 }
 

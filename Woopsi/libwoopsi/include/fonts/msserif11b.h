@@ -1,18 +1,12 @@
-//
-// msserif11b.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/msserif11b.bmp
-//
+#ifndef _MSSERIF11B_H_
+#define _MSSERIF11B_H_
 
-#ifndef _MS_SERIF_11B_H_
-#define _MS_SERIF_11B_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class MSSerif11b: public PackedFont16 {
+	class MSSerif11b : public PackedFont1 {
 	public:
-		MSSerif11b(u8 fixedWidth=0);
+		MSSerif11b(u8 fixedWidth = 0);
 	};
 }
 

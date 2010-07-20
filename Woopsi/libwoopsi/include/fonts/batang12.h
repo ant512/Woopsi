@@ -1,18 +1,12 @@
-//
-// batang12.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/batang12.bmp
-//
+#ifndef _BATANG12_H_
+#define _BATANG12_H_
 
-#ifndef _BATANG_12_H_
-#define _BATANG_12_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Batang12: public PackedFont16 {
+	class Batang12 : public PackedFont1 {
 	public:
-		Batang12(u8 fixedWidth=0);
+		Batang12(u8 fixedWidth = 0);
 	};
 }
 

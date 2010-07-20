@@ -1,18 +1,12 @@
-//
-// mssans9b.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/mssans9b.bmp
-//
+#ifndef _MSSANS9B_H_
+#define _MSSANS9B_H_
 
-#ifndef _MS_SANS_9_B_H_
-#define _MS_SANS_9_B_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class MSSans9b: public PackedFont16 {
+	class MSSans9b : public PackedFont1 {
 	public:
-		MSSans9b(u8 fixedWidth=0);
+		MSSans9b(u8 fixedWidth = 0);
 	};
 }
 

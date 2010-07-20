@@ -1,18 +1,12 @@
-//
-// courier12.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/courier12.bmp
-//
+#ifndef _COURIER12_H_
+#define _COURIER12_H_
 
-#ifndef _COURIER_12_H_
-#define _COURIER_12_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class Courier12: public PackedFont16 {
+	class Courier12 : public PackedFont1 {
 	public:
-		Courier12(u8 fixedWidth=0);
+		Courier12(u8 fixedWidth = 0);
 	};
 }
 

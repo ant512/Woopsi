@@ -1,19 +1,12 @@
+#ifndef _OCRFONT8_H_
+#define _OCRFONT8_H_
 
-//
-// ocrfont8.h
-//
-// Do not edit - created by 'bmp2font' from bitmaps/ocrfont8.bmp
-//
-
-#ifndef _OCR_FONT_8_H_
-#define _OCR_FONT_8_H_
-
-#include "packedfont16.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class OCRFont8: public PackedFont16 {
+	class OCRFont8 : public PackedFont1 {
 	public:
-		OCRFont8(u8 fixedWidth=0);
+		OCRFont8(u8 fixedWidth = 0);
 	};
 }
 
