@@ -15,10 +15,11 @@ Change Log
     - Converted most fonts to PackedFont1.
     - Converted GlyphFont to PackedFont16 (manually altered class to force
       fixed-width).
-    - bmp2font upgraded to latest version - no longer creates gigantic arrays in
-      PackedFont1 fonts.
     - Removed Font and MonoFont classes (PackedFont classes are faster and more
       efficient).
+    - bmp2font upgraded to latest version - no longer creates gigantic arrays in
+      PackedFont1 fonts; removed support for Font and MonoFont classes.
+
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
     - Converted Rect struct to class.
