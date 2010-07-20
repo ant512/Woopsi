@@ -15,7 +15,18 @@ namespace WoopsiUI {
 		s32 width;						/**< Width of the rectangle. */
 		s32 height;						/**< Height of the rectangle. */
 
+		/**
+		 * Constructor.
+		 */
 		Rect();
+
+		/**
+		 * Constructor.
+		 * @param x The x co-ordinate of the rect.
+		 * @param y The y co-ordinate of the rect.
+		 * @param width The width of the rect.
+		 * @param height The height of the rect.
+		 */
 		Rect(s16 x, s16 y, s32 width, s32 height);
 
 		/**
@@ -24,50 +35,103 @@ namespace WoopsiUI {
 		 */
 		Rect(const Rect& rect);
 
+		/**
+		 * Create a new rect object from the supplied dimensions.  The user is
+		 * responsible for deleting the rect when it is no longer required.
+		 * @param x The x co-ordinate of the rect.
+		 * @param y The y co-ordinate of the rect.
+		 * @param width The width of the rect.
+		 * @param height The height of the rect.
+		 * @return A new rect.
+		 */
 		static Rect* fromDimensions(s16 x, s16 y, s32 width, s32 height);
+
+		/**
+		 * Create a new rect object from the supplied co-ordinates.  The user is
+		 * responsible for deleting the rect when it is no longer required.
+		 * @param x1 The x co-ordinate of the rect's top-left corner.
+		 * @param y1 The y co-ordinate of the rect's top-left corner.
+		 * @param x2 The x co-ordinate of the rect's bottom-right corner.
+		 * @param y2 The y co-ordinate of the rect's bottom-right corner.
+		 * @return A new rect.
+		 */
 		static Rect* fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2);
 
+		/**
+		 * Get the rect's x co-ordinate.
+		 * @return The rect's x co-ordinate.
+		 */
 		inline s16 getX() const { return x; };
+
+		/**
+		 * Get the rect's y co-ordinate.
+		 * @return The rect's y co-ordinate.
+		 */
 		inline s16 getY() const { return y; };
+
+		/**
+		 * Get the rect's width.
+		 * @return The rect's width.
+		 */
 		inline s32 getWidth() const { return width; };
+
+		/**
+		 * Get the rect's height.
+		 * @return The rect's height.
+		 */
 		inline s32 getHeight() const { return height; };
 
+		/**
+		 * Set the rect's x co-ordinate.
+		 * @param x The new x co-ordinate.
+		 */
 		inline void setX(s16 x) { this->x = x; };
+
+		/**
+		 * Set the rect's y co-ordinate.
+		 * @param y The new y co-ordinate.
+		 */
 		inline void setY(s16 y) { this->y = y; };
+
+		/**
+		 * Set the rect's width.
+		 * @param width The new width.
+		 */
 		inline void setWidth(s32 width) { this->width = width; };
+
+		/**
+		 * Set the rect's height.
+		 * @param height The new height.
+		 */
 		inline void setHeight(s32 height) { this->height = height; };
 
-		void setX2(s16 x2) {
+		/**
+		 * Set the x co-ordinate of the rect's bottom-right corner.  If x2 is less
+		 * than the rect's current x co-ordinate the method automatically adjusts
+		 * the co-ords so that the rect's width is never negative.
+		 * @param x2 The x co-ordinate of the rect's bottom-right corner.
+		 */
+		void setX2(s16 x2);
 
-			// Ensure that x contains the smaller value
-			if (x2 < x) {
-				s16 swap = x;
-				x = x2;
-				x2 = swap;
-			}
+		/**
+		 * Set the y co-ordinate of the rect's bottom-right corner.  If y2 is less
+		 * than the rect's current y co-ordinate the method automatically adjusts
+		 * the co-ords so that the rect's height is never negative.
+		 * @param y2 The y co-ordinate of the rect's bottom-right corner.
+		 */
+		void setY2(s16 y2);
 
-			width = (x2 - x) + 1;
-		};
+		/**
+		 * Get the x co-ordinate of the rect's bottom-right corner.
+		 * @return The x co-ordinate of the rect's bottom-right corner.
+		 */
+		inline s16 getX2() const { return x + (width - 1); };
 
-		void setY2(s16 y2) {
-
-			// Ensure that y contains the smaller value
-			if (y2 < y) {
-				s16 swap = y;
-				y = y2;
-				y2 = swap;
-			}
-
-			height = (y2 - y) + 1;
-		};
-
-		s16 getX2() const {
-			return x + (width - 1);
-		};
-
-		s16 getY2() const {
-			return y + (height - 1);
-		};
+		/**
+		 * Get the y co-ordinate of the rect's bottom-right corner.
+		 * @return The y co-ordinate of the rect's bottom-right corner.
+		 */
+		inline s16 getY2() const { return y + (height - 1); };
 
 		/**
 		 * Determines if the rectangle has two dimensions; in other words, does it
@@ -92,7 +156,15 @@ namespace WoopsiUI {
 		 */
 		void getAddition(const Rect& rect, Rect& dest) const;
 
+		/**
+		 * Clips this rect to the region that intersects the supplied rect.
+		 */
 		void clipToIntersect(const Rect& rect);
+
+		/**
+		 * Expands this rect so that it includes the area described by the supplied
+		 * rect.
+		 */
 		void expandToInclude(const Rect& rect);
 
 		/**

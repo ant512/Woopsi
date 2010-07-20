@@ -64,6 +64,30 @@ void Rect::getIntersect(const Rect& rect, Rect& dest) const {
 	dest.setY2(y2);
 }
 
+void Rect::setX2(s16 x2) {
+
+	// Ensure that x contains the smaller value
+	if (x2 < x) {
+		s16 swap = x;
+		x = x2;
+		x2 = swap;
+	}
+
+	width = (x2 - x) + 1;
+}
+
+void Rect::setY2(s16 y2) {
+
+	// Ensure that y contains the smaller value
+	if (y2 < y) {
+		s16 swap = y;
+		y = y2;
+		y2 = swap;
+	}
+
+	height = (y2 - y) + 1;
+}
+
 void Rect::getAddition(const Rect& rect, Rect& dest) const {
 	s16 x1 = x < rect.getX() ? x : rect.getX();
 	s16 y1 = y < rect.getY() ? y : rect.getY();
