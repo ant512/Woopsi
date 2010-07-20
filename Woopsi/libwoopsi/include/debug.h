@@ -13,7 +13,6 @@ namespace WoopsiUI {
 	class AmigaWindow;
 	class Gadget;
 	class Woopsi;
-	class MonoFont;
 	class ScrollingTextBox;
 
 	/**

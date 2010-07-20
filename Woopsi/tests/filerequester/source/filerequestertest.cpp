@@ -311,10 +311,12 @@ void FileRequesterTest::handleActionEvent(const GadgetEventArgs& e) {
 			_requester->resize(140, 60);
 			break;
 		case 8:
-			Rect rect;
-			_requester->getPreferredDimensions(rect);
-			_requester->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_requester->getPreferredDimensions(rect);
+				_requester->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_requester->enable();
 			break;

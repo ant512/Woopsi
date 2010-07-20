@@ -307,10 +307,12 @@ void RadioButtonGroupTest::handleActionEvent(const GadgetEventArgs& e) {
 			_radioGroup->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_radioGroup->getPreferredDimensions(rect);
-			_radioGroup->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_radioGroup->getPreferredDimensions(rect);
+				_radioGroup->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_radioGroup->enable();
 			break;

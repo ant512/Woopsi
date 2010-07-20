@@ -17,7 +17,7 @@ TestPanel::TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle
 void TestPanel::drawContents(GraphicsPort* port) {
 
 	// Draw background
-	port->drawFilledRect(0, 0, _width, _height, getBackColour());
+	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 
 	// Draw contents.  Note that all co-ordinates are offset by the canvas
 	// x and y co-ordinates

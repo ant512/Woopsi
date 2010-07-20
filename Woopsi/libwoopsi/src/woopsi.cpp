@@ -2,7 +2,6 @@
 #include "screen.h"
 #include "woopsifuncs.h"
 #include "fontbase.h"
-#include "font.h"
 #include "contextmenu.h"
 #include "gadgetstyle.h"
 #include "woopsitimer.h"

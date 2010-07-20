@@ -309,10 +309,12 @@ void CalendarTest::handleActionEvent(const GadgetEventArgs& e) {
 			_calendar->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_calendar->getPreferredDimensions(rect);
-			_calendar->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_calendar->getPreferredDimensions(rect);
+				_calendar->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_calendar->enable();
 			break;

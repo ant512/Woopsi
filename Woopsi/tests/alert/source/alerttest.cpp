@@ -309,10 +309,12 @@ void AlertTest::handleActionEvent(const GadgetEventArgs& e) {
 			_alert->resize(140, 60);
 			break;
 		case 8:
-			Rect rect;
-			_alert->getPreferredDimensions(rect);
-			_alert->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_alert->getPreferredDimensions(rect);
+				_alert->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_alert->enable();
 			break;

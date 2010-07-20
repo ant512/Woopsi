@@ -1,12 +1,12 @@
 #ifndef _TINYFONT_H_
 #define _TINYFONT_H_
 
-#include "monofont.h"
+#include "packedfont1.h"
 
 namespace WoopsiUI {
-	class TinyFont : public MonoFont {
+	class TinyFont : public PackedFont1 {
 	public:
-		TinyFont(u16 drawColour = 32768);
+		TinyFont(u8 fixedWidth = 0);
 	};
 }
 

@@ -322,10 +322,12 @@ void TextBoxTest::handleActionEvent(const GadgetEventArgs& e) {
 			_textbox->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_textbox->getPreferredDimensions(rect);
-			_textbox->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_textbox->getPreferredDimensions(rect);
+				_textbox->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_textbox->enable();
 			break;

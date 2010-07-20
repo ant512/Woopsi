@@ -326,10 +326,12 @@ void SuperBitmapTest::handleActionEvent(const GadgetEventArgs& e) {
 			_superBitmap->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_superBitmap->getPreferredDimensions(rect);
-			_superBitmap->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_superBitmap->getPreferredDimensions(rect);
+				_superBitmap->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_superBitmap->enable();
 			break;

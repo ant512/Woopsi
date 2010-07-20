@@ -319,10 +319,12 @@ void CycleTest::handleActionEvent(const GadgetEventArgs& e) {
 			_cycleButton->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_cycleButton->getPreferredDimensions(rect);
-			_cycleButton->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_cycleButton->getPreferredDimensions(rect);
+				_cycleButton->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_cycleButton->enable();
 			break;

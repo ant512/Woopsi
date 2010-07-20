@@ -371,10 +371,12 @@ void ScrollingListBoxTest::handleActionEvent(const GadgetEventArgs& e) {
 			_listBox->resize(50, 30);
 			break;
 		case 8:
-			Rect rect;
-			_listBox->getPreferredDimensions(rect);
-			_listBox->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_listBox->getPreferredDimensions(rect);
+				_listBox->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_listBox->enable();
 			break;

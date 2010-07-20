@@ -65,10 +65,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\src\font.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\src\freetypecache.cpp"
 						>
 					</File>
@@ -78,10 +74,6 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\src\freetypefont.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\src\monofont.cpp"
 						>
 					</File>
 					<File
@@ -691,10 +683,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\include\font.h"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\include\fontbase.h"
 						>
 					</File>
@@ -712,10 +700,6 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\glyphs.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\monofont.h"
 						>
 					</File>
 					<File

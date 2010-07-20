@@ -309,10 +309,12 @@ void LabelTest::handleActionEvent(const GadgetEventArgs& e) {
 			_label->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_label->getPreferredDimensions(rect);
-			_label->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_label->getPreferredDimensions(rect);
+				_label->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_label->enable();
 			break;

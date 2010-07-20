@@ -8,8 +8,6 @@
 
 #include <nds.h>
 #include "framebuffer.h"
-#include "font.h"
-#include "monofont.h"
 #include "bitmapwrapper.h"
 #include "gadgetstyle.h"
 #include "newtopaz.h"

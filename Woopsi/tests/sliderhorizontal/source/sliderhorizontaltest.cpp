@@ -312,10 +312,12 @@ void SliderHorizontalTest::handleActionEvent(const GadgetEventArgs& e) {
 			_slider->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_slider->getPreferredDimensions(rect);
-			_slider->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_slider->getPreferredDimensions(rect);
+				_slider->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_slider->enable();
 			break;

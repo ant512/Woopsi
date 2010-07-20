@@ -309,10 +309,12 @@ void ProgressBarTest::handleActionEvent(const GadgetEventArgs& e) {
 			_progressBar->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_progressBar->getPreferredDimensions(rect);
-			_progressBar->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_progressBar->getPreferredDimensions(rect);
+				_progressBar->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_progressBar->enable();
 			break;

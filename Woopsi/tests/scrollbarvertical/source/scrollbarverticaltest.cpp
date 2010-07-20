@@ -312,10 +312,12 @@ void ScrollbarVerticalTest::handleActionEvent(const GadgetEventArgs& e) {
 			_scrollbar->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_scrollbar->getPreferredDimensions(rect);
-			_scrollbar->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_scrollbar->getPreferredDimensions(rect);
+				_scrollbar->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_scrollbar->enable();
 			break;

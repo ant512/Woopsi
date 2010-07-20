@@ -315,10 +315,12 @@ void BitmapButtonTest::handleActionEvent(const GadgetEventArgs& e) {
 			_button->resize(10, 10);
 			break;
 		case 8:
-			Rect rect;
-			_button->getPreferredDimensions(rect);
-			_button->resize(rect.width, rect.height);
-			break;
+			{
+				Rect rect;
+				_button->getPreferredDimensions(rect);
+				_button->resize(rect.width, rect.height);
+				break;
+			}
 		case 9:
 			_button->enable();
 			break;
