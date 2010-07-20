@@ -9,6 +9,9 @@ Change Log
     - PackedFont16::renderChar() aborts correctly if there is nothing to render
       (Lakedaemon).
     - Bitmap::getData(x, y) no longer declared inline (Lakedaemon).
+    - Renamed gunsuh15.bmp and gunsuhche15.bmp to gungsuh15.bmp and
+      gungsuhche15.bmp respectively.
+    - Converted GlyphFont from Font to PackedFont16.
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
     - Converted Rect struct to class.
