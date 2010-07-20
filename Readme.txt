@@ -74,9 +74,7 @@ Features
   - Automatic gadget garbage collection;
   - Complete API for constructing new gadgets:
     - Extensible font system that supports:
-      - Fixed-width, bit-packed monochrome fonts;
-      - Fixed-width, 16-bit colour bitmap fonts;
-      - Compressed proportional fonts (monochrome and 16-bit);
+      - Compressed proportional and fixed-width fonts (monochrome and 16-bit);
       - FreeType library integration for TTF/OTF/etc fonts with antialiasing.
     - Text manipulation, including wrapping functions and width calculation;
     - Animation class with support for variable framerates and standard/pingpong
@@ -159,7 +157,10 @@ Credits and Acknowledgements
   - Coding and design                                - Antony Dzeryn
   - Testing, technical advice, other contributions   - Jeff Laing
   - PALib independence                               - Steven Harrison
-  - More testing and suggestions                     - John Buxton
+  - Testing and suggestions                          - John Buxton
+                                                     - Lakedaemon
+                                                     - Chase
+                                                     - Leonelhs
   - Unicode work                                     - Olivier Binda
   - Testing and gadget contributions                 - Mark Adamson
   - Simian Zombie logo                               - John Clay
