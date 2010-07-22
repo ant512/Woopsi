@@ -6,6 +6,11 @@ Change Log
   - Fixes:
     - WoopsiString::compareTo() no longer inlined (fixes SF bug 3017420).
     - Moved unused FixedWidthFontBase class into extras directory.
+    - Moved putSDLPixel() and getSDLPixel() into FrameBuffer class from
+      woopsifuncs files.
+    - Added copy() to all bitmap classes.
+    - Replaced call to woopsiDmaCopy() in Graphics::copy() with call to copy()
+      method of bitmap class.
 
   - New Features:
 

@@ -21,6 +21,21 @@ namespace WoopsiUI {
 	class FrameBuffer : public MutableBitmapBase {
 	public:
 
+		/**
+		 * Copies data from the supplied co-ordinates sequentially into dest.
+		 * If the amount to be copied exceeds the available width of the bitmap,
+		 * copying will wrap around from the right-hand edge of the bitmap to
+		 * the left-hand edge.
+		 * The size will be truncated if it exceeds the bounds of the bitmap.
+		 * The dest parameter must point to an area of memory large enough to
+		 * contain the copied data.
+		 * @param x The x co-ordinate to copy from.
+		 * @param y The y co-ordinate to copy from.
+		 * @param size The number of pixels to copy.
+		 * @param dest Pointer to the memory that will be copied into.
+		 */
+		void copy(s16 x, s16 y, u32 size, u16* dest) const;
+
 #ifdef USING_SDL
 		// SDL version
 		
@@ -117,6 +132,22 @@ namespace WoopsiUI {
 		SDL_Surface* _surface;	/**< Pointer to the SDL surface. */
 		u16 _yOffset;			/**< Y offset from top of surface to draw. */
 		u16* _dataBuffer;		/**< Buffer used when getData() is called. */
+
+		/**
+		 * Write a pixel to the SDL surface.
+		 * @param x The x co-ordinate of the pixel to write to.
+		 * @param y The y co-ordinate of the pixel to write to.
+		 * @param pixel The colour to write.
+		 */
+		void putSDLPixel(int x, int y, Uint32 pixel);
+
+		/**
+		 * Get the colour of pixel on the SDL surface at the given co-ordinates.
+		 * @param x The x co-ordinate of the pixel.
+		 * @param y The y co-ordinate of the pixel.
+		 * @return The pixel colour.
+		 */
+		Uint32 getSDLPixel(int x, int y);
 #else
 		// DS version
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap. */

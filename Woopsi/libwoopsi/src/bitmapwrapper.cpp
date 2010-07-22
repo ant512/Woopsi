@@ -1,4 +1,5 @@
 #include "bitmapwrapper.h"
+#include "woopsifuncs.h"
 
 using namespace WoopsiUI;
 
@@ -29,4 +30,9 @@ const u16* BitmapWrapper::getData(s16 x, s16 y) const {
 	// Get the pixel
 	u32 pos = (y * _width) + x;
 	return _bitmap + pos;
+}
+
+void BitmapWrapper::copy(s16 x, s16 y, u32 size, u16* dest) const {
+	const u16* pos = _bitmap + (y * _width) + x;
+	woopsiDmaCopy(pos, dest, size);
 }

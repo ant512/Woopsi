@@ -67,3 +67,8 @@ void Bitmap::blitFill(const s16 x, const s16 y, const u16 colour, const u32 size
 	u16* pos = _bitmap + (y * _width) + x;
 	woopsiDmaFill(colour, pos, size);
 }
+
+void Bitmap::copy(s16 x, s16 y, u32 size, u16* dest) const {
+	u16* pos = _bitmap + (y * _width) + x;
+	woopsiDmaCopy(pos, dest, size);
+}

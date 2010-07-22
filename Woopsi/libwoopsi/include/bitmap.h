@@ -86,6 +86,21 @@ namespace WoopsiUI {
 		 */
 		void blitFill(const s16 x, const s16 y, const u16 colour, const u32 size);
 
+		/**
+		 * Copies data from the supplied co-ordinates sequentially into dest.
+		 * If the amount to be copied exceeds the available width of the bitmap,
+		 * copying will wrap around from the right-hand edge of the bitmap to
+		 * the left-hand edge.
+		 * The size will be truncated if it exceeds the bounds of the bitmap.
+		 * The dest parameter must point to an area of memory large enough to
+		 * contain the copied data.
+		 * @param x The x co-ordinate to copy from.
+		 * @param y The y co-ordinate to copy from.
+		 * @param size The number of pixels to copy.
+		 * @param dest Pointer to the memory that will be copied into.
+		 */
+		void copy(s16 x, s16 y, u32 size, u16* dest) const;
+
 	protected:
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
 		

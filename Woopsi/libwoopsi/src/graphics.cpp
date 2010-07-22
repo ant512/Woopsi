@@ -929,7 +929,7 @@ void Graphics::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u
 			for (u16 y = 0; y < height; y++) {
 				
 				// Copy row to buffer
-				woopsiDmaCopy(_bitmap->getData(sourceX, sourceY + y), buffer, width);
+				_bitmap->copy(sourceX, sourceY + y, width, buffer);
 				
 				// Copy row back to screen
 				_bitmap->blit(destX, destY + y, buffer, width);
