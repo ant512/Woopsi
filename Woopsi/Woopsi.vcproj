@@ -61,10 +61,6 @@
 					Name="Fonts"
 					>
 					<File
-						RelativePath=".\libwoopsi\src\fixedwidthfontbase.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\src\freetypecache.cpp"
 						>
 					</File>
@@ -668,6 +664,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\libwoopsi\include\hardware.h"
+					>
+				</File>
+				<File
 					RelativePath=".\libwoopsi\include\woopsifuncs.h"
 					>
 				</File>
@@ -678,10 +678,6 @@
 				<Filter
 					Name="Fonts"
 					>
-					<File
-						RelativePath=".\libwoopsi\include\fixedwidthfontbase.h"
-						>
-					</File>
 					<File
 						RelativePath=".\libwoopsi\include\fontbase.h"
 						>

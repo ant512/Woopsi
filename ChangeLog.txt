@@ -5,6 +5,7 @@ Change Log
   
   - Fixes:
     - WoopsiString::compareTo() no longer inlined (fixes SF bug 3017420).
+    - Moved unused FixedWidthFontBase class into extras directory.
 
   - New Features:
 
