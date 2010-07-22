@@ -1,7 +1,14 @@
 Change Log
 ----------
 
-  V0.99.2
+  V0.99.3
+  
+  - Fixes:
+    - WoopsiString::compareTo() no longer inlined (fixes SF bug 3017420).
+
+  - New Features:
+
+  V0.99.2 (20100720)
   
   - Fixes:
     - Replaced clipping code in Gadget::clipRectToHierarchy() with call to new
@@ -19,7 +26,6 @@ Change Log
       efficient).
     - bmp2font upgraded to latest version - no longer creates gigantic arrays in
       PackedFont1 fonts; removed support for Font and MonoFont classes.
-    - WoopsiString::compareTo() no longer inlined (fixes SF bug 3017420).
 
   - New Features:
     - Added getPath() to FileRequester and FileListBox.
