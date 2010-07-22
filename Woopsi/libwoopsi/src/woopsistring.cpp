@@ -536,3 +536,7 @@ const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
 	// No legal codepoints after this point
 	return NULL;
 }
+
+s32 WoopsiString::compareTo(const WoopsiString& string) const {
+	return strncmp(_text, string.getCharArray(), getLength());
+}
