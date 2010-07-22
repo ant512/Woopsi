@@ -29,7 +29,6 @@
 #include "filelistboxdataitem.h"
 #include "filepath.h"
 #include "filerequester.h"
-#include "fixedwidthfontbase.h"
 #include "fontbase.h"
 #include "framebuffer.h"
 #include "gadget.h"
