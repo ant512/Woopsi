@@ -154,8 +154,8 @@ void AmigaScreen::drawBorder(GraphicsPort* port) {
 
 	// Title bar
 	if (!isBorderless()) {
-		port->drawFilledRect(0, 0, getWidth(), _titleHeight - 1, getShineColour());	// Background
-		port->drawHorizLine(0, _titleHeight - 1, getWidth(), getShadowColour());	// Bottom
-		port->drawText(2, 1, getFont(), getTitle());								// Title text
+		port->drawFilledRect(0, 0, getWidth(), _titleHeight - 1, getShineColour());					// Background
+		port->drawLine(0, _titleHeight - 1, getWidth() - 1, _titleHeight - 1, getShadowColour());	// Bottom
+		port->drawText(2, 1, getFont(), getTitle());												// Title text
 	}
 }

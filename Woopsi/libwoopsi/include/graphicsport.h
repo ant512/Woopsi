@@ -146,24 +146,6 @@ namespace WoopsiUI {
 		void drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour);
 		
 		/**
-		 * Draw a horizontal line to the bitmap
-		 * @param x The x co-ordinate of the line.
-		 * @param y The y co-ordinate of the line.
-		 * @param width The width of the line.
-		 * @param colour The colour of the line.
-		 */
-		void drawHorizLine(s16 x, s16 y, s16 width, u16 colour);
-		
-		/**
-		 * Draw a vertical line to the bitmap
-		 * @param x The x co-ordinate of the line.
-		 * @param y The y co-ordinate of the line.
-		 * @param height The height of the line.
-		 * @param colour The colour of the line.
-		 */
-		void drawVertLine(s16 x, s16 y, s16 height, u16 colour);
-		
-		/**
 		 * Draw an unfilled rectangle to the bitmap
 		 * @param x The x co-ordinate of the rectangle.
 		 * @param y The y co-ordinate of the rectangle.
@@ -183,24 +165,6 @@ namespace WoopsiUI {
 		 * @param shadowColour The colour of the bottom/right sides.
 		 */
 		void drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shineColour, u16 shadowColour);
-
-		/**
-		 * Draw an unfilled circle to the internal bitmap.
-		 * @param x0 The x co-ordinate of the circle.
-		 * @param y0 The y co-ordinate of the circle.
-		 * @param radius The radius of the circle.
-		 * @param colour The colour of the circle.
-		 */
-		virtual void drawCircle(s16 x0, s16 y0, u16 radius, u16 colour);
-
-		/**
-		 * Draw a filled circle to the bitmap.
-		 * @param x0 The x co-ordinate of the circle.
-		 * @param y0 The y co-ordinate of the circle.
-		 * @param radius The radius of the circle.
-		 * @param colour The colour of the circle.
-		 */
-		void drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour);
 
 		/**
 		 * XOR the colour of the pixel at the specified co-ordinates against

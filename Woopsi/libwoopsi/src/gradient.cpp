@@ -91,7 +91,7 @@ void Gradient::drawContents(GraphicsPort* port) {
 	while (y < rect.height) {
 	
 		// Draw line (y value adjusted back to gadget space from screen space)
-		port->drawHorizLine(rect.x, row, rect.width, _rowColour[row]);
+		port->drawLine(0, row, getWidth() - 1, row, _rowColour[row]);
 
 		row++;
 		y++;

@@ -144,60 +144,6 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 	}
 }
 
-// Draw horizontal line - external function
-void GraphicsPort::drawHorizLine(s16 x, s16 y, s16 width, u16 colour) {
-	
-	// Ignore command if drawing is disabled
-	if (!_isEnabled) return;
-	
-	// Adjust from port-space to screen-space
-	convertPortToScreenSpace(&x, &y);
-	
-	Rect rect;
-	
-	// Draw all visible rects
-	for (s32 i = 0; i < _clipRectList.size(); i++) {
-		
-		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
-		rect.x = _clipRectList.at(i).x;
-		rect.y = _clipRectList.at(i).y;
-		rect.width = _clipRectList.at(i).width;
-		rect.height = _clipRectList.at(i).height;
-		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
-		
-		_graphics->setClipRect(rect);
-		_graphics->drawHorizLine(x, y, width, colour);
-	}
-}
-
-// Draw vertical line - external function
-void GraphicsPort::drawVertLine(s16 x, s16 y, s16 height, u16 colour) {
-	
-	// Ignore command if drawing is disabled
-	if (!_isEnabled) return;
-	
-	// Adjust from port-space to screen-space
-	convertPortToScreenSpace(&x, &y);
-
-	Rect rect;
-	
-	// Draw all visible rects
-	for (s32 i = 0; i < _clipRectList.size(); i++) {
-		
-		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
-		rect.x = _clipRectList.at(i).x;
-		rect.y = _clipRectList.at(i).y;
-		rect.width = _clipRectList.at(i).width;
-		rect.height = _clipRectList.at(i).height;
-		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
-		
-		_graphics->setClipRect(rect);
-		_graphics->drawVertLine(x, y, height, colour);
-	}
-}
-
 // Draw filled rectangle - external function
 void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 	
@@ -224,59 +170,6 @@ void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 		_graphics->drawFilledRect(x, y, width, height, colour);
 	}
 }
-
-void GraphicsPort::drawCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-
-	// Ignore command if drawing is disabled
-	if (!_isEnabled) return;
-	
-	// Adjust from port-space to screen-space
-	convertPortToScreenSpace(&x0, &y0);
-
-	Rect rect;
-	
-	// Draw all visible rects
-	for (s32 i = 0; i < _clipRectList.size(); i++) {
-		
-		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
-		rect.x = _clipRectList.at(i).x;
-		rect.y = _clipRectList.at(i).y;
-		rect.width = _clipRectList.at(i).width;
-		rect.height = _clipRectList.at(i).height;
-		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
-		
-		_graphics->setClipRect(rect);
-		_graphics->drawCircle(x0, y0, radius, colour);
-	}
-}
-
-void GraphicsPort::drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour) {
-
-	// Ignore command if drawing is disabled
-	if (!_isEnabled) return;
-	
-	// Adjust from port-space to screen-space
-	convertPortToScreenSpace(&x0, &y0);
-
-	Rect rect;
-	
-	// Draw all visible rects
-	for (s32 i = 0; i < _clipRectList.size(); i++) {
-		
-		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
-		rect.x = _clipRectList.at(i).x;
-		rect.y = _clipRectList.at(i).y;
-		rect.width = _clipRectList.at(i).width;
-		rect.height = _clipRectList.at(i).height;
-		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
-		
-		_graphics->setClipRect(rect);
-		_graphics->drawFilledCircle(x0, y0, radius, colour);
-	}
-}
-
 
 void GraphicsPort::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
 	

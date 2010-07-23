@@ -735,6 +735,12 @@ void Graphics::drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const Bi
 // McIlroy's ellipse algorithm.
 void Graphics::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
 
+	// Use faster circle drawing routine if possible
+	if (horizRadius == vertRadius) {
+		drawCircle(xCentre, yCentre, horizRadius, colour);
+		return;
+	}
+
 	s16 x = 0;
 	s16 y = vertRadius;
 
@@ -802,6 +808,12 @@ void Graphics::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRa
 // This is L. Patrick's implementation of a filled ellipse algorithm that uses
 // filled rects to draw the ellipse. 
 void Graphics::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 vertRadius, u16 colour) {
+
+	// Use faster circle drawing routine if possible
+	if (horizRadius == vertRadius) {
+		drawFilledCircle(xCentre, yCentre, horizRadius, colour);
+		return;
+	}
 
 	/* e(x,y) = b^2*x^2 + a^2*y^2 - a^2*b^2 */
 	s16 x = 0;
@@ -1068,6 +1080,15 @@ void Graphics::drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 }
 
 void Graphics::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
+
+	// Choose shortcut for horizontal or vertical lines
+	if (x1 == x2) {
+		drawVertLine(x1, y1, (y2 - y1) + 1, colour);
+		return;
+	} else if (y1 == y2) {
+		drawHorizLine(x1, y1, (x2 - x1) + 1, colour);
+		return;
+	}
 
 	// Extract data from cliprect
 	s16 minX = _clipRect.x;

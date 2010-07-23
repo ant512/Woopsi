@@ -11,6 +11,16 @@ Change Log
     - Added copy() to all bitmap classes.
     - Replaced call to woopsiDmaCopy() in Graphics::copy() with call to copy()
       method of bitmap class.
+    - Graphics::drawEllipse() automatically calls drawCircle() if both radii are
+      equal.
+    - Graphics::drawFilledEllipse() automatically calls drawFilledCircle() if
+      both radii are the same.
+    - Graphics::drawCircle() and drawFilledCircle() are protected.
+    - Graphics::drawLine() automatically calls drawVertLine() or drawHorizLine()
+      if lines can be optimised.
+    - Graphics::drawVertLine() and drawHorizLine() are protected.
+    - Removed GraphicsPort::drawCircle(), drawFilledCircle(), drawHorizLine()
+      and drawVertLine().
 
   - New Features:
 

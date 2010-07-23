@@ -51,7 +51,7 @@ void Demo::startup() {
 	gfx->dim(0, 0, 164, 191);
 
 	// Draw on the bitmap
-	gfx->drawFilledCircle(10, 10, 20, woopsiRGB(31, 31, 31));
+	gfx->drawFilledEllipse(10, 10, 20, 20, woopsiRGB(31, 31, 31));
 	gfx->drawFilledRect(10, 40, 20, 20, woopsiRGB(31, 0, 0));
 	gfx->drawFilledEllipse(60, 60, 10, 30, woopsiRGB(10, 31, 0));
 

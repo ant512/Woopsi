@@ -98,8 +98,8 @@ void CycleButton::drawContents(GraphicsPort* port) {
 	port->drawText(0, glyphY, getGlyphFont(), GLYPH_CYCLE, 0, 1, textColour);
 
 	// Draw separator
-	port->drawVertLine(glyphSpace + glyphWidth, 0, rect.height, separatorLeftColour);
-	port->drawVertLine(glyphSpace + 1 + glyphWidth, 0, rect.height, separatorRightColour);
+	port->drawLine(glyphSpace + glyphWidth, 0, glyphSpace + glyphWidth, rect.height - 1, separatorLeftColour);
+	port->drawLine(glyphSpace + 1 + glyphWidth, 0, glyphSpace + 1 + glyphWidth, rect.height - 1, separatorRightColour);
 
 	// Only draw text if option is selected
 	if (_options.getSelectedItem() != NULL) {

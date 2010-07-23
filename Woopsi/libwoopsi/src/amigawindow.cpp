@@ -197,17 +197,18 @@ void AmigaWindow::drawBorder(GraphicsPort* port) {
 		textX += _closeButton->getWidth();
 
 		// Draw left edge
-		port->drawVertLine(_closeButton->getWidth(), 1, _borderSize.top - 2, getShineColour());
+		port->drawLine(_closeButton->getWidth(), 1, _closeButton->getWidth(), _borderSize.top - 3, getShineColour());
 	}
 
 	if (hasDepthButton()) {
 
 		// Draw right edge
-		port->drawVertLine(getWidth() - _depthButton->getWidth() - 1, 1, _borderSize.top - 2, getShadowColour());
+		s16 lineX = getWidth() - _depthButton->getWidth() - 1;
+		port->drawLine(lineX, 1, lineX, _borderSize.top - 3, getShadowColour());
 	}
 
 	// Line below title
-	port->drawHorizLine(1, _borderSize.top - 1, getWidth() - 2, getShadowColour());
+	port->drawLine(1, _borderSize.top - 1, getWidth() - 3, _borderSize.top - 1, getShadowColour());
 
 	// Draw title text
 	port->drawText(textX, 1, getFont(), getTitle());
