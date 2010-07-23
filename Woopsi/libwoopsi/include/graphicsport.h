@@ -19,7 +19,7 @@ namespace WoopsiUI {
 	 *
 	 * All drawing co-ordinates should be submitted in GraphicsPort space.
 	 * GraphicsPort space is relative to the x and y co-ordinates given to an
-	 * instance of the GraphicsPort class via its constructor.  The  width and
+	 * instance of the GraphicsPort class via its constructor.  The width and
 	 * height parameters define the size of that space.  The x and y
 	 * co-ordinates submitted to the constructor should be relative to the
 	 * gadget.  The getClipRect() method returns the rect in GraphicsPort

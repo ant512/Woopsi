@@ -55,7 +55,6 @@ namespace WoopsiUI {
 		 * If the amount to be copied exceeds the available width of the bitmap,
 		 * copying will wrap around from the right-hand edge of the bitmap to
 		 * the left-hand edge.
-		 * The size will be truncated if it exceeds the bounds of the bitmap.
 		 * The dest parameter must point to an area of memory large enough to
 		 * contain the copied data.
 		 * @param x The x co-ordinate to copy from.
