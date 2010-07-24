@@ -197,14 +197,14 @@ void AmigaWindow::drawBorder(GraphicsPort* port) {
 		textX += _closeButton->getWidth();
 
 		// Draw left edge
-		port->drawLine(_closeButton->getWidth(), 1, _closeButton->getWidth(), _borderSize.top - 3, getShineColour());
+		port->drawLine(_closeButton->getWidth(), 1, _closeButton->getWidth(), _borderSize.top - 2, getShineColour());
 	}
 
 	if (hasDepthButton()) {
 
 		// Draw right edge
 		s16 lineX = getWidth() - _depthButton->getWidth() - 1;
-		port->drawLine(lineX, 1, lineX, _borderSize.top - 3, getShadowColour());
+		port->drawLine(lineX, 1, lineX, _borderSize.top - 2, getShadowColour());
 	}
 
 	// Line below title
@@ -213,13 +213,9 @@ void AmigaWindow::drawBorder(GraphicsPort* port) {
 	// Draw title text
 	port->drawText(textX, 1, getFont(), getTitle());
 
-	
-
 	port->drawFilledRect(1, _borderSize.top, _borderSize.left - 2, getHeight() - _borderSize.top - _borderSize.bottom, colour);	// Left
 	port->drawFilledRect(getWidth() - WINDOW_BORDER_SIZE + 1, 1, WINDOW_BORDER_SIZE - 2, getHeight() - 2, colour);	// Right
 	port->drawFilledRect(1, getHeight() - WINDOW_BORDER_SIZE + 1, getWidth() - 2, WINDOW_BORDER_SIZE - 2, colour);	// Bottom
-
-
 
 	port->drawBevelledRect(WINDOW_BORDER_SIZE - 1, WINDOW_TITLE_HEIGHT - 1, getWidth() - (WINDOW_BORDER_SIZE * 2) + 2, getHeight() - WINDOW_BORDER_SIZE - WINDOW_TITLE_HEIGHT + 2, getShadowColour(), getShineColour());	// Inner outline
 }
