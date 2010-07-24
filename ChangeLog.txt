@@ -21,6 +21,7 @@ Change Log
     - Graphics::drawVertLine() and drawHorizLine() are protected.
     - Removed GraphicsPort::drawCircle(), drawFilledCircle(), drawHorizLine()
       and drawVertLine().
+    - Fixed TinyFont (broken in last release).
 
   - New Features:
 
