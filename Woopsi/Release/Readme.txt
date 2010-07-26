@@ -47,7 +47,10 @@ Credits and Acknowlegements
   - Coding and design                                - Antony Dzeryn
   - Testing, technical advice, other contributions   - Jeff Laing
   - PALib independence                               - Steven Harrison
-  - More testing and suggestions                     - John Buxton
+  - Testing and suggestions                          - John Buxton
+                                                     - Lakedaemon
+                                                     - Chase
+                                                     - Leonelhs
   - Unicode work                                     - Olivier Binda
   - Testing and gadget contributions                 - Mark Adamson
   - Simian Zombie logo                               - John Clay

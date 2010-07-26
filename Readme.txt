@@ -81,22 +81,21 @@ Features
       looping;
     - Bitmap class for 16-bit bitmap image manipulation;
     - Graphics class providing clipped, DMA-accelerated drawing functions:
-      - Pixel plotting;
-      - Optimised horizontal/vertical lines;
-      - Bresenham omni-directional lines;
+      - Pixels;
+      - Lines;
       - Filled and unfilled rectangles;
-      - Filled and unfilled circles;
+      - Filled and unfilled ellipses;
+      - XOR horizontal/vertical lines, pixels, rectangles and filled rectangles;
       - Bitmap blitting;
       - Bitmap blitting with transparent colour key;
       - Bitmap blitting in greyscale;
-      - XOR horizontal/vertical lines, pixels, rectangles and filled rectangles;
       - Flood fill;
       - Region scrolling;
       - Region copying;
       - Region dimming;
       - Region conversion to greyscale;
       - Text rendering.
-    - Dynamic array container class and associated iterator class.
+    - Dynamic array container iterator classes.
     - Date class.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;
