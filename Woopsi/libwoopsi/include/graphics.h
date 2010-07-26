@@ -8,6 +8,17 @@
 #include "rect.h"
 #include "woopsistring.h"
 
+/**
+ * Converts separate RGB component values into a single 16-bit value for use
+ * with the DS' framebuffer.  All supplied values should be 5 bits wide (ie.
+ * between 0 and 31).
+ * @param r The red component.
+ * @param g The green component.
+ * @param b The blue component.
+ * @return The 15-bit colour value with the top alpha bit set.
+ */
+#define woopsiRGB(r, g, b) (((b) << 10) | ((g) << 5) | (r) | (1 << 15))
+
 namespace WoopsiUI {
 
 	class FontBase;

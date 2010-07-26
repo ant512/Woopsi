@@ -95,7 +95,7 @@ Features
       - Region dimming;
       - Region conversion to greyscale;
       - Text rendering.
-    - Dynamic array container iterator classes.
+    - Dynamic array container and iterator classes.
     - Date class.
   - Object-orientated design for easy integration into other C++ software;
   - Simple API for rapid GUI creation;

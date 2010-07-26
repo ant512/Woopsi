@@ -1,5 +1,5 @@
 #include "bitmapwrapper.h"
-#include "woopsifuncs.h"
+#include "dmafuncs.h"
 
 using namespace WoopsiUI;
 

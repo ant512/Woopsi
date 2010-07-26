@@ -1,5 +1,5 @@
 #include "bitmap.h"
-#include "woopsifuncs.h"
+#include "dmafuncs.h"
 #include "graphics.h"
 #include "rect.h"
 

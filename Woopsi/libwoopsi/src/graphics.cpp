@@ -1,6 +1,7 @@
 #include "graphics.h"
 #include "woopsifuncs.h"
 #include "stringiterator.h"
+#include "fontbase.h"
 
 using namespace WoopsiUI;
 

@@ -54,6 +54,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\libwoopsi\src\dmafuncs.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\libwoopsi\src\woopsifuncs.cpp"
 					>
 				</File>
@@ -661,6 +665,10 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\include\defines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\libwoopsi\include\dmafuncs.h"
 					>
 				</File>
 				<File
