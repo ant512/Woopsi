@@ -50,7 +50,6 @@ Credits and Acknowlegements
   - Testing and suggestions                          - John Buxton
                                                      - Lakedaemon
                                                      - Chase
-                                                     - Leonelhs
   - Unicode work                                     - Olivier Binda
   - Testing and gadget contributions                 - Mark Adamson
   - Simian Zombie logo                               - John Clay
