@@ -24,6 +24,7 @@ Change Log
     - Fixed TinyFont (broken in last release).
     - Moved woopsiRGB() macro from woopsifuncs.h to graphics.h.
     - Moved woopsiDmaFill() and woopsiDmaCopy() into new dmafuncs files.
+    - PackedFont1 clips correctly.
 
   - New Features:
 
