@@ -271,18 +271,13 @@ const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
 // Check for single-point collisions
 bool Gadget::checkCollision(s16 x, s16 y) const {
 
-	if (!isHidden()) {
+	if (isHidden()) return false;
 
-		// Get the clipped rect
-		Rect rect;
-		getRectClippedToHierarchy(rect);
+	// Get the clipped rect
+	Rect rect;
+	getRectClippedToHierarchy(rect);
 
-		if ((x >= rect.x) && (y >= rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
-			return true;
-		}
-	}
-
-	return false;
+	return rect.contains(x, y);
 }
 
 bool Gadget::checkCollisionWithForegroundRects(s16 x, s16 y) const {
@@ -296,9 +291,7 @@ bool Gadget::checkCollisionWithForegroundRects(s16 x, s16 y) const {
 	for (s32 i = 0; i < _rectCache->getForegroundRegions()->size(); ++i) {
 		rect = &(_rectCache->getForegroundRegions()->at(i));
 
-		if ((x >= rect->x) && (y >= rect->y) && (x < rect->x + rect->width) && (y < rect->y + rect->height)) {
-			return true;
-		}
+		if (rect->contains(x, y)) return true;
 	}
 
 	return false;
@@ -307,18 +300,13 @@ bool Gadget::checkCollisionWithForegroundRects(s16 x, s16 y) const {
 // Check for collisions with another rectangle
 bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) const {
 
-	if (!isHidden()) {
+	if (isHidden()) return false;
 
-		// Get the clipped rect
-		Rect rect;
-		getRectClippedToHierarchy(rect);
+	// Get the clipped rect
+	Rect rect;
+	getRectClippedToHierarchy(rect);
 
-		if ((x + width > rect.x) && (y + height > rect.y) && (x < rect.x + rect.width) && (y < rect.y + rect.height)) {
-			return true;
-		}
-	}
-
-	return false;
+	return rect.intersects(Rect(x, y, width, height));
 }
 
 // Check for collisions with another gadget
@@ -328,7 +316,7 @@ bool Gadget::checkCollision(Gadget* gadget) const {
 	Rect rect;
 	gadget->getRectClippedToHierarchy(rect);
 
-	return checkCollision(rect.x, rect.y, rect.width, rect.height);
+	return rect.intersects(_rect);
 }
 
 void Gadget::drawChildren() {

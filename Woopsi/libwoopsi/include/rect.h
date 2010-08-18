@@ -175,6 +175,14 @@ namespace WoopsiUI {
 		bool intersects(const Rect& rect) const;
 
 		/**
+		 * Check if the rect contains the supplied points.
+		 * @param x X co-ord of the point.
+		 * @param y Y co-ord of the point.
+		 * @return True if the rect contains the point; false if not.
+		 */
+		bool contains(s16 x, s16 y) const;
+
+		/**
 		 * Overloaded & operator.  Returns the intersect of this rectangle and the
 		 * rectangle passed as the "rect" argument".
 		 * @param rect The rectangle to intersect with this.

@@ -140,13 +140,15 @@ Rect Rect::operator+(const Rect& rect) {
 }
 
 bool Rect::intersects(const Rect& rect) const {
+	return ((x + width > rect.getX()) &&
+			(y + height > rect.getY()) &&
+			(x < rect.getX() + rect.getWidth()) &&
+			(y < rect.getY() + rect.getHeight()));
+}
 
-	if ((x + width > rect.getX()) &&
-		(y + height > rect.getY()) &&
-		(x < rect.getX() + rect.getWidth()) &&
-		(y < rect.getY() + rect.getHeight())) {
-		return true;
-	}
-
-	return false;
+bool Rect::contains(s16 x, s16 y) const {
+	return ((x >= this->x) &&
+			(y >= this->y) &&
+			(x < this->x + this->width) &&
+			(y < this->y + this->height));
 }

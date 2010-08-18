@@ -25,8 +25,10 @@ Change Log
     - Moved woopsiRGB() macro from woopsifuncs.h to graphics.h.
     - Moved woopsiDmaFill() and woopsiDmaCopy() into new dmafuncs files.
     - PackedFont1 clips correctly.
+    - Gadget collision detection uses routines in Rect class.
 
   - New Features:
+    - Added Rect::contains().
 
   V0.99.2 (20100720)
   
