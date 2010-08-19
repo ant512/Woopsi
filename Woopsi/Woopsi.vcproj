@@ -672,10 +672,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\include\hardware.h"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\include\woopsifuncs.h"
 					>
 				</File>
