@@ -17,11 +17,9 @@ public:
 		CANVAS_MODE_LINE = 2,
 		CANVAS_MODE_RECT = 3,
 		CANVAS_MODE_FILLED_RECT = 4,
-		CANVAS_MODE_CIRCLE = 5,
-		CANVAS_MODE_FILLED_CIRCLE = 6,
-		CANVAS_MODE_ELLIPSE = 7,
-		CANVAS_MODE_FILLED_ELLIPSE = 8,
-		CANVAS_MODE_FLOOD_FILL = 9
+		CANVAS_MODE_ELLIPSE = 5,
+		CANVAS_MODE_FILLED_ELLIPSE = 6,
+		CANVAS_MODE_FLOOD_FILL = 7
 	};
 
 	Canvas() : Window(0, 0, 256, 192, "Canvas Window", GADGET_DECORATION) {	
@@ -31,7 +29,7 @@ public:
 		_graphics = _superBitmap->getGraphics();
 		addGadget(_superBitmap);
 		
-		_mode = CANVAS_MODE_FILLED_CIRCLE;
+		_mode = CANVAS_MODE_FILLED_ELLIPSE;
 		_foregroundColour = woopsiRGB(31, 0, 0);
 		_backgroundColour = woopsiRGB(0, 0, 0);
 		
@@ -53,14 +51,6 @@ public:
 				
 			case CANVAS_MODE_LINE:
 				_graphics->drawLine(e.getX() - (rand() % 20), e.getY() - (rand() % 20), e.getX() + (rand() % 20), e.getY() + (rand() % 20), _foregroundColour);
-				break;
-			
-			case CANVAS_MODE_CIRCLE:
-				_graphics->drawCircle(e.getX(), e.getY(), 30, _foregroundColour);
-				break;
-				
-			case CANVAS_MODE_FILLED_CIRCLE:
-				_graphics->drawFilledCircle(e.getX(), e.getY(), 30, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_RECT:
