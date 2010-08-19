@@ -26,9 +26,15 @@ Change Log
     - Moved woopsiDmaFill() and woopsiDmaCopy() into new dmafuncs files.
     - PackedFont1 clips correctly.
     - Gadget collision detection uses routines in Rect class.
+    - All GraphicsPort routines use Rect class.
+    - Rect::hasDimensions() returns false for negative sizes.
+    - Rect::getIntersect() and getAddition() work correctly for negative sizes.
+    - Removed Rect::fromDimensions().
+    - Rect::fromCoordinates returns a rect rather than a pointer to a rect.
 
   - New Features:
     - Added Rect::contains().
+    - Added Rect::copyTo().
 
   V0.99.2 (20100720)
   

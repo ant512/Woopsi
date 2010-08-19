@@ -23,11 +23,7 @@ Rect::Rect(const Rect& rect) {
 	this->height = rect.getHeight();
 }
 
-Rect* fromDimensions(s16 x, s16 y, s32 width, s32 height) {
-	return new Rect(x, y, width, height);
-}
-
-Rect* fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2) {
+Rect fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2) {
 
 	// Ensure x2 is the larger value
 	if (x2 < x1) {
@@ -46,10 +42,8 @@ Rect* fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2) {
 	s32 width = (x2 - x1) + 1;
 	s32 height = (y2 - y1) + 1;
 
-	return new Rect(x1, y1, width, height);
+	return Rect(x1, y1, width, height);
 }
-
-
 
 void Rect::getIntersect(const Rect& rect, Rect& dest) const {
 	s16 x1 = x > rect.getX() ? x : rect.getX();
@@ -60,8 +54,8 @@ void Rect::getIntersect(const Rect& rect, Rect& dest) const {
 
 	dest.setX(x1);
 	dest.setY(y1);
-	dest.setX2(x2);
-	dest.setY2(y2);
+	dest.setWidth(x2 - x1 + 1);
+	dest.setHeight(y2 - y1 + 1);
 }
 
 void Rect::setX2(s16 x2) {
@@ -97,8 +91,8 @@ void Rect::getAddition(const Rect& rect, Rect& dest) const {
 
 	dest.setX(x1);
 	dest.setY(y1);
-	dest.setX2(x2);
-	dest.setY2(y2);
+	dest.setWidth(x2 - x1 + 1);
+	dest.setHeight(y2 - x1 + 1);
 }
 
 void Rect::clipToIntersect(const Rect& rect) {
@@ -122,8 +116,8 @@ void Rect::expandToInclude(const Rect& rect) {
 }
 
 bool Rect::hasDimensions() const {
-	if (!width) return false;
-	if (!height) return false;
+	if (width < 1) return false;
+	if (height < 1) return false;
 	return true;
 }
 
@@ -151,4 +145,11 @@ bool Rect::contains(s16 x, s16 y) const {
 			(y >= this->y) &&
 			(x < this->x + this->width) &&
 			(y < this->y + this->height));
+}
+
+void Rect::copyTo(Rect& rect) const {
+	rect.setX(x);
+	rect.setY(y);
+	rect.setWidth(width);
+	rect.setHeight(height);
 }

@@ -36,26 +36,14 @@ namespace WoopsiUI {
 		Rect(const Rect& rect);
 
 		/**
-		 * Create a new rect object from the supplied dimensions.  The user is
-		 * responsible for deleting the rect when it is no longer required.
-		 * @param x The x co-ordinate of the rect.
-		 * @param y The y co-ordinate of the rect.
-		 * @param width The width of the rect.
-		 * @param height The height of the rect.
-		 * @return A new rect.
-		 */
-		static Rect* fromDimensions(s16 x, s16 y, s32 width, s32 height);
-
-		/**
-		 * Create a new rect object from the supplied co-ordinates.  The user is
-		 * responsible for deleting the rect when it is no longer required.
+		 * Create a rect object from the supplied co-ordinates.
 		 * @param x1 The x co-ordinate of the rect's top-left corner.
 		 * @param y1 The y co-ordinate of the rect's top-left corner.
 		 * @param x2 The x co-ordinate of the rect's bottom-right corner.
 		 * @param y2 The y co-ordinate of the rect's bottom-right corner.
 		 * @return A new rect.
 		 */
-		static Rect* fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2);
+		static Rect fromCoordinates(s16 x1, s16 y1, s16 x2, s16 y2);
 
 		/**
 		 * Get the rect's x co-ordinate.
@@ -108,7 +96,8 @@ namespace WoopsiUI {
 		/**
 		 * Set the x co-ordinate of the rect's bottom-right corner.  If x2 is less
 		 * than the rect's current x co-ordinate the method automatically adjusts
-		 * the co-ords so that the rect's width is never negative.
+		 * the co-ords so that the rect's width is never negative.  Changing this
+		 * property will change the width of the rect.
 		 * @param x2 The x co-ordinate of the rect's bottom-right corner.
 		 */
 		void setX2(s16 x2);
@@ -116,7 +105,8 @@ namespace WoopsiUI {
 		/**
 		 * Set the y co-ordinate of the rect's bottom-right corner.  If y2 is less
 		 * than the rect's current y co-ordinate the method automatically adjusts
-		 * the co-ords so that the rect's height is never negative.
+		 * the co-ords so that the rect's height is never negative.  Changing this
+		 * property will change the height of the rect.
 		 * @param y2 The y co-ordinate of the rect's bottom-right corner.
 		 */
 		void setY2(s16 y2);
@@ -135,7 +125,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Determines if the rectangle has two dimensions; in other words, does it
-		 * have both height and width?
+		 * have both height and width?  Negative width or height is considered not to
+		 * be valid.
 		 * @return True if the rect has height and width; false if not.
 		 */
 		bool hasDimensions() const;
@@ -175,12 +166,18 @@ namespace WoopsiUI {
 		bool intersects(const Rect& rect) const;
 
 		/**
-		 * Check if the rect contains the supplied points.
+		 * Check if the rect contains the supplied point.
 		 * @param x X co-ord of the point.
 		 * @param y Y co-ord of the point.
 		 * @return True if the rect contains the point; false if not.
 		 */
 		bool contains(s16 x, s16 y) const;
+
+		/**
+		 * Copy the properties of this rect to the destination rect.
+		 * @param dest Destination rect to copy to.
+		 */
+		void copyTo(Rect& dest) const;
 
 		/**
 		 * Overloaded & operator.  Returns the intersect of this rectangle and the
