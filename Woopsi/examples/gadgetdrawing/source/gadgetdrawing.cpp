@@ -49,10 +49,6 @@ void GadgetDrawing::startup() {
 	buttonText.push_back("Rects");
 	buttonText.push_back("Filled Rects");
 	buttonText.push_back("Filled XOR Rects");
-	buttonText.push_back("Horiz Lines");
-	buttonText.push_back("Vert Lines");
-	buttonText.push_back("Circles");
-	buttonText.push_back("Filled Circles");
 	buttonText.push_back("XOR Horiz Lines");
 	buttonText.push_back("XOR Vert Lines");
 	buttonText.push_back("XOR Rects");
@@ -82,7 +78,7 @@ void GadgetDrawing::startup() {
 	_bitmap = new Bitmap(100, 20);
 	Graphics* gfx = _bitmap->newGraphics();
 	gfx->drawFilledRect(0, 0, 100, 20, woopsiRGB(31, 0, 0));
-	gfx->drawFilledCircle(50, 10, 10, woopsiRGB(0, 31, 0));
+	gfx->drawFilledEllipse(50, 10, 10, 10, woopsiRGB(0, 31, 0));
 	gfx->drawText(30, 5, getFont(), "Bitmap", 0, 6, woopsiRGB(0, 0, 31));
 	delete gfx;
 	
@@ -141,53 +137,37 @@ void GadgetDrawing::handleActionEvent(const GadgetEventArgs& e) {
 			break;
 		case 9:
 			// Horiz lines button
-			_mode = DRAW_MODE_HORIZ_LINE;
+			_mode = DRAW_MODE_XOR_HORIZ_LINE;
 			break;
 		case 10:
 			// Vert lines button
-			_mode = DRAW_MODE_VERT_LINE;
-			break;
-		case 11:
-			// Circles button
-			_mode = DRAW_MODE_CIRCLE;
-			break;
-		case 12:
-			// Filled circles button
-			_mode = DRAW_MODE_FILLED_CIRCLE;
-			break;
-		case 13:
-			// Horiz lines button
-			_mode = DRAW_MODE_XOR_HORIZ_LINE;
-			break;
-		case 14:
-			// Vert lines button
 			_mode = DRAW_MODE_XOR_VERT_LINE;
 			break;
-		case 15:
+		case 11:
 			// XOR rects button
 			_mode = DRAW_MODE_XOR_RECT;
 			break;
-		case 16:
+		case 12:
 			// XOR pixels button
 			_mode = DRAW_MODE_XOR_PIXEL;
 			break;
-		case 17:
+		case 13:
 			// Pixels button
 			_mode = DRAW_MODE_PIXEL;
 			break;
-		case 18:
+		case 14:
 			// Text button
 			_mode = DRAW_MODE_TEXT;
 			break;
-		case 19:
+		case 15:
 			// Bitmap button
 			_mode = DRAW_MODE_BITMAP;
 			break;
-		case 20:
+		case 16:
 			// Bitmap transparent button
 			_mode = DRAW_MODE_BITMAP_TRANSPARENT;
 			break;
-		case 21:
+		case 17:
 			// Dim button
 			_mode = DRAW_MODE_DIM;
 			break;
@@ -217,18 +197,6 @@ void GadgetDrawing::handleTimer() {
 			break;
 		case DRAW_MODE_FILLED_XOR_RECT:
 			drawFilledXORRect();
-			break;
-		case DRAW_MODE_HORIZ_LINE:
-			drawHorizLine();
-			break;
-		case DRAW_MODE_VERT_LINE:
-			drawVertLine();
-			break;
-		case DRAW_MODE_CIRCLE:
-			drawCircle();
-			break;
-		case DRAW_MODE_FILLED_CIRCLE:
-			drawFilledCircle();
 			break;
 		case DRAW_MODE_XOR_HORIZ_LINE:
 			drawXORHorizLine();
@@ -275,30 +243,6 @@ void GadgetDrawing::drawLine() {
 	delete port;
 }
 
-void GadgetDrawing::drawHorizLine() {
-
-	// Generate random co-ords for the line
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 width = rand() % 256;
-	
-	GraphicsPort* port = _window->newGraphicsPort(false);
-	port->drawHorizLine(x, y, width, getRandomColour());
-	delete port;
-}
-
-void GadgetDrawing::drawVertLine() {
-
-	// Generate random co-ords for the line
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 height = rand() % 192;
-	
-	GraphicsPort* port = _window->newGraphicsPort(false);
-	port->drawVertLine(x, y, height, getRandomColour());
-	delete port;
-}
-
 void GadgetDrawing::drawEllipse() {
 
 	// Generate random co-ordinates and dimensions for the ellipse
@@ -322,30 +266,6 @@ void GadgetDrawing::drawFilledEllipse() {
 	
 	GraphicsPort* port = _window->newGraphicsPort(false);
 	port->drawFilledEllipse(x, y, hRadius, vRadius, getRandomColour());
-	delete port;
-}
-
-void GadgetDrawing::drawCircle() {
-
-	// Generate random co-ordinates and radius for the circle
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 radius = rand() % 100;
-	
-	GraphicsPort* port = _window->newGraphicsPort(false);
-	port->drawCircle(x, y, radius, getRandomColour());
-	delete port;
-}
-
-void GadgetDrawing::drawFilledCircle() {
-
-	// Generate random co-ordinates and radius for the circle
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 radius = rand() % 100;
-	
-	GraphicsPort* port = _window->newGraphicsPort(false);
-	port->drawFilledCircle(x, y, radius, getRandomColour());
 	delete port;
 }
 
