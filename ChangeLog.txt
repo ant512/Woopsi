@@ -7,7 +7,7 @@ Change Log
     - All makefiles no longer create .ds.gba and .sc.nds binaries.
   
   - New Features:
-    - Built with dkp r31/libnds 1.4.5/default ARM7 0.5.14.
+    - Built with devKitARM r31/libnds 1.4.5/default ARM7 0.5.14.
 
   V0.99.3 (20100819)
   
