@@ -26,6 +26,7 @@ namespace WoopsiUI {
 		 * @param width The width of the window.
 		 * @param height The height of the window.
 		 * @param title The title of the window.
+		 * @param colour The default colour to show.
 		 * @param flags Standard flags.
 		 * @param style Optional gadget style.
 		 */
