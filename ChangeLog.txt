@@ -1,7 +1,14 @@
 Change Log
 ----------
 
-  V0.99.3
+  V0.99.4
+  
+  - Fixes:
+  
+  - New Features:
+    - Built with dkp r31/libnds 1.4.5/default ARM7 0.5.14.
+
+  V0.99.3 (20100819)
   
   - Fixes:
     - WoopsiString::compareTo() no longer inlined (fixes SF bug 3017420).
