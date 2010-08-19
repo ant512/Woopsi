@@ -32,7 +32,8 @@ Change Log
     - Removed Rect::fromDimensions().
     - Rect::fromCoordinates returns a rect rather than a pointer to a rect.
     - Tidied up SDL pad updating in woopsifuncs.c.
-    - Removed woopsiLidClosed() from woopsifuncs.c
+    - Removed woopsiLidClosed() from woopsifuncs.c.
+    - Added dmafuncs.h to woopsiheaders.h.
 
   - New Features:
     - Added Rect::contains().

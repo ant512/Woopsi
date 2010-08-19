@@ -24,6 +24,7 @@
 #include "gadgetstyle.h"
 #include "defines.h"
 #include "dimmedscreen.h"
+#include "dmafuncs.h"
 #include "eventargs.h"
 #include "filelistbox.h"
 #include "filelistboxdataitem.h"

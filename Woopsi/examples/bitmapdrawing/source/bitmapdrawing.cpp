@@ -65,10 +65,6 @@ void BitmapDrawing::startup() {
 	buttonText.push_back("Rects");
 	buttonText.push_back("Filled Rects");
 	buttonText.push_back("Filled XOR Rects");
-	buttonText.push_back("Horiz Lines");
-	buttonText.push_back("Vert Lines");
-	buttonText.push_back("Circles");
-	buttonText.push_back("Filled Circles");
 	buttonText.push_back("XOR Horiz Lines");
 	buttonText.push_back("XOR Vert Lines");
 	buttonText.push_back("XOR Rects");
@@ -100,7 +96,7 @@ void BitmapDrawing::startup() {
 	_bitmap = new Bitmap(100, 20);
 	Graphics* gfx = _bitmap->newGraphics();
 	gfx->drawFilledRect(0, 0, 100, 20, woopsiRGB(31, 0, 0));
-	gfx->drawFilledCircle(50, 10, 10, woopsiRGB(0, 31, 0));
+	gfx->drawFilledEllipse(50, 10, 10, 10, woopsiRGB(0, 31, 0));
 	gfx->drawText(30, 5, getFont(), "Bitmap", 0, 6, woopsiRGB(0, 0, 31));
 	delete gfx;
 	
@@ -159,61 +155,45 @@ void BitmapDrawing::handleActionEvent(const GadgetEventArgs& e) {
 			break;
 		case 9:
 			// Horiz lines button
-			_mode = DRAW_MODE_HORIZ_LINE;
+			_mode = DRAW_MODE_XOR_HORIZ_LINE;
 			break;
 		case 10:
 			// Vert lines button
-			_mode = DRAW_MODE_VERT_LINE;
-			break;
-		case 11:
-			// Circles button
-			_mode = DRAW_MODE_CIRCLE;
-			break;
-		case 12:
-			// Filled circles button
-			_mode = DRAW_MODE_FILLED_CIRCLE;
-			break;
-		case 13:
-			// Horiz lines button
-			_mode = DRAW_MODE_XOR_HORIZ_LINE;
-			break;
-		case 14:
-			// Vert lines button
 			_mode = DRAW_MODE_XOR_VERT_LINE;
 			break;
-		case 15:
+		case 11:
 			// XOR rects button
 			_mode = DRAW_MODE_XOR_RECT;
 			break;
-		case 16:
+		case 12:
 			// XOR pixels button
 			_mode = DRAW_MODE_XOR_PIXEL;
 			break;
-		case 17:
+		case 13:
 			// Pixels button
 			_mode = DRAW_MODE_PIXEL;
 			break;
-		case 18:
+		case 14:
 			// Text button
 			_mode = DRAW_MODE_TEXT;
 			break;
-		case 19:
+		case 15:
 			// Bitmap button
 			_mode = DRAW_MODE_BITMAP;
 			break;
-		case 20:
+		case 16:
 			// Bitmap transparent button
 			_mode = DRAW_MODE_BITMAP_TRANSPARENT;
 			break;
-		case 21:
+		case 17:
 			// Floodfill button
 			_mode = DRAW_MODE_FLOODFILL;
 			break;
-		case 22:
+		case 18:
 			// Copy button
 			_mode = DRAW_MODE_COPY;
 			break;
-		case 23:
+		case 19:
 			// Dim button
 			_mode = DRAW_MODE_DIM;
 			break;
@@ -243,18 +223,6 @@ void BitmapDrawing::handleTimer() {
 			break;
 		case DRAW_MODE_FILLED_XOR_RECT:
 			drawFilledXORRect();
-			break;
-		case DRAW_MODE_HORIZ_LINE:
-			drawHorizLine();
-			break;
-		case DRAW_MODE_VERT_LINE:
-			drawVertLine();
-			break;
-		case DRAW_MODE_CIRCLE:
-			drawCircle();
-			break;
-		case DRAW_MODE_FILLED_CIRCLE:
-			drawFilledCircle();
 			break;
 		case DRAW_MODE_XOR_HORIZ_LINE:
 			drawXORHorizLine();
@@ -308,26 +276,6 @@ void BitmapDrawing::drawLine() {
 	_graphics->drawLine(x1, y1, x2, y2, getRandomColour());
 }
 
-void BitmapDrawing::drawHorizLine() {
-
-	// Generate random co-ords for the line
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 width = rand() % 256;
-	
-	_graphics->drawHorizLine(x, y, width, getRandomColour());
-}
-
-void BitmapDrawing::drawVertLine() {
-
-	// Generate random co-ords for the line
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 height = rand() % 192;
-	
-	_graphics->drawVertLine(x, y, height, getRandomColour());
-}
-
 void BitmapDrawing::drawEllipse() {
 
 	// Generate random co-ordinates and dimensions for the ellipse
@@ -348,26 +296,6 @@ void BitmapDrawing::drawFilledEllipse() {
 	s16 vRadius = rand() % 100;
 	
 	_graphics->drawFilledEllipse(x, y, hRadius, vRadius, getRandomColour());
-}
-
-void BitmapDrawing::drawCircle() {
-
-	// Generate random co-ordinates and radius for the circle
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 radius = rand() % 100;
-	
-	_graphics->drawCircle(x, y, radius, getRandomColour());
-}
-
-void BitmapDrawing::drawFilledCircle() {
-
-	// Generate random co-ordinates and radius for the circle
-	s16 x = rand() % 256;
-	s16 y = rand() % 192;
-	s16 radius = rand() % 100;
-	
-	_graphics->drawFilledCircle(x, y, radius, getRandomColour());
 }
 
 u16 BitmapDrawing::getRandomColour() {

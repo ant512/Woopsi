@@ -20,10 +20,6 @@ public:
 		DRAW_MODE_RECT,
 		DRAW_MODE_FILLED_RECT,
 		DRAW_MODE_FILLED_XOR_RECT,
-		DRAW_MODE_HORIZ_LINE,
-		DRAW_MODE_VERT_LINE,
-		DRAW_MODE_CIRCLE,
-		DRAW_MODE_FILLED_CIRCLE,
 		DRAW_MODE_XOR_HORIZ_LINE,
 		DRAW_MODE_XOR_VERT_LINE,
 		DRAW_MODE_XOR_RECT,
@@ -51,15 +47,11 @@ private:
 	void handleTimer();
 	
 	void drawLine();
-	void drawHorizLine();
-	void drawVertLine();
 	void drawEllipse();
 	void drawFilledEllipse();
 	void drawRect();
 	void drawFilledRect();
 	void drawFilledXORRect();
-	void drawCircle();
-	void drawFilledCircle();
 	void drawXORHorizLine();
 	void drawXORVertLine();
 	void drawXORRect();
