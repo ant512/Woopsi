@@ -256,7 +256,7 @@ void Woopsi::handleKeys() {
 void Woopsi::handleLid() {
 
 	// Check for lid closed event
-	if (woopsiLidClosed() && !_lidClosed) {
+	if (Pad.Held.Lid && !_lidClosed) {
 
 		// Lid has just been closed
 		_lidClosed = true;
@@ -268,7 +268,7 @@ void Woopsi::handleLid() {
 			i++;
 		}
 
-	} else if (!woopsiLidClosed() && _lidClosed) {
+	} else if (!Pad.Held.Lid && _lidClosed) {
 
 		// Lid has just been opened
 		_lidClosed = false;

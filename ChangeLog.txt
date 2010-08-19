@@ -31,6 +31,8 @@ Change Log
     - Rect::getIntersect() and getAddition() work correctly for negative sizes.
     - Removed Rect::fromDimensions().
     - Rect::fromCoordinates returns a rect rather than a pointer to a rect.
+    - Tidied up SDL pad updating in woopsifuncs.c.
+    - Removed woopsiLidClosed() from woopsifuncs.c
 
   - New Features:
     - Added Rect::contains().

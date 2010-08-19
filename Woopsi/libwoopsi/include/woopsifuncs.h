@@ -103,6 +103,8 @@ extern _stylus Stylus;
 #include <string.h>
 #include <math.h>
 
+void updatePadState(int sdlKey, u16* heldKey, u16* newpressKey, u16* releasedKey, u16* heldTimeKey);
+
 #else
 
 #include <nds/memory.h>
@@ -145,12 +147,6 @@ void woopsiFreeFrameBuffers();
  * Wait for a VBL.  Switches into a wait state if the lid is closed.
  */
 void woopsiWaitVBL();
-
-/**
- * Check if the lid is closed or not.
- * @return True if the lid is closed.
- */
-bool woopsiLidClosed();
 
 /**
  * Update the pad and stylus structs with the latest physical status.  Called
