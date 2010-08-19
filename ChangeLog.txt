@@ -4,6 +4,7 @@ Change Log
   V0.99.4
   
   - Fixes:
+    - All makefiles no longer create .ds.gba and .sc.nds binaries.
   
   - New Features:
     - Built with dkp r31/libnds 1.4.5/default ARM7 0.5.14.

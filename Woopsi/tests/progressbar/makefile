@@ -145,7 +145,6 @@ else	# executing in the build directory
 # main targets
 #-------------------------------------------------------------------------------
 
-$(OUTPUT).ds.gba	: 	$(OUTPUT).nds
 $(OUTPUT).nds		: 	$(OFILES)
  
 #-------------------------------------------------------------------------------
@@ -203,15 +202,6 @@ _LIBS		+= -lnds9
 
 # this makes it easier to type the ndstool command line
 _BANNER 		:= -b $(ICON) "$(TEXT1);$(TEXT2);$(TEXT3)"
-
-#-------------------------------------------------------------------------------
-# rule to build the alternate loader versions - unneeded on R4, etc
-#
-%.ds.gba: %.nds
-	@dsbuild $< 
-	@echo Built: $(notdir $@)
-	@cp $(CURDIR)/../$(RELEASE)/$(notdir $@) ../$(RELEASE)/$(notdir $(OUTPUT)).sc.nds 
-	@echo Built: $(notdir $(OUTPUT)).sc.nds
 
 #-------------------------------------------------------------------------------
 # rule to build a .nds binary - forces the link every time because we don't have proper

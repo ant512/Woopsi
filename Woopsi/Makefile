@@ -137,20 +137,10 @@ DEPENDS	:= $(OFILES:.o=.d)
 # main targets
 #-------------------------------------------------------------------------------
 
-$(OUTPUT).ds.gba	: 	$(OUTPUT).nds
 $(OUTPUT).nds		: 	$(OUTPUT).bin
 $(OUTPUT).bin		:	$(OUTPUT).elf
 $(OUTPUT).elf		:	$(OFILES)
  
-#-------------------------------------------------------------------------------
-
-%.ds.gba: %.nds
-	@dsbuild $< 
-	@echo Built: $(notdir $(OUTPUT)).nds
-	@echo Built: $(notdir $@)
-	@cp $(CURDIR)/../$(RELEASE)/$(notdir $@) ../$(RELEASE)/$(notdir $(OUTPUT)).sc.nds 
-	@echo Built: $(notdir $(OUTPUT)).sc.nds
-
 #-------------------------------------------------------------------------------
 %.nds: %.bin
 	
