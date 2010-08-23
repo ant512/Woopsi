@@ -1,0 +1,13 @@
+syntax: glob
+
+bin
+obj
+build
+BuildLog.htm
+*.ncb
+*.o
+*.d
+*.suo
+*.trx
+*.user
+AgentRestart.dat
