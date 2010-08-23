@@ -8,6 +8,7 @@ Change Log
   
   - New Features:
     - Built with devKitARM r31/libnds 1.4.5/default ARM7 0.5.14.
+    - Setting MultiLineTextBox's max rows to -1 forces it to retain all text.
 
   V0.99.3 (20100819)
   

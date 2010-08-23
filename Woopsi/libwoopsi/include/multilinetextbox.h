@@ -54,7 +54,8 @@ namespace WoopsiUI {
 		 * text beyond this number will cause rows at the start of the text to be
 		 * forgotten; text is essentially stored as a queue, and adding to the back
 		 * of a full queue causes the front items to be popped off.  Setting this to
-		 * 0 will make the textbox track only the visible rows.
+		 * 0 will make the textbox track only the visible rows.  Setting this to -1
+		 * will make the textbox track all rows.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of

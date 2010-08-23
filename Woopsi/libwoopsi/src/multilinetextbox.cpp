@@ -264,7 +264,7 @@ void MultiLineTextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
 bool MultiLineTextBox::cullTopLines() {
 
 	// Ensure that we have the correct number of rows
-	if (_text->getLineCount() > _maxRows) {
+	if ((_text->getLineCount() > _maxRows) && (_maxRows > -1)) {
 		_text->stripTopLines(_text->getLineCount() - _maxRows);
 		return true;
 	}
