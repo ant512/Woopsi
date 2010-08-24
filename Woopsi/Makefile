@@ -148,12 +148,11 @@ $(OUTPUT).elf		:	$(OFILES)
 
 #-------------------------------------------------------------------------------
 %.bin: %.elf
-	
+	@echo Linking...	
 	@$(OBJCOPY) -O binary $(TARGET).elf $(TARGET).bin
  
 #-------------------------------------------------------------------------------
 %.elf:
-	@echo Linking...
 	@$(LD)  $(LDFLAGS) -specs=ds_arm9.specs $(OFILES) $(LIBPATHPA) $(LIBSPA) $(LIBPATHS) $(LIBS) -o $(TARGET).elf
  
  
