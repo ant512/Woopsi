@@ -127,6 +127,8 @@ Roman9b::Roman9b(u8 fixedWidth) : PackedFont1 (
 	Roman9b_width,
 	12,
 	3,
-	10) {
+	6,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

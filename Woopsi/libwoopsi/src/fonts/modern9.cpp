@@ -127,6 +127,8 @@ Modern9::Modern9(u8 fixedWidth) : PackedFont1 (
 	Modern9_width,
 	12,
 	3,
-	9) {
+	6,
+	9
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

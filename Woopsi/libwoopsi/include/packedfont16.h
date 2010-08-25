@@ -26,6 +26,7 @@ namespace WoopsiUI {
 		 * @param glyphWidth Pixel width of character[i].
 		 * @param spWidth The height of a space
 		 * @param height The height of the font.
+		 * @param charTop The height of the font minus the blank spaces below 'a'.
 		 * @param fixedWidth Character width (fixed), or 0 for proportional.
 		 */
 		PackedFont16(
@@ -35,9 +36,10 @@ namespace WoopsiUI {
 			const u8 *glyphWidth,
 			const u8 height,
 			const u8 spWidth,
+			const u8 charTop,
 			const u8 fixedWidth = 0 )
 			:
-			  PackedFontBase(first, last, glyphData, glyphOffset, glyphWidth, height, spWidth, fixedWidth) { }
+			  PackedFontBase(first, last, glyphData, glyphOffset, glyphWidth, height, spWidth, charTop, fixedWidth) { }
 
 		/**
 		 * Render an individual character of the font to the specified bitmap.

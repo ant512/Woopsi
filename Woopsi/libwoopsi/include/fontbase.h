@@ -22,11 +22,13 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 * @param height The height of the font in pixels.
+		 * @param charTop The height of the font minus the blank spaces below 'a'.
 		 * @param transparentColour The colour in the font bitmap used as the
 		 * background colour.
 		 */
-		FontBase(const u8 height, const u16 transparentColour = 0) {
+		FontBase(const u8 height, const u8 charTop, const u16 transparentColour = 0) {
 			_height = height;
+			_charTop = charTop;
 			_drawColour = 0;
 			_isMonochrome = false;
 		}
@@ -143,8 +145,15 @@ namespace WoopsiUI {
 		 */
 		inline const u8 getHeight() const { return _height; };
 
+		/**
+		 * Gets the char top of the font.
+		 * @return The char top of the font.
+		 */
+		inline virtual const u8 getCharTop() const { return _charTop; };
+
 	private:
 		u8 _height;					/**< Height of the font. */
+		u8 _charTop;				/**< Height of the font minus the blank spaces below 'a'. */
 		u16 _drawColour;			/**< Colour to draw the font with when rendering. */
 		bool _isMonochrome;			/**< True if the font is not multicolour. */
 		u16 _transparentColour;		/**< Background colour that should not be rendered. */

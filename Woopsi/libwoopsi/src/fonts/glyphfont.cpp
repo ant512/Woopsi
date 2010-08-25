@@ -301,6 +301,8 @@ GlyphFont::GlyphFont() : PackedFont16 (
 	GlyphFont_width,
 	10,
 	3,
-	8) {
+	10,
+	8
+) {
 	setFontWidth(1);
 };

@@ -127,6 +127,8 @@ Dotum13::Dotum13(u8 fixedWidth) : PackedFont1 (
 	Dotum13_width,
 	14,
 	4,
-	13) {
+	10,
+	13
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

@@ -127,6 +127,8 @@ Gloucester10::Gloucester10(u8 fixedWidth) : PackedFont1 (
 	Gloucester10_width,
 	12,
 	3,
-	6) {
+	7,
+	6
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

@@ -127,6 +127,8 @@ Latha15::Latha15(u8 fixedWidth) : PackedFont1 (
 	Latha15_width,
 	16,
 	4,
-	15) {
+	11,
+	15
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

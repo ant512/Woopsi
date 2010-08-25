@@ -127,6 +127,8 @@ MSSans9::MSSans9(u8 fixedWidth) : PackedFont1 (
 	MSSans9_width,
 	12,
 	3,
-	9) {
+	6,
+	9
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

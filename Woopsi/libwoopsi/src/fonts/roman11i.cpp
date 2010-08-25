@@ -127,6 +127,8 @@ Roman11i::Roman11i(u8 fixedWidth) : PackedFont1 (
 	Roman11i_width,
 	14,
 	4,
-	10) {
+	7,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

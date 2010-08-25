@@ -127,6 +127,8 @@ Script9b::Script9b(u8 fixedWidth) : PackedFont1 (
 	Script9b_width,
 	12,
 	3,
-	10) {
+	6,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

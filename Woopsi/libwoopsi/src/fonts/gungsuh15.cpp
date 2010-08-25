@@ -127,6 +127,8 @@ Gungsuh15::Gungsuh15(u8 fixedWidth) : PackedFont1 (
 	Gungsuh15_width,
 	16,
 	4,
-	11) {
+	11,
+	11
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

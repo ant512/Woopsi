@@ -127,6 +127,8 @@ Kartika9::Kartika9(u8 fixedWidth) : PackedFont1 (
 	Kartika9_width,
 	10,
 	3,
-	8) {
+	5,
+	8
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

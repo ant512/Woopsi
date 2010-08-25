@@ -126,6 +126,8 @@ TinyFont::TinyFont(u8 fixedWidth) : PackedFont1 (
 	TinyFont_width,
 	6,
 	2,
-	3) {
+	4,
+	3
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

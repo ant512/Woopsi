@@ -25,7 +25,8 @@ namespace WoopsiUI {
 		 * @param glyphOffset Offset into glyphData[] of character[i].
 		 * @param glyphWidth Pixel width of character[i].
 		 * @param height The height of the font.
-		 * @param spWidth The width of a space character
+		 * @param spWidth The width of a space character.
+		 * @param charTop The height of the font minus the blank spaces below 'a'.
 		 * @param fixedWidth Character width (fixed), or 0 for proportional.
 		 */
 		PackedFontBase(
@@ -35,9 +36,10 @@ namespace WoopsiUI {
 			const u8 *glyphWidth,
 			const u8 height,
 			const u8 spWidth,
+			const u8 charTop,
 			const u8 fixedWidth = 0)
 			:
-			  FontBase(height, 0),
+			  FontBase(height, charTop, 0),
 			  _first(first), _last(last),
 			  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
 			  _fontWidth(0),

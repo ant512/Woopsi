@@ -127,6 +127,8 @@ Batang14::Batang14(u8 fixedWidth) : PackedFont1 (
 	Batang14_width,
 	14,
 	4,
-	11) {
+	10,
+	11
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

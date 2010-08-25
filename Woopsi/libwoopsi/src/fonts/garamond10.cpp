@@ -127,6 +127,8 @@ Garamond10::Garamond10(u8 fixedWidth) : PackedFont1 (
 	Garamond10_width,
 	12,
 	3,
-	10) {
+	6,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

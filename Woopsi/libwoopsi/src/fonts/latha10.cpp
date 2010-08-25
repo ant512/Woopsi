@@ -127,6 +127,8 @@ Latha10::Latha10(u8 fixedWidth) : PackedFont1 (
 	Latha10_width,
 	11,
 	3,
-	10) {
+	7,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

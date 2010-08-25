@@ -127,6 +127,8 @@ MSGothic9::MSGothic9(u8 fixedWidth) : PackedFont1 (
 	MSGothic9_width,
 	10,
 	3,
-	5) {
+	6,
+	5
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

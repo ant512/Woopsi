@@ -127,6 +127,8 @@ Gungsuh12::Gungsuh12(u8 fixedWidth) : PackedFont1 (
 	Gungsuh12_width,
 	12,
 	3,
-	7) {
+	8,
+	7
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

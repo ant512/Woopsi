@@ -127,6 +127,8 @@ Gulimche12b::Gulimche12b(u8 fixedWidth) : PackedFont1 (
 	Gulimche12b_width,
 	12,
 	3,
-	7) {
+	9,
+	7
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

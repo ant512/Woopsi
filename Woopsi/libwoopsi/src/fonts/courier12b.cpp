@@ -127,6 +127,8 @@ Courier12b::Courier12b(u8 fixedWidth) : PackedFont1 (
 	Courier12b_width,
 	12,
 	3,
-	9) {
+	8,
+	9
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

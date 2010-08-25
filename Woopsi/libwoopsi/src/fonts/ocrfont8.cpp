@@ -127,6 +127,8 @@ OCRFont8::OCRFont8(u8 fixedWidth) : PackedFont1 (
 	OCRFont8_width,
 	8,
 	2,
-	5) {
+	5,
+	5
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

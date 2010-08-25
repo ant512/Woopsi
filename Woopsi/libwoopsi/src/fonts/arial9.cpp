@@ -127,6 +127,8 @@ Arial9::Arial9(u8 fixedWidth) : PackedFont1 (
 	Arial9_width,
 	12,
 	3,
-	10) {
+	6,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

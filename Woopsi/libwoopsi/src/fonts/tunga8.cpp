@@ -127,6 +127,8 @@ Tunga8::Tunga8(u8 fixedWidth) : PackedFont1 (
 	Tunga8_width,
 	8,
 	2,
-	8) {
+	6,
+	8
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

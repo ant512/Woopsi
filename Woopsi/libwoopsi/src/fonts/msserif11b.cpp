@@ -127,6 +127,8 @@ MSSerif11b::MSSerif11b(u8 fixedWidth) : PackedFont1 (
 	MSSerif11b_width,
 	12,
 	3,
-	10) {
+	8,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

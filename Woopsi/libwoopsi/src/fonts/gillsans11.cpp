@@ -127,6 +127,8 @@ GillSans11::GillSans11(u8 fixedWidth) : PackedFont1 (
 	GillSans11_width,
 	12,
 	3,
-	9) {
+	7,
+	9
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

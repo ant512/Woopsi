@@ -127,6 +127,8 @@ Roman13::Roman13(u8 fixedWidth) : PackedFont1 (
 	Roman13_width,
 	16,
 	4,
-	13) {
+	9,
+	13
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

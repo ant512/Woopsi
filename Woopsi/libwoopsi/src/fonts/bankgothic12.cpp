@@ -127,6 +127,8 @@ BankGothic12::BankGothic12(u8 fixedWidth) : PackedFont1 (
 	BankGothic12_width,
 	12,
 	3,
-	11) {
+	5,
+	11
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

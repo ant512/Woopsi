@@ -127,6 +127,8 @@ Gungsuhche11::Gungsuhche11(u8 fixedWidth) : PackedFont1 (
 	Gungsuhche11_width,
 	12,
 	3,
-	6) {
+	8,
+	6
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

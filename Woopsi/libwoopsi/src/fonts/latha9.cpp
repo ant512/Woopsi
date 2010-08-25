@@ -127,6 +127,8 @@ Latha9::Latha9(u8 fixedWidth) : PackedFont1 (
 	Latha9_width,
 	10,
 	3,
-	9) {
+	6,
+	9
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

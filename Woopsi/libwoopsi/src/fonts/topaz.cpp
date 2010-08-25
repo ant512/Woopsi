@@ -233,6 +233,8 @@ Topaz::Topaz(u8 fixedWidth) : PackedFont1 (
 	Topaz_width,
 	5,
 	2,
-	8) {
+	3,
+	8
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

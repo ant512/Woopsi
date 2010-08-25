@@ -127,6 +127,8 @@ PoorRichard9::PoorRichard9(u8 fixedWidth) : PackedFont1 (
 	PoorRichard9_width,
 	12,
 	3,
-	10) {
+	6,
+	10
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

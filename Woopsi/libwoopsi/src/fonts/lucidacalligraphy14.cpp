@@ -127,6 +127,8 @@ LucidaCalligraphy14::LucidaCalligraphy14(u8 fixedWidth) : PackedFont1 (
 	LucidaCalligraphy14_width,
 	16,
 	4,
-	15) {
+	9,
+	15
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

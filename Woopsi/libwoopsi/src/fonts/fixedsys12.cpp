@@ -127,6 +127,8 @@ FixedSys12::FixedSys12(u8 fixedWidth) : PackedFont1 (
 	FixedSys12_width,
 	12,
 	3,
-	8) {
+	8,
+	8
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
 };

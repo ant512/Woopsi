@@ -49,3 +49,5 @@ bmp2font /fonttype packedfont1 /infile TimesNewRoman9.bmp /classname TimesNewRom
 bmp2font /fonttype packedfont1 /infile TinyFont.bmp /classname TinyFont
 bmp2font /fonttype packedfont1 /infile Topaz.bmp /classname Topaz
 bmp2font /fonttype packedfont1 /infile Tunga8.bmp /classname Tunga8
+
+bmp2font /fonttype packedfont16 /infile profont9.bmp /classname ProFont9
