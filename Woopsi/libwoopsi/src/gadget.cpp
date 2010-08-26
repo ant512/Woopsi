@@ -268,7 +268,6 @@ const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
 	return y;
 }
 
-// Check for single-point collisions
 bool Gadget::checkCollision(s16 x, s16 y) const {
 
 	if (isHidden()) return false;
@@ -278,6 +277,17 @@ bool Gadget::checkCollision(s16 x, s16 y) const {
 	getRectClippedToHierarchy(rect);
 
 	return rect.contains(x, y);
+}
+
+bool Gadget::checkCollision(const Rect& rect) const {
+
+	if (isHidden()) return false;
+
+	// Get the clipped rect
+	Rect gadgetRect;
+	getRectClippedToHierarchy(gadgetRect);
+
+	return gadgetRect.intersects(rect);
 }
 
 bool Gadget::checkCollisionWithForegroundRects(s16 x, s16 y) const {

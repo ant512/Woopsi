@@ -97,7 +97,7 @@ void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rec
 		u32 overlapXRect = 0;
 		u32 overlapYRect = 0;
 
-		if (_gadget->checkCollision(checkRect.x, checkRect.y, checkRect.width, checkRect.height)) {
+		if (_gadget->checkCollision(checkRect)) {
 			// Got a collision.  We need to split this rectangle
 
 			// Get clipped dimensions of gadget

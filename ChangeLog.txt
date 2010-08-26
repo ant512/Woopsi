@@ -11,6 +11,7 @@ Change Log
     - Setting MultiLineTextBox's max rows to -1 forces it to retain all text.
     - Added getCharTop() to font classes.
     - Various minor .NET tool improvements.
+    - Added Gadget::checkCollision(Rect&).
 
   V0.99.3 (20100819)
   

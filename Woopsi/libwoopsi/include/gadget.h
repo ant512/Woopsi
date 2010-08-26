@@ -788,6 +788,13 @@ namespace WoopsiUI {
 		bool checkCollision(Gadget* gadget) const;
 
 		/**
+		 * Checks if the supplied rect collides with this gadget.
+		 * @param rect A rect to check for collisions with.
+		 * @return True if a collision occurred.
+		 */
+		bool checkCollision(const Rect& rect) const;
+
+		/**
 		 * Invalidate the visible region cache for all gadgets below the supplied
 		 * gadget in this gadget's child stack.  This will cause those gadgets to
 		 * recalculate their visible regions next time they try to draw themselves.
