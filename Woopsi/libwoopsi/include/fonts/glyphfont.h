@@ -4,8 +4,15 @@
 #include "packedfont16.h"
 
 namespace WoopsiUI {
+
+	/**
+	 * GlyphFont font.
+	 */
 	class GlyphFont : public PackedFont16 {
 	public:
+		/**
+		 * Constructor.
+		 */
 		GlyphFont();
 	};
 }
