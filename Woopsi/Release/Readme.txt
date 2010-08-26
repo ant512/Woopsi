@@ -49,6 +49,7 @@ Credits and Acknowlegements
   - PALib independence                               - Steven Harrison
   - Testing and suggestions                          - John Buxton
                                                      - Chase
+                                                     - Leonelhs
   - Unicode work and libfreetype integration         - Olivier Binda
   - Testing and gadget contributions                 - Mark Adamson
   - Simian Zombie logo                               - John Clay
