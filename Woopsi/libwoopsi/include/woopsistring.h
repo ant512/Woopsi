@@ -3,8 +3,6 @@
 
 #include <nds.h>
 
-
-
 namespace WoopsiUI {
 	
 	class StringIterator;

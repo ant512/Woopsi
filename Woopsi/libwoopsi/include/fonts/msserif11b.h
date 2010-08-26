@@ -4,8 +4,16 @@
 #include "packedfont1.h"
 
 namespace WoopsiUI {
+
+	/**
+	 * MSSerif11b font.
+	 */
 	class MSSerif11b : public PackedFont1 {
 	public:
+		/**
+		 * Constructor.
+		 * @param fixedWidth Set to 0 for proportional or 1 for fixed width.
+		 */
 		MSSerif11b(u8 fixedWidth = 0);
 	};
 }
