@@ -14,6 +14,9 @@ Change Log
     - Added getCharTop() to font classes.
     - Various minor .NET tool improvements.
     - Added Gadget::checkCollision(Rect&).
+    - Added drawBaselineText() to Graphics and GraphicsPort classes
+     (Lakedaemon).
+    - Added freetype outline font class (Lakedaemon).
 
   V0.99.3 (20100819)
   

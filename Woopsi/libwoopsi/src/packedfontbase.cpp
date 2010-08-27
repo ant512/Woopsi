@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-u16 PackedFontBase::getCharWidth(u32 letter) const {
+u8 PackedFontBase::getCharWidth(u32 letter) const {
 	if (_fontWidth) return _fontWidth;
 
 	if (letter < _first || letter > _last) return _spWidth;

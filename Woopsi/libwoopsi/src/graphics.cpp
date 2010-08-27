@@ -259,6 +259,27 @@ void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string
 	delete iterator;
 }
 
+void Graphics::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
+
+	s16 clipX1 = _clipRect.x;
+	s16 clipY1 = _clipRect.y;
+	s16 clipX2 = _clipRect.x + _clipRect.width - 1;
+	s16 clipY2 = _clipRect.y + _clipRect.height - 1;
+		
+	// Draw the string char by char
+	StringIterator* iterator = string.newStringIterator();
+		
+	// We can't do the same exit checks as we have no idea of the height, width, top of the string
+	// We would need lineHeight, lineTop, lineWidth and that wouldn't tell us 
+	// where to stop rendering anyway clipping will be done in the font, on a char basis 
+	if (iterator->moveTo(startIndex)) {
+		do {
+		        x = font->drawBaselineChar(_bitmap, iterator->getCodePoint(), x, y, clipX1, clipY1, clipX2, clipY2);
+		} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+	}
+	delete iterator;
+}
+
 // Print a string in a specific colour
 void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
 

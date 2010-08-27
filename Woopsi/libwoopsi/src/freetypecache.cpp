@@ -1,41 +1,61 @@
 #include "freetypecache.h"
 #include "freetypefacemanager.h"
-#include "freetypefont.h"
-
-// I have implemented three different ways to copy the bitmap with anti-
-// aliasing.  To switch between them use this define
-#define fast
+//#include "freetypefont.h"
 
 using namespace WoopsiUI;
 
 // A callback function provided by Woopsi. It is used by the cache manager to
 // translate a given FTC_FaceID into a new valid FT_Face object, on demand.
 static FT_Error faceRequester(FTC_FaceID face_id, FT_Library library, FT_Pointer request_data, FT_Face* aface) {
-    FT_Error error;
-    FaceID* face = (FaceID*)face_id;
+    FaceId* faceId = (FaceId*) face_id;
+    FaceType type = faceId->type();
+    FaceIdUnion face = faceId->face();
+    FT_Error error;   
+    /*
+ 
+    if (!face->isValid()) return -666; // shouldn't be usefull as invalid freefont shouldn't call the faceRequester
+    */
     
-    // This loads a face from from a file.  It is possible to load a face
-	// (faster!) from memory through FT_Open_Face.
+    // This loads a face from from a file (if face->size is 0) and from memory otherwise.  
     // See here: http://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_Open_Args
-	error = FT_New_Face(library, face->path, face->index, aface);
-	if (error) return error;
+    
+	if (type == FILE_FREETYPE_FACE) error = FT_New_Face(library, face.file.path, face.file.index, aface);
+	else error = FT_New_Memory_Face(library, face.memory.address, face.memory.size, face.memory.index, aface);
+	if (error) {
+	    faceId->declareInvalid();
+	    return error;
+	}
+	//  if the font has a unicode charmap, it'll be selected. In other cases (old/asian fonts) we have to fall back to some other charmap (the first one we find, basically)
+	if ((!aface) || (!*aface) || (!((*aface)->num_charmaps))) return -666;
+	if (!(*aface)->charmap) {// no unicode charmap	
+         for (int n = 0; n < (*aface)->num_charmaps; n++) {
+             error = FT_Set_Charmap(*aface, (*aface)->charmaps[n]);
+             if (!error) break;  // success
+         }
+        if (!(*aface)->charmap) { // could not select a char map 
+            faceId->declareInvalid();
+            return -666;
+        } 
+        faceId->setNMap((*aface)->num_charmaps);
+	}
 
-	// Selects a charmap by it's encoding.  We use Unicode. 
+	/*// Selects a charmap by it's encoding.  We use Unicode. 
 	error = FT_Select_Charmap(*aface, FT_ENCODING_UNICODE);
 	if (error) return error;
+*/
 	
 	// If the font's ‘face_index’ is greater than or equal to zero, (*aface)
 	// must be non-NULL (or there is a problem...).
 	// Computes the index of the previous charmap.  If its rank among the
 	// charmaps of the face isn't 0, we have to compute it's index
-	if (*aface) face->charMapIndex = ((*aface)->charmap ? FT_Get_Charmap_Index((*aface)->charmap) : 0);
+
+	faceId->setCharMapIndex(((*aface)->charmap ? FT_Get_Charmap_Index((*aface)->charmap): 0));
 	// This command stores the CharMapIndex in the FontID structure (to speed up
 	// glyph loading)... as this function is called on demand, maybe
 	// We don't have to initialize that (which feels strange).
 	
-	// If there was no error, the face should be ready to render glyphs/return metrics now
-	return error;
-}
+	return 0;
+};
 
 FreeTypeCache::FreeTypeCache(u32 cacheBytesSize) {
  	// Calling freetype (libfat must be included and initialized), 
@@ -58,21 +78,24 @@ FreeTypeCache::FreeTypeCache(u32 cacheBytesSize) {
 	// in a char : perfect for the DS)
 	_error = FTC_SBitCache_New(_manager, &_sbitCache);
 	if (_error) return;
-}
+	
+	// This structure is designed to hold many distinct glyph images while not exceeding a certain memory threshold.
+	 _error = FTC_ImageCache_New(_manager, &_imageCache);
+	 if (_error) return;
+};
 
 FreeTypeCache::~FreeTypeCache() {
 
-	// Free the manager first
 	FTC_Manager_Done(_manager);
-	
-	// Then free the library
 	FT_Done_FreeType(_library);
-}
+};
     
 void FreeTypeCache::loadSbit(FTC_ScalerRec scaler, u32 charMapIndex, u32 codepoint, FTC_SBit * sbit) const{
-	// For the flag explanation, see here: 
-	// http://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_LOAD_TARGET_XXX
-	// and here : http://www.freetype.org/freetype2/docs/reference/ft2-base_interface.html#FT_LOAD_XXX
 	u32 index = FTC_CMapCache_Lookup(_charMapCache, scaler.face_id, charMapIndex, codepoint);
 	FTC_SBitCache_LookupScaler(_sbitCache, &scaler,  FT_LOAD_RENDER|FT_LOAD_TARGET_NORMAL, index, sbit, NULL);
-}
+};
+
+void FreeTypeCache::loadGlyph(FTC_ScalerRec scaler, u32 charMapIndex, u32 codepoint, FT_Glyph * glyph) const {
+	u32 index = FTC_CMapCache_Lookup(_charMapCache, scaler.face_id, charMapIndex, codepoint);
+	FTC_ImageCache_LookupScaler(_imageCache, &scaler,  FT_LOAD_NO_BITMAP, index, glyph, NULL);//FT_LOAD_TARGET_NORMAL
+};

@@ -92,6 +92,30 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 	}
 }
 
+// Print a string in a specific colour on a baseline
+void GraphicsPort::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
+	
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+	
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		_clipRectList.at(i).copyTo(rect);
+		
+		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawBaselineText(x, y, font, string, startIndex, length);
+	}
+}
+
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string) {
 	drawText(x, y, font, string, 0, string.getLength());
 }

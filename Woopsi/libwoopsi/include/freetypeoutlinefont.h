@@ -1,5 +1,5 @@
-#ifndef _FREETYPE_FONT_H_
-#define _FREETYPE_FONT_H_
+#ifndef _FREETYPE_OUTLINE_FONT_H_
+#define _FREETYPE_OUTLINE_FONT_H_
 
 #include <nds.h>
 #include "fontbase.h"
@@ -9,21 +9,22 @@
 #include FT_CACHE_H 
 #include FT_BITMAP_H
 
-#include "woopsistring.h"
 #include "freetypefacemanager.h"
 #include "freetypecache.h"
 #include "mutablebitmapbase.h"
-
+#include "woopsistring.h"
 
 namespace WoopsiUI {
 
 	class MutableBitmapBase;
 	class FreeTypeCache;
-
-	/**
-	 * A font class using freetype, in association with a fontcache.
+     /**
+	 * A font class using freetype and outline fonts, in association with a fontcache.
+	 * at the moment each glyph is rendered directly on the screen and isn't cached, 
+	 * which makes it much slower than a freetypefont
+	 * this is an experimental class to test experimental features
 	 */
-	class FreeTypeFont : public FontBase {
+	class FreeTypeOutlineFont : public FontBase {
 	public:
 
 		/**
@@ -34,27 +35,37 @@ namespace WoopsiUI {
 		 * @param height The height of a single glyph.
 		 * @param colour The colour of the font.
 		 */
-		FreeTypeFont(FreeTypeCache* fontCache, const FaceId* faceId, const u8 width, const u8 height, const u16 colour);
+		FreeTypeOutlineFont(FreeTypeCache* fontCache, const FaceId* faceId, const u8 width, const u8 height, const u16 colour);
 		
 		/**
 		 * Destructor.
 		 */
-		inline ~FreeTypeFont() {};
+		inline ~FreeTypeOutlineFont() {};
 		
 		/**
-		 * Loads a small bitmap (with metrics) of a glyph.
+		 * Loads a glyph.
 		 * @param codepoint the Unicode codepoint of a glyph.
 		 */
-		void getSbit(const u32 codepoint) const;
+        void loadGlyph(const u32 codepoint) const {
+            _fontCache->loadGlyph(_scaler, _charMapIndex, codepoint, &_glyph);
+        }
+		/**
+		 * Loads the BBbox of  the glyph _glyph.
+		 * @param codepoint the Unicode codepoint of a glyph.
+		 */
+		inline void loadBox() const {     
+             FT_Glyph_Get_CBox(_glyph,FT_GLYPH_BBOX_PIXELS,&_bbox);
+		 };
 		
+		 
 		/**
 		 * Get the width of an individual character.
 		 * @param codepoint The character to get the width of.
 		 * @return The width of the character in pixels.
 		 */
-		inline u8 getCharWidth(const u32 codepoint) const { 
-			getSbit(codepoint);
-			return _sbit->xadvance;
+		inline u8 getCharWidth(const u32 codepoint) const {
+		    loadGlyph(codepoint);
+			return _glyph->advance.x >>16;
 		};
 
 		/**
@@ -82,8 +93,12 @@ namespace WoopsiUI {
 		 * the glyph is blank.
 		 */
 		virtual inline const bool isCharBlank(const u32 codepoint) const { 
-			getSbit(codepoint);
-			if ((_sbit->buffer == 0) || (_sbit->width == 0) || (_sbit->height == 0)) return true;
+		    /*getGlyph(codepoint);
+		    FT_BBox box;
+            FT_Glyph_Get_CBox(_glyph,FT_GLYPH_BBOX_PIXELS,&box);
+			return box.xMax - box.xMin;	
+			if ((_sbit->buffer == 0) || (_sbit->width == 0) || (_sbit->height == 0)) return true;*/
+			if ((codepoint==10) ||(codepoint==13)) return true;  // FixThis
 			return false; 
 		};
 
@@ -100,9 +115,7 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		 s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
-		     return drawBaselineChar(bitmap, letter, x, y+_scaler.height, clipX1, clipY1, clipX2, clipY2);  // Workaround the fact that woopsi gadgets don't have a baseline, except XmlBox
-		 };
+		s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 
 
 		/**
@@ -118,7 +131,9 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		s16 drawBaselineChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
+		s16 drawBaselineChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
+		    return drawChar(bitmap, letter, x, y-getCharTop(letter), clipX1, clipY1, clipX2, clipY2) ;
+		};
 		
 		/**
 		 * Get the width of an individual character.
@@ -126,8 +141,9 @@ namespace WoopsiUI {
 		 * @return The height of the character in pixels.
 		 */
 		inline u8 getCharHeight(const u32 codepoint) const { 
-		    getSbit(codepoint);
-            return _sbit->height; 
+		    //loadGlyph(codepoint);
+		    //loadBox();
+			return _bbox.yMax - _bbox.yMin;
         };     
             
 		/**
@@ -136,13 +152,13 @@ namespace WoopsiUI {
 		 * @return The algebrical distance from baseline to top of the character in pixels.
 		 */
 		inline s8 getCharTop(const u32 codepoint) const { 
-		    getSbit(codepoint);
-            return _sbit->top; 
+		    //loadGlyph(codepoint);
+		    //loadBox();
+			return _bbox.yMax;
         }; 
             
 		/**
-		 * returns true and set the width, height and face of a freetype font if it is valid, 
-		 does nothing and returns false otherwise.
+		 * Set the width, height and face (if faceId isn't NULL) of a freetype font.
 		 * @param width The width of the new font.
 		 * @param height The height of the new font.
 		 * @param faceId The faceId of the new font.		 
@@ -153,16 +169,16 @@ namespace WoopsiUI {
 			_scaler.height = (FT_UInt) height;	
 		    _faceId = faceId;
 		    _scaler.face_id = (FTC_FaceID) faceId;
-		    getSbit(' ');
 		    return true;
-		};		
+		};
 		
 	private:
-		const FreeTypeCache* _fontCache;
+		mutable FreeTypeCache* _fontCache;
 		const FaceId* _faceId;
-		u32 _charMapIndex;
-		FTC_ScalerRec _scaler;
-		FTC_SBit _sbit;
+		mutable u32 _charMapIndex;
+	    mutable FTC_ScalerRec _scaler;
+		mutable FT_Glyph  _glyph;
+	    mutable FT_BBox _bbox;
 	};
-};	
+};
 #endif

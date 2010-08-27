@@ -42,8 +42,8 @@ namespace WoopsiUI {
 			  FontBase(height, 0),
 			  _first(first), _last(last),
 			  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
-			  _fontWidth(0), _fontTop(fontTop), 
-			  _spWidth(spWidth), _widMax(fixedWidth) { };
+			  _fontWidth(0), _spWidth(spWidth),
+			  _fontTop(fontTop), _widMax(fixedWidth) { };
 
 		/**
 		 * Makes this font fixed-width, though doesn't allow the spacing to be less
@@ -152,9 +152,9 @@ namespace WoopsiUI {
 		const u16 *_glyphData;		/**< All data for each glyph */
 		const u16 *_glyphOffset;	/**< Locations of each character in _glyphData */
 		const u8 *_glyphWidth;		/**< Width in pixels of each glyph in _glyphData */
-		u8 _fontTop;				/**< Constant Top of the packed font*/
 		u8 _fontWidth;				/**< Width of the font, or 0 for proportional */
 		u8 _spWidth;				/**< Width of a blank space */
+		u8 _fontTop;				/**< Constant Top of the packed font*/
 		u8 _widMax;					/**< The maximum width of a character in the font */
 	};
 }
