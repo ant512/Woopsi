@@ -44,19 +44,19 @@ Requirements
 Credits and Acknowlegements
 ---------------------------
 
-  - Coding and design                                - Antony Dzeryn
-  - Testing, technical advice, other contributions   - Jeff Laing
-  - PALib independence                               - Steven Harrison
-  - Testing and suggestions                          - John Buxton
-                                                     - Chase
-                                                     - Leonelhs
-  - Unicode work and libfreetype integration         - Olivier Binda
-  - Testing and gadget contributions                 - Mark Adamson
-  - Simian Zombie logo                               - John Clay
-  - Thanks to                                        - The devKitPro team
-                                                     - The PALib team
-                                                     - Nintendo
-                                                     - R. J. Michal
+  - Coding and design                               - Antony Dzeryn
+  - Testing, technical advice, other contributions  - Jeff Laing
+  - PALib independence                              - Steven Harrison
+  - Testing and suggestions                         - John Buxton
+                                                    - Chase
+                                                    - Leonelhs
+  - Unicode work and libfreetype integration        - Olivier Binda (Lakedaemon)
+  - Testing and gadget contributions                - Mark Adamson
+  - Simian Zombie logo                              - John Clay
+  - Thanks to                                       - The devKitPro team
+                                                    - The PALib team
+                                                    - Nintendo
+                                                    - R. J. Michal
 
   Woopsi uses the FreeType library for advanced font support.  See
   http://www.freetype.org for more information.
