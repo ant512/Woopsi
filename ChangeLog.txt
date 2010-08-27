@@ -6,6 +6,7 @@ Change Log
   - Fixes:
     - All makefiles no longer create .ds.gba and .sc.nds binaries.
     - Fonts include doxygen comments.
+    - Amended return type of some font properties (Lakedaemon).
   
   - New Features:
     - Built with devKitARM r31/libnds 1.4.5/default ARM7 0.5.14.

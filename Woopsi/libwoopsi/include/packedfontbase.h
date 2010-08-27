@@ -36,13 +36,13 @@ namespace WoopsiUI {
 			const u8 *glyphWidth,
 			const u8 height,
 			const u8 spWidth,
-			const u8 charTop,
+			const u8 fontTop,
 			const u8 fixedWidth = 0)
 			:
-			  FontBase(height, charTop, 0),
+			  FontBase(height, 0),
 			  _first(first), _last(last),
 			  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
-			  _fontWidth(0),
+			  _fontWidth(0), _fontTop(fontTop), 
 			  _spWidth(spWidth), _widMax(fixedWidth) { };
 
 		/**
@@ -70,7 +70,27 @@ namespace WoopsiUI {
 			u32 letter,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
-
+		
+		/**
+		 * Draw an individual character of the font to the specified bitmap on a baseline.
+		 * @param bitmap The bitmap to draw to.
+		 * @param letter The character to output.
+		 * @param x The x co-ordinate of the text.
+		 * @param y The y co-ordinate of the text.
+		 * @param clipX1 The left edge of the clipping rectangle.
+		 * @param clipY1 The top edge of the clipping rectangle.
+		 * @param clipX2 The right edge of the clipping rectangle.
+		 * @param clipY2 The bottom edge of the clipping rectangle.
+		 * @return The x co-ordinate for the next character to be drawn.
+		 */
+		virtual s16 drawBaselineChar(
+			MutableBitmapBase* bitmap,
+			u32 letter,
+			s16 x, s16 y,
+			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
+		        return drawChar(bitmap,letter,x, y-getCharTop(y),clipX1, clipY1, clipX2, clipY2);
+			};			
+		
 		/**
 		 * Get the width of a string in pixels when drawn with this font.
 		 * @param text The string to check.
@@ -94,7 +114,14 @@ namespace WoopsiUI {
 		 * @param letter The character to get the width of.
 		 * @return The width of the character in pixels.
 		 */
-		virtual u16 getCharWidth(u32 letter) const;
+		virtual u8 getCharWidth(u32 letter) const;
+
+		/**
+		 * Get the top of an individual character (constant for a packedfont).
+		 * @param letter The character to get the width of.
+		 * @return The width of the character in pixels.
+		 */
+		inline virtual s8 getCharTop(u32 letter) const {return _fontTop;};
 
 		/**
 		 * Text uses this to decide whether a given character is blank or not
@@ -125,6 +152,7 @@ namespace WoopsiUI {
 		const u16 *_glyphData;		/**< All data for each glyph */
 		const u16 *_glyphOffset;	/**< Locations of each character in _glyphData */
 		const u8 *_glyphWidth;		/**< Width in pixels of each glyph in _glyphData */
+		u8 _fontTop;				/**< Constant Top of the packed font*/
 		u8 _fontWidth;				/**< Width of the font, or 0 for proportional */
 		u8 _spWidth;				/**< Width of a blank space */
 		u8 _widMax;					/**< The maximum width of a character in the font */

@@ -22,13 +22,11 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 * @param height The height of the font in pixels.
-		 * @param charTop The height of the font minus the blank spaces below 'a'.
 		 * @param transparentColour The colour in the font bitmap used as the
 		 * background colour.
 		 */
-		FontBase(const u8 height, const u8 charTop, const u16 transparentColour = 0) {
+		FontBase(const u8 height, const u16 transparentColour = 0) {
 			_height = height;
-			_charTop = charTop;
 			_drawColour = 0;
 			_isMonochrome = false;
 		}
@@ -106,7 +104,21 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		virtual s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
+		virtual s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;  // This is flawed as it doesn't allow 2 different fonts on the same line
+
+		/**
+		 * Draw an individual character of the font to the specified bitmap on a baseline.
+		 * @param bitmap The bitmap to draw to.
+		 * @param letter The character to output.
+		 * @param x The x co-ordinate of the pen.
+		 * @param y The y co-ordinate of the pen.
+		 * @param clipX1 The left edge of the clipping rectangle.
+		 * @param clipY1 The top edge of the clipping rectangle.
+		 * @param clipX2 The right edge of the clipping rectangle.
+		 * @param clipY2 The bottom edge of the clipping rectangle.
+		 * @return The x co-ordinate for the next character to be drawn.
+		 */
+		virtual s16 drawBaselineChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 		
 		/**
 		 * Get the width of a string in pixels when drawn with this font.
@@ -130,14 +142,21 @@ namespace WoopsiUI {
 		 * @param letter The character to get the width of.
 		 * @return The width of the character in pixels.
 		 */
-		virtual u16 getCharWidth(u32 letter) const = 0;
+		virtual u8 getCharWidth(u32 letter) const = 0;
 
 		/**
 		 * Get the height of an individual character.
 		 * @param letter The letter to get the height of.
 		 * @return The height of the character in pixels.
 		 */
-		virtual u16 getCharHeight(u32 letter) const { return _height; };
+		virtual u8 getCharHeight(u32 letter) const { return _height; };
+		
+		/**
+		 * Get the algebric distance from baseline to top of an individual character.
+		 * @param letter The character to get the "top" of.
+		 * @return The top of the character in pixels.
+		 */
+		virtual s8 getCharTop(u32 letter) const = 0;		
 
 		/**
 		 * Gets the height of the font.
@@ -145,15 +164,8 @@ namespace WoopsiUI {
 		 */
 		inline const u8 getHeight() const { return _height; };
 
-		/**
-		 * Gets the char top of the font.
-		 * @return The char top of the font.
-		 */
-		inline virtual const u8 getCharTop() const { return _charTop; };
-
 	private:
 		u8 _height;					/**< Height of the font. */
-		u8 _charTop;				/**< Height of the font minus the blank spaces below 'a'. */
 		u16 _drawColour;			/**< Colour to draw the font with when rendering. */
 		bool _isMonochrome;			/**< True if the font is not multicolour. */
 		u16 _transparentColour;		/**< Background colour that should not be rendered. */
