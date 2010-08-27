@@ -333,6 +333,18 @@ namespace WoopsiUI {
 		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);
 
 		/**
+		 * Draw a portion of a string on a baseline (chars may have different tops/heights/depths) to the bitmap.
+		 * @param x The x co-ordinate of the string.
+		 * @param y The y co-ordinate of the string.
+		 * @param font The font to draw with.
+		 * @param string The string to output.
+		 * @param startIndex The start index within the string from which
+		 * drawing will commence.
+		 * @param length The number of characters to draw.
+		 */		 
+        void drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);		
+		
+		/**
 		 * Scroll a region by a specified distance in two dimensions.  Performs
 		 * a clipped copy to achieve scroll effect.
 		 * @param x X co-ord of the area to scroll.
