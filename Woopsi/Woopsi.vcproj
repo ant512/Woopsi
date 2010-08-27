@@ -77,6 +77,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\src\freetypeoutlinefont.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\src\packedfont1.cpp"
 						>
 					</File>
@@ -696,6 +700,10 @@
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\freetypefont.h"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\include\freetypeoutlinefont.h"
 						>
 					</File>
 					<File
