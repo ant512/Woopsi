@@ -155,19 +155,126 @@ void woopsiVblFunc() {
 	// Get key state
     Uint8* keyState = SDL_GetKeyState(NULL);
 
-	updatePadState(SDLK_UP, &(Pad.Held.Up), &(Pad.Newpress.Up), &(Pad.Released.Up), &(Pad.HeldTime.Up));
-	updatePadState(SDLK_DOWN, &(Pad.Held.Down), &(Pad.Newpress.Down), &(Pad.Released.Down), &(Pad.HeldTime.Down));
-	updatePadState(SDLK_LEFT, &(Pad.Held.Left), &(Pad.Newpress.Left), &(Pad.Released.Left), &(Pad.HeldTime.Left));
-	updatePadState(SDLK_RIGHT, &(Pad.Held.Right), &(Pad.Newpress.Right), &(Pad.Released.Right), &(Pad.HeldTime.Right));
-	updatePadState(SDLK_z, &(Pad.Held.A), &(Pad.Newpress.A), &(Pad.Released.A), &(Pad.HeldTime.A));
-	updatePadState(SDLK_x, &(Pad.Held.B), &(Pad.Newpress.B), &(Pad.Released.B), &(Pad.HeldTime.B));
-	updatePadState(SDLK_c, &(Pad.Held.X), &(Pad.Newpress.X), &(Pad.Released.X), &(Pad.HeldTime.X));
-	updatePadState(SDLK_v, &(Pad.Held.Y), &(Pad.Newpress.Y), &(Pad.Released.Y), &(Pad.HeldTime.Y));
-	updatePadState(SDLK_a, &(Pad.Held.L), &(Pad.Newpress.L), &(Pad.Released.L), &(Pad.HeldTime.L));
-	updatePadState(SDLK_s, &(Pad.Held.R), &(Pad.Newpress.R), &(Pad.Released.R), &(Pad.HeldTime.R));
-	updatePadState(SDLK_d, &(Pad.Held.Start), &(Pad.Newpress.Start), &(Pad.Released.Start), &(Pad.HeldTime.Start));
-	updatePadState(SDLK_f, &(Pad.Held.Select), &(Pad.Newpress.Select), &(Pad.Released.Select), &(Pad.HeldTime.Select));
-
+	// Up
+	if ((keyState[SDLK_UP]) && ((!Pad.Held.Up) && (!Pad.Newpress.Up))) {
+		Pad.Newpress.Up = true;
+	} else if ((!keyState[SDLK_UP]) && ((Pad.Held.Up) || (Pad.Newpress.Up))) {
+		Pad.Released.Up = true;
+		Pad.Held.Up = false;
+		Pad.Newpress.Up = false;
+		Pad.HeldTime.Up = 0;
+	}
+	
+	// Down
+	if ((keyState[SDLK_DOWN]) && ((!Pad.Held.Down) && (!Pad.Newpress.Down))) {
+		Pad.Newpress.Down = true;
+	} else if ((!keyState[SDLK_DOWN]) && ((Pad.Held.Down) || (Pad.Newpress.Down))) {
+		Pad.Released.Down = true;
+		Pad.Held.Down = false;
+		Pad.Newpress.Down = false;
+		Pad.HeldTime.Down = 0;
+	}
+	
+	// Left
+	if ((keyState[SDLK_LEFT]) && ((!Pad.Held.Left) && (!Pad.Newpress.Left))) {
+		Pad.Newpress.Left = true;
+	} else if ((!keyState[SDLK_LEFT]) && ((Pad.Held.Left) || (Pad.Newpress.Left))) {
+		Pad.Released.Left = true;
+		Pad.Held.Left = false;
+		Pad.Newpress.Left = false;
+		Pad.HeldTime.Left = 0;
+	}
+	
+	// Right
+	if ((keyState[SDLK_RIGHT]) && ((!Pad.Held.Right) && (!Pad.Newpress.Right))) {
+		Pad.Newpress.Right = true;
+	} else if ((!keyState[SDLK_RIGHT]) && ((Pad.Held.Right) || (Pad.Newpress.Right))) {
+		Pad.Released.Right = true;
+		Pad.Held.Right = false;
+		Pad.Newpress.Right = false;
+		Pad.HeldTime.Right = 0;
+	}	
+	
+	// A (assigned as Z on keyboard)
+	if ((keyState[SDLK_z]) && ((!Pad.Held.A) && (!Pad.Newpress.A))) {
+		Pad.Newpress.A = true;
+	} else if ((!keyState[SDLK_z]) && ((Pad.Held.A) || (Pad.Newpress.A))) {
+		Pad.Released.A = true;
+		Pad.Held.A = false;
+		Pad.Newpress.A = false;
+		Pad.HeldTime.A = 0;
+	}
+	
+	// B (assigned as X on keyboard)
+	if ((keyState[SDLK_x]) && ((!Pad.Held.B) && (!Pad.Newpress.B))) {
+		Pad.Newpress.B = true;
+	} else if ((!keyState[SDLK_x]) && ((Pad.Held.B) || (Pad.Newpress.B))) {
+		Pad.Released.B = true;
+		Pad.Held.B = false;
+		Pad.Newpress.B = false;
+		Pad.HeldTime.B = 0;
+	}
+	
+	// X (assigned as C on keyboard)
+	if ((keyState[SDLK_c]) && ((!Pad.Held.X) && (!Pad.Newpress.X))) {
+		Pad.Newpress.X = true;
+	} else if ((!keyState[SDLK_c]) && ((Pad.Held.X) || (Pad.Newpress.X))) {
+		Pad.Released.X = true;
+		Pad.Held.X = false;
+		Pad.Newpress.X = false;
+		Pad.HeldTime.X = 0;
+	}
+	
+	// Y (assigned as V on keyboard)
+	if ((keyState[SDLK_v]) && ((!Pad.Held.Y) && (!Pad.Newpress.Y))) {
+		Pad.Newpress.Y = true;
+	} else if ((!keyState[SDLK_v]) && ((Pad.Held.Y) || (Pad.Newpress.Y))) {
+		Pad.Released.Y = true;
+		Pad.Held.Y = false;
+		Pad.Newpress.Y = false;
+		Pad.HeldTime.Y = 0;
+	}
+	
+	// L (assigned as A on keyboard)
+	if ((keyState[SDLK_a]) && ((!Pad.Held.L) && (!Pad.Newpress.L))) {
+		Pad.Newpress.L = true;
+	} else if ((!keyState[SDLK_a]) && ((Pad.Held.L) || (Pad.Newpress.L))) {
+		Pad.Released.L = true;
+		Pad.Held.L = false;
+		Pad.Newpress.L = false;
+		Pad.HeldTime.L = 0;
+	}
+	
+	// R (assigned as S on keyboard)
+	if ((keyState[SDLK_s]) && ((!Pad.Held.R) && (!Pad.Newpress.R))) {
+		Pad.Newpress.R = true;
+	} else if ((!keyState[SDLK_s]) && ((Pad.Held.R) || (Pad.Newpress.R))) {
+		Pad.Released.R = true;
+		Pad.Held.R = false;
+		Pad.Newpress.R = false;
+		Pad.HeldTime.R = 0;
+	}
+	
+	// Start (assigned as D on keyboard)
+	if ((keyState[SDLK_d]) && ((!Pad.Held.Start) && (!Pad.Newpress.Start))) {
+		Pad.Newpress.Start = true;
+	} else if ((!keyState[SDLK_d]) && ((Pad.Held.Start) || (Pad.Newpress.Start))) {
+		Pad.Released.Start = true;
+		Pad.Held.Start = false;
+		Pad.Newpress.Start = false;
+		Pad.HeldTime.Start = 0;
+	}
+	
+	// Select (assigned as F on keyboard)
+	if ((keyState[SDLK_f]) && ((!Pad.Held.Select) && (!Pad.Newpress.Select))) {
+		Pad.Newpress.Select = true;
+	} else if ((!keyState[SDLK_f]) && ((Pad.Held.Select) || (Pad.Newpress.Select))) {
+		Pad.Released.Select = true;
+		Pad.Held.Select = false;
+		Pad.Newpress.Select = false;
+		Pad.HeldTime.Select = 0;
+	}
+	
 	// Exit (assigned as Esc on keyboard)
 	if (keyState[SDLK_ESCAPE]) exit(0);
 	
@@ -202,17 +309,6 @@ void woopsiWaitVBL() {
 }
 
 int fatInitDefault() { return 1; }
-
-void updatePadState(int sdlKey, u16* heldKey, u16* newpressKey, u16* releasedKey, u16* heldTimeKey) {
-	if ((keyState[sdlKey]) && ((!*heldKey) && (!*newpressKey))) {
-		*newpressKey = true;
-	} else if ((!keyState[sdlKey]) && ((*heldKey) || (*newpressKey))) {
-		*releasedKey = true;
-		*heldKey = false;
-		*newpressKey = false;
-		*heldTimeKey = 0;
-	}
-}
 
 #else
 

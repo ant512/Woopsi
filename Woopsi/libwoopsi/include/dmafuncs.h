@@ -2,8 +2,13 @@
 #define _DMA_FUNCS_H_
 
 #include <nds.h>
+
+#ifndef USING_SDL
+
 #include <nds/memory.h>
 #include <nds/bios.h>
+
+#endif
 
 /**
  * Perform a DMA copy.

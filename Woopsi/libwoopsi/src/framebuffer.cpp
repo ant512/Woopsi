@@ -40,7 +40,7 @@ void FrameBuffer::setPixel(s16 x, s16 y, u16 colour) {
 	SDL_PixelFormat* format = _surface->format;
 	SDL_LockSurface(_surface);
 	
-	putSDLPixel(_surface, x, y + _yOffset, SDL_MapRGB(format, r, g, b));
+	putSDLPixel(x, y + _yOffset, SDL_MapRGB(format, r, g, b));
 	
 	SDL_UnlockSurface(_surface);
 
@@ -80,7 +80,7 @@ void FrameBuffer::blit(const s16 x, const s16 y, const u16* data, const u32 size
 		b = (data[i] & (31 << 10)) >> 7;
 		
 		// Plot the pixel
-		putSDLPixel(_surface, destX, destY, SDL_MapRGB(format, r, g, b));
+		putSDLPixel(destX, destY, SDL_MapRGB(format, r, g, b));
 		
 		destX++;
 		
@@ -116,7 +116,7 @@ void FrameBuffer::blitFill(const s16 x, const s16 y, const u16 colour, const u32
 		b = (colour & (31 << 10)) >> 7;
 		
 		// Plot the pixel
-		putSDLPixel(_surface, destX, destY, SDL_MapRGB(format, r, g, b));
+		putSDLPixel(destX, destY, SDL_MapRGB(format, r, g, b));
 		
 		destX++;
 		
