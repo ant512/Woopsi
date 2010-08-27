@@ -9,6 +9,9 @@ Change Log
     - Amended return type of some font properties (Lakedaemon).
     - Reorganised PSD and BMP files.
     - Prevented demo build process from unnecessarily including BMP files.
+    - Fixed divide by 0 when content size is 0 in SliderVertical and
+      SliderHorizontal::resizeGrip().
+    - SDL fixes.
   
   - New Features:
     - Built with devKitARM r31/libnds 1.4.5/default ARM7 0.5.14.

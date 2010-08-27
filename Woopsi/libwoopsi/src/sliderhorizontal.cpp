@@ -133,7 +133,8 @@ void SliderHorizontal::resizeGrip() {
 	Rect rect;
 	getClientRect(rect);
 
-	s32 gripRatio = (_pageSize << 16) / _contentSize;
+	// Prevent divide by 0
+	s32 gripRatio = _contentSize > 0 ? (_pageSize << 16) / _contentSize : 1 << 16;
 
 	s32 gripSize = rect.width * gripRatio;
 
