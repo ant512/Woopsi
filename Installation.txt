@@ -17,6 +17,11 @@ Installation
 
   All done!
   
+  Alternatively, if you are using Windows, double-click the "Install.bat" file
+  in this directory.  When prompted, enter the location of your devkitPro folder
+  (by default, this is C:\devkitPro).  The installer script will automatically
+  clean, compile and install Woopsi and libfreetype.
+  
   
   To test the installation:
 
