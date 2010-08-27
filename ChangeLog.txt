@@ -19,6 +19,7 @@ Change Log
     - Added drawBaselineText() to Graphics and GraphicsPort classes
      (Lakedaemon).
     - Added freetype outline font class (Lakedaemon).
+    - Added Install.bat install script for Windows users.
 
   V0.99.3 (20100819)
   
