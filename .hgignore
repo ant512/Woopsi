@@ -13,3 +13,4 @@ BuildLog.htm
 libwoopsi.a
 *.nds
 AgentRestart.dat
+.DS_Store
