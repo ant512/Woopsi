@@ -12,6 +12,8 @@ Change Log
     - Fixed divide by 0 when content size is 0 in SliderVertical and
       SliderHorizontal::resizeGrip().
     - SDL fixes.
+    - GraphicsPort maps between co-ordinate systems more accurately; fixes
+      clipping problems.
   
   - New Features:
     - Built with devKitARM r31/libnds 1.4.5/default ARM7 0.5.14.

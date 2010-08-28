@@ -14,6 +14,13 @@ GraphicsPort::GraphicsPort(const s16 x, const s16 y, const u16 width, const u16 
 	_rect.width = width;
 	_rect.height = height;
 	_isEnabled = isEnabled;
+	
+	_isTopScreen = y >= TOP_SCREEN_Y_OFFSET;
+	
+	if (_isTopScreen) {
+		int j = 0;
+		j++;
+	}
 
 	_graphics = bitmap->newGraphics();
 	
@@ -85,7 +92,7 @@ void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& st
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawText(x, y, font, string, startIndex, length);
@@ -109,7 +116,7 @@ void GraphicsPort::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiSt
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawBaselineText(x, y, font, string, startIndex, length);
@@ -161,7 +168,7 @@ void GraphicsPort::drawFilledRect(s16 x, s16 y, u16 width, u16 height, u16 colou
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawFilledRect(x, y, width, height, colour);
@@ -184,7 +191,7 @@ void GraphicsPort::drawEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, s16 ve
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
@@ -208,7 +215,7 @@ void GraphicsPort::drawFilledEllipse(s16 xCentre, s16 yCentre, s16 horizRadius, 
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawFilledEllipse(xCentre, yCentre, horizRadius, vertRadius, colour);
@@ -231,7 +238,7 @@ void GraphicsPort::drawRect(s16 x, s16 y, u16 width, u16 height, u16 colour) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawRect(x, y, width, height, colour);
@@ -254,7 +261,7 @@ void GraphicsPort::drawBevelledRect(s16 x, s16 y, u16 width, u16 height, u16 shi
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawBevelledRect(x, y, width, height, shineColour, shadowColour);
@@ -277,7 +284,7 @@ void GraphicsPort::drawFilledXORRect(s16 x, s16 y, u16 width, u16 height, u16 co
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawFilledXORRect(x, y, width, height, colour);
@@ -308,7 +315,7 @@ void GraphicsPort::drawXORRect(s16 x, s16 y, u16 width, u16 height, u16 colour) 
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawXORRect(x, y, width, height, colour);
@@ -332,7 +339,7 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapB
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY);
@@ -356,7 +363,7 @@ void GraphicsPort::drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapB
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawBitmap(x, y, width, height, bitmap, bitmapX, bitmapY, transparentColour);
@@ -379,7 +386,7 @@ void GraphicsPort::drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, cons
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawBitmapGreyScale(x, y, width, height, bitmap, bitmapX, bitmapY);
@@ -406,7 +413,7 @@ void GraphicsPort::drawXORHorizLine(s16 x, s16 y, u16 width, u16 colour) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawXORHorizLine(x, y, width, colour);
@@ -429,7 +436,7 @@ void GraphicsPort::drawXORVertLine(s16 x, s16 y, u16 height, u16 colour) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawXORVertLine(x, y, height, colour);
@@ -446,9 +453,7 @@ void GraphicsPort::convertPortToScreenSpace(s16* x, s16* y) {
 	*y += getY();
 
 	// Compensate for top screen offset
-	if (*y >= TOP_SCREEN_Y_OFFSET) {
-		*y -= TOP_SCREEN_Y_OFFSET;
-	}
+	if (_isTopScreen) *y -= TOP_SCREEN_Y_OFFSET;
 }
 
 void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
@@ -467,7 +472,7 @@ void GraphicsPort::drawPixel(s16 x, s16 y, u16 colour) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawPixel(x, y, colour);
@@ -494,7 +499,7 @@ void GraphicsPort::drawXORPixel(s16 x, s16 y, u16 colour) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawXORPixel(x, y, colour);
@@ -518,7 +523,7 @@ void GraphicsPort::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->drawLine(x1, y1, x2, y2, colour);
@@ -542,7 +547,7 @@ void GraphicsPort::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 widt
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->copy(sourceX, sourceY, destX, destY, width, height);
@@ -565,7 +570,7 @@ void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width,
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->scroll(x, y, xDistance, yDistance, width, height, revealedRects);
@@ -588,7 +593,7 @@ void GraphicsPort::dim(s16 x, s16 y, u16 width, u16 height) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->dim(x, y, width, height);
@@ -611,7 +616,7 @@ void GraphicsPort::greyScale(s16 x, s16 y, u16 width, u16 height) {
 		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
 		_clipRectList.at(i).copyTo(rect);
 		
-		if (rect.y >= TOP_SCREEN_Y_OFFSET) rect.y -= TOP_SCREEN_Y_OFFSET;
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
 		
 		_graphics->setClipRect(rect);
 		_graphics->greyScale(x, y, width, height);

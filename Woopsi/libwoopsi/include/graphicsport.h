@@ -436,6 +436,7 @@ namespace WoopsiUI {
 		Rect _rect;								/**< Total area that the port can draw within. */
 		bool _isEnabled;						/**< If false, nothing will be drawn. */
 		Graphics* _graphics;					/**< Used to draw to the bitmap. */
+		bool _isTopScreen;						/**< True if drawing to the top screen. */
 		
 		void convertPortToScreenSpace(s16* x, s16* y);
 		void addClipRect(const Rect& clipRect);
