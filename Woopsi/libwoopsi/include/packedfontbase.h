@@ -26,7 +26,7 @@ namespace WoopsiUI {
 		 * @param glyphWidth Pixel width of character[i].
 		 * @param height The height of the font.
 		 * @param spWidth The width of a space character.
-		 * @param charTop The height of the font minus the blank spaces below 'a'.
+		 * @param fontTop The height of the font minus the blank spaces below 'a'.
 		 * @param fixedWidth Character width (fixed), or 0 for proportional.
 		 */
 		PackedFontBase(
