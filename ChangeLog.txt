@@ -1,7 +1,7 @@
 Change Log
 ----------
 
-  V0.99.4
+  V0.99.4 (20100902)
   
   - Fixes:
     - All makefiles no longer create .ds.gba and .sc.nds binaries.
