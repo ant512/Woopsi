@@ -65,9 +65,10 @@ Credits and Acknowlegements
 Links
 -----
 
-  - http://ant.simianzombie.com                      - DS development blog
-  - http://ant.simianzombie.com/forum                - Woopsi forum
-  - http://www.sourceforge.net/projects/woopsi       - Woopsi SourceForge page
+  - http://woopsi.org								 - Main site
+  - http://ant.simianzombie.com                      - Development blog
+  - http://ant.simianzombie.com/forum                - Forum
+  - http://bitbucket.org/ant512/woopsi  		     - BitBucket page
 
 
 Email
