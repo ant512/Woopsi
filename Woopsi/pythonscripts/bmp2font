@@ -155,6 +155,7 @@ def convert(bitmap, fontname):
 	_bitmap = []
 	_pwidth = []
 	_offset = []
+	_chartop = []
 	_first = -1
 	_last = 256
 	for _i in range(0,256):
@@ -178,26 +179,33 @@ def convert(bitmap, fontname):
 		_bitmap.append(_bm)
 		_pwidth.append(_cwidth)
 		_offset.append(0)
+		_chartop.append(0)
 
 		if (_first < 0 and _np>0): _first = _i
 		if (_np>0): _last = _i
 
 	# at this point, we have an array _bitmap[] which has an entry for every
-	# character in our font.  update minimum character widths in _pwidth[]
+	# character in our font.  update minimum character widths in _pwidth[] and
+	# chartop in _chartop
 	_widmax = 0
 	for _i in range(_first,_last+1):
 		_bm = _bitmap[_i]			# get this characters bitmap
 		_maxx = 0
+		_maxy = 0
 		for _r in range(0,_cheight):
 			for _c in range(0,_cwidth):
 				if _bm[_r*_cwidth+_c]>0 and _c > _maxx:
 					_maxx = _c
+					
+				if _bm[_r*_cwidth+_c]>0 and _r > _maxy:
+					_maxy = _r
 		_pwidth[_i] = _maxx+1
+		_chartop[_i] = _maxy
 		if (_widmax < _pwidth[_i]):
 			_widmax = _pwidth[_i]
 
-	# and our space width is equal to ... about 1 quarter of our character height
-	# rounded up
+	# and our space width is equal to ... about 1 quarter of our character
+	# height rounded up
 	_spwidth = int((_cheight+3)/4)
 
 #diagnostic - dump it out
@@ -267,25 +275,28 @@ def convert(bitmap, fontname):
 		"first"		:_first,
 		"last"		:_last,
 		"spwidth"	:_spwidth,
-		"nchars"	:_last-_first+1
+		"nchars"	:_last-_first+1,
+		"chartop"	:_chartop[97]		# Use chartop of 'a' as font char top
 	}
 
 	# now we can write the real files out
 	fp = open(_filename+".h", "w")
 	write(fp, subs, r"""
-//
-// $filename.h
-//
-// Do not edit - created by 'bmp2font' from $bitmap
-//
 #ifndef _${guardname}_H_
 #define _${guardname}_H_
 
 #include "${superclassfilename}.h"
 
 namespace WoopsiUI {
+	/**
+	 * ${fontname} font.
+	 */
 	class ${fontname}: public ${superclass} {
 	public:
+		/**
+		 * Constructor.
+		 * @param fixedWidth Set to 0 for proportional or 1 for fixed width.
+		 */
 		${fontname}(u8 fixedWidth=0);
 	};
 }
@@ -297,13 +308,8 @@ namespace WoopsiUI {
 	# now the content file
 	fp = open(_filename+".cpp", "w")
 	write(fp,subs,r"""
-//
-// $filename.cpp
-//
-// Do not edit - created by 'bmp2font' from $bitmap
-//
 #include "$filename.h"
-#include <nds.h>		/* for u16 */
+#include <nds.h>
 
 using namespace WoopsiUI;
 
@@ -351,21 +357,19 @@ static const u8 ${fontname}_width[$nchars] = {
 	write(fp,subs,r"""
 };
 
-${fontname}::${fontname}(u8 fixedWidth)
-	: ${superclass}(
-		$first,
-		$last,
-		${fontname}_glyphdata,
-		${fontname}_offset,
-		${fontname}_width,
-		${chh},
-		${spwidth},
-		${widmax}
-	)
-{
+${fontname}::${fontname}(u8 fixedWidth) : ${superclass} (
+	$first,
+	$last,
+	${fontname}_glyphdata,
+	${fontname}_offset,
+	${fontname}_width,
+	${chh},
+	${spwidth},
+	${chartop},
+	${widmax}
+) {
 	if (fixedWidth) setFontWidth(fixedWidth);
-}
-
+};
 """)
 	fp.close()
 

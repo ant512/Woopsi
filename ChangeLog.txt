@@ -25,6 +25,7 @@ Change Log
      (Lakedaemon).
     - Added freetype outline font class (Lakedaemon).
     - Added Install.bat install script for Windows users.
+    - Python bmp2font script updated to match output of .NET tools.
 
   V0.99.3 (20100819)
   
