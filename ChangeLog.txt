@@ -1,6 +1,14 @@
 Change Log
 ----------
 
+  V0.99.5
+  
+  - Fixes:
+    - Removed freetype classes, library and example (Lakedaemon's distro will
+      provide this functionality).
+
+  - New Features:
+
   V0.99.4 (20100902)
   
   - Fixes:
