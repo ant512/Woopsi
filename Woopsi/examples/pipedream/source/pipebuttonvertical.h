@@ -37,11 +37,20 @@ protected:
 			port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, 0, FLOW_SIZE, getFlowLevel(), woopsiRGB(0, 0, 20));
 		} else {
 			// Flow is moving upwards
-			port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, _height - getFlowLevel() - 1, FLOW_SIZE, getFlowLevel(), woopsiRGB(0, 0, 20));
+			port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, getHeight() - getFlowLevel() - 1, FLOW_SIZE, getFlowLevel(), woopsiRGB(0, 0, 20));
 		}
+		
+		s16 x1 = (rect.width - FLOW_SIZE) / 2;
+		s16 y1 = 0;
+		s16 x2 = x1;
+		s16 y2 = x1 + rect.height - 1;
 
-		port->drawVertLine((rect.width - FLOW_SIZE) / 2, 0, rect.height, colour);
-		port->drawVertLine((rect.width + FLOW_SIZE) / 2, 0, rect.height, colour);
+		port->drawLine(x1, y1, x2, y2, colour);
+		
+		x1 = (rect.width + FLOW_SIZE) / 2;
+		x2 = x1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	}
 };
 	

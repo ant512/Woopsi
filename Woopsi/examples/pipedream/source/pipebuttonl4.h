@@ -52,18 +52,40 @@ protected:
 			if (getFlowLevel() > MAX_PIPE_BUTTON_FLOW / 2) {
 			
 				// Fill entire horizontal section
-				port->drawFilledRect(_width - getFlowLevel() - 1, 3, getFlowLevel(), rect.height - 7, woopsiRGB(0, 0, 20));
+				port->drawFilledRect(getWidth() - getFlowLevel() - 1, 3, getFlowLevel(), rect.height - 7, woopsiRGB(0, 0, 20));
 			} else {
 			
 				// Draw part of horizontal section
 			}
 		}
 		
-		port->drawVertLine((rect.width + FLOW_SIZE) / 2, 0, (rect.height + FLOW_SIZE) / 2, colour);
-		port->drawVertLine((rect.width - FLOW_SIZE) / 2, 0, (rect.height - FLOW_SIZE) / 2, colour);
+		s16 x1 = (rect.width + FLOW_SIZE) / 2;
+		s16 y1 = 0;
+		s16 x2 = x1;
+		s16 y2 = y1 + ((rect.height + FLOW_SIZE) / 2) - 1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
+		
+		x1 = (rect.width - FLOW_SIZE) / 2;
+		y1 = 0;
+		x2 = x1;
+		y2 = y1 + ((rect.height - FLOW_SIZE) / 2) - 1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
+		
+		x1 = 0;
+		y1 = (rect.height + FLOW_SIZE) / 2;
+		x2 = x1 + ((rect.width + FLOW_SIZE) / 2) - 1;
+		y2 = y1;
 
-		port->drawHorizLine(0, (rect.height + FLOW_SIZE) / 2, (rect.width + FLOW_SIZE) / 2, colour);
-		port->drawHorizLine(0, (rect.height - FLOW_SIZE) / 2, (rect.width - FLOW_SIZE) / 2, colour);
+		port->drawLine(x1, y1, x2, y2, colour);
+
+		x1 = 0;
+		y1 = (rect.height - FLOW_SIZE) / 2;
+		x2 = x1 + ((rect.width - FLOW_SIZE) / 2) - 1;
+		y2 = y1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	};
 };
 	

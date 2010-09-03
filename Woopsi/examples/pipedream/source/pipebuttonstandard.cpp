@@ -37,21 +37,45 @@ void PipeButtonStandard::drawContents(GraphicsPort* port) {
 	}
 	
 	// Draw flow
-	port->drawFilledRect(0, 0, getFlowLevel(), _height, woopsiRGB(0, 0, 20));
+	port->drawFilledRect(0, 0, getFlowLevel(), getHeight(), woopsiRGB(0, 0, 20));
 
 	if (hasTopConnector()) {
-		port->drawVertLine(rect.width / 2, 0, rect.height / 2, colour);
+	
+		s16 x1 = rect.width / 2;
+		s16 y1 = 0;
+		s16 x2 = x1;
+		s16 y2 = y1 + (rect.height / 2) - 1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	}
 	
 	if (hasBottomConnector()) {
-		port->drawVertLine(rect.width / 2, rect.height / 2, rect.height / 2, colour);
+	
+		s16 x1 = rect.width / 2;
+		s16 y1 = rect.height / 2;
+		s16 x2 = x1;
+		s16 y2 = y1 + (rect.height / 2) - 1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	}
 	
 	if (hasLeftConnector()) {
-		port->drawHorizLine(0, rect.height / 2, rect.width / 2, colour);
+	
+		s16 x1 = 0;
+		s16 y1 = rect.height / 2;
+		s16 x2 = x1 + (rect.width / 2) - 1;
+		s16 y2 = y1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	}
 	
 	if (hasRightConnector()) {
-		port->drawHorizLine(rect.width / 2, rect.height / 2, rect.width / 2, colour);
+	
+		s16 x1 = rect.width / 2;
+		s16 y1 = rect.height / 2;
+		s16 x2 = x1 + (rect.width / 2) - 1;
+		s16 y2 = y1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	}
 }

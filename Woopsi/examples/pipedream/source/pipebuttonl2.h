@@ -62,11 +62,33 @@ protected:
 			}
 		}
 		
-		port->drawVertLine((rect.width - FLOW_SIZE) / 2, (rect.height - FLOW_SIZE) / 2, (rect.height + FLOW_SIZE) / 2, colour);
-		port->drawVertLine((rect.width + FLOW_SIZE) / 2, (rect.height + FLOW_SIZE) / 2, (rect.height - FLOW_SIZE) / 2, colour);
+		s16 x1 = (rect.width - FLOW_SIZE) / 2;
+		s16 y1 = (rect.height - FLOW_SIZE) / 2;
+		s16 x2 = x1;
+		s16 y2 = y1 + ((rect.height + FLOW_SIZE) / 2) - 1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
+		
+		x1 = (rect.width + FLOW_SIZE) / 2;
+		y1 = (rect.height + FLOW_SIZE) / 2;
+		x2 = x1;
+		y2 = y1 + ((rect.height - FLOW_SIZE) / 2) - 1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
+		
+		x1 = (rect.width - FLOW_SIZE) / 2;
+		y1 = (rect.height - FLOW_SIZE) / 2;
+		x2 = x1 + ((rect.width + FLOW_SIZE) / 2) - 1;
+		y2 = y1;
 
-		port->drawHorizLine((rect.width - FLOW_SIZE) / 2, (rect.height - FLOW_SIZE) / 2, (rect.width + FLOW_SIZE) / 2, colour);
-		port->drawHorizLine((rect.width + FLOW_SIZE) / 2, (rect.height + FLOW_SIZE) / 2, (rect.width - FLOW_SIZE) / 2, colour);
+		port->drawLine(x1, y1, x2, y2, colour);
+
+		x1 = (rect.width + FLOW_SIZE) / 2;
+		y1 = (rect.height + FLOW_SIZE) / 2;
+		x2 = x1 + ((rect.width - FLOW_SIZE) / 2) - 1;
+		y2 = y1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	};
 };
 	

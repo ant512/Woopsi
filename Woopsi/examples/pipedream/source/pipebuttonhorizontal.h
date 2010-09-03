@@ -37,11 +37,20 @@ protected:
 			port->drawFilledRect(0, ((rect.height - FLOW_SIZE) / 2) + 1, getFlowLevel(), FLOW_SIZE, woopsiRGB(0, 0, 20));
 		} else {
 			// Flow is moving left
-			port->drawFilledRect(_width - getFlowLevel() - 1, ((rect.height - FLOW_SIZE) / 2) + 1, getFlowLevel(), FLOW_SIZE, woopsiRGB(0, 0, 20));
+			port->drawFilledRect(getWidth() - getFlowLevel() - 1, ((rect.height - FLOW_SIZE) / 2) + 1, getFlowLevel(), FLOW_SIZE, woopsiRGB(0, 0, 20));
 		}
 
-		port->drawHorizLine(0, (rect.height - FLOW_SIZE) / 2, rect.width, colour);
-		port->drawHorizLine(0, (rect.height + FLOW_SIZE) / 2, rect.width, colour);
+		s16 x1 = 0;
+		s16 y1 = (rect.height - FLOW_SIZE) / 2;
+		s16 x2 = rect.width - 1;
+		s16 y2 = y1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
+		
+		y1 = (rect.height + FLOW_SIZE) / 2;
+		y2 = y1;
+		
+		port->drawLine(x1, y1, x2, y2, colour);
 	}
 };
 	
