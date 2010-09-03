@@ -322,11 +322,14 @@ bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) const {
 // Check for collisions with another gadget
 bool Gadget::checkCollision(Gadget* gadget) const {
 
-	// Get the clipped rect
-	Rect rect;
-	gadget->getRectClippedToHierarchy(rect);
+	// Get the clipped rects
+	Rect gadgetRect;
+	gadget->getRectClippedToHierarchy(gadgetRect);
 
-	return rect.intersects(_rect);
+	Rect rect;
+	getRectClippedToHierarchy(rect);
+
+	return rect.intersects(gadgetRect);
 }
 
 void Gadget::drawChildren() {

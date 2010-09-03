@@ -7,6 +7,7 @@ Change Log
     - Removed freetype classes, library and example (Lakedaemon's distro will
       provide this functionality).
     - Examples build script uses for loop instead of explicitly named folders.
+    - Gadget::checkCollision(Gadget) works correctly.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
