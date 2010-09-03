@@ -4,7 +4,7 @@
 #include "woopsi.h"
 #include "alert.h"
 
-#define DEMO_VERSION "Woopsi Demo V0.99.3 Beta"
+#define DEMO_VERSION "Woopsi Demo V0.99.4 Beta"
 
 using namespace WoopsiUI;
 
