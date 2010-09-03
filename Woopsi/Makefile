@@ -23,7 +23,7 @@ TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
 SOURCES		:=	demo/src libwoopsi/src libwoopsi/src/fonts demo/data
-INCLUDES	:=	libwoopsi/include libwoopsi/include/fonts demo/include build demo/data $(DEVKITPRO)/libfreetype/includes
+INCLUDES	:=	libwoopsi/include libwoopsi/include/fonts demo/include build demo/data
 
 #-------------------------------------------------------------------------------
 # options for code generation
@@ -54,14 +54,14 @@ PREFIX			:=	arm-eabi-
 # any extra libraries we wish to link with the project
 #-------------------------------------------------------------------------------
 
-LIBS	:= -lnds9 -lfreetype
+LIBS	:= -lnds9
  
 #-------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level 
 # containing include and lib
 #-------------------------------------------------------------------------------
 
-LIBDIRS	:=	$(DEVKITPRO)/libnds $(DEVKITPRO)/libfreetype
+LIBDIRS	:=	$(DEVKITPRO)/libnds
 
 #-------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add 
