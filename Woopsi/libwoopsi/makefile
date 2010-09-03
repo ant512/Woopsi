@@ -18,7 +18,7 @@ BUILD		:=	build
 RELEASE     :=  lib
 SOURCES		:=	src src/fonts
 INCLUDES	:=	include include/fonts build 
-LIBDIRS		:=	$(DEVKITPRO)/libnds $(DEVKITPRO)/libfreetype
+LIBDIRS		:=	$(DEVKITPRO)/libnds
 
 #-------------------------------------------------------------------------------
 # options for code generation

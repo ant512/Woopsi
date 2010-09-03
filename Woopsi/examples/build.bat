@@ -32,10 +32,6 @@ cd ../fire
 make clean
 make
 
-cd ../freetype
-make clean
-make
-
 cd ../gadgetdrawing
 make clean
 make
