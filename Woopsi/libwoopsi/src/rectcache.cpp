@@ -101,8 +101,6 @@ void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rec
 			invalidRects->erase(i);
 			i--;
 
-			// Vertical split
-			
 			// Check for a non-overlapped rect on the left
 			if (checkRect.x < gadgetRect.x) {
 				Rect left;
