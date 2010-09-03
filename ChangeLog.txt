@@ -8,6 +8,7 @@ Change Log
       provide this functionality).
 
   - New Features:
+    - Added makefile for demo - can now be built from command line.
 
   V0.99.4 (20100902)
   
