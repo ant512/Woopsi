@@ -53,16 +53,5 @@ xcopy lib %location%\libwoopsi\lib\ /q
 
 cd ..
 
-:installlibfreetype
 echo.
-echo Installing libfreetype...
-echo.
-
-echo Removing installation (if any)
-rmdir %location%\libfreetype /s /q
-
-echo Creating install directory
-mkdir %location%\libfreetype
-
-echo Installing library
-xcopy .\libs\libfreetype %location%\libfreetype /e /q
+echo Installation complete!

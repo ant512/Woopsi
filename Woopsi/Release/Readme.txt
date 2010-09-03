@@ -30,17 +30,17 @@ Woopsi Demo
   the project is to create a windowing system that other programmers can use for
   their applications, decreasing the tedious amount of GUI code that they have
   to write.
-  
+
   This demo illustrates some of the features of Woopsi.
-  
+
 
 Requirements
 ------------
 
   To run the demo you will need either a DS emulator or a real DS and a flash
   cart.
-  
-  
+
+
 Credits and Acknowlegements
 ---------------------------
 
@@ -57,9 +57,6 @@ Credits and Acknowlegements
                                                     - The PALib team
                                                     - Nintendo
                                                     - R. J. Michal
-
-  Woopsi uses the FreeType library for advanced font support.  See
-  http://www.freetype.org for more information.
 
 
 Links

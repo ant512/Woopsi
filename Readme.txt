@@ -75,7 +75,8 @@ Features
   - Complete API for constructing new gadgets:
     - Extensible font system that supports:
       - Compressed proportional and fixed-width fonts (monochrome and 16-bit);
-      - FreeType library integration for TTF/OTF/etc fonts with antialiasing.
+      - FreeType library integration for TTF/OTF/etc fonts with antialiasing
+        available in a separate distribution.
     - Text manipulation, including wrapping functions and width calculation;
     - Animation class with support for variable framerates and standard/pingpong
       looping;
@@ -135,16 +136,6 @@ SDL Compatibility
   - Copy the "libwoopsi" source folder into your SDL project;
   - Copy the contents of the "sdl" folder from this archive into your copy of
      the "libwoopsi/src" folder.
-
-  To use the FreeType integration of Woopsi with SDL, you will need to download,
-  compile and install FreeType for your chosen platform.  See the "Credits and
-  Acknowledgements" section below for the URL.
-  
-  If you do not want to download FreeType, or cannot compile it for your
-  platform (I confess that I have not tried this), delete any .h and .cpp files
-  from the libwoopsi/src and libwoopsi/include folders that begin with
-  the word "freetype".  This will prevent you from using TTF/OTF/etc fonts, but
-  will allow you to develop the core of your GUI using SDL.
      
   Note that you should not use the Woopsi makefiles, as these are only relevant
   to DS builds of Woopsi.
@@ -167,14 +158,11 @@ Credits and Acknowledgements
                                                     - Nintendo
                                                     - R. J. Michal
 
-  Woopsi uses the FreeType library for advanced font support.  See
-  http://www.freetype.org for more information.
-
 
 Links
 -----
 
-   - http://woopsi.org								 - Main site
+  - http://woopsi.org								 - Main site
   - http://ant.simianzombie.com                      - Development blog
   - http://ant.simianzombie.com/forum                - Forum
   - http://bitbucket.org/ant512/woopsi  		     - BitBucket page
