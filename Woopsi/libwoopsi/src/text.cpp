@@ -39,6 +39,8 @@ const s16 Text::getLineTrimmedLength(const s32 lineNumber) const {
 		return length;
 	}
 	
+	delete iterator;
+	
 	// May occur if data has been horribly corrupted somewhere
 	return 0;
 }
