@@ -9,7 +9,7 @@
 #include "graphics.h"
 #include "rect.h"
 #include "gadgetstyle.h"
-#include "fonts/newtopaz.h"
+#include "newtopaz.h"
 #include "zombie.h"
 #include "bittest1.h"
 #include "bittest2.h"
