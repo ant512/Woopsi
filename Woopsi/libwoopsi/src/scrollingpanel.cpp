@@ -81,12 +81,20 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 				// Create internal and standard graphics ports
 				GraphicsPort* internalPort = newInternalGraphicsPort(revealedRects.at(0));
 				GraphicsPort* port = newGraphicsPort(revealedRects.at(0));
+				
+				Rect revealed;
 
 				// Draw revealed sections
 				for (s32 i = 0; i < revealedRects.size(); ++i) {
+					
+					revealed = revealedRects.at(i);
+					
+					// If we're scrolling the top screen, we need to adjust the
+					// revealed rect from port space back to woopsi space
+					if (getPhysicalScreenNumber() == 1) revealed.y += TOP_SCREEN_Y_OFFSET;
 
-					internalPort->setClipRect(revealedRects.at(i));
-					port->setClipRect(revealedRects.at(i));
+					internalPort->setClipRect(revealed);
+					port->setClipRect(revealed);
 
 					drawBorder(internalPort);
 					drawContents(port);

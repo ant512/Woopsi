@@ -15,6 +15,7 @@ Change Log
     - Fixed memory leak in demo.
     - Fixed memory leak in PackedFontBase::getStringWidth().
     - Fixed memory leak in MultiLineTextBox::moveCursorToPosition().
+    - ScrollingPanel::scroll() redraws correctly on top screen.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
