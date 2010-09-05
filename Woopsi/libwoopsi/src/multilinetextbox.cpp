@@ -511,6 +511,8 @@ void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 
 	// Draw cursor in new position
 	drawCursor(port);
+	
+	delete port;
 }
 
 void MultiLineTextBox::onClick(s16 x, s16 y) {

@@ -36,13 +36,11 @@ const s16 Text::getLineTrimmedLength(const s32 lineNumber) const {
 			if (!_font->isCharBlank(iterator->getCodePoint())) break;
 			length--;
 		} while (iterator->moveToPrevious() && (length > 0));
-		return length;
 	}
 	
 	delete iterator;
-	
-	// May occur if data has been horribly corrupted somewhere
-	return 0;
+
+	return length;
 }
 
 const s16 Text::getLinePixelLength(const s32 lineNumber) const {

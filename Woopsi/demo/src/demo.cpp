@@ -64,6 +64,8 @@ void Demo::startup() {
 	SuperBitmap* superBitmap = new SuperBitmap(rect.x, rect.y, rect.width, rect.height, 164, 191, false);
 	superBitmap->getGraphics()->drawBitmap(0, 0, 164, 191, superBitmapBitmap, 0, 0);
 	superBitmapWindow->addGadget(superBitmap);
+	
+	delete superBitmapBitmap;
 
 	// Create screens
 	AmigaScreen* newScreen = new AmigaScreen(DEMO_VERSION, Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
