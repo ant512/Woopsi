@@ -9,9 +9,12 @@ Change Log
     - Examples build script uses for loop instead of explicitly named folders.
     - Gadget::checkCollision(Gadget) works correctly.
     - Tests build script uses for loop instead of explicitly named folders.
-    - Fixed memory leak in Text::getLineTrimmedLength().
+    - Fixed memory leaks in Text::getLineTrimmedLength().
     - Rewrote RectCache::splitRectangles() for speed and clarity.
     - Increased delays for SDL double click and key repeat times.
+    - Fixed memory leak in demo.
+    - Fixed memory leak in PackedFontBase::getStringWidth().
+    - Fixed memory leak in MultiLineTextBox::moveCursorToPosition().
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

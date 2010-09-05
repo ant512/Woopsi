@@ -27,11 +27,12 @@ u16 PackedFontBase::getStringWidth(const WoopsiString& text, s32 startIndex, s32
 	u16 total = 0;
 
 	StringIterator* iterator = text.newStringIterator();
-	if (!iterator->moveTo(startIndex)) return 0;
+	if (iterator->moveTo(startIndex)) {
 	
-	do {
-		total += getCharWidth(iterator->getCodePoint());
-	} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+		do {
+			total += getCharWidth(iterator->getCodePoint());
+		} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
+	}
 
 	delete iterator;
 
