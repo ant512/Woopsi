@@ -31,15 +31,17 @@
 #define BOTTOM_SCREEN_NUMBER 0
 
 /**
- * Number of VBLs within which a click the user can click again to fire a double-click.
- */
-#define DOUBLE_CLICK_TIME 45
-
-/**
  * Value added to click x and y to describe a box within which a click is counted as
  * a double-click.
  */
 #define DOUBLE_CLICK_BOUNDS 10
+
+#ifndef USING_SDL
+
+/**
+ * Number of VBLs within which a click the user can click again to fire a double-click.
+ */
+#define DOUBLE_CLICK_TIME 45
 
 /**
  * Time taken before a key (either d-pad or keyboard) starts repeating.
@@ -50,6 +52,25 @@
  * Time taken before a repeating key repeats again.
  */
 #define KEY_SECONDARY_REPEAT_TIME 5
+
+#else
+
+/**
+ * Number of VBLs within which a click the user can click again to fire a double-click.
+ */
+#define DOUBLE_CLICK_TIME 8000
+
+/**
+ * Time taken before a key (either d-pad or keyboard) starts repeating.
+ */
+#define KEY_INITIAL_REPEAT_TIME 4000
+
+/**
+ * Time taken before a repeating key repeats again.
+ */
+#define KEY_SECONDARY_REPEAT_TIME 1000
+
+#endif
 
 /**
  * Woopsi version number.
