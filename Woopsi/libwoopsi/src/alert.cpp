@@ -1,7 +1,6 @@
 #include "alert.h"
 #include "button.h"
 #include "multilinetextbox.h"
-#include "text.h"
 #include "woopsistring.h"
 
 using namespace WoopsiUI;

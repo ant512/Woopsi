@@ -5,7 +5,7 @@
 #include "scrollingpanel.h"
 #include "gadgetstyle.h"
 #include "woopsistring.h"
-#include "text.h"
+#include "document.h"
 #include "keyboardeventhandler.h"
 #include "textboxbase.h"
 
@@ -91,13 +91,13 @@ namespace WoopsiUI {
 		virtual const u16 getCurrentPage() const;
 
 		/**
-		 * Returns a pointer to the Text object that contains the
+		 * Returns a pointer to the Document object that contains the
 		 * wrapped text used in the textbox.  It is used as the
 		 * pre-processed data source for the textbox, and should
 		 * not be altered.
 		 * @return Pointer to the Text object.
 		 */
-		virtual inline const Text* getText() const { return _text; };
+		virtual inline const Document* getDocument() const { return _document; };
 
 		/**
 		 * Set the text displayed in the textbox.
@@ -205,7 +205,7 @@ namespace WoopsiUI {
 		inline void enableKeyboardPopup() { _opensKeyboard = true; };
 
 	protected:
-		Text* _text;					/**< Text object that manipulates and wraps the raw text string. */
+		Document* _document;			/**< Text object that manipulates and wraps the raw text string. */
 		u8 _visibleRows;				/**< Total number of rows that the textbox can display at once. */
 		s16 _maxRows;					/**< Maximum number of rows that the textbox should buffer. */
 		u32 _topRow;					/**< Index of the top row of text currently displayed. */
@@ -408,8 +408,8 @@ namespace WoopsiUI {
 		 * Destructor.
 		 */
 		inline virtual ~MultiLineTextBox() {
-			delete _text;
-			_text = NULL;
+			delete _document;
+			_document = NULL;
 		}
 
 		/**

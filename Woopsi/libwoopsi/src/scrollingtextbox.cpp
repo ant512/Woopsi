@@ -35,8 +35,8 @@ void ScrollingTextBox::setTextAlignmentVert(MultiLineTextBox::TextAlignmentVert 
 	_textbox->setTextAlignmentVert(alignment);
 }
 
-const Text* ScrollingTextBox::getText() const {
-	return _textbox->getText();
+const Document* ScrollingTextBox::getDocument() const {
+	return _textbox->getDocument();
 }
 
 void ScrollingTextBox::setText(const WoopsiString& text) {

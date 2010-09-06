@@ -81,11 +81,11 @@
 					Name="Strings"
 					>
 					<File
-						RelativePath=".\libwoopsi\src\stringiterator.cpp"
+						RelativePath=".\libwoopsi\src\document.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\src\text.cpp"
+						RelativePath=".\libwoopsi\src\stringiterator.cpp"
 						>
 					</File>
 					<File
@@ -735,11 +735,11 @@
 					Name="Strings"
 					>
 					<File
-						RelativePath=".\libwoopsi\include\stringiterator.h"
+						RelativePath=".\libwoopsi\include\document.h"
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\include\text.h"
+						RelativePath=".\libwoopsi\include\stringiterator.h"
 						>
 					</File>
 					<File

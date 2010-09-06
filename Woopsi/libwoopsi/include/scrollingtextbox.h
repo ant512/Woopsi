@@ -68,13 +68,13 @@ namespace WoopsiUI {
 		virtual const u16 getCurrentPage() const;
 
 		/**
-		 * Returns a pointer to the Text object that contains the
+		 * Returns a pointer to the Document object that contains the
 		 * wrapped text used in the textbox.  It is used as the
 		 * pre-processed data source for the textbox, and should
 		 * not be altered.
 		 * @return Pointer to the Text object.
 		 */
-		virtual const Text* getText() const;
+		virtual const Document* getDocument() const;
 
 		/**
 		 * Set the text displayed in the textbox.

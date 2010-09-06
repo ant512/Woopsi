@@ -75,7 +75,7 @@
 #include "stickybutton.h"
 #include "stringiterator.h"
 #include "superbitmap.h"
-#include "text.h"
+#include "document.h"
 #include "textbox.h"
 #include "window.h"
 #include "windowborderbutton.h"

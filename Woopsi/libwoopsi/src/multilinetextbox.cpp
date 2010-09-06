@@ -1,6 +1,6 @@
 #include "multilinetextbox.h"
 #include "fontbase.h"
-#include "text.h"
+#include "document.h"
 #include "graphicsport.h"
 #include "woopsifuncs.h"
 #include "stringiterator.h"
@@ -24,7 +24,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 
 	Rect rect;
 	getClientRect(rect);
-	_text = new Text(getFont(), "", rect.width);
+	_document = new Document(getFont(), "", rect.width);
 	_canvasWidth = rect.width;
 
 	_flags.draggable = true;
@@ -47,7 +47,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 void MultiLineTextBox::drawText(GraphicsPort* port) {
 
 	// Early exit if there is no text to display
-	if (_text->getLineCount() == 0) return;
+	if (_document->getLineCount() == 0) return;
 
 	// Determine the top and bottom rows within the graphicsport's clip rect.
 	// We only draw these rows in order to increase the speed of the routine.
@@ -60,11 +60,11 @@ void MultiLineTextBox::drawText(GraphicsPort* port) {
 
 	// Early exit checks
 	if ((topRow < 0) && (bottomRow < 0)) return;
-	if ((bottomRow >= _text->getLineCount()) && (topRow >= _text->getLineCount())) return;
+	if ((bottomRow >= _document->getLineCount()) && (topRow >= _document->getLineCount())) return;
 
 	// Prevent overflows
 	if (topRow < 0) topRow = 0;
-	if (bottomRow >= _text->getLineCount()) bottomRow = _text->getLineCount() - 1;
+	if (bottomRow >= _document->getLineCount()) bottomRow = _document->getLineCount() - 1;
 
 	// Draw lines of text
 	s32 currentRow = topRow;
@@ -78,14 +78,14 @@ void MultiLineTextBox::drawText(GraphicsPort* port) {
 
 void MultiLineTextBox::drawRow(GraphicsPort* port, s32 row) {
 
-	u8 rowLength = _text->getLineTrimmedLength(row);
+	u8 rowLength = _document->getLineTrimmedLength(row);
 	s16 textX = getRowX(row) + _canvasX;
 	s16 textY = getRowY(row) + _canvasY;
 	
 	if (isEnabled()) {
-		port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(row), rowLength);
+		port->drawText(textX, textY, _document->getFont(), *_document, _document->getLineStartIndex(row), rowLength);
 	} else {
-		port->drawText(textX, textY, _text->getFont(), *_text, _text->getLineStartIndex(row), rowLength, getDarkColour());
+		port->drawText(textX, textY, _document->getFont(), *_document, _document->getLineStartIndex(row), rowLength, getDarkColour());
 	}
 }
 
@@ -118,13 +118,13 @@ void MultiLineTextBox::getCursorCoordinates(s16& x, s16& y) const {
 	if (_cursorPos > 0) {
 
 		// Calculate the row in which the cursor appears
-		cursorRow = _text->getLineContainingCharIndex(_cursorPos);
+		cursorRow = _document->getLineContainingCharIndex(_cursorPos);
 
 		// Cursor line offset gives us the distance of the cursor from the start of the line
-		u8 cursorLineOffset = _cursorPos - _text->getLineStartIndex(cursorRow);
+		u8 cursorLineOffset = _cursorPos - _document->getLineStartIndex(cursorRow);
 			
-		StringIterator* iterator = _text->newStringIterator();
-		iterator->moveTo(_text->getLineStartIndex(cursorRow));
+		StringIterator* iterator = _document->newStringIterator();
+		iterator->moveTo(_document->getLineStartIndex(cursorRow));
 			
 		// Sum the width of each char in the row to find the x co-ord
 		for (s32 i = 0; i < cursorLineOffset; ++i) {
@@ -157,13 +157,13 @@ void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 		cursorY += _canvasY;
 
 		// Draw cursor
-		port->drawFilledXORRect(cursorX, cursorY, _text->getFont()->getCharWidth(getCursorCodePoint()), _text->getFont()->getHeight());
+		port->drawFilledXORRect(cursorX, cursorY, _document->getFont()->getCharWidth(getCursorCodePoint()), _document->getFont()->getHeight());
 	}
 }
 
 u32 MultiLineTextBox::getCursorCodePoint() const {
-	if (_cursorPos < _text->getLength()) {
-		return _text->getCharAt(_cursorPos);
+	if (_cursorPos < _document->getLength()) {
+		return _document->getCharAt(_cursorPos);
 	} else {
 		return ' ';
 	}
@@ -175,8 +175,8 @@ u8 MultiLineTextBox::getRowX(s32 row) const {
 	Rect rect;
 	getClientRect(rect);
 
-	u8 rowLength = _text->getLineTrimmedLength(row);
-	u8 rowPixelWidth = _text->getFont()->getStringWidth(*_text, _text->getLineStartIndex(row), rowLength);
+	u8 rowLength = _document->getLineTrimmedLength(row);
+	u8 rowPixelWidth = _document->getFont()->getStringWidth(*_document, _document->getLineStartIndex(row), rowLength);
 
 	// Calculate horizontal position
 	switch (_hAlignment) {
@@ -196,8 +196,8 @@ s16 MultiLineTextBox::getRowY(s32 row) const {
 
 	// If the amount of text exceeds the size of the gadget, force
 	// the text to be top-aligned
-	if (_visibleRows <= _text->getLineCount()) {
-		return row * _text->getLineHeight();
+	if (_visibleRows <= _document->getLineCount()) {
+		return row * _document->getLineHeight();
 	}
 
 	// All text falls within the textbox, so obey the alignment
@@ -217,26 +217,26 @@ s16 MultiLineTextBox::getRowY(s32 row) const {
 		case TEXT_ALIGNMENT_VERT_CENTRE:
 
 			// Calculate the maximum number of rows
-			canvasRows = _canvasHeight / _text->getLineHeight();
-			textY = row * _text->getLineHeight();
+			canvasRows = _canvasHeight / _document->getLineHeight();
+			textY = row * _document->getLineHeight();
 
 			// Get the number of rows of text
-			textRows = _text->getLineCount();
+			textRows = _document->getLineCount();
 
 			// Ensure there's always one row
 			if (textRows == 0) textRows = 1;
 
             // Calculate the start position of the block of text
-            startPos = ((canvasRows - textRows) * _text->getLineHeight()) >> 1;
+            startPos = ((canvasRows - textRows) * _document->getLineHeight()) >> 1;
 
             // Calculate the row Y co-ordinate
 			textY = startPos + textY;
 			break;
 		case TEXT_ALIGNMENT_VERT_TOP:
-			textY = row * _text->getLineHeight();
+			textY = row * _document->getLineHeight();
 			break;
 		case TEXT_ALIGNMENT_VERT_BOTTOM:
-			textY = rect.height - (((_text->getLineCount() - row) * _text->getLineHeight()));
+			textY = rect.height - (((_document->getLineCount() - row) * _document->getLineHeight()));
 			break;
 	}
 
@@ -248,7 +248,7 @@ void MultiLineTextBox::calculateVisibleRows() {
 	Rect rect;
 	getClientRect(rect);
 
-	_visibleRows = rect.height / _text->getLineHeight();
+	_visibleRows = rect.height / _document->getLineHeight();
 }
 
 void MultiLineTextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
@@ -264,8 +264,8 @@ void MultiLineTextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
 bool MultiLineTextBox::cullTopLines() {
 
 	// Ensure that we have the correct number of rows
-	if ((_text->getLineCount() > _maxRows) && (_maxRows > -1)) {
-		_text->stripTopLines(_text->getLineCount() - _maxRows);
+	if ((_document->getLineCount() > _maxRows) && (_maxRows > -1)) {
+		_document->stripTopLines(_document->getLineCount() - _maxRows);
 		return true;
 	}
 
@@ -274,7 +274,7 @@ bool MultiLineTextBox::cullTopLines() {
 
 void MultiLineTextBox::limitCanvasHeight() {
 
-	_canvasHeight = _text->getPixelHeight();
+	_canvasHeight = _document->getPixelHeight();
 
 	Rect rect;
 	getClientRect(rect);
@@ -307,19 +307,19 @@ void MultiLineTextBox::jumpToCursor() {
 	getCursorCoordinates(cursorX, cursorY);
 
 	// Work out which row the cursor falls within
-	s32 cursorRow = _text->getLineContainingCharIndex(_cursorPos);
+	s32 cursorRow = _document->getLineContainingCharIndex(_cursorPos);
 	s16 rowY = getRowY(cursorRow);
 
 	// If the cursor is outside the visible portion of the canvas, jump to it
 	Rect rect;
 	getClientRect(rect);
 
-	if (rowY + _text->getLineHeight() + _canvasY > rect.height) {
+	if (rowY + _document->getLineHeight() + _canvasY > rect.height) {
 
 		// Cursor is below the visible portion of the canvas, so
 		// jump down so that the cursor's row is the bottom row of
 		// text
-		jump(0, -(rowY + _text->getLineHeight() - rect.height));
+		jump(0, -(rowY + _document->getLineHeight() - rect.height));
 	} else if (rowY + _canvasY < 0) {
 
 		// Cursor is above the visible portion of the canvas, so
@@ -333,7 +333,7 @@ void MultiLineTextBox::setText(const WoopsiString& text) {
 	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
-	_text->setText(text);
+	_document->setText(text);
 
 	cullTopLines();
 	limitCanvasHeight();
@@ -351,7 +351,7 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
-	_text->append(text);
+	_document->append(text);
 
 	cullTopLines();
 	limitCanvasHeight();
@@ -365,7 +365,7 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex) {
-	removeText(startIndex, _text->getLength() - startIndex);
+	removeText(startIndex, _document->getLength() - startIndex);
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
@@ -373,7 +373,7 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
-	_text->remove(startIndex, count);
+	_document->remove(startIndex, count);
 
 	limitCanvasHeight();
 	limitCanvasY();
@@ -392,7 +392,7 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 	bool drawingEnabled = _flags.drawingEnabled;
 	disableDrawing();
 
-	_text->insert(text, index);
+	_document->insert(text, index);
 
 	cullTopLines();
 	limitCanvasHeight();
@@ -412,7 +412,7 @@ void MultiLineTextBox::setFont(FontBase* font) {
 	disableDrawing();
 
 	_style.font = font;
-	_text->setFont(font);
+	_document->setFont(font);
 
 	cullTopLines();
 	limitCanvasHeight();
@@ -427,7 +427,7 @@ void MultiLineTextBox::setFont(FontBase* font) {
 
 const u16 MultiLineTextBox::getPageCount() const {
 	if (_visibleRows > 0) {
-		return (_text->getLineCount() / _visibleRows) + 1;
+		return (_document->getLineCount() / _visibleRows) + 1;
 	} else {
 		return 1;
 	}
@@ -436,7 +436,7 @@ const u16 MultiLineTextBox::getPageCount() const {
 const u16 MultiLineTextBox::getCurrentPage() const {
 
 	// Calculate the top line of text
-	s32 topRow = -_canvasY / _text->getLineHeight();
+	s32 topRow = -_canvasY / _document->getLineHeight();
 
 	// Return the page on which the top row falls
 	if (_visibleRows > 0) {
@@ -462,8 +462,8 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 	calculateVisibleRows();
 
 	// Re-wrap the text
-	_text->setWidth(getWidth());
-	_text->wrap();
+	_document->setWidth(getWidth());
+	_document->wrap();
 
 	bool raiseEvent = cullTopLines();
 	limitCanvasHeight();
@@ -473,7 +473,7 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 }
 
 const u32 MultiLineTextBox::getTextLength() const {
-	return _text->getLength();
+	return _document->getLength();
 }
 
 void MultiLineTextBox::showCursor() {
@@ -505,7 +505,7 @@ void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 	if (position < 0) {
 		_cursorPos = 0;
 	} else {
-		s32 len = (s32)_text->getLength();
+		s32 len = (s32)_document->getLength();
 		_cursorPos = len > position ? position : len;
 	}
 
@@ -551,10 +551,10 @@ void MultiLineTextBox::moveCursorUp() {
 	// the cursor does not drift off to the left as it moves up the text, which
 	// is a problem when we use the left edge as the reference point when the
 	// font is proportional
-	cursorX += _text->getFont()->getCharWidth(_text->getCharAt(_cursorPos)) >> 1;
+	cursorX += _document->getFont()->getCharWidth(_document->getCharAt(_cursorPos)) >> 1;
 
 	// Locate the character above the midpoint
-	s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _text->getLineHeight());
+	s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _document->getLineHeight());
 
 	moveCursorToPosition(index);
 	jumpToCursor();
@@ -570,10 +570,10 @@ void MultiLineTextBox::moveCursorDown() {
 	// the cursor does not drift off to the left as it moves up the text, which
 	// is a problem when we use the left edge as the reference point when the
 	// font is proportional
-	cursorX += _text->getFont()->getCharWidth(_text->getCharAt(_cursorPos)) >> 1;
+	cursorX += _document->getFont()->getCharWidth(_document->getCharAt(_cursorPos)) >> 1;
 
 	// Locate the character above the midpoint
-	s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _text->getLineHeight());
+	s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _document->getLineHeight());
 
 	moveCursorToPosition(index);
 	jumpToCursor();
@@ -588,7 +588,7 @@ void MultiLineTextBox::moveCursorLeft() {
 }
 
 void MultiLineTextBox::moveCursorRight() {
-	if (_cursorPos < (s32)_text->getLength()) {
+	if (_cursorPos < (s32)_document->getLength()) {
 		moveCursorToPosition(_cursorPos + 1);
 	}
 
@@ -641,7 +641,7 @@ s32 MultiLineTextBox::getRowContainingCoordinate(s16 y) const {
 	s32 row = -1;
 
 	// Locate the row containing the character
-	for (s32 i = 0; i < _text->getLineCount(); ++i) {
+	for (s32 i = 0; i < _document->getLineCount(); ++i) {
 
 		// Abort search if we've found the row below the y co-ordinate
 		if (getRowY(i) > y) {
@@ -664,7 +664,7 @@ s32 MultiLineTextBox::getRowContainingCoordinate(s16 y) const {
 
 	// If the co-ordinate is below the text, row will still be -1.
 	// We need to set it to the last row
-	if (row == -1) row = _text->getLineCount() - 1;
+	if (row == -1) row = _document->getLineCount() - 1;
 
 	return row;
 }
@@ -672,15 +672,15 @@ s32 MultiLineTextBox::getRowContainingCoordinate(s16 y) const {
 u32 MultiLineTextBox::getCharIndexAtCoordinate(s16 x, s32 rowIndex) const {
 
 	// Locate the character within the row
-	s32 startIndex = _text->getLineStartIndex(rowIndex);
-	s32 stopIndex = _text->getLineLength(rowIndex);
+	s32 startIndex = _document->getLineStartIndex(rowIndex);
+	s32 stopIndex = _document->getLineLength(rowIndex);
 	s32 width = getRowX(rowIndex);
 	s32 index = -1;
 
-	StringIterator* iterator = _text->newStringIterator();
+	StringIterator* iterator = _document->newStringIterator();
 	iterator->moveTo(startIndex);
 
-	width += _text->getFont()->getCharWidth(iterator->getCodePoint());
+	width += _document->getFont()->getCharWidth(iterator->getCodePoint());
 
 	for (s32 i = 0; i < stopIndex; ++i) {
 		if (width > x) {
@@ -702,7 +702,7 @@ u32 MultiLineTextBox::getCharIndexAtCoordinate(s16 x, s32 rowIndex) const {
 
 		iterator->moveToNext();
 
-		width += _text->getFont()->getCharWidth(iterator->getCodePoint());
+		width += _document->getFont()->getCharWidth(iterator->getCodePoint());
 	}
 
 	delete iterator;
@@ -711,7 +711,7 @@ u32 MultiLineTextBox::getCharIndexAtCoordinate(s16 x, s32 rowIndex) const {
 	// We need to set it to the last character
 	if (index == -1) {
 		
-		if (rowIndex == _text->getLineCount() - 1) {
+		if (rowIndex == _document->getLineCount() - 1) {
 
 			// Index past the end point of the text, so return an index
 			// just past the text
