@@ -103,8 +103,6 @@ extern _stylus Stylus;
 #include <string.h>
 #include <math.h>
 
-void updatePadState(int sdlKey, u16* heldKey, u16* newpressKey, u16* releasedKey, u16* heldTimeKey);
-
 #else
 
 #include <nds/memory.h>

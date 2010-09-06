@@ -12,6 +12,7 @@ namespace WoopsiUI {
 	class WoopsiTimer;
 	class WoopsiKeyboardScreen;
 	class KeyboardEventHandler;
+	class DisplayController;
 
 	/**
 	 * Class providing a top-level gadget and an interface to the Woopsi gadget hierarchy.
@@ -157,6 +158,8 @@ namespace WoopsiUI {
 		 */
 		void hideKeyboard();
 
+		DisplayController* getDisplayController() { return _displayController; };
+
 	protected:
 		bool _lidClosed;									/**< Remembers the current state of the lid. */
 		
@@ -166,6 +169,7 @@ namespace WoopsiUI {
 		ContextMenu* _contextMenu;							/**< Pointer to the context menu. */
 		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked. */
 		WoopsiKeyboardScreen* _keyboardScreen;				/**< Screen containing the popup keyboard. */
+		DisplayController* _displayController;
 
 		/**
 		 * Initialise the application.  All initial GUI creation, hardware setup, etc, should

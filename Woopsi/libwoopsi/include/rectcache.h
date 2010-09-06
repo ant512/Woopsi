@@ -78,6 +78,8 @@ namespace WoopsiUI {
 		 */
 		void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const;
 
+		void markRectsDirty();
+
 	private:
 		WoopsiArray<Rect> _foregroundRegions;				/**< List of the gadget's visible regions */
 		WoopsiArray<Rect> _backgroundRegions;				/**< List of the gadget's visible regions with child rects removed */

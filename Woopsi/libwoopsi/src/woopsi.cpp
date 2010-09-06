@@ -10,6 +10,7 @@
 #include "woopsikeyboard.h"
 #include "keyboardeventhandler.h"
 #include "screen.h"
+#include "displaycontroller.h"
 
 using namespace WoopsiUI;
 
@@ -33,6 +34,8 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 
 	// Set up singleton pointer
 	singleton = this;
+
+	_displayController = new DisplayController(this);
 
 	// Set up DS display hardware
 	initWoopsiGfxMode();
@@ -86,6 +89,9 @@ Woopsi::~Woopsi() {
 	singleton = NULL;
 	_contextMenu = NULL;
 
+	delete _displayController;
+	_displayController = NULL;
+
 	woopsiFreeFrameBuffers();
 	woopsiFreeDefaultGadgetStyle();
 }
@@ -130,6 +136,9 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 }
 
 void Woopsi::handleVBL() {
+
+	// Redraw all damaged rects
+	_displayController->redraw();
 
 	// Increase vbl counter
 	_vblCount++;

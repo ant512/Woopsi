@@ -54,6 +54,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\libwoopsi\src\displaycontroller.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\libwoopsi\src\dmafuncs.cpp"
 					>
 				</File>
@@ -653,6 +657,10 @@
 				</File>
 				<File
 					RelativePath=".\libwoopsi\include\defines.h"
+					>
+				</File>
+				<File
+					RelativePath=".\libwoopsi\include\displaycontroller.h"
 					>
 				</File>
 				<File

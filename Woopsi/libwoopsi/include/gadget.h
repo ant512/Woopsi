@@ -501,6 +501,8 @@ namespace WoopsiUI {
 		 */
 		void redraw();
 
+		void redraw(const Rect& rect);
+
 		/**
 		 * Erases the visible regions of the gadget by redrawing the gadgets
 		 * behind it.
@@ -937,7 +939,7 @@ namespace WoopsiUI {
 		 * @param index Index of the child to retrieve.
 		 * @return Pointer to the child at the specified index.
 		 */
-		const Gadget* getChild(u32 index) const;
+		Gadget* getChild(u32 index) const;
 
 		/**
 		 * Get the quantity of child gadgets.
@@ -963,6 +965,8 @@ namespace WoopsiUI {
 		 * @param borderSize The new border size.
 		 */
 		void setBorderSize(const GadgetBorderSize& borderSize);
+
+		void markRectsDirty();
 
 	protected:
 		Rect _rect;								/**< Rect describing the gadget. */

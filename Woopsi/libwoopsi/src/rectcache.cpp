@@ -1,4 +1,6 @@
 #include "rectcache.h"
+#include "woopsi.h"
+#include "displaycontroller.h"
 
 using namespace WoopsiUI;
 
@@ -6,6 +8,12 @@ RectCache::RectCache(const Gadget* gadget) {
 	_gadget = gadget;
 	_foregroundInvalid = true;
 	_backgroundInvalid = true;
+}
+
+void RectCache::markRectsDirty() {
+	for (s32 i = 0; i < _foregroundRegions.size(); ++i) {
+		woopsiApplication->getDisplayController()->addDamagedRect(_foregroundRegions[i]);
+	}
 }
 
 void RectCache::cache() {

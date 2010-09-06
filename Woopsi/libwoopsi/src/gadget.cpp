@@ -338,6 +338,22 @@ void Gadget::drawChildren() {
 	}
 }
 
+void Gadget::redraw(const Rect& rect) {
+
+	// Create internal and standard graphics ports
+	GraphicsPort* internalPort = newInternalGraphicsPort(rect);
+	GraphicsPort* port = newGraphicsPort(rect);
+
+	drawBorder(internalPort);
+	drawContents(port);
+
+	delete internalPort;
+	delete port;
+	
+	// Remember that the gadget is no longer erased
+	_flags.erased = false;
+}
+
 void Gadget::redraw() {
 	if (isDrawingEnabled()) {
 		cacheVisibleRects();
@@ -438,18 +454,24 @@ void Gadget::redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender
 	}
 }
 
+void Gadget::markRectsDirty() {
+	_rectCache->markRectsDirty();
+}
+
 // Erase this gadget from the screen
 void Gadget::erase() {
 
 	if (!_flags.erased) {
 		cacheVisibleRects();
 
-		if (_parent != NULL) {
-			_parent->eraseGadget(this);
-		}
+		markRectsDirty();
+
+		//if (_parent != NULL) {
+		//	_parent->eraseGadget(this);
+		//}
 
 		// Remember that the gadget has been erased
-		_flags.erased = true;
+		//_flags.erased = true;
 
 		invalidateVisibleRectCache();
 	}
@@ -1287,7 +1309,7 @@ const s32 Gadget::getGadgetIndex(const Gadget* gadget) const {
 	return -1;
 }
 
-const Gadget* Gadget::getChild(const u32 index) const {
+Gadget* Gadget::getChild(const u32 index) const {
 	if (index < (u32)_gadgets.size()) return _gadgets[index];
 	return NULL;
 }
