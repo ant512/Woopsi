@@ -93,7 +93,7 @@ void AnimButton::handleActionEvent(const GadgetEventArgs& e) {
 				_animNormal->run();
 			}
 
-			redraw();
+			markRectsDirty();
 		}
 	}
 }

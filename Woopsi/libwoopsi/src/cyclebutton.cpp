@@ -58,11 +58,11 @@ void CycleButton::removeAllOptions() {
 }
 
 void CycleButton::handleListDataChangedEvent(const ListDataEventArgs& e) {
-	redraw();
+	markRectsDirty();
 }
 
 void CycleButton::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
-	redraw();
+	markRectsDirty();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
@@ -162,11 +162,11 @@ void CycleButton::onRelease(s16 x, s16 y) {
 		}
 	}
 
-	redraw();
+	markRectsDirty();
 }
 
 void CycleButton::onReleaseOutside(s16 x, s16 y) {
-	redraw();
+	markRectsDirty();
 }
 
 // Get the preferred dimensions of the gadget

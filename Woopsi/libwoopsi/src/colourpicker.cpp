@@ -170,7 +170,7 @@ void ColourPicker::handleReleaseEvent(const GadgetEventArgs& e) {
 
 void ColourPicker::handleValueChangeEvent(const GadgetEventArgs& e) {
 	_colourButton->setBackColour(woopsiRGB(_redSlider->getValue(), _greenSlider->getValue(), _blueSlider->getValue()));
-	_colourButton->redraw();
+	_colourButton->markRectsDirty();
 
 	AmigaWindow::handleValueChangeEvent(e);
 }

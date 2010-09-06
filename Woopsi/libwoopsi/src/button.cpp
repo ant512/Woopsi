@@ -60,14 +60,14 @@ void Button::drawOutline(GraphicsPort* port) {
 }
 
 void Button::onClick(s16 x, s16 y) {
-	redraw();
+	markRectsDirty();
 }
 
 void Button::onRelease(s16 x, s16 y) {
 	_gadgetEventHandlers->raiseActionEvent();
-	redraw();
+	markRectsDirty();
 }
 
 void Button::onReleaseOutside(s16 x, s16 y) {
-	redraw();
+	markRectsDirty();
 }
