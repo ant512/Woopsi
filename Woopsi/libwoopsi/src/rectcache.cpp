@@ -85,92 +85,32 @@ void RectCache::cacheBackgroundRegions() {
 // Used when calculating which portions of a gadget to draw
 void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, const Gadget* sender) const {
 
+	WoopsiArray<Rect> remainderRects;
+	Rect checkRect;
+	Rect intersection;
+	Rect gadgetRect;
+
 	// Check for collisions with any rectangles in the vector
 	for (s32 i = 0; i < invalidRects->size(); ++i) {
 
 		// Get rectangle to check
-		Rect checkRect = invalidRects->at(i);
+		checkRect = invalidRects->at(i);
 
-		if (_gadget->checkCollision(checkRect)) {
-			// Got a collision.  We need to split this rectangle
+		_gadget->getRectClippedToHierarchy(gadgetRect);
 
-			// Get clipped dimensions of gadget
-			Rect gadgetRect;
-			_gadget->getRectClippedToHierarchy(gadgetRect);
-			
+		if (gadgetRect.splitIntersection(checkRect, intersection, &remainderRects)) {
 			invalidRects->erase(i);
 			i--;
 
-			// Check for a non-overlapped rect on the left
-			if (checkRect.x < gadgetRect.x) {
-				Rect left;
-				left.x = checkRect.x;
-				left.y = checkRect.y;
-				left.width = gadgetRect.x - checkRect.x;
-				left.height = checkRect.height;
-				
-				// Insert the rect and make sure we don't check it again
-				invalidRects->insert(0, left);
-				i++;
-				
-				// Adjust the dimensions of the checked rect
-				checkRect.x = gadgetRect.x;
-				checkRect.width -= left.width;
+			i += remainderRects.size();
+
+			for (int j = 0; j < remainderRects.size(); ++j) {
+				invalidRects->insert(0, remainderRects[j]);
 			}
-			
-			// Check for a non-overlapped rect on the right
-			if (checkRect.x + checkRect.width > gadgetRect.x + gadgetRect.width) {
-				Rect right;
-				right.x = gadgetRect.x + gadgetRect.width;
-				right.y = checkRect.y;
-				right.width = checkRect.width - (gadgetRect.x + gadgetRect.width - checkRect.x);
-				right.height = checkRect.height;
-				
-				// Insert the rect and make sure we don't check it again
-				invalidRects->insert(0, right);
-				i++;
-				
-				// Adjust dimensions of the checked rect
-				checkRect.width -= right.width;
-			}
-			
-			// Check for a non-overlapped rect above
-			if (checkRect.y < gadgetRect.y) {
-				Rect top;
-				top.x = checkRect.x;
-				top.y = checkRect.y;
-				top.width = checkRect.width;
-				top.height = gadgetRect.y - checkRect.y;
-				
-				// Insert the rect and make sure we don't check it again
-				invalidRects->insert(0, top);
-				i++;
-				
-				// Adjust the dimensions of the checked rect
-				checkRect.y = gadgetRect.y;
-				checkRect.height -= top.height;
-			}
-			
-			// Check for a non-overlapped rect below
-			if (checkRect.y + checkRect.height > gadgetRect.y + gadgetRect.height) {
-				Rect bottom;
-				bottom.x = checkRect.x;
-				bottom.y = gadgetRect.y + gadgetRect.height;
-				bottom.width = checkRect.width;
-				bottom.height = checkRect.height - (gadgetRect.y + gadgetRect.height - checkRect.y);
-				
-				// Insert the rect and make sure we don't check it again
-				invalidRects->insert(0, bottom);
-				i++;
-				
-				// Adjust dimensions of the checked rect
-				checkRect.height -= bottom.height;
-			}
-			
-			// If we have anything left over, it is the overlapped region
-			if (checkRect.hasDimensions()) {
-				validRects->push_back(checkRect);
-			}
+
+			validRects->push_back(intersection);
+
+			remainderRects.clear();
 		}
 	}
 }

@@ -19,6 +19,7 @@ Change Log
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
+    - Added Rect::splitIntersection().
 
   V0.99.4 (20100902)
   

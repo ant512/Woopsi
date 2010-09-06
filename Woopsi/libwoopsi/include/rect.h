@@ -2,6 +2,7 @@
 #define _RECT_H_
 
 #include <nds.h>
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 
@@ -178,6 +179,17 @@ namespace WoopsiUI {
 		 * @param dest Destination rect to copy to.
 		 */
 		void copyTo(Rect& dest) const;
+
+		/**
+		 * Determines if the supplied rect intersects this and, if so, divides the supplied rect
+		 * into the intersected region (stored in "intersection") and the rectangular regions that
+		 * do not intersect (stored in "remainderRects").
+		 * @param rect Rectangle to check for intersection.
+		 * @param intersection Will contain the dimensions of the intersect once the function ends.
+		 * @param remainderRects Will contain the list of non-intersecting regions of rect.
+		 * @return True if there is an intersection; false if not.
+		 */
+		bool splitIntersection(const Rect& rect, Rect& intersection, WoopsiArray<Rect>* remainderRects) const;
 
 		/**
 		 * Overloaded & operator.  Returns the intersect of this rectangle and the
