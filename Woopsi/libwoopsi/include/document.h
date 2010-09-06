@@ -190,6 +190,12 @@ namespace WoopsiUI {
 		 */
 		const s32 getLineStartIndex(const s32 line) const { return _linePositions[line]; };
 
+		/**
+		 * Get a reference to the internal string.  String is constant to prevent it being
+		 * changed without notifying the document.  Any change to a string should cause
+		 * a re-wrap operation.
+		 * @return The internal string.
+		 */
 		const WoopsiString& getText() const { return _text; };
 
 	private:
