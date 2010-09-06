@@ -34,18 +34,18 @@ Change Log
     - SDL fixes.
     - GraphicsPort maps between co-ordinate systems more accurately; fixes
       clipping problems.
+    - Various minor .NET tool improvements.
+    - Python bmp2font script updated to match output of .NET tools.
   
   - New Features:
     - Built with devKitARM r31/libnds 1.4.5/default ARM7 0.5.14.
     - Setting MultiLineTextBox's max rows to -1 forces it to retain all text.
     - Added getCharTop() to font classes.
-    - Various minor .NET tool improvements.
     - Added Gadget::checkCollision(Rect&).
     - Added drawBaselineText() to Graphics and GraphicsPort classes
      (Lakedaemon).
     - Added freetype outline font class (Lakedaemon).
     - Added Install.bat install script for Windows users.
-    - Python bmp2font script updated to match output of .NET tools.
 
   V0.99.3 (20100819)
   
