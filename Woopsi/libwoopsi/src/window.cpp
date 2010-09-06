@@ -88,7 +88,7 @@ void Window::drawBorder(GraphicsPort* port) {
 void Window::setTitle(const WoopsiString& title) {
 	_title = title;
 
-	redraw();
+	markRectsDirty();
 }
 
 void Window::onDragStart() {

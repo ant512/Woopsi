@@ -146,11 +146,6 @@ namespace WoopsiUI {
 		virtual void createBorder();
 		
 		/**
-		 * Redraw the borders.
-		 */
-		virtual void redrawBorder();
-		
-		/**
 		 * Destructor.
 		 */
 		virtual inline ~AmigaWindow() { }

@@ -58,7 +58,7 @@ void AmigaWindow::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		redraw();
+		markRectsDirty();
 	}
 }
 
@@ -82,16 +82,11 @@ void AmigaWindow::createBorder() {
 
 void AmigaWindow::onFocus() {
 	raiseToTop();
-	redraw();
+	markRectsDirty();
 }
 
 void AmigaWindow::onBlur() {
-	redraw();
-}
-
-void AmigaWindow::redrawBorder() {
-	if (_depthButton != NULL) _depthButton->redraw();
-	if (_closeButton != NULL) _closeButton->redraw();
+	markRectsDirty();
 }
 
 void AmigaWindow::onResize(u16 width, u16 height) {
@@ -143,8 +138,6 @@ void AmigaWindow::showCloseButton() {
 		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, &_style);
 		_closeButton->addGadgetEventHandler(this);
 		insertGadget(_closeButton);
-
-		_closeButton->redraw();
 	}
 }
 
@@ -156,8 +149,6 @@ void AmigaWindow::showDepthButton() {
 		_depthButton = new WindowBorderButton(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
 		_depthButton->addGadgetEventHandler(this);
 		insertGadget(_depthButton);
-
-		_depthButton->redraw();
 	}
 }
 
