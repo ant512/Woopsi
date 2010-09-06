@@ -1,34 +1,35 @@
-#include "text.h"
+#include "document.h"
 #include "stringiterator.h"
 
 using namespace WoopsiUI;
 
-Text::Text(FontBase* font, const WoopsiString& text, u16 width) : WoopsiString(text) {
+Document::Document(FontBase* font, const WoopsiString& text, u16 width) {
 	_font = font;
 	_width = width;
 	_lineSpacing = 1;
+	_text.setText(text);
 	wrap();
 }
 
-FontBase* Text::getFont() const {
+FontBase* Document::getFont() const {
 	return _font;
 }
 
 // Calculate the length of an individual line
-const u8 Text::getLineLength(const s32 lineNumber) const {
+const u8 Document::getLineLength(const s32 lineNumber) const {
 	if (lineNumber < getLineCount() - 1) {
 		return _linePositions[lineNumber + 1] - _linePositions[lineNumber];
 	}
 	
-	return getLength() - _linePositions[lineNumber];
+	return _text.getLength() - _linePositions[lineNumber];
 }
 
 // Calculate the length of an individual line sans right-hand spaces
-const s16 Text::getLineTrimmedLength(const s32 lineNumber) const {
+const s16 Document::getLineTrimmedLength(const s32 lineNumber) const {
 	s16 length = getLineLength(lineNumber);
 	
 	// Loop through string until the end
-	StringIterator* iterator = newStringIterator();
+	StringIterator* iterator = _text.newStringIterator();
 	
 	// Get char at the end of the line
 	if (iterator->moveTo(_linePositions[lineNumber] + length - 1)) {
@@ -43,64 +44,64 @@ const s16 Text::getLineTrimmedLength(const s32 lineNumber) const {
 	return length;
 }
 
-const s16 Text::getLinePixelLength(const s32 lineNumber) const {
-	return _font->getStringWidth(*this, getLineStartIndex(lineNumber), getLineLength(lineNumber));
+const s16 Document::getLinePixelLength(const s32 lineNumber) const {
+	return _font->getStringWidth(_text, getLineStartIndex(lineNumber), getLineLength(lineNumber));
 }
 
-const s16 Text::getLineTrimmedPixelLength(const s32 lineNumber) const {
-	return _font->getStringWidth(*this, getLineStartIndex(lineNumber), getLineTrimmedLength(lineNumber));
+const s16 Document::getLineTrimmedPixelLength(const s32 lineNumber) const {
+	return _font->getStringWidth(_text, getLineStartIndex(lineNumber), getLineTrimmedLength(lineNumber));
 }
 
-void Text::setText(const WoopsiString& text) {
-	WoopsiString::setText(text);
+void Document::setText(const WoopsiString& text) {
+	_text.setText(text);
 	wrap();
 }
 
-void Text::setText(const char* text) {
-	WoopsiString::setText(text);
+void Document::setText(const char* text) {
+	_text.setText(text);
 	wrap();
 }
 
-void Text::setText(const u32 text) {
-	WoopsiString::setText(text);
+void Document::setText(const u32 text) {
+	_text.setText(text);
 	wrap();
 }
 
-void Text::append(const WoopsiString& text) {
-	WoopsiString::append(text);
-	wrap(getLength() - 1);
+void Document::append(const WoopsiString& text) {
+	_text.append(text);
+	wrap(_text.getLength() - 1);
 }
 
-void Text::insert(const WoopsiString& text, const s32 index) {
-	WoopsiString::insert(text, index);
+void Document::insert(const WoopsiString& text, const s32 index) {
+	_text.insert(text, index);
 	wrap(index);
 }
 
-void Text::remove(const s32 startIndex) {
-	WoopsiString::remove(startIndex);
+void Document::remove(const s32 startIndex) {
+	_text.remove(startIndex);
 	wrap(startIndex);
 }
 
-void Text::remove(const s32 startIndex, const s32 count) {
-	WoopsiString::remove(startIndex, count);
+void Document::remove(const s32 startIndex, const s32 count) {
+	_text.remove(startIndex, count);
 	wrap(startIndex);
 }
 
-void Text::setLineSpacing(u8 lineSpacing) {
+void Document::setLineSpacing(u8 lineSpacing) {
 	_lineSpacing = lineSpacing;
 	wrap();
 }
 
-void Text::setWidth(u16 width) {
+void Document::setWidth(u16 width) {
 	_width = width;
 	wrap();
 }
 
-void Text::wrap() {
+void Document::wrap() {
 	wrap(0);
 }
 
-void Text::wrap(s32 charIndex) {
+void Document::wrap(s32 charIndex) {
 	
 	// Declare vars in advance of loop
 	s32 pos = 0;
@@ -160,7 +161,7 @@ void Text::wrap(s32 charIndex) {
 	}
 	
 	// Loop through string until the end
-	StringIterator* iterator = newStringIterator();
+	StringIterator* iterator = _text.newStringIterator();
 	
 	while (!endReached) {
 		breakIndex = 0;
@@ -216,7 +217,7 @@ void Text::wrap(s32 charIndex) {
 			if (breakIndex == 0) breakIndex = iterator->getIndex() - 1;
 			
 			// Trim blank space from the start of the next line
-			StringIterator* breakIterator = newStringIterator();
+			StringIterator* breakIterator = _text.newStringIterator();
 			
 			if (breakIterator->moveTo(breakIndex + 1)) {
 				while (breakIterator->getCodePoint() == ' ') {
@@ -257,8 +258,8 @@ void Text::wrap(s32 charIndex) {
 	
 	// Add marker indicating end of text
 	// If we reached the end of the text, append the stopping point
-	if (_linePositions[_linePositions.size() - 1] != getLength() + 1) {
-		_linePositions.push_back(getLength());
+	if (_linePositions[_linePositions.size() - 1] != _text.getLength() + 1) {
+		_linePositions.push_back(_text.getLength());
 	}
 	
 	delete iterator;
@@ -270,12 +271,12 @@ void Text::wrap(s32 charIndex) {
 	if (_textPixelHeight == 0) _textPixelHeight = _font->getHeight() + _lineSpacing;
 }
 
-void Text::setFont(FontBase* font) {
+void Document::setFont(FontBase* font) {
 	_font = font;
 	wrap();
 }
 
-void Text::stripTopLines(const s32 lines) {
+void Document::stripTopLines(const s32 lines) {
 	// Get the start point of the text we want to keep
 	u16 textStart = 0;
 	
@@ -290,7 +291,7 @@ void Text::stripTopLines(const s32 lines) {
 	wrap();
 }
 
-const s32 Text::getLineContainingCharIndex(const s32 index) const {
+const s32 Document::getLineContainingCharIndex(const s32 index) const {
 	
 	// Early exit if there is no existing line data
 	if (_linePositions.size() == 0) return 0;

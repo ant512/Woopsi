@@ -17,6 +17,7 @@ Change Log
     - Fixed memory leak in MultiLineTextBox::moveCursorToPosition().
     - ScrollingPanel::scroll() redraws correctly on top screen.
     - Renamed Text class to Document.
+    - Document class contains a WoopsiString instead of inheriting from it.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

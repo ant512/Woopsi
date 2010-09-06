@@ -83,9 +83,9 @@ void MultiLineTextBox::drawRow(GraphicsPort* port, s32 row) {
 	s16 textY = getRowY(row) + _canvasY;
 	
 	if (isEnabled()) {
-		port->drawText(textX, textY, _document->getFont(), *_document, _document->getLineStartIndex(row), rowLength);
+		port->drawText(textX, textY, _document->getFont(), _document->getText(), _document->getLineStartIndex(row), rowLength);
 	} else {
-		port->drawText(textX, textY, _document->getFont(), *_document, _document->getLineStartIndex(row), rowLength, getDarkColour());
+		port->drawText(textX, textY, _document->getFont(), _document->getText(), _document->getLineStartIndex(row), rowLength, getDarkColour());
 	}
 }
 
@@ -123,7 +123,7 @@ void MultiLineTextBox::getCursorCoordinates(s16& x, s16& y) const {
 		// Cursor line offset gives us the distance of the cursor from the start of the line
 		u8 cursorLineOffset = _cursorPos - _document->getLineStartIndex(cursorRow);
 			
-		StringIterator* iterator = _document->newStringIterator();
+		StringIterator* iterator = _document->getText().newStringIterator();
 		iterator->moveTo(_document->getLineStartIndex(cursorRow));
 			
 		// Sum the width of each char in the row to find the x co-ord
@@ -162,8 +162,8 @@ void MultiLineTextBox::drawCursor(GraphicsPort* port) {
 }
 
 u32 MultiLineTextBox::getCursorCodePoint() const {
-	if (_cursorPos < _document->getLength()) {
-		return _document->getCharAt(_cursorPos);
+	if (_cursorPos < _document->getText().getLength()) {
+		return _document->getText().getCharAt(_cursorPos);
 	} else {
 		return ' ';
 	}
@@ -176,7 +176,7 @@ u8 MultiLineTextBox::getRowX(s32 row) const {
 	getClientRect(rect);
 
 	u8 rowLength = _document->getLineTrimmedLength(row);
-	u8 rowPixelWidth = _document->getFont()->getStringWidth(*_document, _document->getLineStartIndex(row), rowLength);
+	u8 rowPixelWidth = _document->getFont()->getStringWidth(_document->getText(), _document->getLineStartIndex(row), rowLength);
 
 	// Calculate horizontal position
 	switch (_hAlignment) {
@@ -365,7 +365,7 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex) {
-	removeText(startIndex, _document->getLength() - startIndex);
+	removeText(startIndex, _document->getText().getLength() - startIndex);
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
@@ -473,7 +473,7 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 }
 
 const u32 MultiLineTextBox::getTextLength() const {
-	return _document->getLength();
+	return _document->getText().getLength();
 }
 
 void MultiLineTextBox::showCursor() {
@@ -505,7 +505,7 @@ void MultiLineTextBox::moveCursorToPosition(const s32 position) {
 	if (position < 0) {
 		_cursorPos = 0;
 	} else {
-		s32 len = (s32)_document->getLength();
+		s32 len = (s32)_document->getText().getLength();
 		_cursorPos = len > position ? position : len;
 	}
 
@@ -551,7 +551,7 @@ void MultiLineTextBox::moveCursorUp() {
 	// the cursor does not drift off to the left as it moves up the text, which
 	// is a problem when we use the left edge as the reference point when the
 	// font is proportional
-	cursorX += _document->getFont()->getCharWidth(_document->getCharAt(_cursorPos)) >> 1;
+	cursorX += _document->getFont()->getCharWidth(_document->getText().getCharAt(_cursorPos)) >> 1;
 
 	// Locate the character above the midpoint
 	s32 index = getCharIndexAtCoordinates(cursorX, cursorY + _document->getLineHeight());
@@ -570,7 +570,7 @@ void MultiLineTextBox::moveCursorDown() {
 	// the cursor does not drift off to the left as it moves up the text, which
 	// is a problem when we use the left edge as the reference point when the
 	// font is proportional
-	cursorX += _document->getFont()->getCharWidth(_document->getCharAt(_cursorPos)) >> 1;
+	cursorX += _document->getFont()->getCharWidth(_document->getText().getCharAt(_cursorPos)) >> 1;
 
 	// Locate the character above the midpoint
 	s32 index = getCharIndexAtCoordinates(cursorX, cursorY - _document->getLineHeight());
@@ -588,7 +588,7 @@ void MultiLineTextBox::moveCursorLeft() {
 }
 
 void MultiLineTextBox::moveCursorRight() {
-	if (_cursorPos < (s32)_document->getLength()) {
+	if (_cursorPos < (s32)_document->getText().getLength()) {
 		moveCursorToPosition(_cursorPos + 1);
 	}
 
@@ -677,7 +677,7 @@ u32 MultiLineTextBox::getCharIndexAtCoordinate(s16 x, s32 rowIndex) const {
 	s32 width = getRowX(rowIndex);
 	s32 index = -1;
 
-	StringIterator* iterator = _document->newStringIterator();
+	StringIterator* iterator = _document->getText().newStringIterator();
 	iterator->moveTo(startIndex);
 
 	width += _document->getFont()->getCharWidth(iterator->getCodePoint());

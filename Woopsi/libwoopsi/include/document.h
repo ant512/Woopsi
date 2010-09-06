@@ -13,7 +13,7 @@ namespace WoopsiUI {
 	 * more advanced functionality - it can wrap text, calculate its
 	 * height in pixels, calculate the width of a row, etc.
 	 */
-	class Text : public WoopsiString {
+	class Document {
 
 	public:
 
@@ -23,7 +23,7 @@ namespace WoopsiUI {
 		 * @param text A string that this text object should wrap around.
 		 * @param width The pixel width at which the text should wrap.
 		 */
-		Text(FontBase* font, const WoopsiString& text, u16 width);
+		Document(FontBase* font, const WoopsiString& text, u16 width);
 
 		/**
 		 * Set the text in the string.
@@ -150,7 +150,7 @@ namespace WoopsiUI {
 		inline const s32 getLineCount() const { return _linePositions.size() - 1; };
 
 		/**
-		 * Get a pointer to the Text object's font.
+		 * Get a pointer to the Document object's font.
 		 * @return Pointer to the font.
 		 */
 		FontBase* getFont() const;
@@ -190,6 +190,8 @@ namespace WoopsiUI {
 		 */
 		const s32 getLineStartIndex(const s32 line) const { return _linePositions[line]; };
 
+		const WoopsiString& getText() const { return _text; };
+
 	private:
 		/**
 		 * Struct defining the position and length of a longest line within the _linePositions
@@ -207,6 +209,7 @@ namespace WoopsiUI {
 		s32 _textPixelHeight;						/**< Total height of the wrapped text in pixels */
 		u8 _textPixelWidth;							/**< Total width of the wrapped text in pixels */
 		u16 _width;									/**< Width in pixels available to the text */
+		WoopsiString _text;							/**< Content of the document. */
 	};
 }
 
