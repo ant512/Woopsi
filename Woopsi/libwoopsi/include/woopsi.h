@@ -72,12 +72,6 @@ namespace WoopsiUI {
 		virtual bool flipScreens(Gadget* gadget);
 
 		/**
-		 * Redraws any dirty regions within the supplied region.
-		 * @param rect The region to redraw
-		 */
-		virtual void eraseRect(Rect rect);
-
-		/**
 		 * Add the supplied timer to the list of timers that receive VBL notifications.
 		 * This is handled automatically by the WoopsiTimer constructor and should not be
 		 * used in user code.

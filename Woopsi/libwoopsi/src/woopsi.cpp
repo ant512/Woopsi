@@ -308,7 +308,7 @@ bool Woopsi::swapGadgetDepth(Gadget* gadget) {
 		}
 
 		if (gadgetSource != gadgetDest) {
-			eraseGadget(gadget);
+			gadget->markRectsDirty();
 
 			// Swap
 			Gadget* tmp = _gadgets[gadgetSource];
@@ -318,8 +318,6 @@ bool Woopsi::swapGadgetDepth(Gadget* gadget) {
 			// Invalidate from the top screen down
 			_gadgets[_gadgets.size() - 1]->invalidateVisibleRectCache();
 			invalidateLowerGadgetsVisibleRectCache(_gadgets[_gadgets.size() - 1]);
-
-			gadget->redraw();
 
 			return true;
 		}
@@ -377,31 +375,6 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 	}
 
 	return false;
-}
-
-// Erase a rectangular area of the screen
-void Woopsi::eraseRect(Rect rect) {
-
-	// Create pointer to a vector to store the invalid rectangles
-	WoopsiArray<Rect>* invalidRectangles = new WoopsiArray<Rect>();
-
-	if (invalidRectangles != NULL) {
-		 
-		// Add rectangle into the vector
-		invalidRectangles->push_back(rect);
-
-		// Refresh children
-		for (s32 i = _gadgets.size() - 1; i > -1 ; i--) {
-			if (invalidRectangles->size() > 0) {
-				_gadgets[i]->redrawDirty(invalidRectangles, NULL);
-			} else {
-				break;
-			}
-		}
-
-		// Tidy up
-		delete invalidRectangles;
-	}
 }
 
 // Add a timer to the list of timers that receive VBL events

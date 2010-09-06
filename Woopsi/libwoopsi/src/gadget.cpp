@@ -455,6 +455,7 @@ void Gadget::redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender
 }
 
 void Gadget::markRectsDirty() {
+	cacheVisibleRects();
 	_rectCache->markRectsDirty();
 }
 
@@ -462,41 +463,11 @@ void Gadget::markRectsDirty() {
 void Gadget::erase() {
 
 	if (!_flags.erased) {
-		cacheVisibleRects();
 
 		markRectsDirty();
 
-		//if (_parent != NULL) {
-		//	_parent->eraseGadget(this);
-		//}
-
-		// Remember that the gadget has been erased
-		//_flags.erased = true;
-
 		invalidateVisibleRectCache();
 	}
-}
-
-// Erase a child gadget from the screen
-void Gadget::eraseGadget(Gadget* gadget) {
-
-	// Locate the gadget
-	s32 gadgetIndex = getGadgetIndex(gadget);
-
-	// Ensure rect cache is up to date
-	gadget->cacheVisibleRects();
-
-	// Order all lower gadgets to redraw themselves based on the erased gadget's
-	// visible rect cache
-	for (s32 i = gadgetIndex - 1; i > -1; i--) {
-		_gadgets[i]->redrawDirty(gadget->getForegroundRegions(), gadget);
-	}
-
-	// Order this gadget to redraw itself based on any remaining rectangles
-	// in the erased gadget's rect cache
-	redrawDirty(gadget->getForegroundRegions(), gadget);
-
-	invalidateVisibleRectCache();
 }
 
 // Marks the gadget as deleted and adds it to the deletion queue
@@ -762,7 +733,7 @@ bool Gadget::swapGadgetDepth(Gadget* gadget) {
 		}
 		
 		// Erase the gadget from the screen
-		eraseGadget(gadget);
+		gadget->markRectsDirty();
 
 		// Swap
 		Gadget* tmp = _gadgets[gadgetSource];
@@ -779,9 +750,6 @@ bool Gadget::swapGadgetDepth(Gadget* gadget) {
 			_gadgets[gadgetSource]->invalidateVisibleRectCache();
 			invalidateLowerGadgetsVisibleRectCache(_gadgets[gadgetSource]);
 		}
-		
-		// Redraw the gadget
-		gadget->redraw();
 
 		return true;
 	}
@@ -876,7 +844,8 @@ bool Gadget::moveTo(s16 x, s16 y) {
 			
 	// Perform move if necessary
 	if ((_rect.getX() != x) || (_rect.getY() != y)) {
-		erase();
+		
+		markRectsDirty();
 
 		s16 oldX = _rect.getX();
 		s16 oldY = _rect.getY();
@@ -884,7 +853,9 @@ bool Gadget::moveTo(s16 x, s16 y) {
 		_rect.setX(x);
 		_rect.setY(y);
 
-		redraw();
+		invalidateVisibleRectCache();
+
+		markRectsDirty();
 
 		_gadgetEventHandlers->raiseMoveEvent(x, y, x - oldX, y - oldY);
 
@@ -925,9 +896,7 @@ bool Gadget::resize(u16 width, u16 height) {
 
 		_flags.permeable = true;
 	
-		erase();
-		
-		disableDrawing();
+		markRectsDirty();
 
 		_rect.setWidth(width);
 		_rect.setHeight(height);
@@ -945,7 +914,8 @@ bool Gadget::resize(u16 width, u16 height) {
 		// Reset drawing value
 		_flags.drawingEnabled = wasDrawEnabled;
 
-		redraw();
+		invalidateVisibleRectCache();
+		markRectsDirty();
 
 		_gadgetEventHandlers->raiseResizeEvent(width, height);
 
@@ -956,10 +926,7 @@ bool Gadget::resize(u16 width, u16 height) {
 }
 
 bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
-	bool wasDrawing = _flags.drawingEnabled;
-	_flags.drawingEnabled = false;
 	bool moved = moveTo(x, y);
-	_flags.drawingEnabled = wasDrawing;
 	return (resize(width, height) | moved);
 }
 
@@ -1346,7 +1313,7 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 	s32 index = getGadgetIndex(gadget);
 
 	if (index > _decorationCount) {
-		gadget->erase();
+		gadget->markRectsDirty();
 
 		// Handle visible region caching
 		gadget->invalidateVisibleRectCache();
@@ -1355,7 +1322,7 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 		_gadgets.erase(index);
 		_gadgets.insert(_decorationCount, gadget);
 
-		gadget->redraw();
+		gadget->markRectsDirty();
 
 		return true;
 	}
@@ -1386,8 +1353,7 @@ void Gadget::addGadget(Gadget* gadget) {
 		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();
-
-		gadget->redraw();
+		gadget->markRectsDirty();
 	}
 }
 
@@ -1409,8 +1375,7 @@ void Gadget::insertGadget(Gadget* gadget) {
 		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();
-
-		gadget->redraw();
+		gadget->markRectsDirty();
 	}
 }
 

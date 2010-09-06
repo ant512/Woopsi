@@ -4,6 +4,7 @@
 #include "screen.h"
 #include "graphicsport.h"
 #include "woopsi.h"
+#include "displaycontroller.h"
 
 namespace WoopsiUI {
 
@@ -45,7 +46,8 @@ namespace WoopsiUI {
 			// Erase the gadget, thus redrawing everything underneath it
 			_flags.erased = false;
 			disableDrawing();
-			woopsiApplication->eraseRect(rect);
+			woopsiApplication->getDisplayController()->addDamagedRect(rect);
+			woopsiApplication->getDisplayController()->redraw();
 			enableDrawing();
 			_flags.erased = false;
 			

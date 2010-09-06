@@ -4,6 +4,7 @@
 #include "woopsifuncs.h"
 #include "rectcache.h"
 #include "graphicsport.h"
+#include "displaycontroller.h"
 
 using namespace WoopsiUI;
 
@@ -132,7 +133,7 @@ void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 			_rect.setY(_newY);
 			
 			// Erase the screen from its old location
-			((Woopsi*)_parent)->eraseRect(rect);
+			woopsiApplication->getDisplayController()->addDamagedRect(rect);
 			
 			// Handle visible region caching
 			invalidateVisibleRectCache();
@@ -186,7 +187,7 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 			
 			// Erase the gadget from the screen
 			//gadget->cacheVisibleRects();
-			eraseGadget(gadget);
+			gadget->markRectsDirty();
 			
 			// Swap
 			_gadgets.erase(gadgetSource);
@@ -198,9 +199,6 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 					_gadgets[i]->invalidateVisibleRectCache();
 				}
 			}
-			
-			// Redraw the gadget
-			gadget->redraw();
 			
 			// Give focus to the highest gadget in the stack
 			_gadgets[_gadgets.size() - 1]->focus();

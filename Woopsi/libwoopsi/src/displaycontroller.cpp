@@ -11,7 +11,41 @@ DisplayController::~DisplayController() {
 }
 
 void DisplayController::addDamagedRect(const Rect& rect) {
-	_damagedRects.push_back(rect);
+
+	WoopsiArray<Rect> newRects;
+	WoopsiArray<Rect> remainingRects;
+	Rect intersection;
+
+	newRects.push_back(rect);
+
+	// Ensure that the new rect does not overlap any existing rects - we only
+	// want to draw each region once
+	for (s32 i = 0; i < _damagedRects.size(); ++i) {
+		for (s32 j = 0; j < newRects.size(); ++j) {
+
+			if (_damagedRects[i].splitIntersection(newRects[j], intersection, &remainingRects)) {
+				// Intersection contains the part of the new rect that is already known to be damaged
+				// and can be discarded.  remainingRects contains the rects that still need to be examined
+
+				newRects.erase(j);
+				j--;
+
+				// Insert non-overlapping rects to the front of the array so that they are not
+				// examined again for this particular damaged rect
+				for (s32 k = 0; k < remainingRects.size(); ++k) {
+					newRects.insert(0, remainingRects[k]);
+					j++;
+				}
+
+				remainingRects.clear();
+			}
+		}
+	}
+
+	// Add any non-overlapping rects into the damaged rect array
+	for (s32 i = 0; i < newRects.size(); ++i) {
+		_damagedRects.push_back(newRects[i]);
+	}
 }
 
 void DisplayController::redraw(Gadget* gadget) {

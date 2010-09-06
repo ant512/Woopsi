@@ -841,12 +841,6 @@ namespace WoopsiUI {
 		void invalidateVisibleRectCache();
 
 		/**
-		 * Erase a child gadget by drawing the gadgets behind it.
-		 * @param gadget The child gadget to erase.
-		 */
-		void eraseGadget(Gadget* gadget);
-
-		/**
 		 * Redraw any visible regions of this gadget that have become corrupted.
 		 * @param invalidRects A list of corrupt regions.
 		 * @param sender A pointer to the gadget that corrupted the regions.
