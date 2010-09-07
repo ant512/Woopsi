@@ -32,7 +32,7 @@ namespace WoopsiUI {
 		 * border when drawn.  If it is false, the key has an outwards-bevelled border.
 		 * @param isStuckDown The new stuck down state.
 		 */
-		inline void setStuckDown(bool isStuckDown) { _isStuckDown = isStuckDown; };
+		void setStuckDown(bool isStuckDown);
 
 	protected:
 		bool _isStuckDown;					/**< True if the key is stuck down (ie. is Ctrl key and is active) */

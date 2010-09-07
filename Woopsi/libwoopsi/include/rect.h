@@ -195,6 +195,7 @@ namespace WoopsiUI {
 		 * Overloaded & operator.  Returns the intersect of this rectangle and the
 		 * rectangle passed as the "rect" argument".
 		 * @param rect The rectangle to intersect with this.
+		 * @return The intersect of this rect with the argument.
 		 */
 		Rect operator&(const Rect& rect);
 
@@ -202,8 +203,25 @@ namespace WoopsiUI {
 		 * Overloaded + operator.  Returns the smallest rectangle that can contain
 		 * this rectangle and the rectangle passed as the "rect" argument".
 		 * @param rect The rectangle to add to this.
+		 * @return The smallest rect that contains this and the argument.
 		 */
 		Rect operator+(const Rect& rect);
+
+		/**
+		 * Overloaded == operator.  Checks if the dimensions of the supplied rect
+		 * are the same as this rect.
+		 * @param rect The rect to compare with this.
+		 * @return True if the dimensions are equal; false if not.
+		 */
+		bool operator==(const Rect& rect);
+
+		/**
+		 * Overloaded != operator.  Checks if the dimensions of the supplied rect
+		 * are not the same as this rect.
+		 * @param rect The rect to compare with this.
+		 * @param True if the dimensions are not equal; false if they are.
+		 */
+		bool operator!=(const Rect& rect);
 	};
 }
 

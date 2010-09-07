@@ -70,7 +70,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_flags.deleted = false;
 	_flags.drawingEnabled = false;
 	_flags.enabled = true;
-	_flags.erased = true;
 	_flags.shelved = false;
 	_flags.visibleRegionCacheInvalid = true;
 	_flags.hidden = false;
@@ -343,25 +342,11 @@ void Gadget::redraw(const Rect& rect) {
 
 	delete internalPort;
 	delete port;
-	
-	// Remember that the gadget is no longer erased
-	_flags.erased = false;
 }
 
 void Gadget::markRectsDirty() {
 	cacheVisibleRects();
 	_rectCache->markRectsDirty();
-}
-
-// Erase this gadget from the screen
-void Gadget::erase() {
-
-	if (!_flags.erased) {
-
-		markRectsDirty();
-
-		invalidateVisibleRectCache();
-	}
 }
 
 // Marks the gadget as deleted and adds it to the deletion queue
@@ -402,6 +387,8 @@ bool Gadget::shelve() {
 		_gadgetEventHandlers->raiseShelveEvent();
 		_gadgetEventHandlers->disable();
 
+		markRectsDirty();
+
 		_flags.shelved = true;
 		_flags.drawingEnabled = false;
 
@@ -413,8 +400,6 @@ bool Gadget::shelve() {
 
 		// Ensure the gadget isn't running modally
 		stopModal();
-
-		erase();
 
 		if (_parent != NULL) {
 			_parent->shelveChild(this);
@@ -1217,8 +1202,6 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 
 		_gadgets.erase(index);
 		_gadgets.insert(_decorationCount, gadget);
-
-		gadget->markRectsDirty();
 
 		return true;
 	}

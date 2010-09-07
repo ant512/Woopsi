@@ -44,12 +44,10 @@ namespace WoopsiUI {
 			port->getClipRect(rect);
 			
 			// Erase the gadget, thus redrawing everything underneath it
-			_flags.erased = false;
 			disableDrawing();
 			woopsiApplication->getDisplayController()->addDamagedRect(rect);
 			woopsiApplication->getDisplayController()->redraw();
 			enableDrawing();
-			_flags.erased = false;
 			
 			// Dim the screen
 			port->dim(rect.x, rect.y, rect.width, rect.height);

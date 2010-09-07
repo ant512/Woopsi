@@ -133,6 +133,17 @@ Rect Rect::operator+(const Rect& rect) {
 	return dest;
 }
 
+bool Rect::operator==(const Rect& rect) {
+	return (x == rect.x &&
+			y == rect.y &&
+			width == rect.width &&
+			height == rect.height);
+}
+
+bool Rect::operator!=(const Rect& rect) {
+	return !(this->operator== (rect));
+}
+
 bool Rect::intersects(const Rect& rect) const {
 	return ((x + width > rect.getX()) &&
 			(y + height > rect.getY()) &&

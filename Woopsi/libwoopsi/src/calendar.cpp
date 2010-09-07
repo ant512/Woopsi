@@ -71,11 +71,9 @@ void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
 				// Select the new gadget and deselect the old
 				StickyButton* dayButton = (StickyButton*)e.getSource();
 				dayButton->setStuckDown(true);
-				dayButton->markRectsDirty();
 
 				if (_selectedDayButton != NULL) {
 					_selectedDayButton->setStuckDown(false);
-					_selectedDayButton->markRectsDirty();
 				}
 
 				_selectedDayButton = dayButton;

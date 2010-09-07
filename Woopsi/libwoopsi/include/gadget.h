@@ -499,12 +499,6 @@ namespace WoopsiUI {
 		void redraw(const Rect& rect);
 
 		/**
-		 * Erases the visible regions of the gadget by redrawing the gadgets
-		 * behind it.
-		 */
-		void erase();
-
-		/**
 		 * Enables the gadget.
 		 * @return True if the gadget was enabled.
 		 */

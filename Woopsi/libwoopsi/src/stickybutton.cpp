@@ -33,3 +33,8 @@ void StickyButton::drawOutline(GraphicsPort* port) {
 	
 	port->drawBevelledRect(0, 0, getWidth(), getHeight(), col1, col2);
 }
+
+void StickyButton::setStuckDown(bool isStuckDown) {
+	_isStuckDown = isStuckDown;
+	markRectsDirty();
+}

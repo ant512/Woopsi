@@ -15,9 +15,17 @@ namespace WoopsiUI {
 
 		void addDamagedRect(const Rect& rect);
 		void redraw(Gadget* gadget = NULL);
+		void clearVisibleRects();
+		void cacheVisibleRects(Gadget* gadget, WoopsiArray<Rect>* unallocatedRects);
 
 	private:
+		typedef struct {
+			Rect rect;
+			Gadget* gadget;
+		} VisibleRect;
+
 		WoopsiArray<Rect> _damagedRects;
+		WoopsiArray<VisibleRect> _visibleRects;
 		Gadget* _gadget;
 	};
 }

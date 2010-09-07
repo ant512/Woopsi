@@ -48,6 +48,59 @@ void DisplayController::addDamagedRect(const Rect& rect) {
 	}
 }
 
+void DisplayController::clearVisibleRects() {
+	_visibleRects.clear();
+}
+
+// TODO: Make this generic and combine with redraw()?
+void DisplayController::cacheVisibleRects(Gadget* gadget, WoopsiArray<Rect>* unallocatedRects) {
+	
+	if (gadget == NULL) gadget = _gadget;
+
+	// Locate all visible child portions first
+	for (s32 i = gadget->getChildCount() - 1; i >= 0; --i) {
+		if (!gadget->getChild(i)->isDrawingEnabled()) continue;
+
+		cacheVisibleRects(gadget->getChild(i), unallocatedRects);
+
+		if (_damagedRects.size() == 0) return;
+	}
+
+	// Locate visible portions of this gadget
+	for (s32 i = 0; i < unallocatedRects->size(); ++i) {
+		Rect gadgetRect;
+		gadget->getRectClippedToHierarchy(gadgetRect);
+
+		if (unallocatedRects->at(i).intersects(gadgetRect)) {
+			Rect intersection;
+			Rect drawRect = unallocatedRects->at(i);
+			WoopsiArray<Rect> tmpRemainingRects;
+
+			unallocatedRects->erase(i);
+			i--;
+
+			// Locate the part of this visible rect that intersects the current gadget
+			if (gadgetRect.splitIntersection(drawRect, intersection, &tmpRemainingRects)) {
+
+				// Add all rects that don't intersect this gadget to the list that still
+				// need to be analysed
+				i += tmpRemainingRects.size();
+				for (s32 j = 0; j < tmpRemainingRects.size(); ++j) {
+					unallocatedRects->insert(0, tmpRemainingRects[j]);
+				}
+
+				// Add the region we've located to the visible rect cache
+				VisibleRect visible;
+				visible.gadget = gadget;
+				visible.rect = intersection;
+
+				_visibleRects.push_back(visible);
+			}
+		}
+	}
+}
+ 
+
 void DisplayController::redraw(Gadget* gadget) {
 
 	if (_damagedRects.size() == 0) return;
