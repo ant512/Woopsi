@@ -71,7 +71,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_flags.drawingEnabled = false;
 	_flags.enabled = true;
 	_flags.shelved = false;
-	_flags.visibleRegionCacheInvalid = true;
 	_flags.hidden = false;
 	_flags.modal = false;
 	_flags.canReceiveFocus = true;
@@ -543,6 +542,8 @@ void Gadget::shelveChild(Gadget* gadget) {
 	}
 
 	moveChildToShelvedList(gadget);
+
+	invalidateVisibleRectCache();
 }
 
 // Close a child
@@ -1556,7 +1557,11 @@ bool Gadget::show() {
 
 		// Ensure that gadgets behind this do not draw over the
 		// top of the newly-visible gadget
-		_parent->invalidateLowerGadgetsVisibleRectCache(this);
+		if (_parent != NULL) {
+			_parent->invalidateLowerGadgetsVisibleRectCache(this);
+		} else {
+			invalidateVisibleRectCache();
+		}
 
 		_gadgetEventHandlers->raiseShowEvent();
 		markRectsDirty();
@@ -1568,13 +1573,23 @@ bool Gadget::show() {
 
 bool Gadget::hide() {
 	if (!_flags.hidden) {
+
+		markRectsDirty();
+
 		_flags.hidden = true;
 
 		// Ensure the gadget isn't running modally
 		stopModal();
 
+		// Ensure that gadgets behind this do draw over the top
+		if (_parent != NULL) {
+			_parent->invalidateVisibleRectCache();
+		} else {
+			invalidateVisibleRectCache();
+		}
+
 		_gadgetEventHandlers->raiseHideEvent();
-		markRectsDirty();
+
 		return true;
 	}
 

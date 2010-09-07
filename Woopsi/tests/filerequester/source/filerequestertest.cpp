@@ -76,9 +76,6 @@ void FileRequesterTest::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void FileRequesterTest::shutdown() {

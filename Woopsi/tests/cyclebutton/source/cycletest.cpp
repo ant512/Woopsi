@@ -84,9 +84,6 @@ void CycleTest::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void CycleTest::shutdown() {

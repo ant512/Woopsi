@@ -23,6 +23,7 @@ void RectCache::cache() {
 void RectCache::cacheForegroundRegions() {
 
 	if (_foregroundInvalid) {
+		
 		// Use internal region cache to store the non-overlapped rectangles
 		// We will use this to clip the gadget
 		_foregroundRegions.clear();
@@ -75,11 +76,11 @@ void RectCache::cacheBackgroundRegions() {
 
 		// Remove all child rects from the visible vector
 		for (s32 i = 0; i < _gadget->getChildCount(); i++) {
-			if (_backgroundRegions.size() > 0) {
-				_gadget->getChild(i)->getRectCache()->splitRectangles(&_backgroundRegions, invisibleRects, _gadget);
-			} else {
-				break;
-			}
+			
+			// Stop if there are no more regions to split
+			if (_backgroundRegions.size() == 0) break;
+			
+			_gadget->getChild(i)->getRectCache()->splitRectangles(&_backgroundRegions, invisibleRects, _gadget);
 		}
 
 		// Tidy up
@@ -93,6 +94,10 @@ void RectCache::cacheBackgroundRegions() {
 // Used when calculating which portions of a gadget to draw
 void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, const Gadget* sender) const {
 
+	// Bypass if the gadget is hidden - we do not want hidden gadgets to be able
+	// to affect the structure of the screen
+	if (_gadget->isHidden()) return;
+	
 	WoopsiArray<Rect> remainderRects;
 	Rect checkRect;
 	Rect intersection;

@@ -84,9 +84,6 @@ void ListBoxTest::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void ListBoxTest::shutdown() {

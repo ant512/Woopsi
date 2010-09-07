@@ -74,9 +74,6 @@ void AlertTest::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void AlertTest::shutdown() {

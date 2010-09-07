@@ -91,9 +91,6 @@ void SuperBitmapTest::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void SuperBitmapTest::shutdown() {

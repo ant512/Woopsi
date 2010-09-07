@@ -87,9 +87,6 @@ void TextBoxTest::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void TextBoxTest::shutdown() {

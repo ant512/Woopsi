@@ -111,9 +111,6 @@ void ScrollingListBoxTest::startup() {
 	// Ensure Woopsi can draw itself
 	enableDrawing();
 	
-	// Draw GUI
-	redraw();
-	
 	ScrollbarVertical* scrollbar = ((ScrollbarVertical*)(_listBox->getChild(1)));
 	
 	Debug::printf("Scrollbar");

@@ -74,9 +74,6 @@ void ButtonTest::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void ButtonTest::shutdown() {
