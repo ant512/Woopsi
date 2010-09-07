@@ -71,9 +71,6 @@ void ColourPickerTest::startup() {
 	Rect rect;
 	_colourPicker->getPreferredDimensions(rect);
 	_colourPicker->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void ColourPickerTest::shutdown() {

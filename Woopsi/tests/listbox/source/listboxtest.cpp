@@ -81,9 +81,6 @@ void ListBoxTest::startup() {
 	Rect rect;
 	_listBox->getPreferredDimensions(rect);
 	_listBox->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void ListBoxTest::shutdown() {

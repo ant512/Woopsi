@@ -88,9 +88,6 @@ void SuperBitmapTest::startup() {
 	Rect rect;
 	_superBitmap->getPreferredDimensions(rect);
 	_superBitmap->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void SuperBitmapTest::shutdown() {

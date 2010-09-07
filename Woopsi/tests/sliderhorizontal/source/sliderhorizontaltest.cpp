@@ -74,9 +74,6 @@ void SliderHorizontalTest::startup() {
 	Rect rect;
 	_slider->getPreferredDimensions(rect);
 	_slider->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void SliderHorizontalTest::shutdown() {

@@ -71,9 +71,6 @@ void ProgressBarTest::startup() {
 	Rect rect;
 	_progressBar->getPreferredDimensions(rect);
 	_progressBar->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void ProgressBarTest::shutdown() {

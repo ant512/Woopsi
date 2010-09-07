@@ -71,9 +71,6 @@ void AlertTest::startup() {
 	Rect rect;
 	_alert->getPreferredDimensions(rect);
 	_alert->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void AlertTest::shutdown() {

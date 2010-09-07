@@ -71,9 +71,6 @@ void CalendarTest::startup() {
 	Rect rect;
 	_calendar->getPreferredDimensions(rect);
 	_calendar->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void CalendarTest::shutdown() {

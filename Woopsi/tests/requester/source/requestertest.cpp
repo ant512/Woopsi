@@ -71,9 +71,6 @@ void RequesterTest::startup() {
 	Rect rect;
 	_requester->getPreferredDimensions(rect);
 	_requester->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void RequesterTest::shutdown() {

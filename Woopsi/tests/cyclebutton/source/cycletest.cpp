@@ -81,9 +81,6 @@ void CycleTest::startup() {
 	Rect rect;
 	_cycleButton->getPreferredDimensions(rect);
 	_cycleButton->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void CycleTest::shutdown() {

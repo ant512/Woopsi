@@ -82,9 +82,6 @@ void MultiLineTextBoxTest::startup() {
 	Rect rect;
 	_textbox->getPreferredDimensions(rect);
 	_textbox->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void MultiLineTextBoxTest::shutdown() {

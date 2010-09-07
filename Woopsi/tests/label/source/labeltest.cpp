@@ -71,9 +71,6 @@ void LabelTest::startup() {
 	Rect rect;
 	_label->getPreferredDimensions(rect);
 	_label->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void LabelTest::shutdown() {

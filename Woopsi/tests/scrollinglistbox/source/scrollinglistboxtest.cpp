@@ -108,9 +108,6 @@ void ScrollingListBoxTest::startup() {
 	//_listBox->getPreferredDimensions(rect);
 	//_listBox->resize(rect.width, rect.height);
 	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
-	
 	ScrollbarVertical* scrollbar = ((ScrollbarVertical*)(_listBox->getChild(1)));
 	
 	Debug::printf("Scrollbar");

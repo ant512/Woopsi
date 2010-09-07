@@ -74,9 +74,6 @@ void ScrollbarHorizontalTest::startup() {
 	Rect rect;
 	_scrollbar->getPreferredDimensions(rect);
 	_scrollbar->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void ScrollbarHorizontalTest::shutdown() {

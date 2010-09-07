@@ -75,9 +75,6 @@ void BitmapButtonTest::startup() {
 	Rect rect;
 	_button->getPreferredDimensions(rect);
 	_button->resize(rect.width, rect.height);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void BitmapButtonTest::shutdown() {

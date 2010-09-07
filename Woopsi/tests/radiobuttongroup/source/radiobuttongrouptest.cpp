@@ -69,9 +69,6 @@ void RadioButtonGroupTest::startup() {
 	_radioGroup->addGadgetEventHandler(this);
 	_radioGroup->setDoubleClickable(true);
 	_radioGroup->setRefcon(1);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void RadioButtonGroupTest::shutdown() {
