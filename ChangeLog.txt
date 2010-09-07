@@ -18,10 +18,25 @@ Change Log
     - ScrollingPanel::scroll() redraws correctly on top screen.
     - Renamed Text class to Document.
     - Document class contains a WoopsiString instead of inheriting from it.
+    - Removed DimmedScreen class (not compatible with new rendering system).
+    - Removed erased flag from Gadget.
+    - Removed Gadget::erase().
+    - Removed Gadget::eraseGadget().
+    - Removed Gadget::redraw().
+    - Removed Gadget::redrawDirty().
+    - Removed Gadget::drawChildren().
+    - Removed Gadget::redrawDirtyChildren().
+    - ListData destructor does not fire list changed events.
+    - Removed AmigaWindow::redrawBorder().
+    - Removed Woopsi::eraseRect().
+    - Gadget::getChild() no longer returns a const gadget.
+    - Removed visibleRegionCacheInvalid flag from gadget.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
     - Added Rect::splitIntersection().
+    - Gadget rendering re-written to use damaged rects.
+    - Added equality and inequality operator overloads to Rect class.
 
   V0.99.4 (20100902)
   

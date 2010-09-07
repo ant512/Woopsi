@@ -62,7 +62,6 @@ namespace WoopsiUI {
 			u8 decoration : 1;					/**< True if the gadget is a decoration. */
 			u8 permeable : 1;					/**< True if the gadget's children can exceed its dimensions. */
 			u8 erased : 1;						/**< True if the gadget is currently erased from the frame buffer. */
-			u8 visibleRegionCacheInvalid : 1;	/**< True if the region cache is invalid. */
 			u8 hidden : 1;						/**< True if the gadget is hidden. */
 			u8 doubleClickable : 1;				/**< True if the gadget can be double-clicked. */
 			u8 modal : 1;						/**< True if the gadget is modal. */
