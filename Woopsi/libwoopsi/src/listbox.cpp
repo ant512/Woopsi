@@ -192,7 +192,7 @@ void ListBox::onClick(s16 x, s16 y) {
 
 	startDragging(x, y);
 
-	redraw();
+	markRectsDirty();
 }
 
 void ListBox::onDoubleClick(s16 x, s16 y) {
@@ -243,11 +243,11 @@ void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
 	_lastSelectedIndex = -1;
 
 	resizeCanvas();
-	redraw();
+	markRectsDirty();
 }
 
 void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
-	redraw();
+	markRectsDirty();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 

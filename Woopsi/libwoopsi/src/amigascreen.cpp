@@ -57,7 +57,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		redraw();
+		markRectsDirty();
 	}
 }
 
@@ -99,8 +99,6 @@ void AmigaScreen::showFlipButton() {
 		_flipButton = new DecorationGlyphButton(buttonX, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, &_style);
 		_flipButton->addGadgetEventHandler(this);
 		addGadget(_flipButton);
-
-		_flipButton->redraw();
 	}
 }
 
@@ -117,8 +115,6 @@ void AmigaScreen::showDepthButton() {
 		if (_screenFlags.showFlipButton) {
 			_flipButton->moveTo(getWidth() - SCREEN_DEPTH_BUTTON_WIDTH - SCREEN_FLIP_BUTTON_WIDTH, 0);
 		}
-		
-		_depthButton->redraw();
 	}
 }
 

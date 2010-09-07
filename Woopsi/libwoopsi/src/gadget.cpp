@@ -332,12 +332,6 @@ bool Gadget::checkCollision(Gadget* gadget) const {
 	return rect.intersects(gadgetRect);
 }
 
-void Gadget::drawChildren() {
-	for (s32 i = 0; i < _gadgets.size(); i++) {
-		_gadgets[i]->redraw();
-	}
-}
-
 void Gadget::redraw(const Rect& rect) {
 
 	// Create internal and standard graphics ports
@@ -352,106 +346,6 @@ void Gadget::redraw(const Rect& rect) {
 	
 	// Remember that the gadget is no longer erased
 	_flags.erased = false;
-}
-
-void Gadget::redraw() {
-	if (isDrawingEnabled()) {
-		cacheVisibleRects();
-
-		if (_rectCache->getBackgroundRegions()->size() > 0) {
-
-			// Create internal and standard graphics ports
-			GraphicsPort* internalPort = newInternalGraphicsPort(_rectCache->getBackgroundRegions()->at(0));
-			GraphicsPort* port = newGraphicsPort(_rectCache->getBackgroundRegions()->at(0));
-
-			// Draw all visible rectangles
-			for (s32 i = 0; i < _rectCache->getBackgroundRegions()->size(); i++) {
-
-				internalPort->setClipRect(_rectCache->getBackgroundRegions()->at(i));
-				port->setClipRect(_rectCache->getBackgroundRegions()->at(i));
-
-				drawBorder(internalPort);
-				drawContents(port);
-			}
-
-			delete internalPort;
-			delete port;
-		}
-
-		// Remember that the gadget is no longer erased
-		_flags.erased = false;
-
-		drawChildren();
-	}
-}
-
-// Redraw any regions that have been overlapped
-// Called when erasing a gadget higher up the vector
-void Gadget::redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender) {
-
-	if (isDrawingEnabled()) {
-
-		// Draw any children first
-		redrawDirtyChildren(invalidRects, sender);
-	
-		// Create an array that will contain all of the rects from the
-		// original array that overlap this gadget
-		WoopsiArray<Rect>* overlappingRects = new WoopsiArray<Rect>();
-
-		// Remove any non-overlapping rectangles from dirty vector and add to
-		// overlapping vector
-		_rectCache->splitRectangles(invalidRects, overlappingRects, sender);
-
-		// Create an array that will contain all of the rects that overlap this
-		// gadget clipped to its parent
-		WoopsiArray<Rect>* rectsToDraw = new WoopsiArray<Rect>();
-		
-		// Split from overlappingRects into rectsToDraw, giving us an array
-		// of rects that overlap only the visible portions of this gadget
-		_rectCache->splitRectangles(overlappingRects, rectsToDraw, sender);
-		
-		// Draw the dirty rects
-		if (rectsToDraw->size() > 0) {
-
-			GraphicsPort* internalPort = newInternalGraphicsPort(rectsToDraw->at(0));
-			GraphicsPort* port = newGraphicsPort(rectsToDraw->at(0));
-
-			for (s32 i = 0; i < rectsToDraw->size(); i++) {
-
-				internalPort->setClipRect(rectsToDraw->at(i));
-				port->setClipRect(rectsToDraw->at(i));
-
-				drawBorder(internalPort);
-				drawContents(port);
-			}
-
-			delete internalPort;
-			delete port;
-		}
-		
-		// Copy all of the overlapping rects we didn't draw back to the main
-		// array of rects that need to be drawn by another gadget
-		for (s32 i = 0; i < overlappingRects->size(); i++) {
-			invalidRects->push_back(overlappingRects->at(i));
-		}
-
-		// Clean up
-		delete overlappingRects;
-		delete rectsToDraw;
-	}
-}
-
-void Gadget::redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender) {
-
-	for (s32 i = _gadgets.size() - 1; i > -1 ; i--) {
-		if (invalidRects->size() > 0) {
-			if (_gadgets.at(i) != sender) {
-				_gadgets[i]->redrawDirty(invalidRects, sender);
-			}
-		} else {
-			break;
-		}
-	}
 }
 
 void Gadget::markRectsDirty() {
@@ -476,6 +370,9 @@ void Gadget::close() {
 	if (!_flags.deleted) {
 		_gadgetEventHandlers->raiseCloseEvent();
 		_gadgetEventHandlers->disable();
+		
+		_parent->invalidateVisibleRectCache();
+		markRectsDirty();
 
 		_flags.deleted = true;
 		_flags.drawingEnabled = false;
@@ -488,8 +385,6 @@ void Gadget::close() {
 
 		// Ensure the gadget isn't running modally
 		stopModal();
-
-		erase();
 
 		if (_parent != NULL) {
 			_parent->closeChild(this);
@@ -547,7 +442,7 @@ bool Gadget::unshelve() {
 			_parent->invalidateVisibleRectCache();	
 		}
 
-		redraw();
+		markRectsDirty();
 
 		return true;
 	}
@@ -771,7 +666,7 @@ bool Gadget::enable() {
 		
 		onEnable();
 
-		redraw();
+		markRectsDirty();
 
 		_gadgetEventHandlers->raiseEnableEvent();
 
@@ -787,7 +682,7 @@ bool Gadget::disable() {
 		
 		onDisable();
 
-		redraw();
+		markRectsDirty();
 
 		_gadgetEventHandlers->raiseDisableEvent();
 
@@ -853,7 +748,9 @@ bool Gadget::moveTo(s16 x, s16 y) {
 		_rect.setX(x);
 		_rect.setY(y);
 
-		invalidateVisibleRectCache();
+		if (_parent != NULL) {
+			_parent->invalidateVisibleRectCache();
+		}
 
 		markRectsDirty();
 
@@ -1291,6 +1188,7 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 		_gadgets.push_back(gadget);
 
 		gadget->invalidateVisibleRectCache();
+		gadget->markRectsDirty();
 
 		// Invalidate all gadgets that collide with the depth-swapped gadget
 		for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1298,8 +1196,6 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 				_gadgets[i]->invalidateVisibleRectCache();
 			}
 		}
-
-		gadget->redraw();
 
 		return true;
 	}
@@ -1680,7 +1576,7 @@ bool Gadget::show() {
 		_parent->invalidateLowerGadgetsVisibleRectCache(this);
 
 		_gadgetEventHandlers->raiseShowEvent();
-		redraw();
+		markRectsDirty();
 		return true;
 	}
 
@@ -1695,7 +1591,7 @@ bool Gadget::hide() {
 		stopModal();
 
 		_gadgetEventHandlers->raiseHideEvent();
-		erase();
+		markRectsDirty();
 		return true;
 	}
 

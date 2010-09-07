@@ -9,7 +9,13 @@ ListData::ListData() {
 }
 
 ListData::~ListData() {
-	removeAllItems();
+	
+	// Delete all option data
+	for (s32 i = 0; i < _items.size(); i++) {
+		delete _items[i];
+	}
+	
+	_items.clear();
 }
 
 void ListData::addItem(ListDataItem* item) {

@@ -55,7 +55,7 @@ void DisplayController::redraw(Gadget* gadget) {
 	if (gadget == NULL) gadget = _gadget;
 
 	// Draw all visible child portions first
-	for (s32 i = gadget->getChildCount(); i >= 0; --i) {
+	for (s32 i = gadget->getChildCount() - 1; i >= 0; --i) {
 		if (!gadget->getChild(i)->isDrawingEnabled()) continue;
 
 		redraw(gadget->getChild(i));

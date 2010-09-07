@@ -68,8 +68,6 @@ void Calculator::appendText(const WoopsiString& text) {
 			_output->appendText(text);
 		}
 	}
-
-	_output->redraw();
 }
 
 void Calculator::doAdd() {
@@ -191,7 +189,6 @@ void Calculator::updateDisplay() {
 	itoa(_val1, _text);
 	
 	_output->setText(_text);
-	_output->redraw();
 }
 
 void Calculator::doFunction() {
@@ -270,7 +267,6 @@ void Calculator::handleClickEvent(const GadgetEventArgs& e) {
 		_val1 = 0;
 		_val2 = 0;
 		_opCode = 0;
-		_output->redraw();
 
 	} else if (button->getText().getCharAt(0) == '+') {
 		doAdd();

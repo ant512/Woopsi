@@ -23,7 +23,7 @@ void CheckBox::setState(CheckBox::CheckBoxState state) {
 
 		_gadgetEventHandlers->raiseValueChangeEvent();
 
-		redraw();
+		markRectsDirty();
 	}
 }
 

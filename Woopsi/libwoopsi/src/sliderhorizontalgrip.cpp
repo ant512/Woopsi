@@ -28,15 +28,15 @@ void SliderHorizontalGrip::drawBorder(GraphicsPort* port) {
 
 void SliderHorizontalGrip::onClick(s16 x, s16 y) {
 	startDragging(x, y);
-	redraw();
+	markRectsDirty();
 }
 
 void SliderHorizontalGrip::onRelease(s16 x, s16 y) {
-	redraw();
+	markRectsDirty();
 }
 
 void SliderHorizontalGrip::onReleaseOutside(s16 x, s16 y) {
-	redraw();
+	markRectsDirty();
 }
 
 void SliderHorizontalGrip::onDrag(s16 x, s16 y, s16 vX, s16 vY) {

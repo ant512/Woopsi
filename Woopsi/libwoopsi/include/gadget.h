@@ -496,11 +496,6 @@ namespace WoopsiUI {
 		 */
 		virtual void setGlyphFont(FontBase* font);
 
-		/**
-		 * Draws the visible regions of the gadget and the gadget's child gadgets.
-		 */
-		void redraw();
-
 		void redraw(const Rect& rect);
 
 		/**
@@ -841,13 +836,6 @@ namespace WoopsiUI {
 		void invalidateVisibleRectCache();
 
 		/**
-		 * Redraw any visible regions of this gadget that have become corrupted.
-		 * @param invalidRects A list of corrupt regions.
-		 * @param sender A pointer to the gadget that corrupted the regions.
-		 */
-		void redrawDirty(WoopsiArray<Rect>* invalidRects, Gadget* sender);
-
-		/**
 		 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
 		 * @param rect The region that needs to be clipped.
 		 */
@@ -1065,11 +1053,6 @@ namespace WoopsiUI {
 		const u8 calculatePhysicalScreenNumber(s16 y) const;
 
 		/**
-		 * Draw all visible regions of this gadget's children.
-		 */
-		void drawChildren();
-
-		/**
 		 * Erase and remove the supplied child gadget from this gadget and
 		 * send it to the deletion queue.
 		 * @param gadget The gadget to close.
@@ -1084,14 +1067,6 @@ namespace WoopsiUI {
 		 * @param gadget The gadget to hide.
 		 */
 		void shelveChild(Gadget* gadget);
-
-		/**
-		 * Redraws all regions of child gadgets that fall within the invalidRects
-		 * regions.
-		 * @param invalidRects List of invalid regions that need to be redrawn.
-		 * @param sender Pointer to the gadget that initiated the redraw.
-		 */
-		void redrawDirtyChildren(WoopsiArray<Rect>* invalidRects, Gadget* sender);
 
 		/**
 		 * Get a graphics port that can draw within the region of the supplied

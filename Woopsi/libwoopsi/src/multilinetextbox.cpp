@@ -253,12 +253,12 @@ void MultiLineTextBox::calculateVisibleRows() {
 
 void MultiLineTextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
 	_hAlignment = alignment;
-	redraw();
+	markRectsDirty();
 }
 
 void MultiLineTextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
 	_vAlignment = alignment;
-	redraw();
+	markRectsDirty();
 }
 
 bool MultiLineTextBox::cullTopLines() {
@@ -330,26 +330,18 @@ void MultiLineTextBox::jumpToCursor() {
 
 void MultiLineTextBox::setText(const WoopsiString& text) {
 
-	bool drawingEnabled = _flags.drawingEnabled;
-	disableDrawing();
-
 	_document->setText(text);
 
 	cullTopLines();
 	limitCanvasHeight();
 	jumpToTextBottom();
 
-	if (drawingEnabled) enableDrawing();
-
-	redraw();
+	markRectsDirty();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::appendText(const WoopsiString& text) {
-
-	bool drawingEnabled = _flags.drawingEnabled;
-	disableDrawing();
 
 	_document->append(text);
 
@@ -357,9 +349,7 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 	limitCanvasHeight();
 	jumpToTextBottom();
 
-	if (drawingEnabled) enableDrawing();
-
-	redraw();
+	markRectsDirty();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -370,9 +360,6 @@ void MultiLineTextBox::removeText(const u32 startIndex) {
 
 void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
-	bool drawingEnabled = _flags.drawingEnabled;
-	disableDrawing();
-
 	_document->remove(startIndex, count);
 
 	limitCanvasHeight();
@@ -380,17 +367,12 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
 	moveCursorToPosition(startIndex);
 
-	if (drawingEnabled) enableDrawing();
-
-	redraw();
+	markRectsDirty();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
-
-	bool drawingEnabled = _flags.drawingEnabled;
-	disableDrawing();
 
 	_document->insert(text, index);
 
@@ -399,17 +381,12 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 
 	moveCursorToPosition(index + text.getLength());
 
-	if (drawingEnabled) enableDrawing();
-
-	redraw();
+	markRectsDirty();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void MultiLineTextBox::setFont(FontBase* font) {
-
-	bool drawingEnabled = _flags.drawingEnabled;
-	disableDrawing();
 
 	_style.font = font;
 	_document->setFont(font);
@@ -418,9 +395,7 @@ void MultiLineTextBox::setFont(FontBase* font) {
 	limitCanvasHeight();
 	limitCanvasY();
 
-	if (drawingEnabled) enableDrawing();
-
-	redraw();
+	markRectsDirty();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -479,14 +454,14 @@ const u32 MultiLineTextBox::getTextLength() const {
 void MultiLineTextBox::showCursor() {
 	if (!_showCursor) {
 		_showCursor = true;
-		redraw();
+		markRectsDirty();
 	}
 }
 
 void MultiLineTextBox::hideCursor() {
 	if (_showCursor) {
 		_showCursor = false;
-		redraw();
+		markRectsDirty();
 	}
 }
 

@@ -3,6 +3,8 @@
 #include "amigawindow.h"
 #include "woopsifuncs.h"
 #include "woopsitimer.h"
+#include "woopsi.h"
+#include "displaycontroller.h"
 
 Pong::Pong(AmigaScreen* screen) {
 	_screen = screen;
@@ -94,6 +96,8 @@ void Pong::moveObjects() {
 }
 
 void Pong::draw() {
+	woopsiApplication->getDisplayController()->redraw();
+
 	// Get graphics port
 	GraphicsPort* port = _window->newGraphicsPort(false);
 

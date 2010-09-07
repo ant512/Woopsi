@@ -64,7 +64,6 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 
 	_redSlider->addGadgetEventHandler(this);
 	addGadget(_redSlider);
-	_redSlider->redraw();
 
 	// Calculate Green Slider Dimensions
 	buttonRect.y = buttonRect.y + buttonRect.height + 1;
@@ -78,7 +77,6 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 
 	_greenSlider->addGadgetEventHandler(this);
 	addGadget(_greenSlider);
-	_greenSlider->redraw();
 
 	// Calculate Blue Slider Dimensions
 	buttonRect.y = buttonRect.y + buttonRect.height + 1;
@@ -92,7 +90,6 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 
 	_blueSlider->addGadgetEventHandler(this);
 	addGadget(_blueSlider);
-	_blueSlider->redraw();
 
 	// Calculate Colour button dimensions
 	buttonRect.width = (rect.width >> 2) - 1;

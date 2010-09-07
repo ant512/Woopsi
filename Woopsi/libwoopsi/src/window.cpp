@@ -1,4 +1,6 @@
 #include "window.h"	
+#include "woopsi.h"
+#include "displaycontroller.h"
 
 using namespace WoopsiUI;
 
@@ -7,6 +9,8 @@ Window::Window(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u
 }
 
 void Window::onDragStop() {
+	
+	woopsiApplication->getDisplayController()->redraw();
 
 	// Get a graphics port from the parent screen
 	GraphicsPort* port = _parent->newGraphicsPort(true);
@@ -57,6 +61,8 @@ void Window::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 		if (destY < 0) {
 			destY = 0;
 		}
+		
+		woopsiApplication->getDisplayController()->redraw();
 
 		// Get a graphics port from the parent screen
 		GraphicsPort* port = _parent->newGraphicsPort(true);
@@ -92,6 +98,8 @@ void Window::setTitle(const WoopsiString& title) {
 }
 
 void Window::onDragStart() {
+	
+	woopsiApplication->getDisplayController()->redraw();
 
 	// Draw XOR rect
 

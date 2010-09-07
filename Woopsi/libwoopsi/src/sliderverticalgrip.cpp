@@ -28,15 +28,15 @@ void SliderVerticalGrip::drawBorder(GraphicsPort* port) {
 
 void SliderVerticalGrip::onClick(s16 x, s16 y) {
 	startDragging(x, y);
-	redraw();
+	markRectsDirty();
 }
 
 void SliderVerticalGrip::onRelease(s16 x, s16 y) {
-	redraw();
+	markRectsDirty();
 }
 
 void SliderVerticalGrip::onReleaseOutside(s16 x, s16 y) {
-	redraw();
+	markRectsDirty();
 }
 
 void SliderVerticalGrip::onDrag(s16 x, s16 y, s16 vX, s16 vY) {

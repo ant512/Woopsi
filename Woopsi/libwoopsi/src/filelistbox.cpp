@@ -72,11 +72,6 @@ void FileListBox::readDirectory() {
 	
 	// Add "Loading..." option to display whilst directory is enumerated
 	_listbox->addOption("Loading...", 0);
-
-	bool drawingEnabled = _flags.drawingEnabled;
-
-	// Disable drawing for speed
-	disableDrawing();
 	
 	// Remove the "Loading..." option
 	_listbox->removeAllOptions();
@@ -171,11 +166,7 @@ void FileListBox::readDirectory() {
 
 #endif
 	
-	// Re-enable drawing now that the list is complete
-	if (drawingEnabled) {
-		enableDrawing();
-		redraw();
-	}
+	markRectsDirty();
 }
 
 void FileListBox::setPath(const WoopsiString& path) {

@@ -78,14 +78,14 @@ void Label::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
 	_hAlignment = alignment;
 	calculateTextPositionHorizontal();
 
-	redraw();
+	markRectsDirty();
 }
 
 void Label::setTextAlignmentVert(TextAlignmentVert alignment) {
 	_vAlignment = alignment;
 	calculateTextPositionVertical();
 
-	redraw();
+	markRectsDirty();
 }
 
 void Label::setText(const WoopsiString& text) {
@@ -111,7 +111,7 @@ void Label::onResize(u16 width, u16 height) {
 void Label::onTextChange() {
 	calculateTextPositionHorizontal();
 	calculateTextPositionVertical();
-	redraw();
+	markRectsDirty();
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
@@ -138,5 +138,5 @@ void Label::setFont(FontBase* font) {
 	calculateTextPositionHorizontal();
 	calculateTextPositionVertical();
 
-	redraw();
+	markRectsDirty();
 }

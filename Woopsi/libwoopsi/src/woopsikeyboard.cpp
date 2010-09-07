@@ -173,14 +173,14 @@ void WoopsiKeyboard::processKeyRelease(WoopsiKey* key) {
 				if (_isShiftDown) {
 					_isShiftDown = false;
 					_shiftKey->setStuckDown(false);
-					_shiftKey->redraw();
+					_shiftKey->markRectsDirty();
 				}
 
 				// Reset control key
 				if (_isControlDown) {
 					_isControlDown = false;
 					_controlKey->setStuckDown(false);
-					_controlKey->redraw();
+					_controlKey->markRectsDirty();
 				}
 
 				// Update the keyboard

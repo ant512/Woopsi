@@ -213,5 +213,5 @@ bool Screen::swapGadgetDepth(Gadget* gadget) {
 void Screen::setTitle(const WoopsiString& title) {
 	_title = title;
 
-	redraw();
+	markRectsDirty();
 }
