@@ -168,8 +168,6 @@ namespace WoopsiUI {
 		/**
 		 * Initialise the application.  All initial GUI creation, hardware setup, etc, should
 		 * be done in an override of this method.
-		 * This method must call enableDrawing() and draw() at some point or nothing will
-		 * be visible.
 		 */
 		virtual void startup() = 0;
 

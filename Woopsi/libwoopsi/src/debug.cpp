@@ -40,10 +40,8 @@ void Debug::output(const char* text) {
 		if (woopsiApplication != NULL) {
 			createDebug();
 
-			_debug->_textBox->disableDrawing();
 			_debug->_textBox->appendText(">");
 			_debug->_textBox->appendText(text);
-			_debug->_textBox->enableDrawing();
 			_debug->_textBox->appendText("\n");
 		}
 	}
@@ -105,7 +103,6 @@ void Debug::createGUI() {
 		_window->getClientRect(rect);
 
 		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _style);
-		_textBox->disableDrawing();
 		_window->addGadget(_textBox);
 		_textBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
 		_textBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
@@ -113,7 +110,6 @@ void Debug::createGUI() {
 		_textBox->appendText(WOOPSI_VERSION);
 		_textBox->appendText("\n");
 		_textBox->appendText(WOOPSI_COPYRIGHT);
-		_textBox->enableDrawing();
 		_textBox->appendText("\n");
 	}
 }

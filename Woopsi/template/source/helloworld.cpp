@@ -21,12 +21,6 @@ void HelloWorld::startup() {
 	// Add textbox
 	TextBox* textbox = new TextBox(rect.x, rect.y, rect.width, rect.height, "Hello World!");
 	window->addGadget(textbox);
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void HelloWorld::shutdown() {

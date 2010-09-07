@@ -68,7 +68,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_flags.dragging = false;
 	_flags.hasFocus = false;
 	_flags.deleted = false;
-	_flags.drawingEnabled = false;
 	_flags.enabled = true;
 	_flags.shelved = false;
 	_flags.hidden = false;
@@ -179,10 +178,10 @@ const bool Gadget::isDrawingEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isDrawingEnabled()) {
 			// Drawing is enabled if the gadget is drawable, not deleted, and not shelved
-			return (_flags.drawingEnabled && (!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
+			return ((!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 		}
 	} else {
-		return (_flags.drawingEnabled && (!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
+		return ((!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 	}
 
 	return false;
@@ -359,7 +358,6 @@ void Gadget::close() {
 		markRectsDirty();
 
 		_flags.deleted = true;
-		_flags.drawingEnabled = false;
 		
 		// Unset clicked gadget if necessary
 		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
@@ -389,7 +387,6 @@ bool Gadget::shelve() {
 		markRectsDirty();
 
 		_flags.shelved = true;
-		_flags.drawingEnabled = false;
 
 		// Unset clicked gadget if necessary
 		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
@@ -418,7 +415,6 @@ bool Gadget::unshelve() {
 		_gadgetEventHandlers->enable();
 		_gadgetEventHandlers->raiseUnshelveEvent();
 
-		_flags.drawingEnabled = true;
 		_flags.shelved = false;
 
 		if (_parent != NULL) {
@@ -774,8 +770,6 @@ bool Gadget::resize(u16 width, u16 height) {
 		// Remember if the gadget is permeable
 		bool wasPermeable = _flags.permeable;
 
-		// Remember if gadget was drawing
-		bool wasDrawEnabled = _flags.drawingEnabled;
 
 		_flags.permeable = true;
 	
@@ -793,9 +787,6 @@ bool Gadget::resize(u16 width, u16 height) {
 		
 		// Reset the permeable value
 		_flags.permeable = wasPermeable;
-
-		// Reset drawing value
-		_flags.drawingEnabled = wasDrawEnabled;
 
 		invalidateVisibleRectCache();
 		markRectsDirty();
@@ -1230,8 +1221,6 @@ void Gadget::addGadget(Gadget* gadget) {
 			setFocusedGadget(gadget);
 		}
 
-		gadget->enableDrawing();
-
 		invalidateVisibleRectCache();
 		gadget->markRectsDirty();
 	}
@@ -1251,8 +1240,6 @@ void Gadget::insertGadget(Gadget* gadget) {
 		} else {
 			_gadgets.insert(_decorationCount, gadget);
 		}
-
-		gadget->enableDrawing();
 
 		invalidateVisibleRectCache();
 		gadget->markRectsDirty();
@@ -1486,8 +1473,6 @@ bool Gadget::removeChild(Gadget* gadget) {
 
 	// Divorce child from parent
 	gadget->setParent(NULL);
-	
-	gadget->disableDrawing();
 
 	// Locate gadget in main vector
 	for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1509,8 +1494,6 @@ bool Gadget::removeChild(Gadget* gadget) {
 
 			// Remove gadget from shelved vector
 			_shelvedGadgets.erase(i);
-
-			gadget->disableDrawing();
 
 			return true;
 		}

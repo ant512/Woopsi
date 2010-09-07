@@ -107,12 +107,10 @@ void Calendar::populateGUI() {
 	char buffer[6];
 
 	// Set month label
-	_monthLabel->disableDrawing();
 	_monthLabel->setText(_visibleDate->getMonthName());
 
 	// Append year to month name label
 	sprintf(buffer, " %d", _visibleDate->getYear());
-	_monthLabel->enableDrawing();
 	_monthLabel->appendText(buffer);
 
 	u8 buttonIndex = 0;

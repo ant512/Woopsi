@@ -357,12 +357,8 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 				}
 			}
 
-			topGadget->disableDrawing();
-
 			// Move to top of stack
 			topGadget->raiseToTop();
-
-			topGadget->enableDrawing();
 
 			// Move to bottom screen
 			((Screen*)topGadget)->flipToBottomScreen();

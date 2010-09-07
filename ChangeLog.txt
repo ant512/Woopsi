@@ -31,6 +31,9 @@ Change Log
     - Removed Woopsi::eraseRect().
     - Gadget::getChild() no longer returns a const gadget.
     - Removed visibleRegionCacheInvalid flag from gadget.
+    - Removed Gadget::enableDrawing().
+    - Removed Gadget::disableDrawing().
+    - Removed drawingEnabled flag from Gadget.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

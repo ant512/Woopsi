@@ -57,7 +57,6 @@ namespace WoopsiUI {
 			u8 shelved : 1;						/**< True if the gadget has been shelved. */
 			u8 borderless : 1;					/**< True if the gadget is borderless. */
 			u8 draggable : 1;					/**< True if the gadget can be dragged. */
-			u8 drawingEnabled : 1;				/**< True if the gadget can be drawn. */
 			u8 enabled : 1;						/**< True if the gadget is enabled. */
 			u8 decoration : 1;					/**< True if the gadget is a decoration. */
 			u8 permeable : 1;					/**< True if the gadget's children can exceed its dimensions. */
@@ -429,17 +428,6 @@ namespace WoopsiUI {
 		inline void setRaisesEvents(const bool raisesEvents) { 
 			raisesEvents ? _gadgetEventHandlers->enable() : _gadgetEventHandlers->disable();
 		};
-
-		/**
-		 * Disabled drawing of this gadget. Gadgets hidden using this method will still
-		 * be processed.
-		 */
-		inline void disableDrawing() { _flags.drawingEnabled = false; };
-
-		/**
-		 * Enables drawing of this gadget.
-		 */
-		inline void enableDrawing() { _flags.drawingEnabled = true; };
 
 		/**
 		 * Sets the background colour.
