@@ -28,9 +28,6 @@ void ContextMenuTest::startup() {
 	_output->addContextMenuItem("Test 1", 1);
 	_output->addContextMenuItem("Test 2", 2);
 	_output->addContextMenuItem("Test 3", 3);
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void ContextMenuTest::shutdown() {

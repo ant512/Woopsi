@@ -10,9 +10,6 @@ void DateTest::startup() {
 		date->addDays(-1);
 		Debug::printf("%d/%d/%d", date->getDay(), date->getMonth(), date->getYear());
 	}
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void DateTest::shutdown() {

@@ -278,8 +278,6 @@ void Demo::startup() {
 	_alert = new Alert(2, 2, 200, 80, "Welcome!", "Welcome to Woopsi!");
 	newScreen2->addGadget(_alert);
 
-	enableDrawing();	// Ensure Woopsi can now draw itself
-
 	// Make welcome notice modal
 	//_alert->goModal();
 }

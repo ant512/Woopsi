@@ -24,9 +24,6 @@ void FileReqDemo::startup() {
 	_textbox->setTextAlignmentVert(TextBox::TEXT_ALIGNMENT_VERT_TOP);
 	window->addGadget(_textbox);
 
-	// Ensure Woopsi can draw itself
-	enableDrawing();
-	
 	// Attempt to initialise the FAT system
 	if (fatInitDefault()) {
 	

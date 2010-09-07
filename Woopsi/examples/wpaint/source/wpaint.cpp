@@ -17,9 +17,6 @@ void WPaint::startup() {
 	// Add toolbox
 	Toolbox* toolbox = new Toolbox(canvas);
 	screen->addGadget(toolbox);
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void WPaint::shutdown() {

@@ -17,9 +17,6 @@ void Windowless::startup() {
 	// Add textbox
 	TextBox* textbox = new TextBox(rect.x, rect.y, rect.width, rect.height, "Hello World!");
 	screen->addGadget(textbox);
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void Windowless::shutdown() {

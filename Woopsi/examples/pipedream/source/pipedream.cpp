@@ -27,9 +27,6 @@ void PipeDream::startup() {
 	window->addGadget(_timer);
 	_timer->setRefcon(2);
 	_timer->start();
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void PipeDream::shutdown() {

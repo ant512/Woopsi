@@ -72,9 +72,6 @@ void Fire::startup() {
 	// Other options
 	_intensity = 20;
 	_scale = 1;
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void Fire::shutdown() {

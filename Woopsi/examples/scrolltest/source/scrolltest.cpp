@@ -20,9 +20,6 @@ void ScrollTest::startup() {
 	// Add test panel
 	TestPanel* panel = new TestPanel(rect.x, rect.y, rect.width, rect.height, 0);
 	window->addGadget(panel);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void ScrollTest::shutdown() {

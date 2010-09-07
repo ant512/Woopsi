@@ -84,9 +84,6 @@ void GadgetDrawing::startup() {
 	
 	// Set to line drawing mode
 	_mode = DRAW_MODE_OFF;
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void GadgetDrawing::shutdown() {

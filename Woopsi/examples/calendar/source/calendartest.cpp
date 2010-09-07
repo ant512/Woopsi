@@ -21,9 +21,6 @@ void CalendarTest::startup() {
 	_calendar = new Calendar(rect.x, rect.y, rect.width, rect.height, 26, 10, 2008, 0);
 	_calendar->addGadgetEventHandler(this);
 	window->addGadget(_calendar);
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void CalendarTest::shutdown() {

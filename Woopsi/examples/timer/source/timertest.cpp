@@ -29,9 +29,6 @@ void TimerTest::startup() {
 	
 	// Set up value we're going to print to the screen
 	_text = 'a';
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void TimerTest::shutdown() {

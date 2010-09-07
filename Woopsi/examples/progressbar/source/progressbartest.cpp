@@ -27,9 +27,6 @@ void ProgressBarTest::startup() {
 	_timer = new WoopsiTimer(10, true);
 	_timer->addGadgetEventHandler(this);
 	addGadget(_timer);
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 	
 	// Start the timer
 	_timer->start();

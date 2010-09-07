@@ -141,9 +141,6 @@ void PackedFonts::startup() {
 	_cycleButton->setRefcon(1);
 	_cycleButton->addGadgetEventHandler(this);
 	window->addGadget(_cycleButton);
-
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void PackedFonts::shutdown() {

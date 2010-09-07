@@ -34,9 +34,6 @@ void KeyTest::startup() {
 	_keyboard = new WoopsiKeyboard(0, 13, 0);
 	_keyboard->addKeyboardEventHandler(_output);
 	inScreen->addGadget(_keyboard);
-	
-	// Ensure Woopsi can draw itself
-	enableDrawing();
 }
 
 void KeyTest::shutdown() {
