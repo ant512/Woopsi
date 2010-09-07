@@ -144,9 +144,6 @@ void PackedFonts::startup() {
 
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void PackedFonts::shutdown() {

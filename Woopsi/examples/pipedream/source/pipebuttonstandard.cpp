@@ -16,7 +16,7 @@ PipeButtonStandard::PipeButtonStandard(s16 x, s16 y, u16 width, u16 height, bool
 
 void PipeButtonStandard::increaseFlowLevel(u8 increase) {
 	_flowLevel += increase;
-	redraw();
+	markRectsDirty();
 	disable();
 }
 

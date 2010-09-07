@@ -20,9 +20,6 @@ void Windowless::startup() {
 
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void Windowless::shutdown() {

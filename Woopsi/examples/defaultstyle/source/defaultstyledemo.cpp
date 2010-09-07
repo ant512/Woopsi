@@ -45,9 +45,6 @@ void DefaultStyleDemo::startup() {
 
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void DefaultStyleDemo::shutdown() {

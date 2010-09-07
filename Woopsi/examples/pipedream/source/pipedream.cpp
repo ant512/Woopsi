@@ -30,9 +30,6 @@ void PipeDream::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void PipeDream::shutdown() {

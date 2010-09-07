@@ -24,9 +24,6 @@ void CalendarTest::startup() {
 
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void CalendarTest::shutdown() {

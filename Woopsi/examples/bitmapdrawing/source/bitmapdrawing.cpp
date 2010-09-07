@@ -105,9 +105,6 @@ void BitmapDrawing::startup() {
 
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void BitmapDrawing::shutdown() {
@@ -261,8 +258,8 @@ void BitmapDrawing::handleTimer() {
 			break;
 	}
 	
-	// Redraw the superbitmap to the window
-	_superBitmap->redraw();
+	// Ensure the superbitmap redraws
+	_superBitmap->markRectsDirty();
 }
 
 void BitmapDrawing::drawLine() {

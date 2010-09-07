@@ -27,9 +27,6 @@ void FileReqDemo::startup() {
 	// Ensure Woopsi can draw itself
 	enableDrawing();
 	
-	// Draw GUI
-	redraw();
-	
 	// Attempt to initialise the FAT system
 	if (fatInitDefault()) {
 	
@@ -41,7 +38,6 @@ void FileReqDemo::startup() {
 		req->setRefcon(1);
 		req->addGadgetEventHandler(this);
 		screen->addGadget(req);
-		req->redraw();
 	} else {
 	
 		// FAT initialisation failed!  Update textbox to tell user that we're stuck

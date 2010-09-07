@@ -32,9 +32,6 @@ void TimerTest::startup() {
 
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void TimerTest::shutdown() {

@@ -37,9 +37,6 @@ void KeyboardTextBox::startup() {
 	
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void KeyboardTextBox::shutdown() {

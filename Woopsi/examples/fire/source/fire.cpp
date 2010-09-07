@@ -75,9 +75,6 @@ void Fire::startup() {
 
 	// Ensure Woopsi can draw itself
 	enableDrawing();
-	
-	// Draw GUI
-	redraw();
 }
 
 void Fire::shutdown() {
@@ -175,5 +172,5 @@ void Fire::handleTimer() {
 	_buffer2 = tmp;
 	
 	// Redraw the superbitmap to the window
-	_superBitmap->redraw();
+	_superBitmap->markRectsDirty();
 }

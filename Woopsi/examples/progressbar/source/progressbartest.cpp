@@ -31,9 +31,6 @@ void ProgressBarTest::startup() {
 	// Ensure Woopsi can draw itself
 	enableDrawing();
 	
-	// Draw GUI
-	redraw();
-	
 	// Start the timer
 	_timer->start();
 }

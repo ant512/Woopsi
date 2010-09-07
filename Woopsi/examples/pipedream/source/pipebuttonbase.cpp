@@ -60,7 +60,7 @@ void PipeButtonBase::onClick(s16 x, s16 y) {
 	if (!isRevealed()) reveal();
 	raiseToTop();
 	if (_flags.draggable) startDragging(x, y);
-	redraw();
+	markRectsDirty();
 }
 
 bool PipeButtonBase::canSwap() const {
