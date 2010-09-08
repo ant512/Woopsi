@@ -10,9 +10,26 @@ RectCache::RectCache(const Gadget* gadget) {
 	_backgroundInvalid = true;
 }
 
-void RectCache::markRectsDirty() {
+void RectCache::markRectsDirty() const {
 	for (s32 i = 0; i < _foregroundRegions.size(); ++i) {
 		woopsiApplication->getDisplayController()->addDamagedRect(_foregroundRegions[i]);
+	}
+}
+
+void RectCache::markRectDirty(const Rect& rect) const {
+	
+	WoopsiArray<Rect> dirtyRects;
+	WoopsiArray<Rect> overlappedRects;
+	
+	dirtyRects.push_back(rect);
+	
+	// Work out which parts of the dirty rect overlap this gadget - we only want to
+	// attempt to redraw the portions of rect that overlap.
+	splitRectangles(&dirtyRects, &overlappedRects);
+	
+	// Queue all overlapping portions of the dirty rect for redrawing.
+	for (s32 i = 0; i < overlappedRects.size(); ++i) {
+		woopsiApplication->getDisplayController()->addDamagedRect(overlappedRects[i]);
 	}
 }
 
@@ -80,7 +97,7 @@ void RectCache::cacheBackgroundRegions() {
 			// Stop if there are no more regions to split
 			if (_backgroundRegions.size() == 0) break;
 			
-			_gadget->getChild(i)->getRectCache()->splitRectangles(&_backgroundRegions, invisibleRects, _gadget);
+			_gadget->getChild(i)->getRectCache()->splitRectangles(&_backgroundRegions, invisibleRects);
 		}
 
 		// Tidy up
@@ -92,7 +109,7 @@ void RectCache::cacheBackgroundRegions() {
 
 // Split rectangles into valid and invalid sub-rectangles
 // Used when calculating which portions of a gadget to draw
-void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects, const Gadget* sender) const {
+void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rect>* validRects) const {
 
 	// Bypass if the gadget is hidden - we do not want hidden gadgets to be able
 	// to affect the structure of the screen
@@ -145,10 +162,10 @@ void RectCache::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArr
 		// Gadget should never be the bottom item on the screen
 		if (gadgetIndex > 0) {
 
-			// Remove any overlapped rectangles
+			// Remove any overlapped rectanglesg
 			for (s32 i = gadgetIndex; i < parent->getChildCount(); i++) {
 				if (visibleRects->size() > 0) {
-					parent->getChild(i)->getRectCache()->splitRectangles(visibleRects, invisibleRects, gadget);
+					parent->getChild(i)->getRectCache()->splitRectangles(visibleRects, invisibleRects);
 				} else {
 					break;
 				}

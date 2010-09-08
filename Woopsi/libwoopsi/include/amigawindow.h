@@ -146,6 +146,11 @@ namespace WoopsiUI {
 		virtual void createBorder();
 		
 		/**
+		 * Mark the visible border regions as dirty for redraw.
+		 */
+		virtual void markBorderDirty();
+		
+		/**
 		 * Destructor.
 		 */
 		virtual inline ~AmigaWindow() { }

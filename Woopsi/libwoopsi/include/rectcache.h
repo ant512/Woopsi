@@ -64,9 +64,8 @@ namespace WoopsiUI {
 		 * to be redrawn.
 		 * @param validRects A vector of regions that represents areas of the
 		 * display that do not need to be redrawn.
-		 * @param sender Pointer to the gadget that initiated the split.
 		 */
-		void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects, const Gadget* sender) const;
+		void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects) const;
 
 		/**
 		 * Move any rectangles from the visibleRects list that overlap this gadget
@@ -78,7 +77,9 @@ namespace WoopsiUI {
 		 */
 		void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const;
 
-		void markRectsDirty();
+		void markRectsDirty() const;
+		
+		void markRectDirty(const Rect& rect) const;
 
 	private:
 		WoopsiArray<Rect> _foregroundRegions;				/**< List of the gadget's visible regions */

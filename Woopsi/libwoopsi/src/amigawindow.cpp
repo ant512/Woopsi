@@ -82,11 +82,28 @@ void AmigaWindow::createBorder() {
 
 void AmigaWindow::onFocus() {
 	raiseToTop();
-	markRectsDirty();
+	markBorderDirty();
+}
+
+void AmigaWindow::markBorderDirty() {
+	if (!isBorderless()) {
+		
+		// Left
+		markRectDirty(Rect(0, 0, _borderSize.left, getHeight()));
+		
+		// Right
+		markRectDirty(Rect(getWidth() - _borderSize.right, 0, _borderSize.right, getHeight()));
+		
+		// Top
+		markRectDirty(Rect(_borderSize.left, 0, getWidth() - _borderSize.left - _borderSize.right, _borderSize.top));
+		
+		// Bottom
+		markRectDirty(Rect(_borderSize.left, getHeight() - _borderSize.bottom, getWidth() - _borderSize.left - _borderSize.right, _borderSize.bottom));
+	}	
 }
 
 void AmigaWindow::onBlur() {
-	markRectsDirty();
+	markBorderDirty();
 }
 
 void AmigaWindow::onResize(u16 width, u16 height) {

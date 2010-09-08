@@ -347,6 +347,21 @@ void Gadget::markRectsDirty() {
 	_rectCache->markRectsDirty();
 }
 
+void Gadget::markRectDirty(const Rect& rect) {
+	cacheVisibleRects();
+
+	// Convert the rect from gadget space to Woopsi space co-ordinates
+	Rect adjustedRect = rect;
+	
+	adjustedRect.x += getX();
+	adjustedRect.y += getY();
+	
+	// Get the rect cache to redraw the rect.  It will automatically
+	// clip the rect to the visible portions of the gadget so we
+	// don't need to
+	_rectCache->markRectDirty(adjustedRect);
+}	
+
 // Marks the gadget as deleted and adds it to the deletion queue
 void Gadget::close() {
 
