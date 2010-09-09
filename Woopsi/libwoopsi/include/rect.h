@@ -95,19 +95,19 @@ namespace WoopsiUI {
 		inline void setHeight(s32 height) { this->height = height; };
 
 		/**
-		 * Set the x co-ordinate of the rect's bottom-right corner.  If x2 is less
-		 * than the rect's current x co-ordinate the method automatically adjusts
-		 * the co-ords so that the rect's width is never negative.  Changing this
-		 * property will change the width of the rect.
+		 * Set the x co-ordinate of the rect's bottom-right corner.  If x2 is
+		 * less than the rect's current x co-ordinate the method automatically
+		 * adjusts the co-ords so that the rect's width is never negative.
+		 * Changing this property will change the width of the rect.
 		 * @param x2 The x co-ordinate of the rect's bottom-right corner.
 		 */
 		void setX2(s16 x2);
 
 		/**
-		 * Set the y co-ordinate of the rect's bottom-right corner.  If y2 is less
-		 * than the rect's current y co-ordinate the method automatically adjusts
-		 * the co-ords so that the rect's height is never negative.  Changing this
-		 * property will change the height of the rect.
+		 * Set the y co-ordinate of the rect's bottom-right corner.  If y2 is
+		 * less than the rect's current y co-ordinate the method automatically
+		 * adjusts the co-ords so that the rect's height is never negative.
+		 * Changing this property will change the height of the rect.
 		 * @param y2 The y co-ordinate of the rect's bottom-right corner.
 		 */
 		void setY2(s16 y2);
@@ -125,24 +125,24 @@ namespace WoopsiUI {
 		inline s16 getY2() const { return y + (height - 1); };
 
 		/**
-		 * Determines if the rectangle has two dimensions; in other words, does it
-		 * have both height and width?  Negative width or height is considered not to
-		 * be valid.
+		 * Determines if the rectangle has two dimensions; in other words, does
+		 * it have both height and width?  Negative width or height is
+		 * considered not to be valid.
 		 * @return True if the rect has height and width; false if not.
 		 */
 		bool hasDimensions() const;
 
 		/**
-		 * Populates dest with a rectangle representating the intersection
-		 * of this rectangle and rect.
+		 * Populates dest with a rectangle representating the intersection of
+		 * this rectangle and rect.
 		 * @param rect The rectangle to intersect with this.
 		 * @param dest The destination rectangle.
 		 */
 		void getIntersect(const Rect& rect, Rect& dest) const;
 
 		/**
-		 * Populates dest with a rectangle representating the smallest
-		 * rectangle that contains this rectangle and rect.
+		 * Populates dest with a rectangle representating the smallest rectangle
+		 * that contains this rectangle and rect.
 		 * @param rect The rectangle to add to this.
 		 * @param dest The destination rectangle.
 		 */
@@ -154,8 +154,8 @@ namespace WoopsiUI {
 		void clipToIntersect(const Rect& rect);
 
 		/**
-		 * Expands this rect so that it includes the area described by the supplied
-		 * rect.
+		 * Expands this rect so that it includes the area described by the
+		 * supplied rect.
 		 */
 		void expandToInclude(const Rect& rect);
 
@@ -181,43 +181,47 @@ namespace WoopsiUI {
 		void copyTo(Rect& dest) const;
 
 		/**
-		 * Determines if the supplied rect intersects this and, if so, divides the supplied rect
-		 * into the intersected region (stored in "intersection") and the rectangular regions that
-		 * do not intersect (stored in "remainderRects").
+		 * Determines if the supplied rect intersects this and, if so, divides
+		 * the supplied rect into the intersected region (stored in
+		 * "intersection") and the rectangular regions that do not intersect
+		 * (stored in "remainderRects").
 		 * @param rect Rectangle to check for intersection.
-		 * @param intersection Will contain the dimensions of the intersect once the function ends.
-		 * @param remainderRects Will contain the list of non-intersecting regions of rect.
+		 * @param intersection Will contain the dimensions of the intersect once
+		 * the function ends.
+		 * @param remainderRects Will contain the list of non-intersecting
+		 * regions of rect.
 		 * @return True if there is an intersection; false if not.
 		 */
 		bool splitIntersection(const Rect& rect, Rect& intersection, WoopsiArray<Rect>* remainderRects) const;
 
 		/**
-		 * Overloaded & operator.  Returns the intersect of this rectangle and the
-		 * rectangle passed as the "rect" argument".
+		 * Overloaded & operator.  Returns the intersect of this rectangle and
+		 * the rectangle passed as the "rect" argument".
 		 * @param rect The rectangle to intersect with this.
 		 * @return The intersect of this rect with the argument.
 		 */
 		Rect operator&(const Rect& rect);
 
 		/**
-		 * Overloaded + operator.  Returns the smallest rectangle that can contain
-		 * this rectangle and the rectangle passed as the "rect" argument".
+		 * Overloaded + operator.  Returns the smallest rectangle that can
+		 * contain this rectangle and the rectangle passed as the "rect"
+		 * argument.
 		 * @param rect The rectangle to add to this.
 		 * @return The smallest rect that contains this and the argument.
 		 */
 		Rect operator+(const Rect& rect);
 
 		/**
-		 * Overloaded == operator.  Checks if the dimensions of the supplied rect
-		 * are the same as this rect.
+		 * Overloaded == operator.  Checks if the dimensions of the supplied
+		 * rect are the same as this rect.
 		 * @param rect The rect to compare with this.
 		 * @return True if the dimensions are equal; false if not.
 		 */
 		bool operator==(const Rect& rect);
 
 		/**
-		 * Overloaded != operator.  Checks if the dimensions of the supplied rect
-		 * are not the same as this rect.
+		 * Overloaded != operator.  Checks if the dimensions of the supplied
+		 * rect are not the same as this rect.
 		 * @param rect The rect to compare with this.
 		 * @return True if the dimensions are not equal; false if they are.
 		 */

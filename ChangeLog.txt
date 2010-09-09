@@ -34,6 +34,8 @@ Change Log
     - Removed Gadget::enableDrawing().
     - Removed Gadget::disableDrawing().
     - Removed drawingEnabled flag from Gadget.
+    - Gadget::remove() and removeChild() will trigger a redraw of the gadget's
+      visible regions (ie. erase it) automatically.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

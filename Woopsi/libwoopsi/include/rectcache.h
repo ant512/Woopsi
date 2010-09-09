@@ -8,8 +8,8 @@ namespace WoopsiUI {
 
 	/**
 	 * Maintains a list of foreground (ie. above children) and background (with
-	 * child overlapped-rects removed) rectangles representing the visible portions
-	 * of a gadget.
+	 * child overlapped-rects removed) rectangles representing the visible
+	 * portions of a gadget.
 	 */
 	class RectCache {
 	public:
@@ -39,26 +39,26 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Return the list of background regions.  These are regions that are not overlapped by
-		 * child gadgets.
+		 * Return the list of background regions.  These are regions that are
+		 * not overlapped by child gadgets.
 		 * @return The list of background regions.
 		 */
 		inline WoopsiArray<Rect>* getBackgroundRegions() { return &_backgroundRegions; };
 
 		/**
-		 * Return the list of foreground regions.  These are regions that represent the entire
-		 * visible surface of the gadget - that is, any regions not overlapped by ancestors or
-		 * sublings of the gadget - including any regions that are actually overlapped by
-		 * child gadgets.
+		 * Return the list of foreground regions.  These are regions that
+		 * represent the entire visible surface of the gadget - that is, any
+		 * regions not overlapped by ancestors or sublings of the gadget -
+		 * including any regions that are actually overlapped by child gadgets.
 		 * @return The list of foreground regions.
 		 */
 		inline WoopsiArray<Rect>* getForegroundRegions() { return &_foregroundRegions; };
 
 		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
-		 * gadget, then cuts the rectangles into smaller pieces.  The overlapping
-		 * pieces are pushed into validRects, and the non-overlapping pieces are
-		 * pushed back into the invalidRects vector.
+		 * gadget, then cuts the rectangles into smaller pieces.  The
+		 * overlapping pieces are pushed into validRects, and the
+		 * non-overlapping pieces are pushed back into the invalidRects vector.
 		 * @param invalidRectangles A vector of regions that need to be tested
 		 * for collisions against this gadget; they represent regions that need
 		 * to be redrawn.
@@ -68,8 +68,9 @@ namespace WoopsiUI {
 		void splitRectangles(WoopsiArray<Rect>* invalidRectangles, WoopsiArray<Rect>* validRects) const;
 
 		/**
-		 * Move any rectangles from the visibleRects list that overlap this gadget
-		 * into the invisibleRects list.  Used during visible region calculations.
+		 * Move any rectangles from the visibleRects list that overlap this
+		 * gadget into the invisibleRects list.  Used during visible region
+		 * calculations.
 		 * @param visibleRects A vector of regions that are not overlapped.
 		 * @param invisibleRects A vector of regions that are overlapped.
 		 * @param gadget The gadget that requested the lists.
@@ -77,8 +78,20 @@ namespace WoopsiUI {
 		 */
 		void removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArray<Rect>* invisibleRects, const Gadget* gadget) const;
 
+		/**
+		 * Marks all foreground rects dirty.  All rects are sent to the
+		 * DisplayController for redraw.  Since all foreground rects are sent,
+		 * not background rects, this means that all of the owning gadget's
+		 * children will also be redrawn next time the display is refreshed.
+		 */
 		void markRectsDirty() const;
 		
+		/**
+		 * Marks a specific rect as dirty.  The rect's co-ordinates should be in
+		 * Woopsi-space.  The rect is automatically clipped and split so that
+		 * only regions of it that intersect the foreground rects are redrawn.
+		 * @param rect Rect to mark as dirty.
+		 */
 		void markRectDirty(const Rect& rect) const;
 
 	private:

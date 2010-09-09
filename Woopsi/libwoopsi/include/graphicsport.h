@@ -293,7 +293,8 @@ namespace WoopsiUI {
 		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);
 
 		/**
-		 * Draw a portion of a string on a baseline (chars may have different tops/heights/depths) to the bitmap.
+		 * Draw a portion of a string on a baseline (chars may have different
+		 * tops/heights/depths) to the bitmap.
 		 * @param x The x co-ordinate of the string.
 		 * @param y The y co-ordinate of the string.
 		 * @param font The font to draw with.

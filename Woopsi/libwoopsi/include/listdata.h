@@ -9,9 +9,9 @@
 namespace WoopsiUI {
 
 	/**
-	 * Class representing a list of items.  Designed to be used by the ListBox class, etc, to
-	 * store its data.  Fires events to notify listeners when the list changes or a new selection
-	 * is made.
+	 * Class representing a list of items.  Designed to be used by the ListBox
+	 * class, etc, to store its data.  Fires events to notify listeners when the
+	 * list changes or a new selection is made.
 	 */
 	class ListData {
 	public:
@@ -34,8 +34,8 @@ namespace WoopsiUI {
 		virtual void addItem(const WoopsiString& text, const u32 value);
 
 		/**
-		 * Add an existing item.  ListData becomes the owner of the option and will delete it
-		 * when the list is deleted.
+		 * Add an existing item.  ListData becomes the owner of the option and
+		 * will delete it when the list is deleted.
 		 * @param item The item to add.
 		 */
 		virtual void addItem(ListDataItem* item);
@@ -65,8 +65,9 @@ namespace WoopsiUI {
 		virtual void removeAllItems();
 
 		/**
-		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
-		 * item is selected, the index of the first selected item is returned.
+		 * Get the selected index.  Returns -1 if nothing is selected.  If more
+		 * than one item is selected, the index of the first selected item is
+		 * returned.
 		 * @return The selected index.
 		 */
 		virtual const s32 getSelectedIndex() const;
@@ -108,7 +109,8 @@ namespace WoopsiUI {
 		virtual inline const s32 getItemCount() const { return _items.size(); };
 
 		/**
-		 * Select all items.  Does nothing if the list does not allow multiple selections.
+		 * Select all items.  Does nothing if the list does not allow multiple
+		 * selections.
 		 */
 		virtual void selectAllItems();
 
@@ -118,8 +120,8 @@ namespace WoopsiUI {
 		virtual void deselectAllItems();
 
 		/**
-		 * Select or deselect an item by its index.  Does not deselect any other selected items.
-		 * Set index to -1 to select nothing.
+		 * Select or deselect an item by its index.  Does not deselect any other
+		 * selected items.  Set index to -1 to select nothing.
 		 * @param index The index of the item to select.
 		 * @param selected True to select the item, false to deselect it.
 		 */
@@ -132,7 +134,8 @@ namespace WoopsiUI {
 		virtual inline const bool allowsMultipleSelections() const { return _allowMultipleSelections; };
 
 		/**
-		 * Sets whether or not items added to the list are automatically sorted on insert or not.
+		 * Sets whether or not items added to the list are automatically sorted
+		 * on insert or not.
 		 * @param sortInsertedItems True to enable sort on insertion.
 		 */
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _sortInsertedItems = sortInsertedItems; };
@@ -172,7 +175,8 @@ namespace WoopsiUI {
 		virtual void swapItems(const s32 index1, const s32 index2);
 
 		/**
-		 * Return the index that an item should be inserted at to maintain a sorted list of data.
+		 * Return the index that an item should be inserted at to maintain a
+		 * sorted list of data.
 		 * @param item The item to insert.
 		 * @return The index that the item should be imserted into at.
 		 */

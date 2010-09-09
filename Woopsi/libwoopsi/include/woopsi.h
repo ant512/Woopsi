@@ -15,15 +15,16 @@ namespace WoopsiUI {
 	class DisplayController;
 
 	/**
-	 * Class providing a top-level gadget and an interface to the Woopsi gadget hierarchy.
+	 * Class providing a top-level gadget and an interface to the Woopsi gadget
+	 * hierarchy.
 	 */
 	class Woopsi : public Gadget {
 
 	public:
 		/**
-		 * The singleton provides an instance of Woopsi that should be instantiated and
-		 * used as the only Woopsi instance.  The Debug class in particular interacts
-		 * with this singleton.
+		 * The singleton provides an instance of Woopsi that should be
+		 * instantiated and used as the only Woopsi instance.  The Debug class
+		 * in particular interacts with this singleton.
 		 */
 		static Woopsi *singleton;
 		
@@ -42,61 +43,62 @@ namespace WoopsiUI {
 		virtual ~Woopsi();
 
 		/**
-		 * Run the gadget modally.  This will run the Woopsi application until stopModal()
-		 * is called.
+		 * Run the gadget modally.  This will run the Woopsi application until
+		 * stopModal() is called.
 		 */
 		void goModal();
 
 		/**
-		 * Run all code that needs to take place once a frame.
-		 * This should be called every VBL in order for Woopsi to work.
+		 * Run all code that needs to take place once a frame.  This should be
+		 * called every VBL in order for Woopsi to work.
 		 * @param gadget Sub-gadget to run, used for modal gadgets; omit
 		 * this parameter to run the whole system.
 		 */
 		virtual void processOneVBL(Gadget* gadget = NULL);
 
 		/**
-		 * Swaps the depth of the supplied gadget.
-		 * This function presumes that all child gadgets are screens.
+		 * Swaps the depth of the supplied gadget.  This function presumes that
+		 * all child gadgets are screens.
 		 * @param gadget The gadget to be depth-swapped.
 		 * @return True if the depth swap occurred.
 		 */
 		virtual bool swapGadgetDepth(Gadget* gadget);
 
 		/**
-		 * Flips the supplied gadget from its current screen to the other screen.
-		 * This functions presumes that all child gadgets are screens.
+		 * Flips the supplied gadget from its current screen to the other
+		 * screen.  This function presumes that all child gadgets are screens.
 		 * @param gadget The gadget (must be a screen) to flip.
 		 * @return True if the flip occurred.
 		 */
 		virtual bool flipScreens(Gadget* gadget);
 
 		/**
-		 * Add the supplied timer to the list of timers that receive VBL notifications.
-		 * This is handled automatically by the WoopsiTimer constructor and should not be
-		 * used in user code.
+		 * Add the supplied timer to the list of timers that receive VBL
+		 * notifications.  This is handled automatically by the WoopsiTimer
+		 * constructor and should not be used in user code.
 		 * @param timer A pointer to the timer to add to the VBL list.
 		 */
 		static void registerForVBL(WoopsiTimer* timer);
 
 		/**
-		 * Remove the supplied timer from the list of timers that receive VBL notifications.
-		 * This is handled automatically by the WoopsiTimer destructor and should not be
-		 * used in user code.
+		 * Remove the supplied timer from the list of timers that receive VBL
+		 * notifications.  This is handled automatically by the WoopsiTimer
+		 * destructor and should not be used in user code.
 		 * @param timer A pointer to the timer to remove from the VBL list.
 		 */
 		static void unregisterFromVBL(WoopsiTimer* timer);
 
 		/**
-		 * Add a gadget to the list of gadgets to be deleted.
-		 * Must never be called by anything other than the framework itself.
+		 * Add a gadget to the list of gadgets to be deleted.  Must never be
+		 * called by anything other than the framework itself.
 		 * @param gadget The gadget to add to the delete queue.
 		 */
 		static void addToDeleteQueue(Gadget* gadget);
 
 		/**
-		 * Return the number of VBLs that have occurred since Woopsi began running.
-		 * The count will eventually overflow the 32-bit int and reset to 0.  Developers must allow for this.
+		 * Return the number of VBLs that have occurred since Woopsi began
+		 * running.  The count will eventually overflow the 32-bit int and reset
+		 * to 0.  Developers must allow for this.
 		 * @return The VBL count.
 		 */
 		static inline u32 getVBLCount() { return _vblCount; };
@@ -108,8 +110,8 @@ namespace WoopsiUI {
 		inline ContextMenu* getContextMenu() { return _contextMenu; };
 
 		/**
-		 * Shelve the context menu.  Hides it without destroying the object and without it
-		 * remaining an active, but hidden, gadget.
+		 * Shelve the context menu.  Hides it without destroying the object and
+		 * without it remaining an active, but hidden, gadget.
 		 */
 		void shelveContextMenu();
 
@@ -166,18 +168,19 @@ namespace WoopsiUI {
 		DisplayController* _displayController;
 
 		/**
-		 * Initialise the application.  All initial GUI creation, hardware setup, etc, should
-		 * be done in an override of this method.
+		 * Initialise the application.  All initial GUI creation, hardware
+		 * setup, etc, should be done in an override of this method.
 		 */
 		virtual void startup() = 0;
 
 		/**
-		 * Shut down the application.  All non-gadget objects should be deleted in an override
-		 * of this function, and all hardware should be shut down, etc.
-		 * This base method will shut down the SDL system, so it must be called as the last
-		 * function if overridden in an SDL application.  If you don't want to let Woopsi
-		 * shut down SDL (if you have another chunk of code to run later, for example),
-		 * you will need to shut down SDL yourself.
+		 * Shut down the application.  All non-gadget objects should be deleted
+		 * in an override of this function, and all hardware should be shut
+		 * down, etc.  This base method will shut down the SDL system, so it
+		 * must be called as the last function if overridden in an SDL
+		 * application.  If you don't want to let Woopsi shut down SDL (if you
+		 * have another chunk of code to run later, for example), you will need
+		 * to shut down SDL yourself.
 		 */
 		virtual inline void shutdown() {
 	#ifdef USING_SDL
@@ -186,10 +189,10 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Pass clicks to the gadget hierarchy.  Closes the context menu if
-		 * the clicked gadget is not the context menu.  If a single gadget
-		 * is supplied, only that gadget is sent the click.  That gadget
-		 * should be running modally.
+		 * Pass clicks to the gadget hierarchy.  Closes the context menu if the
+		 * clicked gadget is not the context menu.  If a single gadget is
+		 * supplied, only that gadget is sent the click.  That gadget should be
+		 * running modally.
 		 * @param x Stylus x co-ordinate.
 		 * @param y Stylus y co-ordinate.
 		 * @param gadget Pointer to a modally-running gadget or NULL.
@@ -197,9 +200,9 @@ namespace WoopsiUI {
 		void handleClick(s16 x, s16 y, Gadget* gadget);
 
 		/**
-		 * Pass shift-clicks to the gadget hierarchy.  If a single gadget
-		 * is supplied, only that gadget is sent the click.  That gadget
-		 * should be running modally.
+		 * Pass shift-clicks to the gadget hierarchy.  If a single gadget is
+		 * supplied, only that gadget is sent the click.  That gadget should be
+		 * running modally.
 		 * @param x Stylus x co-ordinate.
 		 * @param y Stylus y co-ordinate.
 		 * @param gadget Pointer to a modally-running gadget or NULL.

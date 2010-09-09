@@ -11,6 +11,11 @@ RectCache::RectCache(const Gadget* gadget) {
 }
 
 void RectCache::markRectsDirty() const {
+	
+	// Abort if Woopsi does not exist.  This can occur if Woopsi is shutting
+	// down
+	if (woopsiApplication == NULL) return;
+	
 	for (s32 i = 0; i < _foregroundRegions.size(); ++i) {
 		woopsiApplication->getDisplayController()->addDamagedRect(_foregroundRegions[i]);
 	}
@@ -18,18 +23,35 @@ void RectCache::markRectsDirty() const {
 
 void RectCache::markRectDirty(const Rect& rect) const {
 	
+	// Abort if Woopsi does not exist.  This can occur if Woopsi is shutting
+	// down
+	if (woopsiApplication == NULL) return;
+	
 	WoopsiArray<Rect> dirtyRects;
-	WoopsiArray<Rect> overlappedRects;
+	WoopsiArray<Rect> remainderRects;
+	Rect intersect;
 	
 	dirtyRects.push_back(rect);
 	
-	// Work out which parts of the dirty rect overlap this gadget - we only want to
-	// attempt to redraw the portions of rect that overlap.
-	splitRectangles(&dirtyRects, &overlappedRects);
-	
-	// Queue all overlapping portions of the dirty rect for redrawing.
-	for (s32 i = 0; i < overlappedRects.size(); ++i) {
-		woopsiApplication->getDisplayController()->addDamagedRect(overlappedRects[i]);
+	// Work out which parts of the dirty rect overlap the visible portions of
+	// this gadget - we only want to attempt to redraw the visible portions of
+	// the rect that overlap.
+	for (s32 i = 0; i < _foregroundRegions.size(); ++i) {
+		for (s32 j = 0; j < dirtyRects.size(); ++j) {
+			if (_foregroundRegions[i].splitIntersection(dirtyRects[i], intersect, &remainderRects)) {
+				dirtyRects.erase(i);
+				i--;
+				
+				i += remainderRects.size();
+				for (s32 k = 0; k < remainderRects.size(); ++k) {
+					dirtyRects.push_back(remainderRects[k]);
+				}
+				
+				woopsiApplication->getDisplayController()->addDamagedRect(intersect);
+				
+				remainderRects.clear();
+			}
+		}
 	}
 }
 

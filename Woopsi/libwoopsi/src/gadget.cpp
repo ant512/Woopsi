@@ -1452,6 +1452,8 @@ void Gadget::setGlyphFont(FontBase* font) {
 }
 
 bool Gadget::remove() {
+	markRectsDirty();
+	
 	if (_parent != NULL) {
 		return _parent->removeChild(this);
 	}
@@ -1460,6 +1462,8 @@ bool Gadget::remove() {
 }
 
 bool Gadget::removeChild(Gadget* gadget) {
+	
+	gadget->markRectsDirty();
 
 	// Do we need to make another gadget active?
 	if (_focusedGadget == gadget) {

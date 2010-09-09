@@ -26,7 +26,8 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Enum describing the way other gadgets should behave when they try to close this gadget.
+		 * Enum describing the way other gadgets should behave when they try to
+		 * close this gadget.
 		 */
 		enum CloseType {
 			CLOSE_TYPE_CLOSE = 0,				/**< Gadgets should call the close() method */
@@ -140,18 +141,18 @@ namespace WoopsiUI {
 
 		/**
 		 * Is the gadget active?
-		 * A value of true indicates that this gadget has focus or is an ancestor
-		 * of the gadget with focus.
+		 * A value of true indicates that this gadget has focus or is an
+		 * ancestor of the gadget with focus.
 		 * @return True if active.
 		 */
 		inline const bool hasFocus() const { return _flags.hasFocus; };
 
 		/**
-		 * Has the gadget been marked for deletion?  This function recurses up the gadget
-		 * hierarchy and only returns true if all of the gadgets in the ancestor
-		 * chain are not deleted.  
-		 * Gadgets marked for deletion are automatically deleted and should not be
-		 * interacted with.
+		 * Has the gadget been marked for deletion?  This function recurses up
+		 * the gadget hierarchy and only returns true if all of the gadgets in
+		 * the ancestor chain are not deleted.  
+		 * Gadgets marked for deletion are automatically deleted and should not
+		 * be interacted with.
 		 * @return True if marked for deletion.
 		 */
 		const bool isDeleted() const;
@@ -182,8 +183,10 @@ namespace WoopsiUI {
 
 		/**
 		 * Is the gadget a decoration?
-		 * Decoration gadgets are children of, but also an essential component of,
-		 * another gadget.
+		 * Decoration gadgets are children of, but also an essential component
+		 * of, another gadget.  They are always at the start of the child
+		 * gadget array, so will always be at the bottom of the gadget stack.
+		 * They can be thought of as background gadgets.
 		 * @return True if the gadget is a decoration.
 		 */
 		inline const bool isDecoration() const { return _flags.decoration; };
@@ -191,13 +194,17 @@ namespace WoopsiUI {
 		/**
 		 * Are the gadget's edges permeable or solid?
 		 * Permeable gadgets do not enforce their dimensions on the
-		 * co-ordinates and dimensions of child gadgets.
+		 * co-ordinates and dimensions of child gadgets.  For example, windows
+		 * belonging to non-permeable screens cannot be dragged outside the
+		 * screen.  Windows belonging to permeable screens *can* be dragged
+		 * outside their parent screen.
 		 * @return True if permeable.
 		 */
 		inline const bool isPermeable() const { return _flags.permeable; };
 
 		/**
-		 * IS the gadget double-clickable?
+		 * Is the gadget double-clickable?  If this is false, double-clicks will
+		 * be detected and processed as single-clicks.
 		 * @return True if the gadget watches for double-clicks.
 		 */
 		inline const bool isDoubleClickable() const { return _flags.doubleClickable; };
@@ -227,7 +234,8 @@ namespace WoopsiUI {
 		inline const bool isShelved() const { return _flags.shelved; };
 
 		/**
-		 * Is the gadget modal?  Only true if the Woopsi singleton is also modal.
+		 * Is the gadget modal?  Only true if the Woopsi singleton is also
+		 * modal.
 		 * @return True if the gadget is modal.
 		 */
 		const bool isModal() const;
@@ -263,7 +271,8 @@ namespace WoopsiUI {
 		inline Gadget* getFocusedGadget() { return _focusedGadget; };
 
 		/**
-		 * Get the number of the screen that this gadget is currently displayed on.
+		 * Get the number of the screen that this gadget is currently displayed
+		 * on.
 		 * @return 0 for the touch screen, 1 for the top screen.
 		 */
 		virtual const u8 getPhysicalScreenNumber() const;
@@ -276,15 +285,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
 
 		/**
-		 * Insert the properties of the space within this gadget that is available
-		 * for children into the rect passed in as a parameter.
+		 * Insert the properties of the space within this gadget that is
+		 * available for children into the rect passed in as a parameter.
 		 * All co-ordinates are relative to this gadget.
 		 * @param rect Reference to a rect to populate with data.
 		 */
@@ -292,7 +301,7 @@ namespace WoopsiUI {
 
 		/**
 		 * Clips the supplied rect to the boundaries defined by this gadget and
-		 * this gadget's parents.
+		 * this gadget's parents.  Co-ordinates are in Woopsi-space.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		void getRectClippedToHierarchy(Rect& rect) const;
@@ -315,16 +324,17 @@ namespace WoopsiUI {
 		 *
 		 * The GraphicsPort object must be deleted when it is no longer required.
 		 * Drawing is clipped only to the supplied rect.  If the rect is
-		 * not within the region of this gadget graphical anomalies will occur.
-		 * This should only be called by the Woopsi hierarchy.
-		 * @param clipRect The region to clip to.
+		 * not within the visible regions of this gadget graphical anomalies
+		 * will occur.  This should only be called by the Woopsi hierarchy.
+		 * @param clipRect The region to clip to.  Co-ordinates are in Woopsi-
+		 * space.
 		 * @return A pointer to a new GraphicsPort object.
 		 */
 		GraphicsPort* newGraphicsPort(Rect clipRect);
 
 		/**
-		 * Gets a pointer to the vector of all of the visible regions of this gadget,
-		 * including any covered by children.
+		 * Gets a pointer to the vector of all of the visible regions of this
+		 * gadget, including any covered by children.
 		 * @return A pointer to a vector of all visible regions.
 		 */
 		WoopsiArray<Rect>* getForegroundRegions();
@@ -378,8 +388,8 @@ namespace WoopsiUI {
 		inline const u16 getDarkColour() const { return _style.colours.dark; };
 
 		/**
-		 * Sets this gadget's reference constant.  This should be unique,
-		 * at least amongst this gadget's siblings.
+		 * Sets this gadget's reference constant.  This should be unique, at
+		 * least amongst this gadget's siblings.
 		 * @param refcon The reference constant.
 		 */
 		u32 setRefcon(u32 refcon);
@@ -397,7 +407,8 @@ namespace WoopsiUI {
 		inline void setDraggable(const bool isDraggable) { _flags.draggable = isDraggable; };
 
 		/**
-		 * Sets whether or not child gadgets can exceed this gadget's dimensions.
+		 * Sets whether or not child gadgets can exceed this gadget's
+		 * dimensions.
 		 * @param isPermeable The permeable state.
 		 */
 		inline void setPermeable(const bool isPermeable) { _flags.permeable = isPermeable; };
@@ -495,19 +506,21 @@ namespace WoopsiUI {
 		/**
 		 * Enables the gadget.
 		 * @return True if the gadget was enabled.
+		 * @see disable()
 		 */
 		bool enable();
 
 		/**
 		 * Disabled the gadget.
 		 * @return True if the gadget was disabled.
+		 * @see enable()
 		 */
 		bool disable();
 
 		/**
 		 * Erases the gadget, marks it as deleted, and moves it to Woopsi's
-		 * deletion queue.  Gadgets are automatically deleted by the framework and
-		 * should not be deleted externally.
+		 * deletion queue.  Gadgets are automatically deleted by the framework
+		 * and should not be deleted externally.
 		 */
 		void close();
 
@@ -545,10 +558,7 @@ namespace WoopsiUI {
 		bool hide();
 
 		/**
-		 * Click this gadget at the supplied co-ordinates.  This should only be
-		 * overridden in subclasses if the default click behaviour needs to be changed.
-		 * If the subclassed gadget should just respond to a standard click,
-		 * the onClick() method should be overridden instead.
+		 * Click this gadget at the supplied co-ordinates.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if the click was successful.
@@ -564,11 +574,7 @@ namespace WoopsiUI {
 		virtual bool isDoubleClick(s16 x, s16 y);
 
 		/**
-		 * Double-click this gadget at the supplied co-ordinates.  This
-		 * should only be overridden in subclasses if the default
-		 * double-click behaviour needs to be changed.  If the subclassed
-		 * gadget should just respond to a standard double-click, the
-		 * onDoubleClick() method should be overridden instead.
+		 * Double-click this gadget at the supplied co-ordinates.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if the click was successful.
@@ -576,11 +582,7 @@ namespace WoopsiUI {
 		bool doubleClick(s16 x, s16 y);
 
 		/**
-		 * Shift-click this gadget at the supplied co-ordinates.  This
-		 * should only be overridden in subclasses if the default
-		 * shift-click behaviour needs to be changed.  If the subclassed
-		 * gadget should just respond to a standard shift-click, the
-		 * onShiftClick() method should be overridden instead.
+		 * Shift-click this gadget at the supplied co-ordinates.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if the click was successful.
@@ -588,11 +590,7 @@ namespace WoopsiUI {
 		bool shiftClick(s16 x, s16 y);
 
 		/**
-		 * Release this gadget at the supplied co-ordinates.  This
-		 * should only be overridden in subclasses if the default
-		 * release behaviour needs to be changed.  If the subclassed
-		 * gadget should just respond to a standard release, the
-		 * onRelease() method should be overridden instead.
+		 * Release this gadget at the supplied co-ordinates.
 		 * @param x X co-ordinate of the release.
 		 * @param y Y co-ordinate of the release.
 		 * @return True if the release was successful.
@@ -645,12 +643,14 @@ namespace WoopsiUI {
 		/**
 		 * Give the gadget focus.
 		 * @return True if the gadget received focus correctly.
+		 * @see blur()
 		 */
 		bool focus();
 
 		/**
 		 * Remove focus from the gadget.
 		 * @return True if the gadget lost focus correctly.
+		 * @see focus()
 		 */
 		bool blur();
 
@@ -673,8 +673,6 @@ namespace WoopsiUI {
 
 		/**
 		 * Resize and move the gadget in one operation.
-		 * Only performs one redraw so it is faster than calling the
-		 * two separate functions.
 		 * @param x The new x co-ordinate.
 		 * @param y The new y co-ordinate.
 		 * @param width The new width.
@@ -698,10 +696,10 @@ namespace WoopsiUI {
 		/**
 		 * Raises the supplied gadget to the top of this gadget's child stack.
 		 * The supplied gadget pointer must be a child of this gadget.
-		 * @param gadget A pointer to the child gadget to raise.
+		 * @param child A pointer to the child gadget to raise.
 		 * @return True if the raise was successful.
 		 */
-		bool raiseGadgetToTop(Gadget* gadget);
+		bool raiseGadgetToTop(Gadget* child);
 
 		/**
 		 * Lowers the supplied gadget to the bottom of this gadget's child stack.
@@ -749,6 +747,7 @@ namespace WoopsiUI {
 
 		/**
 		 * Checks if the supplied co-ordinates collide with this gadget.
+		 * Co-ordinates must be in Woopsi-space.
 		 * @param x The x co-ordinate to check.
 		 * @param y The y co-ordinate to check.
 		 * @return True if a collision occurred.
@@ -756,7 +755,8 @@ namespace WoopsiUI {
 		bool checkCollision(s16 x, s16 y) const;
 
 		/**
-		 * Checks if the supplied rectangle definition collides with this gadget.
+		 * Checks if the supplied rectangle definition collides with this
+		 * gadget.  Co-ordinates must be in Woopsi-space.
 		 * @param x The x co-ordinate of the rectangle to check.
 		 * @param y The y co-ordinate of the rectangle to check.
 		 * @param width The width of the rectangle to check.
@@ -767,32 +767,49 @@ namespace WoopsiUI {
 
 		/**
 		 * Checks if the supplied gadget collides with this gadget.
-		 * @param gadget A pointer to another gadget to check for collisions with.
+		 * @param gadget A pointer to another gadget to check for collisions
+		 * with.
 		 * @return True if a collision occurred.
 		 */
 		bool checkCollision(Gadget* gadget) const;
 
 		/**
-		 * Checks if the supplied rect collides with this gadget.
+		 * Checks if the supplied rect collides with this gadget.  Co-ordinates
+		 * must be in Woopsi-space.
 		 * @param rect A rect to check for collisions with.
 		 * @return True if a collision occurred.
 		 */
 		bool checkCollision(const Rect& rect) const;
 
 		/**
-		 * Invalidate the visible region cache for all gadgets below the supplied
-		 * gadget in this gadget's child stack.  This will cause those gadgets to
-		 * recalculate their visible regions next time they try to draw themselves.
+		 * Invalidate the visible region cache for all gadgets below the
+		 * supplied gadget in this gadget's child stack.  This will cause those
+		 * gadgets to recalculate their visible regions next time they try to
+		 * draw themselves.
+		 * This should be called when the gadget passed as a pointer has swapped
+		 * positions with another gadget in the gadget array (ie. it has moved
+		 * towards the front of the screen or towards the back).
 		 * @param gadget A pointer to a child gadget.
 		 */
 		void invalidateLowerGadgetsVisibleRectCache(Gadget* gadget);
 
 		/**
-		 * Adds a gadget to this gadget's child stack.  The gadget is added to the
-		 * top of the stack.  Note that the gadget can only be added if it is not
-		 * already a child of another gadget.
+		 * Adds a gadget to this gadget's child stack.  The gadget is added to
+		 * the top of the stack.  Note that the gadget can only be added if it
+		 * is not already a child of another gadget.
+		 *
+		 * If the gadget is a decoration, the gadget will be inserted to the
+		 * bottom of the stack instead of the top.  Decorations are always at
+		 * the bottom of the gadget stack.  This is automatic and cannot be
+		 * overridden.
+		 *
+		 * Once a gadget has been added to another, it becomes the
+		 * responsibility of Woopsi to delete it once it it no longer needed.
+		 * Attempts to manually call "delete" on child gadgets will result in
+		 * crashes due to dereferencing deleted objects.
 		 * @param gadget A pointer to the gadget to add to the child list.
 		 * @see insertGadget()
+		 * @see remove()
 		 */
 		void addGadget(Gadget* gadget);
 
@@ -800,20 +817,28 @@ namespace WoopsiUI {
 		 * Inserts a gadget into this gadget's child stack at the bottom of the
 		 * stack.  Note that the gadget can only be added if it is not already
 		 * a child of another gadget.
+		 *
+		 * Once a gadget has been added to another, it becomes the
+		 * responsibility of Woopsi to delete it once it it no longer needed.
+		 * Attempts to manually call "delete" on child gadgets will result in
+		 * crashes due to dereferencing deleted objects.
 		 * @param gadget A pointer to the gadget to add to the child list.
 		 * @see addGadget()
+		 * @see remove()
 		 */
 		void insertGadget(Gadget* gadget);
 
 		/**
 		 * Set the gadget's parent to the gadget passed in as a parameter.
-		 * Called automatically when a gadget is added as a child.
+		 * Called automatically when a gadget is added as a child.  It shouldn't
+		 * be called in user code.
 		 * @param parent A pointer to the parent gadget.
 		 */
 		inline void setParent(Gadget* parent) { _parent = parent; };
 
 		/**
-		 * Rebuild the list of this gadget's visible regions
+		 * Rebuild the list of this gadget's visible regions.  If the cache is
+		 * already up to date this function will just exit.
 		 */
 		void cacheVisibleRects() const;
 
@@ -824,21 +849,29 @@ namespace WoopsiUI {
 		void invalidateVisibleRectCache();
 
 		/**
-		 * Clips a rectangular region to the dimensions of this gadget and its ancestors.
+		 * Clips a rectangular region to the dimensions of this gadget and its
+		 * ancestors.
 		 * @param rect The region that needs to be clipped.
 		 */
 		void clipRectToHierarchy(Rect& rect) const;
 
 		/**
-		 * Swaps the depth of the supplied child gadget.
-		 * @param gadget A pointer to the child gadget that needs to swap depths.
+		 * Swaps the depth of the supplied child gadget.  Raises it up one place
+		 * unless the gadget is at the top of the stack, in which case it is
+		 * pushed to the bottom.  Typically called by Woopsi to cycle through
+		 * screens when their depth buttons are pushed.
+		 * @param gadget A pointer to the child gadget that needs to swap
+		 * depths.
 		 * @return True if the swap was successful.
 		 */
 		virtual bool swapGadgetDepth(Gadget* gadget);
 
 		/**
-		 * Swap the depth of this gadget.
+		 * Swap the depth of this gadget.  Calls the parent gadget's
+		 * swapGadgetDepth() method to perform the swap, so the behaviour of
+		 * this method is dictated by the gadget's parent.
 		 * @return True if the swap was successful.
+		 * @see swapGadgetDepth()
 		 */
 		bool swapDepth();
 
@@ -852,8 +885,8 @@ namespace WoopsiUI {
 		 * Remove this gadget from Woopsi's gadget hierarchy.  Returns
 		 * responsibility for deleting the gadget back to the developer.
 		 * Does not unregister the gadget from the VBL system.
-		 * Does not erase the gadget from the display.
 		 * @return True if the gadget was successfully removed.
+		 * @see removeChild()
 		 */
 		bool remove();
 
@@ -861,9 +894,9 @@ namespace WoopsiUI {
 		 * Remove a child gadget from Woopsi's gadget hierarchy.  Returns
 		 * responsibility for deleting the gadget back to the developer.
 		 * Does not unregister the gadget from the VBL system.
-		 * Does not erase the gadget from the display.
 		 * @param gadget Pointer to the gadget to remove from the hierarchy.
 		 * @return True if the gadget was succesfully removed.
+		 * @see remove()
 		 */
 		bool removeChild(Gadget* gadget);
 
@@ -876,19 +909,24 @@ namespace WoopsiUI {
 
 		/**
 		 * Show the context menu for this gadget at the specified co-ordinates.
-		 * @param x The x co-ordinate of the context menu, relative to the screen.
-		 * @param y The y co-ordinate of the context menu, relative to the screen.
+		 * @param x The x co-ordinate of the context menu, relative to the
+		 * topmost screen on the bottom display.
+		 * @param y The y co-ordinate of the context menu, relative to the
+		 * topmost screen on the bottom display.
 		 */
 		void showContextMenu(s16 x, s16 y);
 
 		/**
-		 * Handle a context menu selection.  Just raises the event to its own handlers.
+		 * Raises the context menu selection event to the gadget's event
+		 * handlers.
 		 * @param item The selected menu item.
 		 */
 		virtual bool handleContextMenuSelection(const ListDataItem* item);
 
 		/**
-		 * Run the gadget modally.
+		 * Run the gadget modally.  All other gadgets will become non-responsive
+		 * and only this gadget will be interactive.  Useful for requesters that
+		 * must be dealt with before the application can continue.
 		 */
 		void goModal();
 
@@ -912,14 +950,18 @@ namespace WoopsiUI {
 		Gadget* getChild(u32 index) const;
 
 		/**
-		 * Get the quantity of child gadgets.
+		 * Get the quantity of child gadgets, including decoration gadgets.
+		 * The quantity of child gadgets not including decorations can be found
+		 * by calling getChildCount() - getDecorationCount().
 		 * @return The number of child gadgets belonging to this gadget.
+		 * @see getDecorationCount()
 		 */
 		const s32 getChildCount() const { return _gadgets.size(); };
 
 		/**
 		 * Get the quantity of decoration gadgets.
 		 * @return The number of decoration gadgets belonging to this gadget.
+		 * @see getChildCount()
 		 */
 		const inline s32 getDecorationCount() const { return _decorationCount; };
 
@@ -947,7 +989,7 @@ namespace WoopsiUI {
 		 * markRectsDirty() if only a portion of a gadget has changed.
 		 * The rect is automatically clipped to the visible portions of the
 		 * gadget.  Its co-ordinates should be in gadget co-ordinates (ie.
-		 * relative to the top-left corner of the gadget, which is (0. 0)).
+		 * relative to the top-left corner of the gadget, which is (0,0)).
 		 * It will automatically be converted to Woopsi co-ordinates.
 		 * @param rect Rect to queue for redraw.
 		 */
@@ -1004,24 +1046,21 @@ namespace WoopsiUI {
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the redraw() function to draw all visible regions.
 		 * @param port The GraphicsPort to draw to.
-		 * @see redraw().
 		 */
 		virtual inline void drawContents(GraphicsPort* port) { };
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
-		 * Called by the redraw() function to draw all visible regions.
 		 * @param port The GraphicsPort to draw to.
-		 * @see redraw().
 		 */
 		virtual void drawBorder(GraphicsPort* port) { };
 
 		/**
-		 * Checks if the supplied co-ordinates collide with a portion of this gadget
-		 * that is not obscured by its siblings, but that may be obscured by
-		 * its children.
+		 * Checks if the supplied co-ordinates collide with a portion of this
+		 * gadget that is not obscured by its siblings or ancestors, but that
+		 * may be obscured by its children.  Co-ordinates should be in
+		 * Woopsi-space.
 		 * @param x X co-ordinate of the click.
 		 * @param y Y co-ordinate of the click.
 		 * @return True if a collision occurred; false if not.
@@ -1029,35 +1068,35 @@ namespace WoopsiUI {
 		bool checkCollisionWithForegroundRects(s16 x, s16 y) const;
 
 		/**
-		 * Get the current physical display co-ordinate for the supplied y co-ordinate.
-		 * Woopsi treats the two displays as two viewports on the same logical space.
-		 * The lower half of the range of y co-ordinates is displayed on the bottom
-		 * screen, whilst the upper half of the range of y co-ordinates is displayed
-		 * on the top screen.  This function converts back into a value that can be
-		 * displayed on one of the screens.
-		 * Should be used in conjunction with calculatePhysicalScreenNumber to 
-		 * work out which screen to draw on.
+		 * Get the current physical display co-ordinate for the supplied y
+		 * co-ordinate.  Woopsi treats the two displays as two viewports on the
+		 * same logical space.  The lower half of the range of y co-ordinates is
+		 * displayed on the bottom screen, whilst the upper half of the range of
+		 * y co-ordinates is displayed on the top screen.  This function
+		 * converts back into a value that can be displayed on one of the
+		 * screens.  Should be used in conjunction with
+		 * calculatePhysicalScreenNumber() to work out which screen to draw on.
 		 * @param y The y co-ordinate to check.
-		 * @return 
-		 * falls within the top screen.
+		 * @return The converted y co-ordinate.
 		 * @see calculatePhysicalScreenNumber()
 		 */
 		const s16 calculatePhysicalScreenY(s16 y) const;
 
 		/**
-		 * Get the current physical display number for the supplied y co-ordinate.
-		 * Should be used in conjunction with calculatePhysicalScreenY to convert
-		 * to a y co-ordinate that can be displayed.
+		 * Get the current physical display number for the supplied y
+		 * co-ordinate.  Should be used in conjunction with
+		 * calculatePhysicalScreenY() to convert to a y co-ordinate that can be
+		 * displayed.
 		 * @param y The y co-ordinate to check.
 		 * @return 0 if the co-ordinate falls within the bottom screen; 1 if it
 		 * falls within the top screen.
-		 * @see calculatePhysicalScreenY
+		 * @see calculatePhysicalScreenY()
 		 */
 		const u8 calculatePhysicalScreenNumber(s16 y) const;
 
 		/**
-		 * Erase and remove the supplied child gadget from this gadget and
-		 * send it to the deletion queue.
+		 * Erase and remove the supplied child gadget from this gadget and send
+		 * it to the deletion queue.
 		 * @param gadget The gadget to close.
 		 * @see close().
 		 */
@@ -1068,14 +1107,20 @@ namespace WoopsiUI {
 		 * list into the shelved list.  The gadget remains in memory and can
 		 * be restored by calling "unshelve()" on the gadget.
 		 * @param gadget The gadget to hide.
+		 * @see shelve()
+		 * @see unshelve()
+		 * @see shelveChild()
 		 */
 		void shelveChild(Gadget* gadget);
 
 		/**
 		 * Get a graphics port that can draw within the region of the supplied
-		 * clipping rect.  The port must be deleted when it is no longer required.
+		 * clipping rect.  The port must be deleted when it is no longer
+		 * required.
+		 *
 		 * Note that the clipping rect should be clipped to the gadget's visible
-		 * region before creating the graphics port.
+		 * region before creating the graphics port.  The rect should be in
+		 * Woopsi-space co-ordinates.
 		 * @return A new graphics port object.
 		 */
 		GraphicsPort* newInternalGraphicsPort(Rect clipRect);
@@ -1096,13 +1141,17 @@ namespace WoopsiUI {
 		
 		/**
 		 * Notify this gadget that it is being dragged, and set its drag point.
-		 * @param x The x co-ordinate of the drag position relative to this gadget.
-		 * @param y The y co-ordinate of the drag position relative to this gadget.
+		 * @param x The x co-ordinate of the drag position relative to this
+		 * gadget.
+		 * @param y The y co-ordinate of the drag position relative to this
+		 * gadget.
 		 */
 		void startDragging(s16 x, s16 y);
 		
 		/**
 		 * Notify this gadget that it is no longer being dragged.
+		 * @param x The x co-ordinate at which dragging stopped.
+		 * @param y The y co-ordinate at which dragging stopped.
 		 */
 		void stopDragging(s16 x, s16 y);
 

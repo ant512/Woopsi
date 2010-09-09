@@ -7,8 +7,8 @@
 namespace WoopsiUI {
 
 	/**
-	 * Class representing a data item within a list.  Intended for use within the ListData
-	 * class.
+	 * Class representing a data item within a list.  Intended for use within
+	 * the ListData class.
 	 */
 	class ListDataItem {
 	public:

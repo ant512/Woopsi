@@ -191,37 +191,44 @@ namespace WoopsiUI {
 		 * @param width The width of the bitmap to draw.
 		 * @param height The height of the bitmap to draw.
 		 * @param bitmap Pointer to the bitmap to draw.
-		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
-		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as
+		 * the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as
+		 * the origin.
 		 */
 		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY);
 		
 		/**
-		 * Draw a bitmap to the port's bitmap, using the supplied transparent colour
-		 * as an invisible colour.  This is considerably slower than the standard bitmap
-		 * drawing routine as it plots pixel-by-pixel instead of using a scanline DMA copy.
+		 * Draw a bitmap to the port's bitmap, using the supplied transparent
+		 * colour as an invisible colour.  This is considerably slower than the
+		 * standard bitmap drawing routine as it plots pixel-by-pixel instead of
+		 * using a scanline DMA copy.
 		 * @param x The x co-ordinate to draw the bitmap to.
 		 * @param y The y co-ordinate to draw the bitmap to.
 		 * @param width The width of the bitmap to draw.
 		 * @param height The height of the bitmap to draw.
 		 * @param bitmap Pointer to the bitmap to draw.
-		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
-		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as
+		 * the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as
+		 * the origin.
 		 * @param transparentColour The transparent colour used in the bitmap.
 		 */
 		virtual void drawBitmap(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY, u16 transparentColour);
 
 		/**
-		 * Draw a bitmap to the port's bitmap in greyscale.  This is considerably slower
-		 * than the standard bitmap drawing routine as it plots pixel-by-pixel instead
-		 * of using a scanline DMA copy.
+		 * Draw a bitmap to the port's bitmap in greyscale.  This is
+		 * considerably slower than the standard bitmap drawing routine as it
+		 * plots pixel-by-pixel instead of using a scanline DMA copy.
 		 * @param x The x co-ordinate to draw the bitmap to.
 		 * @param y The y co-ordinate to draw the bitmap to.
 		 * @param width The width of the bitmap to draw.
 		 * @param height The height of the bitmap to draw.
 		 * @param bitmap Pointer to the bitmap to draw.
-		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
-		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as
+		 * the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as
+		 * the origin.
 		 */
 		virtual void drawBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16  bitmapY);
 
@@ -333,7 +340,8 @@ namespace WoopsiUI {
 		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);
 
 		/**
-		 * Draw a portion of a string on a baseline (chars may have different tops/heights/depths) to the bitmap.
+		 * Draw a portion of a string on a baseline (chars may have different
+		 * tops/heights/depths) to the bitmap.
 		 * @param x The x co-ordinate of the string.
 		 * @param y The y co-ordinate of the string.
 		 * @param font The font to draw with.
@@ -415,19 +423,27 @@ namespace WoopsiUI {
 		virtual void drawFilledCircle(s16 x0, s16 y0, u16 radius, u16 colour);
 
 		/**
-		 * Clip the supplied rectangular dimensions to the size of the internal bitmap.
-		 * @param x The x co-ordinate of the rectangle to clip (modified by the function).
-		 * @param y The y co-ordinate of the rectangle to clip (modified by the function).
-		 * @param width The width of the rectangle to clip (modified by the function).
-		 * @param height The height of the rectangle to clip (modified by the function).
+		 * Clip the supplied rectangular dimensions to the size of the internal
+		 * bitmap.
+		 * @param x The x co-ordinate of the rectangle to clip (modified by the
+		 * function).
+		 * @param y The y co-ordinate of the rectangle to clip (modified by the
+		 * function).
+		 * @param width The width of the rectangle to clip (modified by the
+		 * function).
+		 * @param height The height of the rectangle to clip (modified by the
+		 * function).
 		 */
 		bool clipBitmapCoordinates(s16* x, s16* y, u16* width, u16* height);
 
 		/**
-		 * Remove the last item from the flood fill stack and insert its properties into the
+		 * Remove the last item from the flood fill stack and insert its
+		 * properties into the
 		 * supplied x and y variables.
-		 * @param x The x co-ordinate of the pixel from the stack (output by the function).
-		 * @param y The y co-ordinate of the pixel from the stack (output by the function).
+		 * @param x The x co-ordinate of the pixel from the stack (output by the
+		 * function).
+		 * @param y The y co-ordinate of the pixel from the stack (output by the
+		 * function).
 		 * @param stack Pointer to the stack to pop from.
 		 */
 		bool popStack(s16* x, s16* y, WoopsiArray<s32>* stack);
@@ -453,7 +469,8 @@ namespace WoopsiUI {
 		u8 getClipLineOutCode(s16 x, s16 y, s16 xMin, s16 yMin, s16 xMax, s16 yMax);
 
 		/**
-		 * Draws a line.  The parameters must be pre-clipped by the drawLine() method.
+		 * Draws a line.  The parameters must be pre-clipped by the drawLine()
+		 * method.
 		 * @param x1 The x co-ord of the start of the line.
 		 * @param y1 The y co-ord of the start of the line.
 		 * @param x2 The x co-ord of the end of the line.
@@ -463,22 +480,24 @@ namespace WoopsiUI {
 		void drawClippedLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour);
 
 		/**
-		 * Draws a bitmap in greyscale.  The parameters must be pre-clipped by the
-		 * drawBitmapGreyScale method.
+		 * Draws a bitmap in greyscale.  The parameters must be pre-clipped by
+		 * the drawBitmapGreyScale method.
 		 * @param x The x co-ordinate to draw the bitmap to.
 		 * @param y The y co-ordinate to draw the bitmap to.
 		 * @param width The width of the bitmap to draw.
 		 * @param height The height of the bitmap to draw.
 		 * @param bitmap Pointer to the bitmap to draw.
-		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as the origin.
-		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as the origin.
+		 * @param bitmapX The x co-ordinate within the supplied bitmap to use as
+		 * the origin.
+		 * @param bitmapY The y co-ordinate within the supplied bitmap to use as
+		 * the origin.
 		 */
 		void drawClippedBitmapGreyScale(s16 x, s16 y, u16 width, u16 height, const BitmapBase* bitmap, s16 bitmapX, s16 bitmapY);
 
 		/**
-		 * Clips the supplied co-ordinates so that they fit within the supplied clipping
-		 * rectangle.  If the clipped area is empty, the method returns false to indicate
-		 * this.  Otherwise, it returns true.
+		 * Clips the supplied co-ordinates so that they fit within the supplied
+		 * clipping rectangle.  If the clipped area is empty, the method returns
+		 * false to indicate this.  Otherwise, it returns true.
 		 * @param x1 The top-left x co-ordinate.
 		 * @param y1 The top-left y co-ordinate.
 		 * @param x2 The bottom-right x co-ordinate.

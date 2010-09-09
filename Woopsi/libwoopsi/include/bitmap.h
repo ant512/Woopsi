@@ -10,8 +10,8 @@ namespace WoopsiUI {
 	class Graphics;
 
 	/**
-	 * Class providing bitmap manipulation (drawing, etc) functions.  Creates a new
-	 * internal bitmap data array and uses it to draw onto.
+	 * Class providing bitmap manipulation (drawing, etc) functions.  Creates a
+	 * new internal bitmap data array and uses it to draw onto.
 	 */
 	class Bitmap : public MutableBitmapBase {
 	public:

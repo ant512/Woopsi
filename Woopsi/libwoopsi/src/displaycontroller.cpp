@@ -57,7 +57,7 @@ void DisplayController::recursiveRedraw(Gadget* gadget) {
 	for (s32 i = gadget->getChildCount() - 1; i >= 0; --i) {
 		if (!gadget->getChild(i)->isDrawingEnabled()) continue;
 		
-		redraw(gadget->getChild(i));
+		recursiveRedraw(gadget->getChild(i));
 		
 		if (_damagedRects.size() == 0) return;
 	}
