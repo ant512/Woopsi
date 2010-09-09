@@ -5,6 +5,7 @@
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "woopsitimer.h"
+#include "superbitmap.h"
 
 using namespace WoopsiUI;
 
@@ -26,6 +27,7 @@ private:
 	AmigaScreen* _screen;
 	AmigaWindow* _window;
 	WoopsiTimer* _timer;
+	SuperBitmap* _superBitmap;
 	u8 _p1x;
 	u8 _p1y;
 	u8 _p2x;

@@ -5,6 +5,7 @@
 #include "woopsitimer.h"
 #include "woopsi.h"
 #include "damagedrectmanager.h"
+#include "rect.h"
 
 Pong::Pong(AmigaScreen* screen) {
 	_screen = screen;
@@ -40,6 +41,16 @@ void Pong::initGUI() {
 	_window = new AmigaWindow(0, 13, 120, 60, "Pong", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	_screen->addGadget(_window);
 	_window->addGadgetEventHandler(this);
+	_window->setRefcon(1);
+	
+	// Create superbitmap
+	Rect rect;
+	_window->getClientRect(rect);
+	
+	_superBitmap = new SuperBitmap(rect.x, rect.y, rect.width, rect.height, rect.width, rect.height, false);
+	_window->addGadget(_superBitmap);
+	_superBitmap->setDraggable(false);
+	_superBitmap->setRefcon(2);
 	
 	// Create timer
 	_timer = new WoopsiTimer(1, true);
@@ -98,26 +109,24 @@ void Pong::moveObjects() {
 void Pong::draw() {
 	woopsiApplication->getDamagedRectManager()->redraw();
 
-	// Get graphics port
-	GraphicsPort* port = _window->newGraphicsPort(false);
+	// Get graphics object
+	Graphics* gfx = _superBitmap->getGraphics();
 
 	// Background
-	port->drawFilledRect(0, 0, 112, 43, woopsiRGB(0, 0, 0));
+	gfx->drawFilledRect(0, 0, 112, 43, woopsiRGB(0, 0, 0));
 
 	// Draw dividing line
-	port->drawLine(56, 0, 56, 99, woopsiRGB(0, 31, 0));
+	gfx->drawLine(56, 0, 56, 99, woopsiRGB(0, 31, 0));
 
 	// Players
-	port->drawFilledRect(_p1x, _p1y, _pWidth, _pHeight, woopsiRGB(0, 31, 0));
-	port->drawFilledRect(_p2x, _p2y, _pWidth, _pHeight, woopsiRGB(0, 31, 0));
+	gfx->drawFilledRect(_p1x, _p1y, _pWidth, _pHeight, woopsiRGB(0, 31, 0));
+	gfx->drawFilledRect(_p2x, _p2y, _pWidth, _pHeight, woopsiRGB(0, 31, 0));
 
 	// Ball
-	port->drawFilledEllipse(_bx, _by, _bRadius, _bRadius, woopsiRGB(0, 31, 0));
+	gfx->drawFilledEllipse(_bx, _by, _bRadius, _bRadius, woopsiRGB(0, 31, 0));
 
 	// Text
-	port->drawText(15, 2, _font, "It's Pong!", 0, 10, woopsiRGB(_fontRColour, _fontGColour, _fontBColour));
-
-	delete port;
+	gfx->drawText(15, 2, _font, "It's Pong!", 0, 10, woopsiRGB(_fontRColour, _fontGColour, _fontBColour));
 
 	// Font colour rotation
 	_fontRColour++;
@@ -132,6 +141,8 @@ void Pong::draw() {
 			}
 		}
 	}
+	
+	_superBitmap->markRectsDamaged();
 }
 
 void Pong::handleActionEvent(const GadgetEventArgs& e) {
