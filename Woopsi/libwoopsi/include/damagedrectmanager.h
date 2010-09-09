@@ -48,8 +48,9 @@ namespace WoopsiUI {
 		 * Redraws all damaged rects.
 		 * @param gadget The gadget to compare with the damaged region list to
 		 * see if it intersects any regions.  If so, those regions are redrawn.
+		 * @param damagedRects Damaged region list.
 		 */
-		void recursiveRedraw(Gadget* gadget);
+		void drawRects(Gadget* gadget, WoopsiArray<Rect>* damagedRects);
 	};
 }
 

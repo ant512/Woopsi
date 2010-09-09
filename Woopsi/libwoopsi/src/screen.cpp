@@ -44,6 +44,8 @@ void Screen::drawBorder(GraphicsPort* port) {
 }
 
 void Screen::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
+	
+	woopsiApplication->getDamagedRectManager()->redraw();
 			
 	y = calculatePhysicalScreenY(y);
 	

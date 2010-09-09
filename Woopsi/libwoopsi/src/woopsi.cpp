@@ -109,6 +109,10 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 	handleStylus(gadget);
 	handleKeys();
 	handleLid();
+	
+	// Redraw all damaged rects
+	_damagedRectManager->redraw();
+	
 	woopsiWaitVBL();
 
 #ifdef USING_SDL
@@ -136,9 +140,6 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 }
 
 void Woopsi::handleVBL() {
-
-	// Redraw all damaged rects
-	_damagedRectManager->redraw();
 
 	// Increase vbl counter
 	_vblCount++;

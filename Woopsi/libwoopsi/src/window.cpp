@@ -11,21 +11,21 @@ Window::Window(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u
 void Window::onDragStop() {
 	
 	woopsiApplication->getDamagedRectManager()->redraw();
-
+	
 	// Get a graphics port from the parent screen
 	GraphicsPort* port = _parent->newGraphicsPort(true);
-
+	
 	// Since we're drawing to the parent gadget's graphics port,
 	// we need to ensure that we subtract the parent's client rect
 	// offset from our drawing co-ordinates
 	Rect rect;
 	_parent->getClientRect(rect);
-
+	
 	// Draw rect
 	port->drawXORRect(_newX - rect.x, _newY - rect.y, getWidth(), getHeight());
-
+	
 	delete port;
-
+	
 	moveTo(_newX, _newY);
 }
 

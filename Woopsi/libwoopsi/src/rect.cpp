@@ -184,7 +184,7 @@ bool Rect::splitIntersection(const Rect& rect, Rect& intersection, WoopsiArray<R
 		left.height = intersection.height;
 		
 		// Insert the rect
-		remainderRects->insert(0, left);
+		remainderRects->push_back(left);
 		
 		// Adjust the dimensions of the intersection
 		intersection.x = x;
@@ -200,7 +200,7 @@ bool Rect::splitIntersection(const Rect& rect, Rect& intersection, WoopsiArray<R
 		right.height = intersection.height;
 		
 		// Insert the rect
-		remainderRects->insert(0, right);
+		remainderRects->push_back(right);
 		
 		// Adjust dimensions of the intersection
 		intersection.width -= right.width;
@@ -215,7 +215,7 @@ bool Rect::splitIntersection(const Rect& rect, Rect& intersection, WoopsiArray<R
 		top.height = y - intersection.y;
 		
 		// Insert the rect
-		remainderRects->insert(0, top);
+		remainderRects->push_back(top);
 		
 		// Adjust the dimensions of the intersection
 		intersection.y = y;
@@ -231,7 +231,7 @@ bool Rect::splitIntersection(const Rect& rect, Rect& intersection, WoopsiArray<R
 		bottom.height = intersection.height - (y + height - intersection.y);
 		
 		// Insert the rect
-		remainderRects->insert(0, bottom);
+		remainderRects->push_back(bottom);
 		
 		// Adjust dimensions of the intersection
 		intersection.height -= bottom.height;
