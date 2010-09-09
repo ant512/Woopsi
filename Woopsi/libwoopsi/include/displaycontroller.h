@@ -17,7 +17,8 @@ namespace WoopsiUI {
 		
 		/**
 		 * Constructor.
-		 * @param gadget The top-level gadget.  This should always be the Woopsi instance.
+		 * @param gadget The top-level gadget.  This should always be the Woopsi
+		 * instance.
 		 */
 		DisplayController(Gadget* gadget);
 		
@@ -27,8 +28,9 @@ namespace WoopsiUI {
 		~DisplayController();
 
 		/**
-		 * Add a damaged rect to the list.  The method automatically clips and splits
-		 * the rect to ensure that only new regions are added to the list.
+		 * Add a damaged rect to the list.  The method automatically clips and
+		 * splits the rect to ensure that only new regions are added to the
+		 * list.
 		 * @param rect The rect to add to the list.
 		 */
 		void addDamagedRect(const Rect& rect);

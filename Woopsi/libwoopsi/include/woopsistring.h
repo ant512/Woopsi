@@ -11,12 +11,12 @@ namespace WoopsiUI {
 	 * Unicode string class.  Uses UTF-8 encoding.  For optimal performance, use
 	 * the StringIterator class to iterate over a WoopsiString instance.
 	 *
-	 * Where possible, the string avoids allocating memory
-	 * each time the string grows or shrinks.  This means that the string may
-	 * consume more memory than the number of chars would seem to dictate if the
-	 * object previously contained a large string that has subsequently been
-	 * truncated.  It also means that increasing the length of such a string is
-	 * a cheaper operation as memory does not need to allocated and copied.
+	 * Where possible, the string avoids allocating memory each time the string
+	 * grows or shrinks.  This means that the string may consume more memory
+	 * than the number of chars would seem to dictate if the object previously
+	 * previously contained a large string that has subsequently been truncated.
+	 * It also means that increasing the length of such a string is a cheaper
+	 * operation as memory does not need to allocated and copied.
 	 *
 	 * Additionally, the string increases its array size by _growAmount every
 	 * time it needs to allocate extra memory, potentially reducing the number

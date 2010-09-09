@@ -40,8 +40,8 @@ namespace WoopsiUI {
 		inline const WoopsiString& getMonthName() const { return _monthNames[_month - 1]; };
 
 		/**
-		 * Get the integer value of the current day of the week.  Value is 0-based
-		 * where 0 represents Sunday and 6 represents Saturday.
+		 * Get the integer value of the current day of the week.  Value is
+		 * 0-based where 0 represents Sunday and 6 represents Saturday.
 		 * @return The current day of the week.
 		 */
 		inline const u8 getWeekDay() const { return _weekDay; };
@@ -76,7 +76,8 @@ namespace WoopsiUI {
 		void addYears(s16 years);
 
 		/**
-		 * Add a number of months to this date.  Automatically rolls over years if necessary.
+		 * Add a number of months to this date.  Automatically rolls over years
+		 * if necessary.
 		 * @param months Number of months to add.
 		 */
 		void addMonths(s16 months);
@@ -132,8 +133,8 @@ namespace WoopsiUI {
 		static const WoopsiString _monthNames[12];		/**< Array of month names */
 
 		/**
-		 * Returns 1 if the date falls before the 29th of Feb and the year is a leap year.
-		 * Necessary for correct calculation of year offset.
+		 * Returns 1 if the date falls before the 29th of Feb and the year is a
+		 * leap year.  Necessary for correct calculation of year offset.
 		 * @return 1 if date before 29th Feb in leap year; 0 otherwise.
 		 */
 		const int getLeapCompensationValue() const;
@@ -150,13 +151,14 @@ namespace WoopsiUI {
 		void setYear(u16 year);
 
 		/**
-		 * Set the month.  Automatically wraps around years if the month value is not
-		 * valid.
+		 * Set the month.  Automatically wraps around years if the month value
+		 * is not valid.
 		 * @param month The new month.
 		 */
 		void setMonth(u8 month);
 		/**
-		 * Set the day.  Automatically wraps around days if the day value is not valid.
+		 * Set the day.  Automatically wraps around days if the day value is not
+		 * valid.
 		 * @param day The new day.
 		 */
 		void setDay(u8 day);

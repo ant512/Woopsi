@@ -9,9 +9,8 @@
 namespace WoopsiUI {
 
 	/**
-	 * This class functions as a wrapper around a char array offering
-	 * more advanced functionality - it can wrap text, calculate its
-	 * height in pixels, calculate the width of a row, etc.
+	 * Contains a WoopsiString and can wrap it to fit within a given width for a
+	 * given font.
 	 */
 	class Document {
 
@@ -19,15 +18,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
-		 * @param font The font to use for this text object.
-		 * @param text A string that this text object should wrap around.
+		 * @param font The font to use for this object.
+		 * @param text A string that this object should wrap around.
 		 * @param width The pixel width at which the text should wrap.
 		 */
 		Document(FontBase* font, const WoopsiString& text, u16 width);
 
 		/**
 		 * Set the text in the string.
-		 * @param text Char array to use as the new data for this string.
+		 * @param text The new string.
 		 */
 		virtual void setText(const WoopsiString& text);
 
@@ -76,8 +75,8 @@ namespace WoopsiUI {
 		void setLineSpacing(u8 lineSpacing);
 
 		/**
-		 * Sets the pixel width of the text; text wider than 
-		 * this will automatically wrap.
+		 * Sets the pixel width of the text; text wider than this will
+		 * automatically wrap.
 		 * @param width Maximum pixel width of the text.
 		 */
 		void setWidth(u16 width);
@@ -96,8 +95,8 @@ namespace WoopsiUI {
 		const u8 getLineLength(const s32 lineNumber) const;
 
 		/**
-		 * Get the number of characters in the specified line number,
-		 * ignoring any trailing blank characters.
+		 * Get the number of characters in the specified line number, ignoring
+		 * any trailing blank characters.
 		 * @param lineNumber The line number to check.
 		 * @return The number of characters in the line.
 		 */
@@ -111,8 +110,8 @@ namespace WoopsiUI {
 		const s16 getLinePixelLength(const s32 lineNumber) const;
 
 		/**
-		 * Get the width in pixels of the specified line number,
-		 * ignoring any trailing blank characters.
+		 * Get the width in pixels of the specified line number, ignoring any
+		 * trailing blank characters.
 		 * @param lineNumber The line number to check.
 		 * @return The pixel width of the line.
 		 */
@@ -167,7 +166,8 @@ namespace WoopsiUI {
 		void wrap();
 
 		/**
-		 * Wrap the text from the line containing the specified char index onwards.
+		 * Wrap the text from the line containing the specified char index
+		 * onwards.
 		 * @param charIndex The index of the char to start wrapping from; note
 		 * that the wrapping function will re-wrap that entire line of text.
 		 */
@@ -183,25 +183,26 @@ namespace WoopsiUI {
 		const s32 getLineContainingCharIndex(const s32 index) const;
 
 		/**
-		 * Gets the index within the char array that represents the start of the line of
-		 * text indicated by the line parameter.
+		 * Gets the index within the char array that represents the start of the
+		 * line of text indicated by the line parameter.
 		 * @param line The line number to locate within the char array.
-		 * @return The index within the char array of the start of the supplied line.
+		 * @return The index within the char array of the start of the supplied
+		 * line.
 		 */
 		const s32 getLineStartIndex(const s32 line) const { return _linePositions[line]; };
 
 		/**
-		 * Get a reference to the internal string.  String is constant to prevent it being
-		 * changed without notifying the document.  Any change to a string should cause
-		 * a re-wrap operation.
+		 * Get a reference to the internal string.  String is constant to
+		 * prevent it being changed without notifying the document.  Any change
+		 * to a string should cause a re-wrap operation.
 		 * @return The internal string.
 		 */
 		const WoopsiString& getText() const { return _text; };
 
 	private:
 		/**
-		 * Struct defining the position and length of a longest line within the _linePositions
-		 * array.
+		 * Struct defining the position and length of a longest line within the
+		 * _linePositions array.
 		 */
 		typedef struct {
 			s32 index;

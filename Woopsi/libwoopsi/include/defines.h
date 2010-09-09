@@ -2,9 +2,9 @@
 #define _DEFINES_H_
 
 /**
- * The TOP_SCREEN_Y_OFFSET specifies the y co-ordinate at which output swaps from the 
- * lower DS screen to the upper screen.  This lets us use a single co-ordinate system
- * instead of one co-ordinate system for each screen.
+ * The TOP_SCREEN_Y_OFFSET specifies the y co-ordinate at which output swaps
+ * from the lower DS screen to the upper screen.  This lets us use a single
+ * co-ordinate system instead of one co-ordinate system for each screen.
  */
 #define TOP_SCREEN_Y_OFFSET 512
 
@@ -19,27 +19,28 @@
 #define SCREEN_HEIGHT 192
 
 /**
- * The TOP_SCREEN_NUMBER gives the index of the top screen in the frameBuffer[] framebuffer
- * pointer array.
+ * The TOP_SCREEN_NUMBER gives the index of the top screen in the frameBuffer[]
+ * framebuffer pointer array.
  */
 #define TOP_SCREEN_NUMBER 1
 
 /**
- * The BOTTOM_SCREEN_NUMBER gives the index of the touch screen in the frameBuffer[] framebuffer
- * pointer array.
+ * The BOTTOM_SCREEN_NUMBER gives the index of the touch screen in the
+ * frameBuffer[] framebuffer pointer array.
  */
 #define BOTTOM_SCREEN_NUMBER 0
 
 /**
- * Value added to click x and y to describe a box within which a click is counted as
- * a double-click.
+ * Value added to click x and y to describe a box within which a click is
+ * counted as a double-click.
  */
 #define DOUBLE_CLICK_BOUNDS 10
 
 #ifndef USING_SDL
 
 /**
- * Number of VBLs within which a click the user can click again to fire a double-click.
+ * Number of VBLs within which a click the user can click again to fire a
+ * double-click.
  */
 #define DOUBLE_CLICK_TIME 45
 
@@ -56,7 +57,8 @@
 #else
 
 /**
- * Number of VBLs within which a click the user can click again to fire a double-click.
+ * Number of VBLs within which a click the user can click again to fire a
+ * double-click.
  */
 #define DOUBLE_CLICK_TIME 8000
 

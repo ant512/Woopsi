@@ -121,8 +121,8 @@ extern WoopsiUI::FrameBuffer* frameBuffer[2];
 extern WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 /**
- * Initialise the DS' screens into framebuffer mode.  Also sets up some other subsystems
- * and IRQs.
+ * Initialise the DS' screens into framebuffer mode.  Also sets up some other
+ * subsystems and IRQs.
  */
 void initWoopsiGfxMode();
 
