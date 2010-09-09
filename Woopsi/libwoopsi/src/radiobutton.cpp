@@ -23,7 +23,7 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 
 		_gadgetEventHandlers->raiseValueChangeEvent();
 
-		markRectsDirty();
+		markRectsDamaged();
 	}
 }
 

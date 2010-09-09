@@ -53,16 +53,16 @@ void BitmapButton::drawOutline(GraphicsPort* port) {
 }
 
 void BitmapButton::onClick(s16 x, s16 y) {
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 void BitmapButton::onRelease(s16 x, s16 y) {
 	_gadgetEventHandlers->raiseReleaseEvent(x, y);
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 void BitmapButton::onReleaseOutside(s16 x, s16 y) {
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 // Get the preferred dimensions of the gadget

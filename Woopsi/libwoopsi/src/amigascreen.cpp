@@ -57,7 +57,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 
 		invalidateVisibleRectCache();
 
-		markRectsDirty();
+		markRectsDamaged();
 	}
 }
 

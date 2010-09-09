@@ -41,22 +41,22 @@ const Document* ScrollingTextBox::getDocument() const {
 
 void ScrollingTextBox::setText(const WoopsiString& text) {
 	_textbox->setText(text);
-	_scrollbar->markRectsDirty();
+	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::appendText(const WoopsiString& text) {
 	_textbox->appendText(text);
-	_scrollbar->markRectsDirty();
+	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::removeText(const u32 startIndex) {
 	_textbox->removeText(startIndex);
-	_scrollbar->markRectsDirty();
+	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::removeText(const u32 startIndex, const u32 count) {
 	_textbox->removeText(startIndex, count);
-	_scrollbar->markRectsDirty();
+	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::setFont(FontBase* font) {
@@ -79,7 +79,7 @@ void ScrollingTextBox::hideCursor() {
 
 void ScrollingTextBox::moveCursorToPosition(const s32 position) {
 	_textbox->moveCursorToPosition(position);
-	_scrollbar->markRectsDirty();
+	_scrollbar->markRectsDamaged();
 }
 
 const s32 ScrollingTextBox::getCursorPosition() const {
@@ -88,12 +88,12 @@ const s32 ScrollingTextBox::getCursorPosition() const {
 
 void ScrollingTextBox::insertText(const WoopsiString& text, const u32 index) {
 	_textbox->insertText(text, index);
-	_scrollbar->markRectsDirty();
+	_scrollbar->markRectsDamaged();
 }
 		
 void ScrollingTextBox::insertTextAtCursor(const WoopsiString& text) {
 	_textbox->insertTextAtCursor(text);
-	_scrollbar->markRectsDirty();
+	_scrollbar->markRectsDamaged();
 }
 
 const u16 ScrollingTextBox::getPageCount() const {

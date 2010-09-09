@@ -1,6 +1,6 @@
 #include "window.h"	
 #include "woopsi.h"
-#include "displaycontroller.h"
+#include "damagedrectmanager.h"
 
 using namespace WoopsiUI;
 
@@ -10,7 +10,7 @@ Window::Window(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u
 
 void Window::onDragStop() {
 	
-	woopsiApplication->getDisplayController()->redraw();
+	woopsiApplication->getDamagedRectManager()->redraw();
 
 	// Get a graphics port from the parent screen
 	GraphicsPort* port = _parent->newGraphicsPort(true);
@@ -62,7 +62,7 @@ void Window::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 			destY = 0;
 		}
 		
-		woopsiApplication->getDisplayController()->redraw();
+		woopsiApplication->getDamagedRectManager()->redraw();
 
 		// Get a graphics port from the parent screen
 		GraphicsPort* port = _parent->newGraphicsPort(true);
@@ -94,12 +94,12 @@ void Window::drawBorder(GraphicsPort* port) {
 void Window::setTitle(const WoopsiString& title) {
 	_title = title;
 
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 void Window::onDragStart() {
 	
-	woopsiApplication->getDisplayController()->redraw();
+	woopsiApplication->getDamagedRectManager()->redraw();
 
 	// Draw XOR rect
 

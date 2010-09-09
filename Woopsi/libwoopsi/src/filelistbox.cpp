@@ -166,7 +166,7 @@ void FileListBox::readDirectory() {
 
 #endif
 	
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 void FileListBox::setPath(const WoopsiString& path) {

@@ -114,20 +114,20 @@ void TextBox::repositionCursor(const s32 position) {
 void TextBox::moveCursorToPosition(const s32 position) {
 	repositionCursor(position);
 	calculateTextPositionHorizontal();
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 void TextBox::showCursor() {
 	if (!_showCursor) {
 		_showCursor = true;
-		markRectsDirty();
+		markRectsDamaged();
 	}
 }
 
 void TextBox::hideCursor() {
 	if (_showCursor) {
 		_showCursor = false;
-		markRectsDirty();
+		markRectsDamaged();
 	}
 }
 
@@ -309,5 +309,5 @@ void TextBox::processKey(const WoopsiKey* key) {
 }
 
 void TextBox::onBlur() {
-	markRectsDirty();
+	markRectsDamaged();
 }

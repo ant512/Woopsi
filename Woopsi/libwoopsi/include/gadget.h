@@ -982,18 +982,18 @@ namespace WoopsiUI {
 		 * Marks all visible portions of the gadget for redrawing.
 		 * Should be called when a gadget's appearance has changed.
 		 */
-		void markRectsDirty();
+		void markRectsDamaged();
 		
 		/**
 		 * Marks a particular rect for drawing.  Can be called instead of
-		 * markRectsDirty() if only a portion of a gadget has changed.
+		 * markRectsDamaged() if only a portion of a gadget has changed.
 		 * The rect is automatically clipped to the visible portions of the
 		 * gadget.  Its co-ordinates should be in gadget co-ordinates (ie.
 		 * relative to the top-left corner of the gadget, which is (0,0)).
 		 * It will automatically be converted to Woopsi co-ordinates.
 		 * @param rect Rect to queue for redraw.
 		 */
-		void markRectDirty(const Rect& rect);
+		void markRectDamaged(const Rect& rect);
 
 	protected:
 		Rect _rect;								/**< Rect describing the gadget. */

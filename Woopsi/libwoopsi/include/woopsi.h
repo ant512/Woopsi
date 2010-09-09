@@ -12,7 +12,7 @@ namespace WoopsiUI {
 	class WoopsiTimer;
 	class WoopsiKeyboardScreen;
 	class KeyboardEventHandler;
-	class DisplayController;
+	class DamagedRectManager;
 
 	/**
 	 * Class providing a top-level gadget and an interface to the Woopsi gadget
@@ -155,10 +155,10 @@ namespace WoopsiUI {
 		void hideKeyboard();
 
 		/**
-		 * Get a pointer to the display controller.
-		 * @return A pointer to the display controller.
+		 * Get a pointer to the damaged rect manager.
+		 * @return A pointer to the damaged rect manager.
 		 */
-		DisplayController* getDisplayController() { return _displayController; };
+		DamagedRectManager* getDamagedRectManager() { return _damagedRectManager; };
 
 	protected:
 		bool _lidClosed;									/**< Remembers the current state of the lid. */
@@ -169,7 +169,7 @@ namespace WoopsiUI {
 		ContextMenu* _contextMenu;							/**< Pointer to the context menu. */
 		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked. */
 		WoopsiKeyboardScreen* _keyboardScreen;				/**< Screen containing the popup keyboard. */
-		DisplayController* _displayController;				/**< Maintains damaged rect list and controls redraws. */
+		DamagedRectManager* _damagedRectManager;			/**< Maintains damaged rect list and controls redraws. */
 
 		/**
 		 * Initialise the application.  All initial GUI creation, hardware

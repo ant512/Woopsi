@@ -36,5 +36,5 @@ void StickyButton::drawOutline(GraphicsPort* port) {
 
 void StickyButton::setStuckDown(bool isStuckDown) {
 	_isStuckDown = isStuckDown;
-	markRectsDirty();
+	markRectsDamaged();
 }

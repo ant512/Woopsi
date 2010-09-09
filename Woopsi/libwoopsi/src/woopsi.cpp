@@ -10,7 +10,7 @@
 #include "woopsikeyboard.h"
 #include "keyboardeventhandler.h"
 #include "screen.h"
-#include "displaycontroller.h"
+#include "damagedrectmanager.h"
 
 using namespace WoopsiUI;
 
@@ -35,7 +35,7 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 	// Set up singleton pointer
 	singleton = this;
 
-	_displayController = new DisplayController(this);
+	_damagedRectManager = new DamagedRectManager(this);
 
 	// Set up DS display hardware
 	initWoopsiGfxMode();
@@ -89,8 +89,8 @@ Woopsi::~Woopsi() {
 	singleton = NULL;
 	_contextMenu = NULL;
 
-	delete _displayController;
-	_displayController = NULL;
+	delete _damagedRectManager;
+	_damagedRectManager = NULL;
 
 	woopsiFreeFrameBuffers();
 	woopsiFreeDefaultGadgetStyle();
@@ -138,7 +138,7 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 void Woopsi::handleVBL() {
 
 	// Redraw all damaged rects
-	_displayController->redraw();
+	_damagedRectManager->redraw();
 
 	// Increase vbl counter
 	_vblCount++;
@@ -308,7 +308,7 @@ bool Woopsi::swapGadgetDepth(Gadget* gadget) {
 		}
 
 		if (gadgetSource != gadgetDest) {
-			gadget->markRectsDirty();
+			gadget->markRectsDamaged();
 
 			// Swap
 			Gadget* tmp = _gadgets[gadgetSource];

@@ -63,7 +63,7 @@ namespace WoopsiUI {
 		 */
 		inline void showPercentageText() {
 			_showPercentageText = true;
-			markRectsDirty();
+			markRectsDamaged();
 		};
 
 		/**
@@ -71,7 +71,7 @@ namespace WoopsiUI {
 		 */
 		inline void hidePercentageText() {
 			_showPercentageText = false;
-			markRectsDirty();
+			markRectsDamaged();
 		};
 
 	protected:

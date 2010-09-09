@@ -1,16 +1,16 @@
-#include "displaycontroller.h"
+#include "damagedrectmanager.h"
 #include "gadget.h"
 
 using namespace WoopsiUI;
 
-DisplayController::DisplayController(Gadget* gadget) {
+DamagedRectManager::DamagedRectManager(Gadget* gadget) {
 	_gadget = gadget;
 }
 
-DisplayController::~DisplayController() {
+DamagedRectManager::~DamagedRectManager() {
 }
 
-void DisplayController::addDamagedRect(const Rect& rect) {
+void DamagedRectManager::addDamagedRect(const Rect& rect) {
 
 	WoopsiArray<Rect> newRects;
 	WoopsiArray<Rect> remainingRects;
@@ -48,7 +48,7 @@ void DisplayController::addDamagedRect(const Rect& rect) {
 	}
 }
 
-void DisplayController::recursiveRedraw(Gadget* gadget) {
+void DamagedRectManager::recursiveRedraw(Gadget* gadget) {
 	if (_damagedRects.size() == 0) return;
 	
 	if (gadget == NULL) gadget = _gadget;
@@ -92,6 +92,6 @@ void DisplayController::recursiveRedraw(Gadget* gadget) {
 	}
 }
 
-void DisplayController::redraw() {
+void DamagedRectManager::redraw() {
 	recursiveRedraw(_gadget);
 }

@@ -1,5 +1,5 @@
-#ifndef _DISPLAY_CONTROLLER_H_
-#define _DISPLAY_CONTROLLER_H_
+#ifndef _DAMAGED_RECT_MANAGER_
+#define _DAMAGED_RECT_MANAGER_
 
 #include "woopsiarray.h"
 #include "rect.h"
@@ -12,7 +12,7 @@ namespace WoopsiUI {
 	 * Manages damaged rects.  Keeps a list of damaged rects and redraws them
 	 * when redraw() is called.
 	 */
-	class DisplayController {
+	class DamagedRectManager {
 	public:
 		
 		/**
@@ -20,12 +20,12 @@ namespace WoopsiUI {
 		 * @param gadget The top-level gadget.  This should always be the Woopsi
 		 * instance.
 		 */
-		DisplayController(Gadget* gadget);
+		DamagedRectManager(Gadget* gadget);
 		
 		/**
 		 * Destructor.
 		 */
-		~DisplayController();
+		~DamagedRectManager();
 
 		/**
 		 * Add a damaged rect to the list.  The method automatically clips and

@@ -253,12 +253,12 @@ void MultiLineTextBox::calculateVisibleRows() {
 
 void MultiLineTextBox::setTextAlignmentHoriz(TextAlignmentHoriz alignment) {
 	_hAlignment = alignment;
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 void MultiLineTextBox::setTextAlignmentVert(TextAlignmentVert alignment) {
 	_vAlignment = alignment;
-	markRectsDirty();
+	markRectsDamaged();
 }
 
 bool MultiLineTextBox::cullTopLines() {
@@ -336,7 +336,7 @@ void MultiLineTextBox::setText(const WoopsiString& text) {
 	limitCanvasHeight();
 	jumpToTextBottom();
 
-	markRectsDirty();
+	markRectsDamaged();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -349,7 +349,7 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 	limitCanvasHeight();
 	jumpToTextBottom();
 
-	markRectsDirty();
+	markRectsDamaged();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -367,7 +367,7 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
 	moveCursorToPosition(startIndex);
 
-	markRectsDirty();
+	markRectsDamaged();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -381,7 +381,7 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 
 	moveCursorToPosition(index + text.getLength());
 
-	markRectsDirty();
+	markRectsDamaged();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -395,7 +395,7 @@ void MultiLineTextBox::setFont(FontBase* font) {
 	limitCanvasHeight();
 	limitCanvasY();
 
-	markRectsDirty();
+	markRectsDamaged();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
 }
@@ -454,14 +454,14 @@ const u32 MultiLineTextBox::getTextLength() const {
 void MultiLineTextBox::showCursor() {
 	if (!_showCursor) {
 		_showCursor = true;
-		markRectsDirty();
+		markRectsDamaged();
 	}
 }
 
 void MultiLineTextBox::hideCursor() {
 	if (_showCursor) {
 		_showCursor = false;
-		markRectsDirty();
+		markRectsDamaged();
 	}
 }
 

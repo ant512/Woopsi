@@ -342,12 +342,12 @@ void Gadget::redraw(const Rect& rect) {
 	delete port;
 }
 
-void Gadget::markRectsDirty() {
+void Gadget::markRectsDamaged() {
 	cacheVisibleRects();
-	_rectCache->markRectsDirty();
+	_rectCache->markRectsDamaged();
 }
 
-void Gadget::markRectDirty(const Rect& rect) {
+void Gadget::markRectDamaged(const Rect& rect) {
 	cacheVisibleRects();
 
 	// Convert the rect from gadget space to Woopsi space co-ordinates
@@ -359,7 +359,7 @@ void Gadget::markRectDirty(const Rect& rect) {
 	// Get the rect cache to redraw the rect.  It will automatically
 	// clip the rect to the visible portions of the gadget so we
 	// don't need to
-	_rectCache->markRectDirty(adjustedRect);
+	_rectCache->markRectDamaged(adjustedRect);
 }	
 
 // Marks the gadget as deleted and adds it to the deletion queue
@@ -370,7 +370,7 @@ void Gadget::close() {
 		_gadgetEventHandlers->disable();
 		
 		_parent->invalidateVisibleRectCache();
-		markRectsDirty();
+		markRectsDamaged();
 
 		_flags.deleted = true;
 		
@@ -399,7 +399,7 @@ bool Gadget::shelve() {
 		_gadgetEventHandlers->raiseShelveEvent();
 		_gadgetEventHandlers->disable();
 
-		markRectsDirty();
+		markRectsDamaged();
 
 		_flags.shelved = true;
 
@@ -437,7 +437,7 @@ bool Gadget::unshelve() {
 			_parent->invalidateVisibleRectCache();	
 		}
 
-		markRectsDirty();
+		markRectsDamaged();
 
 		return true;
 	}
@@ -625,7 +625,7 @@ bool Gadget::swapGadgetDepth(Gadget* gadget) {
 		}
 		
 		// Erase the gadget from the screen
-		gadget->markRectsDirty();
+		gadget->markRectsDamaged();
 
 		// Swap
 		Gadget* tmp = _gadgets[gadgetSource];
@@ -663,7 +663,7 @@ bool Gadget::enable() {
 		
 		onEnable();
 
-		markRectsDirty();
+		markRectsDamaged();
 
 		_gadgetEventHandlers->raiseEnableEvent();
 
@@ -679,7 +679,7 @@ bool Gadget::disable() {
 		
 		onDisable();
 
-		markRectsDirty();
+		markRectsDamaged();
 
 		_gadgetEventHandlers->raiseDisableEvent();
 
@@ -737,7 +737,7 @@ bool Gadget::moveTo(s16 x, s16 y) {
 	// Perform move if necessary
 	if ((_rect.getX() != x) || (_rect.getY() != y)) {
 		
-		markRectsDirty();
+		markRectsDamaged();
 
 		s16 oldX = _rect.getX();
 		s16 oldY = _rect.getY();
@@ -749,7 +749,7 @@ bool Gadget::moveTo(s16 x, s16 y) {
 			_parent->invalidateVisibleRectCache();
 		}
 
-		markRectsDirty();
+		markRectsDamaged();
 
 		_gadgetEventHandlers->raiseMoveEvent(x, y, x - oldX, y - oldY);
 
@@ -788,7 +788,7 @@ bool Gadget::resize(u16 width, u16 height) {
 
 		_flags.permeable = true;
 	
-		markRectsDirty();
+		markRectsDamaged();
 
 		_rect.setWidth(width);
 		_rect.setHeight(height);
@@ -804,7 +804,7 @@ bool Gadget::resize(u16 width, u16 height) {
 		_flags.permeable = wasPermeable;
 
 		invalidateVisibleRectCache();
-		markRectsDirty();
+		markRectsDamaged();
 
 		_gadgetEventHandlers->raiseResizeEvent(width, height);
 
@@ -1180,7 +1180,7 @@ bool Gadget::raiseGadgetToTop(Gadget* gadget) {
 		_gadgets.push_back(gadget);
 
 		gadget->invalidateVisibleRectCache();
-		gadget->markRectsDirty();
+		gadget->markRectsDamaged();
 
 		// Invalidate all gadgets that collide with the depth-swapped gadget
 		for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1201,7 +1201,7 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 	s32 index = getGadgetIndex(gadget);
 
 	if (index > _decorationCount) {
-		gadget->markRectsDirty();
+		gadget->markRectsDamaged();
 
 		// Handle visible region caching
 		gadget->invalidateVisibleRectCache();
@@ -1237,7 +1237,7 @@ void Gadget::addGadget(Gadget* gadget) {
 		}
 
 		invalidateVisibleRectCache();
-		gadget->markRectsDirty();
+		gadget->markRectsDamaged();
 	}
 }
 
@@ -1257,7 +1257,7 @@ void Gadget::insertGadget(Gadget* gadget) {
 		}
 
 		invalidateVisibleRectCache();
-		gadget->markRectsDirty();
+		gadget->markRectsDamaged();
 	}
 }
 
@@ -1452,7 +1452,7 @@ void Gadget::setGlyphFont(FontBase* font) {
 }
 
 bool Gadget::remove() {
-	markRectsDirty();
+	markRectsDamaged();
 	
 	if (_parent != NULL) {
 		return _parent->removeChild(this);
@@ -1463,7 +1463,7 @@ bool Gadget::remove() {
 
 bool Gadget::removeChild(Gadget* gadget) {
 	
-	gadget->markRectsDirty();
+	gadget->markRectsDamaged();
 
 	// Do we need to make another gadget active?
 	if (_focusedGadget == gadget) {
@@ -1566,7 +1566,7 @@ bool Gadget::show() {
 		}
 
 		_gadgetEventHandlers->raiseShowEvent();
-		markRectsDirty();
+		markRectsDamaged();
 		return true;
 	}
 
@@ -1576,7 +1576,7 @@ bool Gadget::show() {
 bool Gadget::hide() {
 	if (!_flags.hidden) {
 
-		markRectsDirty();
+		markRectsDamaged();
 
 		_flags.hidden = true;
 

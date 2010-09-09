@@ -1,6 +1,6 @@
 #include "rectcache.h"
 #include "woopsi.h"
-#include "displaycontroller.h"
+#include "damagedrectmanager.h"
 
 using namespace WoopsiUI;
 
@@ -10,18 +10,18 @@ RectCache::RectCache(const Gadget* gadget) {
 	_backgroundInvalid = true;
 }
 
-void RectCache::markRectsDirty() const {
+void RectCache::markRectsDamaged() const {
 	
 	// Abort if Woopsi does not exist.  This can occur if Woopsi is shutting
 	// down
 	if (woopsiApplication == NULL) return;
 	
 	for (s32 i = 0; i < _foregroundRegions.size(); ++i) {
-		woopsiApplication->getDisplayController()->addDamagedRect(_foregroundRegions[i]);
+		woopsiApplication->getDamagedRectManager()->addDamagedRect(_foregroundRegions[i]);
 	}
 }
 
-void RectCache::markRectDirty(const Rect& rect) const {
+void RectCache::markRectDamaged(const Rect& rect) const {
 	
 	// Abort if Woopsi does not exist.  This can occur if Woopsi is shutting
 	// down
@@ -47,7 +47,7 @@ void RectCache::markRectDirty(const Rect& rect) const {
 					dirtyRects.push_back(remainderRects[k]);
 				}
 				
-				woopsiApplication->getDisplayController()->addDamagedRect(intersect);
+				woopsiApplication->getDamagedRectManager()->addDamagedRect(intersect);
 				
 				remainderRects.clear();
 			}

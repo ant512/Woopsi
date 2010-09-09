@@ -84,7 +84,7 @@ namespace WoopsiUI {
 		 * not background rects, this means that all of the owning gadget's
 		 * children will also be redrawn next time the display is refreshed.
 		 */
-		void markRectsDirty() const;
+		void markRectsDamaged() const;
 		
 		/**
 		 * Marks a specific rect as dirty.  The rect's co-ordinates should be in
@@ -92,7 +92,7 @@ namespace WoopsiUI {
 		 * only regions of it that intersect the foreground rects are redrawn.
 		 * @param rect Rect to mark as dirty.
 		 */
-		void markRectDirty(const Rect& rect) const;
+		void markRectDamaged(const Rect& rect) const;
 
 	private:
 		WoopsiArray<Rect> _foregroundRegions;				/**< List of the gadget's visible regions */

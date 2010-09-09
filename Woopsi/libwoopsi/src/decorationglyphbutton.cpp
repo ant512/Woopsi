@@ -57,5 +57,5 @@ void DecorationGlyphButton::drawOutline(GraphicsPort* port) {
 }
 
 void DecorationGlyphButton::onFocus() {
-	markRectsDirty();
+	markRectsDamaged();
 }
