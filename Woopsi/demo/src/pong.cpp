@@ -4,7 +4,7 @@
 #include "woopsifuncs.h"
 #include "woopsitimer.h"
 #include "woopsi.h"
-#include "displaycontroller.h"
+#include "damagedrectmanager.h"
 
 Pong::Pong(AmigaScreen* screen) {
 	_screen = screen;
@@ -96,7 +96,7 @@ void Pong::moveObjects() {
 }
 
 void Pong::draw() {
-	woopsiApplication->getDisplayController()->redraw();
+	woopsiApplication->getDamagedRectManager()->redraw();
 
 	// Get graphics port
 	GraphicsPort* port = _window->newGraphicsPort(false);

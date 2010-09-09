@@ -60,7 +60,7 @@ void PacMan::run() {
 		_player->run();
 		_ghosts->run();
 
-		_superBitmap->markRectsDirty();
+		_superBitmap->markRectsDamaged();
 	}
 }
 
