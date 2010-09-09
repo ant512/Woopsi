@@ -154,6 +154,10 @@ namespace WoopsiUI {
 		 */
 		void hideKeyboard();
 
+		/**
+		 * Get a pointer to the display controller.
+		 * @return A pointer to the display controller.
+		 */
 		DisplayController* getDisplayController() { return _displayController; };
 
 	protected:
@@ -165,7 +169,7 @@ namespace WoopsiUI {
 		ContextMenu* _contextMenu;							/**< Pointer to the context menu. */
 		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked. */
 		WoopsiKeyboardScreen* _keyboardScreen;				/**< Screen containing the popup keyboard. */
-		DisplayController* _displayController;
+		DisplayController* _displayController;				/**< Maintains damaged rect list and controls redraws. */
 
 		/**
 		 * Initialise the application.  All initial GUI creation, hardware
