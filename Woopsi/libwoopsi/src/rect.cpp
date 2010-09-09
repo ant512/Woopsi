@@ -167,78 +167,75 @@ void Rect::copyTo(Rect& rect) const {
 
 bool Rect::splitIntersection(const Rect& rect, Rect& intersection, WoopsiArray<Rect>* remainderRects) const {
 
-	if (intersects(rect)) {
+	if (!intersects(rect)) return false;
 
-		// Copy the properties of rect into intersection; we trim this to size later
-		intersection.x = rect.x;
-		intersection.y = rect.y;
-		intersection.width = rect.width;
-		intersection.height = rect.height;
+	// Copy the properties of rect into intersection; we trim this to size later
+	intersection.x = rect.x;
+	intersection.y = rect.y;
+	intersection.width = rect.width;
+	intersection.height = rect.height;
 
-		// Check for a non-overlapped rect on the left
-		if (intersection.x < x) {
-			Rect left;
-			left.x = intersection.x;
-			left.y = intersection.y;
-			left.width = x - intersection.x;
-			left.height = intersection.height;
-			
-			// Insert the rect
-			remainderRects->insert(0, left);
-			
-			// Adjust the dimensions of the intersection
-			intersection.x = x;
-			intersection.width -= left.width;
-		}
+	// Check for a non-overlapped rect on the left
+	if (intersection.x < x) {
+		Rect left;
+		left.x = intersection.x;
+		left.y = intersection.y;
+		left.width = x - intersection.x;
+		left.height = intersection.height;
 		
-		// Check for a non-overlapped rect on the right
-		if (intersection.x + intersection.width > x + width) {
-			Rect right;
-			right.x = x + width;
-			right.y = intersection.y;
-			right.width = intersection.width - (x + width - intersection.x);
-			right.height = intersection.height;
-			
-			// Insert the rect
-			remainderRects->insert(0, right);
-			
-			// Adjust dimensions of the intersection
-			intersection.width -= right.width;
-		}
+		// Insert the rect
+		remainderRects->insert(0, left);
 		
-		// Check for a non-overlapped rect above
-		if (intersection.y < y) {
-			Rect top;
-			top.x = intersection.x;
-			top.y = intersection.y;
-			top.width = intersection.width;
-			top.height = y - intersection.y;
-			
-			// Insert the rect
-			remainderRects->insert(0, top);
-			
-			// Adjust the dimensions of the intersection
-			intersection.y = y;
-			intersection.height -= top.height;
-		}
-		
-		// Check for a non-overlapped rect below
-		if (intersection.y + intersection.height > y + height) {
-			Rect bottom;
-			bottom.x = intersection.x;
-			bottom.y = y + height;
-			bottom.width = intersection.width;
-			bottom.height = intersection.height - (y + height - intersection.y);
-			
-			// Insert the rect
-			remainderRects->insert(0, bottom);
-			
-			// Adjust dimensions of the intersection
-			intersection.height -= bottom.height;
-		}
-		
-		return true;
+		// Adjust the dimensions of the intersection
+		intersection.x = x;
+		intersection.width -= left.width;
 	}
-
-	return false;
+	
+	// Check for a non-overlapped rect on the right
+	if (intersection.x + intersection.width > x + width) {
+		Rect right;
+		right.x = x + width;
+		right.y = intersection.y;
+		right.width = intersection.width - (x + width - intersection.x);
+		right.height = intersection.height;
+		
+		// Insert the rect
+		remainderRects->insert(0, right);
+		
+		// Adjust dimensions of the intersection
+		intersection.width -= right.width;
+	}
+	
+	// Check for a non-overlapped rect above
+	if (intersection.y < y) {
+		Rect top;
+		top.x = intersection.x;
+		top.y = intersection.y;
+		top.width = intersection.width;
+		top.height = y - intersection.y;
+		
+		// Insert the rect
+		remainderRects->insert(0, top);
+		
+		// Adjust the dimensions of the intersection
+		intersection.y = y;
+		intersection.height -= top.height;
+	}
+	
+	// Check for a non-overlapped rect below
+	if (intersection.y + intersection.height > y + height) {
+		Rect bottom;
+		bottom.x = intersection.x;
+		bottom.y = y + height;
+		bottom.width = intersection.width;
+		bottom.height = intersection.height - (y + height - intersection.y);
+		
+		// Insert the rect
+		remainderRects->insert(0, bottom);
+		
+		// Adjust dimensions of the intersection
+		intersection.height -= bottom.height;
+	}
+	
+	return true;
 }

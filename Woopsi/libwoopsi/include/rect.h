@@ -219,7 +219,7 @@ namespace WoopsiUI {
 		 * Overloaded != operator.  Checks if the dimensions of the supplied rect
 		 * are not the same as this rect.
 		 * @param rect The rect to compare with this.
-		 * @param True if the dimensions are not equal; false if they are.
+		 * @return True if the dimensions are not equal; false if they are.
 		 */
 		bool operator!=(const Rect& rect);
 	};

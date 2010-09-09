@@ -483,6 +483,13 @@ namespace WoopsiUI {
 		 */
 		virtual void setGlyphFont(FontBase* font);
 
+		/**
+		 * Redraws the region of the gadget represented by rect.  Rect should
+		 * be supplied in Woopsi-space co-ordinates and should be pre-clipped
+		 * to the visible regions of the gadget.  This function should only
+		 * ever be called by the DisplayController.
+		 * @param rect The rect to draw.
+		 */
 		void redraw(const Rect& rect);
 
 		/**
