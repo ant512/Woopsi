@@ -24,6 +24,7 @@ public:
 
 	/**
 	 * Constructor.
+	 * @param initialReservedSize The initial capacity of the array.
 	 */
 	inline WoopsiArray(s32 initialReservedSize = 0);
 
@@ -92,7 +93,7 @@ private:
 	s32 _reservedSize;						/**< Total size of the array including unpopulated slots */
 
 	/**
-	 * Resize the array if it is full.
+	 * Resize the array if it is full.  The array will double its capacity.
 	 */
 	void resize();
 };
