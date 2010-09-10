@@ -795,7 +795,7 @@ bool Gadget::resize(u16 width, u16 height) {
 
 		// Handle visible region caching
 		if (_parent != NULL) {
-			_parent->invalidateLowerGadgetsVisibleRectCache(this);
+			_parent->invalidateVisibleRectCache();
 		}
 
 		onResize(width, height);
@@ -803,7 +803,6 @@ bool Gadget::resize(u16 width, u16 height) {
 		// Reset the permeable value
 		_flags.permeable = wasPermeable;
 
-		invalidateVisibleRectCache();
 		markRectsDamaged();
 
 		_gadgetEventHandlers->raiseResizeEvent(width, height);

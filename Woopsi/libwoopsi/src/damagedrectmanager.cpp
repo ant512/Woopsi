@@ -54,6 +54,8 @@ void DamagedRectManager::redraw() {
 			
 void DamagedRectManager::drawRects(Gadget* gadget, WoopsiArray<Rect>* damagedRects) {
 	
+	if (!gadget->isDrawingEnabled()) return;
+	
 	Rect gadgetRect;
 	Rect damagedRect;
 	Rect intersection;

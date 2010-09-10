@@ -40,6 +40,7 @@ Change Log
     - WoopsiArray doubles in size each time it needs to grow instead of
       increasing by 100.
     - ScrollingPanel::scroll() uses the new rendering system.
+    - Fixed FileRequester border.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
