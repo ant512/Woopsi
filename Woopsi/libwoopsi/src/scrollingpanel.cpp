@@ -1,6 +1,8 @@
 #include "scrollingpanel.h"
 #include "graphicsport.h"
 #include "woopsifuncs.h"
+#include "woopsi.h"
+#include "damagedrectmanager.h"
 
 using namespace WoopsiUI;
 
@@ -39,6 +41,9 @@ void ScrollingPanel::jump(s32 x, s32 y) {
 }
 
 void ScrollingPanel::scroll(s32 dx, s32 dy) {
+	
+	// Ensure the screen is up-to-date before we start
+	woopsiApplication->getDamagedRectManager()->redraw();
 
 	Rect rect;
 	getClientRect(rect);
@@ -75,33 +80,15 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 			// Adjust the scroll values
 			_canvasY += dy;
 			_canvasX += dx;
-
-			if (revealedRects.size() > 0) {
-
-				// Create internal and standard graphics ports
-				GraphicsPort* internalPort = newInternalGraphicsPort(revealedRects.at(0));
-				GraphicsPort* port = newGraphicsPort(revealedRects.at(0));
+			
+			// Mark the revealed rects as damaged
+			for (s32 i = 0; i < revealedRects.size(); ++i) {
 				
-				Rect revealed;
-
-				// Draw revealed sections
-				for (s32 i = 0; i < revealedRects.size(); ++i) {
-					
-					revealed = revealedRects.at(i);
-					
-					// If we're scrolling the top screen, we need to adjust the
-					// revealed rect from port space back to woopsi space
-					if (getPhysicalScreenNumber() == 1) revealed.y += TOP_SCREEN_Y_OFFSET;
-
-					internalPort->setClipRect(revealed);
-					port->setClipRect(revealed);
-
-					drawBorder(internalPort);
-					drawContents(port);
-				}
-
-				delete internalPort;
-				delete port;
+				// Adjust co-ordinates from Woopsi-space to gadget space
+				revealedRects[i].x -= getX();
+				revealedRects[i].y -= getY();
+				
+				markRectDamaged(revealedRects[i]);
 			}
 		} else {
 
