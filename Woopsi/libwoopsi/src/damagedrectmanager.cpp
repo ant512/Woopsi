@@ -5,9 +5,11 @@ using namespace WoopsiUI;
 
 DamagedRectManager::DamagedRectManager(Gadget* gadget) {
 	_gadget = gadget;
+	_damagedRects = new WoopsiArray<Rect>(4);
 }
 
 DamagedRectManager::~DamagedRectManager() {
+	delete _damagedRects;
 }
 
 void DamagedRectManager::addDamagedRect(const Rect& rect) {
@@ -20,10 +22,10 @@ void DamagedRectManager::addDamagedRect(const Rect& rect) {
 
 	// Ensure that the new rect does not overlap any existing rects - we only
 	// want to draw each region once
-	for (s32 i = 0; i < _damagedRects.size(); ++i) {
+	for (s32 i = 0; i < _damagedRects->size(); ++i) {
 		for (s32 j = 0; j < newRects.size(); ++j) {
 
-			if (_damagedRects[i].splitIntersection(newRects[j], intersection, &remainingRects)) {
+			if (_damagedRects->at(i).splitIntersection(newRects[j], intersection, &remainingRects)) {
 				// Intersection contains the part of the new rect that is already known to be damaged
 				// and can be discarded.  remainingRects contains the rects that still need to be examined
 
@@ -44,12 +46,12 @@ void DamagedRectManager::addDamagedRect(const Rect& rect) {
 
 	// Add any non-overlapping rects into the damaged rect array
 	for (s32 i = 0; i < newRects.size(); ++i) {
-		_damagedRects.push_back(newRects[i]);
+		_damagedRects->push_back(newRects[i]);
 	}
 }
 
 void DamagedRectManager::redraw() {
-	drawRects(_gadget, &_damagedRects);
+	drawRects(_gadget, _damagedRects);
 }
 			
 void DamagedRectManager::drawRects(Gadget* gadget, WoopsiArray<Rect>* damagedRects) {

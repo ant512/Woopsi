@@ -23,7 +23,10 @@ namespace WoopsiUI {
 		/**
 		 * Destructor.
 		 */
-		inline ~RectCache() { };
+		inline ~RectCache() {
+			delete _foregroundRegions;
+			delete _backgroundRegions;
+		};
 
 		/**
 		 * Rebuild the cache if it is invalid.
@@ -43,7 +46,7 @@ namespace WoopsiUI {
 		 * not overlapped by child gadgets.
 		 * @return The list of background regions.
 		 */
-		inline WoopsiArray<Rect>* getBackgroundRegions() { return &_backgroundRegions; };
+		inline WoopsiArray<Rect>* getBackgroundRegions() { return _backgroundRegions; };
 
 		/**
 		 * Return the list of foreground regions.  These are regions that
@@ -52,7 +55,7 @@ namespace WoopsiUI {
 		 * including any regions that are actually overlapped by child gadgets.
 		 * @return The list of foreground regions.
 		 */
-		inline WoopsiArray<Rect>* getForegroundRegions() { return &_foregroundRegions; };
+		inline WoopsiArray<Rect>* getForegroundRegions() { return _foregroundRegions; };
 
 		/**
 		 * Works out which rectangles in the invalidRectangles list overlap this
@@ -95,8 +98,8 @@ namespace WoopsiUI {
 		void markRectDamaged(const Rect& rect) const;
 
 	private:
-		WoopsiArray<Rect> _foregroundRegions;				/**< List of the gadget's visible regions */
-		WoopsiArray<Rect> _backgroundRegions;				/**< List of the gadget's visible regions with child rects removed */
+		WoopsiArray<Rect>* _foregroundRegions;				/**< List of the gadget's visible regions */
+		WoopsiArray<Rect>* _backgroundRegions;				/**< List of the gadget's visible regions with child rects removed */
 		const Gadget* _gadget;								/**< Owning gadget */
 		bool _foregroundInvalid;							/**< True if the foreground cache needs refreshing */
 		bool _backgroundInvalid;							/**< True if the background cache needs refreshing */

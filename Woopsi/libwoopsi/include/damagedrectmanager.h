@@ -41,7 +41,7 @@ namespace WoopsiUI {
 		void redraw();
 
 	private:
-		WoopsiArray<Rect> _damagedRects;		/**< List of damaged rects. */
+		WoopsiArray<Rect>* _damagedRects;		/**< List of damaged rects. */
 		Gadget* _gadget;						/**< The top-level gadget. */
 		
 		/**
