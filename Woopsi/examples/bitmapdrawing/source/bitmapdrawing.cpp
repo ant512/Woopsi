@@ -256,7 +256,7 @@ void BitmapDrawing::handleTimer() {
 	}
 	
 	// Ensure the superbitmap redraws
-	_superBitmap->markRectsDirty();
+	_superBitmap->markRectsDamaged();
 }
 
 void BitmapDrawing::drawLine() {

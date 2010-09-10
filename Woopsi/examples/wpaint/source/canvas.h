@@ -77,7 +77,7 @@ public:
 				break;
 		}
 
-		_superBitmap->markRectsDirty();
+		_superBitmap->markRectsDamaged();
 		_oldStylusX = e.getX();
 		_oldStylusY = e.getY();
 	};
@@ -96,7 +96,7 @@ public:
 				break;
 		}
 		
-		_superBitmap->markRectsDirty();
+		_superBitmap->markRectsDamaged();
 		_oldStylusX = e.getX();
 		_oldStylusY = e.getY();
 	};
@@ -115,7 +115,7 @@ public:
 				break;
 		}
 
-		_superBitmap->markRectsDirty();
+		_superBitmap->markRectsDamaged();
 		_oldStylusX = x;
 		_oldStylusY = y;
 		

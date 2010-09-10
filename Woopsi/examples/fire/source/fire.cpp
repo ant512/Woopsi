@@ -169,5 +169,5 @@ void Fire::handleTimer() {
 	_buffer2 = tmp;
 	
 	// Redraw the superbitmap to the window
-	_superBitmap->markRectsDirty();
+	_superBitmap->markRectsDamaged();
 }
