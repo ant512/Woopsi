@@ -15,8 +15,9 @@ namespace WoopsiUI {
 	class KeyboardEventHandler;
 
 	/**
-	 * Class providing a window containing a multitude of buttons arranged like a keyboard.
-	 * When any key is released the keyboard fires an EVENT_ACTION event.
+	 * Class providing a window containing a multitude of buttons arranged like
+	 * a keyboard.  When any key is released the keyboard fires an EVENT_ACTION
+	 * event.
 	 */
 	class WoopsiKeyboard : public Gadget, public GadgetEventHandler {
 	public:
@@ -25,7 +26,8 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param x The x co-ordinate of the window.
 		 * @param y The y co-ordinate of the window.
-		 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the Amiga borders.
+		 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the
+		 * Amiga borders.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
@@ -115,7 +117,8 @@ namespace WoopsiUI {
 		virtual void drawBorder(GraphicsPort* port);
 
 		/**
-		 * Swap the keyboard layout to the correct display based on current modifier keys.
+		 * Swap the keyboard layout to the correct display based on current
+		 * modifier keys.
 		 */
 		void showCorrectKeys();
 

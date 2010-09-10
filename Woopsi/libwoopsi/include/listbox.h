@@ -11,12 +11,12 @@
 namespace WoopsiUI {
 
 	/**
-	 * Class providing a scrollable list of options.  The ListBox can be set up to only allow one
-	 * selection or multiple selections.  Processes double-clicks and raises double-click events,
-	 * so that a double-click on an option can be made to automatically select and close a
-	 * window/etc.
-	 * The options themselves have user-definable text and background colours for their selected
-	 * and unselected states.
+	 * Class providing a scrollable list of options.  The ListBox can be set up
+	 * to only allow one selection or multiple selections.  Processes
+	 * double-clicks and raises double-click events, so that a double-click on
+	 * an option can be made to automatically select and close a window/etc.
+	 * The options themselves have user-definable text and background colours
+	 * for their selected and unselected states.
 	 */
 	class ListBox : public ListBoxBase, public ScrollingPanel, public ListDataEventHandler {
 	public:
@@ -62,42 +62,47 @@ namespace WoopsiUI {
 		 * Add a new option to the gadget.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
-		 * @param normalTextColour Colour to draw the text with when not selected.
-		 * @param normalBackColour Colour to draw the background with when not selected.
+		 * @param normalTextColour Colour to draw the text with when not
+		 * selected.
+		 * @param normalBackColour Colour to draw the background with when not
+		 * selected.
 		 * @param selectedTextColour Colour to draw the text with when selected.
-		 * @param selectedBackColour Colour to draw the background with when selected.
+		 * @param selectedBackColour Colour to draw the background with when
+		 * selected.
 		 */
 		virtual void addOption(const WoopsiString& text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour);
 
 		/**
 		 * Select an option by its index.
-		 * Redraws the gadget and raises a value changed event.
+		 * Raises a value changed event.
 		 * @param index The index of the option to select.
 		 */
 		virtual void selectOption(const s32 index);
 
 		/**
 		 * Select an option by its index.
-		 * Redraws the gadget and raises a value changed event.
+		 * Raises a value changed event.
 		 * @param index The index of the option to select.
 		 */
 		virtual void deselectOption(const s32 index);
 
 		/**
-		 * Select all options.  Does nothing if the listbox does not allow multiple selections.
-		 * Redraws the gadget and raises a value changed event.
+		 * Select all options.  Does nothing if the listbox does not allow
+		 * multiple selections.
+		 * Raises a value changed event.
 		 */
 		virtual void selectAllOptions();
 
 		/**
 		 * Deselect all options.
-		 * Redraws the gadget and raises a value changed event.
+		 * Raises a value changed event.
 		 */
 		virtual void deselectAllOptions();
 
 		/**
-		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
-		 * option is selected, the index of the first selected option is returned.
+		 * Get the selected index.  Returns -1 if nothing is selected.  If more
+		 * than one option is selected, the index of the first selected option
+		 * is returned.
 		 * @return The selected index.
 		 */
 		virtual const s32 getSelectedIndex() const;
@@ -105,7 +110,7 @@ namespace WoopsiUI {
 		/**
 		 * Sets the selected index.  Specify -1 to select nothing.  Resets any
 		 * other selected options to deselected.
-		 * Redraws the gadget and raises a value changed event.
+		 * Raises a value changed event.
 		 * @param index The selected index.
 		 */
 		virtual void setSelectedIndex(const s32 index);
@@ -161,7 +166,8 @@ namespace WoopsiUI {
 		virtual const u16 getOptionHeight() const;
 
 		/**
-		 * Sets whether or not items added to the list are automatically sorted on insert or not.
+		 * Sets whether or not items added to the list are automatically sorted
+		 * on insert or not.
 		 * @param sortInsertedItems True to enable sort on insertion.
 		 */
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) {
@@ -182,9 +188,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.  Value is based on the length of the largest string in the
-		 * set of options.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.  Value is based on the length of the largest string
+		 * in the set of options.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
@@ -239,9 +245,9 @@ namespace WoopsiUI {
 		virtual ~ListBox();
 
 		/**
-		 * Select or deselect an option by its index.  Does not deselect any other selected options.
-		 * Set index to -1 to select nothing.
-		 * Redraws the gadget and raises a value changed event.
+		 * Select or deselect an option by its index.  Does not deselect any
+		 * other selected options.  Set index to -1 to select nothing.
+		 * Raises a value changed event.
 		 * @param index The index of the option to select.
 		 * @param selected True to select the option, false to deselect it.
 		 */

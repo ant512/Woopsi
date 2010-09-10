@@ -15,6 +15,7 @@ namespace WoopsiUI {
 	/**
 	 * Class providing a window containing a file listbox, an OK button and a
 	 * Cancel button.
+	 *
 	 * Designed to allow users selection a file from the filesytem.  When a file
 	 * is selected the requester will automatically close.
 	 *
@@ -30,7 +31,11 @@ namespace WoopsiUI {
 	 * - Call "fatInitDefault();" somewhere in your setup code.
 	 *
 	 * Note that including libfat increases the ROM size by ~100K.  Also note
-	 * that this code is not compatible with the SDL build of Woopsi.
+	 * that in the SDL build of Woopsi, the FileRequester shows dummy folders
+	 * and files.  As file I/O is not standard in C, creating a working,
+	 * cross-platform FileRequester for SDL is a more troublesome task than it
+	 * really justifies.  The dummy data allows for the SDL UI to be tested away
+	 * from the DS, which is all it is really intended to do.
 	 */
 	class FileRequester : public AmigaWindow {
 	public:
@@ -61,7 +66,8 @@ namespace WoopsiUI {
 		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
 
 		/**
-		 * Add a new option to the gadget using default colours.  Does not redraw the gadget.
+		 * Add a new option to the gadget using default colours.  Does not
+		 * redraw the gadget.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
 		 */
@@ -73,17 +79,21 @@ namespace WoopsiUI {
 		 * Add a new option to the gadget.  Does not redraw the gadget.
 		 * @param text Text to show in the option.
 		 * @param value The value of the option.
-		 * @param normalTextColour Colour to draw the text with when not selected.
-		 * @param normalBackColour Colour to draw the background with when not selected.
+		 * @param normalTextColour Colour to draw the text with when not
+		 * selected.
+		 * @param normalBackColour Colour to draw the background with when not
+		 * selected.
 		 * @param selectedTextColour Colour to draw the text with when selected.
-		 * @param selectedBackColour Colour to draw the background with when selected.
+		 * @param selectedBackColour Colour to draw the background with when
+		 * selected.
 		 */
 		virtual inline void addOption(const char* text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 			_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
 		};
 
 		/**
-		 * Remove an option from the gadget by its index.  Does not redraw the gadget.
+		 * Remove an option from the gadget by its index.  Does not redraw the
+		 * gadget.
 		 * @param index The index of the option to remove.
 		 */
 		virtual inline void removeOption(const s32 index) {
@@ -98,8 +108,9 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
-		 * option is selected, the index of the first selected option is returned.
+		 * Get the selected index.  Returns -1 if nothing is selected.  If more
+		 * than one option is selected, the index of the first selected option
+		 * is returned.
 		 * @return The selected index.
 		 */
 		virtual inline const s32 getSelectedIndex() const {

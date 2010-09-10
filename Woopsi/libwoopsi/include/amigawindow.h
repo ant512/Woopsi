@@ -122,12 +122,12 @@ namespace WoopsiUI {
 		virtual void onResize(u16 width, u16 height);
 		
 		/**
-		 * Raises the window to the top of the stack and redraws its borders.
+		 * Raises the window to the top of the stack and marks its borders for redraw.
 		 */
 		virtual void onFocus();
 		
 		/**
-		 * Redraws the borders.
+		 * Marks the borders for redraw,
 		 */
 		virtual void onBlur();
 

@@ -42,21 +42,21 @@ namespace WoopsiUI {
 		virtual void drawBorder(GraphicsPort* port);
 
 		/**
-		 * Starts dragging the grip and redraws it.
+		 * Starts dragging the grip and marks it for redraw.
 		 * @param x The x co-ordinate of the click.
 		 * @param y The y co-ordinate of the click.
 		 */
 		virtual void onClick(s16 x, s16 y);
 		
 		/**
-		 * Redraws the grip.
+		 * Marks the grip for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */
 		virtual void onRelease(s16 x, s16 y);
 		
 		/**
-		 * Redraws the grip.
+		 * Marks the grip for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */

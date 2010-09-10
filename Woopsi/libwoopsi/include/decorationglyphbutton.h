@@ -8,9 +8,9 @@
 namespace WoopsiUI {
 
 	/**
-	 * Class representing a button that will display a glyph and form part
-	 * of another gadget's border decorations.  Examples include the
-	 * screen flip/depth buttons.
+	 * Class representing a button that will display a glyph and form part of
+	 * another gadget's border decorations.  Examples include the screen
+	 * flip/depth buttons.
 	 */
 	class DecorationGlyphButton : public Button {
 
@@ -57,7 +57,7 @@ namespace WoopsiUI {
 		virtual void drawBorder(GraphicsPort* port);
 
 		/**
-		 * Redraws the button.
+		 * Marks the button for redraw.
 		 */
 		virtual void onFocus();
 

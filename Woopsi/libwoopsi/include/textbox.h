@@ -150,7 +150,7 @@ namespace WoopsiUI {
 		bool _opensKeyboard;			/**< Set to false to disable keyboard popup when double-clicked. */
 
 		/**
-		 * Redraws the gadget
+		 * Marks the gadget for redraw.
 		 */
 		inline void onBlur();
 

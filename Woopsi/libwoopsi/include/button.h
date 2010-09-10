@@ -52,21 +52,21 @@ namespace WoopsiUI {
 		virtual void drawBorder(GraphicsPort* port);
 
 		/**
-		 * Redraws the button.
+		 * Marks the button for redraw.
 		 * @param x The x co-ordinate of the click.
 		 * @param y The y co-ordinate of the click.
 		 */
 		virtual void onClick(s16 x, s16 y);
 		
 		/**
-		 * Raises an action event and redraws the button.
+		 * Raises an action event and marks the button for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */
 		virtual void onRelease(s16 x, s16 y);
 		
 		/**
-		 * Redraws the button.
+		 * Marks the button for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */

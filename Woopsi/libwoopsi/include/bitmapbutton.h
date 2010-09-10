@@ -9,9 +9,9 @@ namespace WoopsiUI {
 	class BitmapBase;
 
 	/**
-	 * Class representing a clickable button that contains a bitmap image instead of text.
-	 * Displays two bitmaps, one when the button is clicked, and one when it isn't.  The
-	 * bitmaps should be the same size.
+	 * Class representing a clickable button that contains a bitmap image
+	 * instead of text.  Displays two bitmaps, one when the button is clicked,
+	 * and one when it isn't.  The bitmaps should be the same size.
 	 */
 	class BitmapButton : public Gadget {
 
@@ -31,8 +31,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
@@ -66,21 +66,21 @@ namespace WoopsiUI {
 		virtual void drawOutline(GraphicsPort* port);
 
 		/**
-		 * Redraws the button.
+		 * Marks the button for redraw.
 		 * @param x The x co-ordinate of the click.
 		 * @param y The y co-ordinate of the click.
 		 */
 		virtual void onClick(s16 x, s16 y);
 		
 		/**
-		 * Raises an action event and redraws the button.
+		 * Raises an action event and marks the button for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */
 		virtual void onRelease(s16 x, s16 y);
 		
 		/**
-		 * Redraws the button.
+		 * Marks the button for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */

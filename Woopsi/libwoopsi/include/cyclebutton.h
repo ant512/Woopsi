@@ -12,8 +12,8 @@
 namespace WoopsiUI {
 
 	/**
-	 * Cycle button gadget.  Displays text within the button.  Clicking it cycles
-	 * through its available options.
+	 * Cycle button gadget.  Displays text within the button.  Clicking it
+	 * cycles through its available options.
 	 */
 	class CycleButton : public Button, public ListDataEventHandler  {
 	public:
@@ -51,14 +51,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Select an option by its index.
-		 * Redraws the gadget and raises a value changed event.
+		 * Raises a value changed event.
 		 * @param index The index of the option to select.
 		 */
 		virtual void selectOption(const s32 index);
 
 		/**
-		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
-		 * option is selected, the index of the first selected option is returned.
+		 * Get the selected index.  Returns -1 if nothing is selected.  If more
+		 * than one option is selected, the index of the first selected option
+		 * is returned.
 		 * @return The selected index.
 		 */
 		virtual const s32 getSelectedIndex() const;
@@ -66,7 +67,7 @@ namespace WoopsiUI {
 		/**
 		 * Sets the selected index.  Specify -1 to select nothing.  Resets any
 		 * other selected options to deselected.
-		 * Redraws the gadget and raises a value changed event.
+		 * Raises a value changed event.
 		 * @param index The selected index.
 		 */
 		virtual void setSelectedIndex(const s32 index);
@@ -105,7 +106,8 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Sets whether or not items added to the list are automatically sorted on insert or not.
+		 * Sets whether or not items added to the list are automatically sorted
+		 * on insert or not.
 		 * @param sortInsertedItems True to enable sort on insertion.
 		 */
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) {
@@ -126,9 +128,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.  Value is based on the length of the largest string in the
-		 * set of options.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.  Value is based on the length of the largest string
+		 * in the set of options.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
@@ -159,14 +161,14 @@ namespace WoopsiUI {
 		virtual void drawOutline(GraphicsPort* port);
 
 		/**
-		 * Selects the next option in the list and redraws the button.
+		 * Selects the next option in the list and marks the button for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */
 		virtual void onRelease(s16 x, s16 y);
 		
 		/**
-		 * Redraws the button.
+		 * Marks the button for redraw.
 		 * @param x The x co-ordinate of the stylus.
 		 * @param y The y co-ordinate of the stylus.
 		 */
@@ -181,7 +183,8 @@ namespace WoopsiUI {
 		virtual inline void onResize(u16 width, u16 height) { };
 
 		/**
-		 * Override method in Label class to prevent recalculation of text positions.
+		 * Override method in Label class to prevent recalculation of text
+		 * positions.
 		 */
 		virtual inline void calculateTextPosition() { };
 

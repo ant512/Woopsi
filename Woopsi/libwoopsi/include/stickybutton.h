@@ -28,8 +28,9 @@ namespace WoopsiUI {
 		StickyButton(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style = NULL);
 
 		/**
-		 * Sets the key's stuck down state.  If this is true, the key has a inwards-bevelled
-		 * border when drawn.  If it is false, the key has an outwards-bevelled border.
+		 * Sets the key's stuck down state.  If this is true, the key has an
+		 * inwards-bevelled border when drawn.  If it is false, the key has an
+		 * outwards-bevelled border.
 		 * @param isStuckDown The new stuck down state.
 		 */
 		void setStuckDown(bool isStuckDown);

@@ -11,8 +11,8 @@ namespace WoopsiUI {
 	class WoopsiTimer;
 
 	/**
-	 * Button class that has an animation running in its clickable area.  Note that the
-	 * bitmaps used in the animation should all be the same size.
+	 * Button class that has an animation running in its clickable area.  Note
+	 * that the bitmaps used in the animation should all be the same size.
 	 */
 	class AnimButton : public Gadget, public GadgetEventHandler {
 
@@ -24,13 +24,16 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the button.
 		 * @param width The width of the button.
 		 * @param height The height of the button.
-		 * @param animX The x co-ordinate at which the animation's bitmaps will be drawn.
-		 * @param animY The y co-ordinate at which the animation's bitmaps will be drawn.
+		 * @param animX The x co-ordinate at which the animation's bitmaps will
+		 * be drawn.
+		 * @param animY The y co-ordinate at which the animation's bitmaps will
+		 * be drawn.
 		 */
 		AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY);
 
 		/**
-		 * Get a pointer to the animation that plays when the button is not clicked.
+		 * Get a pointer to the animation that plays when the button is not
+		 * clicked.
 		 * @return Pointer to the normal animation.
 		 */
 		virtual Animation* const getNormalAnimation();
@@ -43,8 +46,8 @@ namespace WoopsiUI {
 		
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;

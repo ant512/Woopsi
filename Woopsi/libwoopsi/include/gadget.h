@@ -534,8 +534,9 @@ namespace WoopsiUI {
 		bool shelve();
 
 		/**
-		 * Moves the gadget back into the hierarchy and redraws it.  Gadgets shown
-		 * in this way will be unpartioned and will be processed again.
+		 * Moves the gadget back into the hierarchy and marks it for redraw.
+		 * Gadgets shown in this way will be unpartioned and will be processed
+		 * again.
 		 * @return True if the gadget was unshelved.
 		 * @see shelve()
 		 */

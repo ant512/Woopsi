@@ -11,10 +11,10 @@ namespace WoopsiUI {
 	class ContextMenuItem;
 
 	/**
-	 * The context menu is implemented as a member of the Woopsi class.
-	 * It should not be instantiated elsewhere.  It offers a simple
-	 * context-aware menu that opens when the user holds down a modifier
-	 * key when tapping a gadget.
+	 * The context menu is implemented as a member of the Woopsi class.  It
+	 * should not be instantiated elsewhere.  It offers a simple context-aware
+	 * menu that opens when the user holds down a modifier key when tapping a
+	 * gadget.
 	 */
 	class ContextMenu : public Gadget, public GadgetEventHandler {
 	public:
@@ -54,9 +54,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.  Value is based on the length of the largest string in the
-		 * set of options.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.  Value is based on the length of the largest string
+		 * in the set of options.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;

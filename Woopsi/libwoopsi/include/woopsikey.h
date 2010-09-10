@@ -45,8 +45,9 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Constructor for keys for the keyboard that display a string.  Same text is used
-		 * regardless of which modifier keys are held down.
+		 * Constructor for keys for the keyboard that display a string.
+		 * The same text is used regardless of which modifier keys are held
+		 * down.
 		 * @param x The x co-ordinate of the button, relative to its parent.
 		 * @param y The y co-ordinate of the button, relative to its parent.
 		 * @param width The width of the key.
@@ -61,18 +62,23 @@ namespace WoopsiUI {
 		WoopsiKey(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, const KeyType keyType = KEY_ALPHA_NUMERIC_SYMBOL, GadgetStyle* style = NULL);
 
 		/**
-		 * Constructor for keys for the keyboard that display a string.  Different string is
-		 * supplied for each keyboard modifier situation.
+		 * Constructor for keys for the keyboard that display a string.  A
+		 * different string is supplied for each keyboard modifier situation.
 		 * @param x The x co-ordinate of the button, relative to its parent.
 		 * @param y The y co-ordinate of the button, relative to its parent.
 		 * @param width The width of the key.
 		 * @param height The height of the key.
-		 * @param normalText The text for the key to display when no modifiers are held.
+		 * @param normalText The text for the key to display when no modifiers
+		 * are held.
 		 * @param shiftText The text for the key to display when shift is held.
-		 * @param controlText The text for the key to display when control is held.
-		 * @param shiftControlText The text for the key to display when shift and control are held.
-		 * @param capsLockText The text for the key to display when caps lock is held.
-		 * @param controlCapsLockText The text for the key to display when caps lock and control are held.
+		 * @param controlText The text for the key to display when control is
+		 * held.
+		 * @param shiftControlText The text for the key to display when shift
+		 * and control are held.
+		 * @param capsLockText The text for the key to display when caps lock is
+		 * held.
+		 * @param controlCapsLockText The text for the key to display when caps
+		 * lock and control are held.
 		 * @param keyType The type of key.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
@@ -101,9 +107,9 @@ namespace WoopsiUI {
 		void setKeyMode(KeyMode keyMode);
 
 		/**
-		 * Get the value represented by this key.  This is the text that should (for example)
-		 * be printed to the screen when the key is clicked.  Modifier keys return the
-		 * string terminator character.
+		 * Get the value represented by this key.  This is the text that should
+		 * (for example) be printed to the screen when the key is clicked.
+		 * Modifier keys return the string terminator character.
 		 * @return The value of the key
 		 */
 		const char getValue() const;

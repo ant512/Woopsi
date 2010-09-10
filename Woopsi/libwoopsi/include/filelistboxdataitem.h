@@ -16,10 +16,13 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param text The text to display in the item.
 		 * @param value The value of the item.
-  		 * @param normalTextColour Colour to draw the text with when not selected.
-		 * @param normalBackColour Colour to draw the background with when not selected.
+  		 * @param normalTextColour Colour to draw the text with when not
+		 * selected.
+		 * @param normalBackColour Colour to draw the background with when not
+		 * selected.
 		 * @param selectedTextColour Colour to draw the text with when selected.
-		 * @param selectedBackColour Colour to draw the background with when selected.
+		 * @param selectedBackColour Colour to draw the background with when
+		 * selected.
 		 * @param isDirectory True indicates that the item is a directory; false
 		 * indicates that it is a file.
 		 */

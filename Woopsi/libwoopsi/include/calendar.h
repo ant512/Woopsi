@@ -75,8 +75,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
-		 * passed in as a parameter.  All co-ordinates are relative to the gadget's
-		 * parent.
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.
 		 * @param rect Reference to a rect to populate with data.
 		 */
 		virtual void getPreferredDimensions(Rect& rect) const;
@@ -136,14 +136,16 @@ namespace WoopsiUI {
 		/**
 		 * Calculate the widths of the columns in the calendar.
 		 * @param spaceWidth Width of the space to fill.
-		 * @param columnWidths Array large enough to contain the widths of the columns.
+		 * @param columnWidths Array large enough to contain the widths of the
+		 * columns.
 		 */
 		void calculateColumnWidths(s32 spaceWidth, u8* columnWidths);
 
 		/**
 		 * Calculate the heights of the columns in the calendar.
 		 * @param spaceHeight Width of the space to fill.
-		 * @param columnHeights Array large enough to contain the heights of the columns.
+		 * @param columnHeights Array large enough to contain the heights of the
+		 * columns.
 		 */
 		void calculateColumnHeights(s32 spaceHeight, u8* columnHeights);
 	};

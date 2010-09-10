@@ -17,16 +17,16 @@ namespace WoopsiUI {
 	class FilePath;
 
 	/**
-	 * Class providing a listbox listing files.  Designed to allow users
-	 * selection a file from the filesytem.  When a file is selected the
-	 * requester will automatically close.
+	 * Class providing a listbox listing files.  Designed to allow users to
+	 * select a file from the filesytem.  When a file is selected the requester
+	 * will automatically close.
 	 *
 	 * To read the value of the selected option or options, you should listen
 	 * for the value changed event.  This will fire when the user double-clicks
 	 * an option or clicks the OK button.
 	 *
-	 * When using this class, ensure you call "fatInitDefault();" somewhere
-	 * in your setup code.
+	 * When using this class, ensure you call "fatInitDefault();" somewhere in
+	 * your setup code.
 	 */
 	class FileListBox : public Gadget, public GadgetEventHandler  {
 	public:
@@ -89,8 +89,9 @@ namespace WoopsiUI {
 		};
 
 		/**
-		 * Get the selected index.  Returns -1 if nothing is selected.  If more than one
-		 * option is selected, the index of the first selected option is returned.
+		 * Get the selected index.  Returns -1 if nothing is selected.  If more
+		 * than one option is selected, the index of the first selected option
+		 * is returned.
 		 * @return The selected index.
 		 */
 		virtual inline const s32 getSelectedIndex() const {
