@@ -67,7 +67,7 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 		if (_isContentScrolled) {
 
 			// Perform scroll
-			WoopsiArray<Rect> revealedRects;
+			WoopsiArray<Rect> revealedRects(4);
 			GraphicsPort* port = newGraphicsPort(true);
 			port->scroll(0, 0, dx, dy, rect.width, rect.height, &revealedRects);
 			delete port;

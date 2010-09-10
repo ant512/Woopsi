@@ -3,7 +3,7 @@
 
 #include <nds.h>
 
-#define DYNAMIC_ARRAY_SIZE 100
+#define DYNAMIC_ARRAY_SIZE 32
 
 /**
  * Class providing a dynamic array; that is, an array that will automatically
@@ -25,7 +25,7 @@ public:
 	/**
 	 * Constructor.
 	 */
-	inline WoopsiArray();
+	inline WoopsiArray(s32 initialReservedSize = 0);
 
 	/**
 	 * Destructor.
@@ -98,9 +98,9 @@ private:
 };
 
 template <class T>
-WoopsiArray<T>::WoopsiArray() {
+WoopsiArray<T>::WoopsiArray(s32 initialReservedSize) {
 	_size = 0;
-	_reservedSize = DYNAMIC_ARRAY_SIZE;
+	_reservedSize = initialReservedSize > 0 ? initialReservedSize : DYNAMIC_ARRAY_SIZE;
 	_data = new T[_reservedSize];
 }
 
@@ -183,7 +183,7 @@ void WoopsiArray<T>::resize() {
 		// We have filled the array, so resize it
 
 		// Create new array
-		u32 newSize = _reservedSize + DYNAMIC_ARRAY_SIZE;
+		u32 newSize = _reservedSize * 2;
 		T* newData = new T[newSize];
 
 		// Copy old array to new

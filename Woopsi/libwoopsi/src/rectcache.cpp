@@ -27,8 +27,8 @@ void RectCache::markRectDamaged(const Rect& rect) const {
 	// down
 	if (woopsiApplication == NULL) return;
 	
-	WoopsiArray<Rect> dirtyRects;
-	WoopsiArray<Rect> remainderRects;
+	WoopsiArray<Rect> dirtyRects(4);
+	WoopsiArray<Rect> remainderRects(4);
 	Rect intersect;
 	
 	dirtyRects.push_back(rect);
@@ -137,7 +137,7 @@ void RectCache::splitRectangles(WoopsiArray<Rect>* invalidRects, WoopsiArray<Rec
 	// to affect the structure of the screen
 	if (_gadget->isHidden()) return;
 	
-	WoopsiArray<Rect> remainderRects;
+	WoopsiArray<Rect> remainderRects(4);
 	Rect checkRect;
 	Rect intersection;
 	Rect gadgetRect;

@@ -12,8 +12,8 @@ DamagedRectManager::~DamagedRectManager() {
 
 void DamagedRectManager::addDamagedRect(const Rect& rect) {
 
-	WoopsiArray<Rect> newRects;
-	WoopsiArray<Rect> remainingRects;
+	WoopsiArray<Rect> newRects(4);
+	WoopsiArray<Rect> remainingRects(4);
 	Rect intersection;
 
 	newRects.push_back(rect);
@@ -60,8 +60,8 @@ void DamagedRectManager::drawRects(Gadget* gadget, WoopsiArray<Rect>* damagedRec
 	
 	gadget->getRectClippedToHierarchy(gadgetRect);
 	
-	WoopsiArray<Rect> remainingRects;
-	WoopsiArray<Rect> subRects;
+	WoopsiArray<Rect> remainingRects(4);
+	WoopsiArray<Rect> subRects(4);
 	
 	// Work out which of the damaged rects collide with the current gadget
 	for (s32 i = 0; i < damagedRects->size(); ++i) {

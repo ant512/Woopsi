@@ -37,12 +37,15 @@ Change Log
     - Gadget::remove() and removeChild() will trigger a redraw of the gadget's
       visible regions (ie. erase it) automatically.
     - Pong uses a SuperBitmap as its display.
+    - WoopsiArray doubles in size each time it needs to grow instead of
+      increasing by 100.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
     - Added Rect::splitIntersection().
     - Gadget rendering re-written to use damaged rects.
     - Added equality and inequality operator overloads to Rect class.
+    - WoopsiArray accepts an initial reserved size parameter in its constructor.
 
   V0.99.4 (20100902)
   
