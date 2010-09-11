@@ -40,11 +40,17 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiSt
 	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
 	_cancelButton->addGadgetEventHandler(this);
 	addGadget(_cancelButton);
+	
+	// Create text box
+	Rect textBoxRect;
+	_fileNameTextBox = new TextBox(rect.x, buttonRect.y - buttonRect.height - 2, rect.width, buttonRect.height, "");
+	_fileNameTextBox->setTextAlignmentHoriz(TextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
+	addGadget(_fileNameTextBox);
 
 	// Calculate list box
 	Rect listboxRect;
 	listboxRect.width = rect.width;
-	listboxRect.height = rect.height - buttonRect.height - 2;
+	listboxRect.height = rect.height - ((buttonRect.height + 2) * 2);
 	listboxRect.x = rect.x;
 	listboxRect.y = rect.y;
 
@@ -111,15 +117,32 @@ void FileRequester::handleReleaseEvent(const GadgetEventArgs& e) {
 	AmigaWindow::handleReleaseEvent(e);
 }
 
+void FileRequester::handleActionEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _listbox) {
+			
+			// File selected; raise event
+			_gadgetEventHandlers->raiseValueChangeEvent();
+			
+			// Update the filename box
+			_fileNameTextBox->setText(_listbox->getSelectedOption()->getText());
+			
+			// Close the window
+			close();
+		}
+	}
+}
+
 void FileRequester::handleValueChangeEvent(const GadgetEventArgs& e) {
 	if (e.getSource() != NULL) {
 		if (e.getSource() == _listbox) {
-
-			// File selected; raise event
-			_gadgetEventHandlers->raiseValueChangeEvent();
-
-			// Close the window
-			close();
+			
+			// Update the filename box
+			const ListDataItem* item = _listbox->getSelectedOption();
+			
+			if (item != NULL) {
+				_fileNameTextBox->setText(item->getText());
+			}
 		}
 	}
 }

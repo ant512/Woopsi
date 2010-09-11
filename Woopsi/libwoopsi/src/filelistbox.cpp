@@ -39,6 +39,16 @@ void FileListBox::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
+void FileListBox::handleValueChangeEvent(const GadgetEventArgs& e) {
+	if (e.getSource() != NULL) {
+		if (e.getSource() == _listbox) {
+			
+			// File selected; raise event
+			_gadgetEventHandlers->raiseValueChangeEvent();
+		}
+	}
+}
+
 void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
 	if (e.getSource() != NULL) {
 		if (e.getSource() == _listbox) {
@@ -55,10 +65,13 @@ void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
 					appendPath(selected->getText());
 				} else {
 
-					// File selected; raise event
-					_gadgetEventHandlers->raiseValueChangeEvent();
+					// File selected; raise action event
+					_gadgetEventHandlers->raiseActionEvent();
 				}
 			}
+			
+			// Raise event
+			_gadgetEventHandlers->raiseValueChangeEvent();
 			
 			return;
 		}

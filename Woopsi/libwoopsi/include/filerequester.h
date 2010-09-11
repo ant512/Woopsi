@@ -6,6 +6,7 @@
 #include "filelistboxdataitem.h"
 #include "filelistbox.h"
 #include "gadgetstyle.h"
+#include "textbox.h"
 
 namespace WoopsiUI {
 
@@ -58,6 +59,12 @@ namespace WoopsiUI {
 		 * @param e Event arguments.
 		 */
 		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		
+		/**
+		 * Handles events raised by its sub-gadgets.
+		 * @param e Event arguments.
+		 */
+		virtual void handleActionEvent(const GadgetEventArgs& e);
 	
 		/**
 		 * Handles events raised by its sub-gadgets.
@@ -178,6 +185,7 @@ namespace WoopsiUI {
 		Button* _okButton;					/**< Pointer to the OK button */
 		Button* _cancelButton;				/**< Pointer to the cancel button */
 		FileListBox* _listbox;				/**< Pointer to the list box */
+		TextBox* _fileNameTextBox;			/**< Pointer to the file name textbox */
 
 		/**
 		 * Resize the textbox to the new dimensions.
