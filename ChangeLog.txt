@@ -41,6 +41,9 @@ Change Log
       increasing by 100.
     - ScrollingPanel::scroll() uses the new rendering system.
     - Fixed FileRequester border.
+    - FileListBox re-raises ListBox value changed events.
+    - ListBox no longer raises events when deselecting options when
+      double-clicked (correctly raised when selecting the correct option).
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
@@ -48,6 +51,7 @@ Change Log
     - Gadget rendering re-written to use damaged rects.
     - Added equality and inequality operator overloads to Rect class.
     - WoopsiArray accepts an initial reserved size parameter in its constructor.
+    - FileRequester includes filename textbox.
 
   V0.99.4 (20100902)
   
