@@ -33,7 +33,7 @@ WoopsiKeyboardScreen::WoopsiKeyboardScreen(KeyboardEventHandler* opener) : Amiga
 	addGadget(button);
 }
 
-void WoopsiKeyboardScreen::handleClickEvent(const GadgetEventArgs& e) {
+void WoopsiKeyboardScreen::handleReleaseEvent(const GadgetEventArgs& e) {
 	if (e.getSource() != NULL) {
 		if (e.getSource()->getRefcon() == 1) {
 			woopsiApplication->hideKeyboard();

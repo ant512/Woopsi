@@ -31,7 +31,7 @@ namespace WoopsiUI {
 		 * Handle events fired by child gadgets.
 		 * @param e Event arguments to process.
 		 */
-		virtual void handleClickEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseEvent(const GadgetEventArgs& e);
 		
 		/**
 		 * Copy constructor is protected to prevent usage.
