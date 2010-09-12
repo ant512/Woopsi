@@ -44,6 +44,7 @@ Change Log
     - FileListBox re-raises ListBox value changed events.
     - ListBox no longer raises events when deselecting options when
       double-clicked (correctly raised when selecting the correct option).
+    - Fixed horizontal position of text in left-aligned text box.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

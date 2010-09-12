@@ -235,7 +235,7 @@ void TextBox::calculateTextPositionHorizontal() {
 				_textX = (rect.width - stringWidth) >> 1;
 				break;
 			case TEXT_ALIGNMENT_HORIZ_LEFT:
-				_textX = rect.x;
+				_textX = 0;
 				break;
 			case TEXT_ALIGNMENT_HORIZ_RIGHT:
 				_textX = rect.width - stringWidth;
