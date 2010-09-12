@@ -52,6 +52,7 @@ Change Log
     - Added equality and inequality operator overloads to Rect class.
     - WoopsiArray accepts an initial reserved size parameter in its constructor.
     - FileRequester includes filename textbox.
+    - Added FileRequester::getTextBoxFileName().
 
   V0.99.4 (20100902)
   

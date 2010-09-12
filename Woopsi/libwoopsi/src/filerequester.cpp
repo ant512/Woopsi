@@ -158,3 +158,7 @@ void FileRequester::appendPath(const char* path) {
 const FilePath* FileRequester::getPath() const {
 	return _listbox->getPath();
 }
+
+const WoopsiString& FileRequester::getTextBoxFileName() const {
+	return _fileNameTextBox->getText();
+}

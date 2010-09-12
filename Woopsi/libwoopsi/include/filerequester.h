@@ -180,6 +180,11 @@ namespace WoopsiUI {
 		 * Get the current path.
 		 */
 		virtual const FilePath* getPath() const;
+		
+		/**
+		 * Get the filename contained in the filename textbox.
+		 */
+		virtual const WoopsiString& getTextBoxFileName() const;
 
 	protected:
 		Button* _okButton;					/**< Pointer to the OK button */
