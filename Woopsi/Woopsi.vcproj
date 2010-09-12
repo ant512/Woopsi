@@ -54,10 +54,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\src\displaycontroller.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\src\dmafuncs.cpp"
 					>
 				</File>
@@ -137,14 +133,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\libwoopsi\src\rect.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\src\rectcache.cpp"
-						>
-					</File>
-					<File
 						RelativePath=".\libwoopsi\src\woopsi.cpp"
 						>
 					</File>
@@ -166,6 +154,22 @@
 					>
 					<File
 						RelativePath=".\libwoopsi\src\gadgeteventhandlerlist.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Rects"
+					>
+					<File
+						RelativePath=".\libwoopsi\src\damagedrectmanager.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\rect.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\libwoopsi\src\rectcache.cpp"
 						>
 					</File>
 				</Filter>
@@ -660,10 +664,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\libwoopsi\include\displaycontroller.h"
-					>
-				</File>
-				<File
 					RelativePath=".\libwoopsi\include\dmafuncs.h"
 					>
 				</File>
@@ -815,15 +815,23 @@
 						>
 					</File>
 					<File
+						RelativePath=".\libwoopsi\include\woopsi.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Rects"
+					>
+					<File
+						RelativePath=".\libwoopsi\include\damagedrectmanager.h"
+						>
+					</File>
+					<File
 						RelativePath=".\libwoopsi\include\rect.h"
 						>
 					</File>
 					<File
 						RelativePath=".\libwoopsi\include\rectcache.h"
-						>
-					</File>
-					<File
-						RelativePath=".\libwoopsi\include\woopsi.h"
 						>
 					</File>
 				</Filter>
