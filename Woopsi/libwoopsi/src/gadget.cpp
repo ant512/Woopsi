@@ -814,8 +814,16 @@ bool Gadget::resize(u16 width, u16 height) {
 }
 
 bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
+	
+	bool wasHidden = isHidden();
+	hide();
+	
 	bool moved = moveTo(x, y);
-	return (resize(width, height) | moved);
+	bool resized = resize(width, height);
+	
+	if (!wasHidden) show();
+	
+	return (resized | moved);
 }
 
 bool Gadget::isDoubleClick(s16 x, s16 y) {
