@@ -59,6 +59,8 @@ Change Log
       argument.
     - PadHeldTime struct stores values as s32 instead of u32.
     - Gadget::getCloseType() is const.
+    - ScrollingTextBox and ScrollingListBox scrollbars move in steps instead of
+      smoothly as their lists are scrolled.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
