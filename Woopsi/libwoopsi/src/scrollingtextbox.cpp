@@ -19,7 +19,10 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	_scrollbar->setMinimumValue(0);
 	_scrollbar->setMaximumValue(_textbox->getDocument()->getLineCount());
 	_scrollbar->setPageSize(rect.height / _textbox->getDocument()->getLineHeight());
-	_scrollbar->setValue(0 - _textbox->getDocument()->getLineCount());
+
+	s32 value = ((0 - _textbox->getCanvasY()) << 16) / _textbox->getDocument()->getLineHeight();
+	_scrollbar->setValueWithBitshift(value);
+
 	_scrollbar->addGadgetEventHandler(this);
 
 	// Add children to child array
@@ -41,22 +44,18 @@ const Document* ScrollingTextBox::getDocument() const {
 
 void ScrollingTextBox::setText(const WoopsiString& text) {
 	_textbox->setText(text);
-	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::appendText(const WoopsiString& text) {
 	_textbox->appendText(text);
-	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::removeText(const u32 startIndex) {
 	_textbox->removeText(startIndex);
-	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::removeText(const u32 startIndex, const u32 count) {
 	_textbox->removeText(startIndex, count);
-	_scrollbar->markRectsDamaged();
 }
 
 void ScrollingTextBox::setFont(FontBase* font) {
@@ -79,7 +78,6 @@ void ScrollingTextBox::hideCursor() {
 
 void ScrollingTextBox::moveCursorToPosition(const s32 position) {
 	_textbox->moveCursorToPosition(position);
-	_scrollbar->markRectsDamaged();
 }
 
 const s32 ScrollingTextBox::getCursorPosition() const {
@@ -88,12 +86,10 @@ const s32 ScrollingTextBox::getCursorPosition() const {
 
 void ScrollingTextBox::insertText(const WoopsiString& text, const u32 index) {
 	_textbox->insertText(text, index);
-	_scrollbar->markRectsDamaged();
 }
 		
 void ScrollingTextBox::insertTextAtCursor(const WoopsiString& text) {
 	_textbox->insertTextAtCursor(text);
-	_scrollbar->markRectsDamaged();
 }
 
 const u16 ScrollingTextBox::getPageCount() const {

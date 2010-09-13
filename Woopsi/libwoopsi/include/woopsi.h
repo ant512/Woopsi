@@ -239,7 +239,7 @@ namespace WoopsiUI {
 		 * @param heldTime The number of frames that the key has been held down.
 		 * @param keyCode The code of the button that has been pressed.
 		 */
-		void handleKey(bool newPress, bool released, u32& heldTime, KeyCode keyCode);
+		void handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyCode);
 
 		/**
 		 * Process lid events and send throughout the hierarchy.

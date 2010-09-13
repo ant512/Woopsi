@@ -53,6 +53,12 @@ Change Log
     - Changed DYNAMIC_ARRAY_SIZE define in woopsiarray.h to a const.
     - Changed GLYPH_MAP_SIZE define in fontbase.h to a const.
     - Changed defines in glyphs.h to consts.
+    - Moved SCREEN_WIDTH and SCREEN_HEIGHT defines into sdl/nds.h.
+    - Changed defines in defines.h to consts.
+    - Woopsi::handleKey() expects an s32 instead of a u32 as the heldTime
+      argument.
+    - PadHeldTime struct stores values as s32 instead of u32.
+    - Gadget::getCloseType() is const.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

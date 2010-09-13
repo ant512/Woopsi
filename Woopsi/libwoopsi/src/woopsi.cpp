@@ -223,13 +223,13 @@ void Woopsi::handleClick(s16 x, s16 y, Gadget* gadget) {
 	}
 }
 
-void Woopsi::handleKey(bool newPress, bool released, u32& heldTime, KeyCode keyCode) {
+void Woopsi::handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyCode) {
 
 	// We do not reset the repeat timers to 0 - instead we reset it back to the initial repeat time.
 	// This prevents the secondary repeat firing before the first repeat without us needing to
 	// track whether or not the initial repeat has fired.
 	// Thus, the secondary repeat time is found by adding both values together.
-	u32 secondaryRepeatTime = KEY_INITIAL_REPEAT_TIME + KEY_SECONDARY_REPEAT_TIME;
+	s32 secondaryRepeatTime = KEY_INITIAL_REPEAT_TIME + KEY_SECONDARY_REPEAT_TIME;
 
 	if (newPress) {
 		_focusedGadget->keyPress(keyCode);

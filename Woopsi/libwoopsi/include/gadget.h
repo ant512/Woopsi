@@ -137,7 +137,7 @@ namespace WoopsiUI {
 		 * interacting with this gadget.
 		 * @return The close type of this gadget.
 		 */
-		inline const CloseType getCloseType() { return _closeType; };
+		inline const CloseType getCloseType() const { return _closeType; };
 
 		/**
 		 * Is the gadget active?

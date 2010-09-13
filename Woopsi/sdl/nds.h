@@ -16,6 +16,9 @@
 #define u32 Uint32
 #define s32 Sint32
 
+#define SCREEN_WIDTH 256
+#define SCREEN_HEIGHT 192
+
 int fatInitDefault();
 
 #endif
