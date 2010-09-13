@@ -23,6 +23,7 @@
 #include "gadgetstyle.h"
 #include "defines.h"
 #include "dmafuncs.h"
+#include "document.h"
 #include "eventargs.h"
 #include "filelistbox.h"
 #include "filelistboxdataitem.h"
