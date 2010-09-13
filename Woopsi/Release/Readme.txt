@@ -54,7 +54,6 @@ Credits and Acknowlegements
   - Testing and gadget contributions                - Mark Adamson
   - Simian Zombie logo                              - John Clay
   - Thanks to                                       - The devKitPro team
-                                                    - The PALib team
                                                     - Nintendo
                                                     - R. J. Michal
 
