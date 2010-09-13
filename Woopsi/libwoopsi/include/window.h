@@ -7,11 +7,6 @@
 #include "graphicsport.h"
 #include "gadgetstyle.h"
 
-#define WINDOW_TITLE_HEIGHT 13
-#define WINDOW_BORDER_SIZE 4
-#define WINDOW_CLOSE_BUTTON_WIDTH 14
-#define WINDOW_DEPTH_BUTTON_WIDTH 14
-
 namespace WoopsiUI {
 
 	/**

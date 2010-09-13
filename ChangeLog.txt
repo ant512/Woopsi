@@ -47,6 +47,12 @@ Change Log
     - Fixed horizontal position of text in left-aligned text box.
     - ScrollingTextBox scrolls line-by-line when scrollbar is dragged instead
       of smooth-scrolling (easier to read).
+    - Added virtual destructor to ListBoxBase.
+    - Moved border size defines from window.h to amigawindow.h and made them
+      consts.
+    - Changed DYNAMIC_ARRAY_SIZE define in woopsiarray.h to a const.
+    - Changed GLYPH_MAP_SIZE define in fontbase.h to a const.
+    - Changed defines in glyphs.h to consts.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

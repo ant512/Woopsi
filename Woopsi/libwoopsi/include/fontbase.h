@@ -3,7 +3,7 @@
 
 #include <nds.h>
 
-#define GLYPH_MAP_SIZE 32
+const s32 GLYPH_MAP_SIZE = 32;
 
 namespace WoopsiUI {
 

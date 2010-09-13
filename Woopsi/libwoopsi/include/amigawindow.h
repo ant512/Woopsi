@@ -7,6 +7,11 @@
 #include "gadgetstyle.h"
 #include "woopsistring.h"
 
+const s32 WINDOW_TITLE_HEIGHT = 13;
+const s32 WINDOW_BORDER_SIZE = 4;
+const s32 WINDOW_CLOSE_BUTTON_WIDTH = 14;
+const s32 WINDOW_DEPTH_BUTTON_WIDTH = 14;
+
 namespace WoopsiUI {
 
 	class WindowBorderButton;

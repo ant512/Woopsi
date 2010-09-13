@@ -139,6 +139,11 @@ namespace WoopsiUI {
 		 * @param sortInsertedItems True to enable sort on insertion.
 		 */
 		virtual void setSortInsertedItems(const bool sortInsertedItems) = 0;
+
+		/**
+		 * Destructor.
+		 */
+		virtual ~ListBoxBase() { };
 	};
 }
 

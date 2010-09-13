@@ -3,7 +3,7 @@
 
 #include <nds.h>
 
-#define DYNAMIC_ARRAY_SIZE 32
+const s32 DYNAMIC_ARRAY_SIZE = 32;
 
 /**
  * Class providing a dynamic array; that is, an array that will automatically
