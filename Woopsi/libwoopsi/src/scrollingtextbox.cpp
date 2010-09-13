@@ -20,8 +20,8 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	_scrollbar->setMaximumValue(_textbox->getDocument()->getLineCount());
 	_scrollbar->setPageSize(rect.height / _textbox->getDocument()->getLineHeight());
 
-	s32 value = ((0 - _textbox->getCanvasY()) << 16) / _textbox->getDocument()->getLineHeight();
-	_scrollbar->setValueWithBitshift(value);
+	s32 value = ((0 - _textbox->getCanvasY())) / _textbox->getDocument()->getLineHeight();
+	_scrollbar->setValue(value);
 
 	_scrollbar->addGadgetEventHandler(this);
 
@@ -115,10 +115,11 @@ void ScrollingTextBox::handleValueChangeEvent(const GadgetEventArgs& e) {
 			if (_scrollbar != NULL) {
 				_scrollbar->setRaisesEvents(false);
 
-				s32 value = ((0 - _textbox->getCanvasY()) << 16) / _textbox->getDocument()->getLineHeight();
-
 				_scrollbar->setMaximumValue(_textbox->getDocument()->getLineCount());
-				_scrollbar->setValueWithBitshift(value);
+
+				s32 value = ((0 - _textbox->getCanvasY())) / _textbox->getDocument()->getLineHeight();
+				_scrollbar->setValue(value);
+
 				_scrollbar->setRaisesEvents(true);
 			}
 		}
@@ -133,9 +134,9 @@ void ScrollingTextBox::handleScrollEvent(const GadgetEventArgs& e) {
 			if (_scrollbar != NULL) {
 				_scrollbar->setRaisesEvents(false);
 
-				s32 value = ((0 - _textbox->getCanvasY()) << 16) / _textbox->getDocument()->getLineHeight();
+				s32 value = ((0 - _textbox->getCanvasY())) / _textbox->getDocument()->getLineHeight();
+				_scrollbar->setValue(value);
 
-				_scrollbar->setValueWithBitshift(value);
 				_scrollbar->setRaisesEvents(true);
 			}
 		}
