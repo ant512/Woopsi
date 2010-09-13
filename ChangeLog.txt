@@ -45,6 +45,8 @@ Change Log
     - ListBox no longer raises events when deselecting options when
       double-clicked (correctly raised when selecting the correct option).
     - Fixed horizontal position of text in left-aligned text box.
+    - ScrollingTextBox scrolls line-by-line when scrollbar is dragged instead
+      of smooth-scrolling (easier to read).
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
