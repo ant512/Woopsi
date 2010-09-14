@@ -30,7 +30,7 @@
 				CleanCommandLine="make clean"
 				Output="$(ConfigurationName)\$(ProjectName).nds"
 				PreprocessorDefinitions="WIN32;NDEBUG;VC7"
-				IncludeSearchPath="&quot;$(DKP_HOME)\libnds\include&quot;; &quot;$(DKP_HOME)\libnds\include\nds&quot;; &quot;$(DKP_HOME)\libnds\include\nds\arm9&quot;"
+				IncludeSearchPath="&quot;C:\devkitpro\libnds\include&quot;; &quot;C:\devkitpro\libnds\include\nds&quot;; &quot;C:\devkitpro\libnds\include\nds\arm9&quot;; &quot;C:\work\Mercurial\Woopsi\Woopsi\libwoopsi&quot;"
 				ForcedIncludes=""
 				AssemblySearchPath=""
 				ForcedUsingAssemblies=""
