@@ -1,3 +1,4 @@
+#include <nds.h>
 #include "contextmenu.h"
 #include "graphicsport.h"
 #include "contextmenueventargs.h"
