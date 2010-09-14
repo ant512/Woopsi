@@ -18,7 +18,7 @@
 #include "bittest5.h"
 #include "bittest6.h"
 #include "woopsistring.h"
-
+#include "amigascreen.h"
 #include "colourpicker.h"
 
 void Demo::startup() {
