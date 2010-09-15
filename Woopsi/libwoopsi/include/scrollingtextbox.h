@@ -259,6 +259,11 @@ namespace WoopsiUI {
 		MultiLineTextBox* _textbox;						/**< Pointer to the textbox */
 		ScrollbarVertical* _scrollbar;					/**< Pointer to the scrollbar */
 		u8 _scrollbarWidth;								/**< Width of the scrollbar */
+		
+		/**
+		 * Updates all scrollbar properties; called when textbox changes.
+		 */
+		void updateScrollbar();
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

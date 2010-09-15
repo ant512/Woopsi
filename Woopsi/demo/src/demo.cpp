@@ -29,7 +29,7 @@ void Demo::startup() {
 	AmigaScreen* superBitmapScreen = new AmigaScreen(DEMO_VERSION, Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
 	woopsiApplication->addGadget(superBitmapScreen);
 	superBitmapScreen->setPermeable(true);
-
+	
 	// Create skinned window
 	AmigaWindow* superBitmapWindow = new AmigaWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	superBitmapScreen->addGadget(superBitmapWindow);

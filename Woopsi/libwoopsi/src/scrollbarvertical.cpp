@@ -51,7 +51,7 @@ const s16 ScrollbarVertical::getMaximumValue() const {
 	return _slider->getMaximumValue();
 }
 
-const s16 ScrollbarVertical::getValue() const {
+const s32 ScrollbarVertical::getValue() const {
 	return _slider->getValue();
 }
 
@@ -67,12 +67,8 @@ void ScrollbarVertical::setMaximumValue(const s16 value) {
 	_slider->setMaximumValue(value);
 }
 
-void ScrollbarVertical::setValue(const s16 value) {
+void ScrollbarVertical::setValue(const s32 value) {
 	_slider->setValue(value);
-}
-
-void ScrollbarVertical::setValueWithBitshift(const s32 value) {
-	_slider->setValueWithBitshift(value);
 }
 
 void ScrollbarVertical::setPageSize(s16 pageSize) {

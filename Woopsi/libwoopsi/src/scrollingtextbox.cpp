@@ -16,12 +16,8 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	Rect rect;
 	_textbox->getClientRect(rect);
 	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, &_style);
-	_scrollbar->setMinimumValue(0);
-	_scrollbar->setMaximumValue(_textbox->getDocument()->getLineCount());
-	_scrollbar->setPageSize(rect.height / _textbox->getDocument()->getLineHeight());
 
-	s32 value = ((0 - _textbox->getCanvasY())) / _textbox->getDocument()->getLineHeight();
-	_scrollbar->setValue(value);
+	updateScrollbar();
 
 	_scrollbar->addGadgetEventHandler(this);
 
@@ -111,34 +107,46 @@ void ScrollingTextBox::handleValueChangeEvent(const GadgetEventArgs& e) {
 				_textbox->setRaisesEvents(true);
 			}
 		} else if (e.getSource() == _textbox) {
-			
-			if (_scrollbar != NULL) {
-				_scrollbar->setRaisesEvents(false);
-
-				_scrollbar->setMaximumValue(_textbox->getDocument()->getLineCount());
-
-				s32 value = ((0 - _textbox->getCanvasY())) / _textbox->getDocument()->getLineHeight();
-				_scrollbar->setValue(value);
-
-				_scrollbar->setRaisesEvents(true);
-			}
+			updateScrollbar();
 		}
 	}
+}
+
+void ScrollingTextBox::updateScrollbar() {
+
+	if (_scrollbar == NULL) return;
+
+	_scrollbar->setRaisesEvents(false);
+				
+	Rect rect;
+	_textbox->getClientRect(rect);
+	
+	// Use same scaling method used in Range class to ensure we round correctly
+	// when calculating page size
+	u32 div = rect.height / _textbox->getDocument()->getLineHeight();
+	u32 mod = rect.height % _textbox->getDocument()->getLineHeight();
+	
+	s32 pageSize = div + (2 * mod + _textbox->getDocument()->getLineHeight()) / (2 * _textbox->getDocument()->getLineHeight());
+
+	_scrollbar->setMaximumValue(_textbox->getDocument()->getLineCount());
+	_scrollbar->setPageSize(pageSize);
+	
+	// Ditto for value
+	div = (0 - _textbox->getCanvasY()) / _textbox->getDocument()->getLineHeight();
+	mod = (0 - _textbox->getCanvasY()) % _textbox->getDocument()->getLineHeight();
+	
+	s32 value = div + (2 * mod + _textbox->getDocument()->getLineHeight()) / (2 * _textbox->getDocument()->getLineHeight());
+				
+	_scrollbar->setValue(value);
+
+	_scrollbar->setRaisesEvents(true);
 }
 
 void ScrollingTextBox::handleScrollEvent(const GadgetEventArgs& e) {
 
 	if (e.getSource() != NULL) {
 		if (e.getSource() == _textbox) {
-
-			if (_scrollbar != NULL) {
-				_scrollbar->setRaisesEvents(false);
-
-				s32 value = ((0 - _textbox->getCanvasY())) / _textbox->getDocument()->getLineHeight();
-				_scrollbar->setValue(value);
-
-				_scrollbar->setRaisesEvents(true);
-			}
+			updateScrollbar();
 		}
 	}
 }

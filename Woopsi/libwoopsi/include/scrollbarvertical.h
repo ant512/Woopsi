@@ -54,7 +54,7 @@ namespace WoopsiUI {
 		 * Get the current value of the slider.
 		 * return The current slider value.
 		 */
-		const s16 getValue() const;
+		const s32 getValue() const;
 
 		/**
 		 * Get the value represented by the height of the grip.
@@ -82,16 +82,7 @@ namespace WoopsiUI {
 		 * and mark the grip for redraw.
 		 * @param value The new value.
 		 */
-		void setValue(const s16 value);
-		
-		/**
-		 * Set the value that of the slider.  This will reposition and mark
-		 * the grip for redrw.  The supplied value should be bitshifted left 16
-		 * places.  This ensures greater accuracy than the standard setValue()
-		 * method if the slider is being used as a scrollbar.
-		 * @param value The new value.
-		 */
-		void setValueWithBitshift(const s32 value);
+		void setValue(const s32 value);
 
 		/**
 		 * Set the page size represented by the grip.

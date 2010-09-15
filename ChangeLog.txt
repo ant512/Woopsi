@@ -61,6 +61,7 @@ Change Log
     - Gadget::getCloseType() is const.
     - ScrollingTextBox and ScrollingListBox scrollbars move in steps instead of
       smoothly as their lists are scrolled.
+    - Rewritten slider logic again.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.
@@ -70,6 +71,7 @@ Change Log
     - WoopsiArray accepts an initial reserved size parameter in its constructor.
     - FileRequester includes filename textbox.
     - Added FileRequester::getTextBoxFileName().
+    - Added Range class.
 
   V0.99.4 (20100902)
   

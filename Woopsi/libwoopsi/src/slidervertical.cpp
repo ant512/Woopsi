@@ -1,13 +1,13 @@
 #include "slidervertical.h"
 #include "sliderverticalgrip.h"
 #include "graphicsport.h"
+#include "range.h"
 
 using namespace WoopsiUI;
 
 SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
 	_minimumValue = 0;
 	_maximumValue = 0;
-	_contentSize = 0;
 	_value = 0;
 	_minimumGripHeight = 10;
 	_pageSize = 1;
@@ -23,67 +23,54 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_grip = new SliderVerticalGrip(rect.x, rect.y, rect.width, rect.height);
 	_grip->addGadgetEventHandler(this);
 	addGadget(_grip);
-
-	_gutterHeight = rect.height;
 }
 
-const s32 SliderVertical::getGripValue() const {
+const s32 SliderVertical::getValue() const {
 
 	// Calculate the current value represented by the top of the grip
 	Rect rect;
 	getClientRect(rect);
 
-	u32 gripPos = ((_grip->getY() - getY()) - rect.y);
-	u32 scrollRatio = (gripPos << 16) / _gutterHeight;
-	s32 value = (scrollRatio * _contentSize);
-
-	return value;
+	s32 gripPos = _grip->getRelativeY() - rect.y;
+	
+	s32 span = rect.height - _grip->getHeight();
+	
+	// If pageSize is greater than 1 we aren't dealing with a slider - we have
+	// a scrollbar.  In that situation, we need to subtract the page size from
+	// the maximum value to cater for the fact that we only scroll when the
+	// page is full.
+	s32 maxVal = _pageSize > 1 ? _maximumValue - _pageSize : _maximumValue;
+	
+	Range range(_minimumValue, maxVal, span);
+	
+	return range.convertScaledToValue(gripPos);
 }
 
-void SliderVertical::setValueWithBitshift(const s32 value) {
-
+void SliderVertical::setValue(const s32 value) {
+	
 	Rect rect;
 	getClientRect(rect);
 	
-	// Can the grip move?
-	if ((rect.height > _grip->getHeight()) && (_maximumValue != _minimumValue)) {
+	s32 span = rect.height - _grip->getHeight();
+	
+	// If pageSize is greater than 1 we aren't dealing with a slider - we have
+	// a scrollbar.  In that situation, we need to subtract the page size from
+	// the maximum value to cater for the fact that we only scroll when the
+	// page is full.
+	s32 maxVal = _pageSize > 1 ? _maximumValue - _pageSize : _maximumValue;
+	
+	Range range(_minimumValue, maxVal, span);
 
-		s32 newValue = value;
-
-		s32 maxValue = getPhysicalMaximumValueWithBitshift();
-		
-		// Limit to max/min values
-		if (newValue > maxValue) newValue = maxValue;
-		if (newValue >> 16 < _minimumValue) newValue = _minimumValue << 16;
-		
-		u32 scrollRatio = newValue / _contentSize;
-		s32 newGripY = _gutterHeight * scrollRatio;
-		newGripY += newGripY & 0x8000;
-		newGripY >>= 16;
-		
-		newGripY += rect.y;
-		
-		_grip->moveTo(rect.x, newGripY);
-
-		// Update stored value if necessary
-		if (_value != newValue) {
-			_value = newValue;
-			_gadgetEventHandlers->raiseValueChangeEvent();
-		}
+	s32 newGripPos = range.convertValueToScaled(value);
+	
+	_grip->moveTo(rect.x, newGripPos + rect.y);
+	
+	s32 newValue = getValue();
+	
+	if (newValue != _value) {
+		_value = newValue;
+		_gadgetEventHandlers->raiseValueChangeEvent();
 	}
-}
-
-void SliderVertical::setValue(const s16 value) {
-	setValueWithBitshift(value << 16);
-}
-
-s32 SliderVertical::getPhysicalMaximumValueWithBitshift() const {
-	u32 maxY = _gutterHeight - _grip->getHeight();
-
-	u32 scrollRatio = (maxY << 16) / _gutterHeight;
-	s32 value = (scrollRatio * _contentSize);
-
-	return value;
 }
 
 void SliderVertical::drawContents(GraphicsPort* port) {
@@ -100,13 +87,19 @@ void SliderVertical::drawBorder(GraphicsPort* port) {
 
 void SliderVertical::onClick(s16 x, s16 y) {
 
+	// Grip will move either by the page size or by the minimum amount,
+	// whichever is smaller.
+	s32 step = getMinimumStep();
+	
+	if (step < _pageSize) step = _pageSize;
+
 	// Which way should the grip move?
 	if (y > _grip->getY()) {
 		// Move grip down
-		setValueWithBitshift(_value + (_pageSize << 16));
+		setValue(getValue() + step);
 	} else {
 		// Move grip up
-		setValueWithBitshift(_value - (_pageSize << 16));
+		setValue(getValue() - step);
 	}
 }
 
@@ -114,14 +107,11 @@ void SliderVertical::handleDragEvent(const GadgetEventArgs& e) {
 
 	// Handle grip events
 	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
-
-		s32 newValue = getGripValue() >> 16;
-
-		// Grip has moved - compare values and raise event if the
-		// value has changed.  Compare using integer values rather
-		// than fixed-point.
-		if (_value >> 16 != newValue) {
-			_value = newValue << 16;
+		
+		s32 newValue = getValue();
+		
+		if (_value != newValue) {
+			_value = newValue;
 			_gadgetEventHandlers->raiseValueChangeEvent();
 		}
 	}
@@ -132,20 +122,13 @@ void SliderVertical::resizeGrip() {
 	// Get available size
 	Rect rect;
 	getClientRect(rect);
-
-	// Prevent divide by 0
-	s32 gripRatio = _contentSize > 0 ? (_pageSize << 16) / _contentSize : 1 << 16;
-
-	s32 gripSize = rect.height * gripRatio;
-
-	gripSize >>= 16;
 	
-	_gutterHeight = rect.height;
+	Range range(_minimumValue, _maximumValue, rect.height);
 
+	s32 gripSize = range.convertValueToScaled(_pageSize);
+	
 	if (gripSize < _minimumGripHeight) {
-		// TODO: Need to implement scaling here.  If we resize the grip to be artificially larger,
-		// we effectively reduce the scale (not just the height) of the gutter.  Each position
-		// in the gutter needs to be reduced in value.
+		gripSize = _minimumGripHeight;
 	}
 	
 	_grip->resize(rect.width, gripSize);
@@ -154,7 +137,7 @@ void SliderVertical::resizeGrip() {
 void SliderVertical::onResize(u16 width, u16 height) {
 
 	// Remember current values
-	s32 oldValue = _value;
+	s32 oldValue = getValue();
 	bool events = raisesEvents();
 
 	// Disable event raising
@@ -171,13 +154,12 @@ void SliderVertical::onResize(u16 width, u16 height) {
 
 s16 SliderVertical::getMinimumStep() const {
 
-	// If the ratio of content to gutter is greater than or equal to one,
-	// the minimum step that the slider can represent will be that ratio.
-	u32 gutterRatio = _contentSize << 16 / _gutterHeight;
-	gutterRatio += gutterRatio & 0x8000;
-	gutterRatio >>= 16;
+	Rect rect;
+	getClientRect(rect);
+	
+	s32 span = rect.height - _grip->getHeight();
 
-	if (gutterRatio > 0) return gutterRatio;
-
-	return 1;
+	Range range(_minimumValue, _maximumValue, span);
+	
+	return range.convertScaledToValue(1);
 }

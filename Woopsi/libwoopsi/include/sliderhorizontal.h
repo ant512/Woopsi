@@ -44,7 +44,7 @@ namespace WoopsiUI {
 		 * Get the current value of the slider.
 		 * return The current slider value.
 		 */
-		inline const s16 getValue() const { return _value >> 16; };
+		const s32 getValue() const;
 
 		/**
 		 * Get the value represented by the height of the grip.
@@ -61,7 +61,6 @@ namespace WoopsiUI {
 		 */
 		inline void setMinimumValue(const s16 value) {
 			_minimumValue = value;
-			_contentSize = _maximumValue - _minimumValue + 1;
 			resizeGrip();
 		};
 
@@ -71,7 +70,6 @@ namespace WoopsiUI {
 		 */
 		inline void setMaximumValue(const s16 value) {
 			_maximumValue = value;
-			_contentSize = _maximumValue - _minimumValue + 1;
 			resizeGrip();
 		};
 
@@ -80,16 +78,7 @@ namespace WoopsiUI {
 		 * and mark the grip for redraw.
 		 * @param value The new value.
 		 */
-		void setValue(const s16 value);
-
-		/**
-		 * Set the value that of the slider.  This will reposition and mark
-		 * the grip for redraw.  The supplied value should be bitshifted left 16
-		 * places.  This ensures greater accuracy than the standard setValue()
-		 * method if the slider is being used as a scrollbar.
-		 * @param value The new value.
-		 */
-		void setValueWithBitshift(const s32 value);
+		void setValue(const s32 value);
 
 		/**
 		 * Set the page size represented by the grip.
@@ -122,25 +111,6 @@ namespace WoopsiUI {
 		s32 _value;									/**< Current value of the slider. */
 		s16 _minimumGripWidth;						/**< Smallest width that the grip can become */
 		s16 _pageSize;								/**< Value of a page of data, used when clicking the gutter. */
-		s32 _gutterWidth;							/**< Width of the gutter, taking into account
-														 any adjustments made to the width of the grip. */
-		u32 _contentSize;							/**< Number of values in the min/max range. */
-		
-		/**
-		 * Get the maximum possible value that the slider can represent.  Useful when
-		 * using the slider as a scrollbar, as the height of the grip prevents the full
-		 * range of values being accessed (intentionally).
-		 * The returned value is bitshfted left 16 places for more accuracy in fixed-point
-		 * calculations.
-		 * @return The maximum possible value that the slider can represent.
-		 */
-		s32 getPhysicalMaximumValueWithBitshift() const;
-
-		/**
-		 * Get the value represented by the top of the grip.
-		 * return The value represented by the top of the grip.
-		 */
-		const s32 getGripValue() const;
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
