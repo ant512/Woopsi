@@ -269,6 +269,11 @@ namespace WoopsiUI {
 		ListBox* _listbox;									/**< Pointer to the list box. */
 		ScrollbarVertical* _scrollbar;						/**< Pointer to the scrollbar. */
 		u8 _scrollbarWidth;									/**< Width of the scrollbar. */
+		
+		/**
+		 * Updates all scrollbar properties; called when listbox changes.
+		 */
+		void updateScrollbar();
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

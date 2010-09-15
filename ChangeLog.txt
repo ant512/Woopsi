@@ -62,6 +62,9 @@ Change Log
     - ScrollingTextBox and ScrollingListBox scrollbars move in steps instead of
       smoothly as their lists are scrolled.
     - Rewritten slider logic again.
+    - ScrollingListBox scrollbar updates correctly as list changes or gadget is
+      resized.
+    - ScrollingTextBox scrollbar updates correctly if gadget is resized.
 
   - New Features:
     - Added makefile for demo - can now be built from command line.

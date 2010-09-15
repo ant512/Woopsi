@@ -16,9 +16,9 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetSt
 	Rect rect;
 	_listbox->getClientRect(rect);
 	_scrollbar = new ScrollbarVertical(width - _scrollbarWidth, 0, _scrollbarWidth, height, &_style);
-	_scrollbar->setMinimumValue(0);
-	_scrollbar->setMaximumValue(0);
-	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
+
+	updateScrollbar();
+	
 	_scrollbar->addGadgetEventHandler(this);
 
 	// Add children to child array
@@ -50,17 +50,39 @@ void ScrollingListBox::handleScrollEvent(const GadgetEventArgs& e) {
 
 	if (e.getSource() != NULL) {
 		if (e.getSource() == _listbox) {
-
-			if (_scrollbar != NULL) {
-				_scrollbar->setRaisesEvents(false);
-
-				s32 value = (0 - _listbox->getCanvasY()) / _listbox->getOptionHeight();
-
-				_scrollbar->setValue(value);
-				_scrollbar->setRaisesEvents(true);
-			}
+			updateScrollbar();
 		}
 	}
+}
+
+void ScrollingListBox::updateScrollbar() {
+
+	if (_scrollbar == NULL) return;
+
+	_scrollbar->setRaisesEvents(false);
+				
+	Rect rect;
+	_listbox->getClientRect(rect);
+	
+	// Use same scaling method used in Range class to ensure we round correctly
+	// when calculating page size
+	u32 div = rect.height / _listbox->getOptionHeight();
+	u32 mod = rect.height % _listbox->getOptionHeight();
+	
+	s32 pageSize = div + (2 * mod + _listbox->getOptionHeight()) / (2 * _listbox->getOptionHeight());
+
+	_scrollbar->setMaximumValue(_listbox->getOptionCount());
+	_scrollbar->setPageSize(pageSize);
+	
+	// Ditto for value
+	div = (0 - _listbox->getCanvasY()) / _listbox->getOptionHeight();
+	mod = (0 - _listbox->getCanvasY()) % _listbox->getOptionHeight();
+	
+	s32 value = div + (2 * mod + _listbox->getOptionHeight()) / (2 * _listbox->getOptionHeight());
+				
+	_scrollbar->setValue(value);
+
+	_scrollbar->setRaisesEvents(true);
 }
 
 void ScrollingListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
@@ -102,13 +124,10 @@ void ScrollingListBox::onResize(u16 width, u16 height) {
 	_listbox->resize(width - _scrollbarWidth, height);
 	_scrollbar->resize(_scrollbarWidth, height);
 
-	// Adjust scrollbar page size
-	Rect rect;
-	getClientRect(rect);
-	_scrollbar->setPageSize(rect.height / _listbox->getOptionHeight());
-
 	// Move the scrollbar
 	_scrollbar->moveTo(width - _scrollbarWidth, 0);
+	
+	updateScrollbar();
 }
 
 void ScrollingListBox::setFont(FontBase* font) {
@@ -120,30 +139,37 @@ void ScrollingListBox::setFont(FontBase* font) {
 void ScrollingListBox::addOption(ListBoxDataItem* item) {
 	_listbox->addOption(item);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
+	
+	updateScrollbar();
 }
 
 void ScrollingListBox::addOption(const WoopsiString& text, const u32 value) {
 	_listbox->addOption(text, value);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
+	
+	updateScrollbar();
 }
 
 void ScrollingListBox::addOption(const WoopsiString& text, const u32 value, const u16 normalTextColour, const u16 normalBackColour, const u16 selectedTextColour, const u16 selectedBackColour) {
 	_listbox->addOption(text, value, normalTextColour, normalBackColour, selectedTextColour, selectedBackColour);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
+	
+	updateScrollbar();
 }
 
 void ScrollingListBox::removeOption(const s32 index) {
 	_listbox->removeOption(index);
 	_scrollbar->setMaximumValue(_listbox->getOptionCount() - 1);
-
-	// Reposition grip if necessary
-	if (_scrollbar->getValue() > _listbox->getOptionCount()) _scrollbar->setValue(0);
+	
+	updateScrollbar();
 }
 
 void ScrollingListBox::removeAllOptions() {
 	_listbox->removeAllOptions();
 	_scrollbar->setMaximumValue(0);
 	_scrollbar->setValue(0);
+	
+	updateScrollbar();
 };
 
 // Get the preferred dimensions of the gadget

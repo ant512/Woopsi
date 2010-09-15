@@ -163,6 +163,8 @@ void ScrollingTextBox::onResize(u16 width, u16 height) {
 
 	// Move the scrollbar
 	_scrollbar->moveTo(width - _scrollbarWidth, 0);
+	
+	updateScrollbar();
 }
 
 const s32 ScrollingTextBox::getCanvasX() const {
