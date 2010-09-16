@@ -815,7 +815,7 @@ bool Gadget::resize(u16 width, u16 height) {
 
 bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
 	
-	bool wasHidden = isHidden();
+	bool wasHidden = _flags.hidden;
 	hide();
 	
 	bool moved = moveTo(x, y);
