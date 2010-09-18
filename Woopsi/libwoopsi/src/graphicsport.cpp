@@ -575,6 +575,14 @@ void GraphicsPort::scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width,
 		_graphics->setClipRect(rect);
 		_graphics->scroll(x, y, xDistance, yDistance, width, height, revealedRects);
 	}
+	
+	// Adjust revealedRects back to graphicsport space
+	for (s32 i = 0; i < revealedRects->size(); ++i) {
+		revealedRects->at(i).x -= _rect.x;
+		revealedRects->at(i).y -= _rect.y;
+		
+		if (_isTopScreen) revealedRects->at(i).y += TOP_SCREEN_Y_OFFSET;
+	}
 }
 
 void GraphicsPort::dim(s16 x, s16 y, u16 width, u16 height) {

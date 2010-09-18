@@ -84,9 +84,9 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 			// Mark the revealed rects as damaged
 			for (s32 i = 0; i < revealedRects.size(); ++i) {
 				
-				// Adjust co-ordinates from Woopsi-space to gadget space
-				revealedRects[i].x -= getX();
-				revealedRects[i].y -= getY();
+				// Adjust co-ordinates from graphicsport-space to gadget space
+				revealedRects[i].x += _borderSize.left;
+				revealedRects[i].y += _borderSize.top;
 				
 				markRectDamaged(revealedRects[i]);
 			}

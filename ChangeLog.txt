@@ -1,6 +1,11 @@
 Change Log
 ----------
 
+  V0.88.6
+  
+  - Fixes:
+    - Fixed scrolling problem in top screen.
+
   V0.99.5 (20100916)
   
   - Fixes:

@@ -391,6 +391,9 @@ namespace WoopsiUI {
 		 * @param revealedRects Populated with rects representing the region
 		 * uncovered by the scroll method.  This should be empty when passed,
 		 * and the regions should be drawn to once the scroll has finished.
+		 * The rects in the revealedRects array are returned in GadgetPort
+		 * co-ordinates, and should be converted to Gadget co-ordinates before
+		 * redrawing is attempted.
 		 */
 		void scroll(s16 x, s16 y, s16 xDistance, s16 yDistance, u16 width, u16 height, WoopsiArray<Rect>* revealedRects);
 
