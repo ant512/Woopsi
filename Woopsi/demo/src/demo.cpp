@@ -18,7 +18,8 @@
 #include "bittest5.h"
 #include "bittest6.h"
 #include "woopsistring.h"
-#include "amigascreen.h"
+#include "filerequester.h"
+
 #include "colourpicker.h"
 
 void Demo::startup() {
@@ -30,6 +31,8 @@ void Demo::startup() {
 	woopsiApplication->addGadget(superBitmapScreen);
 	superBitmapScreen->setPermeable(true);
 	
+	superBitmapScreen->addGadget(new FileRequester(10, 10, 100, 150, "Files", "/", Gadget::GADGET_DRAGGABLE));
+
 	// Create skinned window
 	AmigaWindow* superBitmapWindow = new AmigaWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	superBitmapScreen->addGadget(superBitmapWindow);
@@ -85,7 +88,7 @@ void Demo::startup() {
 
 	newScreen2->addGadget(new ColourPicker(0, 0, 150, 100, "Colour Picker", 0, Gadget::GADGET_DRAGGABLE));
 
-	Gradient* gradient = new Gradient(0, SCREEN_TITLE_HEIGHT, 256, 192 - SCREEN_TITLE_HEIGHT, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
+	Gradient* gradient = new Gradient(0, SCREEN_TITLE_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - SCREEN_TITLE_HEIGHT, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
 	newScreen2->insertGadget(gradient);
 
 	gradient->addContextMenuItem("Context Menu", 0);
@@ -159,7 +162,7 @@ void Demo::startup() {
 
 	// Add screen background
 	//SuperBitmap* demoBackground = demoScreen->newSuperBitmap(0, 0, 256, 179, (u16*)background_Bitmap, 256, 192, true);
-	demoScreen->insertGadget(new Gradient(0, SCREEN_TITLE_HEIGHT, 256, 192 - SCREEN_TITLE_HEIGHT, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
+	demoScreen->insertGadget(new Gradient(0, SCREEN_TITLE_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - SCREEN_TITLE_HEIGHT, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
 
 	// Create calculator app
 	_calculator = new Calculator(demoScreen);

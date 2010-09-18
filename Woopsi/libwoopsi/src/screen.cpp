@@ -24,14 +24,26 @@ void Screen::onFocus() {
 }
 
 void Screen::flipToTopScreen() {
+	
+	// Do not flip if there is only one physical screen available
+	if (SCREEN_COUNT == 1) return;
+	
 	moveTo(0, TOP_SCREEN_Y_OFFSET);
 }
 
 void Screen::flipToBottomScreen() {
+	
+	// Do not flip if there is only one physical screen available
+	if (SCREEN_COUNT == 1) return;
+	
 	moveTo(0, 0);
 }
 
 bool Screen::flipScreens() {
+	
+	// Do not flip if there is only one physical screen available
+	if (SCREEN_COUNT == 1) return false;
+	
 	if (_parent != NULL) {
 		return ((Woopsi*)_parent)->flipScreens(this);
 	}

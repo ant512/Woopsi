@@ -332,6 +332,9 @@ bool Woopsi::swapGadgetDepth(Gadget* gadget) {
 }
 
 bool Woopsi::flipScreens(Gadget* gadget) {
+	
+	// Do not flip if there is only one physical screen available
+	if (SCREEN_COUNT == 1) return false;
 
 	// Only flip if there is more than one screen
 	if (_gadgets.size() > 1) {
