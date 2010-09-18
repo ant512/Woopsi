@@ -5,6 +5,7 @@ Change Log
   
   - Fixes:
     - Fixed scrolling problem in top screen.
+    - Gadget::changeDimensions() no longer leaves gadges accidentally hidden.
 
   V0.99.5 (20100916)
   
