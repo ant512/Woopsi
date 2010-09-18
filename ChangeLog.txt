@@ -5,7 +5,7 @@ Change Log
   
   - Fixes:
     - Fixed scrolling problem in top screen.
-    - Gadget::changeDimensions() no longer leaves gadges accidentally hidden.
+    - Gadget::changeDimensions() no longer leaves gadgets accidentally hidden.
     - Division by 0 fixed in Range class when max value == min value.
     - Document::stripTopLines() no longer wraps text twice.
     - WoopsiString::getCharAt() returns NULL if index is out of valid range.
