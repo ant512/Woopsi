@@ -12,7 +12,7 @@ const s32 Range::convertValueToScaled(s32 value) const {
 
 	if (_span <= 0) return 0;
 	if (value < _minimumValue) return 0;
-	if (_maximumValue < _minimumValue) return 0;
+	if (_maximumValue <= _minimumValue) return 0;
 	if (value > _maximumValue) return _span;
 	
 	s32 range = _maximumValue - _minimumValue;
@@ -32,6 +32,7 @@ const s32 Range::convertScaledToValue(s32 scaledValue) const {
 	if (_span <= 0) return _minimumValue;
 	if (scaledValue <= 0) return _minimumValue;
 	if (scaledValue >= _span) return _maximumValue;
+	if (_maximumValue <= _minimumValue) return _minimumValue;
 	
 	s32 range = _maximumValue - _minimumValue;
 	

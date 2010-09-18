@@ -286,9 +286,6 @@ void Document::stripTopLines(const s32 lines) {
 	
 	// Remove the characters from the start of the string to the found location
 	remove(0, textStart);
-	
-	// Rewrap the text
-	wrap();
 }
 
 const s32 Document::getLineContainingCharIndex(const s32 index) const {

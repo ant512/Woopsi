@@ -1,11 +1,18 @@
 Change Log
 ----------
 
-  V0.88.6
+  V0.99.6
   
   - Fixes:
     - Fixed scrolling problem in top screen.
     - Gadget::changeDimensions() no longer leaves gadges accidentally hidden.
+    - Division by 0 fixed in Range class when max value == min value.
+    - Document::stripTopLines() no longer wraps text twice.
+    - WoopsiString::getCharAt() returns NULL if index is out of valid range.
+    - Removed "Loading" message from FileListBox.
+    - Fix to ScrollingListBox scrollbar grip size.
+    - Beginnings of support for n number of physical displays (helps with SDL
+      ports to other platforms).
 
   V0.99.5 (20100916)
   

@@ -2,6 +2,11 @@
 #define _DEFINES_H_
 
 /**
+ * Number of screens available.  Currently supported options are 1 or 2.
+ */
+const s32 SCREEN_COUNT = 2;
+
+/**
  * The TOP_SCREEN_Y_OFFSET specifies the y co-ordinate at which output swaps
  * from the lower DS screen to the upper screen.  This lets us use a single
  * co-ordinate system instead of one co-ordinate system for each display.  The

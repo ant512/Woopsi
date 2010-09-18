@@ -275,6 +275,9 @@ void WoopsiString::remove(const s32 startIndex, const s32 count) {
 }
 
 const u32 WoopsiString::getCharAt(s32 index) const {
+	if (index < 0) return NULL;
+	if (index >= getLength()) return NULL;
+	
 	const char* token = getToken(index);
 	return getCodePoint(token, NULL);
 }

@@ -82,12 +82,6 @@ void FileListBox::readDirectory() {
 
 	// Clear current options
 	_listbox->removeAllOptions();
-	
-	// Add "Loading..." option to display whilst directory is enumerated
-	_listbox->addOption("Loading...", 0);
-	
-	// Remove the "Loading..." option
-	_listbox->removeAllOptions();
 
 #ifdef USING_SDL
 

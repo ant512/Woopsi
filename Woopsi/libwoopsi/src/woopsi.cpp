@@ -76,9 +76,13 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 	_contextMenu->shelve();
 
 	// Create background screens that will sit behind all other screens
-	Screen* screen = new Screen("", GADGET_DECORATION);
-	addGadget(screen);
-	screen->flipToTopScreen();
+	Screen* screen;
+	
+	if (SCREEN_COUNT == 2) {
+		screen = new Screen("", GADGET_DECORATION);
+		addGadget(screen);
+		screen->flipToTopScreen();
+	}
 
 	screen = new Screen("", GADGET_DECORATION);
 	addGadget(screen);

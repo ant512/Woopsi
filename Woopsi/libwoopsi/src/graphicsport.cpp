@@ -15,7 +15,7 @@ GraphicsPort::GraphicsPort(const s16 x, const s16 y, const u16 width, const u16 
 	_rect.height = height;
 	_isEnabled = isEnabled;
 	
-	_isTopScreen = y >= TOP_SCREEN_Y_OFFSET;
+	_isTopScreen = (y >= TOP_SCREEN_Y_OFFSET) && (SCREEN_COUNT > 1);
 	
 	if (_isTopScreen) {
 		int j = 0;

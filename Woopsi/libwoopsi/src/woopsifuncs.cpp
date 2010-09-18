@@ -12,7 +12,7 @@
 
 #include "defines.h"
 
-WoopsiUI::FrameBuffer* frameBuffer[2];
+WoopsiUI::FrameBuffer* frameBuffer[SCREEN_COUNT];
 WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 _pads Pad;
@@ -39,7 +39,7 @@ void initWoopsiGfxMode() {
 	}
 
 	// Set video mode
-	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT * 2, video_bpp, videoflags);
+	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT * SCREEN_COUNT, video_bpp, videoflags);
 	if (screen == NULL) {
 		fprintf(stderr, "Couldn't set %dx%dx%d video mode: %s\n", SCREEN_WIDTH, SCREEN_HEIGHT, video_bpp, SDL_GetError());
 		SDL_Quit();
@@ -47,24 +47,25 @@ void initWoopsiGfxMode() {
 	}
 
 	// Create framebuffers
-	frameBuffer[0] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_HEIGHT);
-	frameBuffer[1] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
+		frameBuffer[i] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, (SCREEN_COUNT - i - 1) * SCREEN_HEIGHT);
+	}
 
 	// Initialise default style
 	woopsiInitDefaultGadgetStyle();
 
 	// Initialise both arrays
-	WoopsiUI::Graphics* graphics = frameBuffer[0]->newGraphics();
-	graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-	delete graphics;
-
-	graphics = frameBuffer[1]->newGraphics();
-	graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-	delete graphics;
+	WoopsiUI::Graphics* graphics;
+	
+	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
+		graphics = frameBuffer[i]->newGraphics();
+		graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+		delete graphics;
+	}
 }
 
 void woopsiVblFunc() {
-	SDL_UpdateRect(screen, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT * 2);
+	SDL_UpdateRect(screen, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT * SCREEN_COUNT);
 
 	if (Stylus.Newpress) {
 		Stylus.Held = true;
@@ -134,7 +135,9 @@ void woopsiVblFunc() {
 	
 	// Update mouse position
 	mouseX = mX;
-	mouseY = mY - SCREEN_HEIGHT;
+	mouseY = mY;
+	
+	if (SCREEN_COUNT == 2) mouseY -= SCREEN_HEIGHT;
 	
 	// Check buttons
 	if ((mState & SDL_BUTTON_LEFT) && (!Stylus.Held)) {
@@ -314,7 +317,7 @@ int fatInitDefault() { return 1; }
 
 // Using libnds
 
-WoopsiUI::FrameBuffer* frameBuffer[2];
+WoopsiUI::FrameBuffer* frameBuffer[SCREEN_COUNT];
 WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 _pads Pad;
@@ -455,6 +458,7 @@ void woopsiFreeDefaultGadgetStyle() {
 void woopsiFreeFrameBuffers() {
 
 	// Delete the framebuffers
-	delete frameBuffer[0];
-	delete frameBuffer[1];
+	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
+		delete frameBuffer[i];
+	}
 }

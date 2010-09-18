@@ -64,19 +64,14 @@ void ScrollingListBox::updateScrollbar() {
 	Rect rect;
 	_listbox->getClientRect(rect);
 	
-	// Use same scaling method used in Range class to ensure we round correctly
-	// when calculating page size
-	u32 div = rect.height / _listbox->getOptionHeight();
-	u32 mod = rect.height % _listbox->getOptionHeight();
-	
-	s32 pageSize = div + (2 * mod + _listbox->getOptionHeight()) / (2 * _listbox->getOptionHeight());
+	s32 pageSize = rect.height / _listbox->getOptionHeight();
 
 	_scrollbar->setMaximumValue(_listbox->getOptionCount());
 	_scrollbar->setPageSize(pageSize);
 	
 	// Ditto for value
-	div = (0 - _listbox->getCanvasY()) / _listbox->getOptionHeight();
-	mod = (0 - _listbox->getCanvasY()) % _listbox->getOptionHeight();
+	u32 div = (0 - _listbox->getCanvasY()) / _listbox->getOptionHeight();
+	u32 mod = (0 - _listbox->getCanvasY()) % _listbox->getOptionHeight();
 	
 	s32 value = div + (2 * mod + _listbox->getOptionHeight()) / (2 * _listbox->getOptionHeight());
 				

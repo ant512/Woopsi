@@ -113,7 +113,7 @@ extern _stylus Stylus;
 /**
  * Pointers to the DS' framebuffers.
  */
-extern WoopsiUI::FrameBuffer* frameBuffer[2];
+extern WoopsiUI::FrameBuffer* frameBuffer[SCREEN_COUNT];
 
 /**
  * Pointer to the default gadget style.
