@@ -14,6 +14,11 @@ namespace WoopsiUI {
 	 */
 	class TextBoxBase {
 	public:
+		
+		/**
+		 * Destructor.
+		 */
+		virtual TextBoxBase() { };
 
 		/**
 		 * Shows the cursor.

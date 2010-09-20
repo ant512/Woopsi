@@ -23,6 +23,11 @@ namespace WoopsiUI {
 		 * @param width The pixel width at which the text should wrap.
 		 */
 		Document(FontBase* font, const WoopsiString& text, u16 width);
+		
+		/**
+		 * Destructor.
+		 */
+		virtual ~Document() { };
 
 		/**
 		 * Set the text in the string.

@@ -65,7 +65,8 @@ void initWoopsiGfxMode() {
 }
 
 void woopsiVblFunc() {
-	SDL_UpdateRect(screen, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT * SCREEN_COUNT);
+	SDL_Delay(10);
+	SDL_Flip(screen);
 
 	if (Stylus.Newpress) {
 		Stylus.Held = true;

@@ -467,6 +467,7 @@ void MultiLineTextBox::hideCursor() {
 
 void MultiLineTextBox::insertTextAtCursor(const WoopsiString& text) {
 	insertText(text, getCursorPosition());
+	jumpToCursor();
 }
 
 void MultiLineTextBox::moveCursorToPosition(const s32 position) {

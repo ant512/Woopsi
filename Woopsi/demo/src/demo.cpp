@@ -140,10 +140,7 @@ void Demo::startup() {
 		"environment, and the look-and-feel of the system "
 		"intentionally resembles the old Amiga system.", Gadget::GADGET_DRAGGABLE, 50);
 
-	//ScrollingTextBox* scrollingBox = new ScrollingTextBox(rect.x + 1, rect.y + 1, 246, 127, "1\n2\n3\n4\n5", Gadget::GADGET_DRAGGABLE, 0);
-
 	scrollingBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
-	//scrollingBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 	scrollingBox->showCursor();
 	textWindow->addGadget(scrollingBox);
 
@@ -161,7 +158,10 @@ void Demo::startup() {
 	demoScreen->flipToTopScreen();
 
 	// Add screen background
+<<<<<<< local
 	//SuperBitmap* demoBackground = demoScreen->newSuperBitmap(0, 0, 256, 179, (u16*)background_Bitmap, 256, 192, true);
+=======
+>>>>>>> other
 	demoScreen->insertGadget(new Gradient(0, SCREEN_TITLE_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - SCREEN_TITLE_HEIGHT, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
 
 	// Create calculator app

@@ -11,6 +11,11 @@ namespace WoopsiUI {
 	class SliderBase {
 
 	public:
+		
+		/**
+		 * Destructor.
+		 */
+		virtual ~SliderBase() { };
 
 		/**
 		 * Get the smallest value that the slider can represent.
