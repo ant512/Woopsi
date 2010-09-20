@@ -11,8 +11,10 @@ Change Log
     - WoopsiString::getCharAt() returns NULL if index is out of valid range.
     - Removed "Loading" message from FileListBox.
     - Fix to ScrollingListBox scrollbar grip size.
-    - Beginnings of support for n number of physical displays (helps with SDL
-      ports to other platforms).
+    - Support for 1 or 2 of physical displays (helps with SDL ports to other
+      platforms).
+    - Compiler warning fixes.
+    - MultiLineTextBox scrolls to follow cursor when text is inserted.
 
   V0.99.5 (20100916)
   
