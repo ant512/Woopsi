@@ -158,10 +158,6 @@ void Demo::startup() {
 	demoScreen->flipToTopScreen();
 
 	// Add screen background
-<<<<<<< local
-	//SuperBitmap* demoBackground = demoScreen->newSuperBitmap(0, 0, 256, 179, (u16*)background_Bitmap, 256, 192, true);
-=======
->>>>>>> other
 	demoScreen->insertGadget(new Gradient(0, SCREEN_TITLE_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - SCREEN_TITLE_HEIGHT, woopsiRGB(31, 0, 0), woopsiRGB(0, 0, 31)));
 
 	// Create calculator app
