@@ -318,7 +318,7 @@ namespace WoopsiUI {
 		 * the codepoint once the method ends.
 		 * @return The codepoint.  Returns 0 if the codepoint is invalid.
 		 */
-		u32 getCodePoint(const char* string, u8* numChars) const;
+		u32 getCodePoint(const char* string, u8* numChars = NULL) const;
 
 	private:
 		friend class StringIterator;
@@ -339,7 +339,7 @@ namespace WoopsiUI {
 		 * @param numBytes The number of bytes in the encoded data.
 		 * @return The encoded codepoint.
 		 */
-		 const char* encodeCodePoint(u32 codePoint, u8* numBytes) const;
+		 const char* encodeCodePoint(u32 codePoint, u8* numBytes = NULL) const;
 	};
 }
 

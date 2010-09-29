@@ -15,6 +15,10 @@ Change Log
       platforms).
     - Compiler warning fixes.
     - MultiLineTextBox scrolls to follow cursor when text is inserted.
+    - WoopsiString::encodeCodePoint() numBytes parameter is optional.
+    - WoopsiString::getCodePoint() numChars parameter is optional.
+    - WoopsiString::getCodePoint() returns the correct number of chars if the
+      codepoint is invalid.
 
   V0.99.5 (20100916)
   

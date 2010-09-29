@@ -436,6 +436,8 @@ s32 WoopsiString::filterString(char* dest, const char* src, s32 sourceBytes, s32
 u32 WoopsiString::getCodePoint(const char* string, u8* numChars) const {
 	char char0 = *string;
 
+	*numChars = 0;
+
 	// 0xxxxxxx ASCII char
 	if (char0 < 0x80) {
 		if (numChars) *numChars = 1;
@@ -500,17 +502,17 @@ u32 WoopsiString::getCodePoint(const char* string, u8* numChars) const {
 
 const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
 	
-	*numBytes = 0;
+	if (numBytes) *numBytes = 0;
 	
 	if (codepoint < 0x80) {
-		*numBytes = 1;
+		if (numBytes) *numBytes = 1;
 		char* buffer = new char[1];
 		buffer[0] = codepoint;
 		return buffer;
 	}
 
 	if (codepoint < 0x0800) {
-		*numBytes = 2;
+		if (numBytes) *numBytes = 2;
 		char* buffer = new char[2];
 		buffer[0] = (codepoint >> 6) + 0xC0;
 		buffer[1] = (codepoint & 0x1F) + 0x80;
@@ -518,7 +520,7 @@ const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
 	}
 
 	if (codepoint < 0x10000) {
-		*numBytes = 3;
+		if (numBytes) *numBytes = 3;
 		char* buffer = new char[3];
 		buffer[0] = (codepoint >> 12) + 0xE0;
 		buffer[1] = ((codepoint >> 6) & 0x3F) + 0x80;
@@ -527,7 +529,7 @@ const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
 	}
 	
 	if (codepoint < 0x10FFFF) {
-		*numBytes = 4;
+		if (numBytes) *numBytes = 4;
 		char* buffer = new char[4];
 		buffer[0] = (codepoint >> 18) + 0xF0;
 		buffer[1] = ((codepoint >> 12) & 0x3F) + 0x80;
