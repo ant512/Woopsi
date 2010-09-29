@@ -1,0 +1,45 @@
+ - Make the WoopsiString raise events when it is modified?
+ - Is there a bug in the floodfill?
+ - Remove flags?
+ - Key events - should these bubble up the hierarchy?
+ - Superbitmap draw methods should mark rects as dirty - GraphicsPort raises
+   events?  A subclass of GraphicsPort?
+ - Redraw as little as possible when adding text to textboxes.
+ - Ensure all commands that should change onscreen display do so (ie. addOption
+   in FileRequester - needs to work out where the option will appear in the
+   list and mark that rect as dirty.  markRectDirty() method will automatically
+   clip it out if it is off-screen).
+
+
+Future
+------
+
+Woopsi
+ - Woopsi class that applications inherit from should not also be the top-level
+   UI component.
+
+Debug
+ - Needs to support WoopsiStrings instead of char arrays.
+
+New Gadgets
+ - Tree
+ - Tabs
+
+Gadget
+ - Move child manipulation into new GadgetCollection class?
+ - Remove support for children from Gadget class?  Should all have it by
+   default?
+   
+FileRequester
+ - Hide the ".." directory and make a parent button?
+ - File type filter.
+
+WoopsiString
+ - Use negative indices to work backwards from the end of the string, Python-
+   style.
+
+Focus
+ - Come up with a way of representing this?
+
+Appearance
+ - Scrap the Amiga appearance and replace it with something unique?
