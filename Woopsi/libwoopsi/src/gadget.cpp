@@ -785,7 +785,6 @@ bool Gadget::resize(u16 width, u16 height) {
 		// Remember if the gadget is permeable
 		bool wasPermeable = _flags.permeable;
 
-
 		_flags.permeable = true;
 	
 		markRectsDamaged();

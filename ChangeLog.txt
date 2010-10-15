@@ -21,6 +21,7 @@ Change Log
       codepoint is invalid.
     - Fixed clipping bug in PackedFont1::renderChar() (Lakedaemon).
     - Fixed clipping bug in PackedFont16::renderChar() (Lakedaemon).
+    - TextBox::getPreferredDimensions() allows space for the cursor if visible.
   
   - New Features:
     - Added Debug::flipToTopScreen().

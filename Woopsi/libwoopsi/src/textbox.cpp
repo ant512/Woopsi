@@ -311,3 +311,14 @@ void TextBox::processKey(const WoopsiKey* key) {
 void TextBox::onBlur() {
 	markRectsDamaged();
 }
+
+// Get the preferred dimensions of the gadget
+void TextBox::getPreferredDimensions(Rect& rect) const {
+	Label::getPreferredDimensions(rect);
+
+	// Add the width of a blank space to the width to ensure that we can
+	// see the cursor
+	if (_showCursor) {
+		rect.width += getFont()->getCharWidth(' ');
+	}
+}

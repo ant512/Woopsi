@@ -144,6 +144,14 @@ namespace WoopsiUI {
 		 */
 		inline void enableKeyboardPopup() { _opensKeyboard = true; };
 
+		/**
+		 * Insert the dimensions that this gadget wants to have into the rect
+		 * passed in as a parameter.  All co-ordinates are relative to the
+		 * gadget's parent.
+		 * @param rect Reference to a rect to populate with data.
+		 */
+		virtual void getPreferredDimensions(Rect& rect) const;
+
 	protected:
 		s32 _cursorPos;					/**< Position of the cursor within the string. */
 		bool _showCursor;				/**< Set to true to make cursor visible. */
