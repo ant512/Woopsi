@@ -13,7 +13,7 @@ void PackedFont1::renderChar(
 	if ((clipY2 < y) ||
 		(clipY1 > y + getHeight() - 1) ||
 		(x > clipX2) ||
-		(x + pixelsPerRow < clipX1)) return;
+		(x + pixelsPerRow - 1 < clipX1)) return;
 	
 	u16 colour = getColour();
 	u16 curr;

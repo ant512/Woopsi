@@ -19,6 +19,8 @@ Change Log
     - WoopsiString::getCodePoint() numChars parameter is optional.
     - WoopsiString::getCodePoint() returns the correct number of chars if the
       codepoint is invalid.
+    - Fixed clipping bug in PackedFont1::renderChar() (Lakedaemon).
+    - Fixed clipping bug in PackedFont16::renderChar() (Lakedaemon).
   
   - New Features:
     - Added Debug::flipToTopScreen().
