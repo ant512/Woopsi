@@ -19,6 +19,14 @@ Change Log
     - WoopsiString::getCodePoint() numChars parameter is optional.
     - WoopsiString::getCodePoint() returns the correct number of chars if the
       codepoint is invalid.
+  
+  - New Features:
+    - Added Debug::flipToTopScreen().
+    - Added Debug::flipToBottomScreen().
+    - Added Debug::flipScreens().
+    - Added Debug::raiseToTop().
+    - Added Debug::lowerToBottom().
+    - Added Debug::wvsnprintf().
 
   V0.99.5 (20100916)
   

@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
 #include "debug.h"
 #include "woopsifuncs.h"
 #include "amigascreen.h"
@@ -47,7 +44,21 @@ void Debug::output(const char* text) {
 	}
 }
 
-void Debug::printf(const char *format, ...) {
+void Debug::wvsnprintf(size_t maxCount, const char* format, va_list args) {
+
+	// Since we don't know at compile time how big the buffer will be,
+	// we avoid using the DS' midget stack to prevent crashes.
+	char* buffer = new char[maxCount];
+
+	vsnprintf(buffer, maxCount, format, args);
+
+	_debug->output(buffer);
+	delete[] buffer;
+}
+
+void Debug::printf(const char* format, ...) {
+
+	// We assume that we'll only ever print strings shorter than 256 characters.
 	char buffer[256];
 
 	va_list args;
@@ -112,4 +123,44 @@ void Debug::createGUI() {
 		_textBox->appendText(WOOPSI_COPYRIGHT);
 		_textBox->appendText("\n");
 	}
+}
+
+void Debug::flipToTopScreen() {
+	if (!DEBUG_ACTIVE) return;
+	if (woopsiApplication == NULL) return;
+	
+	createDebug();
+	_debug->_screen->flipToTopScreen();
+}
+
+void Debug::flipToBottomScreen() {
+	if (!DEBUG_ACTIVE) return;
+	if (woopsiApplication == NULL) return;
+	
+	createDebug();
+	_debug->_screen->flipToBottomScreen();
+}
+
+void Debug::flipScreens() {
+	if (!DEBUG_ACTIVE) return;
+	if (woopsiApplication == NULL) return;
+	
+	createDebug();
+	_debug->_screen->flipScreens();
+}
+
+void Debug::raiseToTop() {
+	if (!DEBUG_ACTIVE) return;
+	if (woopsiApplication == NULL) return;
+	
+	createDebug();
+	_debug->_screen->raiseToTop();
+}
+
+void Debug::lowerToBottom() {
+	if (!DEBUG_ACTIVE) return;
+	if (woopsiApplication == NULL) return;
+	
+	createDebug();
+	_debug->_screen->lowerToBottom();
 }

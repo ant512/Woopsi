@@ -1,6 +1,9 @@
 #ifndef _DEBUG_H_
 #define _DEBUG_H_
 
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 #include <nds.h>
 #include "gadgetstyle.h"
 #include "woopsistring.h"
@@ -37,7 +40,51 @@ namespace WoopsiUI {
 		 * @param format Format of the string to print.
 		 * @param ... The values to output.
 		 */
-		static void printf(const char *format, ...);
+		static void printf(const char* format, ...);
+
+		/**
+		 * Output formatted values to the debug console.  Uses
+		 * standard printf() syntax.  Note that va_start() must be
+		 * called before this method is used, and va_end() must be
+		 * called when it finishes.
+		 *
+		 * The method uses vsnprintf() internally to perform the
+		 * string formatting.  Unfortunately, this means that the method
+		 * cannot be called vsnprintf() itself as it hides the original C
+		 * method.  Hence, this method's name is prefixed with a "w" (for
+		 * "Woopsi".
+		 * @param maxCount The maximum number of characters to print.
+		 * @param format Format of the string to print.
+		 * @param args The values to output.
+		 */
+		static void wvsnprintf(size_t maxCount, const char* format, va_list args);
+
+		/**
+		 * Flip the screen from the bottom physical display to the top display.
+		 */
+		static void flipToTopScreen();
+
+		/**
+		 * Flip the screen from the top physical display to the bottom display.
+		 */
+		static void flipToBottomScreen();
+
+		/**
+		 * Flip the screen from the current physical display to the other.
+		 */
+		static void flipScreens();
+
+		/**
+		 * Raises the gadget to the top of its parent's gadget stack.
+		 * @return True if the raise was successful.
+		 */
+		static void raiseToTop();
+
+		/**
+		 * Lowers the gadget to the bottom of its parent's gadget stack.
+		 * @return True if the lower was successful.
+		 */
+		static void lowerToBottom();
 
 	private:
 		static Debug* _debug;					/**< Pointer to the debug singleton */
