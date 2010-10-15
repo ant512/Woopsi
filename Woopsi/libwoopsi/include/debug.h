@@ -53,6 +53,13 @@ namespace WoopsiUI {
 		 * cannot be called vsnprintf() itself as it hides the original C
 		 * method.  Hence, this method's name is prefixed with a "w" (for
 		 * "Woopsi".
+		 *
+		 * Note that the compiler message regarding va_list mangling changes
+		 * in GCC 4.4 are not problems with Woopsi's code.  They are the result
+		 * of the GCC team bizarrely deciding to include news items in compiler
+		 * messages:
+		 * http://gcc.gnu.org/bugzilla/show_bug.cgi?id=42748
+		 *
 		 * @param maxCount The maximum number of characters to print.
 		 * @param format Format of the string to print.
 		 * @param args The values to output.
