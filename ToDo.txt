@@ -16,7 +16,9 @@ Future
 
 Woopsi
  - Woopsi class that applications inherit from should not also be the top-level
-   UI component.
+   UI component.  Need to create a separate "WoopsiApplication" class that
+   handles all of the VBL/gadget deletion/etc code.  Also remove all static
+   variables/methods.
 
 Debug
  - Needs to support WoopsiStrings instead of char arrays.
