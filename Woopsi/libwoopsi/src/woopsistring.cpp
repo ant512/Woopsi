@@ -436,7 +436,7 @@ s32 WoopsiString::filterString(char* dest, const char* src, s32 sourceBytes, s32
 u32 WoopsiString::getCodePoint(const char* string, u8* numChars) const {
 	char char0 = *string;
 
-	*numChars = 0;
+	if (numChars) *numChars = 0;
 
 	// 0xxxxxxx ASCII char
 	if (char0 < 0x80) {
