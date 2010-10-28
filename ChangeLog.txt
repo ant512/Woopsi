@@ -22,6 +22,7 @@ Change Log
     - Fixed clipping bug in PackedFont1::renderChar() (Lakedaemon).
     - Fixed clipping bug in PackedFont16::renderChar() (Lakedaemon).
     - TextBox::getPreferredDimensions() allows space for the cursor if visible.
+    - Fixed null pointer dereference in WoopsiString::getCodePoint.
   
   - New Features:
     - Added Debug::flipToTopScreen().
@@ -30,6 +31,9 @@ Change Log
     - Added Debug::raiseToTop().
     - Added Debug::lowerToBottom().
     - Added Debug::wvsnprintf().
+    - Built with devKitARM r32/libnds 1.4.8 (manually patched line 661 of
+      nds/arm9/videoGL.h to fix warnings;
+      see http://devkitpro.org/viewtopic.php?f=13&t=2277).
 
   V0.99.5 (20100916)
   
