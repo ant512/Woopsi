@@ -31,8 +31,6 @@ void Demo::startup() {
 	woopsiApplication->addGadget(superBitmapScreen);
 	superBitmapScreen->setPermeable(true);
 	
-	superBitmapScreen->addGadget(new FileRequester(10, 10, 100, 150, "Files", "/", Gadget::GADGET_DRAGGABLE));
-
 	// Create skinned window
 	AmigaWindow* superBitmapWindow = new AmigaWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
 	superBitmapScreen->addGadget(superBitmapWindow);
