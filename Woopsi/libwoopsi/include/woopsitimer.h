@@ -15,7 +15,7 @@ namespace WoopsiUI {
 	 *
 	 * Using the timer is simple:
 	 *  - Create an instance of the WoopsiTimer and add it as a child to a gadget. 
-	 *  - Call the injstance's "start()" method.
+	 *  - Call the instance's "start()" method.
 	 *  - Catch the timer's action event and call any code that should run.
 	 *
 	 * The maximum speed for timer-driven code is one iteration per vertical blank.  
