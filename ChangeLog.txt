@@ -1,6 +1,11 @@
 Change Log
 ----------
 
+  V0.99.7
+  
+  - Fixes:
+    - Rect::getAddition() returns the correct rectangle.
+
   V0.99.6
   
   - Fixes:

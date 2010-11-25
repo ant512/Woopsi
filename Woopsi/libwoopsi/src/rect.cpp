@@ -92,7 +92,7 @@ void Rect::getAddition(const Rect& rect, Rect& dest) const {
 	dest.setX(x1);
 	dest.setY(y1);
 	dest.setWidth(x2 - x1 + 1);
-	dest.setHeight(y2 - x1 + 1);
+	dest.setHeight(y2 - y1 + 1);
 }
 
 void Rect::clipToIntersect(const Rect& rect) {
