@@ -187,7 +187,7 @@ void RectCache::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArr
 		// Gadget should never be the bottom item on the screen
 		if (gadgetIndex > 0) {
 
-			// Remove any overlapped rectanglesg
+			// Remove any overlapped rectangles
 			for (s32 i = gadgetIndex; i < parent->getChildCount(); i++) {
 				if (visibleRects->size() > 0) {
 					parent->getChild(i)->getRectCache()->splitRectangles(visibleRects, invisibleRects);
