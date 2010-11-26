@@ -6,7 +6,7 @@ Change Log
   - Fixes:
     - Rect::getAddition() returns the correct rectangle.
 
-  V0.99.6
+  V0.99.6 (20101101)
   
   - Fixes:
     - Fixed scrolling problem in top screen.
