@@ -7,7 +7,7 @@ Installation
   
   2.  Open the folder "libwoopsi" in a command prompt and type "make".
   
-  2.  Copy the folder "libwoopsi" from this directory to the root of the
+  3.  Copy the folder "libwoopsi" from this directory to the root of the
       devkitPro folder.  In Windows, assuming all of the defaults were chosen at
       install time, this will be "C:\devkitPro"
 
