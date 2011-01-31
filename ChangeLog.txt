@@ -1,10 +1,11 @@
 Change Log
 ----------
 
-  V0.99.7
+  V1.0
   
   - Fixes:
     - Rect::getAddition() returns the correct rectangle.
+    - All .NET tools work correctly.
 
   V0.99.6 (20101101)
   

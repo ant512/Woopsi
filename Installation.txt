@@ -5,7 +5,9 @@ Installation
   
   1.  Download and install DevKitPro from http://www.devkitpro.org
   
-  2.  Copy the folder "Woopsi/libwoopsi" from this directory to the root of the
+  2.  Open the folder "libwoopsi" in a command prompt and type "make".
+  
+  2.  Copy the folder "libwoopsi" from this directory to the root of the
       devkitPro folder.  In Windows, assuming all of the defaults were chosen at
       install time, this will be "C:\devkitPro"
 
@@ -19,10 +21,10 @@ Installation
   
   To test the installation:
 
-  1.  Open a command prompt and CD to the "Woopsi/template" folder
+  1.  Open a command prompt and CD to the "template" folder
       (relative to this document).
 
   2.  Type "make".
   
-  3.  Open the "Woopsi/template/Release/template.nds" ROM file in a DS
+  3.  Open the "template/Release/template.nds" ROM file in a DS
       emulator or copy it to your flash cart and load it up.
