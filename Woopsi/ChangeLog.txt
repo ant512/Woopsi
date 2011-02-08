@@ -5,6 +5,8 @@ Change Log
   
   - Fixes:
     - Slider arrow buttons work correctly.
+    - WoopsiString::compareTo() returns s8 instead of s32.
+    - WoopsiString::compareTo() sorts Chinese text correctly (carpfish).
 
   V1.0 (20110201)
   

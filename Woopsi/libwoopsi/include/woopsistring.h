@@ -260,7 +260,7 @@ namespace WoopsiUI {
 		 * value less than zero indicates the opposite.  Note that the return
 		 * value indicates the *byte* that does not match, not the *character*.
 		 */
-		virtual s32 compareTo(const WoopsiString& string) const;
+		virtual s8 compareTo(const WoopsiString& string) const;
 
 	protected:
 		char* _text;							/**< Raw char array data */

@@ -542,6 +542,44 @@ const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
 	return NULL;
 }
 
-s32 WoopsiString::compareTo(const WoopsiString& string) const {
-	return strncmp(_text, string.getCharArray(), getLength());
+s8 WoopsiString::compareTo(const WoopsiString& string) const {
+	
+	StringIterator* iterator1 = newStringIterator();
+	StringIterator* iterator2 = string.newStringIterator();
+	
+	u32 codePoint1;
+	u32 codePoint2;
+	
+	// Get the length of the shortest string
+	u32 length = getLength() < string.getLength() ? getLength() : string.getLength();
+	
+	// Iterate over the string length that both strings possess and check for
+	// differences
+	for (u32 i = 0; i < length; ++i) {
+		codePoint1 = iterator1->getCodePoint();
+		codePoint2 = iterator2->getCodePoint();
+		
+		if (isupper(codePoint1)) codePoint1 += 0x20;
+		if (isupper(codePoint2)) codePoint2 += 0x20;
+	    
+		if (codePoint1 != codePoint2) {
+			delete iterator1;
+			delete iterator2;
+			
+			return codePoint1 > codePoint2 ? 1 : -1;
+		}
+		
+		iterator1->moveToNext();
+		iterator2->moveToNext();
+	}
+	
+	delete iterator1;
+	delete iterator2;
+	
+	// Strings are identical so far, so compare based on string length.  Shorter
+	// string comes first
+	if (getLength() == string.getLength()) return 0;
+	if (getLength() < string.getLength()) return -1;
+	
+	return 1;
 }
