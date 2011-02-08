@@ -1,7 +1,12 @@
 Change Log
 ----------
 
-  V1.0
+  V1.1
+  
+  - Fixes:
+    - Slider arrow buttons work correctly.
+
+  V1.0 (20110201)
   
   - Fixes:
     - Rect::getAddition() returns the correct rectangle.

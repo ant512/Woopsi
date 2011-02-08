@@ -158,8 +158,11 @@ s16 SliderVertical::getMinimumStep() const {
 	getClientRect(rect);
 	
 	s32 span = rect.height - _grip->getHeight();
-
+	
 	Range range(_minimumValue, _maximumValue, span);
 	
-	return range.convertScaledToValue(1);
+	s16 step = range.convertScaledToValue(1);
+	
+	// Ensure that we always return a value of at least 1.
+	return step > 0 ? step : 1;
 }
