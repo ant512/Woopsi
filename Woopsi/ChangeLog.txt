@@ -7,6 +7,8 @@ Change Log
     - Slider arrow buttons work correctly.
     - WoopsiString::compareTo() returns s8 instead of s32.
     - WoopsiString::compareTo() sorts Chinese text correctly (carpfish).
+    - ProgressBar at 100% completion no longer overflows the printout char
+      array (carpfish).
 
   V1.0 (20110201)
   

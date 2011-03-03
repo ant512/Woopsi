@@ -54,7 +54,7 @@ void ProgressBar::drawContents(GraphicsPort* port) {
 
 	// Draw completion percentage text
 	if (_showPercentageText) {
-		char text[4];
+		char text[5];
 		sprintf(text, "%d%%", (100 * _value) / (_maximumValue - _minimumValue));
 
 		s16 textX = (rect.width - getFont()->getStringWidth(text)) >> 1;
