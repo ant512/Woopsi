@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "stringiterator.h"
 #include "woopsistring.h"
 
@@ -153,4 +154,24 @@ bool StringIterator::moveTo(s32 index) {
 
 u32 StringIterator::getCodePoint() const {
 	return _string->getCodePoint(_currentChar, NULL);
+}
+
+u32 StringIterator::getInteger(u32* charCount) {
+
+	// strtoul() will discard any white space we might currently be looking at
+	// which isn't the desired behaviour.  We prevent this by checking that
+	// we're looking at a digit before we start
+	if (isdigit(getCodePoint())) {
+
+		char *end = NULL;
+		u32 digits = strtoul(_currentChar, &end, 10);
+
+		if (charCount != NULL) *charCount = (u32)(end - _currentChar);
+
+		return digits;
+	} else {
+
+		if (charCount != NULL) *charCount = 0;
+		return 0;
+	}
 }

@@ -72,6 +72,16 @@ namespace WoopsiUI {
 		 * @return The current character in the string.
 		 */
 		u32 getCodePoint() const;
+
+		/**
+		 * Get the integer value represented by the sequence of digits at the
+		 * current point.
+		 * @param charCount If set to anything other than NULL, the pointer will
+		 * be populated with the number of characters in the integer.  A value
+		 * of 0 indicates that no digits were found at the current point.
+		 * @return The integer value represented by the current string position.
+		 */
+		u32 getInteger(u32* charCount = NULL);
 		
 	protected:
 
