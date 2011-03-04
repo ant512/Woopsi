@@ -3,7 +3,7 @@
 :options
 echo Woopsi install script for Windows
 echo.
-echo This script will compile libwoopsi and then install libwoopsi and libfreetype to your devkitPro directory.
+echo This script will compile libwoopsi and then install it to your devkitPro directory.
 echo.
 echo Enter location of devKitPro directory or leave blank for default (C:\devkitPro)
 set /p location=:

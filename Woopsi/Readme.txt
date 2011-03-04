@@ -64,7 +64,7 @@ Features
     - Keyboard;
     - Calendar;
     - Timer, for VBL-driven effects;
-    - Colour picker;
+    - Colour picker.
   - Draggable gadgets, including draggable windows and screens;
   - Borderless gadgets, including borderless windows;
   - Built-in debug console;
@@ -150,7 +150,7 @@ Credits and Acknowledgements
   - Testing and suggestions                         - John Buxton
                                                     - Chase
                                                     - Leonelhs
-													- Carpfish
+                                                    - Carpfish
   - Unicode work and libfreetype integration        - Olivier Binda (Lakedaemon)
   - Testing and gadget contributions                - Mark Adamson
   - Simian Zombie logo                              - John Clay
@@ -162,10 +162,11 @@ Credits and Acknowledgements
 Links
 -----
 
-  - http://woopsi.org								 - Main site
-  - http://ant.simianzombie.com                      - Development blog
-  - http://ant.simianzombie.com/forum                - Forum
-  - http://bitbucket.org/ant512/woopsi  		     - BitBucket page
+  - http://woopsi.org                               - Main site
+  - http://ant.simianzombie.com                     - Development blog
+  - http://ant.simianzombie.com/forum               - Forum
+  - http://bitbucket.org/ant512/woopsi              - BitBucket page
+  - http://bitbucket.org/Lakedaemon/woopsi-xl       - Woopsi with extra libs
 
 
 Email
