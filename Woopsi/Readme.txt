@@ -150,6 +150,7 @@ Credits and Acknowledgements
   - Testing and suggestions                         - John Buxton
                                                     - Chase
                                                     - Leonelhs
+													- Carpfish
   - Unicode work and libfreetype integration        - Olivier Binda (Lakedaemon)
   - Testing and gadget contributions                - Mark Adamson
   - Simian Zombie logo                              - John Clay
