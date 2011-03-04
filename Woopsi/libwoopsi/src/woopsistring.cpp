@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <string.h>
 #include "woopsistring.h"
 #include "stringiterator.h"
@@ -379,7 +380,8 @@ WoopsiString* WoopsiString::subString(s32 startIndex, s32 length) const {
 void WoopsiString::allocateMemory(s32 chars, bool preserve) {
 
 	// Do we already have enough memory allocated to contain this new size?
-	// If so, we can avoid deallocating and allocating new memory by re-using the old
+	// If so, we can avoid deallocating and allocating new memory by re-using
+	// the old
 	
 	if (chars > _allocatedSize) {
 
@@ -417,7 +419,8 @@ s32 WoopsiString::filterString(char* dest, const char* src, s32 sourceBytes, s32
 
 		if (bytes == 0) {
 
-			// This utf-8 token is corrupt; ignore the first char and find a new utf-8 token
+			// This utf-8 token is corrupt; ignore the first char and find a new
+			// utf-8 token
 			src++;
 		} else {
 
@@ -549,28 +552,58 @@ s8 WoopsiString::compareTo(const WoopsiString& string) const {
 	
 	u32 codePoint1;
 	u32 codePoint2;
-	
+
 	// Get the length of the shortest string
 	u32 length = getLength() < string.getLength() ? getLength() : string.getLength();
 	
 	// Iterate over the string length that both strings possess and check for
-	// differences
+	// differences.
 	for (u32 i = 0; i < length; ++i) {
 		codePoint1 = iterator1->getCodePoint();
 		codePoint2 = iterator2->getCodePoint();
 		
 		if (isupper(codePoint1)) codePoint1 += 0x20;
 		if (isupper(codePoint2)) codePoint2 += 0x20;
+
+		// We cheat a little here to get a passable natural sort.  Numbers will
+		// automatically be sorted before text due to the fact that they come
+		// first in the ASCII table.  When we hit two numbers at the same point
+		// in the strings, though, we can convert the digit sequences to ints
+		// and compare those.
+		if (isdigit(codePoint1) && isdigit(codePoint2)) {
+
+			u32 charCount1 = 0;
+			u32 charCount2 = 0;
+
+			codePoint1 = iterator1->getInteger(&charCount1);
+			codePoint2 = iterator2->getInteger(&charCount2);
+
+			if (codePoint1 != codePoint2) {
+				delete iterator1;
+				delete iterator2;
+				
+				return codePoint1 > codePoint2 ? 1 : -1;
+			}
+
+			// Stop iterating if we hit the end of either string
+			if (!iterator1->moveTo(iterator1->getIndex() + charCount1) ||
+				!iterator2->moveTo(iterator2->getIndex() + charCount2)) break;
+		} else {
 	    
-		if (codePoint1 != codePoint2) {
-			delete iterator1;
-			delete iterator2;
+			if (codePoint1 != codePoint2) {
+				delete iterator1;
+				delete iterator2;
+				
+				return codePoint1 > codePoint2 ? 1 : -1;
+			}
 			
-			return codePoint1 > codePoint2 ? 1 : -1;
+			// We can potentially hit the end of a string early if we
+			// encountered a run of digits at any point - we will have consumed
+			// and compared
+			// multiple characters in a single iteration.  In that situation we
+			// need to exit the loop early.
+			if (!iterator1->moveToNext() || !iterator2->moveToNext()) break;
 		}
-		
-		iterator1->moveToNext();
-		iterator2->moveToNext();
 	}
 	
 	delete iterator1;
