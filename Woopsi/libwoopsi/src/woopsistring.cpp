@@ -1,7 +1,10 @@
 #include <ctype.h>
+#include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
 #include "woopsistring.h"
 #include "stringiterator.h"
+#include "woopsiarray.h"
 
 using namespace WoopsiUI;
 
@@ -59,6 +62,19 @@ WoopsiString& WoopsiString::operator=(const char* string) {
 WoopsiString& WoopsiString::operator=(const u32 letter) {
 	setText(letter);
 	return *this;
+}
+
+WoopsiString& WoopsiString::operator+=(const WoopsiString& string) {
+	append(string);
+	
+	return *this;
+}
+
+WoopsiString WoopsiString::operator+(const WoopsiString& string) {
+	WoopsiString str = *this;
+	str.append(string);
+	
+	return str;
 }
 
 StringIterator* WoopsiString::newStringIterator() const {
@@ -615,4 +631,106 @@ s8 WoopsiString::compareTo(const WoopsiString& string) const {
 	if (getLength() < string.getLength()) return -1;
 	
 	return 1;
+}
+
+s32 WoopsiString::indexOf(const char* text) const {
+	return indexOf(text, 0, getLength());
+}
+
+s32 WoopsiString::indexOf(const char* text, s32 startIndex) const {
+	return indexOf(text, startIndex, getLength() - startIndex);
+}
+
+s32 WoopsiString::indexOf(const WoopsiString& string, s32 startIndex, s32 count) const {
+
+	// Exit if no data available
+	if (!hasData()) return -1;
+	if (!string.hasData()) return -1;
+
+	s32 index = -1;
+	s32 charsExamined = 0;
+	
+	StringIterator* srciter = newStringIterator();
+	StringIterator* finditer = string.newStringIterator();
+	
+	if (!srciter->moveTo(startIndex)) return -1;
+
+	do {
+		bool equal = true;
+		s32 idx = srciter->getIndex();
+
+		finditer->moveToFirst();
+		
+		do {
+			if (srciter->getCodePoint() != finditer->getCodePoint()) {
+				equal = false;
+				break;
+			}
+		} while (finditer->moveToNext() && srciter->moveToNext());
+
+		if (!srciter->moveTo(idx)) break;
+		
+		if(equal && !finditer->moveToNext()) {
+			index = srciter->getIndex();
+			break;
+		}
+		
+		charsExamined++;
+	} while (srciter->moveToNext() && (charsExamined < count));
+	
+	
+	delete srciter;
+	delete finditer;
+	
+	return index;
+}
+
+s32 WoopsiString::lastIndexOf(const char* text) const {
+	return lastIndexOf(text, getLength() - 1, getLength());
+}
+
+s32 WoopsiString::lastIndexOf(const char* text, s32 startIndex) const {
+	return lastIndexOf(text, startIndex, getLength() - (getLength() - startIndex));
+}
+
+s32 WoopsiString::lastIndexOf(const WoopsiString& string, s32 startIndex, s32 count) const {
+
+	// Exit if no data available
+	if (!hasData()) return -1;
+	if (!string.hasData()) return -1;
+
+	s32 index = -1;
+	s32 charsExamined = 0;
+
+	StringIterator* srciter = newStringIterator();
+	StringIterator* finditer = string.newStringIterator();
+	if (!srciter->moveTo(startIndex)) return -1;
+
+	do {
+		bool equal = true;
+		s32 idx = srciter->getIndex();
+				
+		finditer->moveToLast();
+				
+		do {
+			if (srciter->getCodePoint() != finditer->getCodePoint()) {
+				equal = false;
+				break;
+			}
+		} while (finditer->moveToPrevious() && srciter->moveToPrevious());
+
+		if (!srciter->moveTo(idx)) break;
+				
+		if(equal && !finditer->moveToPrevious()) {
+			index = srciter->getIndex() - string.getLength() + 1;
+			break;
+		}
+				
+		charsExamined++;
+	} while (srciter->moveToPrevious() && (charsExamined <= count));
+
+	delete srciter;
+	delete finditer;
+	
+	return index;
 }

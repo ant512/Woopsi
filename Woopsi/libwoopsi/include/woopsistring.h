@@ -253,6 +253,22 @@ namespace WoopsiUI {
 		WoopsiString& operator=(u32 letter);
 
 		/**
+		 * Overloaded addition operator.  Creates a copy of the current string,
+		 * appends the parameter string, and returns the updated copy.
+		 * @param string The string to append.
+		 * @return A copy of this string with the parameter string appended.
+		 */
+		WoopsiString operator+(const WoopsiString& string);
+
+		/**
+		 * Overloaded compound addition/assignment operator.  Appends the
+		 * parameter string to the current string.
+		 * @param string The string to append.
+		 * @return This string.
+		 */
+		WoopsiString& operator+=(const WoopsiString& string);
+
+		/**
 		 * Compares this string to the argument.
 		 * @param string String to compare to.
 		 * @return Zero if both strings are equal.  A value greater than zero
@@ -261,6 +277,13 @@ namespace WoopsiUI {
 		 * value indicates the *byte* that does not match, not the *character*.
 		 */
 		virtual s8 compareTo(const WoopsiString& string) const;
+
+		s32 indexOf(const char* text) const;
+		s32 indexOf(const char* text, s32 startIndex) const;
+		s32 indexOf(const WoopsiString& string, s32 startIndex, s32 count) const;
+		s32 lastIndexOf(const char* text) const;
+		s32 lastIndexOf(const char* text, s32 startIndex) const;
+		s32 lastIndexOf(const WoopsiString& string, s32 startIndex, s32 count) const;
 
 	protected:
 		char* _text;							/**< Raw char array data */
@@ -324,7 +347,7 @@ namespace WoopsiUI {
 		friend class StringIterator;
 		
 		s32 _dataLength;		/**< Length of char data in the string */
-		s32 _stringLength;		/*< Number of unicode tokens in the string */
+		s32 _stringLength;		/**< Number of unicode tokens in the string */
 		s32 _allocatedSize;		/**< Number of bytes allocated for this string */
 		s32 _growAmount;		/**< Number of chars that the string grows by
 									 whenever it needs to get larger */
