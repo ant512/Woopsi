@@ -9,8 +9,21 @@ Change Log
     - WoopsiString::compareTo() sorts Chinese text correctly (carpfish).
     - ProgressBar at 100% completion no longer overflows the printout char
       array (carpfish).
-    - WoopsiString::compareTo() implements a simplistic natural sort (carpfish).
+
+
+  - New Features:
     - Added StringIterator::getInteger() (carpfish).
+    - WoopsiString::compareTo() implements a simplistic natural sort (carpfish).
+    - Added WoopsiString::indexOf(const char* text).
+    - Added WoopsiString::indexOf(const char* text, s32 startIndex).
+    - Added WoopsiString::indexOf(const WoopsiString& string, s32 startIndex,
+      s32 count).
+    - Added WoopsiString::lastIndexOf(const char* text).
+    - Added WoopsiString::lastIndexOf(const char* text, s32 startIndex).
+    - Added WoopsiString::lastIndexOf(const WoopsiString& string, s32
+      startIndex, s32 count).
+    - Added WoopsiString + operator overload.
+    - Added WoopsiString += operator overload.
 
   V1.0 (20110201)
   
