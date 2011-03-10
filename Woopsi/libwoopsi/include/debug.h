@@ -70,11 +70,11 @@ namespace WoopsiUI {
 		static void lowerToBottom();
 
 	private:
-		static Debug* _debug;					/**< Pointer to the debug singleton */
-		AmigaScreen* _screen;					/**< Pointer to the debug screen */
-		AmigaWindow* _window;					/**< Pointer to the debug window */
-		ScrollingTextBox* _textBox;				/**< Pointer to the debug output textbox */
-		GadgetStyle* _style;					/**< Pointer to the debug font */
+		static Debug* _debug;		/**< Pointer to the debug singleton */
+		AmigaScreen* _screen;		/**< Pointer to the debug screen */
+		AmigaWindow* _window;		/**< Pointer to the debug window */
+		ScrollingTextBox* _textBox;	/**< Pointer to the debug output textbox */
+		GadgetStyle* _style;		/**< Pointer to the debug font */
 
 		/** 
 		 * Constructor is private to force a singleton pattern.
