@@ -128,7 +128,7 @@ void FileListBox::readDirectory() {
 	struct stat st;
 
 	// Get a copy of the path char array so that it can be used with libfat
-	char* path = new char[_path->getPath().getLength() + 1];
+	char* path = new char[_path->getPath().getByteCount() + 1];
 	_path->getPath().copyToCharArray(path);
 
 	DIR* dir = opendir(path);
@@ -146,7 +146,7 @@ void FileListBox::readDirectory() {
 		// Bypass "." directory
 		if (strcmp(ent->d_name, ".") == 0) continue;
 
-		char* newPath = new char[strlen(ent->d_name) + _path->getPath().getLength() + 2];
+		char* newPath = new char[strlen(ent->d_name) + _path->getPath().getByteCount() + 2];
 		_path->getPath().copyToCharArray(newPath);
 		strcat(newPath, "/");
 		strcat(newPath, ent->d_name);
