@@ -742,7 +742,7 @@ void WoopsiString::format(const char *format, ...) {
 
 		// Allocate with malloc to prevent us from overflowing the DS' tiny
 		// stack
-		char* buffer = (char*)malloc(len + 1);
+		char* buffer = new char[len + 1];
 
 		// Format again; this time the buffer is guaranteed to be large enough
 		// (unless malloc failed, in which case we're stuck anyway)
@@ -750,7 +750,7 @@ void WoopsiString::format(const char *format, ...) {
 
 		setText(buffer);
 
-		delete buffer;
+		delete[] buffer;
 	}
 
 	va_end(args);
