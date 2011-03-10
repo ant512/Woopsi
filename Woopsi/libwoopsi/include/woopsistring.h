@@ -368,13 +368,6 @@ namespace WoopsiUI {
 		/**
 		 * Formats the supplied char array using standard printf() syntax.  The
 		 * formatted text replaces the contents of the current string object.
-		 *
-		 * Note that the compiler message regarding va_list mangling changes
-		 * in GCC 4.4 are not problems with Woopsi's code.  They are the result
-		 * of the GCC team bizarrely deciding to include news items in compiler
-		 * messages:
-		 * http://gcc.gnu.org/bugzilla/show_bug.cgi?id=42748
-		 *
 		 * @param format The format to use.
 		 * @param ... The formatting arguments.
 		 */
@@ -385,6 +378,13 @@ namespace WoopsiUI {
 		 * formatted text replaces the contents of the current string object.
 		 * Note that va_start() must be called before this method is used, and
 		 * va_end() must be called when it finishes.
+		 *
+		 * Note that the compiler message regarding va_list mangling changes
+		 * in GCC 4.4 are not problems with Woopsi's code.  They are the result
+		 * of the GCC team bizarrely deciding to include news items in compiler
+		 * messages:
+		 * http://gcc.gnu.org/bugzilla/show_bug.cgi?id=42748
+		 *
 		 * @param format The format to use.
 		 * @param args The formatting arguments.
 		 */
