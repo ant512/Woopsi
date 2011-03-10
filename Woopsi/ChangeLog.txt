@@ -30,6 +30,7 @@ Change Log
     - Added WoopsiString::format() (carpfish).
     - Added WoopsiString::init() and moved repeated code out of constructors.
     - Added case sensitive switch to WoopsiString::compareTo() (carpfish).
+    - Added WoopsiString::replace() (carpfish).
 
   V1.0 (20110201)
   

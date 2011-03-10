@@ -755,3 +755,28 @@ void WoopsiString::format(const char *format, ...) {
 
 	va_end(args);
 }
+
+void WoopsiString::replace(const WoopsiString& oldText, const WoopsiString& newText) {
+	replace(oldText, 0, newText);
+}
+
+void WoopsiString::replace(const WoopsiString& oldText, const s32 startIndex, const WoopsiString& newText) {
+	s32 startPos = startIndex;
+	s32 endPos;
+
+	// This is inefficient as it involves an awful lot of seeking through the
+	// string.  However, it is good enough for the limited amount of use this
+	// method should get.
+	while ((endPos = indexOf(oldText, startPos, getLength() - startPos)) != -1) {
+		replace(endPos, oldText.getLength(), newText);
+		startPos = endPos + newText.getLength();
+	}
+}
+
+void WoopsiString::replace(const s32 startIndex, const s32 count, const WoopsiString& newText) {
+	// This is inefficient as it involves an awful lot of seeking through the
+	// string.  However, it is good enough for the limited amount of use this
+	// method should get.
+	remove(startIndex, count);
+	insert(newText, startIndex);
+}

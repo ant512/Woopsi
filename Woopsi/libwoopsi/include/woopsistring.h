@@ -311,6 +311,7 @@ namespace WoopsiUI {
 		 * the supplied char array within the string.  If the char array is not
 		 * found, the method will return -1.
 		 * @param text The char array to find.
+		 * @param startIndex The index to start searching from.
 		 * @return The index of the char array within the current string if it
 		 * exists, or -1 if it does not.
 		 */
@@ -322,6 +323,8 @@ namespace WoopsiUI {
 		 * startIndex + count.  If the string is not found, the method will
 		 * return -1.
 		 * @param text The char array to find.
+		 * @param startIndex The index to start searching from.
+		 * @param count The number of characters to examine.
 		 * @return The index of the char array within the current string if it
 		 * exists, or -1 if it does not.
 		 */
@@ -342,6 +345,7 @@ namespace WoopsiUI {
 		 * the supplied char array within the string.  If the char array is not
 		 * found, the method will return -1.
 		 * @param text The char array to find.
+		 * @param startIndex The index to start searching from.
 		 * @return The index of the char array within the current string if it
 		 * exists, or -1 if it does not.
 		 */
@@ -353,6 +357,8 @@ namespace WoopsiUI {
 		 * startIndex - count.  If the string is not found, the method will
 		 * return -1.
 		 * @param text The char array to find.
+		 * @param startIndex The index to start searching from.
+		 * @param count The number of characters to examine.
 		 * @return The index of the char array within the current string if it
 		 * exists, or -1 if it does not.
 		 */
@@ -365,6 +371,32 @@ namespace WoopsiUI {
 		 * @param ... The formatting arguments.
 		 */
 		void format(const char *format, ...);
+
+		/**
+		 * Replace all instances of oldText within the current string with
+		 * newText.
+		 * @param oldText The text to search for and replace.
+		 * @param newText The new text that will appear in place of the old.
+		 */
+		void replace(const WoopsiString& oldText, const WoopsiString& newText);
+
+		/**
+		 * Replace all instances of oldText within the current string from
+		 * startIndex onwards with newText.
+		 * @param oldText The text to search for and replace.
+		 * @param startIndex The index to start replacing from.
+		 * @param newText The new text that will appear in place of the old.
+		 */
+		void replace(const WoopsiString& oldText, const s32 startIndex, const WoopsiString& newText);
+
+		/**
+		 * Replace the text between the bounds defined by startIndex and 
+		 * startIndex + count with newText.
+		 * @param startIndex The index to start replacing from.
+		 * @param count The number of characters to replace.
+		 * @param newText The new text that will appear in place of the old.
+		 */
+		void replace(const s32 startIndex, const s32 count, const WoopsiString& newText);
 
 	protected:
 		char* _text;							/**< Raw char array data */
