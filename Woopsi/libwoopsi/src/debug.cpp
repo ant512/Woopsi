@@ -1,10 +1,11 @@
-#include "debug.h"
-#include "woopsifuncs.h"
 #include "amigascreen.h"
 #include "amigawindow.h"
-#include "woopsi.h"
+#include "debug.h"
 #include "scrollingtextbox.h"
 #include "tinyfont.h"
+#include "woopsi.h"
+#include "woopsifuncs.h"
+#include "woopsistring.h"
 
 using namespace WoopsiUI;
 
@@ -32,7 +33,7 @@ void Debug::createDebug() {
 	}
 }
 
-void Debug::output(const char* text) {
+void Debug::output(const WoopsiString& text) {
 	if (DEBUG_ACTIVE) {
 		if (woopsiApplication != NULL) {
 			createDebug();
@@ -44,29 +45,17 @@ void Debug::output(const char* text) {
 	}
 }
 
-void Debug::wvsnprintf(size_t maxCount, const char* format, va_list args) {
-
-	// Since we don't know at compile time how big the buffer will be,
-	// we avoid using the DS' midget stack to prevent crashes.
-	char* buffer = new char[maxCount];
-
-	vsnprintf(buffer, maxCount, format, args);
-
-	_debug->output(buffer);
-	delete[] buffer;
-}
-
 void Debug::printf(const char* format, ...) {
-
-	// We assume that we'll only ever print strings shorter than 256 characters.
-	char buffer[256];
 
 	va_list args;
 	va_start(args, format);
-	vsnprintf(buffer, sizeof(buffer), format, args);
+
+	WoopsiString str;
+	str.format(format, args);
+
 	va_end(args);
 
-	_debug->output(buffer);
+	_debug->output(str);
 }
 
 

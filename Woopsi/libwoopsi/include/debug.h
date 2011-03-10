@@ -6,7 +6,6 @@
 #include <stdarg.h>
 #include <nds.h>
 #include "gadgetstyle.h"
-#include "woopsistring.h"
 
 #define DEBUG_ACTIVE true
 
@@ -17,6 +16,7 @@ namespace WoopsiUI {
 	class Gadget;
 	class Woopsi;
 	class ScrollingTextBox;
+	class WoopsiString;
 
 	/**
 	 * Debugging console.  The class automatically creates its own
@@ -41,30 +41,6 @@ namespace WoopsiUI {
 		 * @param ... The values to output.
 		 */
 		static void printf(const char* format, ...);
-
-		/**
-		 * Output formatted values to the debug console.  Uses
-		 * standard printf() syntax.  Note that va_start() must be
-		 * called before this method is used, and va_end() must be
-		 * called when it finishes.
-		 *
-		 * The method uses vsnprintf() internally to perform the
-		 * string formatting.  Unfortunately, this means that the method
-		 * cannot be called vsnprintf() itself as it hides the original C
-		 * method.  Hence, this method's name is prefixed with a "w" (for
-		 * "Woopsi".
-		 *
-		 * Note that the compiler message regarding va_list mangling changes
-		 * in GCC 4.4 are not problems with Woopsi's code.  They are the result
-		 * of the GCC team bizarrely deciding to include news items in compiler
-		 * messages:
-		 * http://gcc.gnu.org/bugzilla/show_bug.cgi?id=42748
-		 *
-		 * @param maxCount The maximum number of characters to print.
-		 * @param format Format of the string to print.
-		 * @param args The values to output.
-		 */
-		static void wvsnprintf(size_t maxCount, const char* format, va_list args);
 
 		/**
 		 * Flip the screen from the bottom physical display to the top display.
@@ -125,7 +101,7 @@ namespace WoopsiUI {
 		 * Print a string to the debug console.
 		 * @param msg The string to print.
 		 */
-		void output(const char* msg);
+		void output(const WoopsiString& msg);
 	};
 }
 

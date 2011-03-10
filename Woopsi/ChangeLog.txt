@@ -10,6 +10,10 @@ Change Log
     - ProgressBar at 100% completion no longer overflows the printout char
       array (carpfish).
     - FileListBox handles paths with unicode names correctly (carpfish).
+    - Removed Debug::wvsnprintf().
+    - Debug::output() receives a WoopsiString reference instead of a char
+      pointer.
+    - Debug::printf() uses WoopsiString::format() instead of vsnprintf().
 
   - New Features:
     - Added StringIterator::getInteger() (carpfish).

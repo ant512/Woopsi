@@ -731,6 +731,11 @@ s32 WoopsiString::lastIndexOf(const WoopsiString& string, s32 startIndex, s32 co
 void WoopsiString::format(const char *format, ...) {
 	va_list args;
 	va_start(args, format);
+	this->format(format, args);
+	va_end(args);
+}
+
+void WoopsiString::format(const char *format, va_list args) {
 
 	// Do the format once to get the length.
 	char ch;
@@ -752,8 +757,6 @@ void WoopsiString::format(const char *format, ...) {
 
 		delete[] buffer;
 	}
-
-	va_end(args);
 }
 
 void WoopsiString::replace(const WoopsiString& oldText, const WoopsiString& newText) {
