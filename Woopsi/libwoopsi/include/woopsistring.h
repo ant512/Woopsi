@@ -287,12 +287,14 @@ namespace WoopsiUI {
 		/**
 		 * Compares this string to the argument.
 		 * @param string String to compare to.
+		 * @param caseSensitive Performs a case-sensitive compare if this is set
+		 * to true.
 		 * @return Zero if both strings are equal.  A value greater than zero
 		 * indicates that this string is greater than the argument string.  A
 		 * value less than zero indicates the opposite.  Note that the return
 		 * value indicates the *byte* that does not match, not the *character*.
 		 */
-		virtual s8 compareTo(const WoopsiString& string) const;
+		virtual s8 compareTo(const WoopsiString& string, bool caseSensitive = false) const;
 
 		/**
 		 * Gets the character index of the first occurence of the supplied char

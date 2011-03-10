@@ -550,7 +550,7 @@ const char* WoopsiString::encodeCodePoint(u32 codepoint, u8* numBytes) const {
 	return NULL;
 }
 
-s8 WoopsiString::compareTo(const WoopsiString& string) const {
+s8 WoopsiString::compareTo(const WoopsiString& string, bool caseSensitive) const {
 	
 	StringIterator* iterator1 = newStringIterator();
 	StringIterator* iterator2 = string.newStringIterator();
@@ -567,8 +567,12 @@ s8 WoopsiString::compareTo(const WoopsiString& string) const {
 		codePoint1 = iterator1->getCodePoint();
 		codePoint2 = iterator2->getCodePoint();
 		
-		if (isupper(codePoint1)) codePoint1 += 0x20;
-		if (isupper(codePoint2)) codePoint2 += 0x20;
+		// If we are ignoring case, we can adjust any upper-case letters so that
+		// they are treated as their lower-case variant by adding a constant.
+		if (!caseSensitive) {
+			if (isupper(codePoint1)) codePoint1 += 0x20;
+			if (isupper(codePoint2)) codePoint2 += 0x20;
+		}
 
 		// We cheat a little here to get a passable natural sort.  Numbers will
 		// automatically be sorted before text due to the fact that they come
