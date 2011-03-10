@@ -269,6 +269,22 @@ namespace WoopsiUI {
 		WoopsiString& operator+=(const WoopsiString& string);
 
 		/**
+		 * Overloaded equality operator.  Checks if this string and the supplied
+		 * argument are equal.
+		 * @param string The string to compare with.
+		 * @return True if the strings are equal; false if not.
+		 */
+		bool operator==(const WoopsiString& string) { return compareTo(string) == 0; };
+
+		/**
+		 * Overloaded inequality operator.  Checks if this string and the
+		 * supplied argument are not equal.
+		 * @param string The string to compare with.
+		 * @return False if the strings are equal; true if not.
+		 */
+		bool operator!=(const WoopsiString& string) { return compareTo(string) != 0; };
+
+		/**
 		 * Compares this string to the argument.
 		 * @param string String to compare to.
 		 * @return Zero if both strings are equal.  A value greater than zero
