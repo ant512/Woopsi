@@ -20,9 +20,6 @@ Woopsi
    handles all of the VBL/gadget deletion/etc code.  Also remove all static
    variables/methods.
 
-Debug
- - Needs to support WoopsiStrings instead of char arrays.
-
 New Gadgets
  - Tree
  - Tabs
@@ -35,10 +32,6 @@ Gadget
 FileRequester
  - Hide the ".." directory and make a parent button?
  - File type filter.
-
-WoopsiString
- - Use negative indices to work backwards from the end of the string, Python-
-   style.
 
 Focus
  - Come up with a way of representing this?
