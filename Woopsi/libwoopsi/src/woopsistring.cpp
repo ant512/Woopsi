@@ -9,42 +9,31 @@
 using namespace WoopsiUI;
 
 WoopsiString::WoopsiString() {
-	_text = NULL;
-	_dataLength = 0;
-	_stringLength = 0;
-	_allocatedSize = 0;
-	_growAmount = 32;
+	init();
 }
 
 WoopsiString::WoopsiString(const char* text) {
-	_text = NULL;
-	_dataLength = 0;
-	_stringLength = 0;
-	_allocatedSize = 0;
-	_growAmount = 32;
-
+	init();
 	setText(text);
 }
 
 WoopsiString::WoopsiString(const u32 text) {
-	_text = NULL;
-	_dataLength = 0;
-	_stringLength = 0;
-	_allocatedSize = 0;
-	_growAmount = 32;
-
+	init();
 	setText(text);
 }
 
 WoopsiString::WoopsiString(const WoopsiString& string) {
+	init();
+	setText(string);
+}
+
+void WoopsiString::init() {
 	_text = NULL;
 	_dataLength = 0;
 	_stringLength = 0;
 	_allocatedSize = 0;
 	_growAmount = 32;
-
-	setText(string);
-};
+}
 
 WoopsiString& WoopsiString::operator=(const WoopsiString& string) {
 	if (&string != this) {
@@ -733,4 +722,32 @@ s32 WoopsiString::lastIndexOf(const WoopsiString& string, s32 startIndex, s32 co
 	delete finditer;
 	
 	return index;
+}
+
+void WoopsiString::format(const char *format, ...) {
+	va_list args;
+	va_start(args, format);
+
+	// Do the format once to get the length.
+	char ch;
+	s32 len = vsnprintf(&ch, 1, format, args);
+
+	if (len < 1) {
+		setText("");
+	} else {
+
+		// Allocate with malloc to prevent us from overflowing the DS' tiny
+		// stack
+		char* buffer = (char*)malloc(len + 1);
+
+		// Format again; this time the buffer is guaranteed to be large enough
+		// (unless malloc failed, in which case we're stuck anyway)
+		vsnprintf(buffer, len + 1, format, args);
+
+		setText(buffer);
+
+		delete buffer;
+	}
+
+	va_end(args);
 }

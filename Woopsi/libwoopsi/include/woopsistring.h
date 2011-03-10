@@ -278,15 +278,83 @@ namespace WoopsiUI {
 		 */
 		virtual s8 compareTo(const WoopsiString& string) const;
 
+		/**
+		 * Gets the character index of the first occurence of the supplied char
+		 * array within the string.  If the char array is not found, the method
+		 * will return -1.
+		 * @param text The char array to find.
+		 * @return The index of the char array within the current string if it
+		 * exists, or -1 if it does not.
+		 */
 		s32 indexOf(const char* text) const;
+
+		/**
+		 * Gets the character index of the first occurence after startIndex of
+		 * the supplied char array within the string.  If the char array is not
+		 * found, the method will return -1.
+		 * @param text The char array to find.
+		 * @return The index of the char array within the current string if it
+		 * exists, or -1 if it does not.
+		 */
 		s32 indexOf(const char* text, s32 startIndex) const;
+
+		/**
+		 * Gets the character index of the first occurence of the supplied
+		 * string within the bounds of the current string between startIndex and
+		 * startIndex + count.  If the string is not found, the method will
+		 * return -1.
+		 * @param text The char array to find.
+		 * @return The index of the char array within the current string if it
+		 * exists, or -1 if it does not.
+		 */
 		s32 indexOf(const WoopsiString& string, s32 startIndex, s32 count) const;
+
+		/**
+		 * Gets the character index of the last occurence of the supplied char
+		 * array within the string.  If the char array is not found, the method
+		 * will return -1.
+		 * @param text The char array to find.
+		 * @return The index of the char array within the current string if it
+		 * exists, or -1 if it does not.
+		 */
 		s32 lastIndexOf(const char* text) const;
+
+		/**
+		 * Gets the character index of the last occurence after startIndex of
+		 * the supplied char array within the string.  If the char array is not
+		 * found, the method will return -1.
+		 * @param text The char array to find.
+		 * @return The index of the char array within the current string if it
+		 * exists, or -1 if it does not.
+		 */
 		s32 lastIndexOf(const char* text, s32 startIndex) const;
+
+		/**
+		 * Gets the character index of the last occurence of the supplied
+		 * string within the bounds of the current string between startIndex and
+		 * startIndex - count.  If the string is not found, the method will
+		 * return -1.
+		 * @param text The char array to find.
+		 * @return The index of the char array within the current string if it
+		 * exists, or -1 if it does not.
+		 */
 		s32 lastIndexOf(const WoopsiString& string, s32 startIndex, s32 count) const;
+
+		/**
+		 * Formats the supplied char array using standard printf() syntax.  The
+		 * formatted text replaces the contents of the current string object.
+		 * @param format The format to use.
+		 * @param ... The formatting arguments.
+		 */
+		void format(const char *format, ...);
 
 	protected:
 		char* _text;							/**< Raw char array data */
+
+		/**
+		 * Initialise the string's default state; called by constructors.
+		 */
+		virtual void init();
 
 		/**
 		 * Allocate memory for the string.
