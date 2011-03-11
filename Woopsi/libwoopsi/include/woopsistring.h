@@ -402,10 +402,10 @@ namespace WoopsiUI {
 		 * Replace all instances of oldText within the current string from
 		 * startIndex onwards with newText.
 		 * @param oldText The text to search for and replace.
-		 * @param startIndex The index to start replacing from.
 		 * @param newText The new text that will appear in place of the old.
+		 * @param startIndex The index to start replacing from.
 		 */
-		void replace(const WoopsiString& oldText, const s32 startIndex, const WoopsiString& newText);
+		void replace(const WoopsiString& oldText, const WoopsiString& newText,  const s32 startIndex);
 
 		/**
 		 * Replace the text between the bounds defined by startIndex and 
@@ -415,6 +415,16 @@ namespace WoopsiUI {
 		 * @param newText The new text that will appear in place of the old.
 		 */
 		void replace(const s32 startIndex, const s32 count, const WoopsiString& newText);
+
+		/**
+		 * Replace the first replaceCount instances of oldText within the
+		 * current string from startIndex onwards with newText.
+		 * @param oldText The text to search for and replace.
+		 * @param newText The new text that will appear in place of the old.
+		 * @param startIndex The index to start replacing from.
+		 * @param replaceCount The number of replacements to make.
+		 */
+		void replace(const WoopsiString& oldText, const WoopsiString& newText, const s32 startIndex, const s32 replaceCount);
 
 	protected:
 		char* _text;							/**< Raw char array data */
