@@ -3,6 +3,7 @@
 
 #include <stdarg.h>
 #include <nds.h>
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 	
@@ -55,6 +56,23 @@ namespace WoopsiUI {
 		WoopsiString(const WoopsiString& string);
 
 		/**
+		 * Constructor that creates a copy of the supplied string from
+		 * startIndex onwards (ie. it creates a substring).
+		 * @param string WoopsiString object to create a copy of.
+		 * @param startIndex The index to copy from.
+		 */
+		WoopsiString(const WoopsiString& string, const s32 startIndex);
+
+		/**
+		 * Constructor that creates a copy of the supplied string from
+		 * startIndex until startIndex + count (ie. it creates a substring).
+		 * @param string WoopsiString object to create a copy of.
+		 * @param startIndex The index to copy from.
+		 * @param length The number of characters to copy.
+		 */
+		WoopsiString(const WoopsiString& string, const s32 startIndex, const s32 length);
+
+		/**
 		 * Destructor.
 		 */
 		virtual inline ~WoopsiString() {
@@ -80,6 +98,14 @@ namespace WoopsiUI {
 		 * @param buffer Buffer to copy the internal char array to.
 		 */
 		virtual void copyToCharArray(char* buffer) const;
+
+		/**
+		 * Set the text in the string to be a substring of the supplied text.
+		 * @param text WoopsiString containing the new data for this string.
+		 * @param startIndex The starting point of the substring.
+		 * @param length The length of the substring.
+		 */
+		virtual void setText(const WoopsiString& text, const s32 startIndex, const s32 length);
 		
 		/**
 		 * Set the text in the string.
@@ -211,23 +237,19 @@ namespace WoopsiUI {
 		virtual const s32 lastIndexOf(u32 letter, s32 startIndex, s32 count) const;
 
 		/**
-		 * Get a substring from this string.  It is the responsibility of the
-		 * caller to delete the substring when it is no longer required.
+		 * Get a substring from this string.
 		 * @param startIndex The starting point of the substring.
-		 * @return A pointer to a new WoopsiString object containing the
-		 * substring.
+		 * @return A new WoopsiString object containing the substring.
 		 */
-		WoopsiString* subString(s32 startIndex) const;
+		WoopsiString subString(s32 startIndex) const;
 
 		/**
-		 * Get a substring from this string.  It is the responsibility of the
-		 * caller to delete the substring when it is no longer required.
+		 * Get a substring from this string.
 		 * @param startIndex The starting point of the substring.
 		 * @param length The length of the substring.
-		 * @return A pointer to a new WoopsiString object containing the
-		 * substring.
+		 * @return A new WoopsiString object containing the substring.
 		 */
-		WoopsiString* subString(s32 startIndex, s32 length) const;
+		WoopsiString subString(s32 startIndex, s32 length) const;
 		
 		/**
 		 * Overloaded assignment operator.  Copies the data within the argument

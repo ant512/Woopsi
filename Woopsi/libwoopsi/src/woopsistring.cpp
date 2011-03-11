@@ -2,9 +2,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#include "woopsistring.h"
 #include "stringiterator.h"
-#include "woopsiarray.h"
+#include "woopsistring.h"
 
 using namespace WoopsiUI;
 
@@ -25,6 +24,16 @@ WoopsiString::WoopsiString(const u32 text) {
 WoopsiString::WoopsiString(const WoopsiString& string) {
 	init();
 	setText(string);
+}
+
+WoopsiString::WoopsiString(const WoopsiString& string, const s32 startIndex) {
+	init();
+	setText(string, startIndex, string.getLength());
+}
+
+WoopsiString::WoopsiString(const WoopsiString& string, const s32 startIndex, const s32 length) {
+	init();
+	setText(string, startIndex, length);
 }
 
 void WoopsiString::init() {
@@ -68,6 +77,26 @@ WoopsiString WoopsiString::operator+(const WoopsiString& string) {
 
 StringIterator* WoopsiString::newStringIterator() const {
 	return new StringIterator(this);
+}
+
+void WoopsiString::setText(const WoopsiString& text, const s32 startIndex, const s32 length) {
+
+	StringIterator* iterator = text.newStringIterator();
+	if (!iterator->moveTo(startIndex)) return;
+
+	// Build up the string character by character.  This is slower than
+	// a straightforward memcpy(), but it avoids multiple calls to getToken().
+	// The difference in speed between this method and a more long-winded, lower
+	// level approach is probably minimal.  This method gets bounds checking for
+	// free.
+	s32 count = 0;
+	while (count < length) {
+		append(iterator->getCodePoint());
+		if (!iterator->moveToNext()) break;
+		count++;
+	}
+
+	delete iterator;
 }
 
 void WoopsiString::setText(const WoopsiString& text) {
@@ -354,32 +383,12 @@ const s32 WoopsiString::lastIndexOf(u32 letter, s32 startIndex, s32 count) const
 	return index;
 }
 
-WoopsiString* WoopsiString::subString(s32 startIndex) const {
-	return subString(startIndex, getLength() - startIndex);
+WoopsiString WoopsiString::subString(s32 startIndex) const {
+	return WoopsiString(startIndex, getLength() - startIndex);
 }
 
-WoopsiString* WoopsiString::subString(s32 startIndex, s32 length) const {
-	WoopsiString* subString = new WoopsiString();
-	StringIterator* iterator = newStringIterator();
-	if (!iterator->moveTo(startIndex)) return NULL;
-
-	// Build up the string character by character.  This is slower than
-	// a straightforward memcpy(), but as we don't know how many bytes
-	// are in the requested substring we can't pre-allocate a buffer for
-	// the memcpy().  The only possible way to achieve this is to use a
-	// two-pass algorithm that firstly gets the number of bytes in the
-	// substring, then performs the memcpy().  However, the method used
-	// here is probably just as fast, as the string always over-allocates.
-	s32 count = 0;
-	while (count < length) {
-		subString->append(iterator->getCodePoint());
-		iterator->moveToNext();
-		count++;
-	}
-
-	delete iterator;
-
-	return subString;
+WoopsiString WoopsiString::subString(s32 startIndex, s32 length) const {
+	return WoopsiString(startIndex, length);
 }
 
 void WoopsiString::allocateMemory(s32 chars, bool preserve) {
@@ -768,6 +777,7 @@ void WoopsiString::replace(const WoopsiString& oldText, const WoopsiString& newT
 }
 
 void WoopsiString::replace(const s32 startIndex, const s32 count, const WoopsiString& newText) {
+
 	// This is inefficient as it involves an awful lot of seeking through the
 	// string.  However, it is good enough for the limited amount of use this
 	// method should get.
@@ -783,6 +793,7 @@ void WoopsiString::replace(const WoopsiString& oldText, const WoopsiString& newT
 	while (count != 0 && (endPos = indexOf(oldText, startPos, getLength() - startPos)) != -1) {
 		replace(endPos, oldText.getLength(), newText);
 		startPos = endPos + newText.getLength();
+
 		if(count!=-1) count--;
 	}
 }
