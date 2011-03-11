@@ -643,17 +643,17 @@ s32 WoopsiString::indexOf(const char* text, s32 startIndex) const {
 	return indexOf(text, startIndex, getLength() - startIndex);
 }
 
-s32 WoopsiString::indexOf(const WoopsiString& string, s32 startIndex, s32 count) const {
+s32 WoopsiString::indexOf(const WoopsiString& text, s32 startIndex, s32 count) const {
 
 	// Exit if no data available
 	if (!hasData()) return -1;
-	if (!string.hasData()) return -1;
+	if (!text.hasData()) return -1;
 
 	s32 index = -1;
 	s32 charsExamined = 0;
 	
 	StringIterator* srciter = newStringIterator();
-	StringIterator* finditer = string.newStringIterator();
+	StringIterator* finditer = text.newStringIterator();
 	
 	if (!srciter->moveTo(startIndex)) return -1;
 
@@ -695,17 +695,17 @@ s32 WoopsiString::lastIndexOf(const char* text, s32 startIndex) const {
 	return lastIndexOf(text, startIndex, getLength() - (getLength() - startIndex));
 }
 
-s32 WoopsiString::lastIndexOf(const WoopsiString& string, s32 startIndex, s32 count) const {
+s32 WoopsiString::lastIndexOf(const WoopsiString& text, s32 startIndex, s32 count) const {
 
 	// Exit if no data available
 	if (!hasData()) return -1;
-	if (!string.hasData()) return -1;
+	if (!text.hasData()) return -1;
 
 	s32 index = -1;
 	s32 charsExamined = 0;
 
 	StringIterator* srciter = newStringIterator();
-	StringIterator* finditer = string.newStringIterator();
+	StringIterator* finditer = text.newStringIterator();
 	if (!srciter->moveTo(startIndex)) return -1;
 
 	do {
@@ -724,7 +724,7 @@ s32 WoopsiString::lastIndexOf(const WoopsiString& string, s32 startIndex, s32 co
 		if (!srciter->moveTo(idx)) break;
 				
 		if(equal && !finditer->moveToPrevious()) {
-			index = srciter->getIndex() - string.getLength() + 1;
+			index = srciter->getIndex() - text.getLength() + 1;
 			break;
 		}
 				

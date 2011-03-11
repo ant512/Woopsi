@@ -351,7 +351,7 @@ namespace WoopsiUI {
 		 * @return The index of the char array within the current string if it
 		 * exists, or -1 if it does not.
 		 */
-		s32 indexOf(const WoopsiString& string, s32 startIndex, s32 count) const;
+		s32 indexOf(const WoopsiString& text, s32 startIndex, s32 count) const;
 
 		/**
 		 * Gets the character index of the last occurence of the supplied char
@@ -385,7 +385,7 @@ namespace WoopsiUI {
 		 * @return The index of the char array within the current string if it
 		 * exists, or -1 if it does not.
 		 */
-		s32 lastIndexOf(const WoopsiString& string, s32 startIndex, s32 count) const;
+		s32 lastIndexOf(const WoopsiString& text, s32 startIndex, s32 count) const;
 
 		/**
 		 * Formats the supplied char array using standard printf() syntax.  The
