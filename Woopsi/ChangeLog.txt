@@ -14,6 +14,8 @@ Change Log
     - Debug::output() receives a WoopsiString reference instead of a char
       pointer.
     - Debug::printf() uses WoopsiString::format() instead of vsnprintf().
+    - WoopsiString::subString() returns a WoopsiString instead of a pointer to a
+      WoopsiString.
 
   - New Features:
     - Added StringIterator::getInteger() (carpfish).
@@ -35,6 +37,10 @@ Change Log
     - Added WoopsiString::init() and moved repeated code out of constructors.
     - Added case sensitive switch to WoopsiString::compareTo() (carpfish).
     - Added WoopsiString::replace() (carpfish).
+    - Added WoopsiString constructor to create a new string from a substring of
+      another.
+    - Added WoopsiString::split() (carpfish).
+    - Added WoopsiString::setText() overload to set to a copy of a substring.
 
   V1.0 (20110201)
   
