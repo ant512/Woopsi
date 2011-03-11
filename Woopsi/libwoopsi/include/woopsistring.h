@@ -10,8 +10,9 @@ namespace WoopsiUI {
 	class StringIterator;
 
 	/**
-	 * Unicode string class.  Uses UTF-8 encoding.  For optimal performance, use
-	 * the StringIterator class to iterate over a WoopsiString instance.
+	 * Unicode mutable string class.  Uses UTF-8 encoding.  For optimal
+	 * performance, use the StringIterator class to iterate over a WoopsiString
+	 * instance.
 	 *
 	 * Where possible, the string avoids allocating memory each time the string
 	 * grows or shrinks.  This means that the string may consume more memory
@@ -32,7 +33,7 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Constructor to create a blank object.
+		 * Constructor to create a blank string.
 		 */
 		WoopsiString();
 
