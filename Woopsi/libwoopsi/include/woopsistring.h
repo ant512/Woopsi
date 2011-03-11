@@ -514,11 +514,11 @@ namespace WoopsiUI {
 	private:
 		friend class StringIterator;
 		
-		s32 _dataLength;		/**< Length of char data in the string */
-		s32 _stringLength;		/**< Number of unicode tokens in the string */
-		s32 _allocatedSize;		/**< Number of bytes allocated for this string */
-		s32 _growAmount;		/**< Number of chars that the string grows by
-									 whenever it needs to get larger */
+		s32 _dataLength;	/**< Length of char data in the string */
+		s32 _stringLength;	/**< Number of unicode tokens in the string */
+		s32 _allocatedSize;	/**< Number of bytes allocated for this string */
+		s32 _growAmount;	/**< Number of chars that the string grows by
+								 whenever it needs to get larger */
 									 
 		/**
 		 * Encodes a codepoint into its UTF-8 representation.  Will allocate
