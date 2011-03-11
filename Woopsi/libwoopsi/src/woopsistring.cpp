@@ -797,3 +797,26 @@ void WoopsiString::replace(const WoopsiString& oldText, const WoopsiString& newT
 		if(count!=-1) count--;
 	}
 }
+
+void WoopsiString::split(const WoopsiString& separator, WoopsiArray<WoopsiString>& result) const {
+	split(separator, true, result);
+}
+
+void WoopsiString::split(const WoopsiString& separator, bool allowEmptyEntries, WoopsiArray<WoopsiString>& result) const {
+	result.clear();
+
+	s32 startPos = 0;
+	s32 endPos;
+
+	while ((endPos = indexOf(separator, startPos, getLength() - startPos)) != -1) {
+		if (allowEmptyEntries || startPos != endPos) {
+			result.push_back(subString(startPos, endPos - startPos));
+		}
+
+		startPos = endPos + separator.getLength();
+	}
+
+	if (allowEmptyEntries || startPos != getLength()) {
+		result.push_back(subString(startPos));
+	}
+}

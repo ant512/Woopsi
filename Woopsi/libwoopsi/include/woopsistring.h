@@ -448,6 +448,27 @@ namespace WoopsiUI {
 		 */
 		void replace(const WoopsiString& oldText, const WoopsiString& newText, const s32 startIndex, const s32 replaceCount);
 
+		/**
+		 * Splits the string into substrings divided by the supplied separator.
+		 * The substrings will be placed in the result WoopsiArray.
+		 * @param separator String used to divide this string.
+		 * @param result Will be populated with the subsections of the divided
+		 * string.
+		 */
+		void split(const WoopsiString& separator, WoopsiArray<WoopsiString>& result) const;
+
+		/**
+		 * Splits the string into substrings divided by the supplied separator.
+		 * The substrings will be placed in the result WoopsiArray.
+		 * @param separator String used to divide this string.
+		 * @param allowEmptyEntries If set to false, any empty substrings
+		 * produced by the dividing process will not be added to the result
+		 * array.
+		 * @param result Will be populated with the subsections of the divided
+		 * string.
+		 */
+		void split(const WoopsiString& separator, bool allowEmptyEntries, WoopsiArray<WoopsiString>& result) const;
+
 	protected:
 		char* _text;							/**< Raw char array data */
 
