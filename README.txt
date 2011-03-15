@@ -139,8 +139,8 @@ SDL Compatibility
      
   Note that you should not use the Woopsi makefiles, as these are only relevant
   to DS builds of Woopsi.
-  
-  
+
+
 Credits and Acknowledgements
 ---------------------------
 
@@ -155,8 +155,6 @@ Credits and Acknowledgements
   - Testing and gadget contributions                - Mark Adamson
   - Simian Zombie logo                              - John Clay
   - Thanks to                                       - The devKitPro team
-                                                    - Nintendo
-                                                    - R. J. Michal
 
 
 Links

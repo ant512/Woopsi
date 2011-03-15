@@ -1,4 +1,4 @@
-* Copyright (c) 2007-2010, Antony Dzeryn
+* Copyright (c) 2007-2011, Antony Dzeryn
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -50,24 +50,24 @@ Credits and Acknowlegements
   - Testing and suggestions                         - John Buxton
                                                     - Chase
                                                     - Leonelhs
+                                                    - Carpfish
   - Unicode work and libfreetype integration        - Olivier Binda (Lakedaemon)
   - Testing and gadget contributions                - Mark Adamson
   - Simian Zombie logo                              - John Clay
   - Thanks to                                       - The devKitPro team
-                                                    - Nintendo
-                                                    - R. J. Michal
 
 
 Links
 -----
 
-  - http://woopsi.org								 - Main site
-  - http://ant.simianzombie.com                      - Development blog
-  - http://ant.simianzombie.com/forum                - Forum
-  - http://bitbucket.org/ant512/woopsi  		     - BitBucket page
+  - http://woopsi.org                               - Main site
+  - http://ant.simianzombie.com                     - Development blog
+  - http://ant.simianzombie.com/forum               - Forum
+  - http://bitbucket.org/ant512/woopsi              - BitBucket page
+  - http://bitbucket.org/Lakedaemon/woopsi-xl       - Woopsi with extra libs
 
 
 Email
 -----
 
-  Contact me at spam_mail250@yahoo.com.
+  Contact me at ant@woopsi.org.
