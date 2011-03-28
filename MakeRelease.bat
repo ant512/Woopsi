@@ -20,4 +20,5 @@ make
 rmdir build /s /q
 
 rem Finishing touch
+cd ..\..
 del MakeRelease.bat
