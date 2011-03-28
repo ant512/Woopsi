@@ -21,7 +21,7 @@ echo Installing to %location%.
 echo.
 echo Compiling libwoopsi...
 
-cd .\Woopsi\libwoopsi
+cd .\libwoopsi
 make clean
 make
 

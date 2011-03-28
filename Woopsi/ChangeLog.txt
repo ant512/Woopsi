@@ -16,6 +16,7 @@ Change Log
     - Debug::printf() uses WoopsiString::format() instead of vsnprintf().
     - WoopsiString::subString() returns a WoopsiString instead of a pointer to a
       WoopsiString.
+    - Install batch file works correctly with latest directory structure.
 
   - New Features:
     - Added StringIterator::getInteger() (carpfish).
