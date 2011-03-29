@@ -297,8 +297,9 @@ void Woopsi::handleLid() {
 }
 
 bool Woopsi::swapGadgetDepth(Gadget* gadget) {
-	// Do we have more than one screen?
-	if (_gadgets.size() > 1) {
+	// Do we have more than three screens?  Two are created by default as
+	// background screens, so we can only swap if we have more than 3
+	if (_gadgets.size() > 3) {
 
 		s32 gadgetSource = getGadgetIndex(gadget);
 		s32 gadgetDest = 0;
@@ -336,8 +337,9 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 	// Do not flip if there is only one physical screen available
 	if (SCREEN_COUNT == 1) return false;
 
-	// Only flip if there is more than one screen
-	if (_gadgets.size() > 1) {
+	// Only flip if there are more than three screens. Two are created by
+	// default as background screens, so we can only swap if we have more than 3
+	if (_gadgets.size() > 3) {
 		// Locate the top gadget
 		Gadget* topGadget = NULL;
 

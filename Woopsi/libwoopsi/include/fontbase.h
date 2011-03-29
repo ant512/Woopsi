@@ -104,7 +104,7 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		virtual s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;  // This is flawed as it doesn't allow 2 different fonts on the same line
+		virtual s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 
 		/**
 		 * Draw an individual character of the font to the specified bitmap on a baseline.
