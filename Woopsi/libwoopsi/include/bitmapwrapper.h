@@ -64,8 +64,22 @@ namespace WoopsiUI {
 		 */
 		void copy(s16 x, s16 y, u32 size, u16* dest) const;
 
+		/**
+		 * Get the bitmap's width.
+		 * @return The bitmap's width.
+		 */
+		inline const u16 getWidth() const { return _width; };
+
+		/**
+		 * Get the bitmap's height.
+		 * @return The bitmap's height.
+		 */
+		inline const u16 getHeight() const { return _height; };
+
 	protected:
-		const u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
+		const u16* _bitmap __attribute__ ((aligned (4)));	/**< Bitmap */
+		u16 _width;											/**< Width of the bitmap */
+		u16 _height;										/**< Height of the bitmap */
 
 		/**
 		 * Copy constructor is protected to prevent usage.

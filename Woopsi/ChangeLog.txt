@@ -10,6 +10,8 @@ Change Log
     - Removed height member from FontBase and transplanted all methods to
       PackedFontBase, making FontBase data free.
     - Minor tidying in gadget.cpp.
+    - Removed width and height members from BitmapBase and transplanted to
+      BitmapWrapper, FrameBuffer and Bitmap.
   
   - New Features:
   

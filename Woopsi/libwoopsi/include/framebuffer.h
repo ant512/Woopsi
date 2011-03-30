@@ -124,6 +124,18 @@ namespace WoopsiUI {
 		 */
 		void blitFill(const s16 x, const s16 y, const u16 colour, const u32 size);
 
+		/**
+		 * Get the bitmap's width.
+		 * @return The bitmap's width.
+		 */
+		inline const u16 getWidth() const { return _width; };
+
+		/**
+		 * Get the bitmap's height.
+		 * @return The bitmap's height.
+		 */
+		inline const u16 getHeight() const { return _height; };
+
 	protected:
 		
 #ifdef USING_SDL
@@ -156,6 +168,9 @@ namespace WoopsiUI {
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline FrameBuffer(const FrameBuffer& bitmap) { };
+
+		u16 _width;									/**< Width of the bitmap */
+		u16 _height;								/**< Height of the bitmap */
 	};
 }
 
