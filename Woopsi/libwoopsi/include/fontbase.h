@@ -20,11 +20,6 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Constructor.
-		 */
-		FontBase() { }
-		
-		/**
 		 * Destructor.
 		 */
 		virtual inline ~FontBase() { };

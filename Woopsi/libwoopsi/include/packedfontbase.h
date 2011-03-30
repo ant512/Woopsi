@@ -40,7 +40,6 @@ namespace WoopsiUI {
 			const u8 fontTop,
 			const u8 fixedWidth = 0)
 			:
-			  FontBase(),
 			  _height(height),
 			  _first(first), _last(last),
 			  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
