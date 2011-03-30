@@ -278,19 +278,7 @@ namespace WoopsiUI {
 		 * @param length The number of characters to draw.
 		 * @param colour The colour of the string.
 		 */
-		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour);
-		
-		/**
-		 * Draw a portion of a string to the bitmap.
-		 * @param x The x co-ordinate of the string.
-		 * @param y The y co-ordinate of the string.
-		 * @param font The font to draw with.
-		 * @param string The string to output.
-		 * @param startIndex The start index within the string from which
-		 * drawing will commence.
-		 * @param length The number of characters to draw.
-		 */
-		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);
+		void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour = 0);
 
 		/**
 		 * Draw a portion of a string on a baseline (chars may have different
@@ -303,7 +291,7 @@ namespace WoopsiUI {
 		 * drawing will commence.
 		 * @param length The number of characters to draw.
 		 */		 
-        void drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);
+        void drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour = 0);
 		
 		/**
 		 * Draw a bitmap to the port's bitmap.

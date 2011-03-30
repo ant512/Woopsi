@@ -6,6 +6,7 @@ using namespace WoopsiUI;
 void PackedFont1::renderChar(
 		const u16* pixelData, u16 pixelsPerRow,
 		MutableBitmapBase* bitmap,
+		u16 colour,
 		s16 x, s16 y,
 		u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {
@@ -14,8 +15,10 @@ void PackedFont1::renderChar(
 		(clipY1 > y + getHeight() - 1) ||
 		(x > clipX2) ||
 		(x + pixelsPerRow - 1 < clipX1)) return;
+
+	// If no colour is specified, default to black
+	if (!colour) colour = 1 << 15;
 	
-	u16 colour = getColour();
 	u16 curr;
 	u16 mask;
 

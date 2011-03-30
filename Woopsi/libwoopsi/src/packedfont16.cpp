@@ -10,6 +10,7 @@ using namespace WoopsiUI;
 void PackedFont16::renderChar(
 		const u16* pixelData, u16 pixelsPerRow,
 		MutableBitmapBase* bitmap,
+		u16 colour,
 		s16 x, s16 y,
 		u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {
@@ -19,8 +20,6 @@ void PackedFont16::renderChar(
 		(clipY1 > y + getHeight() - 1) ||
 		(x > clipX2) ||
 		(x + pixelsPerRow - 1 < clipX1)) return;
-
-	u16 colour = getColour();
 
 	// adjust clipY2 to be the last row+1 in the glyph
 	// so we only write while (y<=clipY2)

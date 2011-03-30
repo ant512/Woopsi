@@ -76,79 +76,55 @@ void GraphicsPort::getClipRect(Rect& rect) const {
 }
 
 // Print a string in a specific colour
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
-	
-	// Ignore command if drawing is disabled
-	if (!_isEnabled) return;
-
-	// Adjust from port-space to screen-space
-	convertPortToScreenSpace(&x, &y);
-	
-	Rect rect;
-	
-	// Draw all visible rects
-	for (s32 i = 0; i < _clipRectList.size(); i++) {
-		
-		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
-		_clipRectList.at(i).copyTo(rect);
-		
-		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
-		
-		_graphics->setClipRect(rect);
-		_graphics->drawText(x, y, font, string, startIndex, length);
-	}
-}
-
-// Print a string in a specific colour on a baseline
-void GraphicsPort::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
-	
-	// Ignore command if drawing is disabled
-	if (!_isEnabled) return;
-
-	// Adjust from port-space to screen-space
-	convertPortToScreenSpace(&x, &y);
-	
-	Rect rect;
-	
-	// Draw all visible rects
-	for (s32 i = 0; i < _clipRectList.size(); i++) {
-		
-		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
-		_clipRectList.at(i).copyTo(rect);
-		
-		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
-		
-		_graphics->setClipRect(rect);
-		_graphics->drawBaselineText(x, y, font, string, startIndex, length);
-	}
-}
-
-void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string) {
-	drawText(x, y, font, string, 0, string.getLength());
-}
-
-// Print a string in a specific colour
 void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
 	
 	// Ignore command if drawing is disabled
 	if (!_isEnabled) return;
 
-	// Store current font colour
-	bool isMonochrome = font->isMonochrome();
-	u16 oldColour = font->getColour();
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
 	
-	// Update font colour
-	font->setColour(colour);
+	Rect rect;
 	
-	// Output as normal
-	drawText(x, y, font, string, startIndex, length);
-	
-	// Reset colour
-	if (!isMonochrome) {
-		font->clearColour();
-	} else {
-		font->setColour(oldColour);
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		_clipRectList.at(i).copyTo(rect);
+		
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawText(x, y, font, string, startIndex, length, colour);
 	}
+}
+
+// Print a string in a specific colour on a baseline
+void GraphicsPort::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
+	
+	// Ignore command if drawing is disabled
+	if (!_isEnabled) return;
+
+	// Adjust from port-space to screen-space
+	convertPortToScreenSpace(&x, &y);
+	
+	Rect rect;
+	
+	// Draw all visible rects
+	for (s32 i = 0; i < _clipRectList.size(); i++) {
+		
+		// Adjust from graphicsport co-ordinates to framebuffer co-ordinates
+		_clipRectList.at(i).copyTo(rect);
+		
+		if (_isTopScreen) rect.y -= TOP_SCREEN_Y_OFFSET;
+		
+		_graphics->setClipRect(rect);
+		_graphics->drawBaselineText(x, y, font, string, startIndex, length, colour);
+	}
+}
+
+void GraphicsPort::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string) {
+	drawText(x, y, font, string, 0, string.getLength());
 }
 
 // Draw filled rectangle - external function

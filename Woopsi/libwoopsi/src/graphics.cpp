@@ -223,7 +223,7 @@ void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string
 	drawText(x, y, font, string, 0, string.getLength());
 }
 
-void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
+void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
 
 	s16 clipX1 = _clipRect.x;
 	s16 clipY1 = _clipRect.y;
@@ -248,7 +248,7 @@ void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string
 		
 	if (iterator->moveTo(startIndex)) {
 		do {
-			x = font->drawChar(_bitmap, iterator->getCodePoint(), x, y, clipX1, clipY1, clipX2, clipY2);
+			x = font->drawChar(_bitmap, iterator->getCodePoint(), colour, x, y, clipX1, clipY1, clipX2, clipY2);
 
 			// Abort if x pos outside clipping region
 			if (x > clipX2) break;
@@ -258,7 +258,7 @@ void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string
 	delete iterator;
 }
 
-void Graphics::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length) {
+void Graphics::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
 
 	s16 clipX1 = _clipRect.x;
 	s16 clipY1 = _clipRect.y;
@@ -273,31 +273,10 @@ void Graphics::drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString
 	// where to stop rendering anyway clipping will be done in the font, on a char basis 
 	if (iterator->moveTo(startIndex)) {
 		do {
-		        x = font->drawBaselineChar(_bitmap, iterator->getCodePoint(), x, y, clipX1, clipY1, clipX2, clipY2);
+		        x = font->drawBaselineChar(_bitmap, iterator->getCodePoint(), colour, x, y, clipX1, clipY1, clipX2, clipY2);
 		} while (iterator->moveToNext() && (iterator->getIndex() < startIndex + length));
 	}
 	delete iterator;
-}
-
-// Print a string in a specific colour
-void Graphics::drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour) {
-
-	// Store current font colour
-	bool isMonochrome = font->isMonochrome();
-	u16 oldColour = font->getColour();
-
-	// Update font colour
-	font->setColour(colour);
-
-	// Output as normal
-	drawText(x, y, font, string, startIndex, length);
-
-	// Reset colour
-	if (!isMonochrome) {
-		font->clearColour();
-	} else {
-		font->setColour(oldColour);
-	}
 }
 
 void Graphics::drawXORPixel(s16 x, s16 y) {

@@ -1,7 +1,19 @@
 Change Log
 ----------
 
-  V1.1
+  V1.2
+  
+  - Fixes:
+    - Screen flipping/ordering does not occur if only one screen is visible.
+    - Removed ability to set font draw colour/monochrome from font classes;
+      replaced with explicit "colour" parameter to all draw methods.
+    - Removed height member from FontBase and transplanted all methods to
+      PackedFontBase, making FontBase data free.
+  
+  - New Features:
+  
+
+  V1.1 (20110329)
   
   - Fixes:
     - Slider arrow buttons work correctly.

@@ -21,15 +21,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Constructor.
-		 * @param height The height of the font in pixels.
-		 * @param transparentColour The colour in the font bitmap used as the
-		 * background colour.
 		 */
-		FontBase(const u8 height, const u16 transparentColour = 0) {
-			_height = height;
-			_drawColour = 0;
-			_isMonochrome = false;
-		}
+		FontBase() { }
 		
 		/**
 		 * Destructor.
@@ -43,54 +36,6 @@ namespace WoopsiUI {
 		 * the glyph is blank.
 		 */
 		virtual const bool isCharBlank(const u32 letter) const = 0;
-		
-		/**
-		 * Sets the colour to use as the drawing colour.  If set, this overrides
-		 * the colours present in a non-monochrome font.
-		 * @param colour The new drawing colour.
-		 */
-		void setColour(const u16 colour) {
-			_drawColour = colour;
-			_isMonochrome = true;
-		}
-		
-		/**
-		 * Gets the colour currently being used as the drawing colour.  This
-		 * should be used in conjunction with isMonochrome() to determine if
-		 * this is really being used or not; isMonochrome() must be true for
-		 * this colour to be used.
-		 * @return The current drawing colour.
-		 */
-		inline const u16 getColour() const { return _drawColour; };
-		
-		/**
-		 * Returns true if the current font is being drawn using a single
-		 * colour.
-		 * @return True if the current font is monochrome.
-		 */
-		inline const bool isMonochrome() const { return _isMonochrome; };
-		
-		/**
-		 * Get the colour currently being used as the transparent background
-		 * colour.
-		 * @return The transparent background colour.
-		 */
-		inline const u16 getTransparentColour() const { return _transparentColour; };
-		
-		/**
-		 * Sets the transparent background colour to a new value.
-		 * @param colour The new background colour.
-		 */
-		inline void setTransparentColour(const u16 colour) { _transparentColour = colour; };
-
-		/**
-		 * Resets back to multicolour mode if the font supports it and is
-		 * currently set to monochrome mode.
-		 */
-		inline void clearColour() {
-			_isMonochrome = false;
-			_drawColour = 0;	
-		};
 
 		/**
 		 * Draw an individual character of the font to the specified bitmap.
@@ -104,7 +49,7 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		virtual s16 drawChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
+		virtual s16 drawChar(MutableBitmapBase* bitmap, u32 letter, u16 colour, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 
 		/**
 		 * Draw an individual character of the font to the specified bitmap on a baseline.
@@ -118,7 +63,7 @@ namespace WoopsiUI {
 		 * @param clipY2 The bottom edge of the clipping rectangle.
 		 * @return The x co-ordinate for the next character to be drawn.
 		 */
-		virtual s16 drawBaselineChar(MutableBitmapBase* bitmap, u32 letter, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
+		virtual s16 drawBaselineChar(MutableBitmapBase* bitmap, u32 letter, u16 colour, s16 x, s16 y, u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 		
 		/**
 		 * Get the width of a string in pixels when drawn with this font.
@@ -149,7 +94,7 @@ namespace WoopsiUI {
 		 * @param letter The letter to get the height of.
 		 * @return The height of the character in pixels.
 		 */
-		virtual u8 getCharHeight(u32 letter) const { return _height; };
+		virtual u8 getCharHeight(u32 letter) const = 0;
 		
 		/**
 		 * Get the algebric distance from baseline to top of an individual character.
@@ -162,13 +107,7 @@ namespace WoopsiUI {
 		 * Gets the height of the font.
 		 * @return The height of the font.
 		 */
-		inline const u8 getHeight() const { return _height; };
-
-	private:
-		u8 _height;					/**< Height of the font. */
-		u16 _drawColour;			/**< Colour to draw the font with when rendering. */
-		bool _isMonochrome;			/**< True if the font is not multicolour. */
-		u16 _transparentColour;		/**< Background colour that should not be rendered. */
+		virtual const u8 getHeight() const = 0;
 	};
 }
 

@@ -325,19 +325,7 @@ namespace WoopsiUI {
 		 * @param length The number of characters to draw.
 		 * @param colour The colour of the string.
 		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour);
-		
-		/**
-		 * Draw a string to the internal bitmap in a specific colour.
-		 * @param x The x co-ordinate of the string.
-		 * @param y The y co-ordinate of the string.
-		 * @param font The font to draw with.
-		 * @param string The string to output.
-		 * @param startIndex The start index within the string from which
-		 * drawing will commence.
-		 * @param length The number of characters to draw.
-		 */
-		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);
+		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour = 0);
 
 		/**
 		 * Draw a portion of a string on a baseline (chars may have different
@@ -350,7 +338,7 @@ namespace WoopsiUI {
 		 * drawing will commence.
 		 * @param length The number of characters to draw.
 		 */		 
-        void drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length);		
+        void drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour = 0);		
 		
 		/**
 		 * Scroll a region by a specified distance in two dimensions.  Performs

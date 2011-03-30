@@ -42,6 +42,7 @@ u16 PackedFontBase::getStringWidth(const WoopsiString& text, s32 startIndex, s32
 s16 PackedFontBase::drawChar(
 	MutableBitmapBase* bitmap,
 	u32 letter,
+	u16 colour,
 	s16 x, s16 y,
 	u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2)
 {
@@ -62,6 +63,7 @@ s16 PackedFontBase::drawChar(
 		&_glyphData[_glyphOffset[letter - _first]],
 		pixelWidth,
 		bitmap,
+		colour,
 		x, y,
 		clipX1, clipY1, clipX2, clipY2);
 

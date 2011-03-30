@@ -39,7 +39,8 @@ namespace WoopsiUI {
 			const u8 fontTop,
 			const u8 fixedWidth = 0)
 			:
-			  FontBase(height, 0),
+			  FontBase(),
+			  _height(height),
 			  _first(first), _last(last),
 			  _glyphData(glyphData), _glyphOffset(glyphOffset), _glyphWidth(glyphWidth),
 			  _fontWidth(0), _spWidth(spWidth),
@@ -68,6 +69,7 @@ namespace WoopsiUI {
 		virtual s16 drawChar(
 			MutableBitmapBase* bitmap,
 			u32 letter,
+			u16 colour,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 		
@@ -86,9 +88,10 @@ namespace WoopsiUI {
 		virtual s16 drawBaselineChar(
 			MutableBitmapBase* bitmap,
 			u32 letter,
+			u16 colour,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) {
-		        return drawChar(bitmap,letter,x, y-getCharTop(y),clipX1, clipY1, clipX2, clipY2);
+		        return drawChar(bitmap, letter, colour, x, y - getCharTop(y), clipX1, clipY1, clipX2, clipY2);
 			};			
 		
 		/**
@@ -129,6 +132,19 @@ namespace WoopsiUI {
 		const bool isCharBlank(const u32 letter) const;
 
 		/**
+		 * Gets the height of the font.
+		 * @return The height of the font.
+		 */
+		inline const u8 getHeight() const { return _height; };
+
+		/**
+		 * Get the height of an individual character.
+		 * @param letter The letter to get the height of.
+		 * @return The height of the character in pixels.
+		 */
+		virtual u8 getCharHeight(u32 letter) const { return _height; };
+
+		/**
 		 * Render an individual character of the font to the specified bitmap.
 		 * @param pixelData The font-specific pixel data
 		 * @param pixelsPerRow The number of pixels to render per row (for this character)
@@ -143,19 +159,21 @@ namespace WoopsiUI {
 		virtual void renderChar(
 			const u16* pixelData, u16 pixelsPerRow,
 			MutableBitmapBase* bitmap,
+			u16 colour,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2) = 0;
 
 	protected:
-		u8 _first;					/**< The first letter that the font contains */
-		u8 _last;					/**< The last letter that the font contains */
-		const u16 *_glyphData;		/**< All data for each glyph */
-		const u16 *_glyphOffset;	/**< Locations of each character in _glyphData */
-		const u8 *_glyphWidth;		/**< Width in pixels of each glyph in _glyphData */
-		u8 _fontWidth;				/**< Width of the font, or 0 for proportional */
-		u8 _spWidth;				/**< Width of a blank space */
-		u8 _fontTop;				/**< Constant Top of the packed font*/
-		u8 _widMax;					/**< The maximum width of a character in the font */
+		u8 _height;					/**< The height of the font. */
+		u8 _first;					/**< The first letter that the font contains. */
+		u8 _last;					/**< The last letter that the font contains. */
+		const u16 *_glyphData;		/**< All data for each glyph. */
+		const u16 *_glyphOffset;	/**< Locations of each character in _glyphData. */
+		const u8 *_glyphWidth;		/**< Width in pixels of each glyph in _glyphData. */
+		u8 _fontWidth;				/**< Width of the font, or 0 for proportional. */
+		u8 _spWidth;				/**< Width of a blank space. */
+		u8 _fontTop;				/**< Constant Top of the packed font. */
+		u8 _widMax;					/**< The maximum width of a character in the font. */
 	};
 }
 

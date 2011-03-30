@@ -56,6 +56,7 @@ namespace WoopsiUI {
 		void renderChar(
 			const u16* pixelData, u16 pixelsPerRow,
 			MutableBitmapBase* bitmap,
+			u16 colour,
 			s16 x, s16 y,
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 	};
