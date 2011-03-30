@@ -365,83 +365,84 @@ void Gadget::markRectDamaged(const Rect& rect) {
 // Marks the gadget as deleted and adds it to the deletion queue
 void Gadget::close() {
 
-	if (!_flags.deleted) {
-		_gadgetEventHandlers->raiseCloseEvent();
-		_gadgetEventHandlers->disable();
-		
-		_parent->invalidateVisibleRectCache();
-		markRectsDamaged();
+	// Do not attempt to close deleted gadgets.  They should only ever be
+	// deleted after being closed, so this suggests that an attempt is being
+	// made to close the gadget twice.
+	if (_flags.deleted) return;
 
-		_flags.deleted = true;
-		
-		// Unset clicked gadget if necessary
-		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
-		if (clickedGadget == this) {
-			release(clickedGadget->getX(), clickedGadget->getY());
-		}
+	_gadgetEventHandlers->raiseCloseEvent();
+	_gadgetEventHandlers->disable();
+	
+	_parent->invalidateVisibleRectCache();
+	markRectsDamaged();
 
-		// Ensure the gadget isn't running modally
-		stopModal();
-
-		if (_parent != NULL) {
-			_parent->closeChild(this);
-		}
-
-		// Ensure that this gadget can no longer affect the decoration count
-		_flags.decoration = false;
+	_flags.deleted = true;
+	
+	// Unset clicked gadget if necessary
+	Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+	if (clickedGadget == this) {
+		release(clickedGadget->getX(), clickedGadget->getY());
 	}
+
+	// Ensure the gadget isn't running modally
+	stopModal();
+
+	if (_parent != NULL) {
+		_parent->closeChild(this);
+	}
+
+	// Ensure that this gadget can no longer affect the decoration count
+	_flags.decoration = false;
 }
 
 // Erases the gadget from the display and prevents it from being redrawn
 bool Gadget::shelve() {
 
-	if (!_flags.shelved) {
-		_gadgetEventHandlers->raiseShelveEvent();
-		_gadgetEventHandlers->disable();
+ 	// Never attempt to shelve a gadget that has already been shelved
+	if (_flags.shelved) return false;
 
-		markRectsDamaged();
+	_gadgetEventHandlers->raiseShelveEvent();
+	_gadgetEventHandlers->disable();
 
-		_flags.shelved = true;
+	markRectsDamaged();
 
-		// Unset clicked gadget if necessary
-		Gadget* clickedGadget = woopsiApplication->getClickedGadget();
-		if (clickedGadget == this) {
-			release(clickedGadget->getX(), clickedGadget->getY());
-		}
+	_flags.shelved = true;
 
-		// Ensure the gadget isn't running modally
-		stopModal();
-
-		if (_parent != NULL) {
-			_parent->shelveChild(this);
-		}
-
-		return true;
+	// Unset clicked gadget if necessary
+	Gadget* clickedGadget = woopsiApplication->getClickedGadget();
+	if (clickedGadget == this) {
+		release(clickedGadget->getX(), clickedGadget->getY());
 	}
 
-	return false;
+	// Ensure the gadget isn't running modally
+	stopModal();
+
+	if (_parent != NULL) {
+		_parent->shelveChild(this);
+	}
+
+	return true;
 }
 
 // Re-enables drawing and draws the gadget to the display
 bool Gadget::unshelve() {
 
-	if (_flags.shelved) {
+	// Never attempt to unshelve a gadget that is not already shelved
+	if (!_flags.shelved) return false;
 
-		_gadgetEventHandlers->enable();
-		_gadgetEventHandlers->raiseUnshelveEvent();
+	_gadgetEventHandlers->enable();
+	_gadgetEventHandlers->raiseUnshelveEvent();
 
-		_flags.shelved = false;
+	_flags.shelved = false;
 
-		if (_parent != NULL) {
-			_parent->moveShelvedToChildList(this);
-			_parent->invalidateVisibleRectCache();	
-		}
-
-		markRectsDamaged();
-
-		return true;
+	if (_parent != NULL) {
+		_parent->moveShelvedToChildList(this);
+		_parent->invalidateVisibleRectCache();	
 	}
-	return false;
+
+	markRectsDamaged();
+
+	return true;
 }
 
 // Add a gadget to the deletion queue ready for later processing
@@ -603,6 +604,8 @@ void Gadget::closeChild(Gadget* gadget) {
 }
 
 bool Gadget::swapGadgetDepth(Gadget* gadget) {
+
+	if (gadget == NULL) return false;
 	
 	// Can we swap?
 	if ((_gadgets.size() > 1) && (!gadget->isDecoration())) {
@@ -658,35 +661,35 @@ bool Gadget::swapDepth() {
 }
 
 bool Gadget::enable() {
-	if (!_flags.enabled) {
-		_flags.enabled = true;
-		
-		onEnable();
 
-		markRectsDamaged();
+	// Never enable a gadget that is already enabled
+	if (_flags.enabled) return false;
 
-		_gadgetEventHandlers->raiseEnableEvent();
+	_flags.enabled = true;
+	
+	onEnable();
 
-		return true;
-	}
+	markRectsDamaged();
 
-	return false;
+	_gadgetEventHandlers->raiseEnableEvent();
+
+	return true;
 }
 
 bool Gadget::disable() {
-	if (_flags.enabled) {
-		_flags.enabled = false;
-		
-		onDisable();
 
-		markRectsDamaged();
+	// Never disable a gadget that is already disabled
+	if (!_flags.enabled) return false;
 
-		_gadgetEventHandlers->raiseDisableEvent();
+	_flags.enabled = false;
+	
+	onDisable();
 
-		return true;
-	}
+	markRectsDamaged();
 
-	return false;
+	_gadgetEventHandlers->raiseDisableEvent();
+
+	return true;
 }
 
 bool Gadget::moveTo(s16 x, s16 y) {
