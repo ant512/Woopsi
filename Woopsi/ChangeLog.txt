@@ -12,6 +12,7 @@ Change Log
     - Minor tidying in gadget.cpp.
     - Removed width and height members from BitmapBase and transplanted to
       BitmapWrapper, FrameBuffer and Bitmap.
+    - Removed constructor from FontBase.
   
   - New Features:
   
