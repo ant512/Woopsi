@@ -26,7 +26,8 @@ namespace WoopsiUI {
 		 * @param glyphWidth Pixel width of character[i].
 		 * @param height The height of the font.
 		 * @param spWidth The width of a space character.
-		 * @param fontTop The height of the font minus the blank spaces below 'a'.
+		 * @param fontTop The height of the font minus the blank spaces below
+		 * 'a'.
 		 * @param fixedWidth Character width (fixed), or 0 for proportional.
 		 */
 		PackedFontBase(
@@ -47,10 +48,11 @@ namespace WoopsiUI {
 			  _fontTop(fontTop), _widMax(fixedWidth) { };
 
 		/**
-		 * Makes this font fixed-width, though doesn't allow the spacing to be less
-		 * than the font's known maximum character width.  If you want fixed spacing but
-		 * don't know the required size, pass 1.
-		 * @param fontWidth Font width to use (0 for proportional, 1 for wide-enough)
+		 * Makes this font fixed-width, though doesn't allow the spacing to be
+		 * less than the font's known maximum character width.  If you want
+		 * fixed spacing but don't know the required size, pass 1.
+		 * @param fontWidth Font width to use (0 for proportional, 1 for
+		 * wide-enough).
 		 */
 		inline void setFontWidth(u8 fontWidth) { _fontWidth = (fontWidth && (fontWidth < _widMax)) ? _widMax : fontWidth; };
 
@@ -58,6 +60,8 @@ namespace WoopsiUI {
 		 * Draw an individual character of the font to the specified bitmap.
 		 * @param bitmap The bitmap to draw to.
 		 * @param letter The character to output.
+		 * @param colour The colour to draw with.  If this is 0 the font's
+		 * default colour will be used.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
 		 * @param clipX1 The left edge of the clipping rectangle.
@@ -74,9 +78,12 @@ namespace WoopsiUI {
 			u16 clipX1, u16 clipY1, u16 clipX2, u16 clipY2);
 		
 		/**
-		 * Draw an individual character of the font to the specified bitmap on a baseline.
+		 * Draw an individual character of the font to the specified bitmap on a
+		 * baseline.
 		 * @param bitmap The bitmap to draw to.
 		 * @param letter The character to output.
+		 * @param colour The colour to draw with.  If this is 0 the font's
+		 * default colour will be used.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
 		 * @param clipX1 The left edge of the clipping rectangle.
@@ -102,9 +109,9 @@ namespace WoopsiUI {
 		virtual u16 getStringWidth(const WoopsiString& text) const;
 
 		/**
-		 * Get the width of a portion of a string in pixels when drawn with this font.
-		 * Useful if you want to determine the length of a string without a terminator, or
-		 * the length of a section of a string.
+		 * Get the width of a portion of a string in pixels when drawn with this
+		 * font.  Useful if you want to determine the length of a string without
+		 * a terminator, or the length of a section of a string.
 		 * @param text The string to check.
 		 * @param startIndex The start point of the substring within the string.
 		 * @param length The length of the substring in chars.
@@ -146,9 +153,12 @@ namespace WoopsiUI {
 
 		/**
 		 * Render an individual character of the font to the specified bitmap.
-		 * @param pixelData The font-specific pixel data
-		 * @param pixelsPerRow The number of pixels to render per row (for this character)
+		 * @param pixelData The font-specific pixel data.
+		 * @param pixelsPerRow The number of pixels to render per row (for this
+		 * character).
 		 * @param bitmap The bitmap to draw to.
+		 * @param colour The colour to draw with.  If this is 0 the font's
+		 * default colour will be used.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
 		 * @param clipX1 The left edge of the clipping rectangle.

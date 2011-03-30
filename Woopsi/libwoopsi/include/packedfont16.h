@@ -26,7 +26,8 @@ namespace WoopsiUI {
 		 * @param glyphWidth Pixel width of character[i].
 		 * @param spWidth The height of a space
 		 * @param height The height of the font.
-		 * @param charTop The height of the font minus the blank spaces below 'a'.
+		 * @param charTop The height of the font minus the blank spaces below
+		 * 'a'.
 		 * @param fixedWidth Character width (fixed), or 0 for proportional.
 		 */
 		PackedFont16(
@@ -43,12 +44,14 @@ namespace WoopsiUI {
 
 		/**
 		 * Render an individual character of the font to the specified bitmap.
-		 * @param pixelData The font-specific pixel data
-		 * @param pixelsPerRow The number of pixels to render per row (for this character)
+		 * @param pixelData The font-specific pixel data.
+		 * @param pixelsPerRow The number of pixels to render per row
+		 * (for this character).
 		 * @param bitmap Bitmap to draw to.  Use 0 to draw using the font's own
 		 * colour scheme, or any other value to override with a monochromatic
 		 * colour.
-		 * @param colour The colour to draw with.
+		 * @param colour The colour to draw with.  If this is 0 the font's
+		 * default colour will be used.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
 		 * @param clipX1 The left edge of the clipping rectangle.
