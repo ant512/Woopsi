@@ -323,7 +323,8 @@ namespace WoopsiUI {
 		 * @param startIndex The start index within the string from which
 		 * drawing will commence.
 		 * @param length The number of characters to draw.
-		 * @param colour The colour of the string.
+		 * @param colour The colour of the string.  If this is not specified the
+		 * font's default colour will be used.
 		 */
 		virtual void drawText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour = 0);
 
@@ -337,6 +338,8 @@ namespace WoopsiUI {
 		 * @param startIndex The start index within the string from which
 		 * drawing will commence.
 		 * @param length The number of characters to draw.
+		 * @param colour The colour of the string.  If this is not specified the
+		 * font's default colour will be used.
 		 */		 
         void drawBaselineText(s16 x, s16 y, FontBase* font, const WoopsiString& string, s32 startIndex, s32 length, u16 colour = 0);		
 		

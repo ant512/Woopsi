@@ -46,6 +46,7 @@ namespace WoopsiUI {
 		 * @param pixelData The font-specific pixel data
 		 * @param pixelsPerRow The number of pixels to render per row (for this character)
 		 * @param bitmap Bitmap to draw to.
+		 * @param colour The colour to draw with.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
 		 * @param clipX1 The left edge of the clipping rectangle.

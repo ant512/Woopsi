@@ -41,6 +41,7 @@ namespace WoopsiUI {
 		 * Draw an individual character of the font to the specified bitmap.
 		 * @param bitmap The bitmap to draw to.
 		 * @param letter The character to output.
+		 * @param colour The colour to draw with.
 		 * @param x The x co-ordinate of the text.
 		 * @param y The y co-ordinate of the text.
 		 * @param clipX1 The left edge of the clipping rectangle.
@@ -55,6 +56,7 @@ namespace WoopsiUI {
 		 * Draw an individual character of the font to the specified bitmap on a baseline.
 		 * @param bitmap The bitmap to draw to.
 		 * @param letter The character to output.
+		 * @param colour The colour to draw with.
 		 * @param x The x co-ordinate of the pen.
 		 * @param y The y co-ordinate of the pen.
 		 * @param clipX1 The left edge of the clipping rectangle.
