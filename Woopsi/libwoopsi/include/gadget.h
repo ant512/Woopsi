@@ -859,12 +859,11 @@ namespace WoopsiUI {
 		/**
 		 * Moves the the supplied child gadget from its current location in the
 		 * child list to the new location.
-		 * @param gadget A pointer to the child gadget that needs to swap
-		 * depths.
+		 * @param sourceIndex The current index of the child gadget.
 		 * @param destinationIndex The new index for the child gadget.
 		 * @return True if the swap was successful.
 		 */
-		bool swapGadgetDepth(Gadget* gadget, s32 destinationIndex);
+		bool changeGadgetDepth(s32 sourceIndex, s32 destinationIndex);
 
 		/**
 		 * Gets the lowest non-decoration gadget in the child list that collides
@@ -885,7 +884,11 @@ namespace WoopsiUI {
 		s32 getHighestCollidingGadgetIndex(const Gadget* gadget) const;
 
 		/**
-		 * Swap the depth of this gadget.
+		 * Swap the depth of this gadget.  Compares the gadget's depth with all
+		 * non-decoration sibling gadgets that it overlaps.  If it is not at the
+		 * front of the overlapping pile, it is moved to the front.  If it is at
+		 * the front of the overlapping pile, it moves the gadget to the back of
+		 * the pile.
 		 * @return True if the swap was successful.
 		 * @see swapGadgetDepth()
 		 */

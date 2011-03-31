@@ -18,8 +18,7 @@ Change Log
     - Gadget::checkCollision(Gadget*) will ignore collisions with hidden
       gadgets.
     - Gadget::checkCollision(Gadget*) now accepts a const Gadget*.
-    - Replaced Gadget::swapGadgetDepth(Gadget*) with
-      Gadget::swapGadgetDepth(Gadget*, s32).
+    - Replaced Gadget::swapGadgetDepth() with Gadget::changeGadgetDepth().
     - Rewrote Gadget::swapDepth() to be more intelligent.
     - The index to which Gadget::swapDepth() moves the gadget is now determined
       by swapDepth() instead of the parent's swapGadgetDepth() method.

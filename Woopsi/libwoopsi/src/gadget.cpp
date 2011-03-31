@@ -637,11 +637,11 @@ s32 Gadget::getLowestCollidingGadgetIndex(const Gadget* gadget) const {
 	return -1;
 }
 
-bool Gadget::swapGadgetDepth(Gadget* gadget, s32 destinationIndex) {
+bool Gadget::changeGadgetDepth(s32 sourceIndex, s32 destinationIndex) {
+
+	Gadget* gadget = _gadgets[sourceIndex];
+
 	if (gadget->isDecoration()) return false;
-
-	s32 sourceIndex = getGadgetIndex(gadget);
-
 	if (destinationIndex == sourceIndex) return false;
 
 	// Ensure the gadget gets erased
@@ -682,17 +682,17 @@ bool Gadget::swapDepth() {
 	// Cannot swap if there is nowhere to swap to
 	if ((lowestIndex == -1) && (highestIndex == -1)) return false;
 
-	s32 dest = -1;
+	s32 destinationIndex = -1;
 
 	// If we are behind another gadget, move to the front.  If not, move to the
 	// back
 	if (highestIndex > sourceIndex) {
-		dest = highestIndex;
+		destinationIndex = highestIndex;
 	} else {
-		dest = lowestIndex > -1 ? lowestIndex : highestIndex;
+		destinationIndex = lowestIndex > -1 ? lowestIndex : highestIndex;
 	}
 
-	return _parent->swapGadgetDepth(this, dest);
+	return _parent->changeGadgetDepth(sourceIndex, destinationIndex);
 }
 
 bool Gadget::enable() {
