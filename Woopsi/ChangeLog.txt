@@ -13,8 +13,6 @@ Change Log
     - Removed width and height members from BitmapBase and transplanted to
       BitmapWrapper, FrameBuffer and Bitmap.
     - Removed constructor from FontBase.
-    - Clicking the depth or close button in an AmigaWindow will give the window
-      focus.
     - Gadget::checkCollision(Gadget*) will ignore collisions with hidden
       gadgets.
     - Gadget::checkCollision(Gadget*) now accepts a const Gadget*.
