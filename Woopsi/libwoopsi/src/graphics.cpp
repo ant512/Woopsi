@@ -378,7 +378,7 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 	if (oldColour == newColour) return;
 
 	// Initalise stack
-	WoopsiArray<s32>* stack = new WoopsiArray<s32>();
+	WoopsiArray<s32> stack;
 
 	s16 x1;
 	u8 spanUp, spanDown;
@@ -413,15 +413,15 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 			if ((!spanUp) && (y > _clipRect.y) && (_bitmap->getPixel(x1, y - 1) == oldColour)) {
 				pushStack(x1, y - 1, stack);
 				spanUp = 1;
-			} else if ((spanUp) && (_clipRect.y > 0) && (_bitmap->getPixel(x1, y - 1) != oldColour)) {
+			} else if ((spanUp) && (y > _clipRect.y) && (_bitmap->getPixel(x1, y - 1) != oldColour)) {
 				spanUp = 0;
 			}
 
 			// Check pixel below
-			if ((!spanDown) && (_clipRect.y < _clipRect.height - 1) && (_bitmap->getPixel(x1, y + 1) == oldColour)) {
+			if ((!spanDown) && (y < _clipRect.height - 1) && (_bitmap->getPixel(x1, y + 1) == oldColour)) {
 				pushStack(x1, y + 1, stack);
 				spanDown = 1;
-			} else if ((spanDown) && (_clipRect.y < _clipRect.height - 1) && (_bitmap->getPixel(x1, y + 1) != oldColour)) {
+			} else if ((spanDown) && (y < _clipRect.height - 1) && (_bitmap->getPixel(x1, y + 1) != oldColour)) {
 				spanDown = 0;
 			}
 
@@ -432,25 +432,23 @@ void Graphics::floodFill(s16 x, s16 y, u16 newColour) {
 		// Draw line
 		drawHorizLine(rowStart, y, rowWidth, newColour);
 	}
-
-	delete stack;
 }
 
 // Floodfill stack functions
-bool Graphics::popStack(s16* x, s16* y, WoopsiArray<s32>* stack) { 
-	if (stack->size() > 0) { 
-		s32 val = stack->at(stack->size() - 1);
+bool Graphics::popStack(s16* x, s16* y, WoopsiArray<s32>& stack) { 
+	if (stack.size() > 0) { 
+		s32 val = stack.at(stack.size() - 1);
 		*y = val / _width;
 		*x = val % _width;
-		stack->pop_back();
+		stack.pop_back();
 		return true;
 	}
 
 	return false;  
 }
 
-void Graphics::pushStack(s16 x, s16 y, WoopsiArray<s32>* stack) {
-	stack->push_back(x + (y * _width));
+void Graphics::pushStack(s16 x, s16 y, WoopsiArray<s32>& stack) {
+	stack.push_back(x + (y * _width));
 }
 
 //Draw bitmap to the internal bitmap

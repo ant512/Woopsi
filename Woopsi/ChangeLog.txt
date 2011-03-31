@@ -27,6 +27,9 @@ Change Log
     - Minor tidying and optimisations.
     - Gadget::_decorationCount is an s32 instead of a u8.
     - Fixed array index confusion in RectCache::markRectDamaged().
+    - Fixed bugs in Graphics::floodFill().
+    - Stack methods in Graphics class expect a reference to a stack as a
+      parameter instead of pointer.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().

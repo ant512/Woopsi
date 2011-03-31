@@ -1,5 +1,4 @@
  - Make the WoopsiString raise events when it is modified?
- - Is there a bug in the floodfill?
  - Remove flags?
  - Key events - should these bubble up the hierarchy?
  - Superbitmap draw methods should mark rects as dirty - GraphicsPort raises
