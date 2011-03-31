@@ -38,19 +38,6 @@ namespace WoopsiUI {
 		virtual inline const WoopsiString& getTitle() const { return _title; };
 
 		/**
-		 * Swaps the depth of the supplied child gadget.  The child
-		 * gadget is assumed to be a window, and although this is not a requirement,
-		 * it does mean that child gadgets are depth-swapped as windows would
-		 * be expected to.  If the gadget is not at the top of the z-order of the
-		 * gadgets is collides with, it is raised above those gadgets.  If it is
-		 * at the top of the z-order of the gadgets it collides with, it is
-		 * dropped down to the bottom of that z-order.
-		 * @param gadget A pointer to the child gadget that needs to swap depths.
-		 * @return True if the swap was successful.
-		 */
-		virtual bool swapGadgetDepth(Gadget* gadget);
-
-		/**
 		 * Flip the screen from the bottom physical display to the top display.
 		 */
 		virtual void flipToTopScreen();

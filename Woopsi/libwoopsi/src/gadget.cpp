@@ -317,7 +317,9 @@ bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) const {
 }
 
 // Check for collisions with another gadget
-bool Gadget::checkCollision(Gadget* gadget) const {
+bool Gadget::checkCollision(const Gadget* gadget) const {
+
+	if (gadget->isHidden()) return false;
 
 	// Get the clipped rects
 	Rect gadgetRect;
@@ -603,61 +605,94 @@ void Gadget::closeChild(Gadget* gadget) {
 	moveChildToDeleteQueue(gadget);
 }
 
-bool Gadget::swapGadgetDepth(Gadget* gadget) {
+// Ignores collisions with decorations
+s32 Gadget::getHighestCollidingGadgetIndex(const Gadget* gadget) const {
+	if (gadget == NULL) return -1;
+	if (_gadgets.size() - _decorationCount < 2) return -1;
 
-	if (gadget == NULL) return false;
-	
-	// Can we swap?
-	if ((_gadgets.size() > 1) && (!gadget->isDecoration())) {
-
-		s32 gadgetSource = 0;
-		s32 gadgetDest = 0;
-
-		// Locate the gadget in the vector
-		gadgetSource = getGadgetIndex(gadget);
-
-		// Attempt to raise up
-		s32 i = getHigherVisibleGadget(gadgetSource);
-
-		if (i > -1) {
-			// Raise
-			gadgetDest = i;
-		} else {
-			// Lower to bottom of stack
-			gadgetDest = _decorationCount;
+	for (s32 i = _gadgets.size() - 1; i >= _decorationCount; --i) {
+		if (gadget != _gadgets[i]) {
+			if (_gadgets[i]->checkCollision(gadget)) {
+				return i;
+			}
 		}
-		
-		// Erase the gadget from the screen
-		gadget->markRectsDamaged();
-
-		// Swap
-		Gadget* tmp = _gadgets[gadgetSource];
-		_gadgets[gadgetSource] = _gadgets[gadgetDest];
-		_gadgets[gadgetDest] = tmp;
-
-		// Invalidate the gadgets below the top affected gadget
-		if (gadgetSource < gadgetDest) {
-			// Source lower; invalidate from dest down
-			_gadgets[gadgetDest]->invalidateVisibleRectCache();
-			invalidateLowerGadgetsVisibleRectCache(_gadgets[gadgetDest]);
-		} else {
-			// Dest lower; invalidate from source down
-			_gadgets[gadgetSource]->invalidateVisibleRectCache();
-			invalidateLowerGadgetsVisibleRectCache(_gadgets[gadgetSource]);
-		}
-
-		return true;
 	}
 
-	return false;
+	return -1;
+}
+
+// Ignores collisions with decorations
+s32 Gadget::getLowestCollidingGadgetIndex(const Gadget* gadget) const {
+	if (gadget == NULL) return -1;
+	if (_gadgets.size() - _decorationCount < 2) return -1;
+
+	for (s32 i = _decorationCount; i < _gadgets.size(); ++i) {
+		if (gadget != _gadgets[i]) {
+			if (_gadgets[i]->checkCollision(gadget)) {
+				return i;
+			}
+		}
+	}
+
+	return -1;
+}
+
+bool Gadget::swapGadgetDepth(Gadget* gadget, s32 destinationIndex) {
+	if (gadget->isDecoration()) return false;
+
+	s32 sourceIndex = getGadgetIndex(gadget);
+
+	if (destinationIndex == sourceIndex) return false;
+
+	// Ensure the gadget gets erased
+	gadget->markRectsDamaged();
+	gadget->invalidateVisibleRectCache();
+
+	_gadgets.erase(sourceIndex);
+	_gadgets.insert(destinationIndex, gadget);
+
+	// Invalidate rect cache of all gadgets that collide with the swapped gadget
+	for (s32 i = 0; i < _gadgets.size(); ++i) {
+		if (_gadgets[i]->checkCollision(gadget)) {
+			_gadgets[i]->invalidateVisibleRectCache();
+		}
+	}
+
+	// Ensure the gadget gets correctly redrawn
+	gadget->markRectsDamaged();
+
+	// Shift focus to the frontmost gadget if the moved gadget had focus and
+	// moved backwards
+	if ((destinationIndex < sourceIndex) && (gadget->hasFocus())) {
+		_gadgets[_gadgets.size() - 1]->focus();
+	}
+
+	return true;
 }
 
 bool Gadget::swapDepth() {
-	if (_parent != NULL) {
-		return _parent->swapGadgetDepth(this);
+
+	if (_parent == NULL) return false;
+	if (isDecoration()) return false;
+
+	s32 lowestIndex = _parent->getLowestCollidingGadgetIndex(this);
+	s32 highestIndex = _parent->getHighestCollidingGadgetIndex(this);
+	s32 sourceIndex = _parent->getGadgetIndex(this);
+
+	// Cannot swap if there is nowhere to swap to
+	if ((lowestIndex == -1) && (highestIndex == -1)) return false;
+
+	s32 dest = -1;
+
+	// If we are behind another gadget, move to the front.  If not, move to the
+	// back
+	if (highestIndex > sourceIndex) {
+		dest = highestIndex;
+	} else {
+		dest = lowestIndex > -1 ? lowestIndex : highestIndex;
 	}
 
-	return false;
+	return _parent->swapGadgetDepth(this, dest);
 }
 
 bool Gadget::enable() {
@@ -1227,47 +1262,47 @@ bool Gadget::lowerGadgetToBottom(Gadget* gadget) {
 
 // Append a gadget to the end of the gadget list
 void Gadget::addGadget(Gadget* gadget) {
-	if (gadget->getParent() == NULL) {
-		gadget->setParent(this);
 
-		// Process decorations and standard gadgets differently
-		if (gadget->isDecoration()) {
-			_gadgets.insert(_decorationCount, gadget);
+	// Do not add gadgets that already belong to another gadget
+	if (gadget->getParent() != NULL) return;
 
-			// Increase the decoration count
-			_decorationCount++;
-		} else {
-			_gadgets.push_back(gadget);
-		}
+	gadget->setParent(this);
 
-		// Should the gadget steal the focus?
-		if (gadget->hasFocus()) {
-			setFocusedGadget(gadget);
-		}
-
-		invalidateVisibleRectCache();
-		gadget->markRectsDamaged();
+	// Process decorations and standard gadgets differently
+	if (gadget->isDecoration()) {
+		_gadgets.insert(_decorationCount, gadget);
+		_decorationCount++;
+	} else {
+		_gadgets.push_back(gadget);
 	}
+
+	// Should the gadget steal the focus?
+	if (gadget->hasFocus()) {
+		setFocusedGadget(gadget);
+	}
+
+	invalidateVisibleRectCache();
+	gadget->markRectsDamaged();
 }
 
 // Insert a gadget into the gadget list after the decorations
 void Gadget::insertGadget(Gadget* gadget) {
-	if (gadget->getParent() == NULL) {
-		gadget->setParent(this);
 
-		// Process decorations and standard gadgets differently
-		if (gadget->isDecoration()) {
-			_gadgets.insert(0, gadget);
+	// Do not insert gadgets that already belong to another gadget
+	if (gadget->getParent() != NULL) return;
 
-			// Increate the decoration count
-			_decorationCount++;
-		} else {
-			_gadgets.insert(_decorationCount, gadget);
-		}
+	gadget->setParent(this);
 
-		invalidateVisibleRectCache();
-		gadget->markRectsDamaged();
+	// Process decorations and standard gadgets differently
+	if (gadget->isDecoration()) {
+		_gadgets.insert(0, gadget);
+		_decorationCount++;
+	} else {
+		_gadgets.insert(_decorationCount, gadget);
 	}
+
+	invalidateVisibleRectCache();
+	gadget->markRectsDamaged();
 }
 
 // Invalidate any gadgets below the supplied index

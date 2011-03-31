@@ -67,6 +67,12 @@ namespace WoopsiUI {
 		 * Handle events fired by decoration gadgets.
 		 * @param e Event arguments to process.
 		 */
+		virtual void handleClickEvent(const GadgetEventArgs& e);
+
+		/**
+		 * Handle events fired by decoration gadgets.
+		 * @param e Event arguments to process.
+		 */
 		virtual void handleReleaseEvent(const GadgetEventArgs& e);
 
 		/**

@@ -112,31 +112,37 @@ void AmigaWindow::onResize(u16 width, u16 height) {
 	if (_windowFlags.showDepthButton) _depthButton->moveTo(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0);
 }
 
+void AmigaWindow::handleClickEvent(const GadgetEventArgs& e) {
+	if (e.getSource() == NULL) return;
+
+	if (e.getSource() == _depthButton) {
+		focus();
+	} else if (e.getSource() == _closeButton) {
+		focus();
+	}
+}
+
 void AmigaWindow::handleReleaseEvent(const GadgetEventArgs& e) {
-	
-	if (e.getSource() != NULL) {
+	if (e.getSource() == NULL) return;
 
-		if (e.getSource() == _depthButton) {
+	if (e.getSource() == _depthButton) {
+		swapDepth();
+	} else if (e.getSource() == _closeButton) {
 
-			// Swap depths
-			swapDepth();
-		} else if (e.getSource() == _closeButton) {
-
-			// Work out which close type to use
-			switch (getCloseType()) {
-				case CLOSE_TYPE_CLOSE:
-					// Close the window
-					close();
-					break;
-				case CLOSE_TYPE_SHELVE:
-					// Shelve the window
-					shelve();
-					break;
-				case CLOSE_TYPE_HIDE:
-					// Hide the window
-					hide();
-					break;
-			}
+		// Work out which close type to use
+		switch (getCloseType()) {
+			case CLOSE_TYPE_CLOSE:
+				// Close the window
+				close();
+				break;
+			case CLOSE_TYPE_SHELVE:
+				// Shelve the window
+				shelve();
+				break;
+			case CLOSE_TYPE_HIDE:
+				// Hide the window
+				hide();
+				break;
 		}
 	}
 }

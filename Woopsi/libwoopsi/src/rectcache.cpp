@@ -41,8 +41,8 @@ void RectCache::markRectDamaged(const Rect& rect) const {
 	// the rect that overlap.
 	for (s32 i = 0; i < _foregroundRegions->size(); ++i) {
 		for (s32 j = 0; j < dirtyRects.size(); ++j) {
-			if (_foregroundRegions->at(i).splitIntersection(dirtyRects[i], intersect, &remainderRects)) {
-				dirtyRects.erase(i);
+			if (_foregroundRegions->at(i).splitIntersection(dirtyRects[j], intersect, &remainderRects)) {
+				dirtyRects.erase(j);
 				i--;
 				
 				i += remainderRects.size();

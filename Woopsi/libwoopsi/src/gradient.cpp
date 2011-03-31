@@ -14,7 +14,7 @@ Gradient::Gradient(s16 x, s16 y, u16 width, u16 height, u16 fromColour, u16 toCo
 	_fromColour(fromColour),
 	_toColour(toColour) {
 	
-	_flags.decoration = 1;
+	_flags.decoration = true;
 	
 	_rowColour = NULL;
 	

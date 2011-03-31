@@ -772,7 +772,7 @@ namespace WoopsiUI {
 		 * with.
 		 * @return True if a collision occurred.
 		 */
-		bool checkCollision(Gadget* gadget) const;
+		bool checkCollision(const Gadget* gadget) const;
 
 		/**
 		 * Checks if the supplied rect collides with this gadget.  Co-ordinates
@@ -857,24 +857,39 @@ namespace WoopsiUI {
 		void clipRectToHierarchy(Rect& rect) const;
 
 		/**
-		 * Swaps the depth of the supplied child gadget.  Raises it up one place
-		 * unless the gadget is at the top of the stack, in which case it is
-		 * pushed to the bottom.  Typically called by Woopsi to cycle through
-		 * screens when their depth buttons are pushed.
+		 * Moves the the supplied child gadget from its current location in the
+		 * child list to the new location.
 		 * @param gadget A pointer to the child gadget that needs to swap
 		 * depths.
+		 * @param destinationIndex The new index for the child gadget.
 		 * @return True if the swap was successful.
 		 */
-		virtual bool swapGadgetDepth(Gadget* gadget);
+		bool swapGadgetDepth(Gadget* gadget, s32 destinationIndex);
 
 		/**
-		 * Swap the depth of this gadget.  Calls the parent gadget's
-		 * swapGadgetDepth() method to perform the swap, so the behaviour of
-		 * this method is dictated by the gadget's parent.
+		 * Gets the lowest non-decoration gadget in the child list that collides
+		 * with the specified gadget.
+		 * @param gadget The gadget to check for collisions.
+		 * @return The index of the lowest colliding gadget, or -1 if no gadgets
+		 * collide with the specified gadget.
+		 */
+		s32 getLowestCollidingGadgetIndex(const Gadget* gadget) const;
+
+		/**
+		 * Gets the highest non-decoration gadget in the child list that
+		 * collides with the specified gadget.
+		 * @param gadget The gadget to check for collisions.
+		 * @return The index of the highest colliding gadget, or -1 if no
+		 * gadgets collide with the specified gadget.
+		 */
+		s32 getHighestCollidingGadgetIndex(const Gadget* gadget) const;
+
+		/**
+		 * Swap the depth of this gadget.
 		 * @return True if the swap was successful.
 		 * @see swapGadgetDepth()
 		 */
-		bool swapDepth();
+		virtual bool swapDepth();
 
 		/**
 		 * Delete this gadget.  This should never be called in user code; gadget
@@ -1028,7 +1043,7 @@ namespace WoopsiUI {
 		WoopsiArray<Gadget*> _shelvedGadgets;	/**< List of shelved child gadgets. */
 
 		// Decorations
-		u8 _decorationCount;					/**< Total number of decoration child gadgets. */
+		s32 _decorationCount;					/**< Total number of decoration child gadgets. */
 
 		// Visible regions
 		RectCache* _rectCache;					/**< List of the gadget's visible regions. */

@@ -57,14 +57,6 @@ namespace WoopsiUI {
 		virtual void processOneVBL(Gadget* gadget = NULL);
 
 		/**
-		 * Swaps the depth of the supplied gadget.  This function presumes that
-		 * all child gadgets are screens.
-		 * @param gadget The gadget to be depth-swapped.
-		 * @return True if the depth swap occurred.
-		 */
-		virtual bool swapGadgetDepth(Gadget* gadget);
-
-		/**
 		 * Flips the supplied gadget from its current screen to the other
 		 * screen.  This function presumes that all child gadgets are screens.
 		 * @param gadget The gadget (must be a screen) to flip.
