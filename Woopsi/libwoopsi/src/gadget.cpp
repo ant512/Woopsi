@@ -454,7 +454,9 @@ void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
 		if (_gadgets[i] == gadget) {
 
 			// Add gadget to Woopsi's delete vector
-			Woopsi::addToDeleteQueue(gadget);
+			if (woopsiApplication != NULL) {
+				woopsiApplication->addToDeleteQueue(gadget);
+			}
 
 			// Remove gadget from main vector
 			_gadgets.erase(i);

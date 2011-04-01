@@ -17,20 +17,12 @@ using namespace WoopsiUI;
 // Instantiate singleton
 Woopsi* Woopsi::singleton = NULL;
 
-// Initialise static VBL listener vector
-WoopsiArray<WoopsiTimer*> Woopsi::_vblListeners;
-
-// Initialise static deletion queue
-WoopsiArray<Gadget*> Woopsi::_deleteQueue;
-
-// Initialise VBL counter
-u32 Woopsi::_vblCount = 0;
-
 Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, style) {
 	_lidClosed = false;
 	_flags.modal = true;
 	_clickedGadget = NULL;
 	_keyboardScreen = NULL;
+	_vblCount = 0;
 
 	// Set up singleton pointer
 	singleton = this;

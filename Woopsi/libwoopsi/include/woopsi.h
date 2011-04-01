@@ -70,7 +70,7 @@ namespace WoopsiUI {
 		 * constructor and should not be used in user code.
 		 * @param timer A pointer to the timer to add to the VBL list.
 		 */
-		static void registerForVBL(WoopsiTimer* timer);
+		void registerForVBL(WoopsiTimer* timer);
 
 		/**
 		 * Remove the supplied timer from the list of timers that receive VBL
@@ -78,14 +78,14 @@ namespace WoopsiUI {
 		 * destructor and should not be used in user code.
 		 * @param timer A pointer to the timer to remove from the VBL list.
 		 */
-		static void unregisterFromVBL(WoopsiTimer* timer);
+		void unregisterFromVBL(WoopsiTimer* timer);
 
 		/**
 		 * Add a gadget to the list of gadgets to be deleted.  Must never be
 		 * called by anything other than the framework itself.
 		 * @param gadget The gadget to add to the delete queue.
 		 */
-		static void addToDeleteQueue(Gadget* gadget);
+		void addToDeleteQueue(Gadget* gadget);
 
 		/**
 		 * Return the number of VBLs that have occurred since Woopsi began
@@ -93,7 +93,7 @@ namespace WoopsiUI {
 		 * to 0.  Developers must allow for this.
 		 * @return The VBL count.
 		 */
-		static inline u32 getVBLCount() { return _vblCount; };
+		inline u32 getVBLCount() { return _vblCount; };
 
 		/**
 		 * Get a pointer to the context menu.
@@ -155,9 +155,9 @@ namespace WoopsiUI {
 	protected:
 		bool _lidClosed;									/**< Remembers the current state of the lid. */
 		
-		static WoopsiArray<WoopsiTimer*> _vblListeners;		/**< Array of timers that receive VBL events. */
-		static WoopsiArray<Gadget*> _deleteQueue;			/**< Array of gadgets awaiting deletion. */
-		static u32 _vblCount;								/**< Count of VBLs since Woopsi was first run. */
+		WoopsiArray<WoopsiTimer*> _vblListeners;			/**< Array of timers that receive VBL events. */
+		WoopsiArray<Gadget*> _deleteQueue;					/**< Array of gadgets awaiting deletion. */
+		u32 _vblCount;										/**< Count of VBLs since Woopsi was first run. */
 		ContextMenu* _contextMenu;							/**< Pointer to the context menu. */
 		Gadget* _clickedGadget;								/**< Pointer to the gadget that is clicked. */
 		WoopsiKeyboardScreen* _keyboardScreen;				/**< Screen containing the popup keyboard. */
