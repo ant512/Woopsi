@@ -50,7 +50,8 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 		_style.glyphFont = style->glyphFont;
 	}
 
-	// Mask flags against bitmasks and logical NOT twice to obtain boolean values
+	// Mask flags against bitmasks and logical NOT twice to obtain boolean
+	// values
 	_flags.borderless = (!(!(flags & GADGET_BORDERLESS)));
 	_flags.draggable = (!(!(flags & GADGET_DRAGGABLE)));
 	_flags.permeable = (!(!(flags & GADGET_PERMEABLE)));
@@ -103,7 +104,8 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 
 Gadget::~Gadget() {
 
-	// Ensure that the gadget is disposed of correctly if it has not been sent to the deletion queue.
+	// Ensure that the gadget is disposed of correctly if it has not been sent
+	// to the deletion queue.
 	if (!_flags.deleted) {
 
 		_flags.deleted = true;
@@ -177,7 +179,9 @@ const bool Gadget::isDeleted() const {
 const bool Gadget::isDrawingEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isDrawingEnabled()) {
-			// Drawing is enabled if the gadget is drawable, not deleted, and not shelved
+
+			// Drawing is enabled if the gadget is drawable, not deleted, and
+			// not shelved
 			return ((!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 		}
 	} else {
@@ -190,6 +194,7 @@ const bool Gadget::isDrawingEnabled() const {
 const bool Gadget::isHidden() const {
 	if (_parent != NULL) {
 		if (!_parent->isHidden()) {
+
 			// Hidden if the gadget is deleted, shelved or hidden
 			return (_flags.deleted || _flags.shelved || _flags.hidden);
 		}
@@ -203,7 +208,8 @@ const bool Gadget::isHidden() const {
 const bool Gadget::isEnabled() const {
 	if (_parent != NULL) {
 		if (_parent->isEnabled()) {
-			// Enabled if the gadget is enabled, not deleted, not shelved and not hidden
+			// Enabled if the gadget is enabled, not deleted, not shelved and
+			// not hidden
 			return (_flags.enabled && (!_flags.deleted) && (!_flags.shelved) && (!_flags.hidden));
 		}
 	} else {
@@ -1041,7 +1047,8 @@ bool Gadget::release(s16 x, s16 y) {
 bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 #ifdef USING_SDL
-	// Abort dragging if not dragging the bottom screen; will only be an issue in SDL code
+	// Abort dragging if not dragging the bottom screen; will only be an issue
+	// in SDL code
 	if (calculatePhysicalScreenNumber(y) != 0) return false;
 #endif
 
