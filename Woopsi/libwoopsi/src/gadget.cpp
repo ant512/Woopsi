@@ -326,6 +326,7 @@ bool Gadget::checkCollision(s16 x, s16 y, u16 width, u16 height) const {
 bool Gadget::checkCollision(const Gadget* gadget) const {
 
 	if (gadget->isHidden()) return false;
+	if (gadget == this) return true;
 
 	// Get the clipped rects
 	Rect gadgetRect;
@@ -661,10 +662,8 @@ bool Gadget::changeGadgetDepth(s32 sourceIndex, s32 destinationIndex) {
 
 	// Invalidate rect cache of all gadgets that collide with the swapped gadget
 	for (s32 i = 0; i < _gadgets.size(); ++i) {
-		if (_gadgets[i] != gadget) {
-			if (_gadgets[i]->checkCollision(gadget)) {
-				_gadgets[i]->invalidateVisibleRectCache();
-			}
+		if (_gadgets[i]->checkCollision(gadget)) {
+			_gadgets[i]->invalidateVisibleRectCache();
 		}
 	}
 

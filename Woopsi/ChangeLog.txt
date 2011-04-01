@@ -31,6 +31,8 @@ Change Log
     - Stack methods in Graphics class expect a reference to a stack as a
       parameter instead of pointer.
     - Removed static variables from Woopsi class.
+    - Gadget::checkCollision(Gadget*) shortcuts if a gadget is being compared
+      with itself.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
