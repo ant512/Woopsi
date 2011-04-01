@@ -661,8 +661,10 @@ bool Gadget::changeGadgetDepth(s32 sourceIndex, s32 destinationIndex) {
 
 	// Invalidate rect cache of all gadgets that collide with the swapped gadget
 	for (s32 i = 0; i < _gadgets.size(); ++i) {
-		if (_gadgets[i]->checkCollision(gadget)) {
-			_gadgets[i]->invalidateVisibleRectCache();
+		if (_gadgets[i] != gadget) {
+			if (_gadgets[i]->checkCollision(gadget)) {
+				_gadgets[i]->invalidateVisibleRectCache();
+			}
 		}
 	}
 
