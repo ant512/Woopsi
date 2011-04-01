@@ -30,6 +30,7 @@ Change Log
     - Fixed bugs in Graphics::floodFill().
     - Stack methods in Graphics class expect a reference to a stack as a
       parameter instead of pointer.
+    - Removed static variables from Woopsi class.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
