@@ -21,68 +21,67 @@ AmigaScreen::AmigaScreen(const WoopsiString& title, u32 flags, bool showFlipButt
 }
 
 void AmigaScreen::setBorderless(bool isBorderless) {
-	if (isBorderless != _flags.borderless) {
-		if (isBorderless) {
+	if (isBorderless == _flags.borderless) return;
 
-			// Remove borders
-			if (_depthButton != NULL) _depthButton->close();
-			if (_flipButton != NULL) _flipButton->close();
+	if (isBorderless) {
 
-			_depthButton = NULL;
-			_flipButton = NULL;
+		// Remove borders
+		if (_depthButton != NULL) _depthButton->close();
+		if (_flipButton != NULL) _flipButton->close();
 
-			_flags.borderless = true;
-		} else {
-			// Add borders
-			s16 buttonX = _rect.getWidth();
+		_depthButton = NULL;
+		_flipButton = NULL;
 
-			// Create depth button
-			if (_screenFlags.showDepthButton) {
-				_depthButton = new DecorationGlyphButton(buttonX - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, &_style);
-				_depthButton->addGadgetEventHandler(this);
-				addGadget(_depthButton);
+		_flags.borderless = true;
+	} else {
+		// Add borders
+		s16 buttonX = _rect.getWidth();
 
-				buttonX -= SCREEN_DEPTH_BUTTON_WIDTH;
-			}
+		// Create depth button
+		if (_screenFlags.showDepthButton) {
+			_depthButton = new DecorationGlyphButton(buttonX - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, &_style);
+			_depthButton->addGadgetEventHandler(this);
+			addGadget(_depthButton);
 
-			// Create flip button
-			if (_screenFlags.showFlipButton) {
-				_flipButton = new DecorationGlyphButton(buttonX - SCREEN_FLIP_BUTTON_WIDTH, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, &_style);
-				_flipButton->addGadgetEventHandler(this);
-				addGadget(_flipButton);
-			}
-
-			_flags.borderless = false;
+			buttonX -= SCREEN_DEPTH_BUTTON_WIDTH;
 		}
 
-		invalidateVisibleRectCache();
+		// Create flip button
+		if (_screenFlags.showFlipButton) {
+			_flipButton = new DecorationGlyphButton(buttonX - SCREEN_FLIP_BUTTON_WIDTH, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, &_style);
+			_flipButton->addGadgetEventHandler(this);
+			addGadget(_flipButton);
+		}
 
-		markRectsDamaged();
+		_flags.borderless = false;
 	}
+
+	invalidateVisibleRectCache();
+
+	markRectsDamaged();
 }
 
 void AmigaScreen::handleReleaseEvent(const GadgetEventArgs& e) {
 
-	if (e.getSource() != NULL) {
+	if (e.getSource() == NULL) return;
 
-		// Process decoration gadgets only
-		if (e.getSource() == _flipButton) {
+	// Process decoration gadgets only
+	if (e.getSource() == _flipButton) {
 
-			// Flip screens
-			flipScreens();
-		} else if (e.getSource() == _depthButton) {
+		// Flip screens
+		flipScreens();
+	} else if (e.getSource() == _depthButton) {
 
-			// Depth swap to bottom of stack
-			if (lowerToBottom()) blur();
-		}
+		// Depth swap to bottom of stack
+		if (lowerToBottom()) blur();
 	}
 }
 
 void AmigaScreen::onClick(s16 x, s16 y) {
-	if (!isBorderless()) {
-		if (y - getY() < SCREEN_TITLE_HEIGHT) {
-			startDragging(x, y);
-		}
+	if (isBorderless()) return;
+
+	if (y - getY() < SCREEN_TITLE_HEIGHT) {
+		startDragging(x, y);
 	}
 }
 
