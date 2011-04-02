@@ -1,10 +1,10 @@
 #include <string.h>
+#include "damagedrectmanager.h"
+#include "graphicsport.h"
+#include "rectcache.h"
 #include "screen.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
-#include "rectcache.h"
-#include "graphicsport.h"
-#include "damagedrectmanager.h"
 
 using namespace WoopsiUI;
 

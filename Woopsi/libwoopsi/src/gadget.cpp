@@ -1,17 +1,16 @@
+#include "contextmenu.h"
+#include "contextmenueventargs.h"
+#include "gadgeteventargs.h"
+#include "gadgetstyle.h"
 #include "gadget.h"
+#include "gadgeteventhandler.h"
 #include "graphicsport.h"
+#include "fontbase.h"
+#include "framebuffer.h"
+#include "listdataitem.h"
+#include "rectcache.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
-#include "gadgeteventhandler.h"
-#include "fontbase.h"
-#include "contextmenu.h"
-#include "gadgetstyle.h"
-#include "gadgeteventargs.h"
-#include "contextmenu.h"
-#include "listdataitem.h"
-#include "contextmenueventargs.h"
-#include "rectcache.h"
-#include "framebuffer.h"
 
 using namespace WoopsiUI;
 
@@ -220,10 +219,18 @@ const bool Gadget::isEnabled() const {
 }
 
 const bool Gadget::isModal() const {
+
+	// A gadget is only running modally if the Woopsi UI is also running.  That
+	// means we can stop a gadget from running modally by stopping the Woopsi
+	// UI top-level gadget from running modally.  This is very useful if we want
+	// to kill the app but have a gadget *somewhere* in the hierarchy running
+	// modally.
 	if ((woopsiApplication != NULL) && (woopsiApplication != this)) {
 		return woopsiApplication->isModal() & _flags.modal;
 	}
 
+	// If we reach this point, we *are* the top-level gadget, so we return our
+	// modal state.
 	return _flags.modal;
 }
 
