@@ -26,16 +26,6 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Enum describing the way other gadgets should behave when they try to
-		 * close this gadget.
-		 */
-		enum CloseType {
-			CLOSE_TYPE_CLOSE = 0,				/**< Gadgets should call the close() method. */
-			CLOSE_TYPE_HIDE = 1,				/**< Gadgets should call the hide() method. */
-			CLOSE_TYPE_SHELVE = 2				/**< Gadgets should call the shelve() method. */
-		};
-
-		/**
 		 * Enum listing flags that can be set in the constructor's "flags"
 		 * parameter.
 		 */
@@ -131,13 +121,6 @@ namespace WoopsiUI {
 		 * @return The reference constant.
 		 */
 		inline const u32 getRefcon() const { return _refcon; };
-
-		/**
-		 * Get the type of close routine that should be called by other gadgets
-		 * interacting with this gadget.
-		 * @return The close type of this gadget.
-		 */
-		inline const CloseType getCloseType() const { return _closeType; };
 
 		/**
 		 * Is the gadget active?
@@ -487,13 +470,6 @@ namespace WoopsiUI {
 		 * @param colour The new text colour.  0 specifies the font default.
 		 */
 		inline void setTextColour(const u16 colour) { _style.colours.text = colour; };
-
-		/**
-		 * Sets the close type other gadgets should use when closing this
-		 * gadget.
-		 * @param closeType The close type to use.
-		 */
-		inline void setCloseType(const CloseType closeType) { _closeType = closeType; };
 
 		/**
 		 * Sets the font.
@@ -1064,8 +1040,6 @@ namespace WoopsiUI {
 
 		// Visible regions
 		RectCache* _rectCache;					/**< List of the gadget's visible regions. */
-
-		CloseType _closeType;					/**< Type of close method that should be called for the gadget. */
 
 		GadgetBorderSize _borderSize;			/**< Size of the gadget borders. */
 

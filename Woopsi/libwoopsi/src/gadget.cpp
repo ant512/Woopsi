@@ -95,8 +95,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_borderSize.right = 1;
 	_borderSize.bottom = 1;
 	_borderSize.left = 1;
-	
-	_closeType = CLOSE_TYPE_CLOSE;
 
 	_rectCache = new RectCache(this);
 

@@ -118,22 +118,7 @@ void AmigaWindow::handleReleaseEvent(const GadgetEventArgs& e) {
 	if (e.getSource() == _depthButton) {
 		swapDepth();
 	} else if (e.getSource() == _closeButton) {
-
-		// Work out which close type to use
-		switch (getCloseType()) {
-			case CLOSE_TYPE_CLOSE:
-				// Close the window
-				close();
-				break;
-			case CLOSE_TYPE_SHELVE:
-				// Shelve the window
-				shelve();
-				break;
-			case CLOSE_TYPE_HIDE:
-				// Hide the window
-				hide();
-				break;
-		}
+		close();
 	}
 }
 

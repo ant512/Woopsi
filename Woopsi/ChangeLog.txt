@@ -43,6 +43,7 @@ Change Log
       scrollbars in empty ScrollingListBoxes.
     - AmigaScreen doesn't lose focus when depth gadget is clicked if it is not
       lowered to the bottom of the screen stack (ie. only one screen).
+    - Removed concept of "close type" from Gadget.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
