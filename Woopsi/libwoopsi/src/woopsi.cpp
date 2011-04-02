@@ -126,6 +126,15 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 #endif
 }
 
+void Woopsi::goModal() {
+
+	// Loop until no longer modal
+	while (isModal()) {
+		processOneVBL();
+	}
+}
+
+
 void Woopsi::handleVBL() {
 
 	// Increase vbl counter

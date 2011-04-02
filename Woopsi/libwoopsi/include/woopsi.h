@@ -51,6 +51,12 @@ namespace WoopsiUI {
 		virtual void processOneVBL(Gadget* gadget = NULL);
 
 		/**
+		 * Run the gadget modally.  This will run the Woopsi application until
+		 * stopModal() is called.
+		 */
+		void goModal();
+
+		/**
 		 * Flips the supplied gadget from its current screen to the other
 		 * screen.  This function presumes that all child gadgets are screens.
 		 * @param gadget The gadget (must be a screen) to flip.
