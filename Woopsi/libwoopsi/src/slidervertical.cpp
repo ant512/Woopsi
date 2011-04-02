@@ -126,6 +126,10 @@ void SliderVertical::resizeGrip() {
 	Range range(_minimumValue, _maximumValue, rect.height);
 
 	s32 gripSize = range.convertValueToScaled(_pageSize);
+
+	// If gripSize comes back as 0, there was a problem with the conversion
+	// process.  We just set the grip to the size of the gutter.
+	if (gripSize == 0) gripSize = rect.height;
 	
 	if (gripSize < _minimumGripHeight) {
 		gripSize = _minimumGripHeight;

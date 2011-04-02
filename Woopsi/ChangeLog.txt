@@ -39,6 +39,8 @@ Change Log
     - Replaced AmigaWindow-specific flags with extra constructor parameters.
     - Woopsi::handleClick() correctly interprets clicks on children of the
       context menu.
+    - Sliders choose a more appropriate size when fed nonsense data; fixes
+      scrollbars in empty ScrollingListBoxes.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
