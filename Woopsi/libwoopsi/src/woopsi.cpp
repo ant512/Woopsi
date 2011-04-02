@@ -92,14 +92,6 @@ Woopsi::~Woopsi() {
 	woopsiFreeDefaultGadgetStyle();
 }
 
-void Woopsi::goModal() {
-
-	// Loop until no longer modal
-	while (_flags.modal) {
-		processOneVBL();
-	}
-}
-
 void Woopsi::processOneVBL(Gadget* gadget) {
 	handleVBL();
 	handleStylus(gadget);

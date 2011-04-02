@@ -43,12 +43,6 @@ namespace WoopsiUI {
 		virtual ~Woopsi();
 
 		/**
-		 * Run the gadget modally.  This will run the Woopsi application until
-		 * stopModal() is called.
-		 */
-		void goModal();
-
-		/**
 		 * Run all code that needs to take place once a frame.  This should be
 		 * called every VBL in order for Woopsi to work.
 		 * @param gadget Sub-gadget to run, used for modal gadgets; omit

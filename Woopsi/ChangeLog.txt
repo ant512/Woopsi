@@ -34,6 +34,7 @@ Change Log
     - Gadget::checkCollision(Gadget*) shortcuts if a gadget is being compared
       with itself.
     - Removed unused Gadget::GADGET_NO_RAISE_EVENTS flag.
+    - Removed redundant Woopsi::goModal() method.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
