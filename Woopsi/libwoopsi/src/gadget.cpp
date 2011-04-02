@@ -1701,6 +1701,12 @@ void Gadget::setBorderSize(const GadgetBorderSize& borderSize) {
 }
 
 const u8 Gadget::getPhysicalScreenNumber() const {
+
+	// We interrogate the parent gadget for its screen number rather than just
+	// rely on calculatePhysicalScreenNumber() to do this for us because it is
+	// possible that our parent is on screen 0 but our y co-ordinate places us
+	// on screen 1.  We must be on the same screen as our parent, so we defer
+	// to the parent's value.
 	if (_parent != NULL) {
 		return _parent->getPhysicalScreenNumber();
 	} else{
