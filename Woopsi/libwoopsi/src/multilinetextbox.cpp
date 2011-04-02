@@ -83,7 +83,7 @@ void MultiLineTextBox::drawRow(GraphicsPort* port, s32 row) {
 	s16 textY = getRowY(row) + _canvasY;
 	
 	if (isEnabled()) {
-		port->drawText(textX, textY, _document->getFont(), _document->getText(), _document->getLineStartIndex(row), rowLength);
+		port->drawText(textX, textY, _document->getFont(), _document->getText(), _document->getLineStartIndex(row), rowLength, getTextColour());
 	} else {
 		port->drawText(textX, textY, _document->getFont(), _document->getText(), _document->getLineStartIndex(row), rowLength, getDarkColour());
 	}

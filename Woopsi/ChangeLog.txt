@@ -47,6 +47,10 @@ Change Log
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
     - Added Gadget::getLowestCollidingGadgetIndex().
+    - Added text member to GadgetColours class - text colour can be defined
+      individually.
+    - Added Gadget::getTextColor().
+    - Added Gadget::setTextColour().
 
   V1.1 (20110329)
   

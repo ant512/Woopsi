@@ -85,7 +85,7 @@ void CycleButton::drawContents(GraphicsPort* port) {
 		separatorLeftColour = getShadowColour();
 		separatorRightColour = getShineColour();
 	} else if (!isClicked()) {
-		textColour = getShadowColour();
+		textColour = getTextColour();
 		separatorLeftColour = getShadowColour();
 		separatorRightColour = getShineColour();
 	} else {

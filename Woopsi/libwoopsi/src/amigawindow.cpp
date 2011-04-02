@@ -215,7 +215,7 @@ void AmigaWindow::drawBorder(GraphicsPort* port) {
 	port->drawLine(1, _borderSize.top - 1, getWidth() - 3, _borderSize.top - 1, getShadowColour());
 
 	// Draw title text
-	port->drawText(textX, 1, getFont(), getTitle());
+	port->drawText(textX, 1, getFont(), getTitle(), 0, getTitle().getLength(), getTextColour());
 
 	port->drawFilledRect(1, _borderSize.top, _borderSize.left - 2, getHeight() - _borderSize.top - _borderSize.bottom, colour);	// Left
 	port->drawFilledRect(getWidth() - WINDOW_BORDER_SIZE + 1, 1, WINDOW_BORDER_SIZE - 2, getHeight() - 2, colour);	// Right

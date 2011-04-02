@@ -14,7 +14,7 @@ void Button::drawContents(GraphicsPort* port) {
 	if (!isEnabled()) {
 		textColour = getDarkColour();
 	} else if (!isClicked()) {
-		textColour = getShadowColour();
+		textColour = getTextColour();
 	} else {
 		textColour = getShineColour();
 	}

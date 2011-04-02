@@ -23,7 +23,7 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, 
 
 void TextBox::drawContents(GraphicsPort* port) {
 
-	u16 textColour = isEnabled() ? getShadowColour() : getDarkColour();
+	u16 textColour = isEnabled() ? getTextColour() : getDarkColour();
 	port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), textColour);
 
 	// Draw cursor

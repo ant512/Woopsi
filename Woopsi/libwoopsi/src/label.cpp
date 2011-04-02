@@ -23,7 +23,7 @@ Label::Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, Gadg
 
 void Label::drawContents(GraphicsPort* port) {
 	if (isEnabled()) {
-		port->drawText(_textX, _textY, getFont(), _text);
+		port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), getTextColour());
 	} else {
 		port->drawText(_textX, _textY, getFont(), _text, 0, _text.getLength(), getDarkColour());
 	}

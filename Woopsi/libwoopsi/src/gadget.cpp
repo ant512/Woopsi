@@ -33,6 +33,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 			_style.colours.shadow = defaultGadgetStyle->colours.shadow;
 			_style.colours.fill = defaultGadgetStyle->colours.fill;
 			_style.colours.dark = defaultGadgetStyle->colours.dark;
+			_style.colours.text = defaultGadgetStyle->colours.text;
 			_style.font = defaultGadgetStyle->font;
 			_style.glyphFont = defaultGadgetStyle->glyphFont;
 		}
@@ -45,6 +46,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 		_style.colours.shadow = style->colours.shadow;
 		_style.colours.fill = style->colours.fill;
 		_style.colours.dark = style->colours.dark;
+		_style.colours.text = style->colours.text;
 		_style.font = style->font;
 		_style.glyphFont = style->glyphFont;
 	}

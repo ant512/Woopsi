@@ -388,6 +388,12 @@ namespace WoopsiUI {
 		inline const u16 getDarkColour() const { return _style.colours.dark; };
 
 		/**
+		 * Gets the colour used for text.
+		 * @return Text colour.  0 indicates the font default will be used. 
+		 */
+		inline const u16 getTextColour() const { return _style.colours.text; };
+
+		/**
 		 * Sets this gadget's reference constant.  This should be unique, at
 		 * least amongst this gadget's siblings.
 		 * @param refcon The reference constant.
@@ -475,6 +481,12 @@ namespace WoopsiUI {
 		 * @param colour The new dark colour.
 		 */
 		inline void setDarkColour(const u16 colour) { _style.colours.dark = colour; };
+
+		/**
+		 * Sets the text colour.
+		 * @param colour The new text colour.  0 specifies the font default.
+		 */
+		inline void setTextColour(const u16 colour) { _style.colours.text = colour; };
 
 		/**
 		 * Sets the close type other gadgets should use when closing this

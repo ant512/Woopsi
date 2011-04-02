@@ -12,12 +12,13 @@ namespace WoopsiUI {
 	 */
 	class GadgetColours {
 	public:
-		u16 back;					/**< Colour used as background */
-		u16 shine;					/**< Colour used as light bevel edge */
-		u16 highlight;				/**< Colour used as highlighted elements */
-		u16 shadow;					/**< Colour used as dark bevel edge */
-		u16 fill;					/**< Colour used as foreground fill */
-		u16 dark;					/**< Colour used as scrollbar gutters etc */
+		u16 back;				/**< Colour used as background. */
+		u16 shine;				/**< Colour used as light bevel edge. */
+		u16 highlight;			/**< Colour used as highlighted elements. */
+		u16 shadow;				/**< Colour used as dark bevel edge. */
+		u16 fill;				/**< Colour used as foreground fill. */
+		u16 dark;				/**< Colour used as scrollbar gutters etc. */
+		u16 text;				/**< Colour used for text. */
 	};
 
 	/**
@@ -30,9 +31,9 @@ namespace WoopsiUI {
 	 */
 	class GadgetStyle {
 	public:
-		GadgetColours colours;				/**< All gadget colours */
-		FontBase* font;						/**< Default font */
-		FontBase* glyphFont;				/**< Default glyph font */
+		GadgetColours colours;				/**< All gadget colours. */
+		FontBase* font;						/**< Default font. */
+		FontBase* glyphFont;				/**< Default glyph font. */
 	};
 }
 

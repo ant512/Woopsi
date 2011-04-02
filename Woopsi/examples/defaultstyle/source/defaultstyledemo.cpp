@@ -25,6 +25,7 @@ void DefaultStyleDemo::startup() {
 	defaultGadgetStyle->colours.highlight = woopsiRGB(25, 31, 25);
 	defaultGadgetStyle->colours.shadow = woopsiRGB(0, 0, 0);
 	defaultGadgetStyle->colours.fill = woopsiRGB(10, 0, 0);
+	defaultGadgetStyle->colours.text = woopsiRGB(0, 31, 0);
 
 	// Create screen
 	AmigaScreen* screen = new AmigaScreen("Hello World Screen", Gadget::GADGET_DRAGGABLE, true, true);
