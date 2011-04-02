@@ -39,7 +39,7 @@ Change Log
     - Replaced AmigaWindow-specific flags with extra constructor parameters.
     - Woopsi::handleClick() correctly interprets clicks on children of the
       context menu.
-    - Sliders choose a more appropriate size when fed nonsense data; fixes
+    - Sliders choose a more appropriate size when max value == min value; fixes
       scrollbars in empty ScrollingListBoxes.
     - AmigaScreen doesn't lose focus when depth gadget is clicked if it is not
       lowered to the bottom of the screen stack (ie. only one screen).
