@@ -33,6 +33,7 @@ Change Log
     - Removed static variables from Woopsi class.
     - Gadget::checkCollision(Gadget*) shortcuts if a gadget is being compared
       with itself.
+    - Removed unused Gadget::GADGET_NO_RAISE_EVENTS flag.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().

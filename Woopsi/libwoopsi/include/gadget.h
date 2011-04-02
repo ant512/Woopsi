@@ -30,21 +30,21 @@ namespace WoopsiUI {
 		 * close this gadget.
 		 */
 		enum CloseType {
-			CLOSE_TYPE_CLOSE = 0,				/**< Gadgets should call the close() method */
-			CLOSE_TYPE_HIDE = 1,				/**< Gadgets should call the hide() method */
-			CLOSE_TYPE_SHELVE = 2				/**< Gadgets should call the shelve() method */
+			CLOSE_TYPE_CLOSE = 0,				/**< Gadgets should call the close() method. */
+			CLOSE_TYPE_HIDE = 1,				/**< Gadgets should call the hide() method. */
+			CLOSE_TYPE_SHELVE = 2				/**< Gadgets should call the shelve() method. */
 		};
 
 		/**
-		 * Enum listing flags that can be set in the constructor's "flags" parameter.
+		 * Enum listing flags that can be set in the constructor's "flags"
+		 * parameter.
 		 */
 		enum GadgetFlagType {
-			GADGET_BORDERLESS = 0x0001,					/**< Gadget has no border */
-			GADGET_DRAGGABLE = 0x0002,					/**< Gadget can be dragged by the user */
-			GADGET_PERMEABLE = 0x0004,					/**< Gadget's children can exceed this gadget's edges */
-			GADGET_DOUBLE_CLICKABLE = 0x0008,			/**< Gadget can be double-clicked */
-			GADGET_NO_RAISE_EVENTS = 0x0010,			/**< Gadget does not raise events */
-			GADGET_DECORATION = 0x0020					/**< Gadget is a decoration */
+			GADGET_BORDERLESS = 0x0001,			/**< Gadget has no border. */
+			GADGET_DRAGGABLE = 0x0002,			/**< Gadget can be dragged by the user. */
+			GADGET_PERMEABLE = 0x0004,			/**< Gadget's children can exceed this gadget's edges. */
+			GADGET_DOUBLE_CLICKABLE = 0x0008,	/**< Gadget can be double-clicked. */
+			GADGET_DECORATION = 0x0010			/**< Gadget is a decoration. */
 		};
 
 		/**
@@ -322,9 +322,9 @@ namespace WoopsiUI {
 		 * drawing within this gadget's client space.  The GraphicsPort can
 		 * only draw within the supplied region.
 		 *
-		 * The GraphicsPort object must be deleted when it is no longer required.
-		 * Drawing is clipped only to the supplied rect.  If the rect is
-		 * not within the visible regions of this gadget graphical anomalies
+		 * The GraphicsPort object must be deleted when it is no longer
+		 * required.  Drawing is clipped only to the supplied rect.  If the rect
+		 * is not within the visible regions of this gadget graphical anomalies
 		 * will occur.  This should only be called by the Woopsi hierarchy.
 		 * @param clipRect The region to clip to.  Co-ordinates are in Woopsi-
 		 * space.
@@ -477,7 +477,8 @@ namespace WoopsiUI {
 		inline void setDarkColour(const u16 colour) { _style.colours.dark = colour; };
 
 		/**
-		 * Sets the close type other gadgets should use when closing this gadget.
+		 * Sets the close type other gadgets should use when closing this
+		 * gadget.
 		 * @param closeType The close type to use.
 		 */
 		inline void setCloseType(const CloseType closeType) { _closeType = closeType; };
@@ -703,7 +704,8 @@ namespace WoopsiUI {
 		bool raiseGadgetToTop(Gadget* child);
 
 		/**
-		 * Lowers the supplied gadget to the bottom of this gadget's child stack.
+		 * Lowers the supplied gadget to the bottom of this gadget's child
+		 * stack.
 		 * The supplied gadget pointer must be a child of this gadget.
 		 * @param gadget A pointer to the child gadget to lower.
 		 * @return True if the lower was successful.
