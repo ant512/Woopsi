@@ -73,8 +73,7 @@ void AmigaScreen::handleReleaseEvent(const GadgetEventArgs& e) {
 		} else if (e.getSource() == _depthButton) {
 
 			// Depth swap to bottom of stack
-			lowerToBottom();
-			blur();
+			if (lowerToBottom()) blur();
 		}
 	}
 }

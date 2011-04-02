@@ -41,6 +41,8 @@ Change Log
       context menu.
     - Sliders choose a more appropriate size when fed nonsense data; fixes
       scrollbars in empty ScrollingListBoxes.
+    - AmigaScreen doesn't lose focus when depth gadget is clicked if it is not
+      lowered to the bottom of the screen stack (ie. only one screen).
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
