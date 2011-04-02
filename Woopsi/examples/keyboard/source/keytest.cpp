@@ -6,14 +6,14 @@ void KeyTest::startup() {
 	
 	/* Code below creates the output screen and associated gadgets */
 	// Create screen
-	AmigaScreen* outScreen = new AmigaScreen("Ouput Screen", Gadget::GADGET_PERMEABLE, AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* outScreen = new AmigaScreen("Ouput Screen", Gadget::GADGET_PERMEABLE, true, false);
 	woopsiApplication->addGadget(outScreen);
 	
 	// Move output screen to top display
 	outScreen->flipToTopScreen();
 
 	// Add output window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Key Test Window", Gadget::GADGET_DRAGGABLE, true, false);
 	outScreen->addGadget(window);
 
 	// Get available area within window
@@ -27,7 +27,7 @@ void KeyTest::startup() {
 	
 	/* Code below creates input screen and associated gadgets */
 	// Create screen
-	AmigaScreen* inScreen = new AmigaScreen("Input Screen", Gadget::GADGET_PERMEABLE, AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* inScreen = new AmigaScreen("Input Screen", Gadget::GADGET_PERMEABLE, true, false);
 	woopsiApplication->addGadget(inScreen);
 
 	// Create keyboard

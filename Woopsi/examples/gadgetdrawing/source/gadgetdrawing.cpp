@@ -10,11 +10,11 @@
 void GadgetDrawing::startup() {
 
 	// Create screen to host our application
-	AmigaScreen* screen = new AmigaScreen("Drawing Screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* screen = new AmigaScreen("Drawing Screen", Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window to the screen
-	_window = new AmigaWindow(0, 13, 256, 179, "Drawing Window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	_window = new AmigaWindow(0, 13, 256, 179, "Drawing Window", Gadget::GADGET_DRAGGABLE, true, true);
 	screen->addGadget(_window);
 
 	// Get available area for child gadgets within window
@@ -33,11 +33,11 @@ void GadgetDrawing::startup() {
 	screen->flipToTopScreen();
 	
 	// Create second screen that will contain the control buttons
-	screen = new AmigaScreen("Control Screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	screen = new AmigaScreen("Control Screen", Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window to the second screen
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Control Window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Control Window", Gadget::GADGET_DRAGGABLE, true, true);
 	screen->addGadget(window);
 	
 	// Create array containing labels for all buttons

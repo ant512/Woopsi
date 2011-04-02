@@ -14,7 +14,6 @@ void DefaultStyleDemo::startup() {
 	// Change the font
 	delete defaultGadgetStyle->font;
 	defaultGadgetStyle->font = new Garamond10();
-	defaultGadgetStyle->font->setColour(woopsiRGB(0, 31, 0));
 	
 	// Ensure that this object's font pointer does not point at the deleted font
 	setFont(defaultGadgetStyle->font);
@@ -28,11 +27,11 @@ void DefaultStyleDemo::startup() {
 	defaultGadgetStyle->colours.fill = woopsiRGB(10, 0, 0);
 
 	// Create screen
-	AmigaScreen* screen = new AmigaScreen("Hello World Screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* screen = new AmigaScreen("Hello World Screen", Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Hello World Window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Hello World Window", Gadget::GADGET_DRAGGABLE, true, true);
 	screen->addGadget(window);
 
 	// Get available area within window
