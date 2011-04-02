@@ -1,8 +1,8 @@
 #ifndef _DAMAGED_RECT_MANAGER_
 #define _DAMAGED_RECT_MANAGER_
 
-#include "woopsiarray.h"
 #include "rect.h"
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 

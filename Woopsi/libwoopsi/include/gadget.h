@@ -3,13 +3,13 @@
 
 #include <nds.h>
 #include "defines.h"
+#include "fontbase.h"
 #include "gadgeteventhandler.h"
-#include "woopsiarray.h"
+#include "gadgeteventhandlerlist.h"
+#include "gadgetstyle.h"
 #include "glyphs.h"
 #include "rect.h"
-#include "fontbase.h"
-#include "gadgetstyle.h"
-#include "gadgeteventhandlerlist.h"
+#include "woopsiarray.h"
 #include "woopsistring.h"
 
 namespace WoopsiUI {
