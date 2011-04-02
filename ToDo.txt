@@ -1,7 +1,5 @@
  - Remove flags?
  - Key events - should these bubble up the hierarchy?
- - Superbitmap draw methods should mark rects as dirty - GraphicsPort raises
-   events?  A subclass of GraphicsPort?
  - Redraw as little as possible when adding text to textboxes.
  - Ensure all commands that should change onscreen display do so (ie. addOption
    in FileRequester - needs to work out where the option will appear in the
