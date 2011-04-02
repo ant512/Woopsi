@@ -34,8 +34,11 @@ Change Log
     - Gadget::checkCollision(Gadget*) shortcuts if a gadget is being compared
       with itself.
     - Removed unused Gadget::GADGET_NO_RAISE_EVENTS flag.
+    - Removed redundant Woopsi::goModal() method.
     - Replaced AmigaScreen-specific flags with extra constructor parameters.
     - Replaced AmigaWindow-specific flags with extra constructor parameters.
+    - Woopsi::handleClick() correctly interprets clicks on children of the
+      context menu.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().

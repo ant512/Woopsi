@@ -126,15 +126,6 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 #endif
 }
 
-void Woopsi::goModal() {
-
-	// Loop until no longer modal
-	while (isModal()) {
-		processOneVBL();
-	}
-}
-
-
 void Woopsi::handleVBL() {
 
 	// Increase vbl counter
@@ -191,31 +182,32 @@ void Woopsi::handleShiftClick(s16 x, s16 y, Gadget* gadget) {
 
 void Woopsi::handleClick(s16 x, s16 y, Gadget* gadget) {
 
-	// Working with a modal gadget or the whole structure?
-	if (gadget == NULL) {
+	// Working with a modal gadget or the whole structure?  If gadget is not
+	// NULL, we have a modal gadget.  Otherwise we're dealing with the whole
+	// structure.  In either case, the code is the same, so we just point the
+	// gadget pointer at this at carry on.
+	// if (gadget == NULL) gadget = this;
 
-		// All gadgets
-		for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-			if (_gadgets[i]->click(x, y)) {
+	if (gadget->click(x, y)) {
+		
+		// If the context menu isn't an ancestor of the clicked gadget, we
+		// need to close the menu.
+		Gadget* ancestor = _clickedGadget;
+		bool closeMenu = true;
 
-				// Do we need to close the context menu?
-				if (_gadgets[i] != _contextMenu) {
-					shelveContextMenu();
-				}
+		while (ancestor != NULL) {
+			if (ancestor == _contextMenu) {
 
-				return;
+				// Either the context menu or one of its descendants has
+				// been clicked.  In that case, we shouldn't close the menu.
+				closeMenu = false;
+				break;
 			}
-		}
-	} else {
 
-		// One gadget
-		if (gadget->click(x, y)) {
-
-			// Do we need to close the context menu?
-			if (gadget != _contextMenu) {
-				shelveContextMenu();
-			}
+			ancestor = ancestor->getParent();
 		}
+
+		if (closeMenu) shelveContextMenu();
 	}
 }
 
