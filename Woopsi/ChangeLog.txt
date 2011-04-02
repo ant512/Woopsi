@@ -35,6 +35,8 @@ Change Log
       with itself.
     - Removed unused Gadget::GADGET_NO_RAISE_EVENTS flag.
     - Removed redundant Woopsi::goModal() method.
+    - Replaced AmigaScreen-specific flags with extra constructor parameters.
+    - Replaced AmigaWindow-specific flags with extra constructor parameters.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().

@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-AmigaScreen::AmigaScreen(const WoopsiString& title, u32 flags, u32 screenFlags, GadgetStyle* style) : Screen(title, flags, style) {
+AmigaScreen::AmigaScreen(const WoopsiString& title, u32 flags, bool showFlipButton, bool showDepthButton, GadgetStyle* style) : Screen(title, flags, style) {
 
 	_titleHeight = SCREEN_TITLE_HEIGHT;
 
@@ -12,8 +12,8 @@ AmigaScreen::AmigaScreen(const WoopsiString& title, u32 flags, u32 screenFlags, 
 	_flipButton = NULL;
 
 	// Set screen flags
-	_screenFlags.showFlipButton = (!(!(screenFlags & AMIGA_SCREEN_SHOW_FLIP)));
-	_screenFlags.showDepthButton = (!(!(screenFlags & AMIGA_SCREEN_SHOW_DEPTH)));
+	_screenFlags.showFlipButton = showFlipButton;
+	_screenFlags.showDepthButton = showDepthButton;
 
 	// Abuse the borderless system into setting the border up for us
 	_flags.borderless = true;

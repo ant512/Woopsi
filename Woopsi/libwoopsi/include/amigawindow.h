@@ -26,14 +26,6 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Enum listing flags that can be set in the constructor's "windowFlags" parameter.
-		 */
-		enum AmigaWindowFlagType {
-			AMIGA_WINDOW_SHOW_CLOSE = 0x0001,			/**< Window shows close button */
-			AMIGA_WINDOW_SHOW_DEPTH = 0x0002			/**< Window shows depth button */
-		};
-
-		/**
 		 * Struct describing some basic properties of an AmigaWindow.
 		 */
 		typedef struct {
@@ -49,13 +41,14 @@ namespace WoopsiUI {
 		 * @param height The height of the window.
 		 * @param title The text that should appear in the title bar.
 		 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the Amiga borders.
-		 * @param windowFlags Window-specfic flags from the WindowFlagType enum.
+		 * @param showCloseButton True to show the window close button.
+		 * @param showDepthButton True to show the z-order sorting button.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, u32 windowFlags, GadgetStyle* style = NULL);
+		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, bool showCloseButton, bool showDepthButton, GadgetStyle* style = NULL);
 
 		/**
 		 * Show or hide the Amiga borders.

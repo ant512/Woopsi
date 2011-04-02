@@ -4,14 +4,14 @@
 
 using namespace WoopsiUI;
 
-AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, u32 windowFlags, GadgetStyle* style) : Window(x, y, width, height, title, flags, style) {
+AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, bool showCloseButton, bool showDepthButton, GadgetStyle* style) : Window(x, y, width, height, title, flags, style) {
 
 	_closeButton = NULL;
 	_depthButton = NULL;
 
 	// Set window flags
-	_windowFlags.showCloseButton = (!(!(windowFlags & AMIGA_WINDOW_SHOW_CLOSE)));
-	_windowFlags.showDepthButton = (!(!(windowFlags & AMIGA_WINDOW_SHOW_DEPTH)));
+	_windowFlags.showCloseButton = showCloseButton;
+	_windowFlags.showDepthButton = showDepthButton;
 
 	// Add border to gadget list
 	if (!(flags & GADGET_BORDERLESS)) {

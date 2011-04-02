@@ -27,12 +27,12 @@ void Demo::startup() {
 	Rect rect;
 
 	// Create SuperBitmap test screen
-	AmigaScreen* superBitmapScreen = new AmigaScreen(DEMO_VERSION, Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* superBitmapScreen = new AmigaScreen(DEMO_VERSION, Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(superBitmapScreen);
 	superBitmapScreen->setPermeable(true);
 	
 	// Create skinned window
-	AmigaWindow* superBitmapWindow = new AmigaWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* superBitmapWindow = new AmigaWindow(10, 10, 100, 100, "window", Gadget::GADGET_DRAGGABLE, true, true);
 	superBitmapScreen->addGadget(superBitmapWindow);
 
 	/** SuperBitmap preparation **/
@@ -69,13 +69,13 @@ void Demo::startup() {
 	delete superBitmapBitmap;
 
 	// Create screens
-	AmigaScreen* newScreen = new AmigaScreen(DEMO_VERSION, Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* newScreen = new AmigaScreen(DEMO_VERSION, Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(newScreen);
 	newScreen->setPermeable(true);
 
 	newScreen->addGadget(new WoopsiKeyboard(2, 13, Gadget::GADGET_DRAGGABLE));
 
-	AmigaScreen* newScreen2 = new AmigaScreen("Another screen", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* newScreen2 = new AmigaScreen("Another screen", Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(newScreen2);
 
 	// Add progress bar
@@ -96,13 +96,13 @@ void Demo::startup() {
 
 
 	// Add child windows
-	AmigaWindow* controlWindow = new AmigaWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* controlWindow = new AmigaWindow(0, 13, 256, 33, "Controls", Gadget::GADGET_DRAGGABLE, true, true);
 	newScreen->addGadget(controlWindow);
 
-	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* textWindow = new AmigaWindow(0, 46, 256, 146, "Text", Gadget::GADGET_DRAGGABLE, true, true);
 	newScreen->addGadget(textWindow);
 
-	AmigaWindow* textTestWindow = new AmigaWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* textTestWindow = new AmigaWindow(0, 0, 100, 100, "MTest", Gadget::GADGET_DRAGGABLE, true, true);
 	newScreen->addGadget(textTestWindow);
 
 	textTestWindow->getClientRect(rect);
@@ -150,7 +150,7 @@ void Demo::startup() {
 
 
 	// Add another screen
-	AmigaScreen* demoScreen = new AmigaScreen("Demos", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* demoScreen = new AmigaScreen("Demos", Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(demoScreen);
 	demoScreen->setPermeable(true);
 	demoScreen->flipToTopScreen();
@@ -168,7 +168,7 @@ void Demo::startup() {
 	_pacMan = new PacMan(demoScreen);
 
 	// Bitmap button test
-	AmigaWindow* buttonWindow = new AmigaWindow(10, 10, 100, 100, "ButtonTest", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE);
+	AmigaWindow* buttonWindow = new AmigaWindow(10, 10, 100, 100, "ButtonTest", Gadget::GADGET_DRAGGABLE, true, false);
 	demoScreen->addGadget(buttonWindow);
 
 	buttonWindow->getClientRect(rect);
@@ -177,10 +177,10 @@ void Demo::startup() {
 	buttonWindow->addGadget(new BitmapButton(rect.x, rect.y + 56, 92, 27, 0, 0, new BitTest3(), new BitTest6()));
 
 	// Gadget test
-	AmigaScreen* gadgetTestScreen = new AmigaScreen("Gadget test", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+	AmigaScreen* gadgetTestScreen = new AmigaScreen("Gadget test", Gadget::GADGET_DRAGGABLE, true, true);
 	woopsiApplication->addGadget(gadgetTestScreen);
 
-	AmigaWindow* gadgetTestWindow = new AmigaWindow(0, 13, 256, 179, "Gadget Test", 0, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	AmigaWindow* gadgetTestWindow = new AmigaWindow(0, 13, 256, 179, "Gadget Test", 0, true, true);
 	gadgetTestScreen->addGadget(gadgetTestWindow);
 
 	// Create listbox

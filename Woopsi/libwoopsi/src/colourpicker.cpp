@@ -10,7 +10,7 @@
 
 using namespace WoopsiUI;
 
-ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u16 colour, u32 flags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, AMIGA_WINDOW_SHOW_DEPTH, style) {
+ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u16 colour, u32 flags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, false, true, style) {
 
 	Rect rect;
 	getClientRect(rect);

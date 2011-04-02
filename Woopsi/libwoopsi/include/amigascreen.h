@@ -26,14 +26,6 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Enum listing flags that can be set in the constructor's "screenFlags" parameter.
-		 */
-		enum AmigaScreenFlagType {
-			AMIGA_SCREEN_SHOW_FLIP = 0x0001,			/**< Screen shows flip button */
-			AMIGA_SCREEN_SHOW_DEPTH = 0x0002			/**< Screen shows depth button */
-		};
-
-		/**
 		 * Struct describing some basic properties of an AmigaScreen.
 		 */
 		typedef struct {
@@ -45,13 +37,14 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param title The screen's title.
 		 * @param flags Bitmask specifying some setup values for the object.
-		 * @param screenFlags Screen-specific setup bitmask.
+		 * @param showFlipButton True to show the display-flipping button.
+		 * @param showDepthButton True to show the z-order sorting button.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		AmigaScreen(const WoopsiString& title, u32 flags, u32 screenFlags, GadgetStyle* style = NULL);
+		AmigaScreen(const WoopsiString& title, u32 flags, bool showFlipButton, bool showDepthButton, GadgetStyle* style = NULL);
 
 		/**
 		 * Sets this gadget's border state.  Setting to false hides the title bar.

@@ -38,7 +38,7 @@ Pong::~Pong() {
 
 void Pong::initGUI() {
 	// Create window
-	_window = new AmigaWindow(0, 13, 120, 60, "Pong", Gadget::GADGET_DRAGGABLE, AmigaWindow::AMIGA_WINDOW_SHOW_CLOSE | AmigaWindow::AMIGA_WINDOW_SHOW_DEPTH);
+	_window = new AmigaWindow(0, 13, 120, 60, "Pong", Gadget::GADGET_DRAGGABLE, true, true);
 	_screen->addGadget(_window);
 	_window->addGadgetEventHandler(this);
 	_window->setRefcon(1);

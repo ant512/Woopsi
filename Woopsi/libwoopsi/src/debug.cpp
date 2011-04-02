@@ -74,13 +74,13 @@ void Debug::createGUI() {
 
 	// Add debug screen
 	if (_screen == NULL) {
-		_screen = new AmigaScreen("Debug", Gadget::GADGET_DRAGGABLE, AmigaScreen::AMIGA_SCREEN_SHOW_DEPTH | AmigaScreen::AMIGA_SCREEN_SHOW_FLIP);
+		_screen = new AmigaScreen("Debug", Gadget::GADGET_DRAGGABLE, true, true);
 		woopsiApplication->addGadget(_screen);
 	}
 
 	// Add debug window
 	if (_window == NULL) {
-		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE, 0);
+		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE, false, false);
 		_screen->addGadget(_window);
 	}
 

@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-WoopsiKeyboardScreen::WoopsiKeyboardScreen(KeyboardEventHandler* opener) : AmigaScreen("Keyboard", 0, 0 ) {
+WoopsiKeyboardScreen::WoopsiKeyboardScreen(KeyboardEventHandler* opener) : AmigaScreen("Keyboard", 0, false, false) {
 	_flags.canReceiveFocus = false;
 
 	WoopsiKeyboard* keyboard = new WoopsiKeyboard(2, 13, 0);
