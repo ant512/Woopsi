@@ -184,33 +184,26 @@ void Woopsi::handleShiftClick(s16 x, s16 y, Gadget* gadget) {
 
 void Woopsi::handleClick(s16 x, s16 y, Gadget* gadget) {
 
-	// Working with a modal gadget or the whole structure?  If gadget is not
-	// NULL, we have a modal gadget.  Otherwise we're dealing with the whole
-	// structure.  In either case, the code is the same, so we just point the
-	// gadget pointer at this at carry on.
-	// if (gadget == NULL) gadget = this;
-
-	if (gadget->click(x, y)) {
+	if (!gadget->click(x, y)) return;
 		
-		// If the context menu isn't an ancestor of the clicked gadget, we
-		// need to close the menu.
-		Gadget* ancestor = _clickedGadget;
-		bool closeMenu = true;
+	// If the context menu isn't an ancestor of the clicked gadget, we
+	// need to close the menu.
+	Gadget* ancestor = _clickedGadget;
+	bool closeMenu = true;
 
-		while (ancestor != NULL) {
-			if (ancestor == _contextMenu) {
+	while (ancestor != NULL) {
+		if (ancestor == _contextMenu) {
 
-				// Either the context menu or one of its descendants has
-				// been clicked.  In that case, we shouldn't close the menu.
-				closeMenu = false;
-				break;
-			}
-
-			ancestor = ancestor->getParent();
+			// Either the context menu or one of its descendants has
+			// been clicked.  In that case, we shouldn't close the menu.
+			closeMenu = false;
+			break;
 		}
 
-		if (closeMenu) shelveContextMenu();
+		ancestor = ancestor->getParent();
 	}
+
+	if (closeMenu) shelveContextMenu();
 }
 
 void Woopsi::handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyCode) {
@@ -241,20 +234,20 @@ void Woopsi::handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyC
 
 // Process all key input
 void Woopsi::handleKeys() {
-	if (_focusedGadget != NULL) {
-		handleKey(Pad.Newpress.A, Pad.Released.A, Pad.HeldTime.A, KEY_CODE_A);
-		handleKey(Pad.Newpress.B, Pad.Released.B, Pad.HeldTime.B, KEY_CODE_B);
-		handleKey(Pad.Newpress.X, Pad.Released.X, Pad.HeldTime.X, KEY_CODE_X);
-		handleKey(Pad.Newpress.Y, Pad.Released.Y, Pad.HeldTime.Y, KEY_CODE_Y);
-		handleKey(Pad.Newpress.L, Pad.Released.L, Pad.HeldTime.L, KEY_CODE_L);
-		handleKey(Pad.Newpress.R, Pad.Released.R, Pad.HeldTime.R, KEY_CODE_R);
-		handleKey(Pad.Newpress.Up, Pad.Released.Up, Pad.HeldTime.Up, KEY_CODE_UP);
-		handleKey(Pad.Newpress.Down, Pad.Released.Down, Pad.HeldTime.Down, KEY_CODE_DOWN);
-		handleKey(Pad.Newpress.Left, Pad.Released.Left, Pad.HeldTime.Left, KEY_CODE_LEFT);
-		handleKey(Pad.Newpress.Right, Pad.Released.Right, Pad.HeldTime.Right, KEY_CODE_RIGHT);
-		handleKey(Pad.Newpress.Start, Pad.Released.Start, Pad.HeldTime.Start, KEY_CODE_START);
-		handleKey(Pad.Newpress.Select, Pad.Released.Select, Pad.HeldTime.Select, KEY_CODE_SELECT);
-	}
+	if (_focusedGadget == NULL) return;
+
+	handleKey(Pad.Newpress.A, Pad.Released.A, Pad.HeldTime.A, KEY_CODE_A);
+	handleKey(Pad.Newpress.B, Pad.Released.B, Pad.HeldTime.B, KEY_CODE_B);
+	handleKey(Pad.Newpress.X, Pad.Released.X, Pad.HeldTime.X, KEY_CODE_X);
+	handleKey(Pad.Newpress.Y, Pad.Released.Y, Pad.HeldTime.Y, KEY_CODE_Y);
+	handleKey(Pad.Newpress.L, Pad.Released.L, Pad.HeldTime.L, KEY_CODE_L);
+	handleKey(Pad.Newpress.R, Pad.Released.R, Pad.HeldTime.R, KEY_CODE_R);
+	handleKey(Pad.Newpress.Up, Pad.Released.Up, Pad.HeldTime.Up, KEY_CODE_UP);
+	handleKey(Pad.Newpress.Down, Pad.Released.Down, Pad.HeldTime.Down, KEY_CODE_DOWN);
+	handleKey(Pad.Newpress.Left, Pad.Released.Left, Pad.HeldTime.Left, KEY_CODE_LEFT);
+	handleKey(Pad.Newpress.Right, Pad.Released.Right, Pad.HeldTime.Right, KEY_CODE_RIGHT);
+	handleKey(Pad.Newpress.Start, Pad.Released.Start, Pad.HeldTime.Start, KEY_CODE_START);
+	handleKey(Pad.Newpress.Select, Pad.Released.Select, Pad.HeldTime.Select, KEY_CODE_SELECT);
 }
 
 void Woopsi::handleLid() {
@@ -293,48 +286,46 @@ bool Woopsi::flipScreens(Gadget* gadget) {
 
 	// Only flip if there are more than three screens. Two are created by
 	// default as background screens, so we can only swap if we have more than 3
-	if (_gadgets.size() > 3) {
-		// Locate the top gadget
-		Gadget* topGadget = NULL;
+	if (_gadgets.size() < 4) return false;
 
-		for (s32 i = 0; i < _gadgets.size(); i++) {
-			if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted()) && (!_gadgets[i]->isDecoration())) {
-				if (_gadgets[i]->getPhysicalScreenNumber() == 1) {
-					topGadget = _gadgets[i];
+	// Locate the top gadget
+	Gadget* topGadget = NULL;
+
+	for (s32 i = 0; i < _gadgets.size(); i++) {
+		if ((_gadgets[i]->isDrawingEnabled()) && (!_gadgets[i]->isDeleted()) && (!_gadgets[i]->isDecoration())) {
+			if (_gadgets[i]->getPhysicalScreenNumber() == 1) {
+				topGadget = _gadgets[i];
+				break;
+			}
+		}
+	}
+
+	// Did we find it?
+	if (topGadget != NULL) {
+
+		// Is the top gadget the current gadget?
+		if (gadget == topGadget) {
+			// Get a pointer to the highest gadget in the bottom screen
+			// that isn't the top gadget
+			for (s32 i = _gadgets.size() - 1; i > -1; i--) {
+				if ((gadget != _gadgets[i]) && (_gadgets[i]->isDecoration())) {
+					gadget = _gadgets[i];
 					break;
 				}
 			}
 		}
 
-		// Did we find it?
-		if (topGadget != NULL) {
+		// Move to top of stack
+		topGadget->raiseToTop();
 
-			// Is the top gadget the current gadget?
-			if (gadget == topGadget) {
-				// Get a pointer to the highest gadget in the bottom screen
-				// that isn't the top gadget
-				for (s32 i = _gadgets.size() - 1; i > -1; i--) {
-					if ((gadget != _gadgets[i]) && (_gadgets[i]->isDecoration())) {
-						gadget = _gadgets[i];
-						break;
-					}
-				}
-			}
-
-			// Move to top of stack
-			topGadget->raiseToTop();
-
-			// Move to bottom screen
-			((Screen*)topGadget)->flipToBottomScreen();
-		}
-		
-		// Move the requested gadget to the top screen
-		((Screen*)gadget)->flipToTopScreen();
-		
-		return true;
+		// Move to bottom screen
+		((Screen*)topGadget)->flipToBottomScreen();
 	}
-
-	return false;
+	
+	// Move the requested gadget to the top screen
+	((Screen*)gadget)->flipToTopScreen();
+	
+	return true;
 }
 
 // Add a timer to the list of timers that receive VBL events
