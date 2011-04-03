@@ -45,6 +45,7 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 			_style.colours.shadow = defaultGadgetStyle->colours.shadow;
 			_style.colours.fill = defaultGadgetStyle->colours.fill;
 			_style.colours.dark = defaultGadgetStyle->colours.dark;
+			_style.colours.text = defaultGadgetStyle->colours.text;
 			_style.font = defaultGadgetStyle->font;
 			_style.glyphFont = defaultGadgetStyle->glyphFont;
 		}
@@ -57,6 +58,7 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 		_style.colours.shadow = style->colours.shadow;
 		_style.colours.fill = style->colours.fill;
 		_style.colours.dark = style->colours.dark;
+		_style.colours.text = style->colours.text;
 		_style.font = style->font;
 		_style.glyphFont = style->glyphFont;
 	}
