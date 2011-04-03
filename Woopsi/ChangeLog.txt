@@ -44,6 +44,8 @@ Change Log
     - AmigaScreen doesn't lose focus when depth gadget is clicked if it is not
       lowered to the bottom of the screen stack (ie. only one screen).
     - Removed concept of "close type" from Gadget.
+    - ListBox::onClick() won't crash if the area clicked doesn't contain an
+      option.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().

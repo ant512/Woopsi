@@ -155,27 +155,29 @@ void ListBox::selectAllOptions() {
 
 bool ListBox::isDoubleClick(s16 x, s16 y) {
 
-	if (Gadget::isDoubleClick(x, y)) {
+	if (!Gadget::isDoubleClick(x, y)) return false;
 
-		// Calculate which option was clicked
-		s32 selectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();
+	// Calculate which option was clicked
+	s32 selectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();
 
-		// Has the same option been clicked twice?  Ignore double-clicks that
-		// occur on different items
-		if (selectedIndex == _lastSelectedIndex) {
-
-			// Process click as a double-click
-			return true;
-		}
-	}
-
-	return false;
+	// Return true if the same option been clicked twice.  Ignore double-clicks
+	// that occur on different items
+	return (selectedIndex == _lastSelectedIndex);
 }
 
 void ListBox::onClick(s16 x, s16 y) {
 
+	// Abort if there are no options to select
+	if (_options.getItemCount() == 0) return;
+
 	// Calculate which option was clicked
-	_lastSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
+	_lastSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();
+
+	// Prevent selecting an option that doesn't exist
+	if (_lastSelectedIndex >= _options.getItemCount()) {
+		_lastSelectedIndex = -1;
+		return;
+	}
 	
 	const ListBoxDataItem* item = (const ListBoxDataItem*)_options.getItem(_lastSelectedIndex);
 
@@ -196,6 +198,9 @@ void ListBox::onClick(s16 x, s16 y) {
 }
 
 void ListBox::onDoubleClick(s16 x, s16 y) {
+
+	// Abort if there are no options to select
+	if (_options.getItemCount() == 0) return;
 
 	// Calculate which option was clicked
 	s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
