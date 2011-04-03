@@ -1,4 +1,3 @@
- - Remove flags?
  - Key events - should these bubble up the hierarchy?
  - Redraw as little as possible when adding text to textboxes.
  - Ensure all commands that should change onscreen display do so (ie. addOption
@@ -12,18 +11,10 @@ Future
 New Gadgets
  - Tree
  - Tabs
-
-Gadget
- - Move child manipulation into new GadgetCollection class?
- - Remove support for children from Gadget class?  Should all have it by
-   default?
    
 FileRequester
  - Hide the ".." directory and make a parent button?
  - File type filter.
-
-Focus
- - Come up with a way of representing this?
 
 Appearance
  - Scrap the Amiga appearance and replace it with something unique?
