@@ -108,8 +108,8 @@ void PipeButtonGrid::handleDropEvent(const GadgetEventArgs& e) {
 	
 	bool swapped = false;
 
-	for (s32 i = 0; i < getChildCount(); ++i) {
-		destButton = (PipeButtonBase*)getChild(i);
+	for (s32 i = 0; i < getGadgetCount(); ++i) {
+		destButton = (PipeButtonBase*)getGadget(i);
 		
 		// Do not allow swap if the buttons are the same object, the buttons do
 		// not collide, the destination cannot swap, or the destination is
@@ -283,10 +283,10 @@ PipeButtonBase* PipeButtonGrid::getPipeButtonAt(s16 column, s16 row) {
 	s16 x = column * _buttonWidth;
 	s16 y = row * _buttonHeight;
 	
-	for (s32 i = 0; i < getChildCount(); ++i) {
-		if (getChild(i)->getX() - getX() == x) {
-			if (getChild(i)->getY() - getY() == y) {
-				return (PipeButtonBase*)getChild(i);
+	for (s32 i = 0; i < getGadgetCount(); ++i) {
+		if (getGadget(i)->getX() - getX() == x) {
+			if (getGadget(i)->getY() - getY() == y) {
+				return (PipeButtonBase*)getGadget(i);
 			}
 		}
 	}

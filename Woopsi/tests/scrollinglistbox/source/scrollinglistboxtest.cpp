@@ -108,7 +108,7 @@ void ScrollingListBoxTest::startup() {
 	//_listBox->getPreferredDimensions(rect);
 	//_listBox->resize(rect.width, rect.height);
 	
-	ScrollbarVertical* scrollbar = ((ScrollbarVertical*)(_listBox->getChild(1)));
+	ScrollbarVertical* scrollbar = ((ScrollbarVertical*)(_listBox->getGadget(1)));
 	
 	Debug::printf("Scrollbar");
 	Debug::printf("Height:        %d", scrollbar->getHeight());
@@ -119,7 +119,7 @@ void ScrollingListBoxTest::startup() {
 	
 	Debug::printf("");
 	Debug::printf("Slider");
-	SliderVertical* slider = (SliderVertical*)scrollbar->getChild(0);
+	SliderVertical* slider = (SliderVertical*)scrollbar->getGadget(0);
 	
 	Rect rect;
 	slider->getClientRect(rect);
@@ -129,7 +129,7 @@ void ScrollingListBoxTest::startup() {
 	
 	Debug::printf("");
 	Debug::printf("Grip");
-	SliderVerticalGrip* grip = (SliderVerticalGrip*)slider->getChild(0);
+	SliderVerticalGrip* grip = (SliderVerticalGrip*)slider->getGadget(0);
 
 	Debug::printf("Height:        %d", grip->getHeight());
 

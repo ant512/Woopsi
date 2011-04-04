@@ -117,12 +117,12 @@ void RectCache::cacheBackgroundRegions() {
 		}
 
 		// Remove all child rects from the visible vector
-		for (s32 i = 0; i < _gadget->getChildCount(); i++) {
+		for (s32 i = 0; i < _gadget->getGadgetCount(); i++) {
 			
 			// Stop if there are no more regions to split
 			if (_backgroundRegions->size() == 0) break;
 			
-			_gadget->getChild(i)->getRectCache()->splitRectangles(_backgroundRegions, invisibleRects);
+			_gadget->getGadget(i)->getRectCache()->splitRectangles(_backgroundRegions, invisibleRects);
 		}
 
 		// Tidy up
@@ -188,9 +188,9 @@ void RectCache::removeOverlappedRects(WoopsiArray<Rect>* visibleRects, WoopsiArr
 		if (gadgetIndex > 0) {
 
 			// Remove any overlapped rectangles
-			for (s32 i = gadgetIndex; i < parent->getChildCount(); i++) {
+			for (s32 i = gadgetIndex; i < parent->getGadgetCount(); i++) {
 				if (visibleRects->size() > 0) {
-					parent->getChild(i)->getRectCache()->splitRectangles(visibleRects, invisibleRects);
+					parent->getGadget(i)->getRectCache()->splitRectangles(visibleRects, invisibleRects);
 				} else {
 					break;
 				}

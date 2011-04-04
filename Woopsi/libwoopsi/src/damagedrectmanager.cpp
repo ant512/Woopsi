@@ -89,8 +89,8 @@ void DamagedRectManager::drawRects(Gadget* gadget, WoopsiArray<Rect>* damagedRec
 			// intersection we've found.
 			subRects.push_back(intersection);
 			
-			for (s32 j = gadget->getChildCount() - 1; j >= 0; --j) {
-				drawRects(gadget->getChild(j), &subRects);
+			for (s32 j = gadget->getGadgetCount() - 1; j >= 0; --j) {
+				drawRects(gadget->getGadget(j), &subRects);
 				
 				// Abort if all rects have been drawn
 				if (subRects.size() == 0) break;

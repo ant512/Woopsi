@@ -679,10 +679,10 @@ namespace WoopsiUI {
 		/**
 		 * Raises the supplied gadget to the top of this gadget's child stack.
 		 * The supplied gadget pointer must be a child of this gadget.
-		 * @param child A pointer to the child gadget to raise.
+		 * @param gadget A pointer to the child gadget to raise.
 		 * @return True if the raise was successful.
 		 */
-		bool raiseGadgetToTop(Gadget* child);
+		bool raiseGadgetToTop(Gadget* gadget);
 
 		/**
 		 * Lowers the supplied gadget to the bottom of this gadget's child
@@ -698,17 +698,17 @@ namespace WoopsiUI {
 		 * For framework use only.
 		 * @param gadget A pointer to the child gadget.
 		 */
-		void moveChildToDeleteQueue(Gadget* gadget);
+		void moveGadgetToDeleteQueue(Gadget* gadget);
 
 		/**
 		 * Moves the supplied child gadget to the shelved gadget list.
 		 * For framework use only.
 		 * @param gadget A pointer to the child gadget.
 		 * @return True if the gadget was moved successfully.
-		 * @see moveShelvedToChildList()
+		 * @see moveShelvedToGadgetList()
 		 * @see hide()
 		 */
-		bool moveChildToShelvedList(Gadget* gadget);
+		bool moveGadgetToShelvedList(Gadget* gadget);
 
 		/**
 		 * Moves the supplied child gadget from the shelved list back
@@ -716,10 +716,10 @@ namespace WoopsiUI {
 		 * For framework use only.
 		 * @param gadget A pointer to the shelved gadget.
 		 * @return True if the gadget was moved successfully.
-		 * @see moveChildtoShelvedList()
+		 * @see moveGadgetToShelvedList()
 		 * @see show()
 		 */
-		bool moveShelvedToChildList(Gadget* gadget);
+		bool moveShelvedToGadgetList(Gadget* gadget);
 
 		/**
 		 * Sets the supplied gadget as the focused child.  The gadget must
@@ -888,7 +888,7 @@ namespace WoopsiUI {
 		 * responsibility for deleting the gadget back to the developer.
 		 * Does not unregister the gadget from the VBL system.
 		 * @return True if the gadget was successfully removed.
-		 * @see removeChild()
+		 * @see removeGadget()
 		 */
 		bool remove();
 
@@ -900,7 +900,7 @@ namespace WoopsiUI {
 		 * @return True if the gadget was succesfully removed.
 		 * @see remove()
 		 */
-		bool removeChild(Gadget* gadget);
+		bool removeGadget(Gadget* gadget);
 
 		/**
 		 * Add a context menu item definition to the gadget.
@@ -949,7 +949,7 @@ namespace WoopsiUI {
 		 * @param index Index of the child to retrieve.
 		 * @return Pointer to the child at the specified index.
 		 */
-		Gadget* getChild(u32 index) const;
+		Gadget* getGadget(u32 index) const;
 
 		/**
 		 * Get the quantity of child gadgets, including decoration gadgets.
@@ -958,12 +958,12 @@ namespace WoopsiUI {
 		 * @return The number of child gadgets belonging to this gadget.
 		 * @see getDecorationCount()
 		 */
-		const s32 getChildCount() const { return _gadgets.size(); };
+		const s32 getGadgetCount() const { return _gadgets.size(); };
 
 		/**
 		 * Get the quantity of decoration gadgets.
 		 * @return The number of decoration gadgets belonging to this gadget.
-		 * @see getChildCount()
+		 * @see getGadgetCount()
 		 */
 		const inline s32 getDecorationCount() const { return _decorationCount; };
 
@@ -1100,7 +1100,7 @@ namespace WoopsiUI {
 		 * @param gadget The gadget to close.
 		 * @see close().
 		 */
-		void closeChild(Gadget* gadget);
+		void closeGadget(Gadget* gadget);
 
 		/**
 		 * Erase the supplied child gadget and move it out of the main child
@@ -1109,9 +1109,9 @@ namespace WoopsiUI {
 		 * @param gadget The gadget to hide.
 		 * @see shelve()
 		 * @see unshelve()
-		 * @see shelveChild()
+		 * @see shelveGadget()
 		 */
-		void shelveChild(Gadget* gadget);
+		void shelveGadget(Gadget* gadget);
 
 		/**
 		 * Get a graphics port that can draw within the region of the supplied

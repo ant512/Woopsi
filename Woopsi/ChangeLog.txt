@@ -55,7 +55,18 @@ Change Log
     - Gadget::setBorderless() is virtual.
     - Label redraws minimal amount when text is changed.
     - TextBox redraws minimal amount when cursor moves.
-  
+    - Gadget::raiseGadgetToTop() parameter name in header file agrees with
+      source file.
+    - Fixed consistency of Gadget method names:
+      - moveChildToDeleteQueue() renamed to moveGadgetToDeleteQueue().
+      - moveChildToShelvedList() renamed to moveGadgetToShelvedList().
+      - moveShelvedToChildList() renamed to moveShelvedToGadgetList().
+      - removeChild() renamed to removeGadget().
+      - getChild() renamed to getGadget().
+      - getChildCount() renamed to getGadgetCount().
+      - closeChild() renamed to closeGadget().
+      - shelveChild() renamed to shelveGadget().
+
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
     - Added Gadget::getLowestCollidingGadgetIndex().

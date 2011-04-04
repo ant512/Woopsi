@@ -122,7 +122,7 @@ Gadget::~Gadget() {
 	}
 	
 	if (_parent != NULL) {
-		_parent->removeChild(this);
+		_parent->removeGadget(this);
 	}
 
 	// Delete children
@@ -259,7 +259,7 @@ void Gadget::setDecoration(bool isDecoration) {
 	// the parent, update its state, and re-add the child
 	Gadget* parent = _parent;
 
-	parent->removeChild(this);
+	parent->removeGadget(this);
 	_flags.decoration = isDecoration;
 	parent->addGadget(this);
 }
@@ -424,7 +424,7 @@ void Gadget::close() {
 	stopModal();
 
 	if (_parent != NULL) {
-		_parent->closeChild(this);
+		_parent->closeGadget(this);
 	}
 
 	// Ensure that this gadget can no longer affect the decoration count
@@ -454,7 +454,7 @@ bool Gadget::shelve() {
 	stopModal();
 
 	if (_parent != NULL) {
-		_parent->shelveChild(this);
+		_parent->shelveGadget(this);
 	}
 
 	return true;
@@ -472,7 +472,7 @@ bool Gadget::unshelve() {
 	_flags.shelved = false;
 
 	if (_parent != NULL) {
-		_parent->moveShelvedToChildList(this);
+		_parent->moveShelvedToGadgetList(this);
 		_parent->invalidateVisibleRectCache();	
 	}
 
@@ -482,7 +482,7 @@ bool Gadget::unshelve() {
 }
 
 // Add a gadget to the deletion queue ready for later processing
-void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
+void Gadget::moveGadgetToDeleteQueue(Gadget* gadget) {
 	// Locate gadget in main vector
 	for (s32 i = 0; i < _gadgets.size(); i++) {
 		if (_gadgets[i] == gadget) {
@@ -501,7 +501,7 @@ void Gadget::moveChildToDeleteQueue(Gadget* gadget) {
 }
 
 // Add a gadget to the shelved list ready for later processing
-bool Gadget::moveChildToShelvedList(Gadget* gadget) {
+bool Gadget::moveGadgetToShelvedList(Gadget* gadget) {
 
 	// Locate gadget in main vector
 	for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -521,7 +521,7 @@ bool Gadget::moveChildToShelvedList(Gadget* gadget) {
 }
 
 // Move a shelved gadget back to the child list
-bool Gadget::moveShelvedToChildList(Gadget* gadget) {
+bool Gadget::moveShelvedToGadgetList(Gadget* gadget) {
 
 	// Locate gadget in shelved vector
 	for (s32 i = 0; i < _shelvedGadgets.size(); i++) {
@@ -550,7 +550,7 @@ bool Gadget::moveShelvedToChildList(Gadget* gadget) {
 }
 
 // Shelve a child
-void Gadget::shelveChild(Gadget* gadget) {
+void Gadget::shelveGadget(Gadget* gadget) {
 	if (gadget == NULL) return;
 
 	// Decrease decoration count if necessary
@@ -591,13 +591,13 @@ void Gadget::shelveChild(Gadget* gadget) {
 		}
 	}
 
-	moveChildToShelvedList(gadget);
+	moveGadgetToShelvedList(gadget);
 
 	invalidateVisibleRectCache();
 }
 
 // Close a child
-void Gadget::closeChild(Gadget* gadget) {
+void Gadget::closeGadget(Gadget* gadget) {
 	if (gadget == NULL) return;
 	
 	// Decrease decoration count if necessary
@@ -638,7 +638,7 @@ void Gadget::closeChild(Gadget* gadget) {
 		}
 	}
 
-	moveChildToDeleteQueue(gadget);
+	moveGadgetToDeleteQueue(gadget);
 }
 
 // Ignores collisions with decorations
@@ -1246,7 +1246,7 @@ const s32 Gadget::getGadgetIndex(const Gadget* gadget) const {
 	return -1;
 }
 
-Gadget* Gadget::getChild(const u32 index) const {
+Gadget* Gadget::getGadget(const u32 index) const {
 	if (index < (u32)_gadgets.size()) return _gadgets[index];
 	return NULL;
 }
@@ -1536,13 +1536,13 @@ bool Gadget::remove() {
 	markRectsDamaged();
 	
 	if (_parent != NULL) {
-		return _parent->removeChild(this);
+		return _parent->removeGadget(this);
 	}
 
 	return false;
 }
 
-bool Gadget::removeChild(Gadget* gadget) {
+bool Gadget::removeGadget(Gadget* gadget) {
 	
 	gadget->markRectsDamaged();
 
