@@ -53,6 +53,7 @@ Change Log
     - Removed flags from all gadget constructors.
     - Changing label borderless state correctly repositions text.
     - Gadget::setBorderless() is virtual.
+    - Label redraws minimal amount when text is changed.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
