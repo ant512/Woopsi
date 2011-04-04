@@ -18,6 +18,8 @@ TextBox::TextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, 
 	_borderSize.bottom = 4;
 	_borderSize.left = 4;
 
+	setBorderless(false);
+
 	moveCursorToPosition(_text.getLength());
 }
 

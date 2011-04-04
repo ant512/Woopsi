@@ -17,9 +17,9 @@ SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u
 
 	_flags.decoration = isDecoration;
 	_flags.draggable = true;
+	_flags.borderless = true;
 
 	if (isDecoration) {
-		_flags.borderless = true;
 		_flags.draggable = false;
 	} else {
 		_flags.draggable = true;

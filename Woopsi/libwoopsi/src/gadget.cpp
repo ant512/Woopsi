@@ -237,9 +237,31 @@ const bool Gadget::canReceiveFocus() const {
 }
 
 void Gadget::setBorderless(bool isBorderless) {
+	if (_flags.borderless == isBorderless) return;
+
 	_flags.borderless = isBorderless;
 
 	invalidateVisibleRectCache();
+}
+
+void Gadget::setDecoration(bool isDecoration) {
+	if (_flags.decoration == isDecoration) return;
+
+	// If we don't have a parent of the gadget is shelved, we can just update
+	// the flag without breaking anything
+	if ((_parent == NULL) || _flags.shelved) {
+		_flags.decoration = isDecoration;
+		return;
+	}
+
+	// To ensure that resetting the child's decoration state cannot invalidate
+	// the order of gadgets in the parent, we have to remove the child from
+	// the parent, update its state, and re-add the child
+	Gadget* parent = _parent;
+
+	parent->removeChild(this);
+	_flags.decoration = isDecoration;
+	parent->addGadget(this);
 }
 
 void Gadget::setFocusedGadget(Gadget* gadget) {

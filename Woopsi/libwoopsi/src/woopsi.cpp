@@ -76,11 +76,13 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 	
 	if (SCREEN_COUNT == 2) {
 		screen = new Screen("", style);
+		screen->setDecoration(true);
 		addGadget(screen);
 		screen->flipToTopScreen();
 	}
 
 	screen = new Screen("", style);
+	screen->setDecoration(true);
 	addGadget(screen);
 }
 

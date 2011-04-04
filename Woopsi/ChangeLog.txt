@@ -51,6 +51,8 @@ Change Log
     - ProgressBar accepts a style object in its constructor.
     - Removed GadgetFlagTypes from Gadget class.
     - Removed flags from all gadget constructors.
+    - Changing label borderless state correctly repositions text.
+    - Gadget::setBorderless() is virtual.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
@@ -59,6 +61,8 @@ Change Log
       individually.
     - Added Gadget::getTextColor().
     - Added Gadget::setTextColour().
+    - Added Gadget::setDecoration().
+    - Added Label::setBorderless().
 
   V1.1 (20110329)
   

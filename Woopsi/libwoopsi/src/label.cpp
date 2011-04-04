@@ -142,3 +142,12 @@ void Label::setFont(FontBase* font) {
 
 	markRectsDamaged();
 }
+
+void Label::setBorderless(bool isBorderless) {
+	_flags.borderless = isBorderless;
+
+	calculateTextPositionHorizontal();
+	calculateTextPositionVertical();
+
+	markRectsDamaged();
+}

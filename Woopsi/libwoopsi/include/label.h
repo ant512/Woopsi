@@ -99,6 +99,12 @@ namespace WoopsiUI {
 		 */
 		virtual void setFont(FontBase* font);
 
+		/**
+		 * Sets this gadget's border state.
+		 * @param isBorderless The border state.
+		 */
+		void setBorderless(bool isBorderless);
+
 	protected:
 		WoopsiString _text;						/**< Text that the textbox will display */
 		s32 _textX;								/**< X co-ordinate of the text relative to the gadget */

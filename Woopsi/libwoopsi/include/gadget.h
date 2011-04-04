@@ -374,7 +374,13 @@ namespace WoopsiUI {
 		 * Sets this gadget's border state.
 		 * @param isBorderless The border state.
 		 */
-		void setBorderless(bool isBorderless);
+		virtual void setBorderless(bool isBorderless);
+
+		/**
+		* Sets this gadget as a decoration or otherwise.
+		 * @param isDecoration The gadget's decoration state.
+		 */
+		void setDecoration(bool isDecoration);
 
 		/**
 		 * Sets whether or not this gadget can be dragged.

@@ -5,6 +5,7 @@
 using namespace WoopsiUI;
 
 Button::Button(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Label(x, y, width, height, text, style) {
+	setBorderless(false);
 }
 
 void Button::drawContents(GraphicsPort* port) {
