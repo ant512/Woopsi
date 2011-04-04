@@ -111,8 +111,8 @@ void Document::wrap(s32 charIndex) {
 	
 	if (_linePositions.size() == 0) charIndex = 0;
 	
-	// If we're wrapping from an offset in the text, ensure that any existing data
-	// after the offset gets removed
+	// If we're wrapping from an offset in the text, ensure that any existing
+	// data after the offset gets removed
 	if (charIndex > 0) {
 		
 		// Remove wrapping data past this point
@@ -120,14 +120,15 @@ void Document::wrap(s32 charIndex) {
 		// Get the index of the line in which the char index appears
 		s32 lineIndex = getLineContainingCharIndex(charIndex);
 		
-		// Remove any longest line records that occur from the line index onwards
+		// Remove any longest line records that occur from the line index
+		// onwards
 		while ((_longestLines.size() > 0) && (_longestLines[_longestLines.size() - 1].index >= lineIndex)) {
 			_longestLines.pop_back();
 		}
 		
-		// If there are any longest line records remaining, update the text pixel width
-		// The last longest line record will always be the last valid longest line as
-		// the vector is sorted by length
+		// If there are any longest line records remaining, update the text
+		// pixel width.  The last longest line record will always be the last
+		// valid longest line as the vector is sorted by length
 		if (_longestLines.size() > 0) {
 			_textPixelWidth = _longestLines[_longestLines.size() - 1].width;
 		} else {
@@ -139,7 +140,8 @@ void Document::wrap(s32 charIndex) {
 			_linePositions.pop_back();
 		}
 		
-		// Adjust start position of wrapping loop so that it starts with the current line index
+		// Adjust start position of wrapping loop so that it starts with the
+		// current line index
 		if (_linePositions.size() > 0) {
 			pos = _linePositions[_linePositions.size() - 1];
 		}
@@ -169,8 +171,8 @@ void Document::wrap(s32 charIndex) {
 		
 		if (iterator->moveTo(pos)) {
 			
-			// Search for line breaks and valid breakpoints until we exceed the width of the
-			// text field or we run out of string to process
+			// Search for line breaks and valid breakpoints until we exceed the
+			// width of the text field or we run out of string to process
 			while (lineWidth + _font->getCharWidth(iterator->getCodePoint()) <= _width) {
 				lineWidth += _font->getCharWidth(iterator->getCodePoint());
 				
@@ -326,11 +328,13 @@ const s32 Document::getLineContainingCharIndex(const s32 index) const {
 		// stored in the _linePositions vector)
 		if (index > _linePositions[top]) {
 			
-			// Search index falls within the line represented by the top position
+			// Search index falls within the line represented by the top
+			// position
 			return top;
 		} else if (index < _linePositions[bottom]) {
 			
-			// Search index falls within the line represented by the bottom position
+			// Search index falls within the line represented by the bottom
+			// position
 			return bottom - 1;
 		}
 		
