@@ -20,7 +20,7 @@ Won't Do
  - Split Woopsi class into WoopsiApplication and WoopsiGadget - too tightly
    linked.  Makes no sense to split them.
  - Optimise MultiLineTextBox by redrawing only changed rows - too much
-   functionality is tidied into the subclasses and they don't give us enough
+   functionality is tied into the subclasses and they don't give us enough
    information back to make the optimisations possible.
  - Split Gadget into Gadget and GadgetCollection - too tightly linked.  Makes
    no sense to split them.
