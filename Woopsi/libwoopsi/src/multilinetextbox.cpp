@@ -51,7 +51,7 @@ void MultiLineTextBox::drawText(GraphicsPort* port) {
 
 	// Determine the top and bottom rows within the graphicsport's clip rect.
 	// We only draw these rows in order to increase the speed of the routine.
-	Rect rect;\
+	Rect rect;
 	port->getClipRect(rect);
 
 	s32 regionY = -_canvasY + rect.y;						// Y co-ord of the visible region of this canvas
