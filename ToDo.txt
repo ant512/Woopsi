@@ -1,7 +1,4 @@
  - Key events - should these bubble up the hierarchy?
- - Rename all "addGadget", "removeGadget", etc methods that work with children
-   to either "xGadget" or "xChild", but make sure that the convention is
-   consistent.
 
 Future
 ------
