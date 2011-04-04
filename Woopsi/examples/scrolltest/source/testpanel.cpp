@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-TestPanel::TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) : ScrollingPanel(x, y, width, height, flags, style) {
+TestPanel::TestPanel(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : ScrollingPanel(x, y, width, height, style) {
 
 	// Set the dimensions of the virtual canvas
 	setCanvasHeight(300);

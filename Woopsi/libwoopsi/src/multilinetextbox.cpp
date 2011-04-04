@@ -10,7 +10,7 @@
 
 using namespace WoopsiUI;
 
-MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows, GadgetStyle* style) : ScrollingPanel(x, y, width, height, flags, style) {
+MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, s16 maxRows, GadgetStyle* style) : ScrollingPanel(x, y, width, height, style) {
 
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;

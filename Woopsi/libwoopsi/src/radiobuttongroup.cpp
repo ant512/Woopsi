@@ -4,7 +4,8 @@
 
 using namespace WoopsiUI;
 
-RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, GadgetStyle* style) : Gadget(x, y, 0, 0, GADGET_BORDERLESS, style) {
+RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, GadgetStyle* style) : Gadget(x, y, 0, 0, style) {
+	_flags.borderless = true;
 	_selectedGadget = NULL;
 }
 

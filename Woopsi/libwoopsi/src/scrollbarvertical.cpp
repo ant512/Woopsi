@@ -6,7 +6,9 @@
 
 using namespace WoopsiUI;
 
-ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, GADGET_BORDERLESS, style) {
+ScrollbarVertical::ScrollbarVertical(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, style) {
+
+	_flags.borderless = true;
 
 	_buttonHeight = 10;
 

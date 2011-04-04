@@ -26,14 +26,12 @@ namespace WoopsiUI {
 		 * Constructor.
 		 * @param x The x co-ordinate of the window.
 		 * @param y The y co-ordinate of the window.
-		 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the
-		 * Amiga borders.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		WoopsiKeyboard(s16 x, s16 y, u32 flags, GadgetStyle* style = NULL);
+		WoopsiKeyboard(s16 x, s16 y, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.

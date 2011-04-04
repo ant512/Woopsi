@@ -7,11 +7,11 @@
 void ColourPickerTest::startup() {
 
 	// Create screen
-	AmigaScreen* screen = new AmigaScreen("Test Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaScreen* screen = new AmigaScreen("Test Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Test Window", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Test Window", true, true);
 	screen->addGadget(window);
 	
 	// Add test buttons
@@ -60,7 +60,7 @@ void ColourPickerTest::startup() {
 	_dimensions->addGadgetEventHandler(this);
 
 	// Add alert
-	_colourPicker = new ColourPicker(30, 30, 160, 105, "This is some text", 0, Gadget::GADGET_DRAGGABLE);
+	_colourPicker = new ColourPicker(30, 30, 160, 105, "This is some text", 0);
 	window->addGadget(_colourPicker);
 	_colourPicker->addGadgetEventHandler(this);
 	_colourPicker->setDoubleClickable(true);

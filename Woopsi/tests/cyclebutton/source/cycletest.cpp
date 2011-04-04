@@ -7,11 +7,11 @@
 void CycleTest::startup() {
 
 	// Create screen
-	AmigaScreen* screen = new AmigaScreen("Test Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaScreen* screen = new AmigaScreen("Test Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Test Window", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Test Window", true, true);
 	screen->addGadget(window);
 	
 	// Add test buttons

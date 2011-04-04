@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-BitmapButton::BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, const BitmapBase* bitmapNormal, const BitmapBase* bitmapClicked) : Gadget(x, y, width, height, 0, NULL) {
+BitmapButton::BitmapButton(s16 x, s16 y, u16 width, u16 height, u16 bitmapX, u16 bitmapY, const BitmapBase* bitmapNormal, const BitmapBase* bitmapClicked) : Gadget(x, y, width, height, NULL) {
 	_bitmapX = bitmapX;
 	_bitmapY = bitmapY;
 	_bitmapClicked = bitmapClicked;

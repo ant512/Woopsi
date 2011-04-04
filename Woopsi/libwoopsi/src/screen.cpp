@@ -8,7 +8,7 @@
 
 using namespace WoopsiUI;
 
-Screen::Screen(const WoopsiString& title, u32 flags, GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, flags, style) {
+Screen::Screen(const WoopsiString& title, GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, style) {
 	_titleHeight = 0;
 	_title = title;
 	_flags.borderless = true;

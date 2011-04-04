@@ -8,7 +8,7 @@
 
 using namespace WoopsiUI;
 
-WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, u32 flags, GadgetStyle* style) : Gadget(x, y, 251, 154, flags, style) {
+WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, GadgetStyle* style) : Gadget(x, y, 251, 154, style) {
 
 	_flags.canReceiveFocus = false;
 

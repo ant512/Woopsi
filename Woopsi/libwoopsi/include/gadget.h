@@ -26,18 +26,6 @@ namespace WoopsiUI {
 	public:
 
 		/**
-		 * Enum listing flags that can be set in the constructor's "flags"
-		 * parameter.
-		 */
-		enum GadgetFlagType {
-			GADGET_BORDERLESS = 0x0001,			/**< Gadget has no border. */
-			GADGET_DRAGGABLE = 0x0002,			/**< Gadget can be dragged by the user. */
-			GADGET_PERMEABLE = 0x0004,			/**< Gadget's children can exceed this gadget's edges. */
-			GADGET_DOUBLE_CLICKABLE = 0x0008,	/**< Gadget can be double-clicked. */
-			GADGET_DECORATION = 0x0010			/**< Gadget is a decoration. */
-		};
-
-		/**
 		 * Struct describing some basic properties of a gadget.
 		 */
 		typedef struct {
@@ -82,7 +70,6 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the gadget.
 		 * @param width The width of the gadget.
 		 * @param height The height of the gadget.
-		 * @param flags Bitmask specifying some set-up values for the gadget.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
@@ -90,7 +77,7 @@ namespace WoopsiUI {
 		 * data.  If no object is specified the gadget will use the default style.
 		 * @see GadgetFlagType.
 		 */
-		Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
+		Gadget(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 		
 		/**
 		 * Get the x co-ordinate of the gadget in "Woopsi space".

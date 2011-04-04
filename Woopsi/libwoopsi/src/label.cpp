@@ -3,9 +3,11 @@
 
 using namespace WoopsiUI;
 
-Label::Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
+Label::Label(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	_hAlignment = TEXT_ALIGNMENT_HORIZ_CENTRE;
 	_vAlignment = TEXT_ALIGNMENT_VERT_CENTRE;
+
+	_flags.borderless = true;
 	
 	_borderSize.top = 3;
 	_borderSize.right = 3;

@@ -49,10 +49,9 @@ namespace WoopsiUI {
 		 * @param height The height of the window.
 		 * @param title The title of the window.
 		 * @param path The initial path that the requester will show.
-		 * @param flags Standard flags.
 		 * @param style Optional gadget style.
 		 */
-		FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& path, u32 flags, GadgetStyle* style = NULL);
+		FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& path, GadgetStyle* style = NULL);
 
 		/**
 		 * Handles events raised by its sub-gadgets.

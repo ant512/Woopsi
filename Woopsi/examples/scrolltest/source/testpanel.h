@@ -18,10 +18,9 @@ namespace WoopsiUI {
 		 * @param y Y co-ord of the panel.
 		 * @param width Width of the panel.
 		 * @param height Height of the panel.
-		 * @param flags Flags bitmask.
 		 * @param font Font to use with the panel.
 		 */
-		TestPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
+		TestPanel(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 		
 	protected:
 		

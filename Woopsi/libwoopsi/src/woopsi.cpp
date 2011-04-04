@@ -16,9 +16,12 @@ using namespace WoopsiUI;
 // Instantiate singleton
 Woopsi* Woopsi::singleton = NULL;
 
-Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, GADGET_BORDERLESS, style) {
+Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFFSET + SCREEN_HEIGHT, style) {
 	_lidClosed = false;
+
 	_flags.modal = true;
+	_flags.borderless = true;
+	
 	_clickedGadget = NULL;
 	_keyboardScreen = NULL;
 	_vblCount = 0;
@@ -72,12 +75,12 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 	Screen* screen;
 	
 	if (SCREEN_COUNT == 2) {
-		screen = new Screen("", GADGET_DECORATION);
+		screen = new Screen("", style);
 		addGadget(screen);
 		screen->flipToTopScreen();
 	}
 
-	screen = new Screen("", GADGET_DECORATION);
+	screen = new Screen("", style);
 	addGadget(screen);
 }
 

@@ -3,7 +3,7 @@
 
 using namespace WoopsiUI;
 
-Requester::Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, false, true, style) {
+Requester::Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, false, true, style) {
 
 	Rect rect;
 	getClientRect(rect);

@@ -7,7 +7,7 @@
 void WPaint::startup() {
 
 	// Create screen
-	Screen* screen = new Screen("WPaint Screen", 0);
+	Screen* screen = new Screen("WPaint Screen");
 	woopsiApplication->addGadget(screen);
 
 	// Add canvas

@@ -6,11 +6,11 @@ void TimerTest::startup() {
 	
 	/* Code below creates the output screen and associated gadgets */
 	// Create screen
-	AmigaScreen* outScreen = new AmigaScreen("Ouput Screen", 0, false, false);
+	AmigaScreen* outScreen = new AmigaScreen("Ouput Screen", false, false);
 	woopsiApplication->addGadget(outScreen);
 	
 	// Add output window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Timer Test Window", 0, false, false);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Timer Test Window", false, false);
 	outScreen->addGadget(window);
 
 	// Get available area within window

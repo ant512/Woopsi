@@ -27,7 +27,6 @@ namespace WoopsiUI {
 		 * @param width The width of the textbox.
 		 * @param height The height of the textbox.
 		 * @param text Pointer to a string to display in the textbox.
-		 * @param flags Standard gadget flag options.
 		 * @param maxRows The maximum number of rows the textbox can track.  Adding
 		 * text beyond this number will cause rows at the start of the text to be
 		 * forgotten; text is essentially stored as a queue, and adding to the back
@@ -38,7 +37,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows = 0, GadgetStyle* style = NULL);
+		ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, s16 maxRows = 0, GadgetStyle* style = NULL);
 
 		/**
 		 * Set the horizontal alignment of text within the textbox.

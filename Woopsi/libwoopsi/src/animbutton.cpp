@@ -9,7 +9,7 @@ using namespace WoopsiUI;
 const int AnimButton::ANIM_BUTTON_DEFAULT_WIDTH = 10;
 const int AnimButton::ANIM_BUTTON_DEFAULT_HEIGHT = 10;
 
-AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, 0, NULL) {
+AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY) : Gadget(x, y, width, height, NULL) {
 
 	_animX = animX;
 	_animY = animY;

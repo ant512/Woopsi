@@ -6,8 +6,10 @@
 
 using namespace WoopsiUI;
 
-ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, GADGET_BORDERLESS, style) {
+ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	
+	_flags.borderless = true;
+
 	_buttonWidth = 10;
 
 	// Create the children

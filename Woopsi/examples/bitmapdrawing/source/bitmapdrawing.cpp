@@ -12,11 +12,11 @@
 void BitmapDrawing::startup() {
 
 	// Create screen to host our application
-	AmigaScreen* screen = new AmigaScreen("Drawing Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaScreen* screen = new AmigaScreen("Drawing Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window to the screen
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Drawing Window", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Drawing Window", true, true);
 	screen->addGadget(window);
 
 	// Get available area for child gadgets within window
@@ -49,11 +49,11 @@ void BitmapDrawing::startup() {
 	screen->flipToTopScreen();
 	
 	// Create second screen that will contain the control buttons
-	screen = new AmigaScreen("Control Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	screen = new AmigaScreen("Control Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window to the second screen
-	window = new AmigaWindow(0, 13, 256, 179, "Control Window", Gadget::GADGET_DRAGGABLE, true, true);
+	window = new AmigaWindow(0, 13, 256, 179, "Control Window", true, true);
 	screen->addGadget(window);
 	
 	// Create array containing labels for all buttons

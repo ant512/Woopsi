@@ -7,7 +7,7 @@
 void Windowless::startup() {
 
 	// Create screen
-	Screen* screen = new Screen("Windowless Screen", Gadget::GADGET_DRAGGABLE);
+	Screen* screen = new Screen("Windowless Screen");
 	woopsiApplication->addGadget(screen);
 
 	// Get available area within window

@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-ContextMenu::ContextMenu(GadgetStyle* style) : Gadget(0, 0, 20, 20, 0, style) {
+ContextMenu::ContextMenu(GadgetStyle* style) : Gadget(0, 0, 20, 20, style) {
 	setBorderless(false);
 	_opener = NULL;
 	

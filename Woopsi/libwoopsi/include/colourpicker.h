@@ -27,10 +27,9 @@ namespace WoopsiUI {
 		 * @param height The height of the window.
 		 * @param title The title of the window.
 		 * @param colour The default colour to show.
-		 * @param flags Standard flags.
 		 * @param style Optional gadget style.
 		 */
-		ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u16 colour, u32 flags, GadgetStyle* style = NULL);
+		ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u16 colour, GadgetStyle* style = NULL);
 
 		/**
 		 * Get the colour currently shown by the gadget.

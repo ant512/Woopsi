@@ -37,10 +37,9 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the listbox.
 		 * @param width The width of the listbox.
 		 * @param height The height of the listbox.
-		 * @param flags Standard flags.
 		 * @param style Optional gadget style.
 		 */
-		FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
+		FileListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 	
 		/**
 		 * Handles events raised by its sub-gadgets.

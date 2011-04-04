@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, 0, style) {
+ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	_scrollbarWidth = 10;
 
 	setBorderless(true);

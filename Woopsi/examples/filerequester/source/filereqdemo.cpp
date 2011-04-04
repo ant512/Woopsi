@@ -8,11 +8,11 @@ using namespace WoopsiUI;
 void FileReqDemo::startup() {
 
 	// Create screen
-	AmigaScreen* screen = new AmigaScreen("Output Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaScreen* screen = new AmigaScreen("Output Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Output Window", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Output Window", true, true);
 	screen->addGadget(window);
 
 	// Get available area within window
@@ -31,7 +31,7 @@ void FileReqDemo::startup() {
 		_textbox->setText("FAT initialised");
 		
 		// Create file requester at the root of the file system
-		FileRequester* req = new FileRequester(10, 10, 150, 150, "Files", "/", GADGET_DRAGGABLE | GADGET_DOUBLE_CLICKABLE);
+		FileRequester* req = new FileRequester(10, 10, 150, 150, "Files", "/");
 		req->setRefcon(1);
 		req->addGadgetEventHandler(this);
 		screen->addGadget(req);

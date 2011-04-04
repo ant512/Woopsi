@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, GADGET_DRAGGABLE) {
+SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height) {
 	_minimumValue = 0;
 	_maximumValue = 0;
 	_value = 0;
@@ -15,6 +15,7 @@ SliderVertical::SliderVertical(s16 x, s16 y, u16 width, u16 height) : Gadget(x, 
 	_flags.permeable = false;
 	_flags.borderless = false;
 	_flags.doubleClickable = false;
+	_flags.draggable = true;
 
 	// Create grip
 	Rect rect;

@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-Alert::Alert(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& text, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, GADGET_DRAGGABLE, false, true, style) {
+Alert::Alert(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& text, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, false, true, style) {
 
 	Rect rect;
 	getClientRect(rect);
@@ -30,7 +30,7 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, con
 	_button->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
 
 	// Create textbox
-	_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height - buttonRect.height - 2, text, GADGET_DRAGGABLE, 100, style);
+	_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height - buttonRect.height - 2, text, 100, style);
 	addGadget(_textBox);
 
 	_button->addGadgetEventHandler(this);

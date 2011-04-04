@@ -4,7 +4,9 @@
 
 using namespace WoopsiUI;
 
-AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, bool showCloseButton, bool showDepthButton, GadgetStyle* style) : Window(x, y, width, height, title, flags, style) {
+AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, bool showCloseButton, bool showDepthButton, GadgetStyle* style) : Window(x, y, width, height, title, style) {
+
+	_flags.draggable = true;
 
 	_closeButton = NULL;
 	_depthButton = NULL;
@@ -13,15 +15,12 @@ AmigaWindow::AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString
 	_windowFlags.showCloseButton = showCloseButton;
 	_windowFlags.showDepthButton = showDepthButton;
 
-	// Add border to gadget list
-	if (!(flags & GADGET_BORDERLESS)) {
-		createBorder();
-	}
-
 	_borderSize.top = WINDOW_TITLE_HEIGHT;
 	_borderSize.right = WINDOW_BORDER_SIZE;
 	_borderSize.bottom = WINDOW_BORDER_SIZE;
 	_borderSize.left = WINDOW_BORDER_SIZE;
+
+	createBorder();
 }
 
 void AmigaWindow::setBorderless(bool isBorderless) {

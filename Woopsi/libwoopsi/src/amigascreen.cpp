@@ -4,7 +4,9 @@
 
 using namespace WoopsiUI;
 
-AmigaScreen::AmigaScreen(const WoopsiString& title, u32 flags, bool showFlipButton, bool showDepthButton, GadgetStyle* style) : Screen(title, flags, style) {
+AmigaScreen::AmigaScreen(const WoopsiString& title, bool showFlipButton, bool showDepthButton, GadgetStyle* style) : Screen(title, style) {
+
+	_flags.draggable = true;
 
 	_titleHeight = SCREEN_TITLE_HEIGHT;
 

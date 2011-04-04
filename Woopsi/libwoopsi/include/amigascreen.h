@@ -36,7 +36,6 @@ namespace WoopsiUI {
 		/**
 		 * Constructor.
 		 * @param title The screen's title.
-		 * @param flags Bitmask specifying some setup values for the object.
 		 * @param showFlipButton True to show the display-flipping button.
 		 * @param showDepthButton True to show the z-order sorting button.
 		 * @param style The style that the gadget should use.  If this is not
@@ -44,7 +43,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		AmigaScreen(const WoopsiString& title, u32 flags, bool showFlipButton, bool showDepthButton, GadgetStyle* style = NULL);
+		AmigaScreen(const WoopsiString& title, bool showFlipButton, bool showDepthButton, GadgetStyle* style = NULL);
 
 		/**
 		 * Sets this gadget's border state.  Setting to false hides the title bar.

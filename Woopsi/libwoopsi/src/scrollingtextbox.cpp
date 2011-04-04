@@ -4,12 +4,12 @@
 
 using namespace WoopsiUI;
 
-ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, u32 flags, s16 maxRows, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
+ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const WoopsiString& text, s16 maxRows, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	_scrollbarWidth = 10;
 
 	setBorderless(true);
 
-	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, flags, maxRows, &_style);
+	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, maxRows, &_style);
 	_textbox->addGadgetEventHandler(this);
 	
 	// Create scrollbar

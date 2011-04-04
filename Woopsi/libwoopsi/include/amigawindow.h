@@ -40,7 +40,6 @@ namespace WoopsiUI {
 		 * @param width The width of the window.
 		 * @param height The height of the window.
 		 * @param title The text that should appear in the title bar.
-		 * @param flags Standard flags.  Setting GADGET_BORDERLESS hides the Amiga borders.
 		 * @param showCloseButton True to show the window close button.
 		 * @param showDepthButton True to show the z-order sorting button.
 		 * @param style The style that the gadget should use.  If this is not
@@ -48,7 +47,7 @@ namespace WoopsiUI {
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, u32 flags, bool showCloseButton, bool showDepthButton, GadgetStyle* style = NULL);
+		AmigaWindow(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, bool showCloseButton, bool showDepthButton, GadgetStyle* style = NULL);
 
 		/**
 		 * Show or hide the Amiga borders.

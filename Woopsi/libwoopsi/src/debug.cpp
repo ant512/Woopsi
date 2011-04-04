@@ -74,13 +74,13 @@ void Debug::createGUI() {
 
 	// Add debug screen
 	if (_screen == NULL) {
-		_screen = new AmigaScreen("Debug", Gadget::GADGET_DRAGGABLE, true, true);
+		_screen = new AmigaScreen("Debug", true, true);
 		woopsiApplication->addGadget(_screen);
 	}
 
 	// Add debug window
 	if (_window == NULL) {
-		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", Gadget::GADGET_DRAGGABLE, false, false);
+		_window = new AmigaWindow(0, 13, 256, 179, "Debug Output", false, false);
 		_screen->addGadget(_window);
 	}
 
@@ -102,7 +102,7 @@ void Debug::createGUI() {
 		Rect rect;
 		_window->getClientRect(rect);
 
-		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", Gadget::GADGET_DRAGGABLE, 50, _style);
+		_textBox = new ScrollingTextBox(rect.x, rect.y, rect.width, rect.height, "", 50, _style);
 		_window->addGadget(_textBox);
 		_textBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
 		_textBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);

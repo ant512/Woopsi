@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-ScrollbarPanel::ScrollbarPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
+ScrollbarPanel::ScrollbarPanel(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	_scrollbarWidth = 10;
 	_scrollbarHeight = 10;
 	_hasVerticalScrollbar = true;
@@ -33,7 +33,7 @@ void ScrollbarPanel::buildUI() {
 	if (_hasVerticalScrollbar) panelWidth -= _scrollbarWidth;
 	if (_hasHorizontalScrollbar) panelHeight -= _scrollbarHeight;
 
-	_panel = new ScrollingPanel(rect.x, rect.y, panelWidth, panelHeight, 0, &_style);
+	_panel = new ScrollingPanel(rect.x, rect.y, panelWidth, panelHeight, &_style);
 	addGadget(_panel);
 
 	Rect panelRect;

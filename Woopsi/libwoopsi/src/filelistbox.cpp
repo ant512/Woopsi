@@ -13,7 +13,7 @@
 
 using namespace WoopsiUI;
 
-FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
+FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 
 	_path = NULL;
 

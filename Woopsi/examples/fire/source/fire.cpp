@@ -12,11 +12,11 @@
 void Fire::startup() {
 
 	// Create screen to host our application
-	AmigaScreen* screen = new AmigaScreen("Drawing Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaScreen* screen = new AmigaScreen("Drawing Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window to the screen
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Drawing Window", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Drawing Window", true, true);
 	screen->addGadget(window);
 
 	// Get available area for child gadgets within window
@@ -45,11 +45,11 @@ void Fire::startup() {
 	screen->flipToTopScreen();
 	
 	// Create second screen that will contain the control buttons
-	screen = new AmigaScreen("Control Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	screen = new AmigaScreen("Control Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window to the second screen
-	window = new AmigaWindow(0, 13, 256, 179, "Control Window", Gadget::GADGET_DRAGGABLE, true, true);
+	window = new AmigaWindow(0, 13, 256, 179, "Control Window", true, true);
 	screen->addGadget(window);
 	
 	// Create the palette
@@ -105,17 +105,17 @@ void Fire::handleTimer() {
 	
 	// Draw new line of pixels at the bottom of the window
 	for (u16 y = 1; y < 3; ++y) {
-	for (u16 x = 0; x < _fireWidth; ++x) {
+		for (u16 x = 0; x < _fireWidth; ++x) {
 
-		// Generate a random colour
-		colour = _intensity + (rand() % (_fireColours - _intensity));
-		
-		// Draw to the buffer
-		_buffer1[x + ((_fireHeight - y) * _fireWidth)] = colour;
-		
-		// Draw the new pixel
-		//_graphics->drawFilledRect((x + fireX) * _scale, (_fireHeight - y + fireY) * _scale, _scale, _scale, _palette[colour]);
-	}
+			// Generate a random colour
+			colour = _intensity + (rand() % (_fireColours - _intensity));
+			
+			// Draw to the buffer
+			_buffer1[x + ((_fireHeight - y) * _fireWidth)] = colour;
+			
+			// Draw the new pixel
+			//_graphics->drawFilledRect((x + fireX) * _scale, (_fireHeight - y + fireY) * _scale, _scale, _scale, _palette[colour]);
+		}
 	}
 	
 	// Draw lines higher up the screen by taking an average of the surrounding

@@ -8,7 +8,7 @@
 
 using namespace WoopsiUI;
 
-Calendar::Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, u32 flags, GadgetStyle* style) : Gadget(x, y, width, height, flags, style) {
+Calendar::Calendar(s16 x, s16 y, u16 width, u16 height, u8 day, u8 month, u16 year, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	_date = NULL;
 	_visibleDate = NULL;
 	_selectedDayButton = NULL;

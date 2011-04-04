@@ -28,11 +28,11 @@ void DefaultStyleDemo::startup() {
 	defaultGadgetStyle->colours.text = woopsiRGB(0, 31, 0);
 
 	// Create screen
-	AmigaScreen* screen = new AmigaScreen("Hello World Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaScreen* screen = new AmigaScreen("Hello World Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Hello World Window", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Hello World Window", true, true);
 	screen->addGadget(window);
 
 	// Get available area within window

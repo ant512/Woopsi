@@ -3,6 +3,7 @@
 
 #include <nds.h>
 #include "gadget.h"
+#include "gadgetstyle.h"
 
 namespace WoopsiUI {
 
@@ -19,8 +20,12 @@ namespace WoopsiUI {
 		 * @param y The y co-ord of the progress bar, relative to its parent.
 		 * @param width The width of the progress bar.
 		 * @param height The height of the progress bar.
+		 * @param style The style that the gadget should use.  If this is not
+		 * specified, the gadget will use the values stored in the global
+		 * defaultGadgetStyle object.  The gadget will copy the properties of
+		 * the style into its own internal style object.
 		 */
-		ProgressBar(s16 x, s16 y, u16 width, u16 height);
+		ProgressBar(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 
 		/**
 		 * Get the smallest value that the progress bar can represent.

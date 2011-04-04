@@ -6,7 +6,7 @@
 
 using namespace WoopsiUI;
 
-ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : ScrollingPanel(x, y, width, height, 0, style) {
+ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : ScrollingPanel(x, y, width, height, style) {
 	_flags.draggable = true;
 	_flags.doubleClickable = true;
 	_optionPadding = 2;

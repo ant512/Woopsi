@@ -46,6 +46,11 @@ Change Log
     - Removed concept of "close type" from Gadget.
     - ListBox::onClick() won't crash if the area clicked doesn't contain an
       option.
+    - Woopsi gadget passes its style object to the two background screens it
+      creates.
+    - ProgressBar accepts a style object in its constructor.
+    - Removed GadgetFlagTypes from Gadget class.
+    - Removed flags from all gadget constructors.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().

@@ -22,7 +22,8 @@ public:
 		CANVAS_MODE_FLOOD_FILL = 7
 	};
 
-	Canvas() : Window(0, 0, 256, 192, "Canvas Window", GADGET_DECORATION) {	
+	Canvas() : Window(0, 0, 256, 192, "Canvas Window") {
+		_flags.decoration = true;
 		_superBitmap = new SuperBitmap(0, 0, 256, 192, 256, 192, 1);
 		_superBitmap->setDraggable(true);
 		_superBitmap->addGadgetEventHandler(this);

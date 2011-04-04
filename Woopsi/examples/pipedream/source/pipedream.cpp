@@ -7,11 +7,11 @@
 void PipeDream::startup() {
 
 	// Create screen
-	AmigaScreen* screen = new AmigaScreen("PipeDream Screen", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaScreen* screen = new AmigaScreen("PipeDream Screen", true, true);
 	woopsiApplication->addGadget(screen);
 
 	// Add window
-	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "PipeDream Window", Gadget::GADGET_DRAGGABLE, true, true);
+	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "PipeDream Window", true, true);
 	screen->addGadget(window);
 
 	// Get available area within window

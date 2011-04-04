@@ -4,7 +4,7 @@
 
 using namespace WoopsiUI;
 
-ProgressBar::ProgressBar(s16 x, s16 y, u16 width, u16 height) : Gadget(x, y, width, height, 0) {
+ProgressBar::ProgressBar(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	_minimumValue = 0;
 	_maximumValue = 0;
 	_value = 0;

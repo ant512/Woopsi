@@ -24,13 +24,12 @@ namespace WoopsiUI {
 		 * @param y The y co-ordinate of the gadget.
 		 * @param width The width of the gadget.
 		 * @param height The height of the gadget.
-		 * @param flags The usual gadget flags.
 		 * @param style The style that the gadget should use.  If this is not
 		 * specified, the gadget will use the values stored in the global
 		 * defaultGadgetStyle object.  The gadget will copy the properties of
 		 * the style into its own internal style object.
 		 */
-		ScrollbarPanel(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style = NULL);
+		ScrollbarPanel(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style = NULL);
 
 		/**
 		 * Scroll the panel by the specified amounts.

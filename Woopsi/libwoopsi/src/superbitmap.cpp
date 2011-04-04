@@ -7,7 +7,7 @@
 using namespace WoopsiUI;
 
 // Constructor - allocates mem for bitmap
-SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, GadgetStyle* style) : Gadget(x, y, width, height, GADGET_BORDERLESS, style) {
+SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u16 bitmapHeight, bool isDecoration, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	
 	_bitmap = new Bitmap(bitmapWidth, bitmapHeight);
 	_graphics = _bitmap->newGraphics();
@@ -16,6 +16,7 @@ SuperBitmap::SuperBitmap(s16 x, s16 y, u16 width, u16 height, u16 bitmapWidth, u
 	_bitmapY = 0;
 
 	_flags.decoration = isDecoration;
+	_flags.draggable = true;
 
 	if (isDecoration) {
 		_flags.borderless = true;

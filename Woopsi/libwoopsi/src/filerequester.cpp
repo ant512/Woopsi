@@ -5,7 +5,7 @@
 
 using namespace WoopsiUI;
 
-FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& path, u32 flags, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, flags, false, true, style) {
+FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, const WoopsiString& path, GadgetStyle* style) : AmigaWindow(x, y, width, height, title, false, true, style) {
 
 	Rect rect;
 	getClientRect(rect);
@@ -55,7 +55,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiSt
 	listboxRect.y = rect.y;
 
 	// Create list box
-	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, 0, style);
+	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, style);
 	_listbox->addGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setPath(path);

@@ -14,7 +14,7 @@
 
 using namespace WoopsiUI;
 
-Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* style) {
+Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) {
 
 	// Set properties from parameters
 	_rect.setX(x);
@@ -51,14 +51,6 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 		_style.glyphFont = style->glyphFont;
 	}
 
-	// Mask flags against bitmasks and logical NOT twice to obtain boolean
-	// values
-	_flags.borderless = (!(!(flags & GADGET_BORDERLESS)));
-	_flags.draggable = (!(!(flags & GADGET_DRAGGABLE)));
-	_flags.permeable = (!(!(flags & GADGET_PERMEABLE)));
-	_flags.doubleClickable = (!(!(flags & GADGET_DOUBLE_CLICKABLE)));
-	_flags.decoration = (!(!(flags & GADGET_DECORATION)));
-
 	// Dragging values
 	_grabPointX = 0;
 	_grabPointY = 0;
@@ -66,15 +58,21 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, u32 flags, GadgetStyle* styl
 	_newY = 0;
 
 	// Set initial flag values
+	_flags.borderless = false;
+	_flags.canReceiveFocus = true;
 	_flags.clicked = false;
-	_flags.dragging = false;
-	_flags.hasFocus = false;
+	_flags.decoration = false;
 	_flags.deleted = false;
+	_flags.doubleClickable = false;
+	_flags.draggable = false;
+	_flags.dragging = false;
 	_flags.enabled = true;
-	_flags.shelved = false;
+	_flags.erased = true;
+	_flags.hasFocus = false;
 	_flags.hidden = false;
 	_flags.modal = false;
-	_flags.canReceiveFocus = true;
+	_flags.permeable = false;
+	_flags.shelved = false;
 
 	// Set hierarchy pointers
 	_parent = NULL;
