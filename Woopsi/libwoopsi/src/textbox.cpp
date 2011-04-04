@@ -116,20 +116,20 @@ void TextBox::repositionCursor(const s32 position) {
 void TextBox::moveCursorToPosition(const s32 position) {
 	repositionCursor(position);
 	calculateTextPositionHorizontal();
-	markRectsDamaged();
+	markTextRectDamaged();
 }
 
 void TextBox::showCursor() {
 	if (!_showCursor) {
 		_showCursor = true;
-		markRectsDamaged();
+		markTextRectDamaged();
 	}
 }
 
 void TextBox::hideCursor() {
 	if (_showCursor) {
 		_showCursor = false;
-		markRectsDamaged();
+		markTextRectDamaged();
 	}
 }
 

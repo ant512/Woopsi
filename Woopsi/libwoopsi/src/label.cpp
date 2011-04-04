@@ -113,7 +113,12 @@ void Label::onResize(u16 width, u16 height) {
 void Label::onTextChange() {
 	calculateTextPositionHorizontal();
 	calculateTextPositionVertical();
+	markTextRectDamaged();
 
+	_gadgetEventHandlers->raiseValueChangeEvent();
+}
+
+void Label::markTextRectDamaged() {
 	// Ensure we only redraw the section of the label that contains the string.
 	// We could be more efficient and just try to redraw the sections containing
 	// the changed letters, but as we don't know if the text has moved, become
@@ -124,8 +129,6 @@ void Label::onTextChange() {
 	textRect.y += _textY;
 	textRect.height = getFont()->getHeight();
 	markRectDamaged(textRect);
-
-	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 // Get the preferred dimensions of the gadget

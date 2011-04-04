@@ -153,6 +153,12 @@ namespace WoopsiUI {
 		virtual void onTextChange();
 
 		/**
+		 * Marks the horizontal band containing the text as damaged, ready for
+		 * redrawing.
+		 */
+		virtual void markTextRectDamaged();
+
+		/**
 		 * Destructor.
 		 */
 		virtual inline ~Label() { };

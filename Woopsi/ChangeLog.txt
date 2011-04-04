@@ -54,6 +54,7 @@ Change Log
     - Changing label borderless state correctly repositions text.
     - Gadget::setBorderless() is virtual.
     - Label redraws minimal amount when text is changed.
+    - TextBox redraws minimal amount when cursor moves.
   
   - New Features:
     - Added Gadget::getHighestCollidingGadgetIndex().
@@ -64,6 +65,8 @@ Change Log
     - Added Gadget::setTextColour().
     - Added Gadget::setDecoration().
     - Added Label::setBorderless().
+    - Added Label::markTextRectDamaged().
+
 
   V1.1 (20110329)
   
