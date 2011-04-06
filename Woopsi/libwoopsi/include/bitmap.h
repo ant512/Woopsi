@@ -2,8 +2,9 @@
 #define _BITMAP_H_
 
 #include <nds.h>
-#include "woopsiarray.h"
+#include "bitmapbase.h"
 #include "mutablebitmapbase.h"
+#include "woopsiarray.h"
 
 namespace WoopsiUI {
 
@@ -22,6 +23,12 @@ namespace WoopsiUI {
 		 * @param height The height of the bitmap.
 		 */
 		Bitmap(u16 width, u16 height);
+
+		/**
+		 * Copy constructor.  Creates an exact copy of the supplied bitmap.
+		 * @param bitmap The bitmap top copy.
+		 */
+		Bitmap(const BitmapBase& bitmap);
 
 		/**
 		 * Destructor.
@@ -112,15 +119,20 @@ namespace WoopsiUI {
 		 */
 		inline const u16 getHeight() const { return _height; };
 
-	protected:
-		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap */
-		u16 _width;										/**< Width of the bitmap */
-		u16 _height;									/**< Height of the bitmap */
-		
 		/**
-		 * Copy constructor is protected to prevent usage.
+		 * Resizes the bitmap.  Preserves the existing data whilst resizing,
+		 * except for any data that gets cropped out if the new dimensions are
+		 * smaller than the old.  The data is always aligned to the top-left
+		 * of the new bitmap.
+		 * @param width The new width for the bitmap.
+		 * @param height The new height for the bitmap.
 		 */
-		inline Bitmap(const Bitmap& bitmap) { };
+		void setDimensions(u16 width, u16 height);
+
+	protected:
+		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap. */
+		u16 _width;										/**< Width of the bitmap. */
+		u16 _height;									/**< Height of the bitmap. */
 	};
 }
 

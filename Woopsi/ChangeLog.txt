@@ -77,7 +77,8 @@ Change Log
     - Added Gadget::setDecoration().
     - Added Label::setBorderless().
     - Added Label::markTextRectDamaged().
-
+    - Added Bitmap::setDimensions().
+    - Added Bitmap copy constructor.
 
   V1.1 (20110329)
   

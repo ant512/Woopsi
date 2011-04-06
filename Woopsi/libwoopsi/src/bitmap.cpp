@@ -14,6 +14,17 @@ Bitmap::Bitmap(u16 width, u16 height) {
 	_bitmap = new u16[_width * _height];
 }
 
+Bitmap::Bitmap(const BitmapBase& bitmap) {
+	_width = bitmap.getWidth();
+	_height = bitmap.getHeight();
+
+	// Allocate memory for bitmap
+	_bitmap = new u16[_width * _height];
+
+	// Tell the other bitmap to copy its data into the current bitmap
+	bitmap.copy(0, 0, _width * _height, _bitmap);
+}
+
 // Get a single pixel from the bitmap
 const u16 Bitmap::getPixel(s16 x, s16 y) const {
 
@@ -71,4 +82,23 @@ void Bitmap::blitFill(const s16 x, const s16 y, const u16 colour, const u32 size
 void Bitmap::copy(s16 x, s16 y, u32 size, u16* dest) const {
 	u16* pos = _bitmap + (y * _width) + x;
 	woopsiDmaCopy(pos, dest, size);
+}
+
+void Bitmap::setDimensions(u16 width, u16 height) {
+	u16* newBitmap = new u16[width * height];
+
+	u16 copyWidth = _width > width ? width : _width;
+	u16 copyHeight = _height > height ? height : _height;
+
+	u16* dest = newBitmap;
+
+	for (u16 i = 0; i < copyHeight; ++i) {
+		copy(0, i, copyWidth, dest);
+		dest += width;
+	}
+
+	delete[] _bitmap;
+	_bitmap = newBitmap;
+	_width = width;
+	_height = height;
 }
