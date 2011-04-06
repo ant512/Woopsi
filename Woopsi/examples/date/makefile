@@ -22,7 +22,7 @@ ICON 		:= $(DEVKITPRO)/libwoopsi/icon/logo.bmp
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 RELEASE     :=  Release
-SOURCES		:=	source data gfx
+SOURCES		:=	src data gfx
 INCLUDES	:=	include
 DEFINES		:=
 

@@ -7,7 +7,7 @@ Default Style
   When creating a new object, developers have the option of passing in a pointer
   to a "GadgetStyle" object.  This contains definitions of all the colours used
   by a gadget, and the font used.  If no style object is specified, the gadget
-  falls back to using values from the defaultGadgetStyle object instead.
+  falls back to using values from the global defaultGadgetStyle object instead.
   
   Changing the properties of the defaultGadgetStyle object will affect all
   objects created subsequently.  Note that each gadget makes its own copy of the
