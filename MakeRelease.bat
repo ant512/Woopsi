@@ -21,4 +21,8 @@ move Woopsi\documentation\html\** Woopsi\documentation
 rmdir Woopsi\documentation\html
 del Doxyfile
 
+rem Zip it up
+"C:\Program Files\7-Zip\7z" a -r -tzip C:\Woopsi\woopsi-nds-1.x.zip C:\Woopsi\Woopsi
+rmdir Woopsi /s /q
+
 del MakeRelease.bat
