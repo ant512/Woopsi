@@ -1,15 +1,10 @@
 // Includes
+#include <woopsiheaders.h>
+
 #include "demo.h"
-#include "woopsiheaders.h"
 #include "calculator.h"
 #include "pong.h"
 #include "pacman.h"
-#include "bitmapwrapper.h"
-#include "bitmap.h"
-#include "graphics.h"
-#include "rect.h"
-#include "gadgetstyle.h"
-#include "newtopaz.h"
 #include "zombie.h"
 #include "bittest1.h"
 #include "bittest2.h"
@@ -17,10 +12,6 @@
 #include "bittest4.h"
 #include "bittest5.h"
 #include "bittest6.h"
-#include "woopsistring.h"
-#include "filerequester.h"
-
-#include "colourpicker.h"
 
 void Demo::startup() {
 
