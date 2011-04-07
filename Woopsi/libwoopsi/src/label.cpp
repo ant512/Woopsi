@@ -213,14 +213,10 @@ void Label::setBorderless(bool isBorderless) {
 }
 
 void Label::markTextRectDamaged() {
-	// Ensure we only redraw the section of the label that contains the string.
-	// We could be more efficient and just try to redraw the sections containing
-	// the changed letters, but as we don't know if the text has moved, become
-	// longer or become shorter, this isn't really possible.  Instead, we just
-	// draw the band across the textbox that contains the text.
+
 	Rect textRect;
 	getClientRect(textRect);
-	
+
 	textRect.y += _textY;
 	textRect.height = getFont()->getHeight();
 

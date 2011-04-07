@@ -19,18 +19,18 @@ namespace WoopsiUI {
 		 * Enum of horizontal alignment options.
 		 */
 		enum TextAlignmentHoriz {
-			TEXT_ALIGNMENT_HORIZ_CENTRE = 0,	/**< Centre the text */
-			TEXT_ALIGNMENT_HORIZ_LEFT = 1,		/**< Align left */
-			TEXT_ALIGNMENT_HORIZ_RIGHT = 2		/**< Align right */
+			TEXT_ALIGNMENT_HORIZ_CENTRE = 0,	/**< Centre the text. */
+			TEXT_ALIGNMENT_HORIZ_LEFT = 1,		/**< Align left. */
+			TEXT_ALIGNMENT_HORIZ_RIGHT = 2		/**< Align right. */
 		};
 
 		/**
 		 * Enum of vertical alignment options.
 		 */
 		enum TextAlignmentVert {
-			TEXT_ALIGNMENT_VERT_CENTRE = 0,	/**< Align to centre of textbox */
-			TEXT_ALIGNMENT_VERT_TOP = 1,	/**< Align to top of textbox */
-			TEXT_ALIGNMENT_VERT_BOTTOM = 2	/**< Align to bottom of textbox */
+			TEXT_ALIGNMENT_VERT_CENTRE = 0,	/**< Align to centre of textbox. */
+			TEXT_ALIGNMENT_VERT_TOP = 1,	/**< Align to top of textbox. */
+			TEXT_ALIGNMENT_VERT_BOTTOM = 2	/**< Align to bottom of textbox. */
 		};
 
 		/**
@@ -106,11 +106,11 @@ namespace WoopsiUI {
 		void setBorderless(bool isBorderless);
 
 	protected:
-		WoopsiString _text;						/**< Text that the textbox will display */
-		s32 _textX;								/**< X co-ordinate of the text relative to the gadget */
-		s32 _textY;								/**< Y co-ordinate of the text relative to the gadget */
-		TextAlignmentHoriz _hAlignment;			/**< Horizontal alignment of the text */
-		TextAlignmentVert _vAlignment;			/**< Vertical alignment of the text */
+		WoopsiString _text;						/**< Text that the textbox will display. */
+		s32 _textX;								/**< X co-ordinate of the text relative to the gadget. */
+		s32 _textY;								/**< Y co-ordinate of the text relative to the gadget. */
+		TextAlignmentHoriz _hAlignment;			/**< Horizontal alignment of the text. */
+		TextAlignmentVert _vAlignment;			/**< Vertical alignment of the text. */
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
