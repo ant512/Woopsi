@@ -1,4 +1,3 @@
-// Includes
 #include "helloworld.h"
 
 int main(int argc, char* argv[]) {

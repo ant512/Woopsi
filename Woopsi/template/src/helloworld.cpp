@@ -1,8 +1,8 @@
-// Includes
+#include <amigascreen.h>
+#include <amigawindow.h>
+#include <textbox.h>
+
 #include "helloworld.h"
-#include "amigascreen.h"
-#include "amigawindow.h"
-#include "textbox.h"
 
 void HelloWorld::startup() {
 
