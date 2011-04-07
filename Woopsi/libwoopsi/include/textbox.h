@@ -244,6 +244,11 @@ namespace WoopsiUI {
 		virtual void calculateTextPositionHorizontal();
 
 		/**
+		 * Marks the region covered by the cursor as damaged for redrawing.
+		 */
+		void markCursorRectDamaged();
+
+		/**
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline TextBox(const TextBox& textbox) : Label(textbox) { };

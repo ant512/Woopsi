@@ -1,7 +1,12 @@
 Change Log
 ----------
 
-  V1.2
+  V1.3
+
+  - Fixes:
+    - Label and TextBox are more efficient when rendering text changes.
+
+  V1.2 (20110406)
   
   - Fixes:
     - Screen flipping/ordering does not occur if only one screen is visible.

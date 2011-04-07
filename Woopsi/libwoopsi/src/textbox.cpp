@@ -75,33 +75,158 @@ const u16 TextBox::getCursorXPos() const {
 }
 
 void TextBox::setText(const WoopsiString& text) {
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
 	_text.setText(text);
 	repositionCursor(_text.getLength());
-	onTextChange();
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	getClientRect(rect);
+
+	rect.x += newX < oldX ? newX : oldX;
+	rect.y += newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	// Ensure that the cursor will always get redrawn regardless of where it is
+	rect.width += getCursorWidth();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::appendText(const WoopsiString& text) {
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
 	_text.append(text);
 	repositionCursor(_text.getLength());
-	onTextChange();
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	getClientRect(rect);
+
+	rect.x += newX < oldX ? newX : oldX;
+	rect.y += newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	// Ensure that the cursor will always get redrawn regardless of where it is
+	rect.width += getCursorWidth();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::removeText(const u32 startIndex) {
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
 	_text.remove(startIndex);
 	repositionCursor(startIndex);
-	onTextChange();
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	getClientRect(rect);
+
+	rect.x += newX < oldX ? newX : oldX;
+	rect.y += newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	// Ensure that the cursor will always get redrawn regardless of where it is
+	rect.width += getCursorWidth();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::removeText(const u32 startIndex, const u32 count) {
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
 	_text.remove(startIndex, count);
 	repositionCursor(startIndex);
-	onTextChange();
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	getClientRect(rect);
+
+	rect.x += newX < oldX ? newX : oldX;
+	rect.y += newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	// Ensure that the cursor will always get redrawn regardless of where it is
+	rect.width += getCursorWidth();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::insertText(const WoopsiString& text, const u32 index) {
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
 	_text.insert(text, index);
 	repositionCursor(index + text.getLength());
-	onTextChange();
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	getClientRect(rect);
+
+	rect.x += newX < oldX ? newX : oldX;
+	rect.y += newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	// Ensure that the cursor will always get redrawn regardless of where it is
+	rect.width += getCursorWidth();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void TextBox::insertTextAtCursor(const WoopsiString& text) {
@@ -122,15 +247,29 @@ void TextBox::moveCursorToPosition(const s32 position) {
 void TextBox::showCursor() {
 	if (!_showCursor) {
 		_showCursor = true;
-		markTextRectDamaged();
+
+		markCursorRectDamaged();
 	}
 }
 
 void TextBox::hideCursor() {
 	if (_showCursor) {
 		_showCursor = false;
-		markTextRectDamaged();
+
+		markCursorRectDamaged();
 	}
+}
+
+void TextBox::markCursorRectDamaged() {
+	Rect rect;
+	getClientRect(rect);
+
+	rect.x = getCursorXPos();
+	rect.y += _textY;
+	rect.width = getCursorWidth();
+	rect.height = getFont()->getHeight();
+
+	markRectDamaged(rect);
 }
 
 void TextBox::moveCursorToClickLocation(s16 x, s16 y) {

@@ -91,18 +91,78 @@ void Label::setTextAlignmentVert(TextAlignmentVert alignment) {
 }
 
 void Label::setText(const WoopsiString& text) {
-	_text = text;
-	onTextChange();
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
+	_text.setText(text);
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	rect.x = newX < oldX ? newX : oldX;
+	rect.y = newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::appendText(const WoopsiString& text) {
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
 	_text.append(text);
-	onTextChange();
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	rect.x = newX < oldX ? newX : oldX;
+	rect.y = newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::insertText(const WoopsiString& text, const u32 index) {
+
+	u16 oldWidth = getFont()->getStringWidth(_text);
+	u16 oldX = _textX;
+	u16 oldY = _textY;
+
 	_text.insert(text, index);
-	onTextChange();
+
+	calculateTextPositionHorizontal();
+
+	u16 newWidth = getFont()->getStringWidth(_text);
+	u16 newX = _textX;
+	u16 newY = _textY;
+
+	Rect rect;
+	rect.x = newX < oldX ? newX : oldX;
+	rect.y = newY < oldY ? newY : oldY;
+	rect.width = newWidth > oldWidth ? newWidth : oldWidth;
+	rect.height = getFont()->getHeight();
+
+	markRectDamaged(rect);
+
+	_gadgetEventHandlers->raiseValueChangeEvent();
 }
 
 void Label::onResize(u16 width, u16 height) {
@@ -113,22 +173,8 @@ void Label::onResize(u16 width, u16 height) {
 void Label::onTextChange() {
 	calculateTextPositionHorizontal();
 	calculateTextPositionVertical();
-	markTextRectDamaged();
 
 	_gadgetEventHandlers->raiseValueChangeEvent();
-}
-
-void Label::markTextRectDamaged() {
-	// Ensure we only redraw the section of the label that contains the string.
-	// We could be more efficient and just try to redraw the sections containing
-	// the changed letters, but as we don't know if the text has moved, become
-	// longer or become shorter, this isn't really possible.  Instead, we just
-	// draw the band across the textbox that contains the text.
-	Rect textRect;
-	getClientRect(textRect);
-	textRect.y += _textY;
-	textRect.height = getFont()->getHeight();
-	markRectDamaged(textRect);
 }
 
 // Get the preferred dimensions of the gadget
@@ -164,4 +210,19 @@ void Label::setBorderless(bool isBorderless) {
 	calculateTextPositionVertical();
 
 	markRectsDamaged();
+}
+
+void Label::markTextRectDamaged() {
+	// Ensure we only redraw the section of the label that contains the string.
+	// We could be more efficient and just try to redraw the sections containing
+	// the changed letters, but as we don't know if the text has moved, become
+	// longer or become shorter, this isn't really possible.  Instead, we just
+	// draw the band across the textbox that contains the text.
+	Rect textRect;
+	getClientRect(textRect);
+	
+	textRect.y += _textY;
+	textRect.height = getFont()->getHeight();
+
+	markRectDamaged(textRect);
 }
