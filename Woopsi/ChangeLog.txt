@@ -6,6 +6,7 @@ Change Log
   - Fixes:
     - Label and TextBox are more efficient when rendering text changes.
     - Removed unused GLYPH_MAP_SIZE constant from fontbase.h.
+    - Header file in template moved into include directory.
 
   V1.2 (20110406)
   
