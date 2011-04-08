@@ -79,6 +79,12 @@ namespace WoopsiUI {
 		 */
 		virtual bool run();
 
+		/**
+		 * Check if the timer is running or not.
+		 * @return True if the timer is running; false if not.
+		 */
+		inline bool isRunning() { return _isRunning; };
+
 	protected:
 		u32 _frameCount;			/**< Number of frames run so far */
 		u32 _timeout;				/**< Number of frames to run before firing an event */

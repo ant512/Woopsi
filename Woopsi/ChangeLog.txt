@@ -7,6 +7,9 @@ Change Log
     - Label and TextBox are more efficient when rendering text changes.
     - Removed unused GLYPH_MAP_SIZE constant from fontbase.h.
     - Header file in template moved into include directory.
+  
+  - New Features:
+    - Added WoopsiTimer::isRunning().
 
   V1.2 (20110406)
   
