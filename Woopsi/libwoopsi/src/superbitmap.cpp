@@ -74,6 +74,31 @@ void SuperBitmap::onDrag(s16 x, s16 y, s16 vX, s16 vY) {
 	markRectsDamaged();
 }
 
+void SuperBitmap::setBitmapX(s16 x) {
+	_bitmapX = x;
+
+	// Prevent scrolling outside boundaries of bitmap
+	if (_bitmapX < 0) {
+		_bitmapX = 0;
+	} else if (_bitmapX > _bitmap->getWidth() - getWidth()) {
+		_bitmapX = _bitmap->getWidth() - getWidth();
+	}
+
+	markRectsDamaged();
+}
+
+void SuperBitmap::setBitmapY(s16 y) {
+	_bitmapY = y;
+
+	if (_bitmapY < 0) {
+		_bitmapY = 0;
+	} else if (_bitmapY > _bitmap->getHeight() - getHeight()) {
+		_bitmapY = _bitmap->getHeight() - getHeight();
+	}
+
+	markRectsDamaged();
+}
+
 Bitmap* SuperBitmap::getBitmap() {
 	return _bitmap;
 }

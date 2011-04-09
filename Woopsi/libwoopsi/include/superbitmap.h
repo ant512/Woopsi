@@ -55,6 +55,18 @@ namespace WoopsiUI {
 		 */
 		virtual void clearBitmap();
 
+		/**
+		 * Set the x co-ordinate of the bitmap.
+		 * @param x The new x co-ordinate of the bitmap.
+		 */
+		void setBitmapX(s16 x);
+
+		/**
+		 * Set the y co-ordinate of the bitmap.
+		 * @param y The new y co-ordinate of the bitmap.
+		 */
+		void setBitmapY(s16 y);
+
 	protected:
 		s32 _bitmapX;									/**< X co-ordinate of the bitmap relative to the gadget */
 		s32 _bitmapY;									/**< Y co-ordinate of the bitmap relative to the gadget */
