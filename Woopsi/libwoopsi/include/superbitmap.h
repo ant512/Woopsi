@@ -67,6 +67,18 @@ namespace WoopsiUI {
 		 */
 		void setBitmapY(s16 y);
 
+		/**
+		 * Get the x co-ordinate of the bitmap.
+		 * @return The x co-ordinate of the bitmap.
+		 */
+		s16 getBitmapX() const;
+
+		/**
+		 * Get the y co-ordinate of the bitmap.
+		 * @return The y co-ordinate of the bitmap.
+		 */
+		s16 getBitmapY() const;
+
 	protected:
 		s32 _bitmapX;									/**< X co-ordinate of the bitmap relative to the gadget */
 		s32 _bitmapY;									/**< Y co-ordinate of the bitmap relative to the gadget */

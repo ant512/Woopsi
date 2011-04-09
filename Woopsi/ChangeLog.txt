@@ -12,6 +12,8 @@ Change Log
     - Added WoopsiTimer::isRunning().
     - Added SuperBitmap::setX().
     - Added SuperBitmap::setY().
+    - Added SuperBitmap::getX().
+    - Added SuperBitmap::getY().
 
   V1.2 (20110406)
   

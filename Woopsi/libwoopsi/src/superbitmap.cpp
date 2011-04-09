@@ -99,6 +99,14 @@ void SuperBitmap::setBitmapY(s16 y) {
 	markRectsDamaged();
 }
 
+s16 SuperBitmap::getBitmapX() const {
+	return _bitmapX;
+}
+
+s16 SuperBitmap::getBitmapY() const {
+	return _bitmapY;
+}
+
 Bitmap* SuperBitmap::getBitmap() {
 	return _bitmap;
 }
