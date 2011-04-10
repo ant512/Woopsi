@@ -98,6 +98,12 @@ void Animation::play() {
 		_currentFrame = 0;
 	}
 
+	// Cannot play if we have no frames
+	if (_frames.size() == 0) {
+		stop();
+		return;
+	}
+
 	_status = ANIMATION_STATUS_PLAYING;
 	_frameTimer = _speed + _frames[_currentFrame].delay;
 }

@@ -7,6 +7,7 @@ Change Log
     - Label and TextBox are more efficient when rendering text changes.
     - Removed unused GLYPH_MAP_SIZE constant from fontbase.h.
     - Header file in template moved into include directory.
+    - Animation::play() stops if there are no frames to play.
   
   - New Features:
     - Added WoopsiTimer::isRunning().
