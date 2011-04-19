@@ -8,6 +8,8 @@ Change Log
     - Removed unused GLYPH_MAP_SIZE constant from fontbase.h.
     - Header file in template moved into include directory.
     - Animation::play() stops if there are no frames to play.
+    - Animation::getCurrentFrame() returns NULL if there are no frames.
+    - Animation::getCurrentBitmap() returns NULL if there are no bitmaps.
   
   - New Features:
     - Added WoopsiTimer::isRunning().
