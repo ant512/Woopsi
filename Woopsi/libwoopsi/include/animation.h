@@ -58,13 +58,17 @@ namespace WoopsiUI {
 		 * Get the current animation frame.
 		 * @return The current animation frame.
 		 */
-		inline const AnimFrame* getCurrentFrame() const { return &_frames[_currentFrame]; };
+		inline const AnimFrame* getCurrentFrame() const {
+			return _frames.size() > 0 ? &_frames[_currentFrame] : NULL;
+		};
 		
 		/**
 		 * Get the bitmap from the current animation frame.
 		 * @return The current frame's bitmap.
 		 */
-		inline const BitmapBase* getCurrentBitmap() const { return _frames[_currentFrame].bitmap; };
+		inline const BitmapBase* getCurrentBitmap() const {
+			return _frames.size() > 0 ? _frames[_currentFrame].bitmap : NULL;
+		};
 		
 		/**
 		 * Get the current status of the animation - stopped, playing or paused.
