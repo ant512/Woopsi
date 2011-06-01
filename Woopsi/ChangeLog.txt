@@ -10,6 +10,7 @@ Change Log
     - Animation::play() stops if there are no frames to play.
     - Animation::getCurrentFrame() returns NULL if there are no frames.
     - Animation::getCurrentBitmap() returns NULL if there are no bitmaps.
+    - Fixed memory leak when deleting SDL framebuffer.
   
   - New Features:
     - Added WoopsiTimer::isRunning().

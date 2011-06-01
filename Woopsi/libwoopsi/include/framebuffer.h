@@ -45,6 +45,13 @@ namespace WoopsiUI {
 		 * @param height The height of the bitmap.
 		 */
 		FrameBuffer(SDL_Surface* surface, u16 width, u16 height, u16 yOffset);
+
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~FrameBuffer() {
+			delete[] _data;
+		};
 		
 		/**
 		 * Get a pointer to the internal bitmap.
@@ -61,6 +68,11 @@ namespace WoopsiUI {
 		 * @param height The height of the bitmap.
 		 */
 		FrameBuffer(u16* data, u16 width, u16 height);
+
+		/**
+		 * Destructor.
+		 */
+		virtual inline ~FrameBuffer() { };
 		
 		/**
 		 * Get a pointer to the internal bitmap.
@@ -68,11 +80,6 @@ namespace WoopsiUI {
 		 */
 		inline const u16* getData() const { return _bitmap; };
 #endif
-
-		/**
-		 * Destructor.
-		 */
-		virtual inline ~FrameBuffer() { };
 		
 		/**
 		 * Get the colour of the pixel at the specified co-ordinates
