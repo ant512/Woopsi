@@ -18,19 +18,13 @@ WoopsiUI::GadgetStyle* defaultGadgetStyle;
 _pads Pad;
 _stylus Stylus;
 
-Uint32 initflags = SDL_INIT_VIDEO;
 SDL_Surface *screen;
-Uint8 video_bpp = 0;
-Uint32 videoflags = SDL_SWSURFACE;
-SDL_Event event;
-s32 mouseX;
-s32 mouseY;
 
 void initWoopsiGfxMode() {
 
-	initflags = SDL_INIT_VIDEO;
-	video_bpp = 0;
-	videoflags = SDL_SWSURFACE;
+	Uint32 initflags = SDL_INIT_VIDEO;
+	Uint8 video_bpp = 0;
+	Uint32 videoflags = SDL_SWSURFACE;
 
 	// Initialize the SDL library
 	if (SDL_Init(initflags) < 0) {
@@ -135,8 +129,8 @@ void woopsiVblFunc() {
 	mState = SDL_GetMouseState(&mX, &mY);
 	
 	// Update mouse position
-	mouseX = mX;
-	mouseY = mY;
+	s32 mouseX = mX;
+	s32 mouseY = mY;
 	
 	if (SCREEN_COUNT == 2) mouseY -= SCREEN_HEIGHT;
 	
