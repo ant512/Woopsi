@@ -50,7 +50,7 @@ namespace WoopsiUI {
 		 * Destructor.
 		 */
 		virtual inline ~FrameBuffer() {
-			delete[] _data;
+			delete[] _dataBuffer;
 		};
 		
 		/**
