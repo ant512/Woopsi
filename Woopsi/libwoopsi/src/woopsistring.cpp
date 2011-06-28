@@ -384,11 +384,11 @@ const s32 WoopsiString::lastIndexOf(u32 letter, s32 startIndex, s32 count) const
 }
 
 WoopsiString WoopsiString::subString(s32 startIndex) const {
-	return WoopsiString(startIndex, getLength() - startIndex);
+	return WoopsiString(*this, startIndex, getLength() - startIndex);
 }
 
 WoopsiString WoopsiString::subString(s32 startIndex, s32 length) const {
-	return WoopsiString(startIndex, length);
+	return WoopsiString(*this, startIndex, length);
 }
 
 void WoopsiString::allocateMemory(s32 chars, bool preserve) {
