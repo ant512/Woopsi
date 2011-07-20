@@ -83,6 +83,9 @@ void StringIterator::iterateBackwardsTo(s32 index) {
 }
 
 bool StringIterator::moveTo(s32 index) {
+
+	// Abort if index makes no sense
+	if (index < 0) return false;
 	
 	// Abort if index exceeds the size of the string
 	if (index >= _string->getLength()) return false;

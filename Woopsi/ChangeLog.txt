@@ -14,6 +14,8 @@ Change Log
     - Removed extraneous globals from woopsifuncs.cpp.
     - WoopsiString::subString() passes the correct arguments to the WoopsiString
       constructor.
+    - StringIterator::moveTo() ignores attempts to move to negative indices.
+    - Improved use of DMA hardware.
   
   - New Features:
     - Added WoopsiTimer::isRunning().
