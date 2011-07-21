@@ -4,25 +4,23 @@ echo Archiving Mercurial repository
 call hg archive -tfiles C:\Woopsi
 
 echo Tidying archived directory structure
-cd C:\Woopsi\
-del .hg_archival.txt
-del .hgignore
-del .hgtags
-del Woopsi.sln
+del C:\Woopsi\.hg_archival.txt
+del C:\Woopsi\.hgignore
+del C:\Woopsi\.hgtags
 del ToDo.txt
-rmdir Woopsi\images /s /q
-rmdir Woopsi\Release /s /q
-move README.txt Woopsi\
+rmdir C:\Woopsi\Woopsi\images /s /q
+rmdir C:\Woopsi\Woopsi\Release /s /q
+move C:\Woopsi\README.txt Woopsi\
 
-rem Create documentation
-mkdir Woopsi\documentation
+echo Creating documentation
+mkdir C:\Woopsi\Woopsi\documentation
 "C:\Program Files (x86)\doxygen\bin\doxygen" C:\Woopsi\Doxyfile
-move Woopsi\documentation\html\** Woopsi\documentation
-rmdir Woopsi\documentation\html
-del Doxyfile
+move C:\Woopsi\Woopsi\documentation\html\** C:\Woopsi\Woopsi\documentation
+rmdir C:\Woopsi\Woopsi\documentation\html
+del C:\Woopsi\Doxyfile
 
-rem Zip it up
+echo Zipping it up
 "C:\Program Files\7-Zip\7z" a -r -tzip C:\Woopsi\woopsi-nds-1.x.zip C:\Woopsi\Woopsi
-rmdir Woopsi /s /q
+rmdir C:\Woopsi\Woopsi /s /q
 
-del MakeRelease.bat
+del C:\Woopsi\MakeRelease.bat
