@@ -10,7 +10,7 @@ del C:\Woopsi\.hgtags
 del C:\Woopsi\ToDo.txt
 rmdir C:\Woopsi\Woopsi\images /s /q
 rmdir C:\Woopsi\Woopsi\Release /s /q
-move C:\Woopsi\README.txt Woopsi\
+move C:\Woopsi\README.txt C:\Woopsi\Woopsi\
 
 echo Creating documentation
 mkdir C:\Woopsi\Woopsi\documentation
