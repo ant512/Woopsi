@@ -16,6 +16,7 @@ Change Log
       constructor.
     - StringIterator::moveTo() ignores attempts to move to negative indices.
     - Improved use of DMA hardware.
+    - Updated C# tools.
   
   - New Features:
     - Added WoopsiTimer::isRunning().
@@ -23,6 +24,7 @@ Change Log
     - Added SuperBitmap::setY().
     - Added SuperBitmap::getX().
     - Added SuperBitmap::getY().
+    - Added FontConverter, a winforms UI for font2font.
 
   V1.2 (20110406)
   
