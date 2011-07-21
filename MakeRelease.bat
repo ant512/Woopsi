@@ -7,7 +7,7 @@ echo Tidying archived directory structure
 del C:\Woopsi\.hg_archival.txt
 del C:\Woopsi\.hgignore
 del C:\Woopsi\.hgtags
-del ToDo.txt
+del C:\Woopsi\ToDo.txt
 rmdir C:\Woopsi\Woopsi\images /s /q
 rmdir C:\Woopsi\Woopsi\Release /s /q
 move C:\Woopsi\README.txt Woopsi\
