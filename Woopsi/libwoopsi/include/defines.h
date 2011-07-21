@@ -75,7 +75,7 @@ const s32 KEY_SECONDARY_REPEAT_TIME = 1000;
 /**
  * Woopsi version number.
  */
-const char WOOPSI_VERSION[] = "1.1";
+const char WOOPSI_VERSION[] = "1.3";
 
 /**
  * Copyright notice.
