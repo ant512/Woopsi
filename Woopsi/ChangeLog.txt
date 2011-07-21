@@ -17,6 +17,7 @@ Change Log
     - StringIterator::moveTo() ignores attempts to move to negative indices.
     - Improved use of DMA hardware.
     - Updated C# tools.
+    - Removed Visual Studio files.
   
   - New Features:
     - Added WoopsiTimer::isRunning().
