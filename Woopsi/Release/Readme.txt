@@ -61,8 +61,7 @@ Links
 -----
 
   - http://woopsi.org                               - Main site
-  - http://ant.simianzombie.com                     - Development blog
-  - http://ant.simianzombie.com/forum               - Forum
+  - http://simianzombie.com                         - Development blog
   - http://bitbucket.org/ant512/woopsi              - BitBucket page
   - http://bitbucket.org/Lakedaemon/woopsi-xl       - Woopsi with extra libs
 
