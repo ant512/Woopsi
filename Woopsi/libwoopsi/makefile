@@ -1,7 +1,7 @@
 # Woopsi Makefile 											ex:set ts=4 sw=4:
 # builds a standalone library
 
-#include $(DEVKITARM)/ds_rules
+include $(DEVKITARM)/ds_rules
 
 PATH 		:= $(DEVKITARM)/bin:$(PATH)
 
