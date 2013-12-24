@@ -10,8 +10,8 @@
 #include "framebuffer.h"
 #include "bitmapwrapper.h"
 #include "gadgetstyle.h"
-#include "newtopaz.h"
-#include "glyphfont.h"
+#include "fonts/newtopaz.h"
+#include "fonts/glyphfont.h"
 #include "defines.h"
 
 /**
