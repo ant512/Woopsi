@@ -18,7 +18,7 @@ void CalendarTest::startup() {
 	window->getClientRect(rect);
 	
 	// Add calendar
-	_calendar = new Calendar(rect.x, rect.y, rect.width, rect.height, 26, 10, 2008, 0);
+	_calendar = new Calendar(rect.x, rect.y, rect.width, rect.height, 23, 12, 2013, 0);
 	_calendar->addGadgetEventHandler(this);
 	window->addGadget(_calendar);
 }
