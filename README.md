@@ -136,7 +136,7 @@ Links
 
  - http://woopsi.org                               - Main site
  - http://simianzombie.com                         - Development blog
- - http://bitbucket.org/ant512/woopsi              - BitBucket page
+ - http://github.com/ant512/woopsi                 - GitHub page
  - http://bitbucket.org/Lakedaemon/woopsi-xl       - Woopsi with extra libs
 
 
