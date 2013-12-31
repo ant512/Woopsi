@@ -91,12 +91,10 @@ Requirements
 ------------
 
 To run the project you will need either a DS emulator or a real DS and a flash
-cart.
+cart.  To compile the project you need [devKitPro][1].
 
-To compile the project you need devKitPro.  This archive contains a VC++ 2008
-Express project, but the Woopsi library and all examples and tests are built
-from the command line.
-   
+  [1]: http://devkitpro.org
+
 
 SDL Compatibility
 -----------------
@@ -134,10 +132,10 @@ Credits and Acknowledgements
 Links
 -----
 
- - http://woopsi.org                               - Main site
- - http://simianzombie.com                         - Development blog
- - http://github.com/ant512/woopsi                 - GitHub page
- - http://bitbucket.org/Lakedaemon/woopsi-xl       - Woopsi with extra libs
+ - <http://woopsi.org>                             - Main site
+ - <http://simianzombie.com>                       - Development blog
+ - <http://github.com/ant512/woopsi>               - GitHub page
+ - <http://bitbucket.org/Lakedaemon/woopsi-xl>     - Woopsi with extra libs
 
 
 Email
