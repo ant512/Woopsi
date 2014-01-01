@@ -3,7 +3,6 @@
 
 #include "woopsi.h"
 #include "gadgeteventhandler.h"
-#include "gadgeteventargs.h"
 #include "amigawindow.h"
 #include "bitmap.h"
 
@@ -31,7 +30,7 @@ public:
 		DRAW_MODE_DIM
 	};
 	
-	void handleActionEvent(const GadgetEventArgs& e);
+	void handleActionEvent(Gadget& source);
 
 private:
 	AmigaWindow* _window;
