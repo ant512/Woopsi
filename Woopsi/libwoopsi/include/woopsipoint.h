@@ -1,7 +1,7 @@
 #ifndef _WOOPSIPOINT_H_
 #define _WOOPSIPOINT_H_
 
-#import <nds.h>
+#include <nds.h>
 
 namespace WoopsiUI {
 	class WoopsiPoint {
