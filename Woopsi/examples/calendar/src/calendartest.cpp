@@ -19,7 +19,7 @@ void CalendarTest::startup() {
 	
 	// Add calendar
 	_calendar = new Calendar(rect.x, rect.y, rect.width, rect.height, 23, 12, 2013, 0);
-	_calendar->addGadgetEventHandler(this);
+	_calendar->setGadgetEventHandler(this);
 	window->addGadget(_calendar);
 }
 
@@ -29,7 +29,7 @@ void CalendarTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-void CalendarTest::handleActionEvent(const GadgetEventArgs& e) {
+void CalendarTest::handleActionEvent(Gadget& source) {
 
 	// Short version of the event handler since we know that only one gadget can
 	// possibly call this
