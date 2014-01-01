@@ -9,7 +9,7 @@ using namespace WoopsiUI;
 
 class FileReqDemo : public Woopsi, public GadgetEventHandler {
 public:
-	void handleValueChangeEvent(const GadgetEventArgs& e);
+	void handleValueChangeEvent(Gadget& source);
 	
 private:
 	TextBox* _textbox;
