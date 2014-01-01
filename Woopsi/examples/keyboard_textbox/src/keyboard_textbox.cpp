@@ -34,7 +34,7 @@ void KeyboardTextBox::startup() {
 
 	// Create keyboard
 	_keyboard = new WoopsiKeyboard(0, 13, 0);
-	_keyboard->addKeyboardEventHandler(_output);
+	_keyboard->setKeyboardEventHandler(_output);
 	inScreen->addGadget(_keyboard);
 }
 
