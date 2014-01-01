@@ -4,14 +4,13 @@
 #include "woopsi.h"
 #include "superbitmap.h"
 #include "gadgeteventhandler.h"
-#include "gadgeteventargs.h"
 #include "graphics.h"
 
 using namespace WoopsiUI;
 
 class Fire : public Woopsi, public GadgetEventHandler {
 public:
-	void handleActionEvent(const GadgetEventArgs& e);
+	void handleActionEvent(Gadget& source);
 
 private:
 	SuperBitmap* _superBitmap;

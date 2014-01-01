@@ -36,7 +36,7 @@ void Fire::startup() {
 	// Add timer to the window set up to trigger an Action event every VBL
 	WoopsiTimer* timer = new WoopsiTimer(1, true);
 	window->addGadget(timer);
-	timer->addGadgetEventHandler(this);
+	timer->setGadgetEventHandler(this);
 	timer->setRefcon(1);
 	timer->start();
 	
@@ -84,11 +84,11 @@ void Fire::shutdown() {
 	Woopsi::shutdown();
 }
 
-void Fire::handleActionEvent(const GadgetEventArgs& e) {
+void Fire::handleActionEvent(Gadget& source) {
 
 	// Check the refcon of the gadget that raised the event to determine which
 	// one it is
-	switch (e.getSource()->getRefcon()) {
+	switch (source.getRefcon()) {
 		case 1:
 			// Timer has fired the event
 			handleTimer();
