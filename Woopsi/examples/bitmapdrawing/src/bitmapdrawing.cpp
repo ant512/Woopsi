@@ -40,7 +40,7 @@ void BitmapDrawing::startup() {
 	// Add timer to the window set up to trigger an Action event every VBL
 	WoopsiTimer* timer = new WoopsiTimer(1, true);
 	window->addGadget(timer);
-	timer->addGadgetEventHandler(this);
+	timer->setGadgetEventHandler(this);
 	timer->setRefcon(1);
 	timer->start();
 	
@@ -88,7 +88,7 @@ void BitmapDrawing::startup() {
 		
 		Button* button = new Button(buttonX, buttonY, buttonWidth, buttonHeight, buttonText[i]);
 		button->setRefcon(i + 2);
-		button->addGadgetEventHandler(this);
+		button->setGadgetEventHandler(this);
 		window->addGadget(button);
 	}
 	
@@ -110,11 +110,11 @@ void BitmapDrawing::shutdown() {
 	Woopsi::shutdown();
 }
 
-void BitmapDrawing::handleActionEvent(const GadgetEventArgs& e) {
+void BitmapDrawing::handleActionEvent(Gadget& source) {
 
 	// Check the refcon of the gadget that raised the event to determine which
 	// one it is
-	switch (e.getSource()->getRefcon()) {
+	switch (source.getRefcon()) {
 		case 1:
 			// Timer has fired the event
 			handleTimer();
