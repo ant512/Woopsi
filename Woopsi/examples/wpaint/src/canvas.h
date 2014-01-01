@@ -26,7 +26,7 @@ public:
 		_flags.decoration = true;
 		_superBitmap = new SuperBitmap(0, 0, 256, 192, 256, 192, 1);
 		_superBitmap->setDraggable(true);
-		_superBitmap->addGadgetEventHandler(this);
+		_superBitmap->setGadgetEventHandler(this);
 		_graphics = _superBitmap->getGraphics();
 		addGadget(_superBitmap);
 		
@@ -43,35 +43,35 @@ public:
 	
 	void setColour(u16 colour) { _foregroundColour = colour; };
 	
-	void handleClickEvent(const GadgetEventArgs& e) {
+	void handleClickEvent(Gadget& source, const WoopsiPoint& point) {
 		switch(_mode) {
 			case CANVAS_MODE_DOTTED_DRAW:
 			case CANVAS_MODE_SOLID_DRAW:
-				_graphics->drawPixel(e.getX(), e.getY(), _foregroundColour);
+				_graphics->drawPixel(point.getX(), point.getY(), _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_LINE:
-				_graphics->drawLine(e.getX() - (rand() % 20), e.getY() - (rand() % 20), e.getX() + (rand() % 20), e.getY() + (rand() % 20), _foregroundColour);
+				_graphics->drawLine(point.getX() - (rand() % 20), point.getY() - (rand() % 20), point.getX() + (rand() % 20), point.getY() + (rand() % 20), _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_RECT:
-				_graphics->drawRect(e.getX(), e.getY(), 30, 30, _foregroundColour);
+				_graphics->drawRect(point.getX(), point.getY(), 30, 30, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_FILLED_RECT:
-				_graphics->drawFilledRect(e.getX(), e.getY(), 30, 30, _foregroundColour);
+				_graphics->drawFilledRect(point.getX(), point.getY(), 30, 30, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_ELLIPSE:
-				_graphics->drawEllipse(e.getX(), e.getY(), 30, 20, _foregroundColour);
+				_graphics->drawEllipse(point.getX(), point.getY(), 30, 20, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_FILLED_ELLIPSE:
-				_graphics->drawFilledEllipse(e.getX(), e.getY(), 30, 20, _foregroundColour);
+				_graphics->drawFilledEllipse(point.getX(), point.getY(), 30, 20, _foregroundColour);
 				break;
 				
 			case CANVAS_MODE_FLOOD_FILL:
-				_graphics->floodFill(e.getX(), e.getY(), _foregroundColour);
+				_graphics->floodFill(point.getX(), point.getY(), _foregroundColour);
 				break;
 				
 			default:
@@ -79,18 +79,18 @@ public:
 		}
 
 		_superBitmap->markRectsDamaged();
-		_oldStylusX = e.getX();
-		_oldStylusY = e.getY();
+		_oldStylusX = point.getX();
+		_oldStylusY = point.getY();
 	};
 	
-	void handleDragEvent(const GadgetEventArgs& e) {
+	void handleDragEvent(Gadget& source, const WoopsiPoint& point, const WoopsiPoint& delta) {
 		switch(_mode) {
 			case CANVAS_MODE_DOTTED_DRAW:
-				_graphics->drawPixel(e.getX(), e.getY(), _foregroundColour);
+				_graphics->drawPixel(point.getX(), point.getY(), _foregroundColour);
 				break;
 			
 			case CANVAS_MODE_SOLID_DRAW:
-				_graphics->drawLine(_oldStylusX, _oldStylusY, e.getX(), e.getY(), _foregroundColour);
+				_graphics->drawLine(_oldStylusX, _oldStylusY, point.getX(), point.getY(), _foregroundColour);
 				break;
 				
 			default:
@@ -98,8 +98,8 @@ public:
 		}
 		
 		_superBitmap->markRectsDamaged();
-		_oldStylusX = e.getX();
-		_oldStylusY = e.getY();
+		_oldStylusX = point.getX();
+		_oldStylusY = point.getY();
 	};
 	
 	bool drag(s16 x, s16 y, s16 vX, s16 vY) {

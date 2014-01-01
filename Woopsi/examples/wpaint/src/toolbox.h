@@ -20,50 +20,50 @@ public:
 		for (u8 i = 0; i < 8; i++) {
 			b = new Button(0, i * 14, 14, 14, 65 + i);
 			b->setRefcon(i + 1);
-			b->addGadgetEventHandler(this);
+			b->setGadgetEventHandler(this);
 			addGadget(b);
 		}
 		
 		// Create colour buttons
 		b = new Button(0, 112, 14, 14, "");
 		b->setRefcon(11);
-		b->addGadgetEventHandler(this);
+		b->setGadgetEventHandler(this);
 		b->setBackColour(woopsiRGB(31, 0, 0));
 		addGadget(b);
 		
 		b = new Button(0, 126, 14, 14, "");
 		b->setRefcon(12);
-		b->addGadgetEventHandler(this);
+		b->setGadgetEventHandler(this);
 		b->setBackColour(woopsiRGB(0, 31, 0));
 		addGadget(b);
 		
 		b = new Button(0, 140, 14, 14, "");
 		b->setRefcon(13);
-		b->addGadgetEventHandler(this);
+		b->setGadgetEventHandler(this);
 		b->setBackColour(woopsiRGB(0, 0, 31));
 		addGadget(b);
 		
 		b = new Button(0, 154, 14, 14, "");
 		b->setRefcon(13);
-		b->addGadgetEventHandler(this);
+		b->setGadgetEventHandler(this);
 		b->setBackColour(woopsiRGB(31, 31, 0));
 		addGadget(b);
 		
 		b = new Button(0, 168, 14, 14, "");
 		b->setRefcon(14);
-		b->addGadgetEventHandler(this);
+		b->setGadgetEventHandler(this);
 		b->setBackColour(woopsiRGB(0, 31, 31));
 		addGadget(b);
 		
 		b = new Button(0, 182, 14, 14, "");
 		b->setRefcon(15);
-		b->addGadgetEventHandler(this);
+		b->setGadgetEventHandler(this);
 		b->setBackColour(woopsiRGB(31, 31, 31));
 		addGadget(b);
 	};
 	
-	void handleActionEvent(const GadgetEventArgs& e) {
-		switch(e.getSource()->getRefcon()) {
+	void handleActionEvent(Gadget& source) {
+		switch(source.getRefcon()) {
 			case 1:
 				_canvas->setMode(Canvas::CANVAS_MODE_DOTTED_DRAW);
 				break;
@@ -90,7 +90,7 @@ public:
 				break;
 			default:
 				// Colours
-				_canvas->setColour(e.getSource()->getBackColour());
+				_canvas->setColour(source.getBackColour());
 				break;
 		}
 	};
