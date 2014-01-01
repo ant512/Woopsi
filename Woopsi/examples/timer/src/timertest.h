@@ -10,7 +10,7 @@ using namespace WoopsiUI;
 
 class TimerTest : public Woopsi, public GadgetEventHandler {
 public:
-	void handleActionEvent(const GadgetEventArgs& e);
+	void handleActionEvent(Gadget& source);
 	
 private:
 	TextBox* _output;
