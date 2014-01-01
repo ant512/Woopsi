@@ -131,6 +131,8 @@ void PackedFonts::startup() {
 	// Add textbox
 	_textbox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height / 2, "The quick brown fox jumped over the lazy dog.", 0, 0);
 	_textbox->setFont(_fonts->at(0)->font);
+	_textbox->disableKeyboardPopup();
+	_textbox->hideCursor();
 	window->addGadget(_textbox);
 	
 	// Add cyclebutton
@@ -139,7 +141,7 @@ void PackedFonts::startup() {
 		_cycleButton->addOption(_fonts->at(i)->fontName, i);
 	}
 	_cycleButton->setRefcon(1);
-	_cycleButton->addGadgetEventHandler(this);
+	_cycleButton->setGadgetEventHandler(this);
 	window->addGadget(_cycleButton);
 }
 
@@ -155,13 +157,11 @@ void PackedFonts::shutdown() {
 	Woopsi::shutdown();
 }
 
-void PackedFonts::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		switch (e.getSource()->getRefcon()) {
-			case 1:
-				// Cycle button
-				_textbox->setFont(_fonts->at(_cycleButton->getValue())->font);
-				break;
-		}
+void PackedFonts::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	switch (source.getRefcon()) {
+		case 1:
+			// Cycle button
+			_textbox->setFont(_fonts->at(_cycleButton->getValue())->font);
+			break;
 	}
 }

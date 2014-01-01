@@ -4,7 +4,6 @@
 #include "woopsi.h"
 #include "fontbase.h"
 #include "gadgeteventhandler.h"
-#include "gadgeteventargs.h"
 #include "multilinetextbox.h"
 #include "cyclebutton.h"
 #include "woopsiarray.h"
@@ -13,7 +12,7 @@ using namespace WoopsiUI;
 
 class PackedFonts : public Woopsi, public GadgetEventHandler {
 public:
-	void handleReleaseEvent(const GadgetEventArgs& e);
+	void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 private:
 	class FontDefinition {
 	public:
