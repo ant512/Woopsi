@@ -94,7 +94,7 @@ void PipeButtonGrid::generateRandomLayout() {
 				}
 			}
 
-			button->addGadgetEventHandler(this);
+			button->setGadgetEventHandler(this);
 			addGadget(button);
 		}
 	}
@@ -102,8 +102,8 @@ void PipeButtonGrid::generateRandomLayout() {
 	resize(_columns * _buttonWidth, _rows * _buttonHeight);
 }
 
-void PipeButtonGrid::handleDropEvent(const GadgetEventArgs& e) {
-	PipeButtonBase* sourceButton = (PipeButtonBase*)e.getSource();
+void PipeButtonGrid::handleDropEvent(Gadget& source, const WoopsiPoint& point) {
+	PipeButtonBase* sourceButton = (PipeButtonBase*)&source;
 	PipeButtonBase* destButton;
 	
 	bool swapped = false;

@@ -23,7 +23,7 @@ void PipeDream::startup() {
 	window->addGadget(_grid);
 	
 	_timer = new WoopsiTimer(20, true);
-	_timer->addGadgetEventHandler(this);
+	_timer->setGadgetEventHandler(this);
 	window->addGadget(_timer);
 	_timer->setRefcon(2);
 	_timer->start();
@@ -35,8 +35,8 @@ void PipeDream::shutdown() {
 	Woopsi::shutdown();
 }
 
-void PipeDream::handleActionEvent(const GadgetEventArgs& e) {
-	if (e.getSource() == _timer) {
+void PipeDream::handleActionEvent(Gadget& source) {
+	if (&source == _timer) {
 		if (!_grid->increaseFlow(1)) {
 		
 			// Game over

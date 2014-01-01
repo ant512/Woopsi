@@ -13,7 +13,7 @@ public:
 	void startup();
 	void shutdown();
 
-	void handleActionEvent(const GadgetEventArgs& e);
+	void handleActionEvent(Gadget& source);
 	
 private:
 	PipeButtonGrid* _grid;

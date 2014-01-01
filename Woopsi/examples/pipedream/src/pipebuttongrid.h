@@ -14,7 +14,7 @@ class PipeButtonGrid : public Gadget, public GadgetEventHandler {
 public:
 	PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns);
 	
-	void handleDropEvent(const GadgetEventArgs& e);
+	void handleDropEvent(Gadget& source, const WoopsiPoint& point);
 	PipeButtonBase* getStartButton();
 	PipeButtonBase* getEndButton();
 	bool increaseFlow(u8 increase);
