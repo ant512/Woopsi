@@ -25,7 +25,7 @@ void ProgressBarTest::startup() {
 	
 	// Add timer
 	_timer = new WoopsiTimer(10, true);
-	_timer->addGadgetEventHandler(this);
+	_timer->setGadgetEventHandler(this);
 	addGadget(_timer);
 	
 	// Start the timer
@@ -38,7 +38,7 @@ void ProgressBarTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-void ProgressBarTest::handleActionEvent(const GadgetEventArgs& e) {
+void ProgressBarTest::handleActionEvent(Gadget& source) {
 
 	// Short version of the event handler since we know that only one gadget can
 	// possibly call this

@@ -9,7 +9,7 @@ using namespace WoopsiUI;
 
 class ProgressBarTest : public Woopsi, public GadgetEventHandler {
 public:
-	void handleActionEvent(const GadgetEventArgs& e);
+	void handleActionEvent(Gadget& source);
 private:
 	ProgressBar* _progressBar;
 	WoopsiTimer* _timer;
