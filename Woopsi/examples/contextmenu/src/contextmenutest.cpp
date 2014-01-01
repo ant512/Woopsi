@@ -21,7 +21,7 @@ void ContextMenuTest::startup() {
 	// Add textbox
 	_output = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height, "", 0);
 	window->addGadget(_output);
-	_output->addGadgetEventHandler(this);
+	_output->setGadgetEventHandler(this);
 	
 	// Create context menu items for the textbox
 	_output->addContextMenuItem("Context Menu", 0);
@@ -36,12 +36,12 @@ void ContextMenuTest::shutdown() {
 	Woopsi::shutdown();
 }
 
-void ContextMenuTest::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
+void ContextMenuTest::handleContextMenuSelectionEvent(Gadget& source, const ListDataItem* item) {
 		
 	// Append value of context menu item to output textbox
 	char buffer[10];
 
-	sprintf(buffer, "%d", e.getItem()->getValue());
+	sprintf(buffer, "%d", item->getValue());
 	_output->appendText("Menu item selected: ");
 	_output->appendText(buffer);
 	_output->appendText('\n');

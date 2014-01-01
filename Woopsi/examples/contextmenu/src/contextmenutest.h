@@ -9,7 +9,7 @@ using namespace WoopsiUI;
 
 class ContextMenuTest : public Woopsi, public GadgetEventHandler {
 public:
-	void handleContextMenuSelectionEvent(const ContextMenuEventArgs& e);
+	void handleContextMenuSelectionEvent(Gadget& source, const ListDataItem* item);
 	
 private:
 	MultiLineTextBox* _output;
