@@ -7,7 +7,7 @@
 PacGhost::PacGhost(PacMan* game) : PacSprite(game) {
 	_width = 5;
 	_height = 5;
-	_type = 0;
+	_type = PAC_GHOST_TYPE_RANDOM;
 	_colour = woopsiRGB(0, 31, 31);
 
 	reset();

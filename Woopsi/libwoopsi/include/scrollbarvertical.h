@@ -95,31 +95,31 @@ namespace WoopsiUI {
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
-		virtual void handleActionEvent(const GadgetEventArgs& e);
+		virtual void handleActionEvent(Gadget& source);
 
 		/**
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
-		virtual void handleClickEvent(const GadgetEventArgs& e);
+		virtual void handleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
-		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
-		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
-
+		virtual void handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point);
+		
 		/**
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
-		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
+		virtual void handleValueChangeEvent(Gadget& source);
 
 	protected:
 		SliderVertical* _slider;					/**< Pointer to the slider gadget */

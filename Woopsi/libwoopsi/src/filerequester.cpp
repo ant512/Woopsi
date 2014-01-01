@@ -29,7 +29,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiSt
 
 	_okButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
 
-	_okButton->addGadgetEventHandler(this);
+	_okButton->setGadgetEventHandler(this);
 	addGadget(_okButton);
 
 	// Calculate cancel button dimensions
@@ -38,7 +38,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiSt
 
 	// Create cancel button
 	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
-	_cancelButton->addGadgetEventHandler(this);
+	_cancelButton->setGadgetEventHandler(this);
 	addGadget(_cancelButton);
 	
 	// Create text box
@@ -56,7 +56,7 @@ FileRequester::FileRequester(s16 x, s16 y, u16 width, u16 height, const WoopsiSt
 
 	// Create list box
 	_listbox = new FileListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, style);
-	_listbox->addGadgetEventHandler(this);
+	_listbox->setGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setPath(path);
 	addGadget(_listbox);
@@ -96,53 +96,51 @@ void FileRequester::onResize(u16 width, u16 height) {
 	_listbox->changeDimensions(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height);
 }
 
-void FileRequester::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _cancelButton) {
+void FileRequester::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _cancelButton) {
 
-			// Close the window
-			close();
-			return;
-		} else if (e.getSource() == _okButton) {
+		// Close the window
+		close();
+		return;
+	} else if (&source == _okButton) {
 
-			// Raise value changed event to event handler
-			_gadgetEventHandlers->raiseValueChangeEvent();
-
-			// Close the window
-			close();
-			return;
+		// Raise value changed event to event handler
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
 		}
+
+		// Close the window
+		close();
+		return;
 	}
 	
-	AmigaWindow::handleReleaseEvent(e);
+	AmigaWindow::handleReleaseEvent(*this, point);
 }
 
-void FileRequester::handleActionEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
-			
-			// File selected; raise event
-			_gadgetEventHandlers->raiseValueChangeEvent();
-			
-			// Update the filename box
-			_fileNameTextBox->setText(_listbox->getSelectedOption()->getText());
-			
-			// Close the window
-			close();
+void FileRequester::handleActionEvent(Gadget &source) {
+	if (&source == _listbox) {
+		
+		// File selected; raise event
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
 		}
+		
+		// Update the filename box
+		_fileNameTextBox->setText(_listbox->getSelectedOption()->getText());
+		
+		// Close the window
+		close();
 	}
 }
 
-void FileRequester::handleValueChangeEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
-			
-			// Update the filename box
-			const ListDataItem* item = _listbox->getSelectedOption();
-			
-			if (item != NULL) {
-				_fileNameTextBox->setText(item->getText());
-			}
+void FileRequester::handleValueChangeEvent(Gadget &source) {
+	if (&source == _listbox) {
+		
+		// Update the filename box
+		const ListDataItem* item = _listbox->getSelectedOption();
+		
+		if (item != NULL) {
+			_fileNameTextBox->setText(item->getText());
 		}
 	}
 }

@@ -112,7 +112,9 @@ void Label::setText(const WoopsiString& text) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void Label::appendText(const WoopsiString& text) {
@@ -137,7 +139,9 @@ void Label::appendText(const WoopsiString& text) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void Label::insertText(const WoopsiString& text, const u32 index) {
@@ -162,7 +166,9 @@ void Label::insertText(const WoopsiString& text, const u32 index) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void Label::onResize(u16 width, u16 height) {
@@ -174,7 +180,9 @@ void Label::onTextChange() {
 	calculateTextPositionHorizontal();
 	calculateTextPositionVertical();
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 // Get the preferred dimensions of the gadget

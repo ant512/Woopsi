@@ -1,6 +1,7 @@
 #include "scrollinglistbox.h"
 #include "scrollbarvertical.h"
 #include "graphicsport.h"
+#include "woopsipoint.h"
 
 using namespace WoopsiUI;
 
@@ -10,7 +11,7 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetSt
 	setBorderless(true);
 
 	_listbox = new ListBox(0, 0, width - _scrollbarWidth, height, &_style);
-	_listbox->addGadgetEventHandler(this);
+	_listbox->setGadgetEventHandler(this);
 
 	// Create scrollbar
 	Rect rect;
@@ -19,7 +20,7 @@ ScrollingListBox::ScrollingListBox(s16 x, s16 y, u16 width, u16 height, GadgetSt
 
 	updateScrollbar();
 	
-	_scrollbar->addGadgetEventHandler(this);
+	_scrollbar->setGadgetEventHandler(this);
 
 	// Add children to child array
 	addGadget(_listbox);
@@ -30,28 +31,23 @@ void ScrollingListBox::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
-void ScrollingListBox::handleValueChangeEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _scrollbar) {
-
-			if (_listbox != NULL) {
-				_listbox->setRaisesEvents(false);
-				_listbox->jump(0, 0 - (_scrollbar->getValue() * _listbox->getOptionHeight()));
-				_listbox->setRaisesEvents(true);
-			}
-		} else if (e.getSource() == _listbox) {
-			_gadgetEventHandlers->raiseValueChangeEvent();
+void ScrollingListBox::handleValueChangeEvent(Gadget &source) {
+	if (&source == _scrollbar) {
+		if (_listbox != NULL) {
+			_listbox->setRaisesEvents(false);
+			_listbox->jump(0, 0 - (_scrollbar->getValue() * _listbox->getOptionHeight()));
+			_listbox->setRaisesEvents(true);
+		}
+	} else if (&source == _listbox) {
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
 		}
 	}
 }
 
-void ScrollingListBox::handleScrollEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
-			updateScrollbar();
-		}
+void ScrollingListBox::handleScrollEvent(Gadget &source, const WoopsiPoint &delta) {
+	if (&source == _listbox) {
+		updateScrollbar();
 	}
 }
 
@@ -80,35 +76,41 @@ void ScrollingListBox::updateScrollbar() {
 	_scrollbar->setRaisesEvents(true);
 }
 
-void ScrollingListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
-	_gadgetEventHandlers->raiseDoubleClickEvent(e.getX(), e.getY());
-}
-
-void ScrollingListBox::handleClickEvent(const GadgetEventArgs& e) {
-	_gadgetEventHandlers->raiseClickEvent(e.getX(), e.getY());
-}
-
-void ScrollingListBox::handleReleaseEvent(const GadgetEventArgs& e) {
-	_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
-}
-
-void ScrollingListBox::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
-
-	// Child raised a release outside event, but we need to raise a different
-	// event if the release occurred within the bounds of this parent gadget
-	if (checkCollision(e.getX(), e.getY())) {
-		_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
-	} else {
-		_gadgetEventHandlers->raiseReleaseOutsideEvent(e.getX(), e.getY());
+void ScrollingListBox::handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleDoubleClickEvent(*this, point);
 	}
 }
 
-void ScrollingListBox::handleActionEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
+void ScrollingListBox::handleClickEvent(Gadget &source, const WoopsiPoint &point) {
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleClickEvent(*this, point);
+	}
+}
 
-			// Raise action events from list box to event handler
-			_gadgetEventHandlers->raiseActionEvent();
+void ScrollingListBox::handleReleaseEvent(Gadget &source, const WoopsiPoint &point) {
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleReleaseEvent(*this, point);
+	}
+}
+
+void ScrollingListBox::handleReleaseOutsideEvent(Gadget &source, const WoopsiPoint &point) {
+
+	// Child raised a release outside event, but we need to raise a different
+	// event if the release occurred within the bounds of this parent gadget
+	if (raisesEvents()) {
+		if (checkCollision(point.getX(), point.getY())) {
+			_gadgetEventHandler->handleReleaseEvent(*this, point);
+		} else {
+			_gadgetEventHandler->handleReleaseOutsideEvent(*this, point);
+		}
+	}
+}
+
+void ScrollingListBox::handleActionEvent(Gadget &source) {
+	if (&source == _listbox) {
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleActionEvent(*this);
 		}
 	}
 }

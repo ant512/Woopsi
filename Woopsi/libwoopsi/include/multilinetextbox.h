@@ -179,13 +179,13 @@ namespace WoopsiUI {
 		 * Handle a keyboard press event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyboardPressEvent(const KeyboardEventArgs& e);
+		virtual void handleKeyboardPressEvent(WoopsiKeyboard& source, const WoopsiKey& key);
 
 		/**
 		 * Handle a keyboard repeat event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyboardRepeatEvent(const KeyboardEventArgs& e);
+		virtual void handleKeyboardRepeatEvent(WoopsiKeyboard& source, const WoopsiKey& key);
 
 		/**
 		 * Check if the textbox opens the keyboard popup when double-clicked.
@@ -355,7 +355,7 @@ namespace WoopsiUI {
 		 * Handles keyboard key presses and key repeats.
 		 * @param key Key that raised the event.
 		 */
-		virtual void processKey(const WoopsiKey* key);
+		virtual void processKey(const WoopsiKey& key);
 
 		/**
 		 * Gets the x position of a row of text based on the width of the row and the

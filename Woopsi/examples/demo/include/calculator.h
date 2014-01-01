@@ -6,7 +6,6 @@
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "textbox.h"
-#include "gadgeteventargs.h"
 #include "woopsistring.h"
 
 using namespace WoopsiUI;
@@ -17,7 +16,7 @@ public:
 	Calculator(AmigaScreen* screen);
 	void buttonClicked(Gadget* gadget);
 
-	void handleClickEvent(const GadgetEventArgs& e);
+	void handleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 private:
 	AmigaScreen* _screen;

@@ -8,21 +8,26 @@ class PacMan;
 
 class PacGhost : public PacSprite {
 
+public:
+    enum PacGhostType {
+        PAC_GHOST_TYPE_RANDOM = 0,
+        PAC_GHOST_TYPE_SMART = 1
+    };
+
 private:
 	u8 _currentDirection;
 	u8 _bufferedDirection;
 	u8 _speed;
 	bool _leftHome;
 	bool _active;
-	bool _type;	// 0 = random, 1 = smart
+	PacGhostType _type;
 
 public:
-
 	PacGhost(PacMan* game);
 
 	inline const bool isActive() const { return _active; };
 
-	inline void setType(const u8 type) { _type = type; };
+	inline void setType(PacGhostType type) { _type = type; };
 	inline void setActive(const bool active) { _active = active; };
 	
 	inline void run() { move(); };

@@ -39,7 +39,7 @@ MultiLineTextBox::MultiLineTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	}
 
 	_cursorPos = 0;
-	_showCursor = false;
+	_showCursor = true;
 
 	setText(text);
 }
@@ -338,7 +338,9 @@ void MultiLineTextBox::setText(const WoopsiString& text) {
 
 	markRectsDamaged();
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void MultiLineTextBox::appendText(const WoopsiString& text) {
@@ -351,7 +353,9 @@ void MultiLineTextBox::appendText(const WoopsiString& text) {
 
 	markRectsDamaged();
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void MultiLineTextBox::removeText(const u32 startIndex) {
@@ -369,7 +373,9 @@ void MultiLineTextBox::removeText(const u32 startIndex, const u32 count) {
 
 	markRectsDamaged();
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
@@ -383,7 +389,9 @@ void MultiLineTextBox::insertText(const WoopsiString& text, const u32 index) {
 
 	markRectsDamaged();
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void MultiLineTextBox::setFont(FontBase* font) {
@@ -397,7 +405,9 @@ void MultiLineTextBox::setFont(FontBase* font) {
 
 	markRectsDamaged();
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 const u16 MultiLineTextBox::getPageCount() const {
@@ -440,11 +450,11 @@ void MultiLineTextBox::onResize(u16 width, u16 height) {
 	_document->setWidth(getWidth());
 	_document->wrap();
 
-	bool raiseEvent = cullTopLines();
+	bool raiseEvent = cullTopLines() && raisesEvents();
 	limitCanvasHeight();
 	limitCanvasY();
 
-	if (raiseEvent) _gadgetEventHandlers->raiseValueChangeEvent();
+	if (raiseEvent) _gadgetEventHandler->handleValueChangeEvent(*this);
 }
 
 const u32 MultiLineTextBox::getTextLength() const {
@@ -591,24 +601,24 @@ void MultiLineTextBox::processPhysicalKey(KeyCode keyCode) {
 	}
 }
 
-void MultiLineTextBox::handleKeyboardPressEvent(const KeyboardEventArgs& e) {
-	processKey(e.getKey());
+void MultiLineTextBox::handleKeyboardPressEvent(WoopsiKeyboard& source, const WoopsiKey& key) {
+	processKey(key);
 }
 
-void MultiLineTextBox::handleKeyboardRepeatEvent(const KeyboardEventArgs& e) {
-	processKey(e.getKey());
+void MultiLineTextBox::handleKeyboardRepeatEvent(WoopsiKeyboard& source, const WoopsiKey& key) {
+	processKey(key);
 }
 
-void MultiLineTextBox::processKey(const WoopsiKey* key) {
+void MultiLineTextBox::processKey(const WoopsiKey& key) {
 
-	if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
+	if (key.getKeyType() == WoopsiKey::KEY_BACKSPACE) {
 
 		// Delete character in front of cursor
 		if (_cursorPos > 0) removeText(_cursorPos - 1, 1);
-	} else if (key->getValue() != '\0') {
+	} else if (key.getValue() != '\0') {
 
 		// Not modifier; append value
-		insertTextAtCursor(key->getValue());
+		insertTextAtCursor(key.getValue());
 	} 
 }
 

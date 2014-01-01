@@ -12,7 +12,7 @@ RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, GadgetStyle* style) : Gadget(x,
 RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 height) {
 	
 	RadioButton* newButton = new RadioButton(x, y, width, height, &_style);
-	newButton->addGadgetEventHandler(this);
+	newButton->setGadgetEventHandler(this);
 	addGadget(newButton);
 
 	// Do we need to resize?
@@ -59,7 +59,9 @@ void RadioButtonGroup::setSelectedGadget(RadioButton* gadget) {
 			_selectedGadget->setState(RadioButton::RADIO_BUTTON_STATE_ON);
 		}
 
-		_gadgetEventHandlers->raiseValueChangeEvent();
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		}
 	}
 }
 
@@ -67,7 +69,9 @@ void RadioButtonGroup::setSelectedIndex(s32 index) {
 	if (index < _gadgets.size()) {
 		setSelectedGadget((RadioButton*)_gadgets[index]);
 
-		_gadgetEventHandlers->raiseValueChangeEvent();
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		};
 	}
 }
 
@@ -106,25 +110,33 @@ void RadioButtonGroup::getPreferredDimensions(Rect& rect) const {
 	rect.height += maxY - getY();
 }
 
-void RadioButtonGroup::handleDoubleClickEvent(const GadgetEventArgs& e) {
-	_gadgetEventHandlers->raiseDoubleClickEvent(e.getX(), e.getY());
+void RadioButtonGroup::handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleDoubleClickEvent(*this, point);
+	}
 }
 
-void RadioButtonGroup::handleClickEvent(const GadgetEventArgs& e) {
-	_gadgetEventHandlers->raiseClickEvent(e.getX(), e.getY());
+void RadioButtonGroup::handleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleClickEvent(*this, point);
+	}
 }
 
-void RadioButtonGroup::handleReleaseEvent(const GadgetEventArgs& e) {
-	_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
+void RadioButtonGroup::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleReleaseEvent(*this, point);
+	}
 }
 
-void RadioButtonGroup::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+void RadioButtonGroup::handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point) {
 
 	// Child raised a release outside event, but we need to raise a different
 	// event if the release occurred within the bounds of this parent gadget
-	if (checkCollision(e.getX(), e.getY())) {
-		_gadgetEventHandlers->raiseReleaseEvent(e.getX(), e.getY());
-	} else {
-		_gadgetEventHandlers->raiseReleaseOutsideEvent(e.getX(), e.getY());
+	if (raisesEvents()) {
+		if (checkCollision(point)) {
+			_gadgetEventHandler->handleReleaseEvent(*this, point);
+		} else {
+			_gadgetEventHandler->handleReleaseOutsideEvent(*this, point);
+		}
 	}
 }

@@ -65,7 +65,9 @@ void Button::onClick(s16 x, s16 y) {
 }
 
 void Button::onRelease(s16 x, s16 y) {
-	_gadgetEventHandlers->raiseActionEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleActionEvent(*this);
+	}
 	markRectsDamaged();
 }
 

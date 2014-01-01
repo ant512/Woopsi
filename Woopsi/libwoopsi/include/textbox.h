@@ -6,7 +6,6 @@
 #include "woopsistring.h"
 #include "gadgetstyle.h"
 #include "keyboardeventhandler.h"
-#include "gadgeteventargs.h"
 #include "textboxbase.h"
 
 namespace WoopsiUI {
@@ -108,25 +107,25 @@ namespace WoopsiUI {
 		 * Handle a keyboard press event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyboardPressEvent(const KeyboardEventArgs& e);
+		virtual void handleKeyboardPressEvent(WoopsiKeyboard* source, const WoopsiKey& key);
 
 		/**
 		 * Handle a keyboard repeat event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyboardRepeatEvent(const KeyboardEventArgs& e);
+		virtual void handleKeyboardRepeatEvent(WoopsiKeyboard* source, const WoopsiKey& key);
 
 		/**
 		 * Handle a key press event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyPressEvent(const GadgetEventArgs& e);
+		virtual void handleKeyPressEvent(Gadget& source, const KeyCode keyCode);
 
 		/**
 		 * Handle a key repeat event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyRepeatEvent(const GadgetEventArgs& e);
+		virtual void handleKeyRepeatEvent(Gadget& source, const KeyCode keyCode);
 
 		/**
 		 * Check if the textbox opens the keyboard popup when double-clicked.
@@ -221,7 +220,7 @@ namespace WoopsiUI {
 		 * Handles keyboard key presses and key repeats.
 		 * @param key Key that raised the event.
 		 */
-		virtual void processKey(const WoopsiKey* key);
+		virtual void processKey(const WoopsiKey& key);
 
 		/**
 		 * Get the x co-ordinate of the cursor in pixels relative

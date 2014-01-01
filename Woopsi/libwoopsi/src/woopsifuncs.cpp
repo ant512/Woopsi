@@ -18,13 +18,17 @@ WoopsiUI::GadgetStyle* defaultGadgetStyle;
 _pads Pad;
 _stylus Stylus;
 
+SDL_Window* _window = NULL;
+SDL_Renderer* _renderer = NULL;
+SDL_Texture* _texture = NULL;
+
+u16* _bitmaps[SCREEN_COUNT];
+
 SDL_Surface *screen;
 
 void initWoopsiGfxMode() {
 
 	Uint32 initflags = SDL_INIT_VIDEO;
-	Uint8 video_bpp = 0;
-	Uint32 videoflags = SDL_SWSURFACE;
 
 	// Initialize the SDL library
 	if (SDL_Init(initflags) < 0) {
@@ -33,16 +37,23 @@ void initWoopsiGfxMode() {
 	}
 
 	// Set video mode
-	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT * SCREEN_COUNT, video_bpp, videoflags);
-	if (screen == NULL) {
-		fprintf(stderr, "Couldn't set %dx%dx%d video mode: %s\n", SCREEN_WIDTH, SCREEN_HEIGHT, video_bpp, SDL_GetError());
-		SDL_Quit();
-		exit(2);
-	}
+	_window = SDL_CreateWindow("Woopsi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT * 2, 0);
+	_renderer = SDL_CreateRenderer(_window, -1, 0);
+	SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
+	SDL_RenderClear(_renderer);
+	SDL_RenderPresent(_renderer);
+
+	_texture = SDL_CreateTexture(_renderer, SDL_PIXELFORMAT_ABGR1555, SDL_TEXTUREACCESS_STREAMING, SCREEN_WIDTH, SCREEN_HEIGHT * 2);
 
 	// Create framebuffers
 	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
-		frameBuffer[i] = new WoopsiUI::FrameBuffer(screen, SCREEN_WIDTH, SCREEN_HEIGHT, (SCREEN_COUNT - i - 1) * SCREEN_HEIGHT);
+		_bitmaps[i] = new u16[SCREEN_WIDTH * SCREEN_HEIGHT];
+	}
+
+	// Bitmaps have ended up in reverse order.
+	// TODO: Fix this witchcraft.
+	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
+		frameBuffer[i] = new WoopsiUI::FrameBuffer(_bitmaps[SCREEN_COUNT - 1 - i], SCREEN_WIDTH, SCREEN_HEIGHT);
 	}
 
 	// Initialise default style
@@ -50,7 +61,7 @@ void initWoopsiGfxMode() {
 
 	// Initialise both arrays
 	WoopsiUI::Graphics* graphics;
-	
+
 	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
 		graphics = frameBuffer[i]->newGraphics();
 		graphics->drawFilledRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
@@ -59,8 +70,24 @@ void initWoopsiGfxMode() {
 }
 
 void woopsiVblFunc() {
+
 	SDL_Delay(10);
-	SDL_Flip(screen);
+
+	SDL_Rect rect;
+	rect.x = 0;
+	rect.y = 0;
+	rect.w = SCREEN_WIDTH;
+	rect.h = SCREEN_HEIGHT;
+
+	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
+		SDL_UpdateTexture(_texture, &rect, _bitmaps[i], SCREEN_WIDTH * sizeof(u16));
+
+		rect.y += SCREEN_HEIGHT;
+	}
+
+	SDL_RenderClear(_renderer);
+	SDL_RenderCopy(_renderer, _texture, NULL, NULL);
+	SDL_RenderPresent(_renderer);
 
 	if (Stylus.Newpress) {
 		Stylus.Held = true;
@@ -68,7 +95,7 @@ void woopsiVblFunc() {
 	}
 
 	Stylus.Released = false;
-	
+
 	if (Pad.Held.Left) Pad.HeldTime.Left++;
 	if (Pad.Held.Right) Pad.HeldTime.Right++;
 	if (Pad.Held.Up) Pad.HeldTime.Up++;
@@ -120,162 +147,162 @@ void woopsiVblFunc() {
 	Pad.Newpress.R = false;
 	Pad.Newpress.Start = false;
 	Pad.Newpress.Select = false;
-	
+
 	// Read mouse state
 	int mState;
 	int mX;
 	int mY;
-	
+
 	mState = SDL_GetMouseState(&mX, &mY);
-	
+
 	// Update mouse position
 	s32 mouseX = mX;
 	s32 mouseY = mY;
-	
+
 	if (SCREEN_COUNT == 2) mouseY -= SCREEN_HEIGHT;
-	
+
 	// Check buttons
 	if ((mState & SDL_BUTTON_LEFT) && (!Stylus.Held)) {
-		
+
 		// New click
 		Stylus.Newpress = true;
 		Stylus.Held = true;
 		Stylus.Released = false;
 
 	} else if ((!(mState & SDL_BUTTON_LEFT)) && (Stylus.Held)) {
-		
+
 		// Release
 		Stylus.Released = true;
 		Stylus.Held = false;
 		Stylus.Newpress = false;
 	}
-	
+
 	// Get key state
-    Uint8* keyState = SDL_GetKeyState(NULL);
+	const Uint8* keyState = SDL_GetKeyboardState(NULL);
 
 	// Up
-	if ((keyState[SDLK_UP]) && ((!Pad.Held.Up) && (!Pad.Newpress.Up))) {
+	if ((keyState[SDL_SCANCODE_UP]) && ((!Pad.Held.Up) && (!Pad.Newpress.Up))) {
 		Pad.Newpress.Up = true;
-	} else if ((!keyState[SDLK_UP]) && ((Pad.Held.Up) || (Pad.Newpress.Up))) {
+	} else if ((!keyState[SDL_SCANCODE_UP]) && ((Pad.Held.Up) || (Pad.Newpress.Up))) {
 		Pad.Released.Up = true;
 		Pad.Held.Up = false;
 		Pad.Newpress.Up = false;
 		Pad.HeldTime.Up = 0;
 	}
-	
+
 	// Down
-	if ((keyState[SDLK_DOWN]) && ((!Pad.Held.Down) && (!Pad.Newpress.Down))) {
+	if ((keyState[SDL_SCANCODE_DOWN]) && ((!Pad.Held.Down) && (!Pad.Newpress.Down))) {
 		Pad.Newpress.Down = true;
-	} else if ((!keyState[SDLK_DOWN]) && ((Pad.Held.Down) || (Pad.Newpress.Down))) {
+	} else if ((!keyState[SDL_SCANCODE_DOWN]) && ((Pad.Held.Down) || (Pad.Newpress.Down))) {
 		Pad.Released.Down = true;
 		Pad.Held.Down = false;
 		Pad.Newpress.Down = false;
 		Pad.HeldTime.Down = 0;
 	}
-	
+
 	// Left
-	if ((keyState[SDLK_LEFT]) && ((!Pad.Held.Left) && (!Pad.Newpress.Left))) {
+	if ((keyState[SDL_SCANCODE_LEFT]) && ((!Pad.Held.Left) && (!Pad.Newpress.Left))) {
 		Pad.Newpress.Left = true;
-	} else if ((!keyState[SDLK_LEFT]) && ((Pad.Held.Left) || (Pad.Newpress.Left))) {
+	} else if ((!keyState[SDL_SCANCODE_LEFT]) && ((Pad.Held.Left) || (Pad.Newpress.Left))) {
 		Pad.Released.Left = true;
 		Pad.Held.Left = false;
 		Pad.Newpress.Left = false;
 		Pad.HeldTime.Left = 0;
 	}
-	
+
 	// Right
-	if ((keyState[SDLK_RIGHT]) && ((!Pad.Held.Right) && (!Pad.Newpress.Right))) {
+	if ((keyState[SDL_SCANCODE_RIGHT]) && ((!Pad.Held.Right) && (!Pad.Newpress.Right))) {
 		Pad.Newpress.Right = true;
-	} else if ((!keyState[SDLK_RIGHT]) && ((Pad.Held.Right) || (Pad.Newpress.Right))) {
+	} else if ((!keyState[SDL_SCANCODE_RIGHT]) && ((Pad.Held.Right) || (Pad.Newpress.Right))) {
 		Pad.Released.Right = true;
 		Pad.Held.Right = false;
 		Pad.Newpress.Right = false;
 		Pad.HeldTime.Right = 0;
-	}	
-	
+	}
+
 	// A (assigned as Z on keyboard)
-	if ((keyState[SDLK_z]) && ((!Pad.Held.A) && (!Pad.Newpress.A))) {
+	if ((keyState[SDL_SCANCODE_Z]) && ((!Pad.Held.A) && (!Pad.Newpress.A))) {
 		Pad.Newpress.A = true;
-	} else if ((!keyState[SDLK_z]) && ((Pad.Held.A) || (Pad.Newpress.A))) {
+	} else if ((!keyState[SDL_SCANCODE_Z]) && ((Pad.Held.A) || (Pad.Newpress.A))) {
 		Pad.Released.A = true;
 		Pad.Held.A = false;
 		Pad.Newpress.A = false;
 		Pad.HeldTime.A = 0;
 	}
-	
+
 	// B (assigned as X on keyboard)
-	if ((keyState[SDLK_x]) && ((!Pad.Held.B) && (!Pad.Newpress.B))) {
+	if ((keyState[SDL_SCANCODE_X]) && ((!Pad.Held.B) && (!Pad.Newpress.B))) {
 		Pad.Newpress.B = true;
-	} else if ((!keyState[SDLK_x]) && ((Pad.Held.B) || (Pad.Newpress.B))) {
+	} else if ((!keyState[SDL_SCANCODE_X]) && ((Pad.Held.B) || (Pad.Newpress.B))) {
 		Pad.Released.B = true;
 		Pad.Held.B = false;
 		Pad.Newpress.B = false;
 		Pad.HeldTime.B = 0;
 	}
-	
+
 	// X (assigned as C on keyboard)
-	if ((keyState[SDLK_c]) && ((!Pad.Held.X) && (!Pad.Newpress.X))) {
+	if ((keyState[SDL_SCANCODE_C]) && ((!Pad.Held.X) && (!Pad.Newpress.X))) {
 		Pad.Newpress.X = true;
-	} else if ((!keyState[SDLK_c]) && ((Pad.Held.X) || (Pad.Newpress.X))) {
+	} else if ((!keyState[SDL_SCANCODE_C]) && ((Pad.Held.X) || (Pad.Newpress.X))) {
 		Pad.Released.X = true;
 		Pad.Held.X = false;
 		Pad.Newpress.X = false;
 		Pad.HeldTime.X = 0;
 	}
-	
+
 	// Y (assigned as V on keyboard)
-	if ((keyState[SDLK_v]) && ((!Pad.Held.Y) && (!Pad.Newpress.Y))) {
+	if ((keyState[SDL_SCANCODE_V]) && ((!Pad.Held.Y) && (!Pad.Newpress.Y))) {
 		Pad.Newpress.Y = true;
-	} else if ((!keyState[SDLK_v]) && ((Pad.Held.Y) || (Pad.Newpress.Y))) {
+	} else if ((!keyState[SDL_SCANCODE_V]) && ((Pad.Held.Y) || (Pad.Newpress.Y))) {
 		Pad.Released.Y = true;
 		Pad.Held.Y = false;
 		Pad.Newpress.Y = false;
 		Pad.HeldTime.Y = 0;
 	}
-	
+
 	// L (assigned as A on keyboard)
-	if ((keyState[SDLK_a]) && ((!Pad.Held.L) && (!Pad.Newpress.L))) {
+	if ((keyState[SDL_SCANCODE_A]) && ((!Pad.Held.L) && (!Pad.Newpress.L))) {
 		Pad.Newpress.L = true;
-	} else if ((!keyState[SDLK_a]) && ((Pad.Held.L) || (Pad.Newpress.L))) {
+	} else if ((!keyState[SDL_SCANCODE_A]) && ((Pad.Held.L) || (Pad.Newpress.L))) {
 		Pad.Released.L = true;
 		Pad.Held.L = false;
 		Pad.Newpress.L = false;
 		Pad.HeldTime.L = 0;
 	}
-	
+
 	// R (assigned as S on keyboard)
-	if ((keyState[SDLK_s]) && ((!Pad.Held.R) && (!Pad.Newpress.R))) {
+	if ((keyState[SDL_SCANCODE_S]) && ((!Pad.Held.R) && (!Pad.Newpress.R))) {
 		Pad.Newpress.R = true;
-	} else if ((!keyState[SDLK_s]) && ((Pad.Held.R) || (Pad.Newpress.R))) {
+	} else if ((!keyState[SDL_SCANCODE_S]) && ((Pad.Held.R) || (Pad.Newpress.R))) {
 		Pad.Released.R = true;
 		Pad.Held.R = false;
 		Pad.Newpress.R = false;
 		Pad.HeldTime.R = 0;
 	}
-	
+
 	// Start (assigned as D on keyboard)
-	if ((keyState[SDLK_d]) && ((!Pad.Held.Start) && (!Pad.Newpress.Start))) {
+	if ((keyState[SDL_SCANCODE_D]) && ((!Pad.Held.Start) && (!Pad.Newpress.Start))) {
 		Pad.Newpress.Start = true;
-	} else if ((!keyState[SDLK_d]) && ((Pad.Held.Start) || (Pad.Newpress.Start))) {
+	} else if ((!keyState[SDL_SCANCODE_D]) && ((Pad.Held.Start) || (Pad.Newpress.Start))) {
 		Pad.Released.Start = true;
 		Pad.Held.Start = false;
 		Pad.Newpress.Start = false;
 		Pad.HeldTime.Start = 0;
 	}
-	
+
 	// Select (assigned as F on keyboard)
-	if ((keyState[SDLK_f]) && ((!Pad.Held.Select) && (!Pad.Newpress.Select))) {
+	if ((keyState[SDL_SCANCODE_F]) && ((!Pad.Held.Select) && (!Pad.Newpress.Select))) {
 		Pad.Newpress.Select = true;
-	} else if ((!keyState[SDLK_f]) && ((Pad.Held.Select) || (Pad.Newpress.Select))) {
+	} else if ((!keyState[SDL_SCANCODE_F]) && ((Pad.Held.Select) || (Pad.Newpress.Select))) {
 		Pad.Released.Select = true;
 		Pad.Held.Select = false;
 		Pad.Newpress.Select = false;
 		Pad.HeldTime.Select = 0;
 	}
-	
+
 	// Exit (assigned as Esc on keyboard)
-	if (keyState[SDLK_ESCAPE]) exit(0);
-	
+	if (keyState[SDL_SCANCODE_ESCAPE]) exit(0);
+
 	// Update other stylus properties
 	Stylus.Downtime *= !Stylus.Newpress; // = 0 if newpress
 	Stylus.Downtime += Stylus.Held;
@@ -321,7 +348,7 @@ _stylus Stylus;
 void woopsiUpdateInput() {
 
 	touchPosition touch;
-	
+
 	// Update held timers
 	if (Pad.Held.Left) Pad.HeldTime.Left++;
 	if (Pad.Held.Right) Pad.HeldTime.Right++;
@@ -335,13 +362,13 @@ void woopsiUpdateInput() {
 	if (Pad.Held.Select) Pad.HeldTime.Select++;
 	if (Pad.Held.L) Pad.HeldTime.L++;
 	if (Pad.Held.R) Pad.HeldTime.R++;
-	
+
 	// Get the state of the keys
 	scanKeys();
 	Pad.Newpress.AllKeys = keysDown();
 	Pad.Held.AllKeys = keysHeld();
 	Pad.Released.AllKeys = keysUp();
-	
+
 	// Update held timers
 	if (!Pad.Held.Left) Pad.HeldTime.Left = 0;
 	if (!Pad.Held.Right) Pad.HeldTime.Right = 0;
@@ -380,7 +407,7 @@ void woopsiUpdateInput() {
 			Stylus.Vx = touch.px - Stylus.X;
 			Stylus.Vy = touch.py - Stylus.Y;
 		}
-		
+
 		Stylus.X = touch.px;
 		Stylus.Y = touch.py;
 	}
@@ -409,14 +436,14 @@ void initWoopsiGfxMode() {
 	frameBuffer[0] = new WoopsiUI::FrameBuffer((u16*)BG_BMP_RAM_SUB(0), SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	woopsiInitDefaultGadgetStyle();
-	
+
 	memset( &Stylus, 0, sizeof(_stylus) );
 }
 
 void woopsiWaitVBL() {
 	if (keysHeld() & KEY_LID) {
-		
-		 // Backup the power
+
+		// Backup the power
 		u16 power_cr = REG_POWERCNT;
 
 		// Shutdown everything
@@ -426,7 +453,7 @@ void woopsiWaitVBL() {
 		while (keysHeld() & KEY_LID) {
 			swiWaitForVBlank();
 		}
-		
+
 		// Return the power
 		REG_POWERCNT = power_cr;
 	}
@@ -457,9 +484,13 @@ void woopsiFreeDefaultGadgetStyle() {
 }
 
 void woopsiFreeFrameBuffers() {
-
+	
 	// Delete the framebuffers
 	for (s32 i = 0; i < SCREEN_COUNT; ++i) {
 		delete frameBuffer[i];
+
+#ifdef USING_SDL
+		delete _bitmaps[i];
+#endif
 	}
 }

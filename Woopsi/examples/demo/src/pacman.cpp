@@ -73,19 +73,21 @@ void PacMan::endGame() {
 	gfx->drawText(15, 40, _superBitmap->getFont(), "Game Over", 0, 9);
 }
 
-void PacMan::handleActionEvent(const GadgetEventArgs& e) {
-
-	// Check for VBL
-	if (e.getSource() == _timer) {
+void PacMan::handleActionEvent(Gadget& source) {
+	if (&source == _timer) {
 		if (!_gameOver) {
 			run();
 		}
+	} else if (&source == _resetButton) {
+		_player->resetLives();
+		_gameOver = false;
+		reset();
 	}
 }
 
-void PacMan::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
+void PacMan::handleContextMenuSelectionEvent(Gadget& source, const ListDataItem* item) {
 
-	switch (e.getItem()->getValue()) {
+	switch (item->getValue()) {
 		case 1:
 			_player->resetLives();
 			_gameOver = false;
@@ -97,10 +99,10 @@ void PacMan::handleContextMenuSelectionEvent(const ContextMenuEventArgs& e) {
 	}
 }
 
-void PacMan::handleKeyPressEvent(const GadgetEventArgs& e) {
+void PacMan::handleKeyPressEvent(Gadget& source, const KeyCode keyCode) {
 	if (_window->hasFocus()) {
-		if (e.getSource()->getRefcon() == 1) {
-			switch (e.getKeyCode()) {
+		if (source.getRefcon() == 1) {
+			switch (keyCode) {
 				case KEY_CODE_UP:
 					_player->setBufferedDirection(1);
 					break;
@@ -127,7 +129,7 @@ void PacMan::initGUI() {
 	_window->addContextMenuItem("Reset", 1);
 	_window->addContextMenuItem("Quit", 2);
 
-	_window->addGadgetEventHandler(this);
+	_window->setGadgetEventHandler(this);
 	_window->setRefcon(1);
 
 	Rect rect;
@@ -140,19 +142,11 @@ void PacMan::initGUI() {
 
 	_resetButton = new Button(rect.x + 18, rect.y + 114, 60, 14, "Reset");
 	_window->addGadget(_resetButton);
-	_resetButton->addGadgetEventHandler(this);
+	_resetButton->setGadgetEventHandler(this);
 	_resetButton->setRefcon(3);
 	
 	_timer = new WoopsiTimer(1, true);
 	_window->addGadget(_timer);
-	_timer->addGadgetEventHandler(this);
+	_timer->setGadgetEventHandler(this);
 	_timer->start();
-}
-
-void PacMan::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource()->getRefcon() == 3) {
-		_player->resetLives();
-		_gameOver = false;
-		reset();
-	}
 }

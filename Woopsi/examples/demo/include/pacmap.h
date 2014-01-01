@@ -7,24 +7,28 @@ class PacMan;
 
 class PacMap {
 private:
+	static const u8 BLOCK_WIDTH = 5;
+	static const u8 BLOCK_HEIGHT = 5;
+
+	static const u8 PILL_OFFSET = 1;
+	static const u8 PILL_WIDTH = 2;
+	static const u8 PILL_HEIGHT = 2;
+
+	static const u8 BLOCK_EMPTY = 0;
+	static const u8 BLOCK_PILL = 1;
+	static const u8 BLOCK_PILL_EATEN = 2;
+	static const u8 BLOCK_POWER = 3;
+	static const u8 BLOCK_POWER_EATEN = 4;
+	static const u8 BLOCK_WALL = 5;
+	static const u8 BLOCK_SPACE = 6;
+	static const u8 BLOCK_GHOST = 7;
+
+	static const u8 MAP_WIDTH = 19;
+	static const u8 MAP_HEIGHT = 22;
+
 	PacMan* _game;
-	u8 _blockWidth;
-	u8 _blockHeight;
-	u8 _pillOffset;
-	u8 _pillWidth;
-	u8 _pillHeight;
-	u8 _emptyBlock;
-	u8 _pillBlock;
-	u8 _eatenPillBlock;
-	u8 _powerBlock;
-	u8 _eatenPowerBlock;
-	u8 _wallBlock;
-	u8 _spaceBlock;
-	u8 _ghostBlock;
 	u8 _remainingPills;
-	static u8 _layout[22][19];
-	u8 _width;
-	u8 _height;
+	static u8 _layout[MAP_HEIGHT][MAP_WIDTH];
 	u16 _colour;
 
 public:

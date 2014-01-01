@@ -37,25 +37,25 @@ namespace WoopsiUI {
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event data to process.
 		 */
-		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event data to process.
 		 */
-		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event data to process.
 		 */
-		virtual void handleClickEvent(const GadgetEventArgs& e);
+		virtual void handleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event data to process.
 		 */
-		virtual void handleActionEvent(const GadgetEventArgs& e);
+		virtual void handleActionEvent(Gadget& source);
 
 		/**
 		 * Process key releases and tidy up the keyboard state.
@@ -86,13 +86,9 @@ namespace WoopsiUI {
 		 * all keyboard events raised by this gadget.
 		 * @param eventHandler A pointer to the event handler.
 		 */
-		inline void addKeyboardEventHandler(KeyboardEventHandler* eventHandler) { _keyboardEventHandlers.push_back(eventHandler); };
+		inline void setKeyboardEventHandler(KeyboardEventHandler* eventHandler) { _keyboardEventHandler = eventHandler; };
 
-		/**
-		 * Remove a keyboard event handler.
-		 * @param eventHandler A pointer to the event handler to remove.
-		 */
-		void removeKeyboardEventHandler(KeyboardEventHandler* eventHandler);
+		inline KeyboardEventHandler* getKeyboardEventHandler(KeyboardEventHandler* eventHandler) { return _keyboardEventHandler; };
 
 	protected:
 		WoopsiKey* _shiftKey;			/**< Pointer to the shift key */
@@ -104,7 +100,7 @@ namespace WoopsiUI {
 		WoopsiTimer* _timer;			/**< Timer for handling key repeats */
 		u32 _initialRepeatTime;			/**< Time until held key starts to repeat */
 		u32 _secondaryRepeatTime;		/**< Time until a key already repeating repeats again */
-		WoopsiArray<KeyboardEventHandler*> _keyboardEventHandlers;	/**< List of keyboard event handlers */
+		KeyboardEventHandler* _keyboardEventHandler;	/**< List of keyboard event handlers */
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.
@@ -159,6 +155,8 @@ namespace WoopsiUI {
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline WoopsiKeyboard(const WoopsiKeyboard& keyboard) : Gadget(keyboard) { };
+
+		inline const bool raisesKeyboardEvents() const { return _flags.raisesEvents && _keyboardEventHandler && !_flags.shelved; };
 
 		/**
 		 * Raise a press event.  Raised when a key is pressed.

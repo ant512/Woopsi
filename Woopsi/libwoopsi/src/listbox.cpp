@@ -10,7 +10,7 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Scro
 	_flags.draggable = true;
 	_flags.doubleClickable = true;
 	_optionPadding = 2;
-	_options.addListDataEventHandler(this);
+	_options.setListDataEventHandler(this);
 	_lastSelectedIndex = -1;
 
 	// Disallow horizontal scrolling
@@ -18,7 +18,7 @@ ListBox::ListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) : Scro
 }
 
 ListBox::~ListBox() {
-	_options.removeListDataEventHandler(this);
+	_options.setListDataEventHandler(NULL);
 }
 
 void ListBox::addOption(ListBoxDataItem* option) {
@@ -206,14 +206,16 @@ void ListBox::onDoubleClick(s16 x, s16 y) {
 	s32 newSelectedIndex = (-_canvasY + (y - getY())) / getOptionHeight();	
 
 	// Double-click - select the item exclusively
-	bool raisedEvents = _gadgetEventHandlers->isEnabled();
-	_gadgetEventHandlers->disable();
+	bool raisedEvents = raisesEvents();
+	setRaisesEvents(false);
 	deselectAllOptions();
-	if (raisedEvents) _gadgetEventHandlers->enable();
+	setRaisesEvents(raisedEvents);
 
 	setSelectedIndex(newSelectedIndex);
 
-	_gadgetEventHandlers->raiseActionEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleActionEvent(*this);
+	}
 }
 
 const u16 ListBox::getOptionHeight() const {
@@ -246,7 +248,7 @@ void ListBox::removeAllOptions() {
 	_options.removeAllItems();
 }
 
-void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
+void ListBox::handleListDataChangedEvent(ListData& source) {
 	
 	// Forget the last selected item as it may have changed
 	_lastSelectedIndex = -1;
@@ -255,9 +257,12 @@ void ListBox::handleListDataChangedEvent(const ListDataEventArgs& e) {
 	markRectsDamaged();
 }
 
-void ListBox::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
+void ListBox::handleListDataSelectionChangedEvent(ListData& source) {
 	markRectsDamaged();
-	_gadgetEventHandlers->raiseValueChangeEvent();
+
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 // Get the preferred dimensions of the gadget

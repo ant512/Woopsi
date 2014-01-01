@@ -1,10 +1,12 @@
 #ifndef _WOOPSI_KEYBOARD_SCREEN_H_
 #define _WOOPSI_KEYBOARD_SCREEN_H_
 
-#include "keyboardeventhandler.h"
 #include "amigascreen.h"
 
 namespace WoopsiUI {
+
+	class WoopsiPoint;
+	class KeyboardEventHandler;
 
 	/**
 	 * AmigaScreen that contains a keyboard.  Used by the Woopsi class
@@ -31,7 +33,7 @@ namespace WoopsiUI {
 		 * Handle events fired by child gadgets.
 		 * @param e Event arguments to process.
 		 */
-		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 		
 		/**
 		 * Copy constructor is protected to prevent usage.

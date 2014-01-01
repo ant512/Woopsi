@@ -67,14 +67,14 @@ void AmigaWindow::createBorder() {
 	// Add close button
 	if (_windowFlags.showCloseButton) {
 		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, &_style);
-		_closeButton->addGadgetEventHandler(this);
+		_closeButton->setGadgetEventHandler(this);
 		insertGadget(_closeButton);
 	}
 
 	// Add depth button
 	if (_windowFlags.showDepthButton) {
 		_depthButton = new WindowBorderButton(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
-		_depthButton->addGadgetEventHandler(this);
+		_depthButton->setGadgetEventHandler(this);
 		insertGadget(_depthButton);
 	}
 }
@@ -111,12 +111,10 @@ void AmigaWindow::onResize(u16 width, u16 height) {
 	if (_windowFlags.showDepthButton) _depthButton->moveTo(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0);
 }
 
-void AmigaWindow::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource() == NULL) return;
-
-	if (e.getSource() == _depthButton) {
+void AmigaWindow::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _depthButton) {
 		swapDepth();
-	} else if (e.getSource() == _closeButton) {
+	} else if (&source == _closeButton) {
 		close();
 	}
 }
@@ -133,7 +131,7 @@ void AmigaWindow::showCloseButton() {
 		
 		// Recreate close button
 		_closeButton = new WindowBorderButton(0, 0, WINDOW_CLOSE_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_CLOSE, GLYPH_WINDOW_CLOSE, &_style);
-		_closeButton->addGadgetEventHandler(this);
+		_closeButton->setGadgetEventHandler(this);
 		insertGadget(_closeButton);
 	}
 }
@@ -144,7 +142,7 @@ void AmigaWindow::showDepthButton() {
 		
 		// Recreate depth button
 		_depthButton = new WindowBorderButton(getWidth() - WINDOW_DEPTH_BUTTON_WIDTH, 0, WINDOW_DEPTH_BUTTON_WIDTH, WINDOW_TITLE_HEIGHT, GLYPH_WINDOW_DEPTH_UP, GLYPH_WINDOW_DEPTH_DOWN, &_style);
-		_depthButton->addGadgetEventHandler(this);
+		_depthButton->setGadgetEventHandler(this);
 		insertGadget(_depthButton);
 	}
 }

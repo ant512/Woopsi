@@ -2,7 +2,6 @@
 #define _LISTDATA_EVENTHANDLER_H_
 
 #include <nds.h>
-#include "listdataeventargs.h"
 
 namespace WoopsiUI {
 
@@ -14,6 +13,7 @@ namespace WoopsiUI {
 	 */
 	class ListDataEventHandler {
 	public:
+
 		/**
 		 * Constructor.
 		 */
@@ -28,13 +28,13 @@ namespace WoopsiUI {
 		 * Handle data changes.
 		 * @param e Event arguments.
 		 */
-		virtual void handleListDataChangedEvent(const ListDataEventArgs& e) = 0;
+		virtual void handleListDataChangedEvent(ListData& source) = 0;
 
 		/**
 		 * Handle data changes.
 		 * @param e Event arguments.
 		 */
-		virtual void handleListDataSelectionChangedEvent(const ListDataEventArgs& e) = 0;
+		virtual void handleListDataSelectionChangedEvent(ListData& source) = 0;
 	};
 }
 

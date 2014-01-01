@@ -120,6 +120,15 @@ extern WoopsiUI::FrameBuffer* frameBuffer[SCREEN_COUNT];
  */
 extern WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
+#ifdef USING_SDL
+
+extern SDL_Window* _window;
+extern SDL_Renderer* _renderer;
+extern SDL_Texture* _texture;
+extern u16* _bitmaps[SCREEN_COUNT];
+
+#endif
+
 /**
  * Initialise the DS' screens into framebuffer mode.  Also sets up some other
  * subsystems and IRQs.

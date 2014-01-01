@@ -14,7 +14,7 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Ga
 
 	// Create the children
 	_slider = new SliderHorizontal(0, 0, width - (_buttonWidth << 1), height);
-	_slider->addGadgetEventHandler(this);
+	_slider->setGadgetEventHandler(this);
 
 	GadgetBorderSize borderSize;
 	borderSize.top = 1;
@@ -23,12 +23,12 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Ga
 	borderSize.left = 1;
 
 	_leftButton = new Button(width - (_buttonWidth << 1), 0, _buttonWidth, height, GLYPH_ARROW_LEFT, &_style);
-	_leftButton->addGadgetEventHandler(this);
+	_leftButton->setGadgetEventHandler(this);
 	_leftButton->setFont(getGlyphFont());
 	_leftButton->setBorderSize(borderSize);
 
 	_rightButton = new Button(width - _buttonWidth, 0, _buttonWidth, height, GLYPH_ARROW_RIGHT, &_style);
-	_rightButton->addGadgetEventHandler(this);
+	_rightButton->setGadgetEventHandler(this);
 	_rightButton->setFont(getGlyphFont());
 	_rightButton->setBorderSize(borderSize);
 
@@ -36,7 +36,7 @@ ScrollbarHorizontal::ScrollbarHorizontal(s16 x, s16 y, u16 width, u16 height, Ga
 	_scrollTimeout = 10;
 
 	_timer = new WoopsiTimer(_scrollTimeout, true);
-	_timer->addGadgetEventHandler(this);
+	_timer->setGadgetEventHandler(this);
 
 	addGadget(_slider);
 	addGadget(_leftButton);
@@ -76,12 +76,8 @@ void ScrollbarHorizontal::setPageSize(s16 pageSize) {
 	_slider->setPageSize(pageSize);
 }
 
-void ScrollbarHorizontal::handleActionEvent(const GadgetEventArgs& e) {
-
-	// Check which gadget fired the event
-	if (e.getSource() == _timer) {
-
-		// Which gadget is clicked?
+void ScrollbarHorizontal::handleActionEvent(Gadget &source) {
+	if (&source == _timer) {
 		if (_leftButton->isClicked()) {
 
 			// Move the grip left
@@ -94,15 +90,16 @@ void ScrollbarHorizontal::handleActionEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void ScrollbarHorizontal::handleValueChangeEvent(const GadgetEventArgs& e) {
-	if (e.getSource() == _slider) {
-		_gadgetEventHandlers->raiseValueChangeEvent();
+void ScrollbarHorizontal::handleValueChangeEvent(Gadget &source) {
+	if (&source == _slider) {
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		}
 	}
 }
 
-void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() == _leftButton) {
+void ScrollbarHorizontal::handleClickEvent(Gadget &source, const WoopsiPoint &point) {
+	if (&source == _leftButton) {
 
 		// Start the timer
 		_timer->start();
@@ -110,7 +107,7 @@ void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
 		// Move the grip left
 		_slider->setValue(_slider->getValue() - _slider->getMinimumStep());
 
-	} else if (e.getSource() == _rightButton) {
+	} else if (&source == _rightButton) {
 
 		// Start the timer
 		_timer->start();
@@ -120,20 +117,14 @@ void ScrollbarHorizontal::handleClickEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void ScrollbarHorizontal::handleReleaseEvent(const GadgetEventArgs& e) {
-
-	if ((e.getSource() == _leftButton) || (e.getSource() == _rightButton)) {
-
-		// Stop the timer
+void ScrollbarHorizontal::handleReleaseEvent(Gadget &source, const WoopsiPoint &point) {
+	if ((&source == _leftButton) || (&source == _rightButton)) {
 		_timer->stop();
 	}
 }
 
-void ScrollbarHorizontal::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
-
-	if ((e.getSource() == _leftButton) || (e.getSource() == _rightButton)) {
-
-		// Stop the timer
+void ScrollbarHorizontal::handleReleaseOutsideEvent(Gadget &source, const WoopsiPoint &point) {
+	if ((&source == _leftButton) || (&source == _rightButton)) {
 		_timer->stop();
 	}
 }

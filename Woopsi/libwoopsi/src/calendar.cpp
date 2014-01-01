@@ -34,56 +34,53 @@ void Calendar::drawBorder(GraphicsPort* port) {
 	port->drawBevelledRect(0, 0, getWidth(), getHeight(), getShineColour(), getShadowColour());
 }
 
-void Calendar::handleReleaseEvent(const GadgetEventArgs& e) {
+void Calendar::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _leftArrow) {
 
-	if (e.getSource() != NULL) {
+		// Handle left arrow release
+		_visibleDate->addMonths(-1);
+		populateGUI();
 
-		if (e.getSource() == _leftArrow) {
+	} else if (&source == _rightArrow) {
 
-			// Handle left arrow release
-			_visibleDate->addMonths(-1);
-			populateGUI();
+		// Handle right arrow release
+		_visibleDate->addMonths(1);
+		populateGUI();
 
-		} else if (e.getSource() == _rightArrow) {
+	} else if (source.getRefcon() > 0) {
 
-			// Handle right arrow release
-			_visibleDate->addMonths(1);
-			populateGUI();
+		// Handle day button release
 
-		} else if (e.getSource()->getRefcon() > 0) {
+		// Calculate the new date
 
-			// Handle day button release
+		// Extract raw char data; this could be much more efficient
+		char string[((Button*)&source)->getText().getByteCount()];
+		((Button*)&source)->getText().copyToCharArray(string);
 
-			// Calculate the new date
+		u8 day = atoi(string);
+		Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
-			// Extract raw char data; this could be much more efficient
-			char string[((Button*)e.getSource())->getText().getByteCount()];
-			((Button*)e.getSource())->getText().copyToCharArray(string);
+		// Prevent changes if new date is same as old
+		if (*_date != *newDate) {
 
-			u8 day = atoi(string);
-			Date* newDate = new Date(day, _visibleDate->getMonth(), _visibleDate->getYear());
+			_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
 
-			// Prevent changes if new date is same as old
-			if (*_date != *newDate) {
+			// Select the new gadget and deselect the old
+			StickyButton* dayButton = (StickyButton*)&source;
+			dayButton->setStuckDown(true);
 
-				_date->setDate(day, _visibleDate->getMonth(), _visibleDate->getYear());
-
-				// Select the new gadget and deselect the old
-				StickyButton* dayButton = (StickyButton*)e.getSource();
-				dayButton->setStuckDown(true);
-
-				if (_selectedDayButton != NULL) {
-					_selectedDayButton->setStuckDown(false);
-				}
-
-				_selectedDayButton = dayButton;
-
-				// Raise an action event
-				_gadgetEventHandlers->raiseActionEvent();
+			if (_selectedDayButton != NULL) {
+				_selectedDayButton->setStuckDown(false);
 			}
 
-			delete newDate;
+			_selectedDayButton = dayButton;
+
+			if (raisesEvents()) {
+				_gadgetEventHandler->handleActionEvent(*this);
+			}
 		}
+
+		delete newDate;
 	}
 }
 
@@ -260,12 +257,12 @@ void Calendar::buildGUI() {
 	// Add arrows and month label
 	_leftArrow = new Button(rect.x, rect.y, columnWidths[0], columnHeights[0], GLYPH_ARROW_LEFT);
 	_leftArrow->setFont(getGlyphFont());
-	_leftArrow->addGadgetEventHandler(this);
+	_leftArrow->setGadgetEventHandler(this);
 	addGadget(_leftArrow);
 
 	_rightArrow = new Button((rect.width - columnWidths[CALENDAR_COLS - 1]) + 1, rect.y, columnWidths[CALENDAR_COLS - 1], columnHeights[0], GLYPH_ARROW_RIGHT);
 	_rightArrow->setFont(getGlyphFont());
-	_rightArrow->addGadgetEventHandler(this);
+	_rightArrow->setGadgetEventHandler(this);
 	addGadget(_rightArrow);
 
 	// Month name
@@ -297,7 +294,7 @@ void Calendar::buildGUI() {
 	u8 buttonRow = 2;
 	while (allocatedDays < maxDays) {
 		button = new StickyButton(buttonX, buttonY, columnWidths[allocatedDays % CALENDAR_COLS], columnHeights[buttonRow], "");
-		button->addGadgetEventHandler(this);
+		button->setGadgetEventHandler(this);
 		button->setRefcon(allocatedDays + 1);
 
 		// Calculate x pos of next button

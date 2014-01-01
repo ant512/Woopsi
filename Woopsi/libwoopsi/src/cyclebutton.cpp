@@ -16,7 +16,7 @@ CycleButton::CycleButton(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style
 	// of the spacer line (2px) plus a space
 	_textX = glyphWidth + 2 + (glyphSpace << 1);
 
-	_options.addListDataEventHandler(this);
+	_options.setListDataEventHandler(this);
 	_options.setAllowMultipleSelections(false);
 }
 
@@ -57,13 +57,16 @@ void CycleButton::removeAllOptions() {
 	_options.removeAllItems();
 }
 
-void CycleButton::handleListDataChangedEvent(const ListDataEventArgs& e) {
+void CycleButton::handleListDataChangedEvent(ListData& source) {
 	markRectsDamaged();
 }
 
-void CycleButton::handleListDataSelectionChangedEvent(const ListDataEventArgs& e) {
+void CycleButton::handleListDataSelectionChangedEvent(ListData& source) {
 	markRectsDamaged();
-	_gadgetEventHandlers->raiseValueChangeEvent();
+
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void CycleButton::drawContents(GraphicsPort* port) {

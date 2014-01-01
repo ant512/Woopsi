@@ -4,7 +4,6 @@
 #include "woopsi.h"
 #include "woopsitimer.h"
 #include "keyboardeventhandler.h"
-#include "keyboardeventargs.h"
 
 using namespace WoopsiUI;
 
@@ -122,7 +121,7 @@ WoopsiKeyboard::WoopsiKeyboard(s16 x, s16 y, GadgetStyle* style) : Gadget(x, y, 
 
 	// Set event handlers
 	for (s32 i = getDecorationCount(); i < _gadgets.size(); i++) {
-		_gadgets[i]->addGadgetEventHandler(this);
+		_gadgets[i]->setGadgetEventHandler(this);
 	}
 
 	// Set initial modifier state
@@ -135,21 +134,18 @@ void WoopsiKeyboard::drawBorder(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
-void WoopsiKeyboard::handleActionEvent(const GadgetEventArgs& e) {
+void WoopsiKeyboard::handleActionEvent(Gadget& source) {
 
-	if (e.getSource() != NULL) {
+	// Check if the event was fired by the timer (key repeat)
+	if (&source == _timer) {
 
-		// Check if the event was fired by the timer (key repeat)
-		if (e.getSource() == _timer) {
+		// Event is a key repeat, so raise repeat event
+		raiseKeyboardRepeatEvent((WoopsiKey*)getFocusedGadget());
 
-			// Event is a key repeat, so raise repeat event
-			raiseKeyboardRepeatEvent((WoopsiKey*)getFocusedGadget());
+		// Ensure that subsequent repeats are faster
+		_timer->setTimeout(_secondaryRepeatTime);
 
-			// Ensure that subsequent repeats are faster
-			_timer->setTimeout(_secondaryRepeatTime);
-
-			return;
-		}
+		return;
 	}
 }
 
@@ -191,120 +187,111 @@ void WoopsiKeyboard::processKeyRelease(WoopsiKey* key) {
 	}
 }
 
-void WoopsiKeyboard::handleReleaseEvent(const GadgetEventArgs& e) {
+void WoopsiKeyboard::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (!source.isDecoration() && &source != _timer) {
 
-	if (e.getSource() != NULL) {
-		if (!e.getSource()->isDecoration()) {
+		// Gadget not a decoration and not a timer, so must be a key
+		WoopsiKey* key = (WoopsiKey*)&source;
 
-			// Gadget not a decoration and not a timer, so must be a key
-			WoopsiKey* key = (WoopsiKey*)e.getSource();
+		raiseKeyboardReleaseEvent(key);
 
-			raiseKeyboardReleaseEvent(key);
+		processKeyRelease(key);
 
-			processKeyRelease(key);
+		// Stop the timer
+		_timer->stop();
 
-			// Stop the timer
-			_timer->stop();
-
-			return;
-		}
+		return;
 	}
 }
 
-void WoopsiKeyboard::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+void WoopsiKeyboard::handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point) {
+	if (!source.isDecoration() && &source != _timer) {
 
-	if (e.getSource() != NULL) {
-		if (!e.getSource()->isDecoration()) {
+		// Gadget not a decoration and not a timer, so must be a key
+		WoopsiKey* key = (WoopsiKey*)&source;
 
-			// Gadget not a decoration and not a timer, so must be a key
-			WoopsiKey* key = (WoopsiKey*)e.getSource();
+		raiseKeyboardReleaseEvent(key);
 
-			raiseKeyboardReleaseEvent(key);
+		processKeyRelease(key);
 
-			processKeyRelease(key);
+		// Stop the timer
+		_timer->stop();
 
-			// Stop the timer
-			_timer->stop();
-
-			return;
-		}
+		return;
 	}
 }
 
-void WoopsiKeyboard::handleClickEvent(const GadgetEventArgs& e) {
-		
-	if (e.getSource() != NULL) {
-		if (!e.getSource()->isDecoration()) {
+void WoopsiKeyboard::handleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	if (!source.isDecoration() && &source != _timer) {
 
-			// Gadget not a decoration and not a timer, so must be a key
-			WoopsiKey* key = (WoopsiKey*)e.getSource();
+		// Gadget not a decoration and not a timer, so must be a key
+		WoopsiKey* key = (WoopsiKey*)&source;
 
-			// Inform the keyboard's keyboard event handlers that a key has been pressed
-			raiseKeyboardPressEvent(key);
+		// Inform the keyboard's keyboard event handlers that a key has been pressed
+		raiseKeyboardPressEvent(key);
 
-			// Process the key after the handler has dealt with it and update
-			// the keyboard accordingly.  We do this after the handler because
-			// we want to ensure that the keyboard state (ie. text on the buttons)
-			// doesn't change before the handler has used this info.
-			switch (key->getKeyType()) {
-				case WoopsiKey::KEY_CAPS_LOCK:
+		// Process the key after the handler has dealt with it and update
+		// the keyboard accordingly.  We do this after the handler because
+		// we want to ensure that the keyboard state (ie. text on the buttons)
+		// doesn't change before the handler has used this info.
+		switch (key->getKeyType()) {
+			case WoopsiKey::KEY_CAPS_LOCK:
 
-					// Set the outline type so the key is obviously stuck down,
-					// or reset it if the key is being clicked for the second time
-					if (_isCapsLockDown) {
-						_capsLockKey->setStuckDown(false);
-					} else {
-						_capsLockKey->setStuckDown(true);
-					}
+				// Set the outline type so the key is obviously stuck down,
+				// or reset it if the key is being clicked for the second time
+				if (_isCapsLockDown) {
+					_capsLockKey->setStuckDown(false);
+				} else {
+					_capsLockKey->setStuckDown(true);
+				}
 
-					// Remember the key's state
-					_isCapsLockDown = !_isCapsLockDown;
+				// Remember the key's state
+				_isCapsLockDown = !_isCapsLockDown;
 
-					// Update the keyboard
-					showCorrectKeys();
-					break;
-				case WoopsiKey::KEY_CONTROL:
+				// Update the keyboard
+				showCorrectKeys();
+				break;
+			case WoopsiKey::KEY_CONTROL:
 
-					// Set the outline type so the key is obviously stuck down,
-					// or reset it if the key is being clicked for the second time
-					if (_isControlDown) {
-						_controlKey->setStuckDown(false);
-					} else {
-						_controlKey->setStuckDown(true);
-					}
+				// Set the outline type so the key is obviously stuck down,
+				// or reset it if the key is being clicked for the second time
+				if (_isControlDown) {
+					_controlKey->setStuckDown(false);
+				} else {
+					_controlKey->setStuckDown(true);
+				}
 
-					// Remember the key's state
-					_isControlDown = !_isControlDown;
+				// Remember the key's state
+				_isControlDown = !_isControlDown;
 
-					// Update the keyboard
-					showCorrectKeys();
-					break;
-				case WoopsiKey::KEY_SHIFT:
+				// Update the keyboard
+				showCorrectKeys();
+				break;
+			case WoopsiKey::KEY_SHIFT:
 
-					// Set the outline type so the key is obviously stuck down,
-					// or reset it if the key is being clicked for the second time
-					if (_isShiftDown) {
-						_shiftKey->setStuckDown(false);
-					} else {
-						_shiftKey->setStuckDown(true);
-					}
+				// Set the outline type so the key is obviously stuck down,
+				// or reset it if the key is being clicked for the second time
+				if (_isShiftDown) {
+					_shiftKey->setStuckDown(false);
+				} else {
+					_shiftKey->setStuckDown(true);
+				}
 
-					// Remember the key's state
-					_isShiftDown = !_isShiftDown;
+				// Remember the key's state
+				_isShiftDown = !_isShiftDown;
 
-					// Update the keyboard
-					showCorrectKeys();
-					break;
-				default:
+				// Update the keyboard
+				showCorrectKeys();
+				break;
+			default:
 
-					// Start the timer
-					_timer->setTimeout(_initialRepeatTime);
-					_timer->start();
-					break;
-			}
-
-			return;
+				// Start the timer
+				_timer->setTimeout(_initialRepeatTime);
+				_timer->start();
+				break;
 		}
+
+		return;
 	}
 }
 
@@ -372,41 +359,20 @@ void WoopsiKeyboard::showControlCapsLockKeys() {
 	}
 }
 
-void WoopsiKeyboard::removeKeyboardEventHandler(KeyboardEventHandler* eventHandler) {
-	for (s32 i = 0; i < _keyboardEventHandlers.size(); ++i) {
-		if (_keyboardEventHandlers.at(i) == eventHandler) {
-			_keyboardEventHandlers.erase(i);
-			return;
-		}
-	}
-}
-
 void WoopsiKeyboard::raiseKeyboardPressEvent(WoopsiKey* key) {
-	if (raisesEvents()) {
-		KeyboardEventArgs e(this, key);
-
-		for (int i = 0; i < _keyboardEventHandlers.size(); ++i) {
-			_keyboardEventHandlers.at(i)->handleKeyboardPressEvent(e);
-		}
+	if (raisesKeyboardEvents()) {
+		_keyboardEventHandler->handleKeyboardPressEvent(*this, *key);
 	}
 }
 
 void WoopsiKeyboard::raiseKeyboardRepeatEvent(WoopsiKey* key) {
-	if (raisesEvents()) {
-		KeyboardEventArgs e(this, key);
-
-		for (int i = 0; i < _keyboardEventHandlers.size(); ++i) {
-			_keyboardEventHandlers.at(i)->handleKeyboardRepeatEvent(e);
-		}
+	if (raisesKeyboardEvents()) {
+		_keyboardEventHandler->handleKeyboardRepeatEvent(*this, *key);
 	}
 }
 
 void WoopsiKeyboard::raiseKeyboardReleaseEvent(WoopsiKey* key) {
-	if (raisesEvents()) {
-		KeyboardEventArgs e(this, key);
-
-		for (int i = 0; i < _keyboardEventHandlers.size(); ++i) {
-			_keyboardEventHandlers.at(i)->handleKeyboardReleaseEvent(e);
-		}
+	if (raisesKeyboardEvents()) {
+		_keyboardEventHandler->handleKeyboardReleaseEvent(*this, *key);
 	}
 }

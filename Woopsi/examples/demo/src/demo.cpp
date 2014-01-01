@@ -1,17 +1,25 @@
-// Includes
+#include <fonts/newtopaz.h>
 #include <woopsiheaders.h>
+#include <bitmapwrapper.h>
+#include <bitmap.h>
+#include <graphics.h>
+#include <rect.h>
+#include <gadgetstyle.h>
+#include <woopsistring.h>
+#include <filerequester.h>
 
-#include "demo.h"
-#include "calculator.h"
-#include "pong.h"
-#include "pacman.h"
-#include "zombie.h"
 #include "bittest1.h"
 #include "bittest2.h"
 #include "bittest3.h"
 #include "bittest4.h"
 #include "bittest5.h"
 #include "bittest6.h"
+#include "demo.h"
+#include "calculator.h"
+#include "colourpicker.h"
+#include "pacman.h"
+#include "pong.h"
+#include "zombie.h"
 
 void Demo::startup() {
 

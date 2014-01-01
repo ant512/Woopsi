@@ -65,13 +65,13 @@ namespace WoopsiUI {
 		 * Handles events raised by the gadget's sub-gadgets.
 		 * @param e The event arguments.
 		 */
-		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by the gadget's sub-gadgets.
 		 * @param e The event arguments.
 		 */
-		virtual void handleReleaseOutsideEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point);
 
 	private:
 		Gadget* _opener;				/**< Pointer to the gadget that opened the menu */

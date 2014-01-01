@@ -40,7 +40,7 @@ void Pong::initGUI() {
 	// Create window
 	_window = new AmigaWindow(0, 13, 120, 60, "Pong", true, true);
 	_screen->addGadget(_window);
-	_window->addGadgetEventHandler(this);
+	_window->setGadgetEventHandler(this);
 	_window->setRefcon(1);
 	
 	// Create superbitmap
@@ -55,7 +55,7 @@ void Pong::initGUI() {
 	// Create timer
 	_timer = new WoopsiTimer(1, true);
 	_window->addGadget(_timer);
-	_timer->addGadgetEventHandler(this);
+	_timer->setGadgetEventHandler(this);
 	_timer->start();
 }
 
@@ -145,15 +145,15 @@ void Pong::draw() {
 	_superBitmap->markRectsDamaged();
 }
 
-void Pong::handleActionEvent(const GadgetEventArgs& e) {
-	if (e.getSource() == _timer) {
+void Pong::handleActionEvent(Gadget& source) {
+	if (&source == _timer) {
 		play();
 	}
 }
 
-void Pong::handleKeyPressEvent(const GadgetEventArgs& e) {
+void Pong::handleKeyPressEvent(Gadget& source, const KeyCode keyCode) {
 	if (_window->hasFocus()) {
-		switch (e.getKeyCode()) {
+		switch (keyCode) {
 			case KEY_CODE_UP:
 				_upHeld = true;
 				break;
@@ -166,9 +166,9 @@ void Pong::handleKeyPressEvent(const GadgetEventArgs& e) {
 	}
 }
 
-void Pong::handleKeyReleaseEvent(const GadgetEventArgs& e) {
+void Pong::handleKeyReleaseEvent(Gadget& source, const KeyCode keyCode) {
 	if (_window->hasFocus()) {
-		switch (e.getKeyCode()) {
+		switch (keyCode) {
 			case KEY_CODE_UP:
 				_upHeld = false;
 				break;

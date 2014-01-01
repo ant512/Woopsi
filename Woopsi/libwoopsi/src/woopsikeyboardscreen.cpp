@@ -2,6 +2,7 @@
 #include "woopsikeyboard.h"
 #include "button.h"
 #include "woopsi.h"
+#include "keyboardeventhandler.h"
 
 using namespace WoopsiUI;
 
@@ -9,7 +10,7 @@ WoopsiKeyboardScreen::WoopsiKeyboardScreen(KeyboardEventHandler* opener) : Amiga
 	_flags.canReceiveFocus = false;
 
 	WoopsiKeyboard* keyboard = new WoopsiKeyboard(2, 13, 0);
-	keyboard->addKeyboardEventHandler(opener);
+	keyboard->setKeyboardEventHandler(opener);
 
 	addGadget(keyboard);
 
@@ -29,17 +30,15 @@ WoopsiKeyboardScreen::WoopsiKeyboardScreen(KeyboardEventHandler* opener) : Amiga
 
 	button->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
 	button->setRefcon(1);
-	button->addGadgetEventHandler(this);
+	button->setGadgetEventHandler(this);
 	addGadget(button);
 }
 
-void WoopsiKeyboardScreen::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource()->getRefcon() == 1) {
-			woopsiApplication->hideKeyboard();
-			return;
-		}
+void WoopsiKeyboardScreen::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (source.getRefcon() == 1) {
+		woopsiApplication->hideKeyboard();
+		return;
 	}
 
-	AmigaScreen::handleClickEvent(e);
+	AmigaScreen::handleReleaseEvent(*this, point);
 }

@@ -39,7 +39,7 @@ namespace WoopsiUI {
 		/**
 		 * Handles release events raised by its sub-gadgets.
 		 */
-		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 	protected:
 		Button* _button;					/**< Pointer to the OK button. */

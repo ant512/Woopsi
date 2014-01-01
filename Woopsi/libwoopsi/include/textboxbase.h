@@ -5,7 +5,6 @@
 #include "woopsistring.h"
 #include "gadgetstyle.h"
 #include "keyboardeventhandler.h"
-#include "gadgeteventargs.h"
 
 namespace WoopsiUI {
 

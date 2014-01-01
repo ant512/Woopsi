@@ -45,13 +45,13 @@ namespace WoopsiUI {
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event arguments.
 		 */
-		virtual void handleDoubleClickEvent(const GadgetEventArgs& e);
+		virtual void handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point);
 		
 		/**
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event arguments.
 		 */
-		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
+		virtual void handleValueChangeEvent(Gadget& source);
 
 		/**
 		 * Add a new option to the gadget using default colours.

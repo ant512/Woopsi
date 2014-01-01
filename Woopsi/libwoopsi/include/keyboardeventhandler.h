@@ -2,11 +2,12 @@
 #define _KEYBOARDEVENTHANDLER_H_
 
 #include <nds.h>
-#include "keyboardeventargs.h"
 
 namespace WoopsiUI {
 
 	class Gadget;
+	class WoopsiKeyboard;
+	class WoopsiKey;
 
 	/**
 	 * Base keyboard event handler, intended to be subclassed.  The
@@ -29,19 +30,19 @@ namespace WoopsiUI {
 		 * Handle a keyboard press event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyboardPressEvent(const KeyboardEventArgs& e) { };
+		virtual void handleKeyboardPressEvent(WoopsiKeyboard& source, const WoopsiKey& key) { };
 
 		/**
 		 * Handle a keyboard repeat event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyboardRepeatEvent(const KeyboardEventArgs& e) { };
+		virtual void handleKeyboardRepeatEvent(WoopsiKeyboard& source, const WoopsiKey& key) { };
 
 		/**
 		 * Handle a keyboard release event.
 		 * @param e The event data.
 		 */
-		virtual void handleKeyboardReleaseEvent(const KeyboardEventArgs& e) { };
+		virtual void handleKeyboardReleaseEvent(WoopsiKeyboard& source, const WoopsiKey& key) { };
 	};
 }
 

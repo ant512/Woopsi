@@ -1,6 +1,4 @@
 #include "contextmenu.h"
-#include "contextmenueventargs.h"
-#include "gadgeteventargs.h"
 #include "gadgetstyle.h"
 #include "gadget.h"
 #include "gadgeteventhandler.h"
@@ -11,6 +9,7 @@
 #include "rectcache.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
+#include "woopsipoint.h"
 
 using namespace WoopsiUI;
 
@@ -73,6 +72,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) {
 	_flags.modal = false;
 	_flags.permeable = false;
 	_flags.shelved = false;
+	_flags.raisesEvents = true;
 
 	// Set hierarchy pointers
 	_parent = NULL;
@@ -96,7 +96,7 @@ Gadget::Gadget(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style) {
 
 	_rectCache = new RectCache(this);
 
-	_gadgetEventHandlers = new GadgetEventHandlerList(this);
+	_gadgetEventHandler = NULL;
 }
 
 Gadget::~Gadget() {
@@ -136,7 +136,6 @@ Gadget::~Gadget() {
 	}
 
 	delete _rectCache;
-	delete _gadgetEventHandlers;
 }
 
 const s16 Gadget::getX() const {
@@ -298,6 +297,10 @@ const s16 Gadget::calculatePhysicalScreenY(s16 y) const {
 	return y;
 }
 
+bool Gadget::checkCollision(const WoopsiPoint& point) const {
+	return checkCollision(point.getX(), point.getY());
+}
+
 bool Gadget::checkCollision(s16 x, s16 y) const {
 
 	if (isHidden()) return false;
@@ -406,8 +409,9 @@ void Gadget::close() {
 	// made to close the gadget twice.
 	if (_flags.deleted) return;
 
-	_gadgetEventHandlers->raiseCloseEvent();
-	_gadgetEventHandlers->disable();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleCloseEvent(*this);
+	}
 	
 	_parent->invalidateVisibleRectCache();
 	markRectsDamaged();
@@ -437,8 +441,9 @@ bool Gadget::shelve() {
  	// Never attempt to shelve a gadget that has already been shelved
 	if (_flags.shelved) return false;
 
-	_gadgetEventHandlers->raiseShelveEvent();
-	_gadgetEventHandlers->disable();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleShelveEvent(*this);
+	}
 
 	markRectsDamaged();
 
@@ -466,8 +471,9 @@ bool Gadget::unshelve() {
 	// Never attempt to unshelve a gadget that is not already shelved
 	if (!_flags.shelved) return false;
 
-	_gadgetEventHandlers->enable();
-	_gadgetEventHandlers->raiseUnshelveEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleUnshelveEvent(*this);
+	}
 
 	_flags.shelved = false;
 
@@ -742,7 +748,9 @@ bool Gadget::enable() {
 
 	markRectsDamaged();
 
-	_gadgetEventHandlers->raiseEnableEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleEnableEvent(*this);
+	}
 
 	return true;
 }
@@ -758,7 +766,9 @@ bool Gadget::disable() {
 
 	markRectsDamaged();
 
-	_gadgetEventHandlers->raiseDisableEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleDisableEvent(*this);
+	}
 
 	return true;
 }
@@ -825,7 +835,9 @@ bool Gadget::moveTo(s16 x, s16 y) {
 
 		markRectsDamaged();
 
-		_gadgetEventHandlers->raiseMoveEvent(x, y, x - oldX, y - oldY);
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleMoveEvent(*this, WoopsiPoint(x, y), WoopsiPoint(x - oldX, y - oldY));
+		}
 
 		return true;
 	}
@@ -878,7 +890,9 @@ bool Gadget::resize(u16 width, u16 height) {
 
 		markRectsDamaged();
 
-		_gadgetEventHandlers->raiseResizeEvent(width, height);
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleResizeEvent(*this, width, height);
+		}
 
 		return true;
 	}
@@ -958,7 +972,9 @@ bool Gadget::click(s16 x, s16 y) {
 	// Run any code in the inherited class
 	onClick(x, y);
 
-	_gadgetEventHandlers->raiseClickEvent(x, y);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleClickEvent(*this, WoopsiPoint(x, y));
+	}
 
 	return true;
 }
@@ -1004,7 +1020,9 @@ bool Gadget::doubleClick(s16 x, s16 y) {
 
 	onDoubleClick(x, y);
 
-	_gadgetEventHandlers->raiseDoubleClickEvent(x, y);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleDoubleClickEvent(*this, WoopsiPoint(x, y));
+	}
 
 	return true;
 }
@@ -1037,7 +1055,9 @@ bool Gadget::shiftClick(s16 x, s16 y) {
 
 	onShiftClick(x, y);
 
-	_gadgetEventHandlers->raiseShiftClickEvent(x, y);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleShiftClickEvent(*this, WoopsiPoint(x, y));
+	}
 
 	return true;
 }
@@ -1060,13 +1080,17 @@ bool Gadget::release(s16 x, s16 y) {
 		onRelease(x, y);
 
 		// Release occurred within gadget; raise release
-		_gadgetEventHandlers->raiseReleaseEvent(x, y);
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleReleaseEvent(*this, WoopsiPoint(x, y));
+		}
 	} else {
 
 		onReleaseOutside(x, y);
 
 		// Release occurred outside gadget; raise release
-		_gadgetEventHandlers->raiseReleaseOutsideEvent(x, y);
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleReleaseOutsideEvent(*this, WoopsiPoint(x, y));
+		}
 	}
 
 	return true;
@@ -1085,7 +1109,9 @@ bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 
 			onDrag(x, y, vX, vY);
 
-			_gadgetEventHandlers->raiseDragEvent(x, y, vX, vY);
+			if (raisesEvents()) {
+				_gadgetEventHandler->handleDragEvent(*this, WoopsiPoint(x, y), WoopsiPoint(vX, vY));
+			}
 		}
 
 		return true;
@@ -1100,7 +1126,9 @@ bool Gadget::keyPress(KeyCode keyCode) {
 	onKeyPress(keyCode);
 	
 	// Raise keypress for this gadget
-	_gadgetEventHandlers->raiseKeyPressEvent(keyCode);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleKeyPressEvent(*this, keyCode);
+	}
 
 	// Handle active child
 	if (_focusedGadget != NULL) {
@@ -1116,7 +1144,9 @@ bool Gadget::keyRepeat(KeyCode keyCode) {
 	onKeyRepeat(keyCode);
 	
 	// Raise key repeat for this gadget
-	_gadgetEventHandlers->raiseKeyRepeatEvent(keyCode);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleKeyRepeatEvent(*this, keyCode);
+	}
 
 	// Handle active child
 	if (_focusedGadget != NULL) {
@@ -1132,7 +1162,9 @@ bool Gadget::keyRelease(KeyCode keyCode) {
 	onKeyRelease(keyCode);
 
 	// Raise key release for this gadget
-	_gadgetEventHandlers->raiseKeyReleaseEvent(keyCode);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleKeyReleaseEvent(*this, keyCode);
+	}
 
 	// Handle active child
 	if (_focusedGadget != NULL) {
@@ -1145,8 +1177,10 @@ bool Gadget::keyRelease(KeyCode keyCode) {
 void Gadget::lidClose() {
 	
 	onLidClose();
-	
-	_gadgetEventHandlers->raiseLidCloseEvent();
+
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleLidCloseEvent(*this);
+	}
 
 	// Run lid closed on all gadgets
 	for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1157,8 +1191,10 @@ void Gadget::lidClose() {
 void Gadget::lidOpen() {
 	
 	onLidOpen();
-	
-	_gadgetEventHandlers->raiseLidOpenEvent();
+
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleLidOpenEvent(*this);
+	}
 
 	// Run lid opened on all gadgets
 	for (s32 i = 0; i < _gadgets.size(); i++) {
@@ -1182,8 +1218,10 @@ bool Gadget::focus() {
 	// Raise an event only if the gadget did not have focus
 	if (!hadFocus) {
 		onFocus();
-		
-		_gadgetEventHandlers->raiseFocusEvent();
+
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleFocusEvent(*this);
+		}
 		return true;
 	}
 
@@ -1206,8 +1244,10 @@ bool Gadget::blur() {
 	// Raise an event only if the gadget had focus
 	if (hadFocus) {
 		onBlur();
-		
-		_gadgetEventHandlers->raiseBlurEvent();
+
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleBlurEvent(*this);
+		}
 		return true;
 	}
 
@@ -1217,7 +1257,9 @@ bool Gadget::blur() {
 bool Gadget::raiseToTop() {
 	if (_parent != NULL) {
 		if (_parent->raiseGadgetToTop(this)) {
-			_gadgetEventHandlers->raiseMoveForwardEvent();
+			if (raisesEvents()) {
+				_gadgetEventHandler->handleMoveForwardEvent(*this);
+			}
 			return true;
 		}
 	}
@@ -1228,7 +1270,9 @@ bool Gadget::raiseToTop() {
 bool Gadget::lowerToBottom() {
 	if (_parent != NULL) {
 		if (_parent->lowerGadgetToBottom(this)) {
-			_gadgetEventHandlers->raiseMoveBackwardEvent();
+			if (raisesEvents()) {
+				_gadgetEventHandler->handleMoveBackwardEvent(*this);
+			}
 			return true;
 		}
 	}
@@ -1405,7 +1449,9 @@ void Gadget::stopDragging(s16 x, s16 y) {
 		onDragStop();
 		_flags.dragging = false;
 
-		_gadgetEventHandlers->raiseDropEvent(x, y);
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleDropEvent(*this, WoopsiPoint(x, y));
+		}
 	}
 }
 
@@ -1629,7 +1675,9 @@ void Gadget::showContextMenu(s16 x, s16 y) {
 }
 
 bool Gadget::handleContextMenuSelection(const ListDataItem* item) {
-	_gadgetEventHandlers->raiseContextMenuSelectionEvent(item);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleContextMenuSelectionEvent(*this, item);
+	}
 
 	return true;
 }
@@ -1646,7 +1694,10 @@ bool Gadget::show() {
 			invalidateVisibleRectCache();
 		}
 
-		_gadgetEventHandlers->raiseShowEvent();
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleShowEvent(*this);
+		}
+
 		markRectsDamaged();
 		return true;
 	}
@@ -1671,7 +1722,9 @@ bool Gadget::hide() {
 			invalidateVisibleRectCache();
 		}
 
-		_gadgetEventHandlers->raiseHideEvent();
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleHideEvent(*this);
+		}
 
 		return true;
 	}

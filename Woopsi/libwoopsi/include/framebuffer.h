@@ -35,32 +35,6 @@ namespace WoopsiUI {
 		 */
 		void copy(s16 x, s16 y, u32 size, u16* dest) const;
 
-#ifdef USING_SDL
-		// SDL version
-		
-		/**
-		 * Constructor.
-		 * @param data Pointer to the raw bitmap data.
-		 * @param width The width of the bitmap.
-		 * @param height The height of the bitmap.
-		 */
-		FrameBuffer(SDL_Surface* surface, u16 width, u16 height, u16 yOffset);
-
-		/**
-		 * Destructor.
-		 */
-		virtual inline ~FrameBuffer() {
-			delete[] _dataBuffer;
-		};
-		
-		/**
-		 * Get a pointer to the internal bitmap.
-		 * @return Pointer to the internal bitmap.
-		 */
-		const u16* getData() const;
-#else
-		// DS version
-		
 		/**
 		 * Constructor.
 		 * @param data Pointer to the raw bitmap data.
@@ -79,8 +53,7 @@ namespace WoopsiUI {
 		 * @return Pointer to the internal bitmap.
 		 */
 		inline const u16* getData() const { return _bitmap; };
-#endif
-		
+
 		/**
 		 * Get the colour of the pixel at the specified co-ordinates
 		 * @param x The x co-ordinate of the pixel.
@@ -144,32 +117,7 @@ namespace WoopsiUI {
 		inline const u16 getHeight() const { return _height; };
 
 	protected:
-		
-#ifdef USING_SDL
-		// SDL version
-		SDL_Surface* _surface;	/**< Pointer to the SDL surface. */
-		u16 _yOffset;			/**< Y offset from top of surface to draw. */
-		u16* _dataBuffer;		/**< Buffer used when getData() is called. */
-
-		/**
-		 * Write a pixel to the SDL surface.
-		 * @param x The x co-ordinate of the pixel to write to.
-		 * @param y The y co-ordinate of the pixel to write to.
-		 * @param pixel The colour to write.
-		 */
-		void putSDLPixel(int x, int y, Uint32 pixel);
-
-		/**
-		 * Get the colour of pixel on the SDL surface at the given co-ordinates.
-		 * @param x The x co-ordinate of the pixel.
-		 * @param y The y co-ordinate of the pixel.
-		 * @return The pixel colour.
-		 */
-		Uint32 getSDLPixel(int x, int y);
-#else
-		// DS version
 		u16* _bitmap __attribute__ ((aligned (4)));		/**< Bitmap. */
-#endif
 
 		/**
 		 * Copy constructor is protected to prevent usage.

@@ -21,7 +21,9 @@ void RadioButton::setState(RadioButton::RadioButtonState state) {
 			((RadioButtonGroup*)_parent)->setSelectedGadget(this);
 		}
 
-		_gadgetEventHandlers->raiseValueChangeEvent();
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		}
 
 		markRectsDamaged();
 	}

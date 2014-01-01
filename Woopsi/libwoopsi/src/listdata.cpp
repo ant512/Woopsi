@@ -184,29 +184,10 @@ const s32 ListData::getSortedInsertionIndex(const ListDataItem* item) const {
 	return i;
 }
 
-void ListData::removeListDataEventHandler(ListDataEventHandler* eventHandler) {
-	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
-		if (_listDataEventhandlers.at(i) == eventHandler) {
-			_listDataEventhandlers.erase(i);
-			return;
-		}
-	}
-}
-
 void ListData::raiseDataChangedEvent() {
-
-	ListDataEventArgs eventArgs(this);
-
-	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
-		_listDataEventhandlers.at(i)->handleListDataChangedEvent(eventArgs);
-	}
+	_listDataEventHandler->handleListDataChangedEvent(*this);
 }
 
 void ListData::raiseSelectionChangedEvent() {
-
-	ListDataEventArgs eventArgs(this);
-
-	for (int i = 0; i < _listDataEventhandlers.size(); ++i) {
-		_listDataEventhandlers.at(i)->handleListDataSelectionChangedEvent(eventArgs);
-	}
+	_listDataEventHandler->handleListDataSelectionChangedEvent(*this);
 }

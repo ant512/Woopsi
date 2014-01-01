@@ -2,6 +2,7 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 #include "bitmapbase.h"
+#include "woopsipoint.h"
 
 using namespace WoopsiUI;
 
@@ -57,7 +58,9 @@ void BitmapButton::onClick(s16 x, s16 y) {
 }
 
 void BitmapButton::onRelease(s16 x, s16 y) {
-	_gadgetEventHandlers->raiseReleaseEvent(x, y);
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleReleaseEvent(*this, WoopsiPoint(x, y));
+	}
 	markRectsDamaged();
 }
 

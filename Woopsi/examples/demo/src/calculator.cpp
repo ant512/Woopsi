@@ -54,7 +54,7 @@ void Calculator::initGUI() {
 
 	// Wire up events
 	for (u8 i = 0; i < buttons.size(); i++) {
-		buttons[i]->addGadgetEventHandler(this);
+		buttons[i]->setGadgetEventHandler(this);
 		_window->addGadget(buttons[i]);
 	}
 }
@@ -255,8 +255,8 @@ void Calculator::itoa(s32 n, char s[])
     reverse(s);
 }
 
-void Calculator::handleClickEvent(const GadgetEventArgs& e) {
-	Button* button = (Button*)e.getSource();
+void Calculator::handleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	Button* button = (Button*)&source;
 
 	if (button->getText().getCharAt(0) == '=') {
 		doEquals();

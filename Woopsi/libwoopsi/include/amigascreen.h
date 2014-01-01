@@ -11,6 +11,7 @@ namespace WoopsiUI {
 
 	class DecorationGlyphButton;
 	class ScreenFlipButton;
+	class WoopsiPoint;
 
 	/**
 	 * Class providing a screen with an Amiga-style title bar.  Unlike the AmigaWindow class,
@@ -55,7 +56,7 @@ namespace WoopsiUI {
 		 * Handle events fired by decoration gadgets.
 		 * @param e Event arguments to process.
 		 */
-		virtual void handleReleaseEvent(const GadgetEventArgs& e);
+		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Shows the flip button if it is hidden.  Has no effect

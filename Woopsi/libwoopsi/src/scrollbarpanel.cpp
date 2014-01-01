@@ -55,7 +55,7 @@ void ScrollbarPanel::buildUI() {
 		_scrollbarHorizontal->setMinimumValue(0);
 		_scrollbarHorizontal->setMaximumValue(getCanvasWidth());
 		_scrollbarHorizontal->setPageSize(panelRect.width);
-		_scrollbarHorizontal->addGadgetEventHandler(this);
+		_scrollbarHorizontal->setGadgetEventHandler(this);
 		addGadget(_scrollbarHorizontal);
 	}
 
@@ -64,7 +64,7 @@ void ScrollbarPanel::buildUI() {
 		_scrollbarVertical->setMinimumValue(0);
 		_scrollbarVertical->setMaximumValue(getCanvasHeight());
 		_scrollbarVertical->setPageSize(panelRect.height);
-		_scrollbarVertical->addGadgetEventHandler(this);
+		_scrollbarVertical->setGadgetEventHandler(this);
 		addGadget(_scrollbarVertical);
 	}
 }
@@ -135,41 +135,34 @@ const s32 ScrollbarPanel::getCanvasHeight() const {
 	return _panel->getCanvasHeight();
 }
 
-void ScrollbarPanel::handleScrollEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _panel) {
-
-			if (_scrollbarVertical != NULL) {
-				_scrollbarVertical->setRaisesEvents(false);
-				_scrollbarVertical->setValue(0 - _panel->getCanvasY());
-				_scrollbarVertical->setRaisesEvents(true);
-			} else if (_scrollbarHorizontal != NULL) {
-				_scrollbarHorizontal->setRaisesEvents(false);
-				_scrollbarHorizontal->setValue(0 - _panel->getCanvasX());
-				_scrollbarHorizontal->setRaisesEvents(true);
-			}
+void ScrollbarPanel::handleScrollEvent(Gadget& source, const WoopsiPoint& delta) {
+	if (&source == _panel) {
+		if (_scrollbarVertical != NULL) {
+			_scrollbarVertical->setRaisesEvents(false);
+			_scrollbarVertical->setValue(0 - _panel->getCanvasY());
+			_scrollbarVertical->setRaisesEvents(true);
+		} else if (_scrollbarHorizontal != NULL) {
+			_scrollbarHorizontal->setRaisesEvents(false);
+			_scrollbarHorizontal->setValue(0 - _panel->getCanvasX());
+			_scrollbarHorizontal->setRaisesEvents(true);
 		}
 	}
 }
 
-void ScrollbarPanel::handleValueChangeEvent(const GadgetEventArgs& e) {
+void ScrollbarPanel::handleValueChangeEvent(Gadget& source) {
+	if (&source == _scrollbarVertical) {
 
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _scrollbarVertical) {
+		if (_panel != NULL) {
+			_panel->setRaisesEvents(false);
+			_panel->jump(_panel->getCanvasX(), 0 - _scrollbarVertical->getValue());
+			_panel->setRaisesEvents(true);
+		}
+	} else if (&source == _scrollbarHorizontal) {
 
-			if (_panel != NULL) {
-				_panel->setRaisesEvents(false);
-				_panel->jump(_panel->getCanvasX(), 0 - _scrollbarVertical->getValue());
-				_panel->setRaisesEvents(true);
-			}
-		} else if (e.getSource() == _scrollbarHorizontal) {
-
-			if (_panel != NULL) {
-				_panel->setRaisesEvents(false);
-				_panel->jump(0 - _scrollbarHorizontal->getValue(), _panel->getCanvasY());
-				_panel->setRaisesEvents(true);
-			}
+		if (_panel != NULL) {
+			_panel->setRaisesEvents(false);
+			_panel->jump(0 - _scrollbarHorizontal->getValue(), _panel->getCanvasY());
+			_panel->setRaisesEvents(true);
 		}
 	}
 }

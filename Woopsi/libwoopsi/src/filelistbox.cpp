@@ -21,7 +21,7 @@ FileListBox::FileListBox(s16 x, s16 y, u16 width, u16 height, GadgetStyle* style
 
 	// Create list box
 	_listbox = new ScrollingListBox(0, 0, getWidth(), getHeight(), &_style);
-	_listbox->addGadgetEventHandler(this);
+	_listbox->setGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setSortInsertedItems(true);
 	addGadget(_listbox);
@@ -39,42 +39,43 @@ void FileListBox::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
-void FileListBox::handleValueChangeEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
-			
-			// File selected; raise event
-			_gadgetEventHandlers->raiseValueChangeEvent();
+void FileListBox::handleValueChangeEvent(Gadget& source) {
+	if (&source == _listbox) {
+		
+		// File selected; raise event
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
 		}
 	}
 }
 
-void FileListBox::handleDoubleClickEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
+void FileListBox::handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _listbox) {
 
-			// Work out which option was clicked - if it was a directory, we move to the new path
-			const FileListBoxDataItem* selected = getSelectedOption();
+		// Work out which option was clicked - if it was a directory, we move to the new path
+		const FileListBoxDataItem* selected = getSelectedOption();
 
-			if (selected != NULL) {
+		if (selected != NULL) {
 
-				// Detect type by examining text colour
-				if (selected->getNormalTextColour() == getShineColour()) {
+			// Detect type by examining text colour
+			if (selected->getNormalTextColour() == getShineColour()) {
 
-					// Got a directory
-					appendPath(selected->getText());
-				} else {
+				// Got a directory
+				appendPath(selected->getText());
+			} else {
 
-					// File selected; raise action event
-					_gadgetEventHandlers->raiseActionEvent();
+				// File selected; raise action event
+				if (raisesEvents()) {
+					_gadgetEventHandler->handleActionEvent(*this);
 				}
 			}
-			
-			// Raise event
-			_gadgetEventHandlers->raiseValueChangeEvent();
-			
-			return;
 		}
+
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		}
+		
+		return;
 	}
 }
 

@@ -10,7 +10,7 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 	setBorderless(true);
 
 	_textbox = new MultiLineTextBox(0, 0, width - _scrollbarWidth, height, text, maxRows, &_style);
-	_textbox->addGadgetEventHandler(this);
+	_textbox->setGadgetEventHandler(this);
 	
 	// Create scrollbar
 	Rect rect;
@@ -19,7 +19,7 @@ ScrollingTextBox::ScrollingTextBox(s16 x, s16 y, u16 width, u16 height, const Wo
 
 	updateScrollbar();
 
-	_scrollbar->addGadgetEventHandler(this);
+	_scrollbar->setGadgetEventHandler(this);
 
 	// Add children to child array
 	addGadget(_textbox);
@@ -96,19 +96,16 @@ const u16 ScrollingTextBox::getCurrentPage() const {
 	return _textbox->getCurrentPage();
 }
 
-void ScrollingTextBox::handleValueChangeEvent(const GadgetEventArgs& e) {
+void ScrollingTextBox::handleValueChangeEvent(Gadget& source) {
+	if (&source == _scrollbar) {
 
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _scrollbar) {
-
-			if (_textbox != NULL) {
-				_textbox->setRaisesEvents(false);
-				_textbox->jump(0, 0 - _scrollbar->getValue() * _textbox->getDocument()->getLineHeight());
-				_textbox->setRaisesEvents(true);
-			}
-		} else if (e.getSource() == _textbox) {
-			updateScrollbar();
+		if (_textbox != NULL) {
+			_textbox->setRaisesEvents(false);
+			_textbox->jump(0, 0 - _scrollbar->getValue() * _textbox->getDocument()->getLineHeight());
+			_textbox->setRaisesEvents(true);
 		}
+	} else if (&source == _textbox) {
+		updateScrollbar();
 	}
 }
 
@@ -142,12 +139,9 @@ void ScrollingTextBox::updateScrollbar() {
 	_scrollbar->setRaisesEvents(true);
 }
 
-void ScrollingTextBox::handleScrollEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _textbox) {
-			updateScrollbar();
-		}
+void ScrollingTextBox::handleScrollEvent(Gadget& source, const WoopsiPoint& delta) {
+	if (&source == _textbox) {
+		updateScrollbar();
 	}
 }
 

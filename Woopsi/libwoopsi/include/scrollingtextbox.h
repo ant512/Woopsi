@@ -156,13 +156,13 @@ namespace WoopsiUI {
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event arguments.
 		 */
-		virtual void handleValueChangeEvent(const GadgetEventArgs& e);
+		virtual void handleValueChangeEvent(Gadget& source);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
 		 * @param e Event arguments.
 		 */
-		virtual void handleScrollEvent(const GadgetEventArgs& e);
+		virtual void handleScrollEvent(Gadget& source, const WoopsiPoint& delta);
 
 		/**
 		 * Check if the textbox opens the keyboard popup when double-clicked.

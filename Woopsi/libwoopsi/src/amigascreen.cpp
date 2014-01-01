@@ -42,7 +42,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 		// Create depth button
 		if (_screenFlags.showDepthButton) {
 			_depthButton = new DecorationGlyphButton(buttonX - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, &_style);
-			_depthButton->addGadgetEventHandler(this);
+			_depthButton->setGadgetEventHandler(this);
 			addGadget(_depthButton);
 
 			buttonX -= SCREEN_DEPTH_BUTTON_WIDTH;
@@ -51,7 +51,7 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 		// Create flip button
 		if (_screenFlags.showFlipButton) {
 			_flipButton = new DecorationGlyphButton(buttonX - SCREEN_FLIP_BUTTON_WIDTH, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, &_style);
-			_flipButton->addGadgetEventHandler(this);
+			_flipButton->setGadgetEventHandler(this);
 			addGadget(_flipButton);
 		}
 
@@ -63,16 +63,14 @@ void AmigaScreen::setBorderless(bool isBorderless) {
 	markRectsDamaged();
 }
 
-void AmigaScreen::handleReleaseEvent(const GadgetEventArgs& e) {
-
-	if (e.getSource() == NULL) return;
+void AmigaScreen::handleReleaseEvent(Gadget &source, const WoopsiPoint &point) {
 
 	// Process decoration gadgets only
-	if (e.getSource() == _flipButton) {
+	if (&source == _flipButton) {
 
 		// Flip screens
 		flipScreens();
-	} else if (e.getSource() == _depthButton) {
+	} else if (&source == _depthButton) {
 
 		// Depth swap to bottom of stack
 		if (lowerToBottom()) blur();
@@ -97,7 +95,7 @@ void AmigaScreen::showFlipButton() {
 		
 		// Recreate flip button
 		_flipButton = new DecorationGlyphButton(buttonX, 0, SCREEN_FLIP_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_FLIP_UP, GLYPH_SCREEN_FLIP_DOWN, &_style);
-		_flipButton->addGadgetEventHandler(this);
+		_flipButton->setGadgetEventHandler(this);
 		addGadget(_flipButton);
 	}
 }
@@ -108,7 +106,7 @@ void AmigaScreen::showDepthButton() {
 		
 		// Recreate depth button
 		_depthButton = new DecorationGlyphButton(getWidth() - SCREEN_DEPTH_BUTTON_WIDTH, 0, SCREEN_DEPTH_BUTTON_WIDTH, _titleHeight, GLYPH_SCREEN_DEPTH_UP, GLYPH_SCREEN_DEPTH_DOWN, &_style);
-		_depthButton->addGadgetEventHandler(this);
+		_depthButton->setGadgetEventHandler(this);
 		addGadget(_depthButton);
 
 		// Move the flip button if necessary

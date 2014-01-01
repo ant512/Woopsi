@@ -109,13 +109,13 @@ namespace WoopsiUI {
 		 * Handle a gadget scroll event.
 		 * @param e The event data.
 		 */
-		void handleScrollEvent(const GadgetEventArgs& e);
+		void handleScrollEvent(Gadget& source, const WoopsiPoint& delta);
 
 		/**
 		 * Handle a gadget value change event.
 		 * @param e The event data.
 		 */
-		void handleValueChangeEvent(const GadgetEventArgs& e);
+		void handleValueChangeEvent(Gadget& source);
 
 		/**
 		 * Gets a pointer to the ScrollingPanel gadget contained within

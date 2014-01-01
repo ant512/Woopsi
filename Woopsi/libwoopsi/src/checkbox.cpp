@@ -21,7 +21,9 @@ void CheckBox::setState(CheckBox::CheckBoxState state) {
 	if (_state != state) {
 		_state = state;
 
-		_gadgetEventHandlers->raiseValueChangeEvent();
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		}
 
 		markRectsDamaged();
 	}

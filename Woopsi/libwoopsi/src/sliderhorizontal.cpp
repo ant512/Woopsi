@@ -22,7 +22,7 @@ SliderHorizontal::SliderHorizontal(s16 x, s16 y, u16 width, u16 height) : Gadget
 	getClientRect(rect);
 
 	_grip = new SliderHorizontalGrip(rect.x, rect.y, rect.width, rect.height);
-	_grip->addGadgetEventHandler(this);
+	_grip->setGadgetEventHandler(this);
 	addGadget(_grip);
 }
 
@@ -70,7 +70,10 @@ void SliderHorizontal::setValue(const s32 value) {
 	
 	if (newValue != _value) {
 		_value = newValue;
-		_gadgetEventHandlers->raiseValueChangeEvent();
+
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		}
 	}
 }
 
@@ -104,16 +107,18 @@ void SliderHorizontal::onClick(s16 x, s16 y) {
 	}
 }
 
-void SliderHorizontal::handleDragEvent(const GadgetEventArgs& e) {
+void SliderHorizontal::handleDragEvent(Gadget& source, const WoopsiPoint& point, const WoopsiPoint& delta) {
 
 	// Handle grip events
-	if ((e.getSource() == _grip) && (e.getSource() != NULL)) {
-
+	if (&source == _grip) {
 		s32 newValue = getValue();
 		
 		if (_value != newValue) {
 			_value = newValue;
-			_gadgetEventHandlers->raiseValueChangeEvent();
+
+			if (raisesEvents()) {
+				_gadgetEventHandler->handleValueChangeEvent(*this);
+			}
 		}
 	}
 }

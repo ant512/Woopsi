@@ -94,7 +94,7 @@ namespace WoopsiUI {
 		 * Process events fired by the grip.
 		 * @param e The event details.
 		 */
-		virtual void handleDragEvent(const GadgetEventArgs& e);
+		virtual void handleDragEvent(Gadget& source, const WoopsiPoint& point, const WoopsiPoint& delta);
 
 		/**
 		 * Get the smallest value that the slider can move through when

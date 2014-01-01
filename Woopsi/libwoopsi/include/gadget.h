@@ -5,7 +5,6 @@
 #include "defines.h"
 #include "fontbase.h"
 #include "gadgeteventhandler.h"
-#include "gadgeteventhandlerlist.h"
 #include "gadgetstyle.h"
 #include "glyphs.h"
 #include "rect.h"
@@ -44,6 +43,7 @@ namespace WoopsiUI {
 			u8 doubleClickable : 1;				/**< True if the gadget can be double-clicked. */
 			u8 modal : 1;						/**< True if the gadget is modal. */
 			u8 canReceiveFocus : 1;				/**< True if the gadget can receive focus. */
+			u8 raisesEvents : 1;				/**< True if the gadget raises events to its handler. */
 		} Flags;
 
 		/**
@@ -249,9 +249,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Check if this gadget raises events or not.
-		 * @return True if events are enabled.
+		 * @return True if events are enabled and a handler is set.
 		 */
-		inline const bool raisesEvents() const { return _gadgetEventHandlers->isEnabled(); };
+		inline const bool raisesEvents() const { return _gadgetEventHandler && _flags.raisesEvents && !_flags.shelved; };
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
@@ -402,25 +402,22 @@ namespace WoopsiUI {
 		inline void setDoubleClickable(const bool isDoubleClickable) { _flags.doubleClickable = isDoubleClickable; };
 
 		/**
-		 * Adds a gadget event handler.  The event handler will receive
+		 * Sets the gadget event handler.  The event handler will receive
 		 * all events raised by this gadget.
 		 * @param eventHandler A pointer to the event handler.
 		 */
-		inline void addGadgetEventHandler(GadgetEventHandler* eventHandler) { _gadgetEventHandlers->addGadgetEventHandler(eventHandler); };
+		inline void setGadgetEventHandler(GadgetEventHandler* eventHandler) { _gadgetEventHandler = eventHandler; };
 
 		/**
-		 * Remove a gadget event handler.
-		 * @param eventHandler A pointer to the event handler to remove.
+		 * Gets the gadget event handler.
+		 * @return A pointer to the event handler.
 		 */
-		inline void removeGadgetEventHandler(GadgetEventHandler* eventHandler) { _gadgetEventHandlers->removeGadgetEventHandler(eventHandler); };
-
+		inline GadgetEventHandler* getGadgetEventHandler() { return _gadgetEventHandler; };
 		/**
 		 * Enables or disables event firing for this gadget.
 		 * @param raisesEvents True to enable events, false to disable.
 		 */
-		inline void setRaisesEvents(const bool raisesEvents) { 
-			raisesEvents ? _gadgetEventHandlers->enable() : _gadgetEventHandlers->disable();
-		};
+		inline void setRaisesEvents(const bool raisesEvents) { _flags.raisesEvents = raisesEvents; };
 
 		/**
 		 * Sets the background colour.
@@ -730,6 +727,14 @@ namespace WoopsiUI {
 		void setFocusedGadget(Gadget* gadget);
 
 		/**
+		 * Checks if the supplied point collide with this gadget.
+		 * Co-ordinates must be in Woopsi-space.
+		 * @param point The point to check.
+		 * @return True if a collision occurred.
+		 */
+		bool checkCollision(const WoopsiPoint& point) const;
+
+		/**
 		 * Checks if the supplied co-ordinates collide with this gadget.
 		 * Co-ordinates must be in Woopsi-space.
 		 * @param x The x co-ordinate to check.
@@ -1014,7 +1019,7 @@ namespace WoopsiUI {
 		Flags _flags;							/**< Flags struct. */
 
 		// Event handling
-		GadgetEventHandlerList* _gadgetEventHandlers;		/**< List of event handlers. */
+		GadgetEventHandler* _gadgetEventHandler;/**< Delegate that responds to gadget events. */
 
 		// Double-clicking
 		u32 _lastClickTime;						/**< VBL count when last clicked. */

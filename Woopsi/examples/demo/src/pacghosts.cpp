@@ -15,7 +15,7 @@ PacGhosts::PacGhosts(PacMan* game) {
 	}
 	
 	// Make first ghost intelligent
-	_ghosts[0]->setType(1);
+	_ghosts[0]->setType(PacGhost::PAC_GHOST_TYPE_SMART);
 	_ghosts[0]->setColour(woopsiRGB(31, 0, 0));
 	
 	_ghostsInHome = _ghostCount;

@@ -1,8 +1,9 @@
 #include "scrollingpanel.h"
-#include "graphicsport.h"
-#include "woopsifuncs.h"
-#include "woopsi.h"
 #include "damagedrectmanager.h"
+#include "graphicsport.h"
+#include "woopsi.h"
+#include "woopsifuncs.h"
+#include "woopsipoint.h"
 
 using namespace WoopsiUI;
 
@@ -101,7 +102,9 @@ void ScrollingPanel::scroll(s32 dx, s32 dy) {
 		scrollChildren(dx, dy);
 
 		// Notify event handlers
-		_gadgetEventHandlers->raiseScrollEvent(dx, dy);
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleScrollEvent(*this, WoopsiPoint(dx, dy));
+		}
 	}
 }
 

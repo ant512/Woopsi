@@ -1,7 +1,6 @@
 #include <nds.h>
 #include "contextmenu.h"
 #include "graphicsport.h"
-#include "contextmenueventargs.h"
 
 using namespace WoopsiUI;
 
@@ -12,7 +11,7 @@ ContextMenu::ContextMenu(GadgetStyle* style) : Gadget(0, 0, 20, 20, style) {
 	_flags.canReceiveFocus = false;
 
 	_listbox = new ListBox(1, 1, 0, 0, style);
-	_listbox->addGadgetEventHandler(this);
+	_listbox->setGadgetEventHandler(this);
 	_listbox->setAllowMultipleSelections(false);
 	_listbox->setBorderless(true);
 	addGadget(_listbox);
@@ -29,31 +28,25 @@ void ContextMenu::addOption(const WoopsiString& text, u32 value) {
 	changeDimensions(rect.x, rect.y, rect.width, rect.height);
 }
 
-void ContextMenu::handleReleaseEvent(const GadgetEventArgs& e) {
+void ContextMenu::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _listbox) {
 
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
+		// Notify the gadget that opened this menu that an event has
+		// occurred, and send the item.
+		_opener->handleContextMenuSelection(_listbox->getSelectedOption());
 
-			// Notify the gadget that opened this menu that an event has
-			// occurred, and send the item.
-			_opener->handleContextMenuSelection(_listbox->getSelectedOption());
-
-			shelve();
-		}
+		shelve();
 	}
 }
 
-void ContextMenu::handleReleaseOutsideEvent(const GadgetEventArgs& e) {
+void ContextMenu::handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _listbox) {
 
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
+		// Reset any selections
+		s32 selectedIndex = _listbox->getSelectedIndex();
 
-			// Reset any selections
-			s32 selectedIndex = _listbox->getSelectedIndex();
-
-			if (selectedIndex > -1) {
-				_listbox->deselectOption(selectedIndex);
-			}
+		if (selectedIndex > -1) {
+			_listbox->deselectOption(selectedIndex);
 		}
 	}
 }

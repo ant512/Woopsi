@@ -2,6 +2,7 @@
 #include "graphicsport.h"
 #include "woopsi.h"
 #include "woopsitimer.h"
+#include "woopsipoint.h"
 
 using namespace WoopsiUI;
 
@@ -21,7 +22,7 @@ AnimButton::AnimButton(s16 x, s16 y, u16 width, u16 height, u16 animX, u16 animY
 
 	_timer = new WoopsiTimer(1, true);
 	addGadget(_timer);
-	_timer->addGadgetEventHandler(this);
+	_timer->setGadgetEventHandler(this);
 	_timer->start();
 }
 
@@ -75,26 +76,23 @@ Animation* const AnimButton::getClickedAnimation() {
 	return _animClicked;
 }
 
-void AnimButton::handleActionEvent(const GadgetEventArgs& e) {
+void AnimButton::handleActionEvent(Gadget& source) {
+	if (&source == _timer) {
 
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _timer) {
-
-			// Ensure the animations are running
-			if (!_initialised) {
-				_animNormal->play();
-				_initialised = true;
-			}
-
-			// Run the animations
-			if (_flags.clicked) {
-				_animClicked->run();
-			} else {
-				_animNormal->run();
-			}
-
-			markRectsDamaged();
+		// Ensure the animations are running
+		if (!_initialised) {
+			_animNormal->play();
+			_initialised = true;
 		}
+
+		// Run the animations
+		if (_flags.clicked) {
+			_animClicked->run();
+		} else {
+			_animNormal->run();
+		}
+
+		markRectsDamaged();
 	}
 }
 
@@ -106,7 +104,9 @@ void AnimButton::onClick(s16 x, s16 y) {
 }
 
 void AnimButton::onRelease(s16 x, s16 y) {
-	_gadgetEventHandlers->raiseActionEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleActionEvent(*this);
+	}
 
 	// Swap animations
 	_animNormal->play();

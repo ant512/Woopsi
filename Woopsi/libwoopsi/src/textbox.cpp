@@ -102,7 +102,9 @@ void TextBox::setText(const WoopsiString& text) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void TextBox::appendText(const WoopsiString& text) {
@@ -133,7 +135,9 @@ void TextBox::appendText(const WoopsiString& text) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void TextBox::removeText(const u32 startIndex) {
@@ -164,7 +168,9 @@ void TextBox::removeText(const u32 startIndex) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void TextBox::removeText(const u32 startIndex, const u32 count) {
@@ -195,7 +201,9 @@ void TextBox::removeText(const u32 startIndex, const u32 count) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void TextBox::insertText(const WoopsiString& text, const u32 index) {
@@ -226,7 +234,9 @@ void TextBox::insertText(const WoopsiString& text, const u32 index) {
 
 	markRectDamaged(rect);
 
-	_gadgetEventHandlers->raiseValueChangeEvent();
+	if (raisesEvents()) {
+		_gadgetEventHandler->handleValueChangeEvent(*this);
+	}
 }
 
 void TextBox::insertTextAtCursor(const WoopsiString& text) {
@@ -343,12 +353,12 @@ void TextBox::onKeyRepeat(KeyCode keyCode) {
 	}
 }
 
-void TextBox::handleKeyPressEvent(const GadgetEventArgs& e) {
-	onKeyPress(e.getKeyCode());
+void TextBox::handleKeyPressEvent(Gadget& source, const KeyCode keyCode) {
+	onKeyPress(keyCode);
 }
 
-void TextBox::handleKeyRepeatEvent(const GadgetEventArgs& e) {
-	onKeyRepeat(e.getKeyCode());
+void TextBox::handleKeyRepeatEvent(Gadget& source, const KeyCode keyCode) {
+	onKeyRepeat(keyCode);
 }
 
 void TextBox::calculateTextPositionHorizontal() {
@@ -419,33 +429,35 @@ void TextBox::calculateTextPositionHorizontal() {
 	}
 }
 
-void TextBox::handleKeyboardPressEvent(const KeyboardEventArgs& e) {
-	processKey(e.getKey());
+void TextBox::handleKeyboardPressEvent(WoopsiKeyboard* source, const WoopsiKey& key) {
+	processKey(key);
 }
 
-void TextBox::handleKeyboardRepeatEvent(const KeyboardEventArgs& e) {
-	processKey(e.getKey());
+void TextBox::handleKeyboardRepeatEvent(WoopsiKeyboard* source, const WoopsiKey& key) {
+	processKey(key);
 }
 
-void TextBox::processKey(const WoopsiKey* key) {
+void TextBox::processKey(const WoopsiKey& key) {
 
-	if (key->getKeyType() == WoopsiKey::KEY_BACKSPACE) {
+	if (key.getKeyType() == WoopsiKey::KEY_BACKSPACE) {
 
 		if (_cursorPos == 0) return;
 
 		// Delete the character in front of the cursor
 		removeText(_cursorPos - 1, 1);
-	} else if (key->getKeyType() == WoopsiKey::KEY_RETURN) {
+	} else if (key.getKeyType() == WoopsiKey::KEY_RETURN) {
 
 		// Close the keyboard
 		woopsiApplication->hideKeyboard();
 
 		// Fire an action event
-		_gadgetEventHandlers->raiseActionEvent();
-	} else if (key->getValue() != '\0') {
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleActionEvent(*this);
+		}
+	} else if (key.getValue() != '\0') {
 
 		// Not modifier; append value
-		insertTextAtCursor(key->getValue());
+		insertTextAtCursor(key.getValue());
 	} 
 }
 

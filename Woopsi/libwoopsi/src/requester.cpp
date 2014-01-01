@@ -27,7 +27,7 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& ti
 
 	_okButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
 
-	_okButton->addGadgetEventHandler(this);
+	_okButton->setGadgetEventHandler(this);
 	addGadget(_okButton);
 
 	// Calculate cancel button dimensions
@@ -36,7 +36,7 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& ti
 
 	// Create cancel button
 	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
-	_cancelButton->addGadgetEventHandler(this);
+	_cancelButton->setGadgetEventHandler(this);
 	addGadget(_cancelButton);
 
 	// Calculate list box
@@ -48,7 +48,7 @@ Requester::Requester(s16 x, s16 y, u16 width, u16 height, const WoopsiString& ti
 
 	// Create list box
 	_listbox = new ScrollingListBox(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height, &_style);
-	_listbox->addGadgetEventHandler(this);
+	_listbox->setGadgetEventHandler(this);
 	addGadget(_listbox);
 }
 
@@ -92,38 +92,32 @@ void Requester::onResize(u16 width, u16 height) {
 	_listbox->changeDimensions(listboxRect.x, listboxRect.y, listboxRect.width, listboxRect.height);
 }
 
-void Requester::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-
-		if (e.getSource() == _cancelButton) {
-
-			// Close the window
-			close();
-		} else if (e.getSource() == _okButton) {
-
-			// Raise events to event handler
-			_gadgetEventHandlers->raiseValueChangeEvent();
-			_gadgetEventHandlers->raiseActionEvent();
-
-			// Close the window
-			close();
+void Requester::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _cancelButton) {
+		close();
+	} else if (&source == _okButton) {
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+			_gadgetEventHandler->handleActionEvent(*this);
 		}
+
+		// Close the window
+		close();
 	}
 
-	AmigaWindow::handleReleaseEvent(e);
+	AmigaWindow::handleReleaseEvent(*this, point);
 }
 
-void Requester::handleDoubleClickEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _listbox) {
+void Requester::handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _listbox) {
 
-			// Raise value changed event to event handler
-			_gadgetEventHandlers->raiseValueChangeEvent();
-
-			// Close the window
-			close();
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
 		}
+
+		// Close the window
+		close();
 	}
 	
-	AmigaWindow::handleDoubleClickEvent(e);
+	AmigaWindow::handleDoubleClickEvent(*this, point);
 }

@@ -31,17 +31,19 @@ Alert::Alert(s16 x, s16 y, u16 width, u16 height, const WoopsiString& title, con
 
 	// Create textbox
 	_textBox = new MultiLineTextBox(rect.x, rect.y, rect.width, rect.height - buttonRect.height - 2, text, 100, style);
+	_textBox->hideCursor();
+	_textBox->disableKeyboardPopup();
 	addGadget(_textBox);
 
-	_button->addGadgetEventHandler(this);
+	_button->setGadgetEventHandler(this);
 	addGadget(_button);
 }
 
-void Alert::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource() == _button) {
+void Alert::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+	if (&source == _button) {
 		close();
 	} else {
-		AmigaWindow::handleReleaseEvent(e);
+		AmigaWindow::handleReleaseEvent(*this, point);
 	}
 }
 

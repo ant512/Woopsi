@@ -130,7 +130,7 @@ namespace WoopsiUI {
 		 * Handle any child events.
 		 * @param e Event arguments.
 		 */
-		void handleActionEvent(const GadgetEventArgs& e);
+		void handleActionEvent(Gadget& source);
 	};
 }
 

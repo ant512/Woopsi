@@ -19,9 +19,9 @@ public:
 	void play();
 	void moveObjects();
 
-	void handleActionEvent(const GadgetEventArgs& e);
-	void handleKeyPressEvent(const GadgetEventArgs& e);
-	void handleKeyReleaseEvent(const GadgetEventArgs& e);
+	void handleActionEvent(Gadget& source);
+	void handleKeyPressEvent(Gadget& source, const KeyCode keyCode);
+	void handleKeyReleaseEvent(Gadget& source, const KeyCode keyCode);
 
 private:
 	AmigaScreen* _screen;

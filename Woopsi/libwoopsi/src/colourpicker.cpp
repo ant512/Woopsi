@@ -34,7 +34,7 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 
 	_okButton->changeDimensions(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height);
 
-	_okButton->addGadgetEventHandler(this);
+	_okButton->setGadgetEventHandler(this);
 	addGadget(_okButton);
 
 	// Calculate cancel button dimensions
@@ -43,7 +43,7 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 
 	// Create cancel button
 	_cancelButton = new Button(buttonRect.x, buttonRect.y, buttonRect.width, buttonRect.height, "Cancel");
-	_cancelButton->addGadgetEventHandler(this);
+	_cancelButton->setGadgetEventHandler(this);
 	addGadget(_cancelButton);
 
 	// Create Red Slider
@@ -62,7 +62,7 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 	_redSlider->setMaximumValue(31);
 	_redSlider->setValue(23);
 
-	_redSlider->addGadgetEventHandler(this);
+	_redSlider->setGadgetEventHandler(this);
 	addGadget(_redSlider);
 
 	// Calculate Green Slider Dimensions
@@ -75,7 +75,7 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 	_greenSlider->setMaximumValue(31);
 	_greenSlider->setValue(0);
 
-	_greenSlider->addGadgetEventHandler(this);
+	_greenSlider->setGadgetEventHandler(this);
 	addGadget(_greenSlider);
 
 	// Calculate Blue Slider Dimensions
@@ -88,7 +88,7 @@ ColourPicker::ColourPicker(s16 x, s16 y, u16 width, u16 height, const WoopsiStri
 	_blueSlider->setMaximumValue(31);
 	_blueSlider->setValue(0);
 
-	_blueSlider->addGadgetEventHandler(this);
+	_blueSlider->setGadgetEventHandler(this);
 	addGadget(_blueSlider);
 
 	// Calculate Colour button dimensions
@@ -143,31 +143,31 @@ void ColourPicker::setColour(u16 colour) {
 	_blueSlider->setValue((colour >> 10) & 31);
 }
 
-void ColourPicker::handleReleaseEvent(const GadgetEventArgs& e) {
-	if (e.getSource() != NULL) {
-		if (e.getSource() == _cancelButton) {
+void ColourPicker::handleReleaseEvent(Gadget &source, const WoopsiPoint& point) {
+	if (&source == _cancelButton) {
 
-			// Close the window
-			close();
-			return;
-		} else if (e.getSource() == _okButton) {
+		// Close the window
+		close();
+		return;
+	} else if (&source == _okButton) {
 
-			// Raise events to event handler
-			_gadgetEventHandlers->raiseValueChangeEvent();
-			_gadgetEventHandlers->raiseActionEvent();
-
-			// Close the window
-			close();
-			return;
+		// Raise events to event handler
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+			_gadgetEventHandler->handleActionEvent(*this);
 		}
+
+		// Close the window
+		close();
+		return;
 	}
 	
-	AmigaWindow::handleReleaseEvent(e);
+	AmigaWindow::handleReleaseEvent(*this, point);
 }
 
-void ColourPicker::handleValueChangeEvent(const GadgetEventArgs& e) {
+void ColourPicker::handleValueChangeEvent(Gadget& source) {
 	_colourButton->setBackColour(woopsiRGB(_redSlider->getValue(), _greenSlider->getValue(), _blueSlider->getValue()));
 	_colourButton->markRectsDamaged();
 
-	AmigaWindow::handleValueChangeEvent(e);
+	AmigaWindow::handleValueChangeEvent(*this);
 }

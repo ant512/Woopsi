@@ -178,13 +178,13 @@ namespace WoopsiUI {
 		 * Handles list data changed events.
 		 * @param e Event arguments.
 		 */
-		virtual void handleListDataChangedEvent(const ListDataEventArgs& e);
+		virtual void handleListDataChangedEvent(ListData& source);
 
 		/**
 		 * Handles list selection changed events.
 		 * @param e Event arguments.
 		 */
-		virtual void handleListDataSelectionChangedEvent(const ListDataEventArgs& e);
+		virtual void handleListDataSelectionChangedEvent(ListData& source);
 
 		/**
 		 * Insert the dimensions that this gadget wants to have into the rect
