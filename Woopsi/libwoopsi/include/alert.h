@@ -38,6 +38,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles release events raised by its sub-gadgets.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release event.
 		 */
 		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 

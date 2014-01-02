@@ -177,13 +177,15 @@ namespace WoopsiUI {
 
 		/**
 		 * Handle a keyboard press event.
-		 * @param e The event data.
+		 * @param source The keyboard that was pressed.
+		 * @param key The key that was pressed.
 		 */
 		virtual void handleKeyboardPressEvent(WoopsiKeyboard& source, const WoopsiKey& key);
 
 		/**
 		 * Handle a keyboard repeat event.
-		 * @param e The event data.
+		 * @param source The keyboard that was pressed.
+		 * @param key The key that was pressed.
 		 */
 		virtual void handleKeyboardRepeatEvent(WoopsiKeyboard& source, const WoopsiKey& key);
 

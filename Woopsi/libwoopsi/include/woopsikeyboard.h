@@ -35,25 +35,28 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event data to process.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event data to process.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event data to process.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
 		 */
 		virtual void handleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event data to process.
+		 * @param source The gadget that performed the action.
 		 */
 		virtual void handleActionEvent(Gadget& source);
 
@@ -82,13 +85,23 @@ namespace WoopsiUI {
 		inline const bool isCapsLockDown() const { return _isCapsLockDown; };
 
 		/**
-		 * Adds a keyboard event handler.  The event handler will receive
-		 * all keyboard events raised by this gadget.
+		 * Sets the keyboard event handler.  The event handler will receive all
+		 * keyboard events raised by this gadget.
 		 * @param eventHandler A pointer to the event handler.
 		 */
 		inline void setKeyboardEventHandler(KeyboardEventHandler* eventHandler) { _keyboardEventHandler = eventHandler; };
 
+		/**
+		 * Gets the keyboard event handler.
+		 * @return The keyboard event handler.
+		 */
 		inline KeyboardEventHandler* getKeyboardEventHandler(KeyboardEventHandler* eventHandler) { return _keyboardEventHandler; };
+
+		/**
+		 * Check if the keyboard raises keyboard events or not.
+		 * @return True if the keyboard raises keyboard events.
+		 */
+		inline const bool raisesKeyboardEvents() const { return _flags.raisesEvents && _keyboardEventHandler && !_flags.shelved; };
 
 	protected:
 		WoopsiKey* _shiftKey;			/**< Pointer to the shift key */
@@ -155,8 +168,6 @@ namespace WoopsiUI {
 		 * Copy constructor is protected to prevent usage.
 		 */
 		inline WoopsiKeyboard(const WoopsiKeyboard& keyboard) : Gadget(keyboard) { };
-
-		inline const bool raisesKeyboardEvents() const { return _flags.raisesEvents && _keyboardEventHandler && !_flags.shelved; };
 
 		/**
 		 * Raise a press event.  Raised when a key is pressed.

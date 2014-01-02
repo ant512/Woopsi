@@ -107,13 +107,14 @@ namespace WoopsiUI {
 
 		/**
 		 * Handle a gadget scroll event.
-		 * @param e The event data.
+		 * @param source The gadget that was scrolled.
+		 * @param delta The distance scrolled.
 		 */
 		void handleScrollEvent(Gadget& source, const WoopsiPoint& delta);
 
 		/**
 		 * Handle a gadget value change event.
-		 * @param e The event data.
+		 * @param source The gadget that raised the event.
 		 */
 		void handleValueChangeEvent(Gadget& source);
 

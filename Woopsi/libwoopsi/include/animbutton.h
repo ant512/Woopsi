@@ -128,7 +128,7 @@ namespace WoopsiUI {
 
 		/**
 		 * Handle any child events.
-		 * @param e Event arguments.
+		 * @param source The gadget that raised the event.
 		 */
 		void handleActionEvent(Gadget& source);
 	};

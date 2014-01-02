@@ -91,33 +91,36 @@ namespace WoopsiUI {
 		 */
 		void setPageSize(const s16 pageSize);
 
-		/**	
+		/**
 		 * Process events fired by the grip.
-		 * @param e The event details.
+		 * @param source The gadget that performed the action.
 		 */
 		virtual void handleActionEvent(Gadget& source);
 
 		/**
 		 * Process events fired by the grip.
-		 * @param e The event details.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
 		 */
 		virtual void handleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Process events fired by the grip.
-		 * @param e The event details.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Process events fired by the grip.
-		 * @param e The event details.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point);
-		
+
 		/**
 		 * Process events fired by the grip.
-		 * @param e The event details.
+		 * @param source The gadget that raised the event.
 		 */
 		virtual void handleValueChangeEvent(Gadget& source);
 

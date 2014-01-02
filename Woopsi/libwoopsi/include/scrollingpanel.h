@@ -172,7 +172,7 @@ namespace WoopsiUI {
 		 * @param dy The vertical distance to scroll.
 		 */
 		void scrollChildren(s32 dx, s32 dy);
-		
+
 		/**
 		 * Draws all child gadgets within the supplied clipping region.
 		 * @param clipRect The clipping region to draw within.

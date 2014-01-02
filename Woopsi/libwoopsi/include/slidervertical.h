@@ -92,7 +92,9 @@ namespace WoopsiUI {
 
 		/**
 		 * Process events fired by the grip.
-		 * @param e The event details.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
+		 * @param delta The distance dragged.
 		 */
 		virtual void handleDragEvent(Gadget& source, const WoopsiPoint& point, const WoopsiPoint& delta);
 

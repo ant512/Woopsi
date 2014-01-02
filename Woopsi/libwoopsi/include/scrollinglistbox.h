@@ -201,45 +201,50 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event arguments.
+		 * @param source The gadget that raised the event.
 		 */
 		virtual void handleValueChangeEvent(Gadget& source);
 
 		/**
 		 * Handle a gadget action event.
-		 * @param e The event data.
+		 * @param source The gadget that performed the action.
 		 */
 		virtual void handleActionEvent(Gadget& source);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event arguments.
+		 * @param source The gadget that was scrolled.
+		 * @param delta The distance scrolled.
 		 */
 		virtual void handleScrollEvent(Gadget& source, const WoopsiPoint& delta);
 
 		/**
 		 * Handle a stylus click event.
-		 * @param e The event data.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
 		 */
 		virtual void handleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event arguments.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
 		 */
 		virtual void handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handle a stylus release event that occurred within the bounds of
 		 * the source gadget.
-		 * @param e The event data.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handle a stylus release event that occurred outside the bounds of
 		 * the source gadget.
-		 * @param e The event data.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point);
 

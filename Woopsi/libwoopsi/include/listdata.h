@@ -141,14 +141,14 @@ namespace WoopsiUI {
 		virtual inline void setSortInsertedItems(const bool sortInsertedItems) { _sortInsertedItems = sortInsertedItems; };
 
 		/**
-		 * Add an event handler.
-		 * @param eventHandler The event handler to add.
+		 * Sets the event handler.
+		 * @param eventHandler The new event handler.
 		 */
 		inline void setListDataEventHandler(ListDataEventHandler* eventHandler) { _listDataEventHandler = eventHandler; };
 
 		/**
-		 * Remove an event handler.
-		 * @param eventHandler The event handler to remove.
+		 * Gets the event handler.
+		 * @return The event handler.
 		 */
 		inline ListDataEventHandler* getListDataEventHandler() { return _listDataEventHandler; };
 

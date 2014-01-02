@@ -43,13 +43,14 @@ namespace WoopsiUI {
 	
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event arguments.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
 		 */
 		virtual void handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point);
 		
 		/**
 		 * Handles events raised by its sub-gadgets.
-		 * @param e Event arguments.
+		 * @param source The gadget that raised the event.
 		 */
 		virtual void handleValueChangeEvent(Gadget& source);
 

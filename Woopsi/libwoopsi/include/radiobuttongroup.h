@@ -80,27 +80,31 @@ namespace WoopsiUI {
 
 		/**
 		 * Handle a stylus click event.
-		 * @param e The event data.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
 		 */
 		virtual void handleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handle a gadget double-click event.
-		 * @param e The event data.
+		 * @param source The gadget that was clicked.
+		 * @param point The co-ordinates of the click.
 		 */
 		virtual void handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handle a stylus release event that occurred within the bounds of
 		 * the source gadget.
-		 * @param e The event data.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
 		/**
 		 * Handle a stylus release event that occurred outside the bounds of
 		 * the source gadget.
-		 * @param e The event data.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release.
 		 */
 		virtual void handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point);
 

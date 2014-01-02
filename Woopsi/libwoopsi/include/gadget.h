@@ -367,6 +367,7 @@ namespace WoopsiUI {
 		 * Sets this gadget's reference constant.  This should be unique, at
 		 * least amongst this gadget's siblings.
 		 * @param refcon The reference constant.
+		 * @return The previous refcon value.
 		 */
 		u32 setRefcon(u32 refcon);
 
@@ -413,6 +414,7 @@ namespace WoopsiUI {
 		 * @return A pointer to the event handler.
 		 */
 		inline GadgetEventHandler* getGadgetEventHandler() { return _gadgetEventHandler; };
+		
 		/**
 		 * Enables or disables event firing for this gadget.
 		 * @param raisesEvents True to enable events, false to disable.

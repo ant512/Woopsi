@@ -116,13 +116,13 @@ namespace WoopsiUI {
 
 		/**
 		 * Handles list data changed events.
-		 * @param e Event arguments.
+		 * @param source The list data object that changed.
 		 */
 		virtual void handleListDataChangedEvent(ListData& source);
 
 		/**
 		 * Handles list selection changed events.
-		 * @param e Event arguments.
+		 * @param source The list data object that changed.
 		 */
 		virtual void handleListDataSelectionChangedEvent(ListData& source);
 

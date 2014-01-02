@@ -54,7 +54,8 @@ namespace WoopsiUI {
 
 		/**
 		 * Handle events fired by decoration gadgets.
-		 * @param e Event arguments to process.
+		 * @param source The gadget that was released.
+		 * @param point The co-ordinates of the release event.
 		 */
 		virtual void handleReleaseEvent(Gadget& source, const WoopsiPoint& point);
 
