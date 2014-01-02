@@ -1,0 +1,6 @@
+﻿/* Localized versions of Info.plist keys */
+
+CFBundleName = "WoopsiSDLXCode";
+CFBundleShortVersionString = "WoopsiSDLXCode version 1.4";
+CFBundleGetInfoString = "WoopsiSDLXCode version 1.4, Copyright 2007-2013 Antony Dzeryn.";
+NSHumanReadableCopyright = "Copyright 2007-2013 Antony Dzeryn.";

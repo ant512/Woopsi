@@ -1,0 +1,1589 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		C24F491C18751DBC009F0FD3 /* alert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A118751DBB009F0FD3 /* alert.cpp */; };
+		C24F491D18751DBC009F0FD3 /* amigascreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A218751DBB009F0FD3 /* amigascreen.cpp */; };
+		C24F491E18751DBC009F0FD3 /* amigawindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A318751DBB009F0FD3 /* amigawindow.cpp */; };
+		C24F491F18751DBC009F0FD3 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A418751DBB009F0FD3 /* animation.cpp */; };
+		C24F492018751DBC009F0FD3 /* animbutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A518751DBB009F0FD3 /* animbutton.cpp */; };
+		C24F492118751DBC009F0FD3 /* bitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A618751DBB009F0FD3 /* bitmap.cpp */; };
+		C24F492218751DBC009F0FD3 /* bitmapbutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A718751DBB009F0FD3 /* bitmapbutton.cpp */; };
+		C24F492318751DBC009F0FD3 /* bitmapwrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A818751DBB009F0FD3 /* bitmapwrapper.cpp */; };
+		C24F492418751DBC009F0FD3 /* button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A918751DBB009F0FD3 /* button.cpp */; };
+		C24F492518751DBC009F0FD3 /* calendar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48AA18751DBB009F0FD3 /* calendar.cpp */; };
+		C24F492618751DBC009F0FD3 /* checkbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48AB18751DBB009F0FD3 /* checkbox.cpp */; };
+		C24F492718751DBC009F0FD3 /* colourpicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48AC18751DBB009F0FD3 /* colourpicker.cpp */; };
+		C24F492818751DBC009F0FD3 /* contextmenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48AD18751DBB009F0FD3 /* contextmenu.cpp */; };
+		C24F492918751DBC009F0FD3 /* cyclebutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48AE18751DBB009F0FD3 /* cyclebutton.cpp */; };
+		C24F492A18751DBC009F0FD3 /* damagedrectmanager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48AF18751DBB009F0FD3 /* damagedrectmanager.cpp */; };
+		C24F492B18751DBC009F0FD3 /* date.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B018751DBB009F0FD3 /* date.cpp */; };
+		C24F492C18751DBC009F0FD3 /* debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B118751DBB009F0FD3 /* debug.cpp */; };
+		C24F492D18751DBC009F0FD3 /* decorationglyphbutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B218751DBB009F0FD3 /* decorationglyphbutton.cpp */; };
+		C24F492E18751DBC009F0FD3 /* dmafuncs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B318751DBB009F0FD3 /* dmafuncs.cpp */; };
+		C24F492F18751DBC009F0FD3 /* document.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B418751DBB009F0FD3 /* document.cpp */; };
+		C24F493018751DBC009F0FD3 /* filelistbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B518751DBB009F0FD3 /* filelistbox.cpp */; };
+		C24F493118751DBC009F0FD3 /* filelistboxdataitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B618751DBB009F0FD3 /* filelistboxdataitem.cpp */; };
+		C24F493218751DBC009F0FD3 /* filepath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B718751DBB009F0FD3 /* filepath.cpp */; };
+		C24F493318751DBC009F0FD3 /* filerequester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48B818751DBB009F0FD3 /* filerequester.cpp */; };
+		C24F493418751DBC009F0FD3 /* arial9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48BA18751DBB009F0FD3 /* arial9.cpp */; };
+		C24F493518751DBC009F0FD3 /* bankgothic12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48BB18751DBB009F0FD3 /* bankgothic12.cpp */; };
+		C24F493618751DBC009F0FD3 /* batang12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48BC18751DBB009F0FD3 /* batang12.cpp */; };
+		C24F493718751DBC009F0FD3 /* batang14.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48BD18751DBB009F0FD3 /* batang14.cpp */; };
+		C24F493818751DBC009F0FD3 /* batang15.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48BE18751DBB009F0FD3 /* batang15.cpp */; };
+		C24F493918751DBC009F0FD3 /* courier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48BF18751DBB009F0FD3 /* courier.cpp */; };
+		C24F493A18751DBC009F0FD3 /* courier12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C018751DBB009F0FD3 /* courier12.cpp */; };
+		C24F493B18751DBC009F0FD3 /* courier12b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C118751DBB009F0FD3 /* courier12b.cpp */; };
+		C24F493C18751DBC009F0FD3 /* couriernew10.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C218751DBB009F0FD3 /* couriernew10.cpp */; };
+		C24F493D18751DBC009F0FD3 /* couriernew12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C318751DBB009F0FD3 /* couriernew12.cpp */; };
+		C24F493E18751DBC009F0FD3 /* dotum13.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C418751DBB009F0FD3 /* dotum13.cpp */; };
+		C24F493F18751DBC009F0FD3 /* fixedsys12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C518751DBB009F0FD3 /* fixedsys12.cpp */; };
+		C24F494018751DBC009F0FD3 /* garamond10.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C618751DBB009F0FD3 /* garamond10.cpp */; };
+		C24F494118751DBC009F0FD3 /* gillsans11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C718751DBB009F0FD3 /* gillsans11.cpp */; };
+		C24F494218751DBC009F0FD3 /* gillsans11b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C818751DBB009F0FD3 /* gillsans11b.cpp */; };
+		C24F494318751DBC009F0FD3 /* gloucester10.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48C918751DBB009F0FD3 /* gloucester10.cpp */; };
+		C24F494418751DBC009F0FD3 /* glyphfont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48CA18751DBB009F0FD3 /* glyphfont.cpp */; };
+		C24F494518751DBC009F0FD3 /* goudy9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48CB18751DBB009F0FD3 /* goudy9.cpp */; };
+		C24F494618751DBC009F0FD3 /* gulimche12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48CC18751DBB009F0FD3 /* gulimche12.cpp */; };
+		C24F494718751DBC009F0FD3 /* gulimche12b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48CD18751DBB009F0FD3 /* gulimche12b.cpp */; };
+		C24F494818751DBC009F0FD3 /* gungsuh12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48CE18751DBB009F0FD3 /* gungsuh12.cpp */; };
+		C24F494918751DBC009F0FD3 /* gungsuh15.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48CF18751DBB009F0FD3 /* gungsuh15.cpp */; };
+		C24F494A18751DBC009F0FD3 /* gungsuhche11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D018751DBB009F0FD3 /* gungsuhche11.cpp */; };
+		C24F494B18751DBC009F0FD3 /* gungsuhche15.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D118751DBB009F0FD3 /* gungsuhche15.cpp */; };
+		C24F494C18751DBC009F0FD3 /* kartika10.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D218751DBB009F0FD3 /* kartika10.cpp */; };
+		C24F494D18751DBC009F0FD3 /* kartika9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D318751DBB009F0FD3 /* kartika9.cpp */; };
+		C24F494E18751DBC009F0FD3 /* latha10.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D418751DBB009F0FD3 /* latha10.cpp */; };
+		C24F494F18751DBC009F0FD3 /* latha15.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D518751DBB009F0FD3 /* latha15.cpp */; };
+		C24F495018751DBC009F0FD3 /* latha9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D618751DBB009F0FD3 /* latha9.cpp */; };
+		C24F495118751DBC009F0FD3 /* lucidacalligraphy14.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D718751DBB009F0FD3 /* lucidacalligraphy14.cpp */; };
+		C24F495218751DBC009F0FD3 /* mangal9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D818751DBB009F0FD3 /* mangal9.cpp */; };
+		C24F495318751DBC009F0FD3 /* modern9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48D918751DBB009F0FD3 /* modern9.cpp */; };
+		C24F495418751DBC009F0FD3 /* modern9b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48DA18751DBB009F0FD3 /* modern9b.cpp */; };
+		C24F495518751DBC009F0FD3 /* msgothic8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48DB18751DBB009F0FD3 /* msgothic8.cpp */; };
+		C24F495618751DBC009F0FD3 /* msgothic9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48DC18751DBB009F0FD3 /* msgothic9.cpp */; };
+		C24F495718751DBC009F0FD3 /* mssans9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48DD18751DBB009F0FD3 /* mssans9.cpp */; };
+		C24F495818751DBC009F0FD3 /* mssans9b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48DE18751DBB009F0FD3 /* mssans9b.cpp */; };
+		C24F495918751DBC009F0FD3 /* msserif11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48DF18751DBB009F0FD3 /* msserif11.cpp */; };
+		C24F495A18751DBC009F0FD3 /* msserif11b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E018751DBB009F0FD3 /* msserif11b.cpp */; };
+		C24F495B18751DBC009F0FD3 /* newtopaz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E118751DBB009F0FD3 /* newtopaz.cpp */; };
+		C24F495C18751DBC009F0FD3 /* ocrfont8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E218751DBB009F0FD3 /* ocrfont8.cpp */; };
+		C24F495D18751DBC009F0FD3 /* poorrichard12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E318751DBB009F0FD3 /* poorrichard12.cpp */; };
+		C24F495E18751DBC009F0FD3 /* poorrichard9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E418751DBB009F0FD3 /* poorrichard9.cpp */; };
+		C24F495F18751DBC009F0FD3 /* profont9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E518751DBB009F0FD3 /* profont9.cpp */; };
+		C24F496018751DBC009F0FD3 /* roman11i.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E618751DBB009F0FD3 /* roman11i.cpp */; };
+		C24F496118751DBC009F0FD3 /* roman13.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E718751DBB009F0FD3 /* roman13.cpp */; };
+		C24F496218751DBC009F0FD3 /* roman13i.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E818751DBB009F0FD3 /* roman13i.cpp */; };
+		C24F496318751DBC009F0FD3 /* roman9b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48E918751DBB009F0FD3 /* roman9b.cpp */; };
+		C24F496418751DBC009F0FD3 /* script9b.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48EA18751DBB009F0FD3 /* script9b.cpp */; };
+		C24F496518751DBC009F0FD3 /* timesnewroman9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48EB18751DBB009F0FD3 /* timesnewroman9.cpp */; };
+		C24F496618751DBC009F0FD3 /* tinyfont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48EC18751DBB009F0FD3 /* tinyfont.cpp */; };
+		C24F496718751DBC009F0FD3 /* topaz.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48ED18751DBB009F0FD3 /* topaz.cpp */; };
+		C24F496818751DBC009F0FD3 /* tunga8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48EE18751DBB009F0FD3 /* tunga8.cpp */; };
+		C24F496918751DBC009F0FD3 /* framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48EF18751DBB009F0FD3 /* framebuffer.cpp */; };
+		C24F496A18751DBC009F0FD3 /* gadget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F018751DBB009F0FD3 /* gadget.cpp */; };
+		C24F496B18751DBC009F0FD3 /* gradient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F118751DBB009F0FD3 /* gradient.cpp */; };
+		C24F496C18751DBC009F0FD3 /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F218751DBB009F0FD3 /* graphics.cpp */; };
+		C24F496D18751DBC009F0FD3 /* graphicsport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F318751DBB009F0FD3 /* graphicsport.cpp */; };
+		C24F496E18751DBC009F0FD3 /* label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F418751DBB009F0FD3 /* label.cpp */; };
+		C24F496F18751DBC009F0FD3 /* listbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F518751DBB009F0FD3 /* listbox.cpp */; };
+		C24F497018751DBC009F0FD3 /* listboxdataitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F618751DBB009F0FD3 /* listboxdataitem.cpp */; };
+		C24F497118751DBC009F0FD3 /* listdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F718751DBB009F0FD3 /* listdata.cpp */; };
+		C24F497218751DBC009F0FD3 /* listdataitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F818751DBB009F0FD3 /* listdataitem.cpp */; };
+		C24F497318751DBC009F0FD3 /* multilinetextbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48F918751DBB009F0FD3 /* multilinetextbox.cpp */; };
+		C24F497418751DBC009F0FD3 /* packedfont1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48FA18751DBB009F0FD3 /* packedfont1.cpp */; };
+		C24F497518751DBC009F0FD3 /* packedfont16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48FB18751DBB009F0FD3 /* packedfont16.cpp */; };
+		C24F497618751DBC009F0FD3 /* packedfontbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48FC18751DBB009F0FD3 /* packedfontbase.cpp */; };
+		C24F497718751DBC009F0FD3 /* progressbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48FD18751DBB009F0FD3 /* progressbar.cpp */; };
+		C24F497818751DBC009F0FD3 /* radiobutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48FE18751DBB009F0FD3 /* radiobutton.cpp */; };
+		C24F497918751DBC009F0FD3 /* radiobuttongroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48FF18751DBB009F0FD3 /* radiobuttongroup.cpp */; };
+		C24F497A18751DBC009F0FD3 /* range.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490018751DBB009F0FD3 /* range.cpp */; };
+		C24F497B18751DBC009F0FD3 /* rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490118751DBB009F0FD3 /* rect.cpp */; };
+		C24F497C18751DBC009F0FD3 /* rectcache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490218751DBB009F0FD3 /* rectcache.cpp */; };
+		C24F497D18751DBC009F0FD3 /* requester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490318751DBB009F0FD3 /* requester.cpp */; };
+		C24F497E18751DBC009F0FD3 /* screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490418751DBB009F0FD3 /* screen.cpp */; };
+		C24F497F18751DBC009F0FD3 /* scrollbarhorizontal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490518751DBB009F0FD3 /* scrollbarhorizontal.cpp */; };
+		C24F498018751DBC009F0FD3 /* scrollbarpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490618751DBB009F0FD3 /* scrollbarpanel.cpp */; };
+		C24F498118751DBC009F0FD3 /* scrollbarvertical.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490718751DBB009F0FD3 /* scrollbarvertical.cpp */; };
+		C24F498218751DBC009F0FD3 /* scrollinglistbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490818751DBB009F0FD3 /* scrollinglistbox.cpp */; };
+		C24F498318751DBC009F0FD3 /* scrollingpanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490918751DBB009F0FD3 /* scrollingpanel.cpp */; };
+		C24F498418751DBC009F0FD3 /* scrollingtextbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490A18751DBB009F0FD3 /* scrollingtextbox.cpp */; };
+		C24F498518751DBC009F0FD3 /* sliderhorizontal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490B18751DBB009F0FD3 /* sliderhorizontal.cpp */; };
+		C24F498618751DBC009F0FD3 /* sliderhorizontalgrip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490C18751DBB009F0FD3 /* sliderhorizontalgrip.cpp */; };
+		C24F498718751DBC009F0FD3 /* slidervertical.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490D18751DBB009F0FD3 /* slidervertical.cpp */; };
+		C24F498818751DBC009F0FD3 /* sliderverticalgrip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490E18751DBB009F0FD3 /* sliderverticalgrip.cpp */; };
+		C24F498918751DBC009F0FD3 /* stickybutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F490F18751DBB009F0FD3 /* stickybutton.cpp */; };
+		C24F498A18751DBC009F0FD3 /* stringiterator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491018751DBB009F0FD3 /* stringiterator.cpp */; };
+		C24F498B18751DBC009F0FD3 /* superbitmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491118751DBB009F0FD3 /* superbitmap.cpp */; };
+		C24F498C18751DBC009F0FD3 /* textbox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491218751DBB009F0FD3 /* textbox.cpp */; };
+		C24F498D18751DBC009F0FD3 /* window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491318751DBB009F0FD3 /* window.cpp */; };
+		C24F498E18751DBC009F0FD3 /* windowborderbutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491418751DBC009F0FD3 /* windowborderbutton.cpp */; };
+		C24F498F18751DBC009F0FD3 /* woopsi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491518751DBC009F0FD3 /* woopsi.cpp */; };
+		C24F499018751DBC009F0FD3 /* woopsifuncs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491618751DBC009F0FD3 /* woopsifuncs.cpp */; };
+		C24F499118751DBC009F0FD3 /* woopsikey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491718751DBC009F0FD3 /* woopsikey.cpp */; };
+		C24F499218751DBC009F0FD3 /* woopsikeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491818751DBC009F0FD3 /* woopsikeyboard.cpp */; };
+		C24F499318751DBC009F0FD3 /* woopsikeyboardscreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491918751DBC009F0FD3 /* woopsikeyboardscreen.cpp */; };
+		C24F499418751DBC009F0FD3 /* woopsistring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491A18751DBC009F0FD3 /* woopsistring.cpp */; };
+		C24F499518751DBC009F0FD3 /* woopsitimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F491B18751DBC009F0FD3 /* woopsitimer.cpp */; };
+		C24F49BB18751DDC009F0FD3 /* bittest1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49AA18751DDC009F0FD3 /* bittest1.cpp */; };
+		C24F49BC18751DDC009F0FD3 /* bittest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49AB18751DDC009F0FD3 /* bittest2.cpp */; };
+		C24F49BD18751DDC009F0FD3 /* bittest3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49AC18751DDC009F0FD3 /* bittest3.cpp */; };
+		C24F49BE18751DDC009F0FD3 /* bittest4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49AD18751DDC009F0FD3 /* bittest4.cpp */; };
+		C24F49BF18751DDC009F0FD3 /* bittest5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49AE18751DDC009F0FD3 /* bittest5.cpp */; };
+		C24F49C018751DDC009F0FD3 /* bittest6.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49AF18751DDC009F0FD3 /* bittest6.cpp */; };
+		C24F49C118751DDC009F0FD3 /* calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B018751DDC009F0FD3 /* calculator.cpp */; };
+		C24F49C218751DDC009F0FD3 /* demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B118751DDC009F0FD3 /* demo.cpp */; };
+		C24F49C318751DDC009F0FD3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B218751DDC009F0FD3 /* main.cpp */; };
+		C24F49C418751DDC009F0FD3 /* pacghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B318751DDC009F0FD3 /* pacghost.cpp */; };
+		C24F49C518751DDC009F0FD3 /* pacghosts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B418751DDC009F0FD3 /* pacghosts.cpp */; };
+		C24F49C618751DDC009F0FD3 /* pacman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B518751DDC009F0FD3 /* pacman.cpp */; };
+		C24F49C718751DDC009F0FD3 /* pacmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B618751DDC009F0FD3 /* pacmap.cpp */; };
+		C24F49C818751DDC009F0FD3 /* pacplayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B718751DDC009F0FD3 /* pacplayer.cpp */; };
+		C24F49C918751DDC009F0FD3 /* pacsprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B818751DDC009F0FD3 /* pacsprite.cpp */; };
+		C24F49CA18751DDC009F0FD3 /* pong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49B918751DDC009F0FD3 /* pong.cpp */; };
+		C24F49CB18751DDC009F0FD3 /* zombie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F49BA18751DDC009F0FD3 /* zombie.cpp */; };
+		C25A753818725FE700F27C63 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C25A753718725FE700F27C63 /* SDL2.framework */; };
+		C25A7715187342A400F27C63 /* OSXIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C25A7713187342A400F27C63 /* OSXIcon.icns */; };
+		C25A771D187342CC00F27C63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C25A771B187342CC00F27C63 /* InfoPlist.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Copy Frameworks into .app bundle";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8D1107320486CEB800E47090 /* WoopsiSDLXCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WoopsiSDLXCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C24F481318751DAD009F0FD3 /* nds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = nds.h; path = WoopsiSDLXCode/nds.h; sourceTree = "<group>"; };
+		C24F481518751DBB009F0FD3 /* alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
+		C24F481618751DBB009F0FD3 /* amigascreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigascreen.h; sourceTree = "<group>"; };
+		C24F481718751DBB009F0FD3 /* amigawindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigawindow.h; sourceTree = "<group>"; };
+		C24F481818751DBB009F0FD3 /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation.h; sourceTree = "<group>"; };
+		C24F481918751DBB009F0FD3 /* animbutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animbutton.h; sourceTree = "<group>"; };
+		C24F481A18751DBB009F0FD3 /* bitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitmap.h; sourceTree = "<group>"; };
+		C24F481B18751DBB009F0FD3 /* bitmapbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitmapbase.h; sourceTree = "<group>"; };
+		C24F481C18751DBB009F0FD3 /* bitmapbutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitmapbutton.h; sourceTree = "<group>"; };
+		C24F481D18751DBB009F0FD3 /* bitmapwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitmapwrapper.h; sourceTree = "<group>"; };
+		C24F481E18751DBB009F0FD3 /* button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = button.h; sourceTree = "<group>"; };
+		C24F481F18751DBB009F0FD3 /* calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calendar.h; sourceTree = "<group>"; };
+		C24F482018751DBB009F0FD3 /* checkbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = checkbox.h; sourceTree = "<group>"; };
+		C24F482118751DBB009F0FD3 /* colourpicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colourpicker.h; sourceTree = "<group>"; };
+		C24F482218751DBB009F0FD3 /* contextmenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contextmenu.h; sourceTree = "<group>"; };
+		C24F482318751DBB009F0FD3 /* cyclebutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cyclebutton.h; sourceTree = "<group>"; };
+		C24F482418751DBB009F0FD3 /* damagedrectmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = damagedrectmanager.h; sourceTree = "<group>"; };
+		C24F482518751DBB009F0FD3 /* date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = date.h; sourceTree = "<group>"; };
+		C24F482618751DBB009F0FD3 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		C24F482718751DBB009F0FD3 /* decorationglyphbutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decorationglyphbutton.h; sourceTree = "<group>"; };
+		C24F482818751DBB009F0FD3 /* defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		C24F482918751DBB009F0FD3 /* dmafuncs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dmafuncs.h; sourceTree = "<group>"; };
+		C24F482A18751DBB009F0FD3 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		C24F482B18751DBB009F0FD3 /* filelistbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filelistbox.h; sourceTree = "<group>"; };
+		C24F482C18751DBB009F0FD3 /* filelistboxdataitem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filelistboxdataitem.h; sourceTree = "<group>"; };
+		C24F482D18751DBB009F0FD3 /* filepath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filepath.h; sourceTree = "<group>"; };
+		C24F482E18751DBB009F0FD3 /* filerequester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filerequester.h; sourceTree = "<group>"; };
+		C24F482F18751DBB009F0FD3 /* fontbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fontbase.h; sourceTree = "<group>"; };
+		C24F483118751DBB009F0FD3 /* arial9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arial9.h; sourceTree = "<group>"; };
+		C24F483218751DBB009F0FD3 /* bankgothic12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bankgothic12.h; sourceTree = "<group>"; };
+		C24F483318751DBB009F0FD3 /* batang12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = batang12.h; sourceTree = "<group>"; };
+		C24F483418751DBB009F0FD3 /* batang14.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = batang14.h; sourceTree = "<group>"; };
+		C24F483518751DBB009F0FD3 /* batang15.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = batang15.h; sourceTree = "<group>"; };
+		C24F483618751DBB009F0FD3 /* courier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = courier.h; sourceTree = "<group>"; };
+		C24F483718751DBB009F0FD3 /* courier12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = courier12.h; sourceTree = "<group>"; };
+		C24F483818751DBB009F0FD3 /* courier12b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = courier12b.h; sourceTree = "<group>"; };
+		C24F483918751DBB009F0FD3 /* couriernew10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = couriernew10.h; sourceTree = "<group>"; };
+		C24F483A18751DBB009F0FD3 /* couriernew12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = couriernew12.h; sourceTree = "<group>"; };
+		C24F483B18751DBB009F0FD3 /* dotum13.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dotum13.h; sourceTree = "<group>"; };
+		C24F483C18751DBB009F0FD3 /* fixedsys12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedsys12.h; sourceTree = "<group>"; };
+		C24F483D18751DBB009F0FD3 /* garamond10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = garamond10.h; sourceTree = "<group>"; };
+		C24F483E18751DBB009F0FD3 /* gillsans11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gillsans11.h; sourceTree = "<group>"; };
+		C24F483F18751DBB009F0FD3 /* gillsans11b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gillsans11b.h; sourceTree = "<group>"; };
+		C24F484018751DBB009F0FD3 /* gloucester10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gloucester10.h; sourceTree = "<group>"; };
+		C24F484118751DBB009F0FD3 /* glyphfont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glyphfont.h; sourceTree = "<group>"; };
+		C24F484218751DBB009F0FD3 /* goudy9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = goudy9.h; sourceTree = "<group>"; };
+		C24F484318751DBB009F0FD3 /* gulimche12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gulimche12.h; sourceTree = "<group>"; };
+		C24F484418751DBB009F0FD3 /* gulimche12b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gulimche12b.h; sourceTree = "<group>"; };
+		C24F484518751DBB009F0FD3 /* gungsuh12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gungsuh12.h; sourceTree = "<group>"; };
+		C24F484618751DBB009F0FD3 /* gungsuh15.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gungsuh15.h; sourceTree = "<group>"; };
+		C24F484718751DBB009F0FD3 /* gungsuhche11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gungsuhche11.h; sourceTree = "<group>"; };
+		C24F484818751DBB009F0FD3 /* gungsuhche15.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gungsuhche15.h; sourceTree = "<group>"; };
+		C24F484918751DBB009F0FD3 /* kartika10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kartika10.h; sourceTree = "<group>"; };
+		C24F484A18751DBB009F0FD3 /* kartika9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kartika9.h; sourceTree = "<group>"; };
+		C24F484B18751DBB009F0FD3 /* latha10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = latha10.h; sourceTree = "<group>"; };
+		C24F484C18751DBB009F0FD3 /* latha15.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = latha15.h; sourceTree = "<group>"; };
+		C24F484D18751DBB009F0FD3 /* latha9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = latha9.h; sourceTree = "<group>"; };
+		C24F484E18751DBB009F0FD3 /* lucidacalligraphy14.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lucidacalligraphy14.h; sourceTree = "<group>"; };
+		C24F484F18751DBB009F0FD3 /* mangal9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mangal9.h; sourceTree = "<group>"; };
+		C24F485018751DBB009F0FD3 /* modern9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modern9.h; sourceTree = "<group>"; };
+		C24F485118751DBB009F0FD3 /* modern9b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modern9b.h; sourceTree = "<group>"; };
+		C24F485218751DBB009F0FD3 /* msgothic8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = msgothic8.h; sourceTree = "<group>"; };
+		C24F485318751DBB009F0FD3 /* msgothic9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = msgothic9.h; sourceTree = "<group>"; };
+		C24F485418751DBB009F0FD3 /* mssans9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mssans9.h; sourceTree = "<group>"; };
+		C24F485518751DBB009F0FD3 /* mssans9b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mssans9b.h; sourceTree = "<group>"; };
+		C24F485618751DBB009F0FD3 /* msserif11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = msserif11.h; sourceTree = "<group>"; };
+		C24F485718751DBB009F0FD3 /* msserif11b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = msserif11b.h; sourceTree = "<group>"; };
+		C24F485818751DBB009F0FD3 /* newtopaz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newtopaz.h; sourceTree = "<group>"; };
+		C24F485918751DBB009F0FD3 /* ocrfont8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ocrfont8.h; sourceTree = "<group>"; };
+		C24F485A18751DBB009F0FD3 /* poorrichard12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poorrichard12.h; sourceTree = "<group>"; };
+		C24F485B18751DBB009F0FD3 /* poorrichard9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poorrichard9.h; sourceTree = "<group>"; };
+		C24F485C18751DBB009F0FD3 /* profont9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = profont9.h; sourceTree = "<group>"; };
+		C24F485D18751DBB009F0FD3 /* roman11i.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = roman11i.h; sourceTree = "<group>"; };
+		C24F485E18751DBB009F0FD3 /* roman13.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = roman13.h; sourceTree = "<group>"; };
+		C24F485F18751DBB009F0FD3 /* roman13i.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = roman13i.h; sourceTree = "<group>"; };
+		C24F486018751DBB009F0FD3 /* roman9b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = roman9b.h; sourceTree = "<group>"; };
+		C24F486118751DBB009F0FD3 /* script9b.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = script9b.h; sourceTree = "<group>"; };
+		C24F486218751DBB009F0FD3 /* timesnewroman9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timesnewroman9.h; sourceTree = "<group>"; };
+		C24F486318751DBB009F0FD3 /* tinyfont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyfont.h; sourceTree = "<group>"; };
+		C24F486418751DBB009F0FD3 /* topaz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = topaz.h; sourceTree = "<group>"; };
+		C24F486518751DBB009F0FD3 /* tunga8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tunga8.h; sourceTree = "<group>"; };
+		C24F486618751DBB009F0FD3 /* framebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framebuffer.h; sourceTree = "<group>"; };
+		C24F486718751DBB009F0FD3 /* gadget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gadget.h; sourceTree = "<group>"; };
+		C24F486818751DBB009F0FD3 /* gadgeteventhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gadgeteventhandler.h; sourceTree = "<group>"; };
+		C24F486918751DBB009F0FD3 /* gadgetstyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gadgetstyle.h; sourceTree = "<group>"; };
+		C24F486A18751DBB009F0FD3 /* glyphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glyphs.h; sourceTree = "<group>"; };
+		C24F486B18751DBB009F0FD3 /* gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gradient.h; sourceTree = "<group>"; };
+		C24F486C18751DBB009F0FD3 /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
+		C24F486D18751DBB009F0FD3 /* graphicsport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphicsport.h; sourceTree = "<group>"; };
+		C24F486E18751DBB009F0FD3 /* keyboardeventhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboardeventhandler.h; sourceTree = "<group>"; };
+		C24F486F18751DBB009F0FD3 /* label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = label.h; sourceTree = "<group>"; };
+		C24F487018751DBB009F0FD3 /* listbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listbox.h; sourceTree = "<group>"; };
+		C24F487118751DBB009F0FD3 /* listboxbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listboxbase.h; sourceTree = "<group>"; };
+		C24F487218751DBB009F0FD3 /* listboxdataitem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listboxdataitem.h; sourceTree = "<group>"; };
+		C24F487318751DBB009F0FD3 /* listdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listdata.h; sourceTree = "<group>"; };
+		C24F487418751DBB009F0FD3 /* listdataeventhandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listdataeventhandler.h; sourceTree = "<group>"; };
+		C24F487518751DBB009F0FD3 /* listdataitem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listdataitem.h; sourceTree = "<group>"; };
+		C24F487618751DBB009F0FD3 /* multilinetextbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multilinetextbox.h; sourceTree = "<group>"; };
+		C24F487718751DBB009F0FD3 /* mutablebitmapbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mutablebitmapbase.h; sourceTree = "<group>"; };
+		C24F487818751DBB009F0FD3 /* packedfont1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packedfont1.h; sourceTree = "<group>"; };
+		C24F487918751DBB009F0FD3 /* packedfont16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packedfont16.h; sourceTree = "<group>"; };
+		C24F487A18751DBB009F0FD3 /* packedfontbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = packedfontbase.h; sourceTree = "<group>"; };
+		C24F487B18751DBB009F0FD3 /* progressbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = progressbar.h; sourceTree = "<group>"; };
+		C24F487C18751DBB009F0FD3 /* radiobutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = radiobutton.h; sourceTree = "<group>"; };
+		C24F487D18751DBB009F0FD3 /* radiobuttongroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = radiobuttongroup.h; sourceTree = "<group>"; };
+		C24F487E18751DBB009F0FD3 /* range.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = range.h; sourceTree = "<group>"; };
+		C24F487F18751DBB009F0FD3 /* rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rect.h; sourceTree = "<group>"; };
+		C24F488018751DBB009F0FD3 /* rectcache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rectcache.h; sourceTree = "<group>"; };
+		C24F488118751DBB009F0FD3 /* requester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = requester.h; sourceTree = "<group>"; };
+		C24F488218751DBB009F0FD3 /* screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = screen.h; sourceTree = "<group>"; };
+		C24F488318751DBB009F0FD3 /* scrollablebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollablebase.h; sourceTree = "<group>"; };
+		C24F488418751DBB009F0FD3 /* scrollbarhorizontal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollbarhorizontal.h; sourceTree = "<group>"; };
+		C24F488518751DBB009F0FD3 /* scrollbarpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollbarpanel.h; sourceTree = "<group>"; };
+		C24F488618751DBB009F0FD3 /* scrollbarvertical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollbarvertical.h; sourceTree = "<group>"; };
+		C24F488718751DBB009F0FD3 /* scrollinglistbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollinglistbox.h; sourceTree = "<group>"; };
+		C24F488818751DBB009F0FD3 /* scrollingpanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollingpanel.h; sourceTree = "<group>"; };
+		C24F488918751DBB009F0FD3 /* scrollingtextbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollingtextbox.h; sourceTree = "<group>"; };
+		C24F488A18751DBB009F0FD3 /* sliderbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sliderbase.h; sourceTree = "<group>"; };
+		C24F488B18751DBB009F0FD3 /* sliderhorizontal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sliderhorizontal.h; sourceTree = "<group>"; };
+		C24F488C18751DBB009F0FD3 /* sliderhorizontalgrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sliderhorizontalgrip.h; sourceTree = "<group>"; };
+		C24F488D18751DBB009F0FD3 /* slidervertical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slidervertical.h; sourceTree = "<group>"; };
+		C24F488E18751DBB009F0FD3 /* sliderverticalgrip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sliderverticalgrip.h; sourceTree = "<group>"; };
+		C24F488F18751DBB009F0FD3 /* stickybutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stickybutton.h; sourceTree = "<group>"; };
+		C24F489018751DBB009F0FD3 /* stringiterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringiterator.h; sourceTree = "<group>"; };
+		C24F489118751DBB009F0FD3 /* superbitmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = superbitmap.h; sourceTree = "<group>"; };
+		C24F489218751DBB009F0FD3 /* textbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textbox.h; sourceTree = "<group>"; };
+		C24F489318751DBB009F0FD3 /* textboxbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textboxbase.h; sourceTree = "<group>"; };
+		C24F489418751DBB009F0FD3 /* window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = window.h; sourceTree = "<group>"; };
+		C24F489518751DBB009F0FD3 /* windowborderbutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = windowborderbutton.h; sourceTree = "<group>"; };
+		C24F489618751DBB009F0FD3 /* woopsi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsi.h; sourceTree = "<group>"; };
+		C24F489718751DBB009F0FD3 /* woopsiarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsiarray.h; sourceTree = "<group>"; };
+		C24F489818751DBB009F0FD3 /* woopsifuncs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsifuncs.h; sourceTree = "<group>"; };
+		C24F489918751DBB009F0FD3 /* woopsiheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsiheaders.h; sourceTree = "<group>"; };
+		C24F489A18751DBB009F0FD3 /* woopsikey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsikey.h; sourceTree = "<group>"; };
+		C24F489B18751DBB009F0FD3 /* woopsikeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsikeyboard.h; sourceTree = "<group>"; };
+		C24F489C18751DBB009F0FD3 /* woopsikeyboardscreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsikeyboardscreen.h; sourceTree = "<group>"; };
+		C24F489D18751DBB009F0FD3 /* woopsipoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsipoint.h; sourceTree = "<group>"; };
+		C24F489E18751DBB009F0FD3 /* woopsistring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsistring.h; sourceTree = "<group>"; };
+		C24F489F18751DBB009F0FD3 /* woopsitimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = woopsitimer.h; sourceTree = "<group>"; };
+		C24F48A118751DBB009F0FD3 /* alert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = alert.cpp; sourceTree = "<group>"; };
+		C24F48A218751DBB009F0FD3 /* amigascreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = amigascreen.cpp; sourceTree = "<group>"; };
+		C24F48A318751DBB009F0FD3 /* amigawindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = amigawindow.cpp; sourceTree = "<group>"; };
+		C24F48A418751DBB009F0FD3 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
+		C24F48A518751DBB009F0FD3 /* animbutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animbutton.cpp; sourceTree = "<group>"; };
+		C24F48A618751DBB009F0FD3 /* bitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitmap.cpp; sourceTree = "<group>"; };
+		C24F48A718751DBB009F0FD3 /* bitmapbutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitmapbutton.cpp; sourceTree = "<group>"; };
+		C24F48A818751DBB009F0FD3 /* bitmapwrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitmapwrapper.cpp; sourceTree = "<group>"; };
+		C24F48A918751DBB009F0FD3 /* button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = button.cpp; sourceTree = "<group>"; };
+		C24F48AA18751DBB009F0FD3 /* calendar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = calendar.cpp; sourceTree = "<group>"; };
+		C24F48AB18751DBB009F0FD3 /* checkbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checkbox.cpp; sourceTree = "<group>"; };
+		C24F48AC18751DBB009F0FD3 /* colourpicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = colourpicker.cpp; sourceTree = "<group>"; };
+		C24F48AD18751DBB009F0FD3 /* contextmenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = contextmenu.cpp; sourceTree = "<group>"; };
+		C24F48AE18751DBB009F0FD3 /* cyclebutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cyclebutton.cpp; sourceTree = "<group>"; };
+		C24F48AF18751DBB009F0FD3 /* damagedrectmanager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = damagedrectmanager.cpp; sourceTree = "<group>"; };
+		C24F48B018751DBB009F0FD3 /* date.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = date.cpp; sourceTree = "<group>"; };
+		C24F48B118751DBB009F0FD3 /* debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = debug.cpp; sourceTree = "<group>"; };
+		C24F48B218751DBB009F0FD3 /* decorationglyphbutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decorationglyphbutton.cpp; sourceTree = "<group>"; };
+		C24F48B318751DBB009F0FD3 /* dmafuncs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dmafuncs.cpp; sourceTree = "<group>"; };
+		C24F48B418751DBB009F0FD3 /* document.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = document.cpp; sourceTree = "<group>"; };
+		C24F48B518751DBB009F0FD3 /* filelistbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filelistbox.cpp; sourceTree = "<group>"; };
+		C24F48B618751DBB009F0FD3 /* filelistboxdataitem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filelistboxdataitem.cpp; sourceTree = "<group>"; };
+		C24F48B718751DBB009F0FD3 /* filepath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filepath.cpp; sourceTree = "<group>"; };
+		C24F48B818751DBB009F0FD3 /* filerequester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filerequester.cpp; sourceTree = "<group>"; };
+		C24F48BA18751DBB009F0FD3 /* arial9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = arial9.cpp; sourceTree = "<group>"; };
+		C24F48BB18751DBB009F0FD3 /* bankgothic12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bankgothic12.cpp; sourceTree = "<group>"; };
+		C24F48BC18751DBB009F0FD3 /* batang12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = batang12.cpp; sourceTree = "<group>"; };
+		C24F48BD18751DBB009F0FD3 /* batang14.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = batang14.cpp; sourceTree = "<group>"; };
+		C24F48BE18751DBB009F0FD3 /* batang15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = batang15.cpp; sourceTree = "<group>"; };
+		C24F48BF18751DBB009F0FD3 /* courier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = courier.cpp; sourceTree = "<group>"; };
+		C24F48C018751DBB009F0FD3 /* courier12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = courier12.cpp; sourceTree = "<group>"; };
+		C24F48C118751DBB009F0FD3 /* courier12b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = courier12b.cpp; sourceTree = "<group>"; };
+		C24F48C218751DBB009F0FD3 /* couriernew10.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = couriernew10.cpp; sourceTree = "<group>"; };
+		C24F48C318751DBB009F0FD3 /* couriernew12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = couriernew12.cpp; sourceTree = "<group>"; };
+		C24F48C418751DBB009F0FD3 /* dotum13.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dotum13.cpp; sourceTree = "<group>"; };
+		C24F48C518751DBB009F0FD3 /* fixedsys12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fixedsys12.cpp; sourceTree = "<group>"; };
+		C24F48C618751DBB009F0FD3 /* garamond10.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = garamond10.cpp; sourceTree = "<group>"; };
+		C24F48C718751DBB009F0FD3 /* gillsans11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gillsans11.cpp; sourceTree = "<group>"; };
+		C24F48C818751DBB009F0FD3 /* gillsans11b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gillsans11b.cpp; sourceTree = "<group>"; };
+		C24F48C918751DBB009F0FD3 /* gloucester10.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gloucester10.cpp; sourceTree = "<group>"; };
+		C24F48CA18751DBB009F0FD3 /* glyphfont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glyphfont.cpp; sourceTree = "<group>"; };
+		C24F48CB18751DBB009F0FD3 /* goudy9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = goudy9.cpp; sourceTree = "<group>"; };
+		C24F48CC18751DBB009F0FD3 /* gulimche12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gulimche12.cpp; sourceTree = "<group>"; };
+		C24F48CD18751DBB009F0FD3 /* gulimche12b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gulimche12b.cpp; sourceTree = "<group>"; };
+		C24F48CE18751DBB009F0FD3 /* gungsuh12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gungsuh12.cpp; sourceTree = "<group>"; };
+		C24F48CF18751DBB009F0FD3 /* gungsuh15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gungsuh15.cpp; sourceTree = "<group>"; };
+		C24F48D018751DBB009F0FD3 /* gungsuhche11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gungsuhche11.cpp; sourceTree = "<group>"; };
+		C24F48D118751DBB009F0FD3 /* gungsuhche15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gungsuhche15.cpp; sourceTree = "<group>"; };
+		C24F48D218751DBB009F0FD3 /* kartika10.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kartika10.cpp; sourceTree = "<group>"; };
+		C24F48D318751DBB009F0FD3 /* kartika9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kartika9.cpp; sourceTree = "<group>"; };
+		C24F48D418751DBB009F0FD3 /* latha10.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = latha10.cpp; sourceTree = "<group>"; };
+		C24F48D518751DBB009F0FD3 /* latha15.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = latha15.cpp; sourceTree = "<group>"; };
+		C24F48D618751DBB009F0FD3 /* latha9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = latha9.cpp; sourceTree = "<group>"; };
+		C24F48D718751DBB009F0FD3 /* lucidacalligraphy14.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lucidacalligraphy14.cpp; sourceTree = "<group>"; };
+		C24F48D818751DBB009F0FD3 /* mangal9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mangal9.cpp; sourceTree = "<group>"; };
+		C24F48D918751DBB009F0FD3 /* modern9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modern9.cpp; sourceTree = "<group>"; };
+		C24F48DA18751DBB009F0FD3 /* modern9b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modern9b.cpp; sourceTree = "<group>"; };
+		C24F48DB18751DBB009F0FD3 /* msgothic8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = msgothic8.cpp; sourceTree = "<group>"; };
+		C24F48DC18751DBB009F0FD3 /* msgothic9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = msgothic9.cpp; sourceTree = "<group>"; };
+		C24F48DD18751DBB009F0FD3 /* mssans9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mssans9.cpp; sourceTree = "<group>"; };
+		C24F48DE18751DBB009F0FD3 /* mssans9b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mssans9b.cpp; sourceTree = "<group>"; };
+		C24F48DF18751DBB009F0FD3 /* msserif11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = msserif11.cpp; sourceTree = "<group>"; };
+		C24F48E018751DBB009F0FD3 /* msserif11b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = msserif11b.cpp; sourceTree = "<group>"; };
+		C24F48E118751DBB009F0FD3 /* newtopaz.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = newtopaz.cpp; sourceTree = "<group>"; };
+		C24F48E218751DBB009F0FD3 /* ocrfont8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ocrfont8.cpp; sourceTree = "<group>"; };
+		C24F48E318751DBB009F0FD3 /* poorrichard12.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poorrichard12.cpp; sourceTree = "<group>"; };
+		C24F48E418751DBB009F0FD3 /* poorrichard9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poorrichard9.cpp; sourceTree = "<group>"; };
+		C24F48E518751DBB009F0FD3 /* profont9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profont9.cpp; sourceTree = "<group>"; };
+		C24F48E618751DBB009F0FD3 /* roman11i.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = roman11i.cpp; sourceTree = "<group>"; };
+		C24F48E718751DBB009F0FD3 /* roman13.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = roman13.cpp; sourceTree = "<group>"; };
+		C24F48E818751DBB009F0FD3 /* roman13i.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = roman13i.cpp; sourceTree = "<group>"; };
+		C24F48E918751DBB009F0FD3 /* roman9b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = roman9b.cpp; sourceTree = "<group>"; };
+		C24F48EA18751DBB009F0FD3 /* script9b.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = script9b.cpp; sourceTree = "<group>"; };
+		C24F48EB18751DBB009F0FD3 /* timesnewroman9.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timesnewroman9.cpp; sourceTree = "<group>"; };
+		C24F48EC18751DBB009F0FD3 /* tinyfont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyfont.cpp; sourceTree = "<group>"; };
+		C24F48ED18751DBB009F0FD3 /* topaz.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = topaz.cpp; sourceTree = "<group>"; };
+		C24F48EE18751DBB009F0FD3 /* tunga8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tunga8.cpp; sourceTree = "<group>"; };
+		C24F48EF18751DBB009F0FD3 /* framebuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = framebuffer.cpp; sourceTree = "<group>"; };
+		C24F48F018751DBB009F0FD3 /* gadget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gadget.cpp; sourceTree = "<group>"; };
+		C24F48F118751DBB009F0FD3 /* gradient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gradient.cpp; sourceTree = "<group>"; };
+		C24F48F218751DBB009F0FD3 /* graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphics.cpp; sourceTree = "<group>"; };
+		C24F48F318751DBB009F0FD3 /* graphicsport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphicsport.cpp; sourceTree = "<group>"; };
+		C24F48F418751DBB009F0FD3 /* label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = label.cpp; sourceTree = "<group>"; };
+		C24F48F518751DBB009F0FD3 /* listbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = listbox.cpp; sourceTree = "<group>"; };
+		C24F48F618751DBB009F0FD3 /* listboxdataitem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = listboxdataitem.cpp; sourceTree = "<group>"; };
+		C24F48F718751DBB009F0FD3 /* listdata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = listdata.cpp; sourceTree = "<group>"; };
+		C24F48F818751DBB009F0FD3 /* listdataitem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = listdataitem.cpp; sourceTree = "<group>"; };
+		C24F48F918751DBB009F0FD3 /* multilinetextbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = multilinetextbox.cpp; sourceTree = "<group>"; };
+		C24F48FA18751DBB009F0FD3 /* packedfont1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = packedfont1.cpp; sourceTree = "<group>"; };
+		C24F48FB18751DBB009F0FD3 /* packedfont16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = packedfont16.cpp; sourceTree = "<group>"; };
+		C24F48FC18751DBB009F0FD3 /* packedfontbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = packedfontbase.cpp; sourceTree = "<group>"; };
+		C24F48FD18751DBB009F0FD3 /* progressbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = progressbar.cpp; sourceTree = "<group>"; };
+		C24F48FE18751DBB009F0FD3 /* radiobutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radiobutton.cpp; sourceTree = "<group>"; };
+		C24F48FF18751DBB009F0FD3 /* radiobuttongroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = radiobuttongroup.cpp; sourceTree = "<group>"; };
+		C24F490018751DBB009F0FD3 /* range.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = range.cpp; sourceTree = "<group>"; };
+		C24F490118751DBB009F0FD3 /* rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rect.cpp; sourceTree = "<group>"; };
+		C24F490218751DBB009F0FD3 /* rectcache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rectcache.cpp; sourceTree = "<group>"; };
+		C24F490318751DBB009F0FD3 /* requester.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = requester.cpp; sourceTree = "<group>"; };
+		C24F490418751DBB009F0FD3 /* screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = screen.cpp; sourceTree = "<group>"; };
+		C24F490518751DBB009F0FD3 /* scrollbarhorizontal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrollbarhorizontal.cpp; sourceTree = "<group>"; };
+		C24F490618751DBB009F0FD3 /* scrollbarpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrollbarpanel.cpp; sourceTree = "<group>"; };
+		C24F490718751DBB009F0FD3 /* scrollbarvertical.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrollbarvertical.cpp; sourceTree = "<group>"; };
+		C24F490818751DBB009F0FD3 /* scrollinglistbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrollinglistbox.cpp; sourceTree = "<group>"; };
+		C24F490918751DBB009F0FD3 /* scrollingpanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrollingpanel.cpp; sourceTree = "<group>"; };
+		C24F490A18751DBB009F0FD3 /* scrollingtextbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrollingtextbox.cpp; sourceTree = "<group>"; };
+		C24F490B18751DBB009F0FD3 /* sliderhorizontal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sliderhorizontal.cpp; sourceTree = "<group>"; };
+		C24F490C18751DBB009F0FD3 /* sliderhorizontalgrip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sliderhorizontalgrip.cpp; sourceTree = "<group>"; };
+		C24F490D18751DBB009F0FD3 /* slidervertical.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = slidervertical.cpp; sourceTree = "<group>"; };
+		C24F490E18751DBB009F0FD3 /* sliderverticalgrip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sliderverticalgrip.cpp; sourceTree = "<group>"; };
+		C24F490F18751DBB009F0FD3 /* stickybutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stickybutton.cpp; sourceTree = "<group>"; };
+		C24F491018751DBB009F0FD3 /* stringiterator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stringiterator.cpp; sourceTree = "<group>"; };
+		C24F491118751DBB009F0FD3 /* superbitmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = superbitmap.cpp; sourceTree = "<group>"; };
+		C24F491218751DBB009F0FD3 /* textbox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textbox.cpp; sourceTree = "<group>"; };
+		C24F491318751DBB009F0FD3 /* window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = window.cpp; sourceTree = "<group>"; };
+		C24F491418751DBC009F0FD3 /* windowborderbutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = windowborderbutton.cpp; sourceTree = "<group>"; };
+		C24F491518751DBC009F0FD3 /* woopsi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = woopsi.cpp; sourceTree = "<group>"; };
+		C24F491618751DBC009F0FD3 /* woopsifuncs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = woopsifuncs.cpp; sourceTree = "<group>"; };
+		C24F491718751DBC009F0FD3 /* woopsikey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = woopsikey.cpp; sourceTree = "<group>"; };
+		C24F491818751DBC009F0FD3 /* woopsikeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = woopsikeyboard.cpp; sourceTree = "<group>"; };
+		C24F491918751DBC009F0FD3 /* woopsikeyboardscreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = woopsikeyboardscreen.cpp; sourceTree = "<group>"; };
+		C24F491A18751DBC009F0FD3 /* woopsistring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = woopsistring.cpp; sourceTree = "<group>"; };
+		C24F491B18751DBC009F0FD3 /* woopsitimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = woopsitimer.cpp; sourceTree = "<group>"; };
+		C24F499918751DDC009F0FD3 /* bittest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest1.h; sourceTree = "<group>"; };
+		C24F499A18751DDC009F0FD3 /* bittest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest2.h; sourceTree = "<group>"; };
+		C24F499B18751DDC009F0FD3 /* bittest3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest3.h; sourceTree = "<group>"; };
+		C24F499C18751DDC009F0FD3 /* bittest4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest4.h; sourceTree = "<group>"; };
+		C24F499D18751DDC009F0FD3 /* bittest5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest5.h; sourceTree = "<group>"; };
+		C24F499E18751DDC009F0FD3 /* bittest6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest6.h; sourceTree = "<group>"; };
+		C24F499F18751DDC009F0FD3 /* calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calculator.h; sourceTree = "<group>"; };
+		C24F49A018751DDC009F0FD3 /* demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = demo.h; sourceTree = "<group>"; };
+		C24F49A118751DDC009F0FD3 /* pacghost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pacghost.h; sourceTree = "<group>"; };
+		C24F49A218751DDC009F0FD3 /* pacghosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pacghosts.h; sourceTree = "<group>"; };
+		C24F49A318751DDC009F0FD3 /* pacman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pacman.h; sourceTree = "<group>"; };
+		C24F49A418751DDC009F0FD3 /* pacmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pacmap.h; sourceTree = "<group>"; };
+		C24F49A518751DDC009F0FD3 /* pacplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pacplayer.h; sourceTree = "<group>"; };
+		C24F49A618751DDC009F0FD3 /* pacsprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pacsprite.h; sourceTree = "<group>"; };
+		C24F49A718751DDC009F0FD3 /* pong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pong.h; sourceTree = "<group>"; };
+		C24F49A818751DDC009F0FD3 /* zombie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zombie.h; sourceTree = "<group>"; };
+		C24F49AA18751DDC009F0FD3 /* bittest1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bittest1.cpp; sourceTree = "<group>"; };
+		C24F49AB18751DDC009F0FD3 /* bittest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bittest2.cpp; sourceTree = "<group>"; };
+		C24F49AC18751DDC009F0FD3 /* bittest3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bittest3.cpp; sourceTree = "<group>"; };
+		C24F49AD18751DDC009F0FD3 /* bittest4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bittest4.cpp; sourceTree = "<group>"; };
+		C24F49AE18751DDC009F0FD3 /* bittest5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bittest5.cpp; sourceTree = "<group>"; };
+		C24F49AF18751DDC009F0FD3 /* bittest6.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bittest6.cpp; sourceTree = "<group>"; };
+		C24F49B018751DDC009F0FD3 /* calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = calculator.cpp; sourceTree = "<group>"; };
+		C24F49B118751DDC009F0FD3 /* demo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = demo.cpp; sourceTree = "<group>"; };
+		C24F49B218751DDC009F0FD3 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C24F49B318751DDC009F0FD3 /* pacghost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pacghost.cpp; sourceTree = "<group>"; };
+		C24F49B418751DDC009F0FD3 /* pacghosts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pacghosts.cpp; sourceTree = "<group>"; };
+		C24F49B518751DDC009F0FD3 /* pacman.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pacman.cpp; sourceTree = "<group>"; };
+		C24F49B618751DDC009F0FD3 /* pacmap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pacmap.cpp; sourceTree = "<group>"; };
+		C24F49B718751DDC009F0FD3 /* pacplayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pacplayer.cpp; sourceTree = "<group>"; };
+		C24F49B818751DDC009F0FD3 /* pacsprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pacsprite.cpp; sourceTree = "<group>"; };
+		C24F49B918751DDC009F0FD3 /* pong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pong.cpp; sourceTree = "<group>"; };
+		C24F49BA18751DDC009F0FD3 /* zombie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zombie.cpp; sourceTree = "<group>"; };
+		C25A753718725FE700F27C63 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = /Library/Frameworks/SDL2.framework; sourceTree = "<absolute>"; };
+		C25A7713187342A400F27C63 /* OSXIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = OSXIcon.icns; path = WoopsiSDLXCode/OSXIcon.icns; sourceTree = "<group>"; };
+		C25A7714187342A400F27C63 /* WoopsiSDLXCode-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "WoopsiSDLXCode-Info.plist"; path = "WoopsiSDLXCode/WoopsiSDLXCode-Info.plist"; sourceTree = "<group>"; };
+		C25A771C187342CC00F27C63 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WoopsiSDLXCode/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C25A753818725FE700F27C63 /* SDL2.framework in Frameworks */,
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C25A753718725FE700F27C63 /* SDL2.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* WoopsiSDLXCode.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* WoopsiSDLXCode */ = {
+			isa = PBXGroup;
+			children = (
+				C25A771E187342E200F27C63 /* WoopsiSDLXCode */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = WoopsiSDLXCode;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C25A771B187342CC00F27C63 /* InfoPlist.strings */,
+				C25A7713187342A400F27C63 /* OSXIcon.icns */,
+				C25A7714187342A400F27C63 /* WoopsiSDLXCode-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C24F481418751DBB009F0FD3 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C24F49CC18751F65009F0FD3 /* core */,
+				C24F483018751DBB009F0FD3 /* fonts */,
+				C24F49D6187520E0009F0FD3 /* gadgets */,
+				C24F482018751DBB009F0FD3 /* checkbox.h */,
+				C24F482618751DBB009F0FD3 /* debug.h */,
+				C24F486B18751DBB009F0FD3 /* gradient.h */,
+				C24F487B18751DBB009F0FD3 /* progressbar.h */,
+				C24F489118751DBB009F0FD3 /* superbitmap.h */,
+				C24F489F18751DBB009F0FD3 /* woopsitimer.h */,
+			);
+			name = include;
+			path = ../libwoopsi/include;
+			sourceTree = "<group>";
+		};
+		C24F483018751DBB009F0FD3 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C24F483118751DBB009F0FD3 /* arial9.h */,
+				C24F483218751DBB009F0FD3 /* bankgothic12.h */,
+				C24F483318751DBB009F0FD3 /* batang12.h */,
+				C24F483418751DBB009F0FD3 /* batang14.h */,
+				C24F483518751DBB009F0FD3 /* batang15.h */,
+				C24F483618751DBB009F0FD3 /* courier.h */,
+				C24F483718751DBB009F0FD3 /* courier12.h */,
+				C24F483818751DBB009F0FD3 /* courier12b.h */,
+				C24F483918751DBB009F0FD3 /* couriernew10.h */,
+				C24F483A18751DBB009F0FD3 /* couriernew12.h */,
+				C24F483B18751DBB009F0FD3 /* dotum13.h */,
+				C24F483C18751DBB009F0FD3 /* fixedsys12.h */,
+				C24F483D18751DBB009F0FD3 /* garamond10.h */,
+				C24F483E18751DBB009F0FD3 /* gillsans11.h */,
+				C24F483F18751DBB009F0FD3 /* gillsans11b.h */,
+				C24F484018751DBB009F0FD3 /* gloucester10.h */,
+				C24F484118751DBB009F0FD3 /* glyphfont.h */,
+				C24F484218751DBB009F0FD3 /* goudy9.h */,
+				C24F484318751DBB009F0FD3 /* gulimche12.h */,
+				C24F484418751DBB009F0FD3 /* gulimche12b.h */,
+				C24F484518751DBB009F0FD3 /* gungsuh12.h */,
+				C24F484618751DBB009F0FD3 /* gungsuh15.h */,
+				C24F484718751DBB009F0FD3 /* gungsuhche11.h */,
+				C24F484818751DBB009F0FD3 /* gungsuhche15.h */,
+				C24F484918751DBB009F0FD3 /* kartika10.h */,
+				C24F484A18751DBB009F0FD3 /* kartika9.h */,
+				C24F484B18751DBB009F0FD3 /* latha10.h */,
+				C24F484C18751DBB009F0FD3 /* latha15.h */,
+				C24F484D18751DBB009F0FD3 /* latha9.h */,
+				C24F484E18751DBB009F0FD3 /* lucidacalligraphy14.h */,
+				C24F484F18751DBB009F0FD3 /* mangal9.h */,
+				C24F485018751DBB009F0FD3 /* modern9.h */,
+				C24F485118751DBB009F0FD3 /* modern9b.h */,
+				C24F485218751DBB009F0FD3 /* msgothic8.h */,
+				C24F485318751DBB009F0FD3 /* msgothic9.h */,
+				C24F485418751DBB009F0FD3 /* mssans9.h */,
+				C24F485518751DBB009F0FD3 /* mssans9b.h */,
+				C24F485618751DBB009F0FD3 /* msserif11.h */,
+				C24F485718751DBB009F0FD3 /* msserif11b.h */,
+				C24F485818751DBB009F0FD3 /* newtopaz.h */,
+				C24F485918751DBB009F0FD3 /* ocrfont8.h */,
+				C24F485A18751DBB009F0FD3 /* poorrichard12.h */,
+				C24F485B18751DBB009F0FD3 /* poorrichard9.h */,
+				C24F485C18751DBB009F0FD3 /* profont9.h */,
+				C24F485D18751DBB009F0FD3 /* roman11i.h */,
+				C24F485E18751DBB009F0FD3 /* roman13.h */,
+				C24F485F18751DBB009F0FD3 /* roman13i.h */,
+				C24F486018751DBB009F0FD3 /* roman9b.h */,
+				C24F486118751DBB009F0FD3 /* script9b.h */,
+				C24F486218751DBB009F0FD3 /* timesnewroman9.h */,
+				C24F486318751DBB009F0FD3 /* tinyfont.h */,
+				C24F486418751DBB009F0FD3 /* topaz.h */,
+				C24F486518751DBB009F0FD3 /* tunga8.h */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		C24F48A018751DBB009F0FD3 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C24F49E518752267009F0FD3 /* core */,
+				C24F48B918751DBB009F0FD3 /* fonts */,
+				C24F49E418752261009F0FD3 /* gadgets */,
+				C24F48AB18751DBB009F0FD3 /* checkbox.cpp */,
+				C24F48B118751DBB009F0FD3 /* debug.cpp */,
+				C24F48F118751DBB009F0FD3 /* gradient.cpp */,
+				C24F48FD18751DBB009F0FD3 /* progressbar.cpp */,
+				C24F491118751DBB009F0FD3 /* superbitmap.cpp */,
+				C24F491B18751DBC009F0FD3 /* woopsitimer.cpp */,
+			);
+			name = src;
+			path = ../libwoopsi/src;
+			sourceTree = "<group>";
+		};
+		C24F48B918751DBB009F0FD3 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48BA18751DBB009F0FD3 /* arial9.cpp */,
+				C24F48BB18751DBB009F0FD3 /* bankgothic12.cpp */,
+				C24F48BC18751DBB009F0FD3 /* batang12.cpp */,
+				C24F48BD18751DBB009F0FD3 /* batang14.cpp */,
+				C24F48BE18751DBB009F0FD3 /* batang15.cpp */,
+				C24F48BF18751DBB009F0FD3 /* courier.cpp */,
+				C24F48C018751DBB009F0FD3 /* courier12.cpp */,
+				C24F48C118751DBB009F0FD3 /* courier12b.cpp */,
+				C24F48C218751DBB009F0FD3 /* couriernew10.cpp */,
+				C24F48C318751DBB009F0FD3 /* couriernew12.cpp */,
+				C24F48C418751DBB009F0FD3 /* dotum13.cpp */,
+				C24F48C518751DBB009F0FD3 /* fixedsys12.cpp */,
+				C24F48C618751DBB009F0FD3 /* garamond10.cpp */,
+				C24F48C718751DBB009F0FD3 /* gillsans11.cpp */,
+				C24F48C818751DBB009F0FD3 /* gillsans11b.cpp */,
+				C24F48C918751DBB009F0FD3 /* gloucester10.cpp */,
+				C24F48CA18751DBB009F0FD3 /* glyphfont.cpp */,
+				C24F48CB18751DBB009F0FD3 /* goudy9.cpp */,
+				C24F48CC18751DBB009F0FD3 /* gulimche12.cpp */,
+				C24F48CD18751DBB009F0FD3 /* gulimche12b.cpp */,
+				C24F48CE18751DBB009F0FD3 /* gungsuh12.cpp */,
+				C24F48CF18751DBB009F0FD3 /* gungsuh15.cpp */,
+				C24F48D018751DBB009F0FD3 /* gungsuhche11.cpp */,
+				C24F48D118751DBB009F0FD3 /* gungsuhche15.cpp */,
+				C24F48D218751DBB009F0FD3 /* kartika10.cpp */,
+				C24F48D318751DBB009F0FD3 /* kartika9.cpp */,
+				C24F48D418751DBB009F0FD3 /* latha10.cpp */,
+				C24F48D518751DBB009F0FD3 /* latha15.cpp */,
+				C24F48D618751DBB009F0FD3 /* latha9.cpp */,
+				C24F48D718751DBB009F0FD3 /* lucidacalligraphy14.cpp */,
+				C24F48D818751DBB009F0FD3 /* mangal9.cpp */,
+				C24F48D918751DBB009F0FD3 /* modern9.cpp */,
+				C24F48DA18751DBB009F0FD3 /* modern9b.cpp */,
+				C24F48DB18751DBB009F0FD3 /* msgothic8.cpp */,
+				C24F48DC18751DBB009F0FD3 /* msgothic9.cpp */,
+				C24F48DD18751DBB009F0FD3 /* mssans9.cpp */,
+				C24F48DE18751DBB009F0FD3 /* mssans9b.cpp */,
+				C24F48DF18751DBB009F0FD3 /* msserif11.cpp */,
+				C24F48E018751DBB009F0FD3 /* msserif11b.cpp */,
+				C24F48E118751DBB009F0FD3 /* newtopaz.cpp */,
+				C24F48E218751DBB009F0FD3 /* ocrfont8.cpp */,
+				C24F48E318751DBB009F0FD3 /* poorrichard12.cpp */,
+				C24F48E418751DBB009F0FD3 /* poorrichard9.cpp */,
+				C24F48E518751DBB009F0FD3 /* profont9.cpp */,
+				C24F48E618751DBB009F0FD3 /* roman11i.cpp */,
+				C24F48E718751DBB009F0FD3 /* roman13.cpp */,
+				C24F48E818751DBB009F0FD3 /* roman13i.cpp */,
+				C24F48E918751DBB009F0FD3 /* roman9b.cpp */,
+				C24F48EA18751DBB009F0FD3 /* script9b.cpp */,
+				C24F48EB18751DBB009F0FD3 /* timesnewroman9.cpp */,
+				C24F48EC18751DBB009F0FD3 /* tinyfont.cpp */,
+				C24F48ED18751DBB009F0FD3 /* topaz.cpp */,
+				C24F48EE18751DBB009F0FD3 /* tunga8.cpp */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		C24F499618751DBE009F0FD3 /* libwoopsi */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481418751DBB009F0FD3 /* include */,
+				C24F48A018751DBB009F0FD3 /* src */,
+			);
+			name = libwoopsi;
+			sourceTree = "<group>";
+		};
+		C24F499718751DCD009F0FD3 /* demo */ = {
+			isa = PBXGroup;
+			children = (
+				C24F499818751DDC009F0FD3 /* include */,
+				C24F49A918751DDC009F0FD3 /* src */,
+			);
+			name = demo;
+			sourceTree = "<group>";
+		};
+		C24F499818751DDC009F0FD3 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				C24F499918751DDC009F0FD3 /* bittest1.h */,
+				C24F499A18751DDC009F0FD3 /* bittest2.h */,
+				C24F499B18751DDC009F0FD3 /* bittest3.h */,
+				C24F499C18751DDC009F0FD3 /* bittest4.h */,
+				C24F499D18751DDC009F0FD3 /* bittest5.h */,
+				C24F499E18751DDC009F0FD3 /* bittest6.h */,
+				C24F499F18751DDC009F0FD3 /* calculator.h */,
+				C24F49A018751DDC009F0FD3 /* demo.h */,
+				C24F49A118751DDC009F0FD3 /* pacghost.h */,
+				C24F49A218751DDC009F0FD3 /* pacghosts.h */,
+				C24F49A318751DDC009F0FD3 /* pacman.h */,
+				C24F49A418751DDC009F0FD3 /* pacmap.h */,
+				C24F49A518751DDC009F0FD3 /* pacplayer.h */,
+				C24F49A618751DDC009F0FD3 /* pacsprite.h */,
+				C24F49A718751DDC009F0FD3 /* pong.h */,
+				C24F49A818751DDC009F0FD3 /* zombie.h */,
+			);
+			name = include;
+			path = ../examples/demo/include;
+			sourceTree = "<group>";
+		};
+		C24F49A918751DDC009F0FD3 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C24F49AA18751DDC009F0FD3 /* bittest1.cpp */,
+				C24F49AB18751DDC009F0FD3 /* bittest2.cpp */,
+				C24F49AC18751DDC009F0FD3 /* bittest3.cpp */,
+				C24F49AD18751DDC009F0FD3 /* bittest4.cpp */,
+				C24F49AE18751DDC009F0FD3 /* bittest5.cpp */,
+				C24F49AF18751DDC009F0FD3 /* bittest6.cpp */,
+				C24F49B018751DDC009F0FD3 /* calculator.cpp */,
+				C24F49B118751DDC009F0FD3 /* demo.cpp */,
+				C24F49B218751DDC009F0FD3 /* main.cpp */,
+				C24F49B318751DDC009F0FD3 /* pacghost.cpp */,
+				C24F49B418751DDC009F0FD3 /* pacghosts.cpp */,
+				C24F49B518751DDC009F0FD3 /* pacman.cpp */,
+				C24F49B618751DDC009F0FD3 /* pacmap.cpp */,
+				C24F49B718751DDC009F0FD3 /* pacplayer.cpp */,
+				C24F49B818751DDC009F0FD3 /* pacsprite.cpp */,
+				C24F49B918751DDC009F0FD3 /* pong.cpp */,
+				C24F49BA18751DDC009F0FD3 /* zombie.cpp */,
+			);
+			name = src;
+			path = ../examples/demo/src;
+			sourceTree = "<group>";
+		};
+		C24F49CC18751F65009F0FD3 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				C24F49CD18751F6C009F0FD3 /* bitmaps */,
+				C24F49CE18751F72009F0FD3 /* collections */,
+				C24F49CF18751F78009F0FD3 /* events */,
+				C24F49D018751F7D009F0FD3 /* fonts */,
+				C24F49D118751F83009F0FD3 /* gadgets */,
+				C24F49D218751F8C009F0FD3 /* graphics */,
+				C24F49D318751FA1009F0FD3 /* listdata */,
+				C24F49D418751FA9009F0FD3 /* rects */,
+				C24F49D518751FB0009F0FD3 /* strings */,
+				C24F482518751DBB009F0FD3 /* date.h */,
+				C24F482818751DBB009F0FD3 /* defines.h */,
+				C24F482918751DBB009F0FD3 /* dmafuncs.h */,
+				C24F487E18751DBB009F0FD3 /* range.h */,
+				C24F489818751DBB009F0FD3 /* woopsifuncs.h */,
+				C24F489918751DBB009F0FD3 /* woopsiheaders.h */,
+				C24F489D18751DBB009F0FD3 /* woopsipoint.h */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		C24F49CD18751F6C009F0FD3 /* bitmaps */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481A18751DBB009F0FD3 /* bitmap.h */,
+				C24F481B18751DBB009F0FD3 /* bitmapbase.h */,
+				C24F481D18751DBB009F0FD3 /* bitmapwrapper.h */,
+				C24F486618751DBB009F0FD3 /* framebuffer.h */,
+				C24F487718751DBB009F0FD3 /* mutablebitmapbase.h */,
+			);
+			name = bitmaps;
+			sourceTree = "<group>";
+		};
+		C24F49CE18751F72009F0FD3 /* collections */ = {
+			isa = PBXGroup;
+			children = (
+				C24F489718751DBB009F0FD3 /* woopsiarray.h */,
+			);
+			name = collections;
+			sourceTree = "<group>";
+		};
+		C24F49CF18751F78009F0FD3 /* events */ = {
+			isa = PBXGroup;
+			children = (
+				C24F486818751DBB009F0FD3 /* gadgeteventhandler.h */,
+			);
+			name = events;
+			sourceTree = "<group>";
+		};
+		C24F49D018751F7D009F0FD3 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C24F482F18751DBB009F0FD3 /* fontbase.h */,
+				C24F486A18751DBB009F0FD3 /* glyphs.h */,
+				C24F487818751DBB009F0FD3 /* packedfont1.h */,
+				C24F487918751DBB009F0FD3 /* packedfont16.h */,
+				C24F487A18751DBB009F0FD3 /* packedfontbase.h */,
+			);
+			name = fonts;
+			sourceTree = "<group>";
+		};
+		C24F49D118751F83009F0FD3 /* gadgets */ = {
+			isa = PBXGroup;
+			children = (
+				C24F486718751DBB009F0FD3 /* gadget.h */,
+				C24F486918751DBB009F0FD3 /* gadgetstyle.h */,
+				C24F489618751DBB009F0FD3 /* woopsi.h */,
+			);
+			name = gadgets;
+			sourceTree = "<group>";
+		};
+		C24F49D218751F8C009F0FD3 /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481818751DBB009F0FD3 /* animation.h */,
+				C24F486C18751DBB009F0FD3 /* graphics.h */,
+				C24F486D18751DBB009F0FD3 /* graphicsport.h */,
+			);
+			name = graphics;
+			sourceTree = "<group>";
+		};
+		C24F49D318751FA1009F0FD3 /* listdata */ = {
+			isa = PBXGroup;
+			children = (
+				C24F487318751DBB009F0FD3 /* listdata.h */,
+				C24F487418751DBB009F0FD3 /* listdataeventhandler.h */,
+				C24F487518751DBB009F0FD3 /* listdataitem.h */,
+			);
+			name = listdata;
+			sourceTree = "<group>";
+		};
+		C24F49D418751FA9009F0FD3 /* rects */ = {
+			isa = PBXGroup;
+			children = (
+				C24F482418751DBB009F0FD3 /* damagedrectmanager.h */,
+				C24F487F18751DBB009F0FD3 /* rect.h */,
+				C24F488018751DBB009F0FD3 /* rectcache.h */,
+			);
+			name = rects;
+			sourceTree = "<group>";
+		};
+		C24F49D518751FB0009F0FD3 /* strings */ = {
+			isa = PBXGroup;
+			children = (
+				C24F482A18751DBB009F0FD3 /* document.h */,
+				C24F489018751DBB009F0FD3 /* stringiterator.h */,
+				C24F489E18751DBB009F0FD3 /* woopsistring.h */,
+			);
+			name = strings;
+			sourceTree = "<group>";
+		};
+		C24F49D6187520E0009F0FD3 /* gadgets */ = {
+			isa = PBXGroup;
+			children = (
+				C24F49D7187520FA009F0FD3 /* button */,
+				C24F49D818752101009F0FD3 /* calendar */,
+				C24F49D918752108009F0FD3 /* contextmenu */,
+				C24F49DA18752111009F0FD3 /* filerequester */,
+				C24F49DB18752118009F0FD3 /* keyboard */,
+				C24F49DC18752121009F0FD3 /* listbox */,
+				C24F49DD18752125009F0FD3 /* radiobutton */,
+				C24F49DE1875212A009F0FD3 /* screen */,
+				C24F49DF1875212F009F0FD3 /* scrollbar */,
+				C24F49E018752135009F0FD3 /* scrollingpanel */,
+				C24F49E11875213D009F0FD3 /* slider */,
+				C24F49E218752167009F0FD3 /* text */,
+				C24F49E31875216F009F0FD3 /* window */,
+			);
+			name = gadgets;
+			sourceTree = "<group>";
+		};
+		C24F49D7187520FA009F0FD3 /* button */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481918751DBB009F0FD3 /* animbutton.h */,
+				C24F481C18751DBB009F0FD3 /* bitmapbutton.h */,
+				C24F481E18751DBB009F0FD3 /* button.h */,
+				C24F482318751DBB009F0FD3 /* cyclebutton.h */,
+				C24F482718751DBB009F0FD3 /* decorationglyphbutton.h */,
+				C24F488F18751DBB009F0FD3 /* stickybutton.h */,
+			);
+			name = button;
+			sourceTree = "<group>";
+		};
+		C24F49D818752101009F0FD3 /* calendar */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481F18751DBB009F0FD3 /* calendar.h */,
+			);
+			name = calendar;
+			sourceTree = "<group>";
+		};
+		C24F49D918752108009F0FD3 /* contextmenu */ = {
+			isa = PBXGroup;
+			children = (
+				C24F482218751DBB009F0FD3 /* contextmenu.h */,
+			);
+			name = contextmenu;
+			sourceTree = "<group>";
+		};
+		C24F49DA18752111009F0FD3 /* filerequester */ = {
+			isa = PBXGroup;
+			children = (
+				C24F482B18751DBB009F0FD3 /* filelistbox.h */,
+				C24F482C18751DBB009F0FD3 /* filelistboxdataitem.h */,
+				C24F482D18751DBB009F0FD3 /* filepath.h */,
+				C24F482E18751DBB009F0FD3 /* filerequester.h */,
+			);
+			name = filerequester;
+			sourceTree = "<group>";
+		};
+		C24F49DB18752118009F0FD3 /* keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				C24F486E18751DBB009F0FD3 /* keyboardeventhandler.h */,
+				C24F489A18751DBB009F0FD3 /* woopsikey.h */,
+				C24F489B18751DBB009F0FD3 /* woopsikeyboard.h */,
+				C24F489C18751DBB009F0FD3 /* woopsikeyboardscreen.h */,
+			);
+			name = keyboard;
+			sourceTree = "<group>";
+		};
+		C24F49DC18752121009F0FD3 /* listbox */ = {
+			isa = PBXGroup;
+			children = (
+				C24F487018751DBB009F0FD3 /* listbox.h */,
+				C24F487118751DBB009F0FD3 /* listboxbase.h */,
+				C24F487218751DBB009F0FD3 /* listboxdataitem.h */,
+				C24F488718751DBB009F0FD3 /* scrollinglistbox.h */,
+			);
+			name = listbox;
+			sourceTree = "<group>";
+		};
+		C24F49DD18752125009F0FD3 /* radiobutton */ = {
+			isa = PBXGroup;
+			children = (
+				C24F487C18751DBB009F0FD3 /* radiobutton.h */,
+				C24F487D18751DBB009F0FD3 /* radiobuttongroup.h */,
+			);
+			name = radiobutton;
+			sourceTree = "<group>";
+		};
+		C24F49DE1875212A009F0FD3 /* screen */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481618751DBB009F0FD3 /* amigascreen.h */,
+				C24F488218751DBB009F0FD3 /* screen.h */,
+			);
+			name = screen;
+			sourceTree = "<group>";
+		};
+		C24F49DF1875212F009F0FD3 /* scrollbar */ = {
+			isa = PBXGroup;
+			children = (
+				C24F488418751DBB009F0FD3 /* scrollbarhorizontal.h */,
+				C24F488618751DBB009F0FD3 /* scrollbarvertical.h */,
+			);
+			name = scrollbar;
+			sourceTree = "<group>";
+		};
+		C24F49E018752135009F0FD3 /* scrollingpanel */ = {
+			isa = PBXGroup;
+			children = (
+				C24F488318751DBB009F0FD3 /* scrollablebase.h */,
+				C24F488518751DBB009F0FD3 /* scrollbarpanel.h */,
+				C24F488818751DBB009F0FD3 /* scrollingpanel.h */,
+			);
+			name = scrollingpanel;
+			sourceTree = "<group>";
+		};
+		C24F49E11875213D009F0FD3 /* slider */ = {
+			isa = PBXGroup;
+			children = (
+				C24F488A18751DBB009F0FD3 /* sliderbase.h */,
+				C24F488B18751DBB009F0FD3 /* sliderhorizontal.h */,
+				C24F488C18751DBB009F0FD3 /* sliderhorizontalgrip.h */,
+				C24F488D18751DBB009F0FD3 /* slidervertical.h */,
+				C24F488E18751DBB009F0FD3 /* sliderverticalgrip.h */,
+			);
+			name = slider;
+			sourceTree = "<group>";
+		};
+		C24F49E218752167009F0FD3 /* text */ = {
+			isa = PBXGroup;
+			children = (
+				C24F486F18751DBB009F0FD3 /* label.h */,
+				C24F487618751DBB009F0FD3 /* multilinetextbox.h */,
+				C24F488918751DBB009F0FD3 /* scrollingtextbox.h */,
+				C24F489218751DBB009F0FD3 /* textbox.h */,
+				C24F489318751DBB009F0FD3 /* textboxbase.h */,
+			);
+			name = text;
+			sourceTree = "<group>";
+		};
+		C24F49E31875216F009F0FD3 /* window */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481518751DBB009F0FD3 /* alert.h */,
+				C24F481718751DBB009F0FD3 /* amigawindow.h */,
+				C24F482118751DBB009F0FD3 /* colourpicker.h */,
+				C24F488118751DBB009F0FD3 /* requester.h */,
+				C24F489418751DBB009F0FD3 /* window.h */,
+				C24F489518751DBB009F0FD3 /* windowborderbutton.h */,
+			);
+			name = window;
+			sourceTree = "<group>";
+		};
+		C24F49E418752261009F0FD3 /* gadgets */ = {
+			isa = PBXGroup;
+			children = (
+				C24F49ED18752343009F0FD3 /* button */,
+				C24F49EE18752348009F0FD3 /* calendar */,
+				C24F49EF18752369009F0FD3 /* contextmenu */,
+				C24F49F018752377009F0FD3 /* filerequester */,
+				C24F49F118752386009F0FD3 /* keyboard */,
+				C24F49F218752396009F0FD3 /* listbox */,
+				C24F49F3187523A2009F0FD3 /* radiobutton */,
+				C24F49F4187523AD009F0FD3 /* screen */,
+				C24F49F5187523B9009F0FD3 /* scrollbar */,
+				C24F49F6187523C6009F0FD3 /* scrollingpanel */,
+				C24F49F7187523D2009F0FD3 /* slider */,
+				C24F49F8187523E3009F0FD3 /* text */,
+				C24F49F91875241F009F0FD3 /* window */,
+			);
+			name = gadgets;
+			sourceTree = "<group>";
+		};
+		C24F49E518752267009F0FD3 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				C24F49E618752270009F0FD3 /* bitmaps */,
+				C24F49E718752277009F0FD3 /* fonts */,
+				C24F49E81875227B009F0FD3 /* gadgets */,
+				C24F49E918752281009F0FD3 /* graphics */,
+				C24F49EA18752289009F0FD3 /* listdata */,
+				C24F49EB18752291009F0FD3 /* rects */,
+				C24F49EC18752298009F0FD3 /* strings */,
+				C24F48B018751DBB009F0FD3 /* date.cpp */,
+				C24F48B318751DBB009F0FD3 /* dmafuncs.cpp */,
+				C24F490018751DBB009F0FD3 /* range.cpp */,
+				C24F491618751DBC009F0FD3 /* woopsifuncs.cpp */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		C24F49E618752270009F0FD3 /* bitmaps */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48A618751DBB009F0FD3 /* bitmap.cpp */,
+				C24F48A818751DBB009F0FD3 /* bitmapwrapper.cpp */,
+				C24F48EF18751DBB009F0FD3 /* framebuffer.cpp */,
+			);
+			name = bitmaps;
+			sourceTree = "<group>";
+		};
+		C24F49E718752277009F0FD3 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48FA18751DBB009F0FD3 /* packedfont1.cpp */,
+				C24F48FB18751DBB009F0FD3 /* packedfont16.cpp */,
+				C24F48FC18751DBB009F0FD3 /* packedfontbase.cpp */,
+			);
+			name = fonts;
+			sourceTree = "<group>";
+		};
+		C24F49E81875227B009F0FD3 /* gadgets */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48F018751DBB009F0FD3 /* gadget.cpp */,
+				C24F491518751DBC009F0FD3 /* woopsi.cpp */,
+			);
+			name = gadgets;
+			sourceTree = "<group>";
+		};
+		C24F49E918752281009F0FD3 /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48A418751DBB009F0FD3 /* animation.cpp */,
+				C24F48F218751DBB009F0FD3 /* graphics.cpp */,
+				C24F48F318751DBB009F0FD3 /* graphicsport.cpp */,
+			);
+			name = graphics;
+			sourceTree = "<group>";
+		};
+		C24F49EA18752289009F0FD3 /* listdata */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48F718751DBB009F0FD3 /* listdata.cpp */,
+				C24F48F818751DBB009F0FD3 /* listdataitem.cpp */,
+			);
+			name = listdata;
+			sourceTree = "<group>";
+		};
+		C24F49EB18752291009F0FD3 /* rects */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48AF18751DBB009F0FD3 /* damagedrectmanager.cpp */,
+				C24F490118751DBB009F0FD3 /* rect.cpp */,
+				C24F490218751DBB009F0FD3 /* rectcache.cpp */,
+			);
+			name = rects;
+			sourceTree = "<group>";
+		};
+		C24F49EC18752298009F0FD3 /* strings */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48B418751DBB009F0FD3 /* document.cpp */,
+				C24F491018751DBB009F0FD3 /* stringiterator.cpp */,
+				C24F491A18751DBC009F0FD3 /* woopsistring.cpp */,
+			);
+			name = strings;
+			sourceTree = "<group>";
+		};
+		C24F49ED18752343009F0FD3 /* button */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48A518751DBB009F0FD3 /* animbutton.cpp */,
+				C24F48A718751DBB009F0FD3 /* bitmapbutton.cpp */,
+				C24F48A918751DBB009F0FD3 /* button.cpp */,
+				C24F48AE18751DBB009F0FD3 /* cyclebutton.cpp */,
+				C24F48B218751DBB009F0FD3 /* decorationglyphbutton.cpp */,
+				C24F490F18751DBB009F0FD3 /* stickybutton.cpp */,
+			);
+			name = button;
+			sourceTree = "<group>";
+		};
+		C24F49EE18752348009F0FD3 /* calendar */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48AA18751DBB009F0FD3 /* calendar.cpp */,
+			);
+			name = calendar;
+			sourceTree = "<group>";
+		};
+		C24F49EF18752369009F0FD3 /* contextmenu */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48AD18751DBB009F0FD3 /* contextmenu.cpp */,
+			);
+			name = contextmenu;
+			sourceTree = "<group>";
+		};
+		C24F49F018752377009F0FD3 /* filerequester */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48B518751DBB009F0FD3 /* filelistbox.cpp */,
+				C24F48B618751DBB009F0FD3 /* filelistboxdataitem.cpp */,
+				C24F48B718751DBB009F0FD3 /* filepath.cpp */,
+				C24F48B818751DBB009F0FD3 /* filerequester.cpp */,
+			);
+			name = filerequester;
+			sourceTree = "<group>";
+		};
+		C24F49F118752386009F0FD3 /* keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				C24F491718751DBC009F0FD3 /* woopsikey.cpp */,
+				C24F491818751DBC009F0FD3 /* woopsikeyboard.cpp */,
+				C24F491918751DBC009F0FD3 /* woopsikeyboardscreen.cpp */,
+			);
+			name = keyboard;
+			sourceTree = "<group>";
+		};
+		C24F49F218752396009F0FD3 /* listbox */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48F518751DBB009F0FD3 /* listbox.cpp */,
+				C24F48F618751DBB009F0FD3 /* listboxdataitem.cpp */,
+				C24F490818751DBB009F0FD3 /* scrollinglistbox.cpp */,
+			);
+			name = listbox;
+			sourceTree = "<group>";
+		};
+		C24F49F3187523A2009F0FD3 /* radiobutton */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48FE18751DBB009F0FD3 /* radiobutton.cpp */,
+				C24F48FF18751DBB009F0FD3 /* radiobuttongroup.cpp */,
+			);
+			name = radiobutton;
+			sourceTree = "<group>";
+		};
+		C24F49F4187523AD009F0FD3 /* screen */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48A218751DBB009F0FD3 /* amigascreen.cpp */,
+				C24F490418751DBB009F0FD3 /* screen.cpp */,
+			);
+			name = screen;
+			sourceTree = "<group>";
+		};
+		C24F49F5187523B9009F0FD3 /* scrollbar */ = {
+			isa = PBXGroup;
+			children = (
+				C24F490518751DBB009F0FD3 /* scrollbarhorizontal.cpp */,
+				C24F490718751DBB009F0FD3 /* scrollbarvertical.cpp */,
+			);
+			name = scrollbar;
+			sourceTree = "<group>";
+		};
+		C24F49F6187523C6009F0FD3 /* scrollingpanel */ = {
+			isa = PBXGroup;
+			children = (
+				C24F490618751DBB009F0FD3 /* scrollbarpanel.cpp */,
+				C24F490918751DBB009F0FD3 /* scrollingpanel.cpp */,
+			);
+			name = scrollingpanel;
+			sourceTree = "<group>";
+		};
+		C24F49F7187523D2009F0FD3 /* slider */ = {
+			isa = PBXGroup;
+			children = (
+				C24F490B18751DBB009F0FD3 /* sliderhorizontal.cpp */,
+				C24F490C18751DBB009F0FD3 /* sliderhorizontalgrip.cpp */,
+				C24F490D18751DBB009F0FD3 /* slidervertical.cpp */,
+				C24F490E18751DBB009F0FD3 /* sliderverticalgrip.cpp */,
+			);
+			name = slider;
+			sourceTree = "<group>";
+		};
+		C24F49F8187523E3009F0FD3 /* text */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48F418751DBB009F0FD3 /* label.cpp */,
+				C24F48F918751DBB009F0FD3 /* multilinetextbox.cpp */,
+				C24F490A18751DBB009F0FD3 /* scrollingtextbox.cpp */,
+				C24F491218751DBB009F0FD3 /* textbox.cpp */,
+			);
+			name = text;
+			sourceTree = "<group>";
+		};
+		C24F49F91875241F009F0FD3 /* window */ = {
+			isa = PBXGroup;
+			children = (
+				C24F48A118751DBB009F0FD3 /* alert.cpp */,
+				C24F48A318751DBB009F0FD3 /* amigawindow.cpp */,
+				C24F48AC18751DBB009F0FD3 /* colourpicker.cpp */,
+				C24F490318751DBB009F0FD3 /* requester.cpp */,
+				C24F491318751DBB009F0FD3 /* window.cpp */,
+				C24F491418751DBC009F0FD3 /* windowborderbutton.cpp */,
+			);
+			name = window;
+			sourceTree = "<group>";
+		};
+		C25A771E187342E200F27C63 /* WoopsiSDLXCode */ = {
+			isa = PBXGroup;
+			children = (
+				C24F481318751DAD009F0FD3 /* nds.h */,
+				C24F499718751DCD009F0FD3 /* demo */,
+				C24F499618751DBE009F0FD3 /* libwoopsi */,
+				29B97317FDCFA39411CA2CEA /* Supporting Files */,
+			);
+			name = WoopsiSDLXCode;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* WoopsiSDLXCode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WoopsiSDLXCode" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WoopsiSDLXCode;
+			productInstallPath = "$(HOME)/Applications";
+			productName = WoopsiSDLXCode;
+			productReference = 8D1107320486CEB800E47090 /* WoopsiSDLXCode.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WoopsiSDLXCode" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* WoopsiSDLXCode */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* WoopsiSDLXCode */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C25A7715187342A400F27C63 /* OSXIcon.icns in Resources */,
+				C25A771D187342CC00F27C63 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C24F49C918751DDC009F0FD3 /* pacsprite.cpp in Sources */,
+				C24F498318751DBC009F0FD3 /* scrollingpanel.cpp in Sources */,
+				C24F493518751DBC009F0FD3 /* bankgothic12.cpp in Sources */,
+				C24F496518751DBC009F0FD3 /* timesnewroman9.cpp in Sources */,
+				C24F492318751DBC009F0FD3 /* bitmapwrapper.cpp in Sources */,
+				C24F493418751DBC009F0FD3 /* arial9.cpp in Sources */,
+				C24F494918751DBC009F0FD3 /* gungsuh15.cpp in Sources */,
+				C24F493E18751DBC009F0FD3 /* dotum13.cpp in Sources */,
+				C24F495018751DBC009F0FD3 /* latha9.cpp in Sources */,
+				C24F495418751DBC009F0FD3 /* modern9b.cpp in Sources */,
+				C24F494618751DBC009F0FD3 /* gulimche12.cpp in Sources */,
+				C24F495A18751DBC009F0FD3 /* msserif11b.cpp in Sources */,
+				C24F495C18751DBC009F0FD3 /* ocrfont8.cpp in Sources */,
+				C24F498B18751DBC009F0FD3 /* superbitmap.cpp in Sources */,
+				C24F492A18751DBC009F0FD3 /* damagedrectmanager.cpp in Sources */,
+				C24F493318751DBC009F0FD3 /* filerequester.cpp in Sources */,
+				C24F494B18751DBC009F0FD3 /* gungsuhche15.cpp in Sources */,
+				C24F494718751DBC009F0FD3 /* gulimche12b.cpp in Sources */,
+				C24F492018751DBC009F0FD3 /* animbutton.cpp in Sources */,
+				C24F49BD18751DDC009F0FD3 /* bittest3.cpp in Sources */,
+				C24F492218751DBC009F0FD3 /* bitmapbutton.cpp in Sources */,
+				C24F498E18751DBC009F0FD3 /* windowborderbutton.cpp in Sources */,
+				C24F497118751DBC009F0FD3 /* listdata.cpp in Sources */,
+				C24F497718751DBC009F0FD3 /* progressbar.cpp in Sources */,
+				C24F498218751DBC009F0FD3 /* scrollinglistbox.cpp in Sources */,
+				C24F497E18751DBC009F0FD3 /* screen.cpp in Sources */,
+				C24F495518751DBC009F0FD3 /* msgothic8.cpp in Sources */,
+				C24F497818751DBC009F0FD3 /* radiobutton.cpp in Sources */,
+				C24F492C18751DBC009F0FD3 /* debug.cpp in Sources */,
+				C24F495818751DBC009F0FD3 /* mssans9b.cpp in Sources */,
+				C24F494218751DBC009F0FD3 /* gillsans11b.cpp in Sources */,
+				C24F493F18751DBC009F0FD3 /* fixedsys12.cpp in Sources */,
+				C24F498618751DBC009F0FD3 /* sliderhorizontalgrip.cpp in Sources */,
+				C24F491E18751DBC009F0FD3 /* amigawindow.cpp in Sources */,
+				C24F492918751DBC009F0FD3 /* cyclebutton.cpp in Sources */,
+				C24F495218751DBC009F0FD3 /* mangal9.cpp in Sources */,
+				C24F49BF18751DDC009F0FD3 /* bittest5.cpp in Sources */,
+				C24F499018751DBC009F0FD3 /* woopsifuncs.cpp in Sources */,
+				C24F494118751DBC009F0FD3 /* gillsans11.cpp in Sources */,
+				C24F496118751DBC009F0FD3 /* roman13.cpp in Sources */,
+				C24F496E18751DBC009F0FD3 /* label.cpp in Sources */,
+				C24F491C18751DBC009F0FD3 /* alert.cpp in Sources */,
+				C24F498018751DBC009F0FD3 /* scrollbarpanel.cpp in Sources */,
+				C24F493618751DBC009F0FD3 /* batang12.cpp in Sources */,
+				C24F496218751DBC009F0FD3 /* roman13i.cpp in Sources */,
+				C24F494818751DBC009F0FD3 /* gungsuh12.cpp in Sources */,
+				C24F497018751DBC009F0FD3 /* listboxdataitem.cpp in Sources */,
+				C24F492B18751DBC009F0FD3 /* date.cpp in Sources */,
+				C24F491F18751DBC009F0FD3 /* animation.cpp in Sources */,
+				C24F492E18751DBC009F0FD3 /* dmafuncs.cpp in Sources */,
+				C24F493718751DBC009F0FD3 /* batang14.cpp in Sources */,
+				C24F49C018751DDC009F0FD3 /* bittest6.cpp in Sources */,
+				C24F498118751DBC009F0FD3 /* scrollbarvertical.cpp in Sources */,
+				C24F498918751DBC009F0FD3 /* stickybutton.cpp in Sources */,
+				C24F493818751DBC009F0FD3 /* batang15.cpp in Sources */,
+				C24F499318751DBC009F0FD3 /* woopsikeyboardscreen.cpp in Sources */,
+				C24F495918751DBC009F0FD3 /* msserif11.cpp in Sources */,
+				C24F496318751DBC009F0FD3 /* roman9b.cpp in Sources */,
+				C24F494418751DBC009F0FD3 /* glyphfont.cpp in Sources */,
+				C24F498818751DBC009F0FD3 /* sliderverticalgrip.cpp in Sources */,
+				C24F49C118751DDC009F0FD3 /* calculator.cpp in Sources */,
+				C24F497418751DBC009F0FD3 /* packedfont1.cpp in Sources */,
+				C24F497918751DBC009F0FD3 /* radiobuttongroup.cpp in Sources */,
+				C24F49C418751DDC009F0FD3 /* pacghost.cpp in Sources */,
+				C24F493918751DBC009F0FD3 /* courier.cpp in Sources */,
+				C24F49CA18751DDC009F0FD3 /* pong.cpp in Sources */,
+				C24F494F18751DBC009F0FD3 /* latha15.cpp in Sources */,
+				C24F496C18751DBC009F0FD3 /* graphics.cpp in Sources */,
+				C24F492618751DBC009F0FD3 /* checkbox.cpp in Sources */,
+				C24F494D18751DBC009F0FD3 /* kartika9.cpp in Sources */,
+				C24F49BE18751DDC009F0FD3 /* bittest4.cpp in Sources */,
+				C24F49C618751DDC009F0FD3 /* pacman.cpp in Sources */,
+				C24F496618751DBC009F0FD3 /* tinyfont.cpp in Sources */,
+				C24F492F18751DBC009F0FD3 /* document.cpp in Sources */,
+				C24F497F18751DBC009F0FD3 /* scrollbarhorizontal.cpp in Sources */,
+				C24F498D18751DBC009F0FD3 /* window.cpp in Sources */,
+				C24F492118751DBC009F0FD3 /* bitmap.cpp in Sources */,
+				C24F493A18751DBC009F0FD3 /* courier12.cpp in Sources */,
+				C24F495618751DBC009F0FD3 /* msgothic9.cpp in Sources */,
+				C24F49BC18751DDC009F0FD3 /* bittest2.cpp in Sources */,
+				C24F498A18751DBC009F0FD3 /* stringiterator.cpp in Sources */,
+				C24F493018751DBC009F0FD3 /* filelistbox.cpp in Sources */,
+				C24F494C18751DBC009F0FD3 /* kartika10.cpp in Sources */,
+				C24F49C718751DDC009F0FD3 /* pacmap.cpp in Sources */,
+				C24F497618751DBC009F0FD3 /* packedfontbase.cpp in Sources */,
+				C24F497318751DBC009F0FD3 /* multilinetextbox.cpp in Sources */,
+				C24F496A18751DBC009F0FD3 /* gadget.cpp in Sources */,
+				C24F49BB18751DDC009F0FD3 /* bittest1.cpp in Sources */,
+				C24F495118751DBC009F0FD3 /* lucidacalligraphy14.cpp in Sources */,
+				C24F494518751DBC009F0FD3 /* goudy9.cpp in Sources */,
+				C24F492D18751DBC009F0FD3 /* decorationglyphbutton.cpp in Sources */,
+				C24F499418751DBC009F0FD3 /* woopsistring.cpp in Sources */,
+				C24F497A18751DBC009F0FD3 /* range.cpp in Sources */,
+				C24F495E18751DBC009F0FD3 /* poorrichard9.cpp in Sources */,
+				C24F496F18751DBC009F0FD3 /* listbox.cpp in Sources */,
+				C24F496018751DBC009F0FD3 /* roman11i.cpp in Sources */,
+				C24F495D18751DBC009F0FD3 /* poorrichard12.cpp in Sources */,
+				C24F49C818751DDC009F0FD3 /* pacplayer.cpp in Sources */,
+				C24F497C18751DBC009F0FD3 /* rectcache.cpp in Sources */,
+				C24F498518751DBC009F0FD3 /* sliderhorizontal.cpp in Sources */,
+				C24F49C518751DDC009F0FD3 /* pacghosts.cpp in Sources */,
+				C24F494018751DBC009F0FD3 /* garamond10.cpp in Sources */,
+				C24F493218751DBC009F0FD3 /* filepath.cpp in Sources */,
+				C24F497B18751DBC009F0FD3 /* rect.cpp in Sources */,
+				C24F499118751DBC009F0FD3 /* woopsikey.cpp in Sources */,
+				C24F498418751DBC009F0FD3 /* scrollingtextbox.cpp in Sources */,
+				C24F496418751DBC009F0FD3 /* script9b.cpp in Sources */,
+				C24F492818751DBC009F0FD3 /* contextmenu.cpp in Sources */,
+				C24F498718751DBC009F0FD3 /* slidervertical.cpp in Sources */,
+				C24F496718751DBC009F0FD3 /* topaz.cpp in Sources */,
+				C24F492418751DBC009F0FD3 /* button.cpp in Sources */,
+				C24F494E18751DBC009F0FD3 /* latha10.cpp in Sources */,
+				C24F493118751DBC009F0FD3 /* filelistboxdataitem.cpp in Sources */,
+				C24F49C318751DDC009F0FD3 /* main.cpp in Sources */,
+				C24F495B18751DBC009F0FD3 /* newtopaz.cpp in Sources */,
+				C24F491D18751DBC009F0FD3 /* amigascreen.cpp in Sources */,
+				C24F493D18751DBC009F0FD3 /* couriernew12.cpp in Sources */,
+				C24F496918751DBC009F0FD3 /* framebuffer.cpp in Sources */,
+				C24F493B18751DBC009F0FD3 /* courier12b.cpp in Sources */,
+				C24F498C18751DBC009F0FD3 /* textbox.cpp in Sources */,
+				C24F49CB18751DDC009F0FD3 /* zombie.cpp in Sources */,
+				C24F495318751DBC009F0FD3 /* modern9.cpp in Sources */,
+				C24F496818751DBC009F0FD3 /* tunga8.cpp in Sources */,
+				C24F497218751DBC009F0FD3 /* listdataitem.cpp in Sources */,
+				C24F499518751DBC009F0FD3 /* woopsitimer.cpp in Sources */,
+				C24F494A18751DBC009F0FD3 /* gungsuhche11.cpp in Sources */,
+				C24F497D18751DBC009F0FD3 /* requester.cpp in Sources */,
+				C24F497518751DBC009F0FD3 /* packedfont16.cpp in Sources */,
+				C24F495F18751DBC009F0FD3 /* profont9.cpp in Sources */,
+				C24F498F18751DBC009F0FD3 /* woopsi.cpp in Sources */,
+				C24F496D18751DBC009F0FD3 /* graphicsport.cpp in Sources */,
+				C24F492518751DBC009F0FD3 /* calendar.cpp in Sources */,
+				C24F496B18751DBC009F0FD3 /* gradient.cpp in Sources */,
+				C24F499218751DBC009F0FD3 /* woopsikeyboard.cpp in Sources */,
+				C24F492718751DBC009F0FD3 /* colourpicker.cpp in Sources */,
+				C24F493C18751DBC009F0FD3 /* couriernew10.cpp in Sources */,
+				C24F495718751DBC009F0FD3 /* mssans9.cpp in Sources */,
+				C24F49C218751DDC009F0FD3 /* demo.cpp in Sources */,
+				C24F494318751DBC009F0FD3 /* gloucester10.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C25A771B187342CC00F27C63 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C25A771C187342CC00F27C63 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "$(SRCROOT)/WoopsiSDLXCode/WoopsiSDLXCode-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = WoopsiSDLXCode;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = "$(SRCROOT)/WoopsiSDLXCode/WoopsiSDLXCode-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = WoopsiSDLXCode;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS)",
+					/Library/Frameworks,
+				);
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(HEADER_SEARCH_PATHS)";
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libwoopsi/include/**";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS)",
+					/Library/Frameworks,
+				);
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(HEADER_SEARCH_PATHS)";
+				PREBINDING = NO;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../libwoopsi/include/**";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WoopsiSDLXCode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WoopsiSDLXCode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
