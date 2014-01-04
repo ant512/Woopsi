@@ -4,9 +4,7 @@
 #ifdef USING_SDL
 
 void woopsiDmaCopy(const u16* source, u16* dest, u32 count) {
-	for (u32 i = 0; i < count; i++) {
-		*(dest + i) = *(source + i);
-	}
+	memcpy(dest, source, sizeof(u16) * count);
 }
 
 void woopsiDmaFill(u16 fill, u16* dest, u32 count) {

@@ -38,7 +38,7 @@ void initWoopsiGfxMode() {
 
 	// Set video mode
 	_window = SDL_CreateWindow("Woopsi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT * 2, 0);
-	_renderer = SDL_CreateRenderer(_window, -1, 0);
+	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
 	SDL_RenderClear(_renderer);
 	SDL_RenderPresent(_renderer);
@@ -71,8 +71,6 @@ void initWoopsiGfxMode() {
 
 void woopsiVblFunc() {
 
-	SDL_Delay(10);
-
 	SDL_Rect rect;
 	rect.x = 0;
 	rect.y = 0;
@@ -85,7 +83,6 @@ void woopsiVblFunc() {
 		rect.y += SCREEN_HEIGHT;
 	}
 
-	SDL_RenderClear(_renderer);
 	SDL_RenderCopy(_renderer, _texture, NULL, NULL);
 	SDL_RenderPresent(_renderer);
 
