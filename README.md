@@ -1,10 +1,10 @@
 Woopsi
 ======
 
-Woopsi is a windowing system for the Nintendo DS, written in C++.  The aim of
-the project is to create a windowing system that other programmers can use for
-their applications, decreasing the tedious amount of GUI code that they have
-to write.
+Woopsi is a GUI framework for the Nintendo DS, written in C++.  The aim of the
+project is to provide a windowing GUI that other programmers can use for their
+applications, decreasing the tedious amount of custom code that they have to
+write.
   
 
 Features
@@ -16,6 +16,7 @@ Features
    - Image buttons;
    - Animated buttons;
    - Radio buttons and radio button groups;
+   - Tabs and tab groups;
    - Check boxes;
    - Labels;
    - Single-line textboxes with cursor support;
