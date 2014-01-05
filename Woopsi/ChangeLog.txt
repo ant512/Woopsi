@@ -1,6 +1,17 @@
 Change Log
 ----------
 
+  V1.4
+
+  - Fixes:
+    - Simplified event argument system.
+    - Fixed makefiles for latest devkitARM.
+
+  - New Features:
+    - Added WoopsiPoint class.
+    - Upgraded to SDL2.
+
+
   V1.3
 
   - Fixes:

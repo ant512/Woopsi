@@ -1,5 +1,5 @@
 Woopsi
-------
+======
 
 Woopsi is a windowing system for the Nintendo DS, written in C++.  The aim of
 the project is to create a windowing system that other programmers can use for
@@ -141,7 +141,7 @@ Links
 Email
 -----
 
-Contact me at ant@woopsi.org.
+Contact me at <ant@woopsi.org>.
 
 
 Licencing and Contributions

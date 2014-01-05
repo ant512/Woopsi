@@ -1,4 +1,4 @@
-* Copyright (c) 2007-2011, Antony Dzeryn
+* Copyright (c) 2007-2014, Antony Dzeryn
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -24,21 +24,21 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Woopsi Demo
------------
+===========
 
-  Woopsi is a windowing system for the Nintendo DS, written in C++.  The aim of
-  the project is to create a windowing system that other programmers can use for
-  their applications, decreasing the tedious amount of GUI code that they have
-  to write.
+Woopsi is a windowing system for the Nintendo DS, written in C++.  The aim of
+the project is to create a windowing system that other programmers can use for
+their applications, decreasing the tedious amount of GUI code that they have to
+write.
 
-  This demo illustrates some of the features of Woopsi.
+This demo illustrates some of the features of Woopsi.
 
 
 Requirements
 ------------
 
-  To run the demo you will need either a DS emulator or a real DS and a flash
-  cart.
+To run the demo you will need either a DS emulator or a real DS and a flash
+cart.
 
 
 Credits and Acknowlegements
@@ -69,4 +69,4 @@ Links
 Email
 -----
 
-  Contact me at ant@woopsi.org.
+Contact me at <ant@woopsi.org>.
