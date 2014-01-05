@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>OSXIcon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.simianzombie.WoopsiSDLXCode</string>
+	<string>com.simianzombie.Woopsi</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

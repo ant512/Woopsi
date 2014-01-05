@@ -171,13 +171,13 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		8D1107320486CEB800E47090 /* WoopsiSDLXCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WoopsiSDLXCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Woopsi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Woopsi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C215AB96187924B000241ED4 /* tabpanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tabpanel.h; sourceTree = "<group>"; };
 		C215AB97187924D400241ED4 /* tab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tab.h; sourceTree = "<group>"; };
 		C215AB98187924F200241ED4 /* tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tab.cpp; sourceTree = "<group>"; };
 		C215AB9A18792D7A00241ED4 /* tabgroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tabgroup.h; sourceTree = "<group>"; };
 		C215AB9B18792EB200241ED4 /* tabgroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tabgroup.cpp; sourceTree = "<group>"; };
-		C24F481318751DAD009F0FD3 /* nds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = nds.h; path = WoopsiSDLXCode/nds.h; sourceTree = "<group>"; };
+		C24F481318751DAD009F0FD3 /* nds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = nds.h; path = Woopsi/nds.h; sourceTree = "<group>"; };
 		C24F481518751DBB009F0FD3 /* alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
 		C24F481618751DBB009F0FD3 /* amigascreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigascreen.h; sourceTree = "<group>"; };
 		C24F481718751DBB009F0FD3 /* amigawindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigawindow.h; sourceTree = "<group>"; };
@@ -472,9 +472,9 @@
 		C24F49B918751DDC009F0FD3 /* pong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pong.cpp; sourceTree = "<group>"; };
 		C24F49BA18751DDC009F0FD3 /* zombie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zombie.cpp; sourceTree = "<group>"; };
 		C25A753718725FE700F27C63 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = /Library/Frameworks/SDL2.framework; sourceTree = "<absolute>"; };
-		C25A7713187342A400F27C63 /* OSXIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = OSXIcon.icns; path = WoopsiSDLXCode/OSXIcon.icns; sourceTree = "<group>"; };
-		C25A7714187342A400F27C63 /* WoopsiSDLXCode-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "WoopsiSDLXCode-Info.plist"; path = "WoopsiSDLXCode/WoopsiSDLXCode-Info.plist"; sourceTree = "<group>"; };
-		C25A771C187342CC00F27C63 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WoopsiSDLXCode/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C25A7713187342A400F27C63 /* OSXIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = OSXIcon.icns; path = Woopsi/OSXIcon.icns; sourceTree = "<group>"; };
+		C25A7714187342A400F27C63 /* Woopsi-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Woopsi-Info.plist"; path = "Woopsi/Woopsi-Info.plist"; sourceTree = "<group>"; };
+		C25A771C187342CC00F27C63 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Woopsi/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -511,19 +511,19 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* WoopsiSDLXCode.app */,
+				8D1107320486CEB800E47090 /* Woopsi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* WoopsiSDLXCode */ = {
+		29B97314FDCFA39411CA2CEA /* Woopsi */ = {
 			isa = PBXGroup;
 			children = (
-				C25A771E187342E200F27C63 /* WoopsiSDLXCode */,
+				C25A771E187342E200F27C63 /* Woopsi */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
-			name = WoopsiSDLXCode;
+			name = Woopsi;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Supporting Files */ = {
@@ -531,7 +531,7 @@
 			children = (
 				C25A771B187342CC00F27C63 /* InfoPlist.strings */,
 				C25A7713187342A400F27C63 /* OSXIcon.icns */,
-				C25A7714187342A400F27C63 /* WoopsiSDLXCode-Info.plist */,
+				C25A7714187342A400F27C63 /* Woopsi-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1277,7 +1277,7 @@
 			name = window;
 			sourceTree = "<group>";
 		};
-		C25A771E187342E200F27C63 /* WoopsiSDLXCode */ = {
+		C25A771E187342E200F27C63 /* Woopsi */ = {
 			isa = PBXGroup;
 			children = (
 				C24F481318751DAD009F0FD3 /* nds.h */,
@@ -1285,15 +1285,15 @@
 				C24F499618751DBE009F0FD3 /* libwoopsi */,
 				29B97317FDCFA39411CA2CEA /* Supporting Files */,
 			);
-			name = WoopsiSDLXCode;
+			name = Woopsi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* WoopsiSDLXCode */ = {
+		8D1107260486CEB800E47090 /* Woopsi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WoopsiSDLXCode" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Woopsi" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -1304,10 +1304,10 @@
 			);
 			dependencies = (
 			);
-			name = WoopsiSDLXCode;
+			name = Woopsi;
 			productInstallPath = "$(HOME)/Applications";
-			productName = WoopsiSDLXCode;
-			productReference = 8D1107320486CEB800E47090 /* WoopsiSDLXCode.app */;
+			productName = Woopsi;
+			productReference = 8D1107320486CEB800E47090 /* Woopsi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1318,18 +1318,18 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WoopsiSDLXCode" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Woopsi" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* WoopsiSDLXCode */;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Woopsi */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* WoopsiSDLXCode */,
+				8D1107260486CEB800E47090 /* Woopsi */,
 			);
 		};
 /* End PBXProject section */
@@ -1519,9 +1519,9 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = "$(SRCROOT)/WoopsiSDLXCode/WoopsiSDLXCode-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Woopsi/Woopsi-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = WoopsiSDLXCode;
+				PRODUCT_NAME = Woopsi;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -1534,9 +1534,9 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = "$(SRCROOT)/WoopsiSDLXCode/WoopsiSDLXCode-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Woopsi/Woopsi-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				PRODUCT_NAME = WoopsiSDLXCode;
+				PRODUCT_NAME = Woopsi;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1579,7 +1579,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WoopsiSDLXCode" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Woopsi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
@@ -1588,7 +1588,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WoopsiSDLXCode" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Woopsi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
