@@ -1,44 +1,51 @@
-#include "radiobuttongroup.h"
-#include "radiobutton.h"
+#include "tabgroup.h"
+#include "tab.h"
 #include "graphicsport.h"
 
 using namespace WoopsiUI;
 
-RadioButtonGroup::RadioButtonGroup(s16 x, s16 y, GadgetStyle* style) : Gadget(x, y, 0, 0, style) {
+TabGroup::TabGroup(s16 x, s16 y, s16 width, s16 height, GadgetStyle* style) : Gadget(x, y, width, height, style) {
 	_flags.borderless = true;
 	_selectedGadget = NULL;
+	_flags.permeable = true;
 }
 
-RadioButton* RadioButtonGroup::newRadioButton(s16 x, s16 y, u16 width, u16 height) {
+Tab* TabGroup::newTab(const WoopsiString &text) {
 	
-	RadioButton* newButton = new RadioButton(x, y, width, height, &_style);
-	newButton->setGadgetEventHandler(this);
-	addGadget(newButton);
-
-	// Do we need to resize?
-	u16 newWidth = getWidth();
-	u16 newHeight = getHeight();
-
-	if (newWidth < x + width) {
-		newWidth = x + width;
+	Tab* newTab = new Tab(0, 0, getWidth(), getHeight(), text, &_style);
+	
+	newTab->setGadgetEventHandler(this);
+	addGadget(newTab);
+	
+	if (!_selectedGadget) {
+		_selectedGadget = newTab;
+		_selectedGadget->activate();
 	}
 
-	if (newHeight < y + height) {
-		newHeight = y + height;
+	// All existing tabs need to resize to accommodate the new one.
+	u16 width = getWidth() / _gadgets.size();
+	u16 remainder = getWidth() % _gadgets.size();
+	s16 x = 0;
+
+	for (s32 i = 0; i < _gadgets.size(); ++i) {
+		Gadget* gadget = _gadgets[i];
+		s16 gadgetWidth = width + (remainder > 0);
+		gadget->changeDimensions(x, 0, gadgetWidth, getHeight());
+		
+		if (remainder) --remainder;
+		x += gadgetWidth;
 	}
-
-	resize(newWidth, newHeight);
-
-	return newButton;
+	
+	return newTab;
 }
 
-const RadioButton* RadioButtonGroup::getSelectedGadget() const {
+const Tab* TabGroup::getSelectedGadget() const {
 	return _selectedGadget;
 }
 
-const s32 RadioButtonGroup::getSelectedIndex() const {
-	for (s32 i = 0; i < _gadgets.size(); i++) {
-		if (((RadioButton*)_gadgets[i]) == _selectedGadget) {
+const s32 TabGroup::getSelectedIndex() const {
+	for (s32 i = 0; i < _gadgets.size(); ++i) {
+		if (((Tab*)_gadgets[i]) == _selectedGadget) {
 			return i;
 		}
 	}
@@ -47,16 +54,16 @@ const s32 RadioButtonGroup::getSelectedIndex() const {
 	return -1;
 }
 
-void RadioButtonGroup::setSelectedGadget(RadioButton* gadget) {
+void TabGroup::setSelectedGadget(Tab* gadget) {
 	if (_selectedGadget != gadget) {
 		if (_selectedGadget != NULL) {
-			_selectedGadget->setState(RadioButton::RADIO_BUTTON_STATE_OFF);
+			_selectedGadget->deactivate();
 		}
 
 		_selectedGadget = gadget;
 
 		if (_selectedGadget != NULL) {
-			_selectedGadget->setState(RadioButton::RADIO_BUTTON_STATE_ON);
+			_selectedGadget->activate();
 		}
 
 		if (raisesEvents()) {
@@ -65,18 +72,18 @@ void RadioButtonGroup::setSelectedGadget(RadioButton* gadget) {
 	}
 }
 
-void RadioButtonGroup::setSelectedIndex(s32 index) {
+void TabGroup::setSelectedIndex(s32 index) {
 	if (index < _gadgets.size()) {
-		setSelectedGadget((RadioButton*)_gadgets[index]);
+		setSelectedGadget((Tab*)_gadgets[index]);
 	}
 }
 
-void RadioButtonGroup::drawContents(GraphicsPort* port) {
+void TabGroup::drawContents(GraphicsPort* port) {
 	port->drawFilledRect(0, 0, getWidth(), getHeight(), getBackColour());
 }
 
 // Get the preferred dimensions of the gadget
-void RadioButtonGroup::getPreferredDimensions(Rect& rect) const {
+void TabGroup::getPreferredDimensions(Rect& rect) const {
 	rect.x = _rect.getX();
 	rect.y = _rect.getY();
 	rect.width = 0;
@@ -106,25 +113,34 @@ void RadioButtonGroup::getPreferredDimensions(Rect& rect) const {
 	rect.height += maxY - getY();
 }
 
-void RadioButtonGroup::handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point) {
+void TabGroup::handleDoubleClickEvent(Gadget& source, const WoopsiPoint& point) {
 	if (raisesEvents()) {
 		_gadgetEventHandler->handleDoubleClickEvent(*this, point);
 	}
 }
 
-void RadioButtonGroup::handleClickEvent(Gadget& source, const WoopsiPoint& point) {
+void TabGroup::handleClickEvent(Gadget& source, const WoopsiPoint& point) {
+	
+	Tab* tab = (Tab*)&source;
+	
+	if (tab != _selectedGadget) {
+		tab->activate();
+		_selectedGadget->deactivate();
+		_selectedGadget = tab;
+	}
+	
 	if (raisesEvents()) {
 		_gadgetEventHandler->handleClickEvent(*this, point);
 	}
 }
 
-void RadioButtonGroup::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
+void TabGroup::handleReleaseEvent(Gadget& source, const WoopsiPoint& point) {
 	if (raisesEvents()) {
 		_gadgetEventHandler->handleReleaseEvent(*this, point);
 	}
 }
 
-void RadioButtonGroup::handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point) {
+void TabGroup::handleReleaseOutsideEvent(Gadget& source, const WoopsiPoint& point) {
 
 	// Child raised a release outside event, but we need to raise a different
 	// event if the release occurred within the bounds of this parent gadget

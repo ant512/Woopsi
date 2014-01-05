@@ -7,6 +7,8 @@
 #include <gadgetstyle.h>
 #include <woopsistring.h>
 #include <filerequester.h>
+#include <tab.h>
+#include <tabgroup.h>
 
 #include "bittest1.h"
 #include "bittest2.h"
@@ -84,6 +86,15 @@ void Demo::startup() {
 	newScreen2->addGadget(progressBar);
 
 	newScreen2->addGadget(new ColourPicker(0, 0, 150, 100, "Colour Picker", 0));
+	
+	TabGroup* tabGroup = new TabGroup(0, 12, 256, 20);
+	tabGroup->newTab("New tab");
+	tabGroup->newTab("Another");
+	tabGroup->newTab("More");
+	tabGroup->newTab("Tab");
+	tabGroup->newTab("Yep");
+	tabGroup->newTab("Tabulous");
+	newScreen2->addGadget(tabGroup);
 
 	Gradient* gradient = new Gradient(0, SCREEN_TITLE_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - SCREEN_TITLE_HEIGHT, woopsiRGB(0, 0, 31), woopsiRGB(31, 0, 0));
 	newScreen2->insertGadget(gradient);

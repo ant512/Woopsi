@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		C215AB99187924F200241ED4 /* tab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C215AB98187924F200241ED4 /* tab.cpp */; };
+		C215AB9C18792EB200241ED4 /* tabgroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C215AB9B18792EB200241ED4 /* tabgroup.cpp */; };
 		C24F491C18751DBC009F0FD3 /* alert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A118751DBB009F0FD3 /* alert.cpp */; };
 		C24F491D18751DBC009F0FD3 /* amigascreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A218751DBB009F0FD3 /* amigascreen.cpp */; };
 		C24F491E18751DBC009F0FD3 /* amigawindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C24F48A318751DBB009F0FD3 /* amigawindow.cpp */; };
@@ -170,6 +172,11 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107320486CEB800E47090 /* WoopsiSDLXCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WoopsiSDLXCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C215AB96187924B000241ED4 /* tabpanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tabpanel.h; sourceTree = "<group>"; };
+		C215AB97187924D400241ED4 /* tab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tab.h; sourceTree = "<group>"; };
+		C215AB98187924F200241ED4 /* tab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tab.cpp; sourceTree = "<group>"; };
+		C215AB9A18792D7A00241ED4 /* tabgroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tabgroup.h; sourceTree = "<group>"; };
+		C215AB9B18792EB200241ED4 /* tabgroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tabgroup.cpp; sourceTree = "<group>"; };
 		C24F481318751DAD009F0FD3 /* nds.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = nds.h; path = WoopsiSDLXCode/nds.h; sourceTree = "<group>"; };
 		C24F481518751DBB009F0FD3 /* alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
 		C24F481618751DBB009F0FD3 /* amigascreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigascreen.h; sourceTree = "<group>"; };
@@ -549,6 +556,9 @@
 				C24F486B18751DBB009F0FD3 /* gradient.h */,
 				C24F487B18751DBB009F0FD3 /* progressbar.h */,
 				C24F489118751DBB009F0FD3 /* superbitmap.h */,
+				C215AB97187924D400241ED4 /* tab.h */,
+				C215AB9A18792D7A00241ED4 /* tabgroup.h */,
+				C215AB96187924B000241ED4 /* tabpanel.h */,
 				C24F489F18751DBB009F0FD3 /* woopsitimer.h */,
 			);
 			name = include;
@@ -626,6 +636,8 @@
 				C24F48F118751DBB009F0FD3 /* gradient.cpp */,
 				C24F48FD18751DBB009F0FD3 /* progressbar.cpp */,
 				C24F491118751DBB009F0FD3 /* superbitmap.cpp */,
+				C215AB98187924F200241ED4 /* tab.cpp */,
+				C215AB9B18792EB200241ED4 /* tabgroup.cpp */,
 				C24F491B18751DBC009F0FD3 /* woopsitimer.cpp */,
 			);
 			name = src;
@@ -1398,6 +1410,7 @@
 				C24F495918751DBC009F0FD3 /* msserif11.cpp in Sources */,
 				C24F496318751DBC009F0FD3 /* roman9b.cpp in Sources */,
 				C24F494418751DBC009F0FD3 /* glyphfont.cpp in Sources */,
+				C215AB99187924F200241ED4 /* tab.cpp in Sources */,
 				C24F498818751DBC009F0FD3 /* sliderverticalgrip.cpp in Sources */,
 				C24F49C118751DDC009F0FD3 /* calculator.cpp in Sources */,
 				C24F497418751DBC009F0FD3 /* packedfont1.cpp in Sources */,
@@ -1436,6 +1449,7 @@
 				C24F496F18751DBC009F0FD3 /* listbox.cpp in Sources */,
 				C24F496018751DBC009F0FD3 /* roman11i.cpp in Sources */,
 				C24F495D18751DBC009F0FD3 /* poorrichard12.cpp in Sources */,
+				C215AB9C18792EB200241ED4 /* tabgroup.cpp in Sources */,
 				C24F49C818751DDC009F0FD3 /* pacplayer.cpp in Sources */,
 				C24F497C18751DBC009F0FD3 /* rectcache.cpp in Sources */,
 				C24F498518751DBC009F0FD3 /* sliderhorizontal.cpp in Sources */,
