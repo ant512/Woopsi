@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C2725D581879E9A900C95E9D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2725D561879E9A900C95E9D /* InfoPlist.strings */; };
-		C2725D661879E9A900C95E9D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2725D651879E9A900C95E9D /* Images.xcassets */; };
 		C2725DAF1879EA6500C95E9D /* bittest1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2725D9E1879EA6500C95E9D /* bittest1.cpp */; };
 		C2725DB01879EA6500C95E9D /* bittest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2725D9F1879EA6500C95E9D /* bittest2.cpp */; };
 		C2725DB11879EA6500C95E9D /* bittest3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2725DA01879EA6500C95E9D /* bittest3.cpp */; };
@@ -28,13 +27,13 @@
 		C2725DBF1879EA6500C95E9D /* zombie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2725DAE1879EA6500C95E9D /* zombie.cpp */; };
 		C2725DC01879EC3200C95E9D /* libWoopsi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2725D8A1879E9E300C95E9D /* libWoopsi.dylib */; };
 		C2725DC21879ECC900C95E9D /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2725DC11879ECC900C95E9D /* SDL2.framework */; };
+		C2D176B2187A43B7003E43C6 /* OSXIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C2D176B1187A43B7003E43C6 /* OSXIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C2725D4A1879E9A900C95E9D /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2725D551879E9A900C95E9D /* Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Demo-Info.plist"; sourceTree = "<group>"; };
 		C2725D571879E9A900C95E9D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C2725D651879E9A900C95E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C2725D8A1879E9E300C95E9D /* libWoopsi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libWoopsi.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/Woopsi-ezikgikmhnsvgpbishdqwatsfsyo/Build/Products/Debug/libWoopsi.dylib"; sourceTree = "<group>"; };
 		C2725D8D1879EA6500C95E9D /* bittest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest1.h; sourceTree = "<group>"; };
 		C2725D8E1879EA6500C95E9D /* bittest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bittest2.h; sourceTree = "<group>"; };
@@ -70,6 +69,7 @@
 		C2725DAD1879EA6500C95E9D /* pong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pong.cpp; sourceTree = "<group>"; };
 		C2725DAE1879EA6500C95E9D /* zombie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zombie.cpp; sourceTree = "<group>"; };
 		C2725DC11879ECC900C95E9D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		C2D176B1187A43B7003E43C6 /* OSXIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = OSXIcon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +88,7 @@
 		C2725D411879E9A900C95E9D = {
 			isa = PBXGroup;
 			children = (
+				C2D176B1187A43B7003E43C6 /* OSXIcon.icns */,
 				C2725D531879E9A900C95E9D /* Demo */,
 				C2725D4C1879E9A900C95E9D /* Frameworks */,
 				C2725D4B1879E9A900C95E9D /* Products */,
@@ -116,7 +117,6 @@
 			children = (
 				C2725D8C1879EA6500C95E9D /* include */,
 				C2725D9D1879EA6500C95E9D /* src */,
-				C2725D651879E9A900C95E9D /* Images.xcassets */,
 				C2725D541879E9A900C95E9D /* Supporting Files */,
 			);
 			path = Demo;
@@ -232,8 +232,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2D176B2187A43B7003E43C6 /* OSXIcon.icns in Resources */,
 				C2725D581879E9A900C95E9D /* InfoPlist.strings in Resources */,
-				C2725D661879E9A900C95E9D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +361,6 @@
 		C2725D7C1879E9A900C95E9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -380,7 +379,6 @@
 		C2725D7D1879E9A900C95E9D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

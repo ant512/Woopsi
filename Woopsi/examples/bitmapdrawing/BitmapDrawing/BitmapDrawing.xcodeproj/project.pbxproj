@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		C2725DDA187A149A00C95E9D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2725DD8187A149A00C95E9D /* InfoPlist.strings */; };
-		C2725DE8187A149A00C95E9D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C2725DE7187A149A00C95E9D /* Images.xcassets */; };
 		C2725E04187A14CD00C95E9D /* libWoopsi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2725E03187A14CD00C95E9D /* libWoopsi.dylib */; };
 		C2725E06187A14DB00C95E9D /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2725E05187A14DB00C95E9D /* SDL2.framework */; };
 		C2725E0B187A164000C95E9D /* bitmapdrawing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2725E08187A164000C95E9D /* bitmapdrawing.cpp */; };
 		C2725E0C187A164000C95E9D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2725E0A187A164000C95E9D /* main.cpp */; };
+		C2D176B4187A43E1003E43C6 /* OSXIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C2D176B3187A43E1003E43C6 /* OSXIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,13 +23,13 @@
 		C2725DD4187A149A00C95E9D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C2725DD7187A149A00C95E9D /* BitmapDrawing-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BitmapDrawing-Info.plist"; sourceTree = "<group>"; };
 		C2725DD9187A149A00C95E9D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C2725DE7187A149A00C95E9D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C2725DEE187A149A00C95E9D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C2725E03187A14CD00C95E9D /* libWoopsi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libWoopsi.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/Woopsi-ezikgikmhnsvgpbishdqwatsfsyo/Build/Products/Debug/libWoopsi.dylib"; sourceTree = "<group>"; };
 		C2725E05187A14DB00C95E9D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		C2725E08187A164000C95E9D /* bitmapdrawing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bitmapdrawing.cpp; sourceTree = "<group>"; };
 		C2725E09187A164000C95E9D /* bitmapdrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bitmapdrawing.h; sourceTree = "<group>"; };
 		C2725E0A187A164000C95E9D /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C2D176B3187A43E1003E43C6 /* OSXIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = OSXIcon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +48,7 @@
 		C2725DC3187A149A00C95E9D = {
 			isa = PBXGroup;
 			children = (
+				C2D176B3187A43E1003E43C6 /* OSXIcon.icns */,
 				C2725DD5187A149A00C95E9D /* BitmapDrawing */,
 				C2725DCE187A149A00C95E9D /* Frameworks */,
 				C2725DCD187A149A00C95E9D /* Products */,
@@ -88,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				C2725E07187A164000C95E9D /* src */,
-				C2725DE7187A149A00C95E9D /* Images.xcassets */,
 				C2725DD6187A149A00C95E9D /* Supporting Files */,
 			);
 			path = BitmapDrawing;
@@ -166,8 +166,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2D176B4187A43E1003E43C6 /* OSXIcon.icns in Resources */,
 				C2725DDA187A149A00C95E9D /* InfoPlist.strings in Resources */,
-				C2725DE8187A149A00C95E9D /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +280,6 @@
 		C2725DFE187A149A00C95E9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,7 +299,6 @@
 		C2725DFF187A149A00C95E9D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
