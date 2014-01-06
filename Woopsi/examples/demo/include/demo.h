@@ -1,8 +1,8 @@
 #ifndef _DEMO_H_
 #define _DEMO_H_
 
-#include "woopsi.h"
-#include "alert.h"
+#include <woopsi.h>
+#include <alert.h>
 
 #define DEMO_VERSION "Woopsi Demo V1.3"
 

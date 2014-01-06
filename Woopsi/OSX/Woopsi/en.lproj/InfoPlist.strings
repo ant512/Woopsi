@@ -1,6 +1,0 @@
-﻿/* Localized versions of Info.plist keys */
-
-CFBundleName = "Woopsi";
-CFBundleShortVersionString = "Woopsi version 1.4";
-CFBundleGetInfoString = "Woopsi version 1.4, Copyright 2007-2014 Antony Dzeryn.";
-NSHumanReadableCopyright = "Copyright 2007-2014 Antony Dzeryn.";
