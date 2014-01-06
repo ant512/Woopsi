@@ -10,4 +10,7 @@
    <FileRef
       location = "group:examples/bitmapdrawing/BitmapDrawing/BitmapDrawing.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:examples/calendar/Calendar/Calendar.xcodeproj">
+   </FileRef>
 </Workspace>
