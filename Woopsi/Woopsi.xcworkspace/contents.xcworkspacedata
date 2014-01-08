@@ -13,4 +13,7 @@
    <FileRef
       location = "group:examples/calendar/Calendar/Calendar.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:examples/tabs/Tabs/Tabs.xcodeproj">
+   </FileRef>
 </Workspace>

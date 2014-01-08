@@ -127,6 +127,10 @@ void TabGroup::handleClickEvent(Gadget& source, const WoopsiPoint& point) {
 		tab->activate();
 		_selectedGadget->deactivate();
 		_selectedGadget = tab;
+
+		if (raisesEvents()) {
+			_gadgetEventHandler->handleValueChangeEvent(*this);
+		}
 	}
 	
 	if (raisesEvents()) {
