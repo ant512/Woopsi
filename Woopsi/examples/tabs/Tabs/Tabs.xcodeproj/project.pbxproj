@@ -13,6 +13,7 @@
 		C243817D187D144D00753A37 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C243817C187D144D00753A37 /* SDL2.framework */; };
 		C2438182187D146200753A37 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C243817F187D146200753A37 /* main.cpp */; };
 		C2438183187D146200753A37 /* tabs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2438180187D146200753A37 /* tabs.cpp */; };
+		C27A8A1D187FB4CC0068C999 /* OSXIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C27A8A1C187FB4CC0068C999 /* OSXIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		C243817F187D146200753A37 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C2438180187D146200753A37 /* tabs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tabs.cpp; sourceTree = "<group>"; };
 		C2438181187D146200753A37 /* tabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tabs.h; sourceTree = "<group>"; };
+		C27A8A1C187FB4CC0068C999 /* OSXIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = OSXIcon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 		C243813A187D13FA00753A37 = {
 			isa = PBXGroup;
 			children = (
+				C27A8A1C187FB4CC0068C999 /* OSXIcon.icns */,
 				C243814C187D13FA00753A37 /* Tabs */,
 				C2438145187D13FA00753A37 /* Frameworks */,
 				C2438144187D13FA00753A37 /* Products */,
@@ -165,6 +168,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C27A8A1D187FB4CC0068C999 /* OSXIcon.icns in Resources */,
 				C2438151187D13FA00753A37 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,7 +284,6 @@
 		C2438175187D13FB00753A37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,7 +303,6 @@
 		C2438176187D13FB00753A37 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -336,6 +338,7 @@
 				C2438176187D13FB00753A37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
