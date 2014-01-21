@@ -96,7 +96,9 @@ void PacGhost::doDumbAI() {
 	}
 	
 	// Choose a random direction
-	_currentDirection = directions[rand() % directions.size()];
+	if (directions.size() > 0) {
+		_currentDirection = directions[rand() % directions.size()];
+	}
 }
 
 // Smart AI will take the shortest route to the player, but cannot change direction on a straight

@@ -127,12 +127,12 @@ Gadget::~Gadget() {
 
 	// Delete children
 	while (_gadgets.size() > 0) {
-		_gadgets[0]->destroy();
+		delete _gadgets[_gadgets.size() - 1];
 	}
 
 	// Delete shelved children
 	while (_shelvedGadgets.size() > 0) {
-		_shelvedGadgets[0]->destroy();
+		delete _shelvedGadgets[_shelvedGadgets.size() - 1];
 	}
 
 	delete _rectCache;

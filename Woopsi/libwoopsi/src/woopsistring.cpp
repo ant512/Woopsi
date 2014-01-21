@@ -104,7 +104,9 @@ void WoopsiString::setText(const WoopsiString& text) {
 	// Ensure we've got enough memory available
 	allocateMemory(text.getByteCount(), false);
 
-	memcpy(_text, text.getCharArray(), text.getByteCount());
+	if (_text) {
+		memcpy(_text, text.getCharArray(), text.getByteCount());
+	}
 
 	_dataLength = text.getByteCount();
 	_stringLength = text.getLength();
@@ -155,7 +157,9 @@ void WoopsiString::append(const WoopsiString& text) {
 	// Ensure we've got enough memory available
 	allocateMemory(_dataLength + text.getByteCount(), true);
 
-	memcpy(_text + _dataLength, text.getCharArray(), text.getByteCount());
+	if (_text) {
+		memcpy(_text + _dataLength, text.getCharArray(), text.getByteCount());
+	}
 
 	_dataLength += text.getByteCount();
 	_stringLength += text.getLength();

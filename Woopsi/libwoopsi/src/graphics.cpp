@@ -945,7 +945,7 @@ void Graphics::copy(s16 sourceX, s16 sourceY, s16 destX, s16 destY, u16 width, u
 				_bitmap->blit(destX, destY + y, buffer, width);
 			}
 			
-			delete buffer;
+			delete[] buffer;
 			
 			return;
 		}
@@ -1141,9 +1141,11 @@ void Graphics::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 			} else if (codeout & 4) {
 				
 				// Check right value
-				t = ((maxX - x1) << 8) / (x2 - x1);
-				y = y1 + ((t * (y2 - y1)) >> 8);
-				x = maxX;
+				if (x2 - x1 != 0) {
+					t = ((maxX - x1) << 8) / (x2 - x1);
+					y = y1 + ((t * (y2 - y1)) >> 8);
+					x = maxX;
+				}
 			} else if (codeout & 8) {
 				
 				// Check left value

@@ -415,7 +415,9 @@ void Woopsi::showKeyboard(KeyboardEventHandler* opener) {
 		}
 
 		// Flip the screen to the top display
-		bottomScreen->flipToTopScreen();
+		if (bottomScreen) {
+			bottomScreen->flipToTopScreen();
+		}
 	}
 
 	// Append the keyboard screen
@@ -442,6 +444,8 @@ void Woopsi::hideKeyboard() {
 		}
 
 		// Flip the screen to the bottom display
-		topScreen->flipToBottomScreen();
+		if (topScreen) {
+			topScreen->flipToBottomScreen();
+		}
 	}
 }
