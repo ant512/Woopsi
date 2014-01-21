@@ -105,7 +105,7 @@ namespace WoopsiUI {
 		
 	private:
 		const WoopsiString* _string;		/**< String being iterated over. */
-		const char* _currentChar;			/**< Pointer to the current position of the iterator. */
+		const char* _currentChar;	/**< Pointer to the current position of the iterator. */
 		s32 _currentIndex;					/**< Iterator's current index within the string. */
 	};
 }

@@ -20,12 +20,12 @@ u8 StringIterator::getCodePointSize() {
 	// Return 0 if string has no data
 	if (_string->getLength() == 0) return 0;
 	
-	char value=*_currentChar;
-	if (value<0x80) return 1;  
-	if (value<0xC2) return 0; // Can't be a leading char
-	if (value<0xE0) return 2;
-	if (value<0xF0) return 3;
-	if (value<0xF4) return 4; // Doesn't have legal unicode leading char after that
+	unsigned char value = *_currentChar;
+	if (value < 0x80) return 1;
+	if (value < 0xC2) return 0; // Can't be a leading char
+	if (value < 0xE0) return 2;
+	if (value < 0xF0) return 3;
+	if (value < 0xF4) return 4; // Doesn't have legal unicode leading char after that
 	return 0;
 }
 
@@ -34,7 +34,7 @@ void StringIterator::moveToLast() {
 	if (_string->getLength() > 0) {
 		_currentChar = _string->getCharArray() + _string->getByteCount() - 1; 
 
-		while ((*_currentChar >= 0x80) && (*_currentChar < 0xC0)) _currentChar--;
+		while (((unsigned const char)*_currentChar >= 0x80) && ((unsigned const char)*_currentChar < 0xC0)) _currentChar--;
 		
 		// String has been filtered before; no need to check if value >=0xF4
 		_currentIndex = _string->getLength()-1;
@@ -61,7 +61,7 @@ bool StringIterator::moveToPrevious() {
 	// Move back one char to ensure we're in the middle of a char sequence
 	do {
 		_currentChar--;
-	} while ((*_currentChar >= 0x80) && (*_currentChar < 0xC0));   
+	} while (((unsigned const char)*_currentChar >= 0x80) && ((unsigned const char)*_currentChar < 0xC0));
 	
 	// Loop has ended, so we must have found a valid codepoint; we know
 	// that we're looking at the previous character index
