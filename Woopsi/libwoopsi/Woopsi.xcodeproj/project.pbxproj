@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		C2725D3E1879E94800C95E9D /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2725D3D1879E94800C95E9D /* SDL2.framework */; };
+		C2BA208E188F01D000882228 /* hardware.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2BA208D188F01D000882228 /* hardware.cpp */; };
+		C2BA2090188F021700882228 /* hardware.h in Headers */ = {isa = PBXBuildFile; fileRef = C2BA208F188F021700882228 /* hardware.h */; };
+		C2BA2093188F024200882228 /* pad.h in Headers */ = {isa = PBXBuildFile; fileRef = C2BA2091188F024200882228 /* pad.h */; };
+		C2BA2094188F024200882228 /* stylus.h in Headers */ = {isa = PBXBuildFile; fileRef = C2BA2092188F024200882228 /* stylus.h */; };
 		C2D17499187A4274003E43C6 /* nds.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D17498187A4274003E43C6 /* nds.h */; };
 		C2D175A8187A428C003E43C6 /* alert.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D1749C187A428C003E43C6 /* alert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2D175A9187A428C003E43C6 /* amigascreen.h in Headers */ = {isa = PBXBuildFile; fileRef = C2D1749D187A428C003E43C6 /* amigascreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -279,6 +283,10 @@
 /* Begin PBXFileReference section */
 		C2725B1F1879E8FF00C95E9D /* libWoopsi.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libWoopsi.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2725D3D1879E94800C95E9D /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		C2BA208D188F01D000882228 /* hardware.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hardware.cpp; sourceTree = "<group>"; };
+		C2BA208F188F021700882228 /* hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hardware.h; sourceTree = "<group>"; };
+		C2BA2091188F024200882228 /* pad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pad.h; sourceTree = "<group>"; };
+		C2BA2092188F024200882228 /* stylus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stylus.h; sourceTree = "<group>"; };
 		C2D17498187A4274003E43C6 /* nds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nds.h; path = ../sdl/nds.h; sourceTree = "<group>"; };
 		C2D1749C187A428C003E43C6 /* alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
 		C2D1749D187A428C003E43C6 /* amigascreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amigascreen.h; sourceTree = "<group>"; };
@@ -633,6 +641,7 @@
 				C2D174F2187A428C003E43C6 /* gradient.h */,
 				C2D174F3187A428C003E43C6 /* graphics.h */,
 				C2D174F4187A428C003E43C6 /* graphicsport.h */,
+				C2BA208F188F021700882228 /* hardware.h */,
 				C2D174F5187A428C003E43C6 /* keyboardeventhandler.h */,
 				C2D174F6187A428C003E43C6 /* label.h */,
 				C2D174F7187A428C003E43C6 /* listbox.h */,
@@ -646,6 +655,7 @@
 				C2D174FF187A428C003E43C6 /* packedfont1.h */,
 				C2D17500187A428C003E43C6 /* packedfont16.h */,
 				C2D17501187A428C003E43C6 /* packedfontbase.h */,
+				C2BA2091188F024200882228 /* pad.h */,
 				C2D17502187A428C003E43C6 /* progressbar.h */,
 				C2D17503187A428C003E43C6 /* radiobutton.h */,
 				C2D17504187A428C003E43C6 /* radiobuttongroup.h */,
@@ -668,6 +678,7 @@
 				C2D17515187A428C003E43C6 /* sliderverticalgrip.h */,
 				C2D17516187A428C003E43C6 /* stickybutton.h */,
 				C2D17517187A428C003E43C6 /* stringiterator.h */,
+				C2BA2092188F024200882228 /* stylus.h */,
 				C2D17518187A428C003E43C6 /* superbitmap.h */,
 				C2D17519187A428C003E43C6 /* tab.h */,
 				C2D1751A187A428C003E43C6 /* tabgroup.h */,
@@ -783,6 +794,7 @@
 				C2D1757B187A428C003E43C6 /* gradient.cpp */,
 				C2D1757C187A428C003E43C6 /* graphics.cpp */,
 				C2D1757D187A428C003E43C6 /* graphicsport.cpp */,
+				C2BA208D188F01D000882228 /* hardware.cpp */,
 				C2D1757E187A428C003E43C6 /* label.cpp */,
 				C2D1757F187A428C003E43C6 /* listbox.cpp */,
 				C2D17580187A428C003E43C6 /* listboxdataitem.cpp */,
@@ -898,6 +910,7 @@
 			files = (
 				C2D1761F187A428C003E43C6 /* slidervertical.h in Headers */,
 				C2D175A9187A428C003E43C6 /* amigascreen.h in Headers */,
+				C2BA2094188F024200882228 /* stylus.h in Headers */,
 				C2D17618187A428C003E43C6 /* scrollbarvertical.h in Headers */,
 				C2D175D3187A428C003E43C6 /* glyphfont.h in Headers */,
 				C2D1762A187A428C003E43C6 /* windowborderbutton.h in Headers */,
@@ -944,6 +957,7 @@
 				C2D175FB187A428C003E43C6 /* gadgetstyle.h in Headers */,
 				C2D175CF187A428C003E43C6 /* garamond10.h in Headers */,
 				C2D175F6187A428C003E43C6 /* topaz.h in Headers */,
+				C2BA2093188F024200882228 /* pad.h in Headers */,
 				C2D175C8187A428C003E43C6 /* courier.h in Headers */,
 				C2D17631187A428C003E43C6 /* woopsikeyboardscreen.h in Headers */,
 				C2D175D9187A428C003E43C6 /* gungsuhche11.h in Headers */,
@@ -994,6 +1008,7 @@
 				C2D17609187A428C003E43C6 /* mutablebitmapbase.h in Headers */,
 				C2D175ED187A428C003E43C6 /* poorrichard9.h in Headers */,
 				C2D175F0187A428C003E43C6 /* roman13.h in Headers */,
+				C2BA2090188F021700882228 /* hardware.h in Headers */,
 				C2D175C7187A428C003E43C6 /* batang15.h in Headers */,
 				C2D175C5187A428C003E43C6 /* batang12.h in Headers */,
 				C2D175EB187A428C003E43C6 /* ocrfont8.h in Headers */,
@@ -1123,6 +1138,7 @@
 				C2D17645187A428C003E43C6 /* debug.cpp in Sources */,
 				C2D17671187A428C003E43C6 /* mssans9b.cpp in Sources */,
 				C2D1765B187A428C003E43C6 /* gillsans11b.cpp in Sources */,
+				C2BA208E188F01D000882228 /* hardware.cpp in Sources */,
 				C2D17658187A428C003E43C6 /* fixedsys12.cpp in Sources */,
 				C2D1769F187A428C003E43C6 /* sliderhorizontalgrip.cpp in Sources */,
 				C2D17637187A428C003E43C6 /* amigawindow.cpp in Sources */,

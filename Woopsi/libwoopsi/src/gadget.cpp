@@ -1474,7 +1474,7 @@ GraphicsPort* Gadget::newGraphicsPort(bool isForeground) {
 	Rect rect;
 	getClientRect(rect);
 
-	FrameBuffer* bitmap = frameBuffer[getPhysicalScreenNumber()];
+	FrameBuffer* bitmap = getFrameBufferForScreenNumber(getPhysicalScreenNumber());
 
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
@@ -1485,13 +1485,26 @@ GraphicsPort* Gadget::newGraphicsPort(bool isForeground) {
 	return new GraphicsPort(rect.x + getX(), rect.y + getY(), rect.width, rect.height, isDrawingEnabled(), bitmap, clipList, NULL);
 }
 
+FrameBuffer* Gadget::getFrameBufferForScreenNumber(u8 screenNumber) const {
+	switch (getPhysicalScreenNumber()) {
+		case 1:
+			return Hardware::getTopBuffer();
+			break;
+		case 0:
+			return Hardware::getBottomBuffer();
+			break;
+	}
+
+	return NULL;
+}
+
 // Return the client graphics port for a specific clipping rect
 GraphicsPort* Gadget::newGraphicsPort(Rect clipRect) {
 
 	Rect rect;
 	getClientRect(rect);
 
-	FrameBuffer* bitmap = frameBuffer[getPhysicalScreenNumber()];
+	FrameBuffer* bitmap = getFrameBufferForScreenNumber(getPhysicalScreenNumber());
 
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
@@ -1505,7 +1518,7 @@ GraphicsPort* Gadget::newInternalGraphicsPort(Rect clipRect) {
 	// Ensure visible region cache is up to date
 	cacheVisibleRects();
 
-	FrameBuffer* bitmap = frameBuffer[getPhysicalScreenNumber()];
+	FrameBuffer* bitmap = getFrameBufferForScreenNumber(getPhysicalScreenNumber());
 
 	return new GraphicsPort(getX(), getY(), getWidth(), getHeight(), isDrawingEnabled(), bitmap, NULL, &clipRect);
 }

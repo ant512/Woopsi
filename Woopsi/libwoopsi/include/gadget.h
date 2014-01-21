@@ -7,6 +7,7 @@
 #include "gadgeteventhandler.h"
 #include "gadgetstyle.h"
 #include "glyphs.h"
+#include "hardware.h"
 #include "rect.h"
 #include "woopsiarray.h"
 #include "woopsistring.h"
@@ -1050,6 +1051,8 @@ namespace WoopsiUI {
 		 * Destructor.
 		 */
 		virtual ~Gadget();
+
+		FrameBuffer* getFrameBufferForScreenNumber(u8 screenNumber) const;
 
 		/**
 		 * Draw the area of this gadget that falls within the clipping region.

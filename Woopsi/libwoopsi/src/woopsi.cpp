@@ -3,6 +3,7 @@
 #include "fontbase.h"
 #include "graphicsport.h"
 #include "gadgetstyle.h"
+#include "hardware.h"
 #include "keyboardeventhandler.h"
 #include "screen.h"
 #include "woopsi.h"
@@ -31,8 +32,10 @@ Woopsi::Woopsi(GadgetStyle* style) : Gadget(0, 0, SCREEN_WIDTH, TOP_SCREEN_Y_OFF
 
 	_damagedRectManager = new DamagedRectManager(this);
 
+	woopsiInitDefaultGadgetStyle();
+
 	// Set up DS display hardware
-	initWoopsiGfxMode();
+	Hardware::init();
 	
 	// Do we need to fetch the default style?
 	// We need to do this again here because the gadget's constructor will be
@@ -94,7 +97,8 @@ Woopsi::~Woopsi() {
 	delete _damagedRectManager;
 	_damagedRectManager = NULL;
 
-	woopsiFreeFrameBuffers();
+	Hardware::shutdown();
+
 	woopsiFreeDefaultGadgetStyle();
 }
 
@@ -107,30 +111,7 @@ void Woopsi::processOneVBL(Gadget* gadget) {
 	// Redraw all damaged rects
 	_damagedRectManager->redraw();
 	
-	woopsiWaitVBL();
-
-#ifdef USING_SDL
-
-	// SDL event pump
-	SDL_Event event;
-
-	// Check for SDL quit
-	while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_QUIT:
-                stopModal();
-				return;
-            case SDL_KEYDOWN:
-                if (event.key.keysym.scancode == 53) {
-                    // Escape pressed
-					stopModal();
-					return;
-                }
-                break;
-        }
-	}
-
-#endif
+	Hardware::waitForVBlank();
 }
 
 void Woopsi::handleVBL() {
