@@ -16,4 +16,7 @@
    <FileRef
       location = "group:examples/tabs/Tabs/Tabs.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:examples/packedfonts/PackedFonts/PackedFonts.xcodeproj">
+   </FileRef>
 </Workspace>
