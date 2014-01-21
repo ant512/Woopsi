@@ -48,8 +48,8 @@ public:
 	void endGame();
 
 	void handleActionEvent(Gadget& source);
-	void handleKeyPressEvent(Gadget& source, const KeyCode keyCode);
-	void handleReleaseEvent(Gadget& source, const KeyCode keyCode);
+	void handleKeyPressEvent(Gadget& source, const Pad::KeyCode keyCode);
+	void handleReleaseEvent(Gadget& source, const Pad::KeyCode keyCode);
 	void handleContextMenuSelectionEvent(Gadget& source, const ListDataItem* item);
 
 private:

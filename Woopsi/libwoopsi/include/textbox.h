@@ -122,14 +122,14 @@ namespace WoopsiUI {
 		 * @param source The gadget that was focused when the key was pressed.
 		 * @param keyCode The key that was pressed.
 		 */
-		virtual void handleKeyPressEvent(Gadget& source, const KeyCode keyCode);
+		virtual void handleKeyPressEvent(Gadget& source, const Pad::KeyCode keyCode);
 
 		/**
 		 * Handle a key repeat event.
 		 * @param source The gadget that was focused when the key was pressed.
 		 * @param keyCode The key that was pressed.
 		 */
-		virtual void handleKeyRepeatEvent(Gadget& source, const KeyCode keyCode);
+		virtual void handleKeyRepeatEvent(Gadget& source, const Pad::KeyCode keyCode);
 
 		/**
 		 * Check if the textbox opens the keyboard popup when double-clicked.
@@ -212,13 +212,13 @@ namespace WoopsiUI {
 		 * Moves the cursor left or right.
 		 * @param keyCode The key that was pressed.
 		 */
-		virtual void onKeyPress(KeyCode keyCode);
+		virtual void onKeyPress(Pad::KeyCode keyCode);
 		
 		/**
 		 * Moves the cursor left or right.
 		 * @param keyCode The key that repeated.
 		 */
-		virtual void onKeyRepeat(KeyCode keyCode);
+		virtual void onKeyRepeat(Pad::KeyCode keyCode);
 
 		/**
 		 * Handles keyboard key presses and key repeats.

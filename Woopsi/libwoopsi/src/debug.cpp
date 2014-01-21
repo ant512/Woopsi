@@ -1,6 +1,8 @@
 #include "amigascreen.h"
 #include "amigawindow.h"
 #include "debug.h"
+#include "hardware.h"
+#include "pad.h"
 #include "scrollingtextbox.h"
 #include "tinyfont.h"
 #include "woopsi.h"
@@ -61,11 +63,11 @@ void Debug::printf(const char* format, ...) {
 
 void Debug::busyWait() {
 	if (DEBUG_ACTIVE) {
-		while (!Pad.Held.B) {
-			woopsiWaitVBL();
+		while (!Hardware::getPad().isHeld(Pad::KEY_CODE_B)) {
+			Hardware::waitForVBlank();
 		}
-		while (Pad.Held.B) {
-			woopsiWaitVBL();
+		while (Hardware::getPad().isHeld(Pad::KEY_CODE_B)) {
+			Hardware::waitForVBlank();
 		}
 	}
 }

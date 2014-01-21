@@ -329,35 +329,35 @@ void TextBox::onDoubleClick(s16 x, s16 y) {
 	if (_opensKeyboard) woopsiApplication->showKeyboard(this);
 }
 
-void TextBox::onKeyPress(KeyCode keyCode) {
-	if (keyCode == KEY_CODE_LEFT) {
+void TextBox::onKeyPress(Pad::KeyCode keyCode) {
+	if (keyCode == Pad::KEY_CODE_LEFT) {
 		if (_cursorPos > 0) {
 			moveCursorToPosition(_cursorPos - 1);
 		}
-	} else if (keyCode == KEY_CODE_RIGHT) {
+	} else if (keyCode == Pad::KEY_CODE_RIGHT) {
 		if (_cursorPos < _text.getLength()) {
 			moveCursorToPosition(_cursorPos + 1);
 		}
 	}
 }
 
-void TextBox::onKeyRepeat(KeyCode keyCode) {
-	if (keyCode == KEY_CODE_LEFT) {
+void TextBox::onKeyRepeat(Pad::KeyCode keyCode) {
+	if (keyCode == Pad::KEY_CODE_LEFT) {
 		if (_cursorPos > 0) {
 			moveCursorToPosition(_cursorPos - 1);
 		}
-	} else if (keyCode == KEY_CODE_RIGHT) {
+	} else if (keyCode == Pad::KEY_CODE_RIGHT) {
 		if (_cursorPos < _text.getLength()) {
 			moveCursorToPosition(_cursorPos + 1);
 		}
 	}
 }
 
-void TextBox::handleKeyPressEvent(Gadget& source, const KeyCode keyCode) {
+void TextBox::handleKeyPressEvent(Gadget& source, const Pad::KeyCode keyCode) {
 	onKeyPress(keyCode);
 }
 
-void TextBox::handleKeyRepeatEvent(Gadget& source, const KeyCode keyCode) {
+void TextBox::handleKeyRepeatEvent(Gadget& source, const Pad::KeyCode keyCode) {
 	onKeyRepeat(keyCode);
 }
 

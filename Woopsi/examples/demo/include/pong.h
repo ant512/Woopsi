@@ -20,8 +20,8 @@ public:
 	void moveObjects();
 
 	void handleActionEvent(Gadget& source);
-	void handleKeyPressEvent(Gadget& source, const KeyCode keyCode);
-	void handleKeyReleaseEvent(Gadget& source, const KeyCode keyCode);
+	void handleKeyPressEvent(Gadget& source, const Pad::KeyCode keyCode);
+	void handleKeyReleaseEvent(Gadget& source, const Pad::KeyCode keyCode);
 
 private:
 	AmigaScreen* _screen;

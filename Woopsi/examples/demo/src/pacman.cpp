@@ -99,20 +99,20 @@ void PacMan::handleContextMenuSelectionEvent(Gadget& source, const ListDataItem*
 	}
 }
 
-void PacMan::handleKeyPressEvent(Gadget& source, const KeyCode keyCode) {
+void PacMan::handleKeyPressEvent(Gadget& source, const Pad::KeyCode keyCode) {
 	if (_window->hasFocus()) {
 		if (source.getRefcon() == 1) {
 			switch (keyCode) {
-				case KEY_CODE_UP:
+				case Pad::KEY_CODE_UP:
 					_player->setBufferedDirection(1);
 					break;
-				case KEY_CODE_DOWN:
+				case Pad::KEY_CODE_DOWN:
 					_player->setBufferedDirection(2);
 					break;
-				case KEY_CODE_LEFT:
+				case Pad::KEY_CODE_LEFT:
 					_player->setBufferedDirection(3);
 					break;
-				case KEY_CODE_RIGHT:
+				case Pad::KEY_CODE_RIGHT:
 					_player->setBufferedDirection(4);
 					break;
 				default:

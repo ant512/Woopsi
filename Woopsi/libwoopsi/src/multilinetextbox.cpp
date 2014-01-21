@@ -519,11 +519,11 @@ void MultiLineTextBox::onDoubleClick(s16 x, s16 y) {
 	if (_opensKeyboard) woopsiApplication->showKeyboard(this);
 }
 
-void MultiLineTextBox::onKeyPress(KeyCode keyCode) {
+void MultiLineTextBox::onKeyPress(Pad::KeyCode keyCode) {
 	processPhysicalKey(keyCode);
 }
 
-void MultiLineTextBox::onKeyRepeat(KeyCode keyCode) {
+void MultiLineTextBox::onKeyRepeat(Pad::KeyCode keyCode) {
 	processPhysicalKey(keyCode);
 }
 
@@ -581,18 +581,18 @@ void MultiLineTextBox::moveCursorRight() {
 	jumpToCursor();
 }
 
-void MultiLineTextBox::processPhysicalKey(KeyCode keyCode) {
+void MultiLineTextBox::processPhysicalKey(Pad::KeyCode keyCode) {
 	switch (keyCode) {
-		case KEY_CODE_LEFT:
+		case Pad::KEY_CODE_LEFT:
 			moveCursorLeft();
 			break;
-		case KEY_CODE_RIGHT:
+		case Pad::KEY_CODE_RIGHT:
 			moveCursorRight();
 			break;
-		case KEY_CODE_UP:
+		case Pad::KEY_CODE_UP:
 			moveCursorDown();
 			break;
-		case KEY_CODE_DOWN:
+		case Pad::KEY_CODE_DOWN:
 			moveCursorUp();
 			break;
 		default:

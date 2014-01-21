@@ -916,7 +916,7 @@ bool Gadget::changeDimensions(s16 x, s16 y, u16 width, u16 height) {
 bool Gadget::isDoubleClick(s16 x, s16 y) {
 
 	// Check for a double-click
-	if (_flags.doubleClickable && hasFocus() && (woopsiApplication != NULL) && Stylus.DblClick) {
+	if (_flags.doubleClickable && hasFocus() && (woopsiApplication != NULL) && Hardware::getStylus().isDoubleClick()) {
 
 		// Within the allowed region?
 		if ((_lastClickX > x - _doubleClickBounds) && (_lastClickX < x + _doubleClickBounds)) {
@@ -1120,7 +1120,7 @@ bool Gadget::drag(s16 x, s16 y, s16 vX, s16 vY) {
 	return false;
 }
 
-bool Gadget::keyPress(KeyCode keyCode) {
+bool Gadget::keyPress(Pad::KeyCode keyCode) {
 	if (!isEnabled()) return false;
 		
 	onKeyPress(keyCode);
@@ -1138,7 +1138,7 @@ bool Gadget::keyPress(KeyCode keyCode) {
 	return true;
 }
 
-bool Gadget::keyRepeat(KeyCode keyCode) {
+bool Gadget::keyRepeat(Pad::KeyCode keyCode) {
 	if (!isEnabled()) return false;
 		
 	onKeyRepeat(keyCode);
@@ -1156,7 +1156,7 @@ bool Gadget::keyRepeat(KeyCode keyCode) {
 	return true;
 }
 
-bool Gadget::keyRelease(KeyCode keyCode) {
+bool Gadget::keyRelease(Pad::KeyCode keyCode) {
 	if (!isEnabled()) return false;
 		
 	onKeyRelease(keyCode);

@@ -338,20 +338,20 @@ namespace WoopsiUI {
 		 * Moves the cursor.
 		 * @param keyCode The key that was pressed.
 		 */
-		virtual void onKeyPress(KeyCode keyCode);
+		virtual void onKeyPress(Pad::KeyCode keyCode);
 		
 		/**
 		 * Moves the cursor.
 		 * @param keyCode The key that repeated.
 		 */
-		virtual void onKeyRepeat(KeyCode keyCode);
+		virtual void onKeyRepeat(Pad::KeyCode keyCode);
 
 		/**
 		 * Handles physical button presses.  Moves the cursor
 		 * in the direction pressed.
 		 * @param keyCode keyCode The key that was pressed.
 		 */
-		void processPhysicalKey(KeyCode keyCode);
+		void processPhysicalKey(Pad::KeyCode keyCode);
 
 		/**
 		 * Handles keyboard key presses and key repeats.

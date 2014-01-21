@@ -2,31 +2,13 @@
 #define _GADGETEVENTHANDLER_H_
 
 #include <nds.h>
+#include "pad.h"
 
 namespace WoopsiUI {
 
 	class Gadget;
 	class WoopsiPoint;
 	class ListDataItem;
-
-	/**
-	 * Enum listing all key codes.
-	 */
-	enum KeyCode {
-		KEY_CODE_NONE = 0,			/**< No key.  Included for completeness. */
-		KEY_CODE_UP = 1,			/**< D-pad up button. */
-		KEY_CODE_DOWN = 2,			/**< D-pad down button. */
-		KEY_CODE_LEFT = 3,			/**< D-pad left button. */
-		KEY_CODE_RIGHT = 4,			/**< D-pad right button. */
-		KEY_CODE_A = 5,				/**< A button. */
-		KEY_CODE_B = 6,				/**< B button. */
-		KEY_CODE_X = 7,				/**< X button. */
-		KEY_CODE_Y = 8,				/**< Y button. */
-		KEY_CODE_L = 9,				/**< L button. */
-		KEY_CODE_R = 10,			/**< R button. */
-		KEY_CODE_START = 11,		/**< Start button. */
-		KEY_CODE_SELECT = 12		/**< Select button. */
-	};
 
 	/**
 	 * Any class that needs to listen for gadget events should inherit from this
@@ -89,21 +71,21 @@ namespace WoopsiUI {
 		 * @param source The gadget that was focused when the key was pressed.
 		 * @param keyCode The key that was pressed.
 		 */
-		virtual void handleKeyPressEvent(Gadget& source, const KeyCode keyCode) { };
+		virtual void handleKeyPressEvent(Gadget& source, const Pad::KeyCode keyCode) { };
 
 		/**
 		 * Handle a key repeat event.
 		 * @param source The gadget that was focused when the key was pressed.
 		 * @param keyCode The key that was pressed.
 		 */
-		virtual void handleKeyRepeatEvent(Gadget& source, const KeyCode keyCode) { };
+		virtual void handleKeyRepeatEvent(Gadget& source, const Pad::KeyCode keyCode) { };
 
 		/**
 		 * Handle a key release event.
 		 * @param source The gadget that was focused when the key was released.
 		 * @param keyCode The key that was released.
 		 */
-		virtual void handleKeyReleaseEvent(Gadget& source, const KeyCode keyCode) { };
+		virtual void handleKeyReleaseEvent(Gadget& source, const Pad::KeyCode keyCode) { };
 
 		/**
 		 * Handle a DS lid open event.

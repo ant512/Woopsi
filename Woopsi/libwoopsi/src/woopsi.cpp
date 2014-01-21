@@ -5,7 +5,9 @@
 #include "gadgetstyle.h"
 #include "hardware.h"
 #include "keyboardeventhandler.h"
+#include "pad.h"
 #include "screen.h"
+#include "stylus.h"
 #include "woopsi.h"
 #include "woopsifuncs.h"
 #include "woopsikeyboard.h"
@@ -133,19 +135,22 @@ void Woopsi::handleVBL() {
 // Process all stylus input
 void Woopsi::handleStylus(Gadget* gadget) {
 
+	const Stylus& stylus = Hardware::getStylus();
+	const Pad& pad = Hardware::getPad();
+
 	// All gadgets
-	if (Stylus.Newpress) {
-		if (Pad.Held.L || Pad.Held.R) {
-			handleShiftClick(Stylus.X, Stylus.Y, gadget);
+	if (stylus.isNewPress()) {
+		if (pad.isHeld(Pad::KEY_CODE_L) || pad.isHeld(Pad::KEY_CODE_R)) {
+			handleShiftClick(stylus.getX(), stylus.getY(), gadget);
 		} else {
-			handleClick(Stylus.X, Stylus.Y, gadget);
+			handleClick(stylus.getX(), stylus.getY(), gadget);
 		}
-	} else if (Stylus.Held) {
+	} else if (stylus.isHeld()) {
 		if (_clickedGadget != NULL) {
-			_clickedGadget->drag(Stylus.X, Stylus.Y, Stylus.Vx, Stylus.Vy);
+			_clickedGadget->drag(stylus.getX(), stylus.getY(), stylus.getVX(), stylus.getVY());
 		}
 	} else if (_clickedGadget != NULL) {
-		_clickedGadget->release(Stylus.X, Stylus.Y);
+		_clickedGadget->release(stylus.getX(), stylus.getY());
 	}
 }
 
@@ -156,15 +161,17 @@ void Woopsi::handleShiftClick(s16 x, s16 y, Gadget* gadget) {
 	// it is correctly hidden
 	shelveContextMenu();
 
+	const Stylus& stylus = Hardware::getStylus();
+
 	// Working with a modal gadget or the whole structure?
 	if (gadget == NULL) {
 
 		// All gadgets
-		shiftClick(Stylus.X, Stylus.Y);
+		shiftClick(stylus.getX(), stylus.getY());
 	} else {
 
 		// One gadget
-		gadget->shiftClick(Stylus.X, Stylus.Y);
+		gadget->shiftClick(stylus.getX(), stylus.getY());
 	}
 }
 
@@ -192,7 +199,7 @@ void Woopsi::handleClick(s16 x, s16 y, Gadget* gadget) {
 	if (closeMenu) shelveContextMenu();
 }
 
-void Woopsi::handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyCode) {
+void Woopsi::handleKey(Pad::KeyCode keyCode) {
 
 	// We do not reset the repeat timers to 0 - instead we reset it back to the
 	// initial repeat time.  This prevents the secondary repeat firing before
@@ -202,6 +209,11 @@ void Woopsi::handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyC
 	//
 	// This technique only works if the initial repeat time is longer than the
 	// secondary repeat.
+	const Pad& pad = Hardware::getPad();
+	bool newPress = pad.isNewPress(keyCode);
+	bool released = pad.isReleased(keyCode);
+	s32 heldTime = pad.heldTimeForKey(keyCode);
+
 	s32 secondaryRepeatTime = KEY_INITIAL_REPEAT_TIME + KEY_SECONDARY_REPEAT_TIME;
 
 	if (newPress) {
@@ -222,22 +234,25 @@ void Woopsi::handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyC
 void Woopsi::handleKeys() {
 	if (_focusedGadget == NULL) return;
 
-	handleKey(Pad.Newpress.A, Pad.Released.A, Pad.HeldTime.A, KEY_CODE_A);
-	handleKey(Pad.Newpress.B, Pad.Released.B, Pad.HeldTime.B, KEY_CODE_B);
-	handleKey(Pad.Newpress.X, Pad.Released.X, Pad.HeldTime.X, KEY_CODE_X);
-	handleKey(Pad.Newpress.Y, Pad.Released.Y, Pad.HeldTime.Y, KEY_CODE_Y);
-	handleKey(Pad.Newpress.L, Pad.Released.L, Pad.HeldTime.L, KEY_CODE_L);
-	handleKey(Pad.Newpress.R, Pad.Released.R, Pad.HeldTime.R, KEY_CODE_R);
-	handleKey(Pad.Newpress.Up, Pad.Released.Up, Pad.HeldTime.Up, KEY_CODE_UP);
-	handleKey(Pad.Newpress.Down, Pad.Released.Down, Pad.HeldTime.Down, KEY_CODE_DOWN);
-	handleKey(Pad.Newpress.Left, Pad.Released.Left, Pad.HeldTime.Left, KEY_CODE_LEFT);
-	handleKey(Pad.Newpress.Right, Pad.Released.Right, Pad.HeldTime.Right, KEY_CODE_RIGHT);
-	handleKey(Pad.Newpress.Start, Pad.Released.Start, Pad.HeldTime.Start, KEY_CODE_START);
-	handleKey(Pad.Newpress.Select, Pad.Released.Select, Pad.HeldTime.Select, KEY_CODE_SELECT);
+	handleKey(Pad::KEY_CODE_A);
+	handleKey(Pad::KEY_CODE_B);
+	handleKey(Pad::KEY_CODE_X);
+	handleKey(Pad::KEY_CODE_Y);
+	handleKey(Pad::KEY_CODE_L);
+	handleKey(Pad::KEY_CODE_R);
+	handleKey(Pad::KEY_CODE_UP);
+	handleKey(Pad::KEY_CODE_DOWN);
+	handleKey(Pad::KEY_CODE_LEFT);
+	handleKey(Pad::KEY_CODE_RIGHT);
+	handleKey(Pad::KEY_CODE_START);
+	handleKey(Pad::KEY_CODE_SELECT);
 }
 
 void Woopsi::handleLid() {
 
+	// TODO: Fix this!
+
+	/*
 	// Check for lid closed event
 	if (Pad.Held.Lid && !_lidClosed) {
 
@@ -263,6 +278,7 @@ void Woopsi::handleLid() {
 			i++;
 		}
 	}
+	 */
 }
 
 bool Woopsi::flipScreens(Gadget* gadget) {

@@ -30,297 +30,99 @@ public:
 	};
 
 	/**
+	 * Enum listing all key codes.
+	 */
+	typedef enum {
+		KEY_CODE_UP = 0,			/**< D-pad up button. */
+		KEY_CODE_DOWN = 1,			/**< D-pad down button. */
+		KEY_CODE_LEFT = 2,			/**< D-pad left button. */
+		KEY_CODE_RIGHT = 3,			/**< D-pad right button. */
+		KEY_CODE_A = 4,				/**< A button. */
+		KEY_CODE_B = 5,				/**< B button. */
+		KEY_CODE_X = 6,				/**< X button. */
+		KEY_CODE_Y = 7,				/**< Y button. */
+		KEY_CODE_L = 8,				/**< L button. */
+		KEY_CODE_R = 9,				/**< R button. */
+		KEY_CODE_START = 10,		/**< Start button. */
+		KEY_CODE_SELECT = 11		/**< Select button. */
+	} KeyCode;
+
+	/**
 	 * Destructor.
 	 */
 	inline ~Pad() { };
 
+	inline s32 heldTimeForKey(const KeyCode keyCode) const {
+		switch (keyCode) {
+			case KEY_CODE_A:
+				return _a;
+				break;
+			case KEY_CODE_B:
+				return _b;
+				break;
+			case KEY_CODE_DOWN:
+				return _down;
+				break;
+			case KEY_CODE_L:
+				return _l;
+				break;
+			case KEY_CODE_LEFT:
+				return _left;
+				break;
+			case KEY_CODE_R:
+				return _r;
+				break;
+			case KEY_CODE_RIGHT:
+				return _right;
+				break;
+			case KEY_CODE_SELECT:
+				return _select;
+				break;
+			case KEY_CODE_START:
+				return _start;
+				break;
+			case KEY_CODE_UP:
+				return _up;
+				break;
+			case KEY_CODE_X:
+				return _x;
+				break;
+			case KEY_CODE_Y:
+				return _y;
+				break;
+		}
+	}
+
 	/**
-	 * Check if up is newly pressed since the last call to update().
+	 * Check if the key is newly pressed since the last call to update().
+	 * @param keyCode The key to test.
 	 * @return True if newly pressed.
 	 */
-	inline bool isUpNewPress() const { return _up == 1; };
+	inline bool isNewPress(const KeyCode keyCode) const { return heldTimeForKey(keyCode) == 1; };
 
 	/**
-	 * Check if down is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isDownNewPress() const { return _down == 1; };
-
-	/**
-	 * Check if left is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isLeftNewPress() const { return _left == 1; };
-
-	/**
-	 * Check if right is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isRightNewPress() const { return _right == 1; };
-
-	/**
-	 * Check if A is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isANewPress() const { return _a == 1; };
-
-	/**
-	 * Check if B is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isBNewPress() const { return _b == 1; };
-
-	/**
-	 * Check if X is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isXNewPress() const { return _x == 1; };
-
-	/**
-	 * Check if Y is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isYNewPress() const { return _y == 1; };
-
-	/**
-	 * Check if L is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isLNewPress() const { return _l == 1; };
-
-	/**
-	 * Check if R is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isRNewPress() const { return _r == 1; };
-
-	/**
-	 * Check if start is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isStartNewPress() const { return _start == 1; };
-
-	/**
-	 * Check if select is newly pressed since the last call to update().
-	 * @return True if newly pressed.
-	 */
-	inline bool isSelectNewPress() const { return _select == 1; };
-
-	/**
-	 * Check if up is newly released since the last call to update().
+	 * Check if the key is newly released since the last call to update().
+	 * @param keyCode The key to test.
 	 * @return True if newly released.
 	 */
-	inline bool isUpReleased() const { return _up == -1; };
+	inline bool isReleased(const KeyCode keyCode) const { return heldTimeForKey(keyCode) == -1; };
 
 	/**
-	 * Check if down is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isDownReleased() const { return _down == -1; };
-
-	/**
-	 * Check if left is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isLeftReleased() const { return _left == -1; };
-
-	/**
-	 * Check if right is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isRightReleased() const { return _right == -1; };
-
-	/**
-	 * Check if A is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isAReleased() const { return _a == -1; };
-
-	/**
-	 * Check if B is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isBReleased() const { return _b == -1; };
-
-	/**
-	 * Check if X is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isXReleased() const { return _x == -1; };
-
-	/**
-	 * Check if Y is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isYReleased() const { return _y == -1; };
-
-	/**
-	 * Check if L is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isLReleased() const { return _l == -1; };
-
-	/**
-	 * Check if R is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isRReleased() const { return _r == -1; };
-
-	/**
-	 * Check if start is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isStartReleased() const { return _start == -1; };
-
-	/**
-	 * Check if select is newly released since the last call to update().
-	 * @return True if newly released.
-	 */
-	inline bool isSelectReleased() const { return _select == -1; };
-
-	/**
-	 * Check if up is held down.
+	 * Check if the key is held down.
+	 * @param keyCode The key to test.
 	 * @return True if held down.
 	 */
-	inline bool isUpHeld() const { return _up > 0; };
+	inline bool isHeld(const KeyCode keyCode) const { return heldTimeForKey(keyCode) > 0; };
 
 	/**
-	 * Check if down is held down.
-	 * @return True if held down.
-	 */
-	inline bool isDownHeld() const { return _down > 0; };
-
-	/**
-	 * Check if left is held down.
-	 * @return True if held down.
-	 */
-	inline bool isLeftHeld() const { return _left > 0; };
-
-	/**
-	 * Check if right is held down.
-	 * @return True if held down.
-	 */
-	inline bool isRightHeld() const { return _right > 0; };
-
-	/**
-	 * Check if A is held down.
-	 * @return True if held down.
-	 */
-	inline bool isAHeld() const { return _a > 0; };
-
-	/**
-	 * Check if B is held down.
-	 * @return True if held down.
-	 */
-	inline bool isBHeld() const { return _b > 0; };
-
-	/**
-	 * Check if X is held down.
-	 * @return True if held down.
-	 */
-	inline bool isXHeld() const { return _x > 0; };
-
-	/**
-	 * Check if Y is held down.
-	 * @return True if held down.
-	 */
-	inline bool isYHeld() const { return _y > 0; };
-
-	/**
-	 * Check if L is held down.
-	 * @return True if held down.
-	 */
-	inline bool isLHeld() const { return _l > 0; };
-
-	/**
-	 * Check if R is held down.
-	 * @return True if held down.
-	 */
-	inline bool isRHeld() const { return _r > 0; };
-
-	/**
-	 * Check if start is held down.
-	 * @return True if held down.
-	 */
-	inline bool isStartHeld() const { return _start > 0; };
-
-	/**
-	 * Check if select is held down.
-	 * @return True if held down.
-	 */
-	inline bool isSelectHeld() const { return _select > 0; };
-
-	/**
-	 * Check if up is repeating.
+	 * Check if the key is repeating.
+	 * @param keyCode The key to test.
 	 * @return True if repeating.
 	 */
-	inline bool isUpRepeat() const { return _up > 0 && _up % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if down is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isDownRepeat() const { return _down > 0 && _down % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if left is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isLeftRepeat() const { return _left > 0 && _left % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if right is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isRightRepeat() const { return _right > 0 && _right % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if A is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isARepeat() const { return _a > 0 && _a % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if B is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isBRepeat() const { return _b > 0 && _b % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if X is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isXRepeat() const { return _x > 0 && _x % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if Y is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isYRepeat() const { return _y > 0 && _y % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if L is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isLRepeat() const { return _l > 0 && _l % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if R is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isRRepeat() const { return _r > 0 && _r % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if start is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isStartRepeat() const { return _start > 0 && _start % PAD_REPEAT_TIME == 0; };
-
-	/**
-	 * Check if select is repeating.
-	 * @return True if repeating.
-	 */
-	inline bool isSelectRepeat() const { return _select > 0 && _select % PAD_REPEAT_TIME == 0; };
+	inline bool isRepeat(const KeyCode keyCode) const {
+		s32 value = heldTimeForKey(keyCode);
+		return value > 0 && value % PAD_REPEAT_TIME == 0;
+	};
 
 	/**
 	 * Check if the most recently pressed direction was vertical or horizontal.

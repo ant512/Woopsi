@@ -151,13 +151,13 @@ void Pong::handleActionEvent(Gadget& source) {
 	}
 }
 
-void Pong::handleKeyPressEvent(Gadget& source, const KeyCode keyCode) {
+void Pong::handleKeyPressEvent(Gadget& source, const Pad::KeyCode keyCode) {
 	if (_window->hasFocus()) {
 		switch (keyCode) {
-			case KEY_CODE_UP:
+			case Pad::KEY_CODE_UP:
 				_upHeld = true;
 				break;
-			case KEY_CODE_DOWN:
+			case Pad::KEY_CODE_DOWN:
 				_downHeld = true;
 				break;
 			default:
@@ -166,13 +166,13 @@ void Pong::handleKeyPressEvent(Gadget& source, const KeyCode keyCode) {
 	}
 }
 
-void Pong::handleKeyReleaseEvent(Gadget& source, const KeyCode keyCode) {
+void Pong::handleKeyReleaseEvent(Gadget& source, const Pad::KeyCode keyCode) {
 	if (_window->hasFocus()) {
 		switch (keyCode) {
-			case KEY_CODE_UP:
+			case Pad::KEY_CODE_UP:
 				_upHeld = false;
 				break;
-			case KEY_CODE_DOWN:
+			case Pad::KEY_CODE_DOWN:
 				_downHeld = false;
 				break;
 			default:

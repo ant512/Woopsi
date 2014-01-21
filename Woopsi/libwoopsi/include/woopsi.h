@@ -219,13 +219,9 @@ namespace WoopsiUI {
 		/**
 		 * Processes a single keypad event and sends it throughout the
 		 * hierarchy.  Called by handleKeys().
-		 * @param newPress Indicates whether or not this is a new press.
-		 * @param released Indicates whether or not the keypad has been
-		 * released.
-		 * @param heldTime The number of frames that the key has been held down.
 		 * @param keyCode The code of the button that has been pressed.
 		 */
-		void handleKey(bool newPress, bool released, s32& heldTime, KeyCode keyCode);
+		void handleKey(Pad::KeyCode keyCode);
 
 		/**
 		 * Process lid events and send throughout the hierarchy.

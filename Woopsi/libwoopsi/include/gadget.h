@@ -8,6 +8,7 @@
 #include "gadgetstyle.h"
 #include "glyphs.h"
 #include "hardware.h"
+#include "pad.h"
 #include "rect.h"
 #include "woopsiarray.h"
 #include "woopsistring.h"
@@ -595,21 +596,21 @@ namespace WoopsiUI {
 		 * @param keyCode The keycode to send to the gadget.
 		 * @return True if the keypress was processed.
 		 */
-		bool keyPress(KeyCode keyCode);
+		bool keyPress(Pad::KeyCode keyCode);
 		
 		/**
 		 * Send a key repeat to the gadget.
 		 * @param keyCode The keycode to send to the gadget.
 		 * @return True if the key repeat was processed.
 		 */
-		bool keyRepeat(KeyCode keyCode);
+		bool keyRepeat(Pad::KeyCode keyCode);
 
 		/**
 		 * Send a key release to the gadget.
 		 * @param keyCode The keycode to send to the gadget.
 		 * @return True if the key release was processed.
 		 */
-		bool keyRelease(KeyCode keyCode);
+		bool keyRelease(Pad::KeyCode keyCode);
 
 		/**
 		 * Inform the gadget that the lid has closed.
@@ -1248,7 +1249,7 @@ namespace WoopsiUI {
 		 * additional behaviour when a key is pressed.
 		 * @param keyCode The key that was pressed.
 		 */
-		virtual inline void onKeyPress(KeyCode keyCode) { };
+		virtual inline void onKeyPress(Pad::KeyCode keyCode) { };
 		
 		/**
 		 * Called when a key (d-pad or physical button) is released.  Override
@@ -1256,7 +1257,7 @@ namespace WoopsiUI {
 		 * additional behaviour when a key is released.
 		 * @param keyCode The key that was released.
 		 */
-		virtual inline void onKeyRelease(KeyCode keyCode) { };
+		virtual inline void onKeyRelease(Pad::KeyCode keyCode) { };
 		
 		/**
 		 * Called when a key (d-pad or physical button) is pressed and repeats.
@@ -1264,7 +1265,7 @@ namespace WoopsiUI {
 		 * additional behaviour when a key repeats.
 		 * @param keyCode The key that repeated.
 		 */
-		virtual inline void onKeyRepeat(KeyCode keyCode) { };
+		virtual inline void onKeyRepeat(Pad::KeyCode keyCode) { };
 		
 		/**
 		 * Called when the gadget gains focus.  Override this when creating new
