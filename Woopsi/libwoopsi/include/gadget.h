@@ -466,13 +466,23 @@ namespace WoopsiUI {
 		inline void setTextColour(const u16 colour) { _style.colours.text = colour; };
 
 		/**
-		 * Sets the font.
+		 * Sets the font.  This will overwrite the existing font object without
+		 * deleting it.  If the font object is not needed, it should be deleted
+		 * first:
+		 * 
+		 * FontBase *font = gadget->getFont();
+		 * delete font;
+		 * gadget->setFont(new SomeFont());
+		 *
 		 * @param font A pointer to the font to use.
 		 */
 		virtual void setFont(FontBase* font);
 		
 		/**
-		 * Sets the glyph font.
+		 * Sets the glyph font.  This will overwrite the existing font object
+		 * without deleting it.  If the font object is not needed, it should be
+		 * deleted first.
+		 * @see setFont().
 		 * @param font A pointer to the font to use.
 		 */
 		virtual void setGlyphFont(FontBase* font);
