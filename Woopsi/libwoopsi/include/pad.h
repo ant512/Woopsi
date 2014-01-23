@@ -91,6 +91,9 @@ public:
 				return _y;
 				break;
 		}
+
+		// Included to silence dumb GCC warning
+		return 0;
 	}
 
 	/**
