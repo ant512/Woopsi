@@ -749,27 +749,11 @@ void WoopsiString::format(const char *format, ...) {
 }
 
 void WoopsiString::format(const char *format, va_list args) {
+	char* formatted;
+	vasprintf(&formatted, format, args);
 
-	// Do the format once to get the length.
-	char ch;
-	s32 len = vsnprintf(&ch, 1, format, args);
-
-	if (len < 1) {
-		setText("");
-	} else {
-
-		// Allocate with malloc to prevent us from overflowing the DS' tiny
-		// stack
-		char* buffer = new char[len + 1];
-
-		// Format again; this time the buffer is guaranteed to be large enough
-		// (unless malloc failed, in which case we're stuck anyway)
-		vsnprintf(buffer, len + 1, format, args);
-
-		setText(buffer);
-
-		delete[] buffer;
-	}
+	setText(formatted);
+	free(formatted);
 }
 
 void WoopsiString::replace(const WoopsiString& oldText, const WoopsiString& newText) {
