@@ -12,8 +12,6 @@
 
 #include "defines.h"
 
-WoopsiUI::GadgetStyle* defaultGadgetStyle;
-
 int fatInitDefault() { return 1; }
 
 #else
@@ -21,6 +19,8 @@ int fatInitDefault() { return 1; }
 // Using libnds
 
 #endif
+
+WoopsiUI::GadgetStyle* defaultGadgetStyle;
 
 void woopsiInitDefaultGadgetStyle() {
 	defaultGadgetStyle = new WoopsiUI::GadgetStyle();
