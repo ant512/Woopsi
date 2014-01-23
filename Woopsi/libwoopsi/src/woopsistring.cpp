@@ -114,7 +114,7 @@ void WoopsiString::setText(const WoopsiString& text) {
 
 void WoopsiString::setText(const char* text) {
 
-	s32 length = strlen(text);
+	s32 length = (s32)strlen(text);
 
 	// Ensure we've got enough memory available
 	allocateMemory(length, false);
@@ -209,7 +209,7 @@ void WoopsiString::insert(const WoopsiString& text, s32 index) {
 	}
 
 	// Locate the point at which we can cut the existing string 
-	s32 insertPoint = getToken(index) - _text;
+	s32 insertPoint = (s32)(getToken(index) - _text);
 
 	// Get the total size of the string that we need
 	s32 newSize = _dataLength + text.getByteCount();
@@ -272,7 +272,7 @@ void WoopsiString::remove(const s32 startIndex) {
         
 	// Removing characters from the end of the string is trivial - simply
 	// decrease the length
-	_dataLength = pos - _text;
+	_dataLength = (s32)(pos - _text);
 
 	_stringLength -= (_stringLength - startIndex);
 }

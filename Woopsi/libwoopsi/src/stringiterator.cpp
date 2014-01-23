@@ -167,7 +167,7 @@ u32 StringIterator::getInteger(u32* charCount) {
 	if (isdigit(getCodePoint())) {
 
 		char *end = NULL;
-		u32 digits = strtoul(_currentChar, &end, 10);
+		u32 digits = (u32)strtoul(_currentChar, &end, 10);
 
 		if (charCount != NULL) *charCount = (u32)(end - _currentChar);
 
