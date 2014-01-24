@@ -18,6 +18,76 @@ public:
 protected:
 	virtual ~PipeButtonL3() { };
 	
+	void drawSparkline(GraphicsPort* port, const Rect& rect) {
+		s16 midX = rect.width / 2;
+		s16 midY = rect.height / 2;
+		
+		s16 bottomX = midX;
+		s16 bottomY = rect.height;
+		
+		s16 leftX = 0;
+		s16 leftY = midY;
+		
+		s16 startX = 0;
+		s16 startY = 0;
+		s16 endX = 0;
+		s16 endY = 0;
+		
+		if (!hasAvailableBottomConnector()) {
+			
+			// Flow is moving from bottom to left
+			startX = bottomX;
+			startY = bottomY;
+			
+			endX = leftX;
+			endY = leftY;
+		} else {
+			
+			// Flow is moving from left to bottom
+			startX = leftX;
+			startY = leftY;
+			
+			endX = bottomX;
+			endY = bottomY;
+		}
+		
+		s16 burnSize = (getFlowLevel() * getWidth()) / 100;
+		
+		port->drawLine(startX, startY, midX, midY, woopsiRGB(0, 0, 0));
+		port->drawLine(midX, midY, endX, endY, woopsiRGB(0, 0, 0));
+		
+		if (getFlowLevel() > 0) {
+			if (getFlowLevel() < MAX_PIPE_BUTTON_FLOW / 2) {
+				if (startX == midX) {
+					port->drawLine(startX, startY, midX, startY - burnSize, woopsiRGB(31, 0, 0));
+					drawSpark(startX, startY - burnSize, port);
+				} else {
+					port->drawLine(startX, startY, startX + burnSize, midY, woopsiRGB(31, 0, 0));
+					drawSpark(startX + burnSize, startY, port);
+				}
+			} else {
+				port->drawLine(startX, startY, midX, midY, woopsiRGB(31, 0, 0));
+				
+				// Half of the burn is now used up
+				burnSize = ((getFlowLevel() - (MAX_PIPE_BUTTON_FLOW / 2)) * getWidth()) / 100;
+				
+				if (endX == midX) {
+					port->drawLine(midX, midY, endX, midY + burnSize, woopsiRGB(31, 0, 0));
+					
+					if (getFlowLevel() < MAX_PIPE_BUTTON_FLOW) {
+						drawSpark(midX, midY + burnSize, port);
+					}
+				} else {
+					port->drawLine(midX, midY, midX - burnSize, endY, woopsiRGB(31, 0, 0));
+					
+					if (getFlowLevel() < MAX_PIPE_BUTTON_FLOW) {
+						drawSpark(midX - burnSize, midY, port);
+					}
+				}
+			}
+		}
+	};
+	
 	void drawContents(GraphicsPort* port) {
 
 		// Do not draw if contents not revealed
@@ -28,71 +98,7 @@ protected:
 		
 		Rect rect;
 		getClientRect(rect);
-		
-		u16 colour;
-		
-		if (isEnabled()) {
-			colour = getShadowColour();
-		} else {
-			colour = getDarkColour();
-		}
-		
-		// Draw flow
-		if (!hasAvailableTopConnector()) {
-		
-			// Flow is moving from bottom to right
-			if (getFlowLevel() > MAX_PIPE_BUTTON_FLOW / 2) {
-			
-				// Fill entire vertical section
-				port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, 0, FLOW_SIZE, (rect.height - FLOW_SIZE) / 2 + FLOW_SIZE, woopsiRGB(0, 0, 20));
-				
-				// Draw horizontal section
-				port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, ((rect.height - FLOW_SIZE) / 2) + 1, getFlowLevel() - ((rect.width - FLOW_SIZE) / 2) + 1, FLOW_SIZE, woopsiRGB(0, 0, 20));
-			} else {
-			
-				// Draw part of vertical section
-				port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, 0, FLOW_SIZE, getFlowLevel(), woopsiRGB(0, 0, 20));
-			}
-		} else {
-		
-			// Flow is moving from right to bottom
-			if (getFlowLevel() > MAX_PIPE_BUTTON_FLOW / 2) {
-			
-				// Fill entire horizontal section
-				port->drawFilledRect(getWidth() - getFlowLevel() - 1, 3, getFlowLevel(), rect.height - 7, woopsiRGB(0, 0, 20));
-			} else {
-			
-				// Draw part of horizontal section
-			}
-		}
-		
-		s16 x1 = (rect.width + FLOW_SIZE) / 2;
-		s16 y1 = (rect.height - FLOW_SIZE) / 2;
-		s16 x2 = x1;
-		s16 y2 = y1 + ((rect.height + FLOW_SIZE) / 2) - 1;
-		
-		port->drawLine(x1, y1, x2, y2, colour);
-		
-		x1 = (rect.width - FLOW_SIZE) / 2;
-		y1 = (rect.height + FLOW_SIZE) / 2;
-		x2 = x1;
-		y2 = y1 + ((rect.height - FLOW_SIZE) / 2) - 1;
-		
-		port->drawLine(x1, y1, x2, y2, colour);
-		
-		x1 = 0;
-		y1 = (rect.height - FLOW_SIZE) / 2;
-		x2 = x1 + ((rect.width + FLOW_SIZE) / 2) - 1;
-		y2 = y1;
-
-		port->drawLine(x1, y1, x2, y2, colour);
-		
-		x1 = 0;
-		y1 = (rect.height + FLOW_SIZE) / 2;
-		x2 = x1 + ((rect.width - FLOW_SIZE) / 2) - 1;
-		y2 = y1;
-		
-		port->drawLine(x1, y1, x2, y2, colour);
+		drawSparkline(port, rect);
 	};
 };
 
