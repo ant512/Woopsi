@@ -59,8 +59,8 @@ protected:
 					port->drawLine(startX, startY, midX, startY + burnSize, woopsiRGB(31, 0, 0));
 					drawSpark(startX, startY + burnSize, port);
 				} else {
-					port->drawLine(startX, startY, startX + burnSize, midY, woopsiRGB(31, 0, 0));
-					drawSpark(startX + burnSize, startY, port);
+					port->drawLine(startX, startY, startX - burnSize, midY, woopsiRGB(31, 0, 0));
+					drawSpark(startX - burnSize, startY, port);
 				}
 			} else {
 				port->drawLine(startX, startY, midX, midY, woopsiRGB(31, 0, 0));
@@ -69,10 +69,10 @@ protected:
 				burnSize = ((getFlowLevel() - (MAX_PIPE_BUTTON_FLOW / 2)) * getWidth()) / 100;
 				
 				if (endX == midX) {
-					port->drawLine(midX, midY, endX, midY + burnSize, woopsiRGB(31, 0, 0));
+					port->drawLine(midX, midY, endX, midY - burnSize, woopsiRGB(31, 0, 0));
 					
 					if (getFlowLevel() < MAX_PIPE_BUTTON_FLOW) {
-						drawSpark(midX, midY + burnSize, port);
+						drawSpark(midX, midY - burnSize, port);
 					}
 				} else {
 					port->drawLine(midX, midY, midX + burnSize, endY, woopsiRGB(31, 0, 0));
