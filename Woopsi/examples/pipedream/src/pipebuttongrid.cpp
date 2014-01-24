@@ -22,6 +22,7 @@ PipeButtonGrid::PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns) : Gadget(x, y,
 }
 
 void PipeButtonGrid::generateRandomLayout() {
+
 	PipeButtonBase* button = NULL;
 	
 	u8 startRow = 0;
@@ -67,7 +68,7 @@ void PipeButtonGrid::generateRandomLayout() {
 			
 				// Add a content button
 		
-				u8 type = rand() % 6;
+				u8 type = rand() % 7;
 
 				switch (type) {
 					case 0:
