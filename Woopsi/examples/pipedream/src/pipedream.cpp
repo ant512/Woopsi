@@ -40,9 +40,9 @@ void PipeDream::handleActionEvent(Gadget& source) {
 		if (!_grid->increaseFlow(1)) {
 		
 			// Game over
-			while(1) {
-				Hardware::waitForVBlank();
-			}
+			//while(1) {
+			//	Hardware::waitForVBlank();
+			//}
 		}
 	}
 }

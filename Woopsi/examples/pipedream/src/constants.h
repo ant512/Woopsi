@@ -3,7 +3,7 @@
 
 const int PIPE_BUTTON_SIZE = 20;
 const int MAX_PIPE_BUTTON_FLOW = 14;
-const int FLOW_SIZE = 4;
+const int FLOW_SIZE = 9;
 const int PIPE_BUTTON_STATES = 9;
 
 #endif

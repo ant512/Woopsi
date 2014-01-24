@@ -46,7 +46,7 @@ protected:
 		s16 x1 = (rect.width - FLOW_SIZE) / 2;
 		s16 y1 = 0;
 		s16 x2 = x1;
-		s16 y2 = x1 + rect.height - 1;
+		s16 y2 = y1 + rect.height - 1;
 
 		port->drawLine(x1, y1, x2, y2, colour);
 		
