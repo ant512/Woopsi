@@ -1,5 +1,6 @@
 #include "pipebuttonbase.h"
 #include "woopsifuncs.h"
+#include "fontbase.h"
 
 PipeButtonBase::PipeButtonBase(s16 x, s16 y, u16 width, u16 height) : Button(x, y, width, height, "") {
 	_isRevealed = false;
@@ -94,4 +95,11 @@ u8 PipeButtonBase::getConnectionCount() const {
 	if (hasLeftConnector()) count++;
 	
 	return count;
+}
+
+void PipeButtonBase::drawUnrevealedContents(GraphicsPort* port) {
+	u16 width = _style.font->getStringWidth("?");
+	u16 height = _style.font->getHeight();
+	
+	port->drawText((getWidth() - width) / 2, (getHeight() - height) / 2, _style.font, "?");
 }

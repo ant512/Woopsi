@@ -18,7 +18,10 @@ protected:
 	void drawContents(GraphicsPort* port) {
 
 		// Do not draw if contents not revealed
-		if (!isRevealed()) return;
+		if (!isRevealed()) {
+			drawUnrevealedContents(port);
+			return;
+		}
 		
 		Rect rect;
 		getClientRect(rect);

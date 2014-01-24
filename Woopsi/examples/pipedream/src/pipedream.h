@@ -1,10 +1,10 @@
 #ifndef _PIPE_DREAM_H_
 #define _PIPE_DREAM_H_
 
-#include "woopsi.h"
+#include <woopsi.h>
+#include <gadgeteventhandler.h>
+#include <woopsitimer.h>
 #include "pipebuttongrid.h"
-#include "gadgeteventhandler.h"
-#include "woopsitimer.h"
 
 using namespace WoopsiUI;
 

@@ -18,7 +18,7 @@ void PipeDream::startup() {
 	Rect rect;
 	window->getClientRect(rect);
 	
-	_grid = new PipeButtonGrid(rect.x, rect.y, 6, 6);
+	_grid = new PipeButtonGrid(rect.x + 2, rect.y + 2, 6, 6);
 	_grid->setRefcon(1);
 	window->addGadget(_grid);
 	

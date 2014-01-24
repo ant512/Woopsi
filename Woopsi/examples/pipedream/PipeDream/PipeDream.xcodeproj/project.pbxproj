@@ -1,0 +1,411 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C2BBC22E1891E329004CDF86 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2BBC22D1891E329004CDF86 /* Cocoa.framework */; };
+		C2BBC2381891E329004CDF86 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBC2361891E329004CDF86 /* InfoPlist.strings */; };
+		C2BBC26D1891E3A2004CDF86 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2BBC26A1891E38E004CDF86 /* SDL2.framework */; };
+		C2BBC26F1891E3B1004CDF86 /* libWoopsi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2BBC26E1891E3B1004CDF86 /* libWoopsi.dylib */; };
+		C2BBC2711891E3D7004CDF86 /* OSXIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C2BBC2701891E3D7004CDF86 /* OSXIcon.icns */; };
+		C2BBC2851891E3F4004CDF86 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2BBC2741891E3F4004CDF86 /* main.cpp */; };
+		C2BBC2861891E3F4004CDF86 /* pipebuttonbase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2BBC2751891E3F4004CDF86 /* pipebuttonbase.cpp */; };
+		C2BBC2871891E3F4004CDF86 /* pipebuttonblock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2BBC2771891E3F4004CDF86 /* pipebuttonblock.cpp */; };
+		C2BBC2881891E3F4004CDF86 /* pipebuttongrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2BBC2791891E3F4004CDF86 /* pipebuttongrid.cpp */; };
+		C2BBC2891891E3F4004CDF86 /* pipebuttonstandard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2BBC2801891E3F4004CDF86 /* pipebuttonstandard.cpp */; };
+		C2BBC28A1891E3F4004CDF86 /* pipedream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2BBC2831891E3F4004CDF86 /* pipedream.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C2BBC22A1891E329004CDF86 /* PipeDream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PipeDream.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2BBC22D1891E329004CDF86 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C2BBC2301891E329004CDF86 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		C2BBC2311891E329004CDF86 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C2BBC2321891E329004CDF86 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C2BBC2351891E329004CDF86 /* PipeDream-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PipeDream-Info.plist"; sourceTree = "<group>"; };
+		C2BBC2371891E329004CDF86 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C2BBC24C1891E329004CDF86 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		C2BBC2621891E38E004CDF86 /* AEProfiling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AEProfiling.framework; sourceTree = "<group>"; };
+		C2BBC2631891E38E004CDF86 /* AERegistration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AERegistration.framework; sourceTree = "<group>"; };
+		C2BBC2641891E38E004CDF86 /* AudioMixEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioMixEngine.framework; sourceTree = "<group>"; };
+		C2BBC2651891E38E004CDF86 /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iTunesLibrary.framework; sourceTree = "<group>"; };
+		C2BBC2661891E38E004CDF86 /* LAME.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LAME.framework; sourceTree = "<group>"; };
+		C2BBC2671891E38E004CDF86 /* NyxAudioAnalysis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NyxAudioAnalysis.framework; sourceTree = "<group>"; };
+		C2BBC2681891E38E004CDF86 /* PluginManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PluginManager.framework; sourceTree = "<group>"; };
+		C2BBC2691891E38E004CDF86 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL.framework; sourceTree = "<group>"; };
+		C2BBC26A1891E38E004CDF86 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
+		C2BBC26B1891E38E004CDF86 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = "<group>"; };
+		C2BBC26C1891E38E004CDF86 /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL_mixer.framework; sourceTree = "<group>"; };
+		C2BBC26E1891E3B1004CDF86 /* libWoopsi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libWoopsi.dylib; path = "../../../../../../Library/Developer/Xcode/DerivedData/Woopsi-ezikgikmhnsvgpbishdqwatsfsyo/Build/Products/Debug/libWoopsi.dylib"; sourceTree = "<group>"; };
+		C2BBC2701891E3D7004CDF86 /* OSXIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = OSXIcon.icns; sourceTree = "<group>"; };
+		C2BBC2731891E3F4004CDF86 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		C2BBC2741891E3F4004CDF86 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C2BBC2751891E3F4004CDF86 /* pipebuttonbase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pipebuttonbase.cpp; sourceTree = "<group>"; };
+		C2BBC2761891E3F4004CDF86 /* pipebuttonbase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonbase.h; sourceTree = "<group>"; };
+		C2BBC2771891E3F4004CDF86 /* pipebuttonblock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pipebuttonblock.cpp; sourceTree = "<group>"; };
+		C2BBC2781891E3F4004CDF86 /* pipebuttonblock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonblock.h; sourceTree = "<group>"; };
+		C2BBC2791891E3F4004CDF86 /* pipebuttongrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pipebuttongrid.cpp; sourceTree = "<group>"; };
+		C2BBC27A1891E3F4004CDF86 /* pipebuttongrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttongrid.h; sourceTree = "<group>"; };
+		C2BBC27B1891E3F4004CDF86 /* pipebuttonhorizontal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonhorizontal.h; sourceTree = "<group>"; };
+		C2BBC27C1891E3F4004CDF86 /* pipebuttonl1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonl1.h; sourceTree = "<group>"; };
+		C2BBC27D1891E3F4004CDF86 /* pipebuttonl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonl2.h; sourceTree = "<group>"; };
+		C2BBC27E1891E3F4004CDF86 /* pipebuttonl3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonl3.h; sourceTree = "<group>"; };
+		C2BBC27F1891E3F4004CDF86 /* pipebuttonl4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonl4.h; sourceTree = "<group>"; };
+		C2BBC2801891E3F4004CDF86 /* pipebuttonstandard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pipebuttonstandard.cpp; sourceTree = "<group>"; };
+		C2BBC2811891E3F4004CDF86 /* pipebuttonstandard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonstandard.h; sourceTree = "<group>"; };
+		C2BBC2821891E3F4004CDF86 /* pipebuttonvertical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttonvertical.h; sourceTree = "<group>"; };
+		C2BBC2831891E3F4004CDF86 /* pipedream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pipedream.cpp; sourceTree = "<group>"; };
+		C2BBC2841891E3F4004CDF86 /* pipedream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipedream.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C2BBC2271891E329004CDF86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2BBC26F1891E3B1004CDF86 /* libWoopsi.dylib in Frameworks */,
+				C2BBC26D1891E3A2004CDF86 /* SDL2.framework in Frameworks */,
+				C2BBC22E1891E329004CDF86 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C2BBC2211891E329004CDF86 = {
+			isa = PBXGroup;
+			children = (
+				C2BBC2701891E3D7004CDF86 /* OSXIcon.icns */,
+				C2BBC2331891E329004CDF86 /* PipeDream */,
+				C2BBC22C1891E329004CDF86 /* Frameworks */,
+				C2BBC22B1891E329004CDF86 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C2BBC22B1891E329004CDF86 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBC22A1891E329004CDF86 /* PipeDream.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C2BBC22C1891E329004CDF86 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBC26E1891E3B1004CDF86 /* libWoopsi.dylib */,
+				C2BBC2611891E38E004CDF86 /* Frameworks */,
+				C2BBC22D1891E329004CDF86 /* Cocoa.framework */,
+				C2BBC24C1891E329004CDF86 /* XCTest.framework */,
+				C2BBC22F1891E329004CDF86 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C2BBC22F1891E329004CDF86 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBC2301891E329004CDF86 /* AppKit.framework */,
+				C2BBC2311891E329004CDF86 /* CoreData.framework */,
+				C2BBC2321891E329004CDF86 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		C2BBC2331891E329004CDF86 /* PipeDream */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBC2721891E3F4004CDF86 /* src */,
+				C2BBC2341891E329004CDF86 /* Supporting Files */,
+			);
+			path = PipeDream;
+			sourceTree = "<group>";
+		};
+		C2BBC2341891E329004CDF86 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBC2351891E329004CDF86 /* PipeDream-Info.plist */,
+				C2BBC2361891E329004CDF86 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C2BBC2611891E38E004CDF86 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBC2621891E38E004CDF86 /* AEProfiling.framework */,
+				C2BBC2631891E38E004CDF86 /* AERegistration.framework */,
+				C2BBC2641891E38E004CDF86 /* AudioMixEngine.framework */,
+				C2BBC2651891E38E004CDF86 /* iTunesLibrary.framework */,
+				C2BBC2661891E38E004CDF86 /* LAME.framework */,
+				C2BBC2671891E38E004CDF86 /* NyxAudioAnalysis.framework */,
+				C2BBC2681891E38E004CDF86 /* PluginManager.framework */,
+				C2BBC2691891E38E004CDF86 /* SDL.framework */,
+				C2BBC26A1891E38E004CDF86 /* SDL2.framework */,
+				C2BBC26B1891E38E004CDF86 /* SDL2_mixer.framework */,
+				C2BBC26C1891E38E004CDF86 /* SDL_mixer.framework */,
+			);
+			name = Frameworks;
+			path = ../../../../../../../../Library/Frameworks;
+			sourceTree = "<group>";
+		};
+		C2BBC2721891E3F4004CDF86 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBC2731891E3F4004CDF86 /* constants.h */,
+				C2BBC2741891E3F4004CDF86 /* main.cpp */,
+				C2BBC2751891E3F4004CDF86 /* pipebuttonbase.cpp */,
+				C2BBC2761891E3F4004CDF86 /* pipebuttonbase.h */,
+				C2BBC2771891E3F4004CDF86 /* pipebuttonblock.cpp */,
+				C2BBC2781891E3F4004CDF86 /* pipebuttonblock.h */,
+				C2BBC2791891E3F4004CDF86 /* pipebuttongrid.cpp */,
+				C2BBC27A1891E3F4004CDF86 /* pipebuttongrid.h */,
+				C2BBC27B1891E3F4004CDF86 /* pipebuttonhorizontal.h */,
+				C2BBC27C1891E3F4004CDF86 /* pipebuttonl1.h */,
+				C2BBC27D1891E3F4004CDF86 /* pipebuttonl2.h */,
+				C2BBC27E1891E3F4004CDF86 /* pipebuttonl3.h */,
+				C2BBC27F1891E3F4004CDF86 /* pipebuttonl4.h */,
+				C2BBC2801891E3F4004CDF86 /* pipebuttonstandard.cpp */,
+				C2BBC2811891E3F4004CDF86 /* pipebuttonstandard.h */,
+				C2BBC2821891E3F4004CDF86 /* pipebuttonvertical.h */,
+				C2BBC2831891E3F4004CDF86 /* pipedream.cpp */,
+				C2BBC2841891E3F4004CDF86 /* pipedream.h */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C2BBC2291891E329004CDF86 /* PipeDream */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C2BBC25B1891E329004CDF86 /* Build configuration list for PBXNativeTarget "PipeDream" */;
+			buildPhases = (
+				C2BBC2261891E329004CDF86 /* Sources */,
+				C2BBC2271891E329004CDF86 /* Frameworks */,
+				C2BBC2281891E329004CDF86 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PipeDream;
+			productName = PipeDream;
+			productReference = C2BBC22A1891E329004CDF86 /* PipeDream.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C2BBC2221891E329004CDF86 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Antony Dzeryn";
+			};
+			buildConfigurationList = C2BBC2251891E329004CDF86 /* Build configuration list for PBXProject "PipeDream" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C2BBC2211891E329004CDF86;
+			productRefGroup = C2BBC22B1891E329004CDF86 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C2BBC2291891E329004CDF86 /* PipeDream */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C2BBC2281891E329004CDF86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2BBC2711891E3D7004CDF86 /* OSXIcon.icns in Resources */,
+				C2BBC2381891E329004CDF86 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C2BBC2261891E329004CDF86 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2BBC2891891E3F4004CDF86 /* pipebuttonstandard.cpp in Sources */,
+				C2BBC2851891E3F4004CDF86 /* main.cpp in Sources */,
+				C2BBC2871891E3F4004CDF86 /* pipebuttonblock.cpp in Sources */,
+				C2BBC28A1891E3F4004CDF86 /* pipedream.cpp in Sources */,
+				C2BBC2861891E3F4004CDF86 /* pipebuttonbase.cpp in Sources */,
+				C2BBC2881891E3F4004CDF86 /* pipebuttongrid.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C2BBC2361891E329004CDF86 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C2BBC2371891E329004CDF86 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C2BBC2591891E329004CDF86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../../../sdl,
+					../../../libwoopsi/include,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C2BBC25A1891E329004CDF86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../../../sdl,
+					../../../libwoopsi/include,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C2BBC25C1891E329004CDF86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "PipeDream/PipeDream-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Woopsi-ezikgikmhnsvgpbishdqwatsfsyo/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C2BBC25D1891E329004CDF86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "PipeDream/PipeDream-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Woopsi-ezikgikmhnsvgpbishdqwatsfsyo/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C2BBC2251891E329004CDF86 /* Build configuration list for PBXProject "PipeDream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2BBC2591891E329004CDF86 /* Debug */,
+				C2BBC25A1891E329004CDF86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C2BBC25B1891E329004CDF86 /* Build configuration list for PBXNativeTarget "PipeDream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C2BBC25C1891E329004CDF86 /* Debug */,
+				C2BBC25D1891E329004CDF86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C2BBC2221891E329004CDF86 /* Project object */;
+}

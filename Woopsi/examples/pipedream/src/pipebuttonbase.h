@@ -1,8 +1,9 @@
 #ifndef _PIPE_BUTTON_BASE_H_
 #define _PIPE_BUTTON_BASE_H_
 
-#include "button.h"
-#include "graphicsport.h"
+#include <button.h>
+#include <graphicsport.h>
+
 #include "constants.h"
 
 using namespace WoopsiUI;
@@ -57,6 +58,8 @@ protected:
 	void onClick(s16 x, s16 y);
 	
 	void setConnectors(const Connectors& connectors) { _connectors = connectors; };
+	
+	void drawUnrevealedContents(GraphicsPort* port);
 	
 private:
 	bool _isRevealed;
