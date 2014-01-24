@@ -26,34 +26,35 @@ protected:
 		Rect rect;
 		getClientRect(rect);
 		
-		u16 colour;
+		s16 x1 = rect.width / 2;
+		s16 x2 = x1;
 		
-		if (isEnabled()) {
-			colour = getShadowColour();
-		} else {
-			colour = getDarkColour();
-		}
+		port->drawLine(x1, 0, x2, rect.height, woopsiRGB(0, 0, 0));
 		
 		// Draw flow
-		if (!hasAvailableTopConnector()) {
-			// Flow is moving downwards
-			port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, 0, FLOW_SIZE, getFlowLevel(), woopsiRGB(0, 0, 20));
-		} else {
-			// Flow is moving upwards
-			port->drawFilledRect(((rect.width - FLOW_SIZE) / 2) + 1, getHeight() - getFlowLevel() - 1, FLOW_SIZE, getFlowLevel(), woopsiRGB(0, 0, 20));
+		if (getFlowLevel() > 0) {
+			s16 burntY1 = 0;
+			s16 burntY2 = 0;
+			
+			if (!hasAvailableTopConnector()) {
+			
+				// Flow is moving downwards
+				burntY1 = 0;
+				burntY2 = (rect.height * getFlowLevel()) / 100;
+				
+			} else {
+				
+				// Flow is moving upwards
+				burntY1 = rect.height;
+				burntY2 = rect.height - ((rect.height * getFlowLevel()) / 100);
+			}
+		
+			port->drawLine(x1, burntY1, x2, burntY2, woopsiRGB(31, 0, 0));
+			
+			if (getFlowLevel() < 100) {
+				drawSpark(x1, burntY2, port);
+			}
 		}
-		
-		s16 x1 = (rect.width - FLOW_SIZE) / 2;
-		s16 y1 = 0;
-		s16 x2 = x1;
-		s16 y2 = y1 + rect.height - 1;
-
-		port->drawLine(x1, y1, x2, y2, colour);
-		
-		x1 = (rect.width + FLOW_SIZE) / 2;
-		x2 = x1;
-		
-		port->drawLine(x1, y1, x2, y2, colour);
 	}
 };
 	

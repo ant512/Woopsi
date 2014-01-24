@@ -26,34 +26,35 @@ protected:
 		Rect rect;
 		getClientRect(rect);
 		
-		u16 colour;
-		
-		if (isEnabled()) {
-			colour = getShadowColour();
-		} else {
-			colour = getDarkColour();
-		}
-		
-		// Draw flow
-		if (!hasAvailableLeftConnector()) {
-			// Flow is moving right
-			port->drawFilledRect(0, ((rect.height - FLOW_SIZE) / 2) + 1, getFlowLevel(), FLOW_SIZE, woopsiRGB(0, 0, 20));
-		} else {
-			// Flow is moving left
-			port->drawFilledRect(getWidth() - getFlowLevel() - 1, ((rect.height - FLOW_SIZE) / 2) + 1, getFlowLevel(), FLOW_SIZE, woopsiRGB(0, 0, 20));
-		}
-
-		s16 x1 = 0;
-		s16 y1 = (rect.height - FLOW_SIZE) / 2;
-		s16 x2 = rect.width - 1;
+		s16 y1 = rect.height / 2;
 		s16 y2 = y1;
 		
-		port->drawLine(x1, y1, x2, y2, colour);
+		port->drawLine(0, y1, rect.width, y2, woopsiRGB(0, 0, 0));
 		
-		y1 = (rect.height + FLOW_SIZE) / 2;
-		y2 = y1;
-		
-		port->drawLine(x1, y1, x2, y2, colour);
+		// Draw flow
+		if (getFlowLevel() > 0) {
+			s16 burntX1 = 0;
+			s16 burntX2 = 0;
+			
+			if (!hasAvailableLeftConnector()) {
+				
+				// Flow is moving right
+				burntX1 = 0;
+				burntX2 = (rect.width * getFlowLevel()) / 100;
+				
+			} else {
+				
+				// Flow is moving left
+				burntX1 = rect.width;
+				burntX2 = rect.width - ((rect.width * getFlowLevel()) / 100);
+			}
+			
+			port->drawLine(burntX1, y1, burntX2, y2, woopsiRGB(31, 0, 0));
+			
+			if (getFlowLevel() < 100) {
+				drawSpark(burntX2, y2, port);
+			}
+		}
 	}
 };
 	

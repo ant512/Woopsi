@@ -17,7 +17,8 @@ public:
 	
 private:
 	PipeButtonGrid* _grid;
-	WoopsiTimer* _timer;
+	WoopsiTimer* _flowTimer;
+	WoopsiTimer* _redrawTimer;
 };
 
 #endif

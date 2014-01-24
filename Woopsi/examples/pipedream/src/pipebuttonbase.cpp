@@ -103,3 +103,12 @@ void PipeButtonBase::drawUnrevealedContents(GraphicsPort* port) {
 	
 	port->drawText((getWidth() - width) / 2, (getHeight() - height) / 2, _style.font, "?");
 }
+
+void PipeButtonBase::drawSpark(s16 x, s16 y, GraphicsPort* port) {
+	u16 redRadius = rand() % 5;
+	u16 yellowRadius = redRadius - rand() % 3;
+	u16 whiteRadius = 1;
+	port->drawFilledEllipse(x, y, redRadius, redRadius, woopsiRGB(31, 0, 0));
+	port->drawFilledEllipse(x, y, yellowRadius, yellowRadius, woopsiRGB(31, 31, 0));
+	port->drawFilledEllipse(x, y, whiteRadius, whiteRadius, woopsiRGB(31, 31, 31));
+}

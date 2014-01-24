@@ -22,11 +22,17 @@ void PipeDream::startup() {
 	_grid->setRefcon(1);
 	window->addGadget(_grid);
 	
-	_timer = new WoopsiTimer(20, true);
-	_timer->setGadgetEventHandler(this);
-	window->addGadget(_timer);
-	_timer->setRefcon(2);
-	_timer->start();
+	_flowTimer = new WoopsiTimer(20, true);
+	_flowTimer->setGadgetEventHandler(this);
+	window->addGadget(_flowTimer);
+	_flowTimer->setRefcon(2);
+	_flowTimer->start();
+	
+	_redrawTimer = new WoopsiTimer(1, true);
+	_redrawTimer->setGadgetEventHandler(this);
+	window->addGadget(_redrawTimer);
+	_redrawTimer->setRefcon(3);
+	_redrawTimer->start();
 }
 
 void PipeDream::shutdown() {
@@ -36,13 +42,15 @@ void PipeDream::shutdown() {
 }
 
 void PipeDream::handleActionEvent(Gadget& source) {
-	if (&source == _timer) {
-		if (!_grid->increaseFlow(1)) {
+	if (&source == _flowTimer) {
+		if (!_grid->increaseFlow(5)) {
 		
 			// Game over
 			//while(1) {
 			//	Hardware::waitForVBlank();
 			//}
 		}
+	} else if (&source == _redrawTimer) {
+		_grid->redrawActiveButton();
 	}
 }

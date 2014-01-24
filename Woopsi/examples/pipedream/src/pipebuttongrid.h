@@ -19,6 +19,8 @@ public:
 	PipeButtonBase* getEndButton();
 	bool increaseFlow(u8 increase);
 	
+	void redrawActiveButton();
+	
 private:
 	u8 _rows;
 	u8 _columns;

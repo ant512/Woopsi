@@ -158,7 +158,7 @@ bool PipeButtonGrid::increaseFlow(u8 increase) {
 	for (s32 i = 0; i < _activeButtons.size(); ++i) {
 		active = _activeButtons[i];
 
-		active->increaseFlowLevel(1);
+		active->increaseFlowLevel(increase);
 	
 		if (active->getFlowLevel() >= MAX_PIPE_BUTTON_FLOW) {
 		
@@ -292,4 +292,10 @@ PipeButtonBase* PipeButtonGrid::getPipeButtonAt(s16 column, s16 row) {
 	}
 	
 	return NULL;
+}
+
+void PipeButtonGrid::redrawActiveButton() {
+	for (s32 i = 0; i < _activeButtons.size(); ++i) {
+		_activeButtons[i]->markRectsDamaged();
+	}
 }

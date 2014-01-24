@@ -60,6 +60,7 @@ protected:
 	void setConnectors(const Connectors& connectors) { _connectors = connectors; };
 	
 	void drawUnrevealedContents(GraphicsPort* port);
+	void drawSpark(s16 x, s16 y, GraphicsPort* port);
 	
 private:
 	bool _isRevealed;
