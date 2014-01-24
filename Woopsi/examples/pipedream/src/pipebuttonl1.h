@@ -8,6 +8,10 @@
 
 using namespace WoopsiUI;
 
+/**
+ * |
+ * --
+ */
 class PipeButtonL1 : public PipeButtonStandard {
 public:
 	PipeButtonL1(s16 x, s16 y, u16 width, u16 height) : PipeButtonStandard(x, y, width, height, true, true, false, false) { };

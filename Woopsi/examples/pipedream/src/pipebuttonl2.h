@@ -7,6 +7,10 @@
 
 using namespace WoopsiUI;
 
+/**
+ * __
+ * |
+ */
 class PipeButtonL2 : public PipeButtonStandard {
 public:
 	PipeButtonL2(s16 x, s16 y, u16 width, u16 height) : PipeButtonStandard(x, y, width, height, false, true, true, false) { };
@@ -55,8 +59,8 @@ protected:
 		if (getFlowLevel() > 0) {
 			if (getFlowLevel() < MAX_PIPE_BUTTON_FLOW / 2) {
 				if (startX == midX) {
-					port->drawLine(startX, startY, midX, startY + burnSize, woopsiRGB(31, 0, 0));
-					drawSpark(startX, startY + burnSize, port);
+					port->drawLine(startX, startY, midX, startY - burnSize, woopsiRGB(31, 0, 0));
+					drawSpark(startX, startY - burnSize, port);
 				} else {
 					port->drawLine(startX, startY, startX - burnSize, midY, woopsiRGB(31, 0, 0));
 					drawSpark(startX - burnSize, startY, port);
@@ -68,10 +72,10 @@ protected:
 				burnSize = ((getFlowLevel() - (MAX_PIPE_BUTTON_FLOW / 2)) * getWidth()) / 100;
 				
 				if (endX == midX) {
-					port->drawLine(midX, midY, endX, midY - burnSize, woopsiRGB(31, 0, 0));
+					port->drawLine(midX, midY, endX, midY + burnSize, woopsiRGB(31, 0, 0));
 					
 					if (getFlowLevel() < MAX_PIPE_BUTTON_FLOW) {
-						drawSpark(midX, midY - burnSize, port);
+						drawSpark(midX, midY + burnSize, port);
 					}
 				} else {
 					port->drawLine(midX, midY, midX + burnSize, endY, woopsiRGB(31, 0, 0));
