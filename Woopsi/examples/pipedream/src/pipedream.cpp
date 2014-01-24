@@ -18,7 +18,7 @@ void PipeDream::startup() {
 	Rect rect;
 	window->getClientRect(rect);
 	
-	_grid = new PipeButtonGrid(rect.x + 2, rect.y + 2, 6, 6);
+	_grid = new PipeButtonGrid(rect.x + 1, rect.y + 1, 8, 8);
 	_grid->setRefcon(1);
 	window->addGadget(_grid);
 	
@@ -40,7 +40,9 @@ void PipeDream::handleActionEvent(Gadget& source) {
 		if (!_grid->increaseFlow(1)) {
 		
 			// Game over
-			while(1);
+			while(1) {
+				Hardware::waitForVBlank();
+			}
 		}
 	}
 }
