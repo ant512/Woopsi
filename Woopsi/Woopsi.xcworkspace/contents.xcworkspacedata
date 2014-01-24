@@ -19,4 +19,7 @@
    <FileRef
       location = "group:examples/packedfonts/PackedFonts/PackedFonts.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:examples/pipedream/PipeDream/PipeDream.xcodeproj">
+   </FileRef>
 </Workspace>
