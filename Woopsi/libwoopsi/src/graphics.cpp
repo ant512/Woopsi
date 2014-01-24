@@ -1081,10 +1081,20 @@ void Graphics::drawLine(s16 x1, s16 y1, s16 x2, s16 y2, u16 colour) {
 
 	// Choose shortcut for horizontal or vertical lines
 	if (x1 == x2) {
-		drawVertLine(x1, y1, (y2 - y1) + 1, colour);
+		
+		if (y1 < y2) {
+			drawVertLine(x1, y1, (y2 - y1) + 1, colour);
+		} else {
+			drawVertLine(x1, y2, (y1 - y2) + 1, colour);
+		}
 		return;
 	} else if (y1 == y2) {
-		drawHorizLine(x1, y1, (x2 - x1) + 1, colour);
+		
+		if (x1 < x2) {
+			drawHorizLine(x1, y1, (x2 - x1) + 1, colour);
+		} else {
+			drawHorizLine(x2, y1, (x1 - x2) + 1, colour);
+		}
 		return;
 	}
 
