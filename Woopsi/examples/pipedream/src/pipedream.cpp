@@ -118,7 +118,7 @@ void PipeDream::handleActionEvent(Gadget& source) {
 				_redrawTimer->stop();
 				_flowTimer->stop();
 				_grid->disable();
-				Alert* alert = new Alert((SCREEN_WIDTH - 100) / 2, (SCREEN_HEIGHT - 80) / 2, 100, 80, "Game Over", "Ooops!");
+				Alert* alert = new Alert((SCREEN_WIDTH - 100) / 2, (SCREEN_HEIGHT - 80) / 2, 100, 80, "Ooops!", "Game Over");
 
 				// We always want to show the modal alert on the touch screen
 				AmigaScreen* screen = NULL;
