@@ -1,5 +1,7 @@
+#include <alert.h>
 #include <amigascreen.h>
 #include <amigawindow.h>
+#include <button.h>
 #include <tab.h>
 
 #include "constants.h"
@@ -11,9 +13,9 @@ void PipeDream::startup() {
 }
 
 void PipeDream::createDocsScreen() {
-	AmigaScreen* screen = new AmigaScreen("Documentation", true, true);
-	woopsiApplication->addGadget(screen);
-	screen->flipToTopScreen();
+	_docsScreen = new AmigaScreen("Documentation", true, true);
+	woopsiApplication->addGadget(_docsScreen);
+	_docsScreen->flipToTopScreen();
 
 	_tabs = new TabGroup(0, SCREEN_TITLE_HEIGHT, SCREEN_WIDTH, 20);
 	_tabs->setRefcon(4);
@@ -25,7 +27,7 @@ void PipeDream::createDocsScreen() {
 	tab = _tabs->newTab("About");
 	tab->setRefcon(2);
 
-	screen->addGadget(_tabs);
+	_docsScreen->addGadget(_tabs);
 
 	s16 textBoxY = _tabs->getRelativeY() + _tabs->getHeight();
 
@@ -48,7 +50,7 @@ void PipeDream::createDocsScreen() {
 	_instructionsTextBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 	_instructionsTextBox->jump(0, 0);
 	_instructionsTextBox->hideCursor();
-	screen->addGadget(_instructionsTextBox);
+	_docsScreen->addGadget(_instructionsTextBox);
 
 	_aboutTextBox = new ScrollingTextBox(0, textBoxY, SCREEN_WIDTH, SCREEN_HEIGHT - textBoxY, "Sparky Version 1.0\n\n"
 										 "Copyright 2014 Antony Dzeryn\n\n"
@@ -62,19 +64,19 @@ void PipeDream::createDocsScreen() {
 	_aboutTextBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 	_aboutTextBox->jump(0, 0);
 	_aboutTextBox->hideCursor();
-	screen->addGadget(_aboutTextBox);
+	_docsScreen->addGadget(_aboutTextBox);
 	_aboutTextBox->shelve();
 }
 
 void PipeDream::createGameScreen() {
 
 	// Create screens
-	AmigaScreen* screen = new AmigaScreen("Sparky", true, true);
-	woopsiApplication->addGadget(screen);
+	_gameScreen = new AmigaScreen("Sparky", true, true);
+	woopsiApplication->addGadget(_gameScreen);
 
 	// Add window
 	AmigaWindow* window = new AmigaWindow(0, 13, 256, 179, "Sparky", false, true);
-	screen->addGadget(window);
+	_gameScreen->addGadget(window);
 
 	// Get available area within window
 	Rect rect;
@@ -82,19 +84,23 @@ void PipeDream::createGameScreen() {
 
 	_grid = new PipeButtonGrid(rect.x + 1, rect.y + 1, 8, 8);
 	_grid->setRefcon(1);
+	_grid->disable();
 	window->addGadget(_grid);
+
+	Button* button = new Button(_grid->getRelativeX() + _grid->getWidth() + 10, 20, 50, 20, "Start");
+	button->setGadgetEventHandler(this);
+	button->setRefcon(4);
+	window->addGadget(button);
 
 	_flowTimer = new WoopsiTimer(20, true);
 	_flowTimer->setGadgetEventHandler(this);
 	window->addGadget(_flowTimer);
 	_flowTimer->setRefcon(2);
-	_flowTimer->start();
 
 	_redrawTimer = new WoopsiTimer(1, true);
 	_redrawTimer->setGadgetEventHandler(this);
 	window->addGadget(_redrawTimer);
 	_redrawTimer->setRefcon(3);
-	_redrawTimer->start();
 }
 
 void PipeDream::shutdown() {
@@ -108,24 +114,37 @@ void PipeDream::handleActionEvent(Gadget& source) {
 		case 2:
 			if (!_grid->increaseFlow(5)) {
 
-				// Game over
-				//while(1) {
-				//	Hardware::waitForVBlank();
-				//}
+				// Game over!
+				_redrawTimer->stop();
+				_flowTimer->stop();
+				_grid->disable();
+				Alert* alert = new Alert((SCREEN_WIDTH - 100) / 2, (SCREEN_HEIGHT - 80) / 2, 100, 80, "Game Over", "Ooops!");
+
+				// We always want to show the modal alert on the touch screen
+				AmigaScreen* screen = NULL;
+
+				if (_gameScreen->getPhysicalScreenNumber() == 0) {
+					screen = _gameScreen;
+				} else {
+					screen = _docsScreen;
+				}
+
+				screen->addGadget(alert);
+				alert->goModal();
 			}
 			break;
 		case 3:
 			_grid->redrawActiveButton();
 			break;
 		case 4:
-			_instructionsTextBox->unshelve();
-			_aboutTextBox->shelve();
-			break;
-		case 5:
-			_instructionsTextBox->shelve();
-			_aboutTextBox->unshelve();
-			break;
-		case 6:
+
+			// Restart
+			_grid->reset();
+			_grid->enable();
+			//_redrawTimer->reset();
+			_redrawTimer->start();
+			//_flowTimer->reset();
+			_flowTimer->start();
 			break;
 	}
 }

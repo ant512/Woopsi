@@ -1,6 +1,7 @@
 #ifndef _PIPE_DREAM_H_
 #define _PIPE_DREAM_H_
 
+#include <amigascreen.h>
 #include <woopsi.h>
 #include <gadgeteventhandler.h>
 #include <woopsitimer.h>
@@ -26,6 +27,8 @@ private:
 	TabGroup* _tabs;
 	ScrollingTextBox* _instructionsTextBox;
 	ScrollingTextBox* _aboutTextBox;
+	AmigaScreen* _gameScreen;
+	AmigaScreen* _docsScreen;
 	
 	void createGameScreen();
 	void createDocsScreen();

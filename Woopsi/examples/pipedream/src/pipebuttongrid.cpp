@@ -21,6 +21,16 @@ PipeButtonGrid::PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns) : Gadget(x, y,
 	generateRandomLayout();
 }
 
+void PipeButtonGrid::reset() {
+	_activeButtons.clear();
+
+	while (getGadgetCount() > 0) {
+		removeGadget(getGadget(getGadgetCount() - 1));
+	}
+
+	generateRandomLayout();
+}
+
 void PipeButtonGrid::generateRandomLayout() {
 
 	PipeButtonBase* button = NULL;
@@ -103,7 +113,18 @@ void PipeButtonGrid::generateRandomLayout() {
 	resize(_columns * _buttonWidth, _rows * _buttonHeight);
 }
 
+bool PipeButtonGrid::isButtonActive(PipeButtonBase* button) {
+	for (int i = 0; i < _activeButtons.size(); ++i) {
+		if (button == _activeButtons[i]) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void PipeButtonGrid::handleDropEvent(Gadget& source, const WoopsiPoint& point) {
+
 	PipeButtonBase* sourceButton = (PipeButtonBase*)&source;
 	PipeButtonBase* destButton;
 	
@@ -119,6 +140,9 @@ void PipeButtonGrid::handleDropEvent(Gadget& source, const WoopsiPoint& point) {
 		if (!sourceButton->checkCollision(destButton)) continue;
 		if (!destButton->canSwap()) continue;
 		if (destButton->isBeingDragged()) continue;
+
+		if (isButtonActive(sourceButton)) continue;
+		if (isButtonActive(destButton)) continue;
 		
 		// Exchange button co-ordinates
 		s16 destX = destButton->getOriginalX();

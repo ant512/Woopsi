@@ -20,6 +20,8 @@ public:
 	bool increaseFlow(u8 increase);
 	
 	void redrawActiveButton();
+
+	void reset();
 	
 private:
 	u8 _rows;
@@ -35,6 +37,7 @@ private:
 	bool activateNextPipe(PipeButtonBase* activePipe);
 	PipeButtonBase* getPipeButtonAt(s16 column, s16 row);
 	void generateRandomLayout();
+	bool isButtonActive(PipeButtonBase* button);
 };
 	
 #endif
