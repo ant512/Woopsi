@@ -50,7 +50,10 @@ void PipeDream::createDocsScreen() {
 												"- Grey dead ends\n"
 												"- Entrance and exit\n"
 												"- Path tiles that have already been travelled\n\n"
-												"Dragging a tile to a non-draggable destination will have no effect.", 50);
+												"Dragging a tile to a non-draggable destination will have no effect.\n\n"
+												"Buttons\n\n"
+												"Start: Starts a new game.\n"
+												"Complete: Speeds up the spark to quickly complete a level.", 50);
 	_instructionsTextBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
 	_instructionsTextBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 	_instructionsTextBox->jump(0, 0);
