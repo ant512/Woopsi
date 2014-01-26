@@ -36,11 +36,25 @@ void PipeButtonGrid::reset() {
 void PipeButtonGrid::generateRandomLayout() {
 
 	PipeButtonBase* button = NULL;
-	
+
+	bool startAtTop = rand() % 2;
+
 	u8 startRow = 0;
-	u8 startColumn = 3;
-	u8 endRow = _rows - 1;
-	u8 endColumn = 1;
+	u8 startColumn = 0;
+	u8 endRow = 0;
+	u8 endColumn = 0;
+
+	if (startAtTop) {
+		startRow = 0;
+		endRow = _rows - 1;
+		startColumn = 1 + (rand() % (_columns - 2));
+		endColumn = 1 + (rand() % (_rows - 2));
+	} else {
+		startColumn = 0;
+		endColumn = _columns - 1;
+		startRow = 1 + (rand() % (_columns - 2));
+		endRow = 1 + (rand() % (_rows - 2));
+	}
 
 	for (u8 y = 0; y < _rows; ++y) {
 		for (u8 x = 0; x < _columns; ++x) {
@@ -48,15 +62,14 @@ void PipeButtonGrid::generateRandomLayout() {
 			if ((y == startRow) && (x == startColumn)) {
 				
 				// Add start button
-				/*
-				bool top = y == _rows - 1 && x > 0;
-				bool right = y > 0 && x == 0;
-				bool bottom = y == 0 && x > 0;
-				bool left = y > 0 && x == _columns - 1;
-				 */
-				
-				button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
-				button->plugTopConnector();
+				if (startAtTop) {
+					button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
+					button->plugTopConnector();
+				} else {
+					button = new PipeButtonHorizontal(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
+					button->plugLeftConnector();
+				}
+
 				button->reveal();
 				button->disable();
 				_startButton = button;
@@ -64,15 +77,14 @@ void PipeButtonGrid::generateRandomLayout() {
 			} else if ((y == endRow) && (x == endColumn)) {
 			
 				// Add end button
-				/*
-				bool top = y == _rows - 1 && x > 0;
-				bool right = y > 0 && x == 0;
-				bool bottom = y == 0 && x > 0;
-				bool left = y > 0 && x == _columns - 1;
-				 */
-				
-				button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
-				button->plugBottomConnector();
+				if (startAtTop) {
+					button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
+					button->plugBottomConnector();
+				} else {
+					button = new PipeButtonHorizontal(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
+					button->plugRightConnector();
+				}
+
 				button->reveal();
 				button->disable();
 				_endButton = button;
