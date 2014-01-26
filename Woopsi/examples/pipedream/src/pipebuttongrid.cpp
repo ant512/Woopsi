@@ -19,10 +19,10 @@ PipeButtonGrid::PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns) : Gadget(x, y,
 	_rows = rows;
 	_columns = columns;
 	
-	generateRandomLayout();
+	generateRandomLayout(0);
 }
 
-void PipeButtonGrid::reset() {
+void PipeButtonGrid::reset(u8 level) {
 	_activeButtons.clear();
 	_isComplete = false;
 
@@ -30,10 +30,10 @@ void PipeButtonGrid::reset() {
 		removeGadget(getGadget(getGadgetCount() - 1));
 	}
 
-	generateRandomLayout();
+	generateRandomLayout(level);
 }
 
-void PipeButtonGrid::generateRandomLayout() {
+void PipeButtonGrid::generateRandomLayout(u8 level) {
 
 	PipeButtonBase* button = NULL;
 

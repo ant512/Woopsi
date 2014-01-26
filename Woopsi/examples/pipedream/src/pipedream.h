@@ -28,6 +28,7 @@ private:
 	TabGroup* _tabs;
 	ScrollingTextBox* _instructionsTextBox;
 	ScrollingTextBox* _aboutTextBox;
+	ScrollingTextBox* _licenseTextBox;
 	AmigaScreen* _gameScreen;
 	AmigaScreen* _docsScreen;
 	TextBox* _levelTextBox;

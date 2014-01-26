@@ -21,7 +21,7 @@ public:
 	
 	void redrawActiveButton();
 
-	void reset();
+	void reset(u8 level);
 
 	bool isComplete();
 	
@@ -39,7 +39,7 @@ private:
 	void drawContents(GraphicsPort* port);
 	bool activateNextPipe(PipeButtonBase* activePipe);
 	PipeButtonBase* getPipeButtonAt(s16 column, s16 row);
-	void generateRandomLayout();
+	void generateRandomLayout(u8 level);
 	bool isButtonActive(PipeButtonBase* button);
 };
 	

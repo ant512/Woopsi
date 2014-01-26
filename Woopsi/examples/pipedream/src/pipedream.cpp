@@ -32,6 +32,9 @@ void PipeDream::createDocsScreen() {
 	tab = _tabs->newTab("About");
 	tab->setRefcon(2);
 
+	tab = _tabs->newTab("License");
+	tab->setRefcon(3);
+
 	_docsScreen->addGadget(_tabs);
 
 	s16 textBoxY = _tabs->getRelativeY() + _tabs->getHeight();
@@ -74,6 +77,34 @@ void PipeDream::createDocsScreen() {
 	_aboutTextBox->hideCursor();
 	_docsScreen->addGadget(_aboutTextBox);
 	_aboutTextBox->shelve();
+
+	_licenseTextBox = new ScrollingTextBox(0, textBoxY, SCREEN_WIDTH, SCREEN_HEIGHT - textBoxY, "Copyright (c) 2014, Antony Dzeryn\n"
+										   "All rights reserved.\n\n"
+										   "Redistribution and use in source and binary forms, with or without modification, are "
+										   "permitted provided that the following conditions are met:\n\n"
+										   "* Redistributions of source code must retain the above copyright notice, this list "
+										   "of conditions and the following disclaimer.\n"
+										   "* Redistributions in binary form must reproduce the above copyright notice, this list "
+										   "of conditions and the following disclaimer in the documentation and/or other materials "
+										   "provided with the distribution.\n"
+										   "* Neither the names 'Sparky', 'Simian Zombie' nor the names of its contributors may be "
+										   "used to endorse or promote products derived from this software without specific prior "
+										   "written permission.\n\n"
+										   "THIS SOFTWARE IS PROVIDED BY Antony Dzeryn ``AS IS'' AND ANY EXPRESS OR IMPLIED "
+										   "WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY "
+										   "AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Antony Dzeryn "
+										   "BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL "
+										   "DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; "
+										   "LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY "
+										   "THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING "
+										   "NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF "
+										   "ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.", 100);
+	_licenseTextBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
+	_licenseTextBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
+	_licenseTextBox->jump(0, 0);
+	_licenseTextBox->hideCursor();
+	_docsScreen->addGadget(_licenseTextBox);
+	_licenseTextBox->shelve();
 }
 
 void PipeDream::createGameScreen() {
@@ -150,7 +181,7 @@ void PipeDream::handleActionEvent(Gadget& source) {
 
 					// Level complete
 					setLevel(_level + 1);
-					_grid->reset();
+					_grid->reset(_level);
 					_grid->enable();
 					_redrawTimer->start();
 					_flowTimer->setTimeout(FLOW_TIMEOUT_SLOW);
@@ -184,7 +215,7 @@ void PipeDream::handleActionEvent(Gadget& source) {
 
 			// Restart
 			setLevel(0);
-			_grid->reset();
+			_grid->reset(_level);
 			_grid->enable();
 			_redrawTimer->start();
 			_flowTimer->setTimeout(FLOW_TIMEOUT_SLOW);
@@ -206,10 +237,17 @@ void PipeDream::handleValueChangeEvent(Gadget& source) {
 				case 1:
 					_instructionsTextBox->unshelve();
 					_aboutTextBox->shelve();
+					_licenseTextBox->shelve();
 					break;
 				case 2:
 					_instructionsTextBox->shelve();
 					_aboutTextBox->unshelve();
+					_licenseTextBox->shelve();
+					break;
+				case 3:
+					_instructionsTextBox->shelve();
+					_aboutTextBox->shelve();
+					_licenseTextBox->unshelve();
 					break;
 			}
 			break;
