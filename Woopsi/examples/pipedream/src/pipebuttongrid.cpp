@@ -1,6 +1,7 @@
+#include <woopsi.h>
+
 #include "pipebuttongrid.h"
 #include "constants.h"
-#include "debug.h"
 #include "pipebuttonstandard.h"
 #include "pipebuttonblock.h"
 #include "pipebuttonhorizontal.h"
@@ -34,6 +35,8 @@ void PipeButtonGrid::reset(u8 level) {
 }
 
 void PipeButtonGrid::generateRandomLayout(u8 level) {
+
+	srand(woopsiApplication->getVBLCount());
 
 	PipeButtonBase* button = NULL;
 
