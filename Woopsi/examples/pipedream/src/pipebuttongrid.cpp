@@ -14,6 +14,7 @@ PipeButtonGrid::PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns) : Gadget(x, y,
 	_buttonWidth = PIPE_BUTTON_SIZE;
 	_buttonHeight = PIPE_BUTTON_SIZE;
 	_flags.borderless = true;
+	_isComplete = false;
 	
 	_rows = rows;
 	_columns = columns;
@@ -23,6 +24,7 @@ PipeButtonGrid::PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns) : Gadget(x, y,
 
 void PipeButtonGrid::reset() {
 	_activeButtons.clear();
+	_isComplete = false;
 
 	while (getGadgetCount() > 0) {
 		removeGadget(getGadget(getGadgetCount() - 1));
@@ -198,6 +200,10 @@ bool PipeButtonGrid::increaseFlow(u8 increase) {
 	return true;
 }
 
+bool PipeButtonGrid::isComplete() {
+	return _isComplete;
+}
+
 bool PipeButtonGrid::activateNextPipe(PipeButtonBase* activePipe) {
 
 	PipeButtonBase* nextPipe;
@@ -293,6 +299,10 @@ bool PipeButtonGrid::activateNextPipe(PipeButtonBase* activePipe) {
 				connectedCount++;
 			}
 		}
+	}
+
+	if (_activeButtons[_activeButtons.size() - 1] == _endButton) {
+		_isComplete = true;
 	}
 	
 	return (connectionCount == connectedCount) && (connectionCount > 0);

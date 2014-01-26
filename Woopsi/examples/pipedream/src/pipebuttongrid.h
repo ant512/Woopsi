@@ -22,12 +22,15 @@ public:
 	void redrawActiveButton();
 
 	void reset();
+
+	bool isComplete();
 	
 private:
 	u8 _rows;
 	u8 _columns;
 	u16 _buttonWidth;
 	u16 _buttonHeight;
+	bool _isComplete;
 	WoopsiArray<PipeButtonBase*> _activeButtons;
 	PipeButtonBase* _startButton;
 	PipeButtonBase* _endButton;

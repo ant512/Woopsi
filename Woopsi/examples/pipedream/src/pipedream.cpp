@@ -121,9 +121,18 @@ void PipeDream::createGameScreen() {
 	WoopsiString level;
 	level.format("%d", _level);
 
-	TextBox* levelTextBox = new TextBox(levelLabel->getRelativeX() + levelLabel->getWidth() + 2, levelLabel->getRelativeY(), 28, levelLabel->getHeight(), level);
-	levelTextBox->hideCursor();
-	window->addGadget(levelTextBox);
+	_levelTextBox = new TextBox(levelLabel->getRelativeX() + levelLabel->getWidth() + 2, levelLabel->getRelativeY(), 28, levelLabel->getHeight(), level);
+	_levelTextBox->hideCursor();
+	window->addGadget(_levelTextBox);
+}
+
+void PipeDream::setLevel(u8 level) {
+	_level = level;
+
+	WoopsiString str;
+	str.format("%d", _level);
+
+	_levelTextBox->setText(str);
 }
 
 void PipeDream::shutdown() {
@@ -137,23 +146,35 @@ void PipeDream::handleActionEvent(Gadget& source) {
 		case 2:
 			if (!_grid->increaseFlow(FLOW_INCREASE)) {
 
-				// Game over!
-				_redrawTimer->stop();
-				_flowTimer->stop();
-				_grid->disable();
-				Alert* alert = new Alert((SCREEN_WIDTH - 100) / 2, (SCREEN_HEIGHT - 80) / 2, 100, 80, "Ooops!", "Game Over");
+				if (_grid->isComplete()) {
 
-				// We always want to show the modal alert on the touch screen
-				AmigaScreen* screen = NULL;
-
-				if (_gameScreen->getPhysicalScreenNumber() == 0) {
-					screen = _gameScreen;
+					// Level complete
+					setLevel(_level + 1);
+					_grid->reset();
+					_grid->enable();
+					_redrawTimer->start();
+					_flowTimer->setTimeout(FLOW_TIMEOUT_SLOW);
+					_flowTimer->start();
 				} else {
-					screen = _docsScreen;
-				}
 
-				screen->addGadget(alert);
-				alert->goModal();
+					// Game over
+					_redrawTimer->stop();
+					_flowTimer->stop();
+					_grid->disable();
+					Alert* alert = new Alert((SCREEN_WIDTH - 100) / 2, (SCREEN_HEIGHT - 80) / 2, 100, 80, "Ooops!", "Game Over");
+
+					// We always want to show the modal alert on the touch screen
+					AmigaScreen* screen = NULL;
+
+					if (_gameScreen->getPhysicalScreenNumber() == 0) {
+						screen = _gameScreen;
+					} else {
+						screen = _docsScreen;
+					}
+
+					screen->addGadget(alert);
+					alert->goModal();
+				}
 			}
 			break;
 		case 3:
@@ -162,7 +183,7 @@ void PipeDream::handleActionEvent(Gadget& source) {
 		case 4:
 
 			// Restart
-			_level = 0;
+			setLevel(0);
 			_grid->reset();
 			_grid->enable();
 			_redrawTimer->start();

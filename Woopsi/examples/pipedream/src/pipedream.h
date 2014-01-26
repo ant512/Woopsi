@@ -7,6 +7,7 @@
 #include <woopsitimer.h>
 #include <tabgroup.h>
 #include <scrollingtextbox.h>
+#include <textbox.h>
 
 #include "pipebuttongrid.h"
 
@@ -29,10 +30,13 @@ private:
 	ScrollingTextBox* _aboutTextBox;
 	AmigaScreen* _gameScreen;
 	AmigaScreen* _docsScreen;
+	TextBox* _levelTextBox;
 	u8 _level;
 	
 	void createGameScreen();
 	void createDocsScreen();
+
+	void setLevel(u8 level);
 };
 
 #endif
