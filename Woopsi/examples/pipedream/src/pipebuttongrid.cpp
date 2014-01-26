@@ -48,12 +48,15 @@ void PipeButtonGrid::generateRandomLayout() {
 			if ((y == startRow) && (x == startColumn)) {
 				
 				// Add start button
+				/*
 				bool top = y == _rows - 1 && x > 0;
 				bool right = y > 0 && x == 0;
 				bool bottom = y == 0 && x > 0;
 				bool left = y > 0 && x == _columns - 1;
+				 */
 				
-				button = new PipeButtonStandard(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight, top, right, bottom, left);
+				button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
+				button->plugTopConnector();
 				button->reveal();
 				button->disable();
 				_startButton = button;
@@ -61,12 +64,15 @@ void PipeButtonGrid::generateRandomLayout() {
 			} else if ((y == endRow) && (x == endColumn)) {
 			
 				// Add end button
+				/*
 				bool top = y == _rows - 1 && x > 0;
 				bool right = y > 0 && x == 0;
 				bool bottom = y == 0 && x > 0;
 				bool left = y > 0 && x == _columns - 1;
+				 */
 				
-				button = new PipeButtonStandard(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight, top, right, bottom, left);
+				button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
+				button->plugBottomConnector();
 				button->reveal();
 				button->disable();
 				_endButton = button;
