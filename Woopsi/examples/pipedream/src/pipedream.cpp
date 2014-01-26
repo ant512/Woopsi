@@ -3,9 +3,14 @@
 #include <amigawindow.h>
 #include <button.h>
 #include <tab.h>
+#include <textbox.h>
 
 #include "constants.h"
 #include "pipedream.h"
+
+static const u8 FLOW_INCREASE = 5;
+static const u8 FLOW_TIMEOUT_SLOW = 20;
+static const u8 FLOW_TIMEOUT_FAST = 1;
 
 void PipeDream::startup() {
 	createGameScreen();
@@ -87,12 +92,7 @@ void PipeDream::createGameScreen() {
 	_grid->disable();
 	window->addGadget(_grid);
 
-	Button* button = new Button(_grid->getRelativeX() + _grid->getWidth() + 10, 20, 50, 20, "Start");
-	button->setGadgetEventHandler(this);
-	button->setRefcon(4);
-	window->addGadget(button);
-
-	_flowTimer = new WoopsiTimer(20, true);
+	_flowTimer = new WoopsiTimer(FLOW_TIMEOUT_SLOW, true);
 	_flowTimer->setGadgetEventHandler(this);
 	window->addGadget(_flowTimer);
 	_flowTimer->setRefcon(2);
@@ -101,6 +101,26 @@ void PipeDream::createGameScreen() {
 	_redrawTimer->setGadgetEventHandler(this);
 	window->addGadget(_redrawTimer);
 	_redrawTimer->setRefcon(3);
+
+	Button* startButton = new Button(_grid->getRelativeX() + _grid->getWidth() + 10, rect.y + rect.height - 22, 70, 20, "Start");
+	startButton->setGadgetEventHandler(this);
+	startButton->setRefcon(4);
+	window->addGadget(startButton);
+
+	Button* completeButton = new Button(_grid->getRelativeX() + _grid->getWidth() + 10, startButton->getRelativeY() - startButton->getHeight() - 2, 70, 20, "Complete");
+	completeButton->setGadgetEventHandler(this);
+	completeButton->setRefcon(5);
+	window->addGadget(completeButton);
+
+	Label* levelLabel = new Label(startButton->getRelativeX(), rect.y + 2, 40, startButton->getHeight(), "Level");
+	window->addGadget(levelLabel);
+
+	WoopsiString level;
+	level.format("%d", _level);
+
+	TextBox* levelTextBox = new TextBox(levelLabel->getRelativeX() + levelLabel->getWidth() + 2, levelLabel->getRelativeY(), 28, levelLabel->getHeight(), level);
+	levelTextBox->hideCursor();
+	window->addGadget(levelTextBox);
 }
 
 void PipeDream::shutdown() {
@@ -112,7 +132,7 @@ void PipeDream::shutdown() {
 void PipeDream::handleActionEvent(Gadget& source) {
 	switch (source.getRefcon()) {
 		case 2:
-			if (!_grid->increaseFlow(5)) {
+			if (!_grid->increaseFlow(FLOW_INCREASE)) {
 
 				// Game over!
 				_redrawTimer->stop();
@@ -139,12 +159,18 @@ void PipeDream::handleActionEvent(Gadget& source) {
 		case 4:
 
 			// Restart
+			_level = 0;
 			_grid->reset();
 			_grid->enable();
-			//_redrawTimer->reset();
 			_redrawTimer->start();
-			//_flowTimer->reset();
+			_flowTimer->setTimeout(FLOW_TIMEOUT_SLOW);
 			_flowTimer->start();
+			break;
+
+		case 5:
+
+			// Done button increases flow speed
+			_flowTimer->setTimeout(FLOW_TIMEOUT_FAST);
 			break;
 	}
 }

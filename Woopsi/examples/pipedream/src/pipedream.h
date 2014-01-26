@@ -29,6 +29,7 @@ private:
 	ScrollingTextBox* _aboutTextBox;
 	AmigaScreen* _gameScreen;
 	AmigaScreen* _docsScreen;
+	u8 _level;
 	
 	void createGameScreen();
 	void createDocsScreen();
