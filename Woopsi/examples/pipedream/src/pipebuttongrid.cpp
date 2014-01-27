@@ -24,7 +24,7 @@ PipeButtonGrid::PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns) : Gadget(x, y,
 	generateRandomLayout(0);
 }
 
-void PipeButtonGrid::reset(Uint8 level) {
+void PipeButtonGrid::reset(u8 level) {
 	_activeButtons.clear();
 	_isComplete = false;
 
