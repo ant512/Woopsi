@@ -39,8 +39,6 @@ void PipeButtonGridGenerator::placeTileAtRandomCoordinates(TileType tile, u8* gr
 u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 	u8* layout = new u8[_rows * _columns];
 
-	blockingTileCount = _rows * _columns;
-
 	// We keep generating new layouts until we create one that can be solved.
 	bool solvable = false;
 
@@ -108,7 +106,15 @@ u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 		delete checked;
 	} while (!solvable);
 
-	// TODO: Populate the empty space with random tiles.
+	// Populate the empty space with random tiles.
+	for (u8 y = 0; y < _rows; ++y) {
+		for (u8 x = 0; x < _columns; ++x) {
+			if (layout[x + (_columns * y)] == TILE_TYPE_BLANK) {
+				layout[x + (_columns * y)] = TILE_TYPE_BLOCKING + (rand() % 6);
+			}
+		}
+	}
+
 	// TODO: Shuffle all tiles except the blocking tiles and entry/exit.
 
 	return layout;

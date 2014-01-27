@@ -17,7 +17,7 @@ public:
 		TILE_TYPE_TOP_RIGHT = 4,
 		TILE_TYPE_BOTTOM_RIGHT = 5,
 		TILE_TYPE_BOTTOM_LEFT = 6,
-		TILE_TYPE_TOP_LEFT = 7,
+		TILE_TYPE_TOP_LEFT = 7
 	} TileType;
 
 	PipeButtonGridGenerator(u8 rows, u8 columns);
