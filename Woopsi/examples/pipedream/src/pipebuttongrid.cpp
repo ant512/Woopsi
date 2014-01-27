@@ -42,35 +42,16 @@ void PipeButtonGrid::generateRandomLayout(u8 level) {
 	PipeButtonBase* button = NULL;
 
 	PipeButtonGridGenerator* generator = new PipeButtonGridGenerator(_rows, _columns);
-	generator->generateRandomTiles(level / 2);
-
-	bool startAtTop = rand() % 2;
-
-	u8 startRow = 0;
-	u8 startColumn = 0;
-	u8 endRow = 0;
-	u8 endColumn = 0;
-
-	if (startAtTop) {
-		startRow = 0;
-		endRow = _rows - 1;
-		startColumn = 1 + (rand() % (_columns - 2));
-		endColumn = 1 + (rand() % (_rows - 2));
-	} else {
-		startColumn = 0;
-		endColumn = _columns - 1;
-		startRow = 1 + (rand() % (_columns - 2));
-		endRow = 1 + (rand() % (_rows - 2));
-	}
-
+	u8* layout = generator->generateRandomTiles(level / 2);
 
 	for (u8 y = 0; y < _rows; ++y) {
 		for (u8 x = 0; x < _columns; ++x) {
-		
-			if ((y == startRow) && (x == startColumn)) {
-				
+
+			if (x == generator->getStart().getX() &&
+				y == generator->getStart().getY()) {
+
 				// Add start button
-				if (startAtTop) {
+				if (y == 0) {
 					button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 					button->plugTopConnector();
 				} else {
@@ -81,11 +62,12 @@ void PipeButtonGrid::generateRandomLayout(u8 level) {
 				button->reveal();
 				button->disable();
 				_startButton = button;
-			
-			} else if ((y == endRow) && (x == endColumn)) {
-			
+
+			} else if (x == generator->getEnd().getX() &&
+					   y == generator->getEnd().getY()) {
+
 				// Add end button
-				if (startAtTop) {
+				if (y == _rows - 1) {
 					button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 					button->plugBottomConnector();
 				} else {
@@ -96,38 +78,34 @@ void PipeButtonGrid::generateRandomLayout(u8 level) {
 				button->reveal();
 				button->disable();
 				_endButton = button;
-				
+
 			} else if ((y == 0) || (x == 0) || (x == _columns - 1) || (y == _rows - 1)) {
-				
+
 				// Add a border button
 				button = new PipeButtonBlock(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 				button->reveal();
-			} else {
-			
-				// Add a content button
-		
-				u8 type = rand() % 7;
 
-				switch (type) {
-					case 0:
+			} else {
+				switch (layout[x + (y * _columns)]) {
+					case PipeButtonGridGenerator::TILE_TYPE_HORIZONTAL:
 						button = new PipeButtonHorizontal(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 						break;
-					case 1:
+					case PipeButtonGridGenerator::TILE_TYPE_VERTICAL:
 						button = new PipeButtonVertical(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 						break;
-					case 2:
+					case PipeButtonGridGenerator::TILE_TYPE_TOP_RIGHT:
 						button = new PipeButtonL1(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 						break;
-					case 3:
+					case PipeButtonGridGenerator::TILE_TYPE_BOTTOM_RIGHT:
 						button = new PipeButtonL2(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 						break;
-					case 4:
+					case PipeButtonGridGenerator::TILE_TYPE_BOTTOM_LEFT:
 						button = new PipeButtonL3(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 						break;
-					case 5:
+					case PipeButtonGridGenerator::TILE_TYPE_TOP_LEFT:
 						button = new PipeButtonL4(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 						break;
-					case 6:
+					case PipeButtonGridGenerator::TILE_TYPE_BLOCKING:
 						button = new PipeButtonBlock(x * _buttonWidth, y * _buttonWidth, _buttonWidth, _buttonHeight);
 						break;
 				}
@@ -137,7 +115,9 @@ void PipeButtonGrid::generateRandomLayout(u8 level) {
 			addGadget(button);
 		}
 	}
-	
+
+	delete layout;
+
 	resize(_columns * _buttonWidth, _rows * _buttonHeight);
 }
 

@@ -39,6 +39,8 @@ void PipeButtonGridGenerator::placeTileAtRandomCoordinates(TileType tile, u8* gr
 u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 	u8* layout = new u8[_rows * _columns];
 
+	blockingTileCount = _rows * _columns;
+
 	// We keep generating new layouts until we create one that can be solved.
 	bool solvable = false;
 
@@ -64,20 +66,28 @@ u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 			_start.setY(0);
 			_end.setY(_rows - 1);
 			_start.setX(1 + (rand() % (_columns - 2)));
-			_end.setX(1 + (rand() % (_rows - 2)));
+
+			// We want to ensure that the start and end are not exactly opposite
+			do {
+				_end.setX(1 + (rand() % (_rows - 2)));
+			} while (_end.getX() == _start.getX());
 		} else {
 			_start.setX(0);
 			_end.setX(_columns - 1);
 			_start.setY(1 + (rand() % (_columns - 2)));
-			_end.setY(1 + (rand() % (_rows - 2)));
+
+			do {
+				_end.setY(1 + (rand() % (_rows - 2)));
+			} while (_end.getY() == _start.getY());
 		}
 
 		layout[_start.getX() + (_start.getY() * _columns)] = startAtTop ? TILE_TYPE_VERTICAL : TILE_TYPE_HORIZONTAL;
 		layout[_end.getX() + (_end.getY() * _columns)] = startAtTop ? TILE_TYPE_VERTICAL : TILE_TYPE_HORIZONTAL;
 
-		// We don't want more than 1/3 of the grid to be blocking tiles, as there's
-		// a good chance we can't create valid levels with more blocks (the ratio is
-		// chosen arbitrarily based on gut feel rather than testing).
+		// We don't want more than 1/3 of the grid to be blocking tiles, as
+		// there's a good chance we can't create valid levels with more blocks
+		// (the ratio is chosen arbitrarily based on gut feel rather than
+		// testing).
 		if (blockingTileCount > ((_rows - 2) * (_columns - 2)) / 3) {
 			blockingTileCount = ((_rows - 2) * (_columns - 2)) / 3;
 		}
@@ -120,6 +130,8 @@ bool PipeButtonGridGenerator::solveGrid(u8 previousX,
 	// iterate over the array trying each direction in preferred order.  That
 	// will make the algorithm always hunt the exit instead of (as is the case
 	// here) hug the walls or do other stupid stuff like pointless backtracking.
+	//
+	// Actually, having played it for a little while, this is sufficient...
 
 	u8 index = currentX + (_columns * currentY);
 
@@ -173,7 +185,7 @@ PipeButtonGridGenerator::TileType PipeButtonGridGenerator::tileToConnectCoordina
 		}
 	}
 
-	if (nextY > previousY && nextX < previousY) {
+	if (nextY > previousY && nextX < previousX) {
 		if (currentX == nextX) {
 			return TILE_TYPE_BOTTOM_RIGHT;
 		} else {
@@ -205,7 +217,7 @@ PipeButtonGridGenerator::TileType PipeButtonGridGenerator::tileToConnectCoordina
 		}
 	}
 
-	if (nextY > previousY && nextX > previousY) {
+	if (nextY > previousY && nextX > previousX) {
 		if (currentX == nextX) {
 			return TILE_TYPE_BOTTOM_LEFT;
 		} else {
@@ -221,7 +233,7 @@ PipeButtonGridGenerator::TileType PipeButtonGridGenerator::tileToConnectCoordina
 		}
 	}
 
-	if (nextY < previousY && nextY > previousX) {
+	if (nextY < previousY && nextX > previousX) {
 		if (currentX == nextX) {
 			return TILE_TYPE_TOP_LEFT;
 		} else {
