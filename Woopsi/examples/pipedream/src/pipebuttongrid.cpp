@@ -1,6 +1,7 @@
 #include <woopsi.h>
 
 #include "pipebuttongrid.h"
+#include "pipebuttongridgenerator.h"
 #include "constants.h"
 #include "pipebuttonstandard.h"
 #include "pipebuttonblock.h"
@@ -19,11 +20,11 @@ PipeButtonGrid::PipeButtonGrid(s16 x, s16 y, u8 rows, u8 columns) : Gadget(x, y,
 	
 	_rows = rows;
 	_columns = columns;
-	
+
 	generateRandomLayout(0);
 }
 
-void PipeButtonGrid::reset(u8 level) {
+void PipeButtonGrid::reset(Uint8 level) {
 	_activeButtons.clear();
 	_isComplete = false;
 
@@ -39,6 +40,9 @@ void PipeButtonGrid::generateRandomLayout(u8 level) {
 	srand(woopsiApplication->getVBLCount());
 
 	PipeButtonBase* button = NULL;
+
+	PipeButtonGridGenerator* generator = new PipeButtonGridGenerator(_rows, _columns);
+	generator->generateRandomTiles(level / 2);
 
 	bool startAtTop = rand() % 2;
 
@@ -58,6 +62,7 @@ void PipeButtonGrid::generateRandomLayout(u8 level) {
 		startRow = 1 + (rand() % (_columns - 2));
 		endRow = 1 + (rand() % (_rows - 2));
 	}
+
 
 	for (u8 y = 0; y < _rows; ++y) {
 		for (u8 x = 0; x < _columns; ++x) {

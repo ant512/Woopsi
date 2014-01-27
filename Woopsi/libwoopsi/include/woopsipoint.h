@@ -10,6 +10,14 @@ namespace WoopsiUI {
 	 */
 	class WoopsiPoint {
 	public:
+
+		/**
+		 * Constructor.
+		 */
+		inline WoopsiPoint() {
+			_x = 0;
+			_y = 0;
+		};
 		
 		/**
 		 * Constructor.

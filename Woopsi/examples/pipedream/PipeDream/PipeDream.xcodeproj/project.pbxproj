@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C21C9944189594E800725483 /* pipebuttongridgenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C21C9942189594E800725483 /* pipebuttongridgenerator.cpp */; };
 		C2BBC22E1891E329004CDF86 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2BBC22D1891E329004CDF86 /* Cocoa.framework */; };
 		C2BBC2381891E329004CDF86 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2BBC2361891E329004CDF86 /* InfoPlist.strings */; };
 		C2BBC26D1891E3A2004CDF86 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2BBC26A1891E38E004CDF86 /* SDL2.framework */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C21C9942189594E800725483 /* pipebuttongridgenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pipebuttongridgenerator.cpp; sourceTree = "<group>"; };
+		C21C9943189594E800725483 /* pipebuttongridgenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pipebuttongridgenerator.h; sourceTree = "<group>"; };
 		C2BBC22A1891E329004CDF86 /* PipeDream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PipeDream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2BBC22D1891E329004CDF86 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C2BBC2301891E329004CDF86 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -164,6 +167,8 @@
 				C2BBC2781891E3F4004CDF86 /* pipebuttonblock.h */,
 				C2BBC2791891E3F4004CDF86 /* pipebuttongrid.cpp */,
 				C2BBC27A1891E3F4004CDF86 /* pipebuttongrid.h */,
+				C21C9942189594E800725483 /* pipebuttongridgenerator.cpp */,
+				C21C9943189594E800725483 /* pipebuttongridgenerator.h */,
 				C2BBC27B1891E3F4004CDF86 /* pipebuttonhorizontal.h */,
 				C2BBC27C1891E3F4004CDF86 /* pipebuttonl1.h */,
 				C2BBC27D1891E3F4004CDF86 /* pipebuttonl2.h */,
@@ -248,6 +253,7 @@
 				C2BBC2871891E3F4004CDF86 /* pipebuttonblock.cpp in Sources */,
 				C2BBC28A1891E3F4004CDF86 /* pipedream.cpp in Sources */,
 				C2BBC2861891E3F4004CDF86 /* pipebuttonbase.cpp in Sources */,
+				C21C9944189594E800725483 /* pipebuttongridgenerator.cpp in Sources */,
 				C2BBC2881891E3F4004CDF86 /* pipebuttongrid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
