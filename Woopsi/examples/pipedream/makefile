@@ -9,7 +9,7 @@ endif
 include $(DEVKITARM)/ds_rules
 
 # set the texts that appear in the loader menus
-GAME_TITLE		:= Demo Project
+GAME_TITLE		:= Sparky
 GAME_SUBTITLE1	:= Using Woopsi
 GAME_SUBTITLE2	:= woopsi.org
 
