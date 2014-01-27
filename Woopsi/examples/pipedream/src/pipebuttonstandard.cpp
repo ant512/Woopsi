@@ -3,9 +3,11 @@
 
 PipeButtonStandard::PipeButtonStandard(s16 x, s16 y, u16 width, u16 height, PipeButtonBase::Connectors connectors) : PipeButtonBase(x, y, width, height) {
 	setConnectors(connectors);
+	_flowLevel = 0;
 }
 
 PipeButtonStandard::PipeButtonStandard(s16 x, s16 y, u16 width, u16 height, bool top, bool right, bool bottom, bool left) : PipeButtonBase(x, y, width, height) {
+	_flowLevel = 0;
 	PipeButtonBase::Connectors connectors;
 	connectors.top = top;
 	connectors.right = right;

@@ -56,7 +56,9 @@ void PipeDream::createDocsScreen() {
 												"Dragging a tile to a non-draggable destination will have no effect.\n\n"
 												"Buttons\n\n"
 												"Start: Starts a new game.\n"
-												"Complete: Speeds up the spark to quickly complete a level.", 50);
+												"Complete: Speeds up the spark to quickly complete a level.\n\n"
+												"Levels\n\n"
+												"All levels are generated randomly, but they all have a solution.", 50);
 	_instructionsTextBox->setTextAlignmentHoriz(MultiLineTextBox::TEXT_ALIGNMENT_HORIZ_LEFT);
 	_instructionsTextBox->setTextAlignmentVert(MultiLineTextBox::TEXT_ALIGNMENT_VERT_TOP);
 	_instructionsTextBox->jump(0, 0);
@@ -183,8 +185,10 @@ void PipeDream::handleActionEvent(Gadget& source) {
 					setLevel(_level + 1);
 					_grid->reset(_level);
 					_grid->enable();
+					_redrawTimer->reset();
 					_redrawTimer->start();
 					_flowTimer->setTimeout(FLOW_TIMEOUT_SLOW);
+					_flowTimer->reset();
 					_flowTimer->start();
 				} else {
 
@@ -217,8 +221,10 @@ void PipeDream::handleActionEvent(Gadget& source) {
 			setLevel(0);
 			_grid->reset(_level);
 			_grid->enable();
+			_redrawTimer->reset();
 			_redrawTimer->start();
 			_flowTimer->setTimeout(FLOW_TIMEOUT_SLOW);
+			_flowTimer->reset();
 			_flowTimer->start();
 			break;
 
