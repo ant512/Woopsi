@@ -63,7 +63,10 @@ u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 		if (startAtTop) {
 			_start.setY(0);
 			_end.setY(_rows - 1);
-			_start.setX(1 + (rand() % (_columns - 2)));
+
+			if (_columns - 2 > 0) {
+				_start.setX(1 + (rand() % (_columns - 2)));
+			}
 
 			// We want to ensure that the start and end are not exactly opposite
 			do {
@@ -72,7 +75,10 @@ u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 		} else {
 			_start.setX(0);
 			_end.setX(_columns - 1);
-			_start.setY(1 + (rand() % (_columns - 2)));
+			
+			if (_rows - 2 > 0) {
+				_start.setY(1 + (rand() % (_rows - 2)));
+			}
 
 			do {
 				_end.setY(1 + (rand() % (_rows - 2)));
@@ -103,7 +109,7 @@ u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 			solvable = solveGrid(_start.getX(), _start.getY(), _start.getX() + 1, _start.getY(), _end.getX(), _end.getY(), layout, checked);
 		}
 
-		delete checked;
+		delete[] checked;
 	} while (!solvable);
 
 	// Populate the empty space with random tiles.
