@@ -107,15 +107,37 @@ u8* PipeButtonGridGenerator::generateRandomTiles(u8 blockingTileCount) {
 	} while (!solvable);
 
 	// Populate the empty space with random tiles.
-	for (u8 y = 0; y < _rows; ++y) {
-		for (u8 x = 0; x < _columns; ++x) {
+	for (u8 y = 1; y < _rows - 1; ++y) {
+		for (u8 x = 1; x < _columns - 1; ++x) {
 			if (layout[x + (_columns * y)] == TILE_TYPE_BLANK) {
-				layout[x + (_columns * y)] = TILE_TYPE_BLOCKING + (rand() % 6);
+				layout[x + (_columns * y)] = TILE_TYPE_VERTICAL + (rand() % 6);
 			}
 		}
 	}
 
-	// TODO: Shuffle all tiles except the blocking tiles and entry/exit.
+	// Shuffle all tiles except the blocking tiles and entry/exit.  We use
+	// another crappy algorithm - iterate through each internal block, find one
+	// we can swap with, and swap it.
+	for (u8 y = 1; y < _rows - 2; ++y) {
+		for (u8 x = 1; x < _columns - 2; ++x) {
+			TileType src = (TileType)layout[x + (y * _columns)];
+
+			if (src != TILE_TYPE_BLOCKING) {
+				u8 destX = 0;
+				u8 destY = 0;
+				TileType dest = TILE_TYPE_BLOCKING;
+
+				while (dest == TILE_TYPE_BLOCKING) {
+					destX = 1 + (rand() % (_columns - 1));
+					destY = 1 + (rand() % (_rows - 1));
+					dest = (TileType)layout[destX + (destY * _columns)];
+				}
+
+				layout[x + (y * _columns)] = layout[destX + (destY * _columns)];
+				layout[destX + (destY * _columns)] = src;
+			}
+		}
+	}
 
 	return layout;
 }
