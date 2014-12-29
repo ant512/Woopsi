@@ -1082,7 +1082,7 @@
 		C2725B171879E8FF00C95E9D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Antony Dzeryn";
 			};
 			buildConfigurationList = C2725B1A1879E8FF00C95E9D /* Build configuration list for PBXProject "Woopsi" */;
@@ -1319,6 +1319,7 @@
 		C2725B241879E8FF00C95E9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1331,6 +1332,7 @@
 		C2725B251879E8FF00C95E9D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

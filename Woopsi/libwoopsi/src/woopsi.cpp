@@ -226,7 +226,6 @@ void Woopsi::handleKey(Pad::KeyCode keyCode) {
 		_focusedGadget->keyRepeat(keyCode);
 	} else if (heldTime == secondaryRepeatTime) {
 		_focusedGadget->keyRepeat(keyCode);
-		heldTime = KEY_INITIAL_REPEAT_TIME;
 	}
 }
 
