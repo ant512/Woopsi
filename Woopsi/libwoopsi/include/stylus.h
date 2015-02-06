@@ -2,6 +2,7 @@
 #define _STYLUS_H_
 
 #include <nds.h>
+#include "defines.h"
 
 /**
  * Abstraction of the DS' stylus state to aid porting.
@@ -10,12 +11,6 @@ class Stylus {
 public:
 
 	static const s32 STYLUS_REPEAT_TIME = 10;	/**< VBLs before the stylus repeats. */
-
-	/**
-	 * Number of VBLs within which the user can click again to fire a
-	 * double-click.
-	 */
-	static const s32 DOUBLE_CLICK_TIME = 8000;
 
 	/**
 	 * Constructor.
@@ -116,12 +111,11 @@ public:
 			if (_touchedTime == 1) {
 				_isDoubleClick = _doubleClickTimeout > 0;
 				_doubleClickTimeout = DOUBLE_CLICK_TIME;
-			}
+            }
 		} else if (_touchedTime > 0) {
 
 			// Stylus is released
 			_touchedTime = -1;
-			_doubleClickTimeout = 0;
 		}
 
 		touchPosition touch;
@@ -160,7 +154,6 @@ public:
 
 			// Stylus is released
 			_touchedTime = -1;
-			_doubleClickTimeout = 0;
 		}
 		
 		if (_touchedTime > 0) {

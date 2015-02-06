@@ -214,17 +214,17 @@ void Woopsi::handleKey(Pad::KeyCode keyCode) {
 	bool released = pad.isReleased(keyCode);
 	s32 heldTime = pad.heldTimeForKey(keyCode);
 
-	s32 secondaryRepeatTime = KEY_INITIAL_REPEAT_TIME + KEY_SECONDARY_REPEAT_TIME;
+	s32 secondaryRepeatTime = KEY_SECONDARY_REPEAT_TIME;
 
 	if (newPress) {
 		_focusedGadget->keyPress(keyCode);
 	} else if (released) {
 		_focusedGadget->keyRelease(keyCode);
 	}
-		
+
 	if (heldTime == KEY_INITIAL_REPEAT_TIME) {
 		_focusedGadget->keyRepeat(keyCode);
-	} else if (heldTime == secondaryRepeatTime) {
+	} else if (heldTime > KEY_INITIAL_REPEAT_TIME && ((heldTime - KEY_INITIAL_REPEAT_TIME) % secondaryRepeatTime) == 0) {
 		_focusedGadget->keyRepeat(keyCode);
 	}
 }

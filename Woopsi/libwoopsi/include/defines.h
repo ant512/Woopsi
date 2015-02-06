@@ -34,8 +34,6 @@ const s32 BOTTOM_SCREEN_NUMBER = 0;
  */
 const s32 DOUBLE_CLICK_BOUNDS = 10;
 
-#ifndef USING_SDL
-
 /**
  * Number of VBLs within which a click the user can click again to fire a
  * double-click.
@@ -51,20 +49,6 @@ const s32 KEY_INITIAL_REPEAT_TIME = 25;
  * Time taken before a repeating key repeats again.
  */
 const s32 KEY_SECONDARY_REPEAT_TIME = 5;
-
-#else
-
-/**
- * Time taken before a key (either d-pad or keyboard) starts repeating.
- */
-const s32 KEY_INITIAL_REPEAT_TIME = 4000;
-
-/**
- * Time taken before a repeating key repeats again.
- */
-const s32 KEY_SECONDARY_REPEAT_TIME = 1000;
-
-#endif
 
 /**
  * Woopsi version number.
