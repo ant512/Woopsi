@@ -33,6 +33,7 @@ MINUSG	:=	-g
 CFLAGS	:=	$(MINUSG) -Wall -O2 \
  		-fomit-frame-pointer \
 		-ffast-math \
+		-D_GNU_SOURCE \
 		$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM9
