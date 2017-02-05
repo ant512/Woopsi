@@ -709,8 +709,13 @@ s32 WoopsiString::lastIndexOf(const WoopsiString& text, s32 startIndex, s32 coun
 	s32 charsExamined = 0;
 
 	StringIterator* srciter = newStringIterator();
-	StringIterator* finditer = text.newStringIterator();
-	if (!srciter->moveTo(startIndex)) return -1;
+
+    if (!srciter->moveTo(startIndex)) {
+        delete srciter;
+        return -1;
+    }
+
+    StringIterator* finditer = text.newStringIterator();
 
 	do {
 		bool equal = true;
